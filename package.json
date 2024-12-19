@@ -1,0 +1,25 @@
+{
+  "name": "membrane-channels",
+  "version": "1.0.0-dev.0",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phetsims/membrane-channels.git"
+  },
+  "devDependencies": {
+    "grunt": "~1.5.3"
+  },
+  "phet": {
+    "requirejsNamespace": "MEMBRANE_CHANNELS",
+    "simulation": true,
+    "runnable": true,
+    "supportedBrands": [
+      "phet",
+      "adapted-from-phet"
+    ],
+    "supportsOutputJS": true,
+    "simFeatures": {
+      "supportsDynamicLocale": true
+    }
+  }
+}
