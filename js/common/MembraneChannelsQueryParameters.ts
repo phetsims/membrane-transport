@@ -4,14 +4,14 @@
  * Defines query parameters that are specific to this simulation.
  * Run with ?log to print query parameters and their values to the browser console at startup.
  *
- * @author Sam Reid (PhET Interactive Simulations, and Jesse Greenberg (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import membraneChannels from '../membraneChannels.js';
 
 const SCHEMA_MAP = {
-  //TODO add schemas for query parameters
 };
 
 const MembraneChannelsQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );

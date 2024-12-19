@@ -1,21 +1,18 @@
 // Copyright 2024, University of Colorado Boulder
 
 /**
- * TODO Describe this class and its responsibilities.
- *
- * @author Sam Reid (PhET Interactive Simulations, and Jesse Greenberg (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 
-type SelfOptions = {
- //TODO add options that are specific to MembraneChannelsScreenView here
-};
+type SelfOptions = EmptySelfOptions;
 
 type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 
@@ -24,10 +21,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
   public constructor( model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
 
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-
-      //TODO add default values for optional SelfOptions here
-
-      //TODO add default values for optional ScreenViewOptions here
     }, providedOptions );
 
     super( options );
@@ -49,7 +42,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * Resets the view.
    */
   public reset(): void {
-    //TODO
+    console.log( 'TODO' );
   }
 
   /**
@@ -57,7 +50,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
-    //TODO
+    console.log( 'TODO' );
   }
 }
 

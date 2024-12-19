@@ -3,7 +3,8 @@
 /**
  * Main entry point for the sim.
  *
- * @author Sam Reid (PhET Interactive Simulations, and Jesse Greenberg (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
@@ -25,11 +26,10 @@ simLauncher.launch( () => {
 
   const options: SimOptions = {
 
-    //TODO fill in credits, all of these fields are optional, see joist.CreditsNode
     credits: {
-      leadDesign: '',
-      softwareDevelopment: '',
-      team: '',
+      leadDesign: 'Brett Fiedler',
+      softwareDevelopment: 'Jesse Greenberg, Sam Reid',
+      team: 'Holly Basta, Mike Klymkowsky, Mark Nielsen, Kathy Perkins, Amy Rouinfar, Taliesin Smith',
       contributors: '',
       qualityAssurance: '',
       graphicArts: '',
