@@ -10,10 +10,10 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import ObservationWindow from './ObservationWindow.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -28,15 +28,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     super( options );
 
     // TODO: We need an actual class for the window.
-    const observationWindow = new Rectangle(
-      0,
-      0,
-      MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH,
-      MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, {
-        fill: 'white',
-        stroke: 'black',
-        lineWidth: 1
-      } );
+    const observationWindow = new ObservationWindow();
     this.addChild( observationWindow );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
