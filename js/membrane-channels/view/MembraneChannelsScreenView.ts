@@ -63,7 +63,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // layout
     observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
     resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, observationWindow.bottom );
-    timeControlNode.rightBottom = resetAllButton.rightTop.minusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
+    timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    timeControlNode.left = observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
   }
 
   /**
