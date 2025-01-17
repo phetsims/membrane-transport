@@ -5,14 +5,14 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import TModel from '../../../../joist/js/TModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import membraneChannels from '../../membraneChannels.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -39,7 +39,8 @@ export default class MembraneChannelsModel implements TModel {
    * Resets the model.
    */
   public reset(): void {
-    console.log( 'TODO' );
+    this.timeSpeedProperty.reset();
+    this.isPlayingProperty.reset();
   }
 
   /**
@@ -47,7 +48,7 @@ export default class MembraneChannelsModel implements TModel {
    * @param dt - time step, in seconds
    */
   public step( dt: number ): void {
-    console.log( 'TODO' );
+    // implement
   }
 }
 
