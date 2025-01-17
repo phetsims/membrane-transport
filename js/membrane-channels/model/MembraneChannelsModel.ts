@@ -5,11 +5,14 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import TModel from '../../../../joist/js/TModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import membraneChannels from '../../membraneChannels.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -17,8 +20,19 @@ type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptio
 
 export default class MembraneChannelsModel implements TModel {
 
+  public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
+  public readonly isPlayingProperty: BooleanProperty;
+
   public constructor( providedOptions: MembraneChannelsModelOptions ) {
-    console.log( 'TODO' );
+
+    this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
+      tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),
+      phetioFeatured: true
+    } );
+    this.isPlayingProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
+      phetioFeatured: true
+    } );
   }
 
   /**

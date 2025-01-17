@@ -11,7 +11,10 @@ import membraneChannels from '../membraneChannels.js';
 
 const MembraneChannelsConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
-  SCREEN_VIEW_Y_MARGIN: 15
+  SCREEN_VIEW_Y_MARGIN: 15,
+
+  // Size of the observation window
+  OBSERVATION_WINDOW_WIDTH: 500
 };
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
