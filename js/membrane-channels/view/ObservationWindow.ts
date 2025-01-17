@@ -1,10 +1,10 @@
 // Copyright 2025, University of Colorado Boulder
 
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import BackgroundCanvasNode from './BackgroundCanvasNode.js';
 import LigandNode from './LigandNode.js';
 
 /**
@@ -35,17 +35,15 @@ export default class ObservationWindow extends Node {
     );
     this.addChild( rectangle );
 
+    // first, we will have a background canvas layer for the performance intensive parts
+    const backgroundCanvasNode = new BackgroundCanvasNode();
+    this.addChild( backgroundCanvasNode );
+
+    // ligand and membrane channel layer
+    // On top, we will have a layer for the interactive parts of the simulation
+
     const ligandNode = new LigandNode();
     this.addChild( ligandNode );
-
-
-    for ( let i = 0; i < 1000; i++ ) {
-      const ligandNode = new LigandNode();
-      ligandNode.x = dotRandom.nextDouble() * MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH;
-      ligandNode.y = dotRandom.nextDouble() * MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH;
-      this.addChild( ligandNode );
-    }
-    console.log( 'startup complete' );
   }
 
 }
