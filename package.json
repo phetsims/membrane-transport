@@ -7,7 +7,8 @@
     "url": "https://github.com/phetsims/membrane-channels.git"
   },
   "devDependencies": {
-    "grunt": "~1.5.3"
+    "grunt": "~1.5.3",
+    "esbuild": "^0.24.2"
   },
   "phet": {
     "requirejsNamespace": "MEMBRANE_CHANNELS",
