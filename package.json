@@ -10,6 +10,9 @@
     "grunt": "~1.5.3",
     "esbuild": "^0.24.2"
   },
+  "scripts": {
+    "esbuild-watch": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundlefile.js --sourcemap --watch"
+  },
   "phet": {
     "requirejsNamespace": "MEMBRANE_CHANNELS",
     "simulation": true,
