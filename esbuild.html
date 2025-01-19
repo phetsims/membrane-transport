@@ -130,6 +130,9 @@
   // Module loading in compilation-free (development) mode will be kicked off once strings are loaded.
   // This is done in load-unbuilt-strings.js
   window.phet.chipper.loadModules = () => loadURL( './dist/bundlefile.js', 'module' );
+
+  // Live reload, see https://esbuild.github.io/api/#live-reload
+  new EventSource( '/esbuild' ).addEventListener( 'change', () => location.reload() );
 </script>
 </body>
 </html>
