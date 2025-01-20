@@ -20,6 +20,7 @@ type SelfOptions = EmptySelfOptions;
 type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class MembraneChannelsScreenView extends ScreenView {
+  private readonly observationWindow: ObservationWindow;
 
   public constructor( model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
 
@@ -27,9 +28,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     super( options );
 
-    // TODO: We need an actual class for the window.
-    const observationWindow = new ObservationWindow();
-    this.addChild( observationWindow );
+    this.observationWindow = new ObservationWindow();
+    this.addChild( this.observationWindow );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       timeSpeedProperty: model.timeSpeedProperty,
@@ -53,10 +53,10 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( resetAllButton );
 
     // layout
-    observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
-    resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, observationWindow.bottom );
+    this.observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
+    resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
     timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-    timeControlNode.left = observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
   }
 
   /**
@@ -71,7 +71,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
-    // Implement step...
+    this.observationWindow.step( dt );
   }
 }
 

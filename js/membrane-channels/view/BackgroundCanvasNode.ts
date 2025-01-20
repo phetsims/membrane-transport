@@ -9,6 +9,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { CanvasNode } from '../../../../scenery/js/imports.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
@@ -24,14 +25,47 @@ const OUTSIDE_CELL_COLOR = 'rgb(152,205,255)';
 const modelBounds = new Bounds2( -100, -100, 100, 100 );
 const viewBounds = new Bounds2( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH );
 
+// Head parameters
+const headRadius = 2;
+const headY = 22;
+
+// Constants controlling the tail control point movement
+const controlPointStepSize = 0.1; // the random component for the change in velocity
+const friction = 0.9999;          // a friction coefficient for momentum (0 to 1)
+
+// Define an interface for a control point.
+// We add a velocity component "vx" for horizontal momentum.
+type ControlPoint = {
+  x: number;
+  y: number;
+  vx: number;
+};
+
+// For each tail, we want to store its anchor (head center) and a list of control points.
+// (Later, you could also include additional parameters like target endpoint offsets.)
+type TailState = {
+  anchorX: number;
+  anchorY: number;
+  controlPoints: ControlPoint[];
+};
+
 export default class BackgroundCanvasNode extends CanvasNode {
 
   private readonly modelViewTransform2 = ModelViewTransform2.createRectangleInvertedYMapping( modelBounds, viewBounds );
-  
+  private time = 0;
+
+  // We use separate tail states for inner and outer layers.
+  private tailStatesInner: TailState[] = [];
+  private tailStatesOuter: TailState[] = [];
+  // Number of phospholipids in our demo.
+  private readonly numTails: number = 61; // for i from -30 to 30
+
   public constructor() {
     super( {
       canvasBounds: viewBounds
     } );
+
+    this.initializeTailStates();
   }
 
   // Convenience functions to move and line in model coordinates
@@ -43,51 +77,135 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.lineTo( this.modelViewTransform2.modelToViewX( x ), this.modelViewTransform2.modelToViewY( y ) );
   }
 
+  public step( dt: number ): void {
+    this.time = this.time + dt;
+  }
+
+  // Initialize two sets of tail states: one for the inner side and one for the outer side.
+  private initializeTailStates(): void {
+    // For this demo, let i run from -30 to 30.
+    for ( let i = -30; i <= 30; i++ ) {
+      const anchorX = i * headRadius * 2;
+
+      // Inner side initialization:
+      const innerAnchorY = -headY; // inner layer uses negative headY
+      const cp1Inner: ControlPoint = { x: anchorX, y: innerAnchorY + headY / 2, vx: 0 };
+      const cp2Inner: ControlPoint = { x: anchorX, y: innerAnchorY + headY, vx: 0 };
+      this.tailStatesInner.push( { anchorX: anchorX, anchorY: innerAnchorY, controlPoints: [ cp1Inner, cp2Inner ] } );
+
+      // Outer side initialization:
+      const outerAnchorY = headY; // outer layer uses positive headY
+      const cp1Outer: ControlPoint = { x: anchorX, y: outerAnchorY - headY / 2, vx: 0 };
+      const cp2Outer: ControlPoint = { x: anchorX, y: outerAnchorY - headY, vx: 0 };
+      this.tailStatesOuter.push( { anchorX: anchorX, anchorY: outerAnchorY, controlPoints: [ cp1Outer, cp2Outer ] } );
+    }
+  }
+
+  // Update control point positions via a random walk with momentum, for a given set of tail states.
+  private updateTailStatesFor( tailStates: TailState[] ): void {
+    for ( const state of tailStates ) {
+      // Define horizontal bounds relative to the tail's anchor.
+      const tailWindowSize = 1;
+      const minX = state.anchorX - tailWindowSize;
+      const maxX = state.anchorX + tailWindowSize;
+      // For each control point, update its x using momentum, leaving y unchanged.
+      for ( const cp of state.controlPoints ) {
+        cp.vx = cp.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize;
+        cp.x += cp.vx;
+        // Clamp the x position to within [anchorX - tailWindowSize, anchorX + tailWindowSize]
+        if ( cp.x < minX ) {
+          cp.x = minX;
+          cp.vx = 0;
+        }
+        else if ( cp.x > maxX ) {
+          cp.x = maxX;
+          cp.vx = 0;
+        }
+      }
+    }
+  }
+
+  /**
+   * Draw tails for the given side ("inner" or "outer").
+   */
+  public drawTails( context: CanvasRenderingContext2D, side: 'inner' | 'outer' ): void {
+    // Depending on the side, pick the correct tail state array and update it.
+    let tailStates: TailState[];
+    if ( side === 'inner' ) {
+      tailStates = this.tailStatesInner;
+    }
+    else {
+      tailStates = this.tailStatesOuter;
+    }
+    this.updateTailStatesFor( tailStates );
+
+    context.strokeStyle = TAIL_COLOR;
+    context.lineWidth = 2;
+
+    // For each tail state, draw a cubic Bézier curve using the anchor, the two control points,
+    // and then a tail endpoint defined relative to the last control point.
+    // (Adjust the endpoint offset if needed.)
+    const endpointOffset = 0;
+    for ( const state of tailStates ) {
+      const lastCP = state.controlPoints[ state.controlPoints.length - 1 ];
+      const tailEndX = lastCP.x;
+      const tailEndY = lastCP.y + endpointOffset;
+
+      context.beginPath();
+      this.moveTo( context, state.anchorX, state.anchorY );
+      context.bezierCurveTo(
+        this.modelViewTransform2.modelToViewX( state.controlPoints[ 0 ].x ), this.modelViewTransform2.modelToViewY( state.controlPoints[ 0 ].y ),
+        this.modelViewTransform2.modelToViewX( state.controlPoints[ 1 ].x ), this.modelViewTransform2.modelToViewY( state.controlPoints[ 1 ].y ),
+        this.modelViewTransform2.modelToViewX( tailEndX ), this.modelViewTransform2.modelToViewY( tailEndY )
+      );
+      context.stroke();
+    }
+  }
+
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
-    // draw the top half rectangle
+    // Draw the background: upper half for outside cell, lower half for inside cell.
     context.fillStyle = OUTSIDE_CELL_COLOR;
     context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2 );
-
-    // draw the bottom half rectangle
     context.fillStyle = INSIDE_CELL_COLOR;
     context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2 );
 
-    const headRadius = 2;
-    const headY = 22;
+    // Draw tails independently for inner and outer layers.
+    this.drawTails( context, 'inner' );
+    this.drawTails( context, 'outer' );
 
-    // draw the tails first so they appear to be coming out of the heads
-    context.strokeStyle = TAIL_COLOR;
-    context.lineWidth = 2;
-    const tailLength = headY;
-
-    for ( let layer = 0; layer <= 1; layer++ ) {
-      for ( let i = -100; i < 100; i++ ) {
-        context.beginPath();
-        const startY = layer === 0 ? -headY : +headY;
-        const tailDirection = layer === 0 ? 1 : -1;
-
-        this.moveTo( context, i * headRadius * 2, startY );
-        this.lineTo( context, i * headRadius * 2, startY + tailLength * tailDirection );
-        context.stroke();
-      }
-    }
-
+    // --- Draw the heads ---
     context.fillStyle = LIPID_HEAD_COLOR;
     context.strokeStyle = 'black';
     context.lineWidth = 2;
 
-    for ( let layer = 0; layer <= 1; layer++ ) {
-      for ( let i = -100; i < 100; i++ ) {
-        // For the phospholipid bilayer, each phospholipid is represented by a circle with a tail for the hydrophobic tail
-        context.beginPath();
-        context.arc( this.modelViewTransform2.modelToViewX( i * headRadius * 2 ), this.modelViewTransform2.modelToViewY( layer === 0 ? -headY : +headY ), this.modelViewTransform2.modelToViewDeltaX( headRadius ), 0, 2 * Math.PI );
-        context.fill();
-        context.stroke();
-      }
+    // Draw inner heads
+    for ( let i = -100; i < 100; i++ ) {
+      context.beginPath();
+      context.arc(
+        this.modelViewTransform2.modelToViewX( i * headRadius * 2 ),
+        this.modelViewTransform2.modelToViewY( -headY ), // inner heads
+        this.modelViewTransform2.modelToViewDeltaX( headRadius ),
+        0, 2 * Math.PI
+      );
+      context.fill();
+      context.stroke();
     }
 
-    // draw a cross hairs at the origin, so we can see where it is
+    // Draw outer heads
+    for ( let i = -100; i < 100; i++ ) {
+      context.beginPath();
+      context.arc(
+        this.modelViewTransform2.modelToViewX( i * headRadius * 2 ),
+        this.modelViewTransform2.modelToViewY( headY ),  // outer heads
+        this.modelViewTransform2.modelToViewDeltaX( headRadius ),
+        0, 2 * Math.PI
+      );
+      context.fill();
+      context.stroke();
+    }
+
+    // --- Draw crosshairs at the origin ---
     context.strokeStyle = 'black';
     context.lineWidth = 2;
     context.beginPath();
@@ -95,7 +213,6 @@ export default class BackgroundCanvasNode extends CanvasNode {
     this.lineTo( context, 0, 5 );
     this.moveTo( context, -5, 0 );
     this.lineTo( context, 5, 0 );
-
     context.stroke();
   }
 }

@@ -9,13 +9,13 @@ import LigandNode from './LigandNode.js';
 
 /**
  * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, membrane channels are.
- * TODO: We should have a better name that aligns with description.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 export default class ObservationWindow extends Node {
+  private readonly backgroundCanvasNode: BackgroundCanvasNode;
 
   public constructor() {
     super( {
@@ -36,14 +36,19 @@ export default class ObservationWindow extends Node {
     this.addChild( rectangle );
 
     // first, we will have a background canvas layer for the performance intensive parts
-    const backgroundCanvasNode = new BackgroundCanvasNode();
-    this.addChild( backgroundCanvasNode );
+    this.backgroundCanvasNode = new BackgroundCanvasNode();
+    this.addChild( this.backgroundCanvasNode );
 
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
 
     const ligandNode = new LigandNode();
     this.addChild( ligandNode );
+  }
+
+  public step( dt: number ): void {
+    this.backgroundCanvasNode.step( dt );
+    this.backgroundCanvasNode.invalidatePaint();
   }
 
 }
