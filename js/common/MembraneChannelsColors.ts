@@ -23,6 +23,30 @@ const MembraneChannelsColors = {
   // Background color for screens in this sim
   screenBackgroundColorProperty: new ProfileColorProperty( membraneChannels, 'background', {
     default: 'white'
+  } ),
+
+  outsideCellColorProperty: new ProfileColorProperty( membraneChannels, 'outsideCellColor', {
+    default: 'rgb(152,205,255)'
+  } ),
+  insideCellColorProperty: new ProfileColorProperty( membraneChannels, 'insideCellColor', {
+    default: 'rgb(101,185,234)'
+  } ),
+
+  // TODO: Finalize names here
+  O2BarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
+    default: 'rgb(250,0,6)'
+  } ),
+  CO2BarChartColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
+    default: 'rgb(95,80,69)'
+  } ),
+  NaBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
+    default: 'rgb(255,255,11)'
+  } ),
+  KBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
+    default: 'rgb(32,255,253)'
+  } ),
+  glucoseBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'glucoseBarChartColor', {
+    default: 'rgb(106,42,211)'
   } )
 };
 

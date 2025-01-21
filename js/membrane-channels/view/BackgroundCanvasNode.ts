@@ -12,14 +12,13 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { CanvasNode } from '../../../../scenery/js/imports.js';
+import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 
 // TODO: Move to color file
 const TAIL_COLOR = 'rgb(229,68,143)';
 const LIPID_HEAD_COLOR = 'rgb(248,161,46)';
-const INSIDE_CELL_COLOR = 'rgb(101,185,234)';
-const OUTSIDE_CELL_COLOR = 'rgb(152,205,255)';
 
 // Choose standard units for working on model coordinates. The origin is in the center.
 const modelBounds = new Bounds2( -100, -100, 100, 100 );
@@ -165,9 +164,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
     // Draw the background: upper half for outside cell, lower half for inside cell.
-    context.fillStyle = OUTSIDE_CELL_COLOR;
+    context.fillStyle = MembraneChannelsColors.outsideCellColorProperty.value.toCSS();
     context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2 );
-    context.fillStyle = INSIDE_CELL_COLOR;
+    context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
     context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2 );
 
     // Draw tails independently for inner and outer layers.

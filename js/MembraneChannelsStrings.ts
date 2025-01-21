@@ -17,7 +17,14 @@ type StringsType = {
   };
   'screen': {
     'nameStringProperty': LocalizedStringProperty;
-  }
+  };
+  'O2StringProperty': LocalizedStringProperty;
+  'CO2StringProperty': LocalizedStringProperty;
+  'H2OStringProperty': LocalizedStringProperty;
+  'NaStringProperty': LocalizedStringProperty;
+  'KStringProperty': LocalizedStringProperty;
+  'glucoseStringProperty': LocalizedStringProperty;
+  'atpStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;

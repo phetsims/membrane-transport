@@ -14,6 +14,7 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import ObservationWindow from './ObservationWindow.js';
+import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -52,11 +53,19 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( resetAllButton );
 
+    const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( {
+      tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
+    } );
+    this.addChild( soluteBarChartsAccordionBox );
+
     // layout
     this.observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
     resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
     timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
     timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
   }
 
   /**
