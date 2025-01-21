@@ -28,7 +28,8 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
       useExpandedBoundsWhenCollapsed: true,
 
       titleAlignX: 'left',
-      expandedDefaultValue: true // just for development
+      fill: 'white',
+      expandedDefaultValue: true // TODO: This is just for development
     }, providedOptions );
 
     const contentWidth = 720;
@@ -58,7 +59,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
     const hbox = new HBox( {
       children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => new SoluteBarChartNode( soluteType ) ),
-      spacing: 10,
+      spacing: 30,
       left: 50
     } );
     contentNode.addChild( hbox );

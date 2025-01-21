@@ -20,11 +20,7 @@ import membraneChannels from '../membraneChannels.js';
 
 const MembraneChannelsColors = {
 
-  // Background color for screens in this sim
-  screenBackgroundColorProperty: new ProfileColorProperty( membraneChannels, 'background', {
-    default: 'white'
-  } ),
-
+  // Color for the outside/extracellular fluid, also serves as the background color for the screen.
   outsideCellColorProperty: new ProfileColorProperty( membraneChannels, 'outsideCellColor', {
     default: 'rgb(152,205,255)'
   } ),

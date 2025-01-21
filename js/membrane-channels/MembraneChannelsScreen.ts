@@ -23,7 +23,7 @@ export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel
 
     const options = optionize<MembraneChannelsScreenOptions, SelfOptions, ScreenOptions>()( {
       name: MembraneChannelsStrings.screen.nameStringProperty,
-      backgroundColorProperty: MembraneChannelsColors.screenBackgroundColorProperty
+      backgroundColorProperty: MembraneChannelsColors.outsideCellColorProperty
     }, providedOptions );
 
     super(

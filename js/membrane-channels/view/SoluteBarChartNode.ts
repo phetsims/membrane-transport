@@ -38,7 +38,9 @@ export default class SoluteBarChartNode extends Node {
       left: 5,
       top: BOX_HEIGHT / 2 + 3
     } );
-    const origin = new Path( Shape.lineSegment( 0, BOX_HEIGHT / 2, BOX_WIDTH, BOX_HEIGHT / 2 ), { stroke: 'black', lineWidth: 1 } );
+    const origin = new Path( Shape.lineSegment( 40, BOX_HEIGHT / 2, BOX_WIDTH, BOX_HEIGHT / 2 ), {
+      stroke: 'black', lineWidth: 2
+    } );
     const fillColorProperty = getSoluteBarChartColorProperty( soluteType );
 
     const barLineWidth = 1;
@@ -56,7 +58,8 @@ export default class SoluteBarChartNode extends Node {
     } );
     const arrow = new ArrowNode( 80, BOX_HEIGHT / 2, 80, 20, {
       fill: fillColorProperty,
-      stroke: 'black'
+      stroke: 'black',
+      centerY: BOX_HEIGHT / 2
     } );
 
     this.children = [ layoutBox, icon, text, outsideBar, insideBar, origin, arrow ];
