@@ -1,7 +1,10 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
- * @author Sam Reid (PhET Interactive Simulations
+ * ScreenView for the Membrane Channels simulation. Note that this provides the full features of the Playgound screen,
+ * and the earlier screens opt-out of some of these features.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
