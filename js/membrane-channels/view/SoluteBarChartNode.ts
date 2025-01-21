@@ -44,13 +44,14 @@ export default class SoluteBarChartNode extends Node {
     const fillColorProperty = getSoluteBarChartColorProperty( soluteType );
 
     const barLineWidth = 1;
-    const outsideBar = new Rectangle( 50, BOX_HEIGHT / 2, 20, 25, {
+    const BAR_WIDTH = 15;
+    const outsideBar = new Rectangle( 50, BOX_HEIGHT / 2, BAR_WIDTH, 25, {
       fill: fillColorProperty,
       stroke: 'black',
       lineWidth: barLineWidth,
       bottom: BOX_HEIGHT / 2 + barLineWidth // Adjust for the line width so it doesn't double up with the origin line
     } );
-    const insideBar = new Rectangle( 50, BOX_HEIGHT / 2, 20, 35, {
+    const insideBar = new Rectangle( 50, BOX_HEIGHT / 2, BAR_WIDTH, 35, {
       fill: fillColorProperty,
       stroke: 'black',
       lineWidth: barLineWidth,
