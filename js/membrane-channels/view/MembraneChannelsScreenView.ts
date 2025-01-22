@@ -37,7 +37,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.observationWindow = new ObservationWindow();
     this.addChild( this.observationWindow );
 
-    // TODO: Move inside ObservationWindow?
+    // TODO: Move inside ObservationWindow
     const observationWindowFrame = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, {
       stroke: 'black',
       lineWidth: 2

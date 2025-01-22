@@ -14,6 +14,7 @@ const MembraneChannelsConstants = {
   SCREEN_VIEW_Y_MARGIN: 8,
 
   // Size of the observation window
+  // TODO: Probably should be non-square
   OBSERVATION_WINDOW_WIDTH: 448
 };
 

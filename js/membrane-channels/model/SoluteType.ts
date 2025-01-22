@@ -10,6 +10,7 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
  * TODO: Sensible names for PhET-iO?
  * TODO: Casing?
  * TODO: Visit the string file and finalize key names
+ * TODO: Probably don't have "+" in the name
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

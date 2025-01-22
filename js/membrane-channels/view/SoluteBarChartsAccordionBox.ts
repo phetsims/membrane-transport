@@ -54,6 +54,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
     const TEXT_MARGIN = 3;
 
+    // TODO: i18n
     const outsideText = new Text( 'Outside', { fontSize: 13, top: contentNode.top + TEXT_MARGIN, left: TEXT_MARGIN } );
     const insideText = new Text( 'Inside', { fontSize: 13, bottom: contentNode.bottom - TEXT_MARGIN, left: TEXT_MARGIN } );
 
