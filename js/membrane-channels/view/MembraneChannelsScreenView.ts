@@ -27,7 +27,8 @@ type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default class MembraneChannelsScreenView extends ScreenView {
   private readonly observationWindow: ObservationWindow;
 
-  public constructor( model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
+  public constructor(
+    public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
 
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
@@ -64,7 +65,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( resetAllButton );
 
-    const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( {
+    const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( model, {
       tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
     } );
     this.addChild( soluteBarChartsAccordionBox );
@@ -93,7 +94,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
-    this.observationWindow.step( dt );
+    if ( this.model.isPlayingProperty.value ) {
+      this.observationWindow.step( dt );
+    }
   }
 }
 

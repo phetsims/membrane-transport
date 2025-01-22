@@ -11,6 +11,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Rectangle, RichText } from '../../../../scenery/js/imports.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType, { getSoluteBarChartColorProperty, getSoluteTypeString } from '../model/SoluteType.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
@@ -18,7 +19,7 @@ const BOX_WIDTH = 100;
 const BOX_HEIGHT = 100;
 
 export default class SoluteBarChartNode extends Node {
-  public constructor( soluteType: SoluteType ) {
+  public constructor( model: MembraneChannelsModel, soluteType: SoluteType ) {
     super( {
 
       // TODO: Eliminate the clip area once we are sure everything remains in bounds.
@@ -61,6 +62,16 @@ export default class SoluteBarChartNode extends Node {
       fill: fillColorProperty,
       stroke: 'black',
       centerY: BOX_HEIGHT / 2
+    } );
+
+    model.getOutsideConcentrationProperty( soluteType ).link( outsideConcentration => {
+      outsideBar.setRectHeight( 25 * outsideConcentration );
+      outsideBar.bottom = BOX_HEIGHT / 2 + barLineWidth;
+    } );
+
+    model.getInsideConcentrationProperty( soluteType ).link( insideConcentration => {
+      insideBar.setRectHeight( 25 * insideConcentration );
+      insideBar.top = BOX_HEIGHT / 2 - barLineWidth;
     } );
 
     this.children = [ layoutBox, icon, text, outsideBar, insideBar, origin, arrow ];

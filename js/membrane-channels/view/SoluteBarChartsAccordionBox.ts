@@ -5,6 +5,7 @@ import { HBox, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { SoluteTypes } from '../model/SoluteType.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
 
@@ -19,7 +20,9 @@ type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class SoluteBarChartsAccordionBox extends AccordionBox {
-  public constructor( providedOptions: SoluteBarChartsAccordionBoxOptions ) {
+
+  // TODO: Just pass the part of the model needed here?
+  public constructor( model: MembraneChannelsModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleNode: new Text( 'Solute Bar Charts', { fontSize: 20 } ),
@@ -58,7 +61,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( insideText );
 
     const hbox = new HBox( {
-      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => new SoluteBarChartNode( soluteType ) ),
+      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => new SoluteBarChartNode( model, soluteType ) ),
       spacing: 30,
       left: 50
     } );

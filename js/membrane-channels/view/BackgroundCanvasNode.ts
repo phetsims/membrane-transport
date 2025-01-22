@@ -56,6 +56,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
   // We use separate tail states for inner and outer layers.
   private tailStatesInner: TailState[] = [];
   private tailStatesOuter: TailState[] = [];
+
   // Number of phospholipids in our demo.
   private readonly numTails: number = 61; // for i from -30 to 30
 
@@ -78,6 +79,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
   public step( dt: number ): void {
     this.time = this.time + dt;
+
+    this.updateTailStatesFor( dt, this.tailStatesInner );
+    this.updateTailStatesFor( dt, this.tailStatesOuter );
   }
 
   // Initialize two sets of tail states: one for the inner side and one for the outer side.
@@ -101,7 +105,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
   }
 
   // Update control point positions via a random walk with momentum, for a given set of tail states.
-  private updateTailStatesFor( tailStates: TailState[] ): void {
+  private updateTailStatesFor( dt: number, tailStates: TailState[] ): void {
     for ( const state of tailStates ) {
       // Define horizontal bounds relative to the tail's anchor.
       const tailWindowSize = 1;
@@ -109,7 +113,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
       const maxX = state.anchorX + tailWindowSize;
       // For each control point, update its x using momentum, leaving y unchanged.
       for ( const cp of state.controlPoints ) {
-        cp.vx = cp.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize;
+        cp.vx = cp.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize * dt;
         cp.x += cp.vx;
         // Clamp the x position to within [anchorX - tailWindowSize, anchorX + tailWindowSize]
         if ( cp.x < minX ) {
@@ -128,15 +132,6 @@ export default class BackgroundCanvasNode extends CanvasNode {
    * Draw tails for the given side ("inner" or "outer").
    */
   public drawTails( context: CanvasRenderingContext2D, side: 'inner' | 'outer' ): void {
-    // Depending on the side, pick the correct tail state array and update it.
-    let tailStates: TailState[];
-    if ( side === 'inner' ) {
-      tailStates = this.tailStatesInner;
-    }
-    else {
-      tailStates = this.tailStatesOuter;
-    }
-    this.updateTailStatesFor( tailStates );
 
     context.strokeStyle = TAIL_COLOR;
     context.lineWidth = 2;
@@ -145,6 +140,10 @@ export default class BackgroundCanvasNode extends CanvasNode {
     // and then a tail endpoint defined relative to the last control point.
     // (Adjust the endpoint offset if needed.)
     const endpointOffset = 0;
+
+    // Depending on the side, pick the correct tail state array and update it.
+    const tailStates = side === 'inner' ? this.tailStatesInner : this.tailStatesOuter;
+
     for ( const state of tailStates ) {
       const lastCP = state.controlPoints[ state.controlPoints.length - 1 ];
       const tailEndX = lastCP.x;
