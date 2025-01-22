@@ -12,14 +12,14 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Rectangle, RichText } from '../../../../scenery/js/imports.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import SoluteType, { getSoluteBarChartColorProperty, getSoluteTypeString } from '../model/SoluteType.js';
+import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 100;
 const BOX_HEIGHT = 100;
 
 export default class SoluteBarChartNode extends Node {
-  public constructor( model: MembraneChannelsModel, soluteType: SoluteType ) {
+  public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes ) {
     super( {
 
       // TODO: Eliminate the clip area once we are sure everything remains in bounds.

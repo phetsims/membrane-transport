@@ -29,16 +29,16 @@ const MembraneChannelsColors = {
   } ),
 
   // TODO: Finalize names here
-  O2BarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
+  oxygenMoleculeBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
     default: 'rgb(250,0,6)'
   } ),
-  CO2BarChartColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
+  carbonDioxideBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
     default: 'rgb(95,80,69)'
   } ),
-  NaBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
+  sodiumIonBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
     default: 'rgb(255,255,11)'
   } ),
-  KBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
+  potassiumIonBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
     default: 'rgb(32,255,253)'
   } ),
   glucoseBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'glucoseBarChartColor', {
