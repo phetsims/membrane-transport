@@ -6,11 +6,10 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
- * TODO: Sensible names for PhET-iO?
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export const SoluteTypes = [ 'oxygenMolecule', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp' ] as const;
+export const SoluteTypes = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp' ] as const;
 
 export type PlottableSoluteTypes = Exclude<SoluteType, 'atp'>;
 
@@ -19,7 +18,7 @@ export default SoluteType;
 
 export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringProperty =>
 
-  soluteType === 'oxygenMolecule' ? MembraneChannelsStrings.oxygenMoleculeStringProperty :
+  soluteType === 'oxygen' ? MembraneChannelsStrings.oxygenStringProperty :
   soluteType === 'carbonDioxide' ? MembraneChannelsStrings.carbonDioxideStringProperty :
   soluteType === 'sodiumIon' ? MembraneChannelsStrings.sodiumIonStringProperty :
   soluteType === 'potassiumIon' ? MembraneChannelsStrings.potassiumIonStringProperty :
@@ -27,7 +26,7 @@ export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringPr
   MembraneChannelsStrings.atpStringProperty;
 
 export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes ): ProfileColorProperty =>
-  soluteType === 'oxygenMolecule' ? MembraneChannelsColors.oxygenMoleculeBarChartColorProperty :
+  soluteType === 'oxygen' ? MembraneChannelsColors.oxygenBarChartColorProperty :
   soluteType === 'carbonDioxide' ? MembraneChannelsColors.carbonDioxideBarChartColorProperty :
   soluteType === 'sodiumIon' ? MembraneChannelsColors.sodiumIonBarChartColorProperty :
   soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonBarChartColorProperty :

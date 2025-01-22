@@ -18,7 +18,7 @@ type StringsType = {
   'screen': {
     'nameStringProperty': LocalizedStringProperty;
   };
-  'oxygenMoleculeStringProperty': LocalizedStringProperty;
+  'oxygenStringProperty': LocalizedStringProperty;
   'carbonDioxideStringProperty': LocalizedStringProperty;
   'sodiumIonStringProperty': LocalizedStringProperty;
   'potassiumIonStringProperty': LocalizedStringProperty;

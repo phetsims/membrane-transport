@@ -5,7 +5,7 @@
   "screen.name": {
     "value": "Membrane Channels"
   },
-  "oxygenMolecule": {
+  "oxygen": {
     "value": "O<sub>2</sub>"
   },
   "carbonDioxide": {

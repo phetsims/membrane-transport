@@ -28,8 +28,7 @@ const MembraneChannelsColors = {
     default: 'rgb(101,185,234)'
   } ),
 
-  // TODO: Finalize names here
-  oxygenMoleculeBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
+  oxygenBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
     default: 'rgb(250,0,6)'
   } ),
   carbonDioxideBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
