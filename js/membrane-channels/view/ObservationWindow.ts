@@ -1,6 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -17,15 +19,15 @@ import LigandNode from './LigandNode.js';
 export default class ObservationWindow extends Node {
   private readonly backgroundCanvasNode: BackgroundCanvasNode;
 
-  public constructor() {
+  public constructor( modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
-      clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH )
+      clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
     const rectangle = new Rectangle(
       0,
       0,
       MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH,
-      MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, {
+      MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
         fill: 'white',
         stroke: 'black',
 
@@ -36,7 +38,7 @@ export default class ObservationWindow extends Node {
     this.addChild( rectangle );
 
     // first, we will have a background canvas layer for the performance intensive parts
-    this.backgroundCanvasNode = new BackgroundCanvasNode();
+    this.backgroundCanvasNode = new BackgroundCanvasNode( modelViewTransform, canvasBounds );
     this.addChild( this.backgroundCanvasNode );
 
     // ligand and membrane channel layer

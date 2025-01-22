@@ -28,6 +28,9 @@ export default class MembraneChannelsModel implements TModel {
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
 
+  // The full width in model coordinates for the area that you can see in the observation window.
+  public static readonly MODEL_WIDTH = 200;
+
   // TODO: group these together?
   // TODO: naming?
   // Mock proxies for testing the bar charts. Ultimately these values will be derived from the particle locations

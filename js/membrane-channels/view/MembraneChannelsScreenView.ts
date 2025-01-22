@@ -8,9 +8,11 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
@@ -20,12 +22,16 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 
+const OBSERVATION_WINDOW_BOUNDS = new Bounds2( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT );
+
 type SelfOptions = EmptySelfOptions;
 
 type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class MembraneChannelsScreenView extends ScreenView {
   private readonly observationWindow: ObservationWindow;
+
+  private readonly modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), OBSERVATION_WINDOW_BOUNDS.center, OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH );
 
   public constructor(
     public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
@@ -34,11 +40,11 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     super( options );
 
-    this.observationWindow = new ObservationWindow();
+    this.observationWindow = new ObservationWindow( this.modelViewTransform, OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
 
     // TODO: Move inside ObservationWindow
-    const observationWindowFrame = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, {
+    const observationWindowFrame = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
       lineWidth: 2
     } );

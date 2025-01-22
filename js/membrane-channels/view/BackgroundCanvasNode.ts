@@ -20,10 +20,6 @@ import membraneChannels from '../../membraneChannels.js';
 const TAIL_COLOR = 'rgb(229,68,143)';
 const LIPID_HEAD_COLOR = 'rgb(248,161,46)';
 
-// Choose standard units for working on model coordinates. The origin is in the center.
-const modelBounds = new Bounds2( -100, -100, 100, 100 );
-const viewBounds = new Bounds2( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH );
-
 // Head parameters
 const headRadius = 2;
 const headY = 22;
@@ -50,7 +46,6 @@ type TailState = {
 
 export default class BackgroundCanvasNode extends CanvasNode {
 
-  private readonly modelViewTransform2 = ModelViewTransform2.createRectangleInvertedYMapping( modelBounds, viewBounds );
   private time = 0;
 
   // We use separate tail states for inner and outer layers.
@@ -60,9 +55,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
   // Number of phospholipids in our demo.
   private readonly numTails: number = 61; // for i from -30 to 30
 
-  public constructor() {
+  public constructor( private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
-      canvasBounds: viewBounds
+      canvasBounds: canvasBounds
     } );
 
     this.initializeTailStates();
@@ -70,11 +65,11 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
   // Convenience functions to move and line in model coordinates
   private moveTo( context: CanvasRenderingContext2D, x: number, y: number ): void {
-    context.moveTo( this.modelViewTransform2.modelToViewX( x ), this.modelViewTransform2.modelToViewY( y ) );
+    context.moveTo( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( y ) );
   }
 
   private lineTo( context: CanvasRenderingContext2D, x: number, y: number ): void {
-    context.lineTo( this.modelViewTransform2.modelToViewX( x ), this.modelViewTransform2.modelToViewY( y ) );
+    context.lineTo( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( y ) );
   }
 
   public step( dt: number ): void {
@@ -152,9 +147,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
       context.beginPath();
       this.moveTo( context, state.anchorX, state.anchorY );
       context.bezierCurveTo(
-        this.modelViewTransform2.modelToViewX( state.controlPoints[ 0 ].x ), this.modelViewTransform2.modelToViewY( state.controlPoints[ 0 ].y ),
-        this.modelViewTransform2.modelToViewX( state.controlPoints[ 1 ].x ), this.modelViewTransform2.modelToViewY( state.controlPoints[ 1 ].y ),
-        this.modelViewTransform2.modelToViewX( tailEndX ), this.modelViewTransform2.modelToViewY( tailEndY )
+        this.modelViewTransform.modelToViewX( state.controlPoints[ 0 ].x ), this.modelViewTransform.modelToViewY( state.controlPoints[ 0 ].y ),
+        this.modelViewTransform.modelToViewX( state.controlPoints[ 1 ].x ), this.modelViewTransform.modelToViewY( state.controlPoints[ 1 ].y ),
+        this.modelViewTransform.modelToViewX( tailEndX ), this.modelViewTransform.modelToViewY( tailEndY )
       );
       context.stroke();
     }
@@ -164,9 +159,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
     // Draw the background: upper half for outside cell, lower half for inside cell.
     context.fillStyle = MembraneChannelsColors.outsideCellColorProperty.value.toCSS();
-    context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2 );
+    context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
     context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
-    context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2 );
+    context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
     // Draw tails independently for inner and outer layers.
     this.drawTails( context, 'inner' );
@@ -181,9 +176,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
     for ( let i = -100; i < 100; i++ ) {
       context.beginPath();
       context.arc(
-        this.modelViewTransform2.modelToViewX( i * headRadius * 2 ),
-        this.modelViewTransform2.modelToViewY( -headY ), // inner heads
-        this.modelViewTransform2.modelToViewDeltaX( headRadius ),
+        this.modelViewTransform.modelToViewX( i * headRadius * 2 ),
+        this.modelViewTransform.modelToViewY( -headY ), // inner heads
+        this.modelViewTransform.modelToViewDeltaX( headRadius ),
         0, 2 * Math.PI
       );
       context.fill();
@@ -194,9 +189,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
     for ( let i = -100; i < 100; i++ ) {
       context.beginPath();
       context.arc(
-        this.modelViewTransform2.modelToViewX( i * headRadius * 2 ),
-        this.modelViewTransform2.modelToViewY( headY ),  // outer heads
-        this.modelViewTransform2.modelToViewDeltaX( headRadius ),
+        this.modelViewTransform.modelToViewX( i * headRadius * 2 ),
+        this.modelViewTransform.modelToViewY( headY ),  // outer heads
+        this.modelViewTransform.modelToViewDeltaX( headRadius ),
         0, 2 * Math.PI
       );
       context.fill();
