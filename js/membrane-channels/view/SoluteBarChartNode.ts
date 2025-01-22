@@ -10,6 +10,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Rectangle, RichText } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
@@ -19,11 +20,14 @@ const BOX_WIDTH = 100;
 const BOX_HEIGHT = 100;
 
 export default class SoluteBarChartNode extends Node {
-  public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes ) {
+  public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
     super( {
 
       // TODO: Eliminate the clip area once we are sure everything remains in bounds.
-      clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT )
+      clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
+
+      // TODO: Pass through options
+      tandem: tandem
     } );
 
     // For layout, not just for debugging

@@ -6,7 +6,7 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import { SoluteTypes } from '../model/SoluteType.js';
+import { getSoluteBarChartTandemName, SoluteTypes } from '../model/SoluteType.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -62,11 +62,20 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( insideText );
 
     const hbox = new HBox( {
-      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => new SoluteBarChartNode( model, soluteType ) ),
+      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => new SoluteBarChartNode( model, soluteType, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) ) ),
       spacing: 30,
       left: 50
     } );
     contentNode.addChild( hbox );
+
+    hbox.boundsProperty.link( () => {
+
+      // Don't crash when hbox.width is NaN
+      const rectWidth = hbox.width >= 0 ? hbox.width + 100 : 0;
+      contentNode.setRectWidth( rectWidth );
+      topHalf.setRectWidth( rectWidth );
+      bottomHalf.setRectWidth( rectWidth );
+    } );
 
     // TODO: Fit contentNode to the hbox, so that removal of solutes will shrink the box horizontally. Like a Panel.
     super( contentNode, options );
