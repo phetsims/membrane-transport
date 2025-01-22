@@ -14,24 +14,24 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export const SoluteTypes = [ 'O2', 'CO2', 'Na+', 'K+', 'glucose', 'atp' ] as const;
+export const SoluteTypes = [ 'oxygenMolecule', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp' ] as const;
 
 type SoluteType = typeof SoluteTypes[number];
 export default SoluteType;
 
 export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringProperty =>
-  soluteType === 'O2' ? MembraneChannelsStrings.O2StringProperty :
-  soluteType === 'CO2' ? MembraneChannelsStrings.CO2StringProperty :
-  soluteType === 'Na+' ? MembraneChannelsStrings.NaStringProperty :
-  soluteType === 'K+' ? MembraneChannelsStrings.KStringProperty :
+  soluteType === 'oxygenMolecule' ? MembraneChannelsStrings.O2StringProperty :
+  soluteType === 'carbonDioxide' ? MembraneChannelsStrings.CO2StringProperty :
+  soluteType === 'sodiumIon' ? MembraneChannelsStrings.NaStringProperty :
+  soluteType === 'potassiumIon' ? MembraneChannelsStrings.KStringProperty :
   soluteType === 'glucose' ? MembraneChannelsStrings.glucoseStringProperty :
   MembraneChannelsStrings.atpStringProperty;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error StictOmit doesn't work here for unknown reasons TODO
 export const getSoluteBarChartColorProperty = ( soluteType: StrictOmit<SoluteType, 'atp'> ): ProfileColorProperty =>
-  soluteType === 'O2' ? MembraneChannelsColors.O2BarChartColorProperty :
-  soluteType === 'CO2' ? MembraneChannelsColors.CO2BarChartColorProperty :
-  soluteType === 'Na+' ? MembraneChannelsColors.NaBarChartColorProperty :
-  soluteType === 'K+' ? MembraneChannelsColors.KBarChartColorProperty :
+  soluteType === 'oxygenMolecule' ? MembraneChannelsColors.O2BarChartColorProperty :
+  soluteType === 'carbonDioxide' ? MembraneChannelsColors.CO2BarChartColorProperty :
+  soluteType === 'sodiumIon' ? MembraneChannelsColors.NaBarChartColorProperty :
+  soluteType === 'potassiumIon' ? MembraneChannelsColors.KBarChartColorProperty :
   MembraneChannelsColors.glucoseBarChartColorProperty;
