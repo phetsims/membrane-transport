@@ -108,6 +108,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
 
     // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
+    // TODO: Keyboard support
     const modelBoundsProperty = new DerivedProperty( [ this.visibleBoundsProperty ], visibleBounds => {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
