@@ -15,7 +15,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, Rectangle } from '../../../../scenery/js/imports.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
@@ -31,7 +31,7 @@ type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default class MembraneChannelsScreenView extends ScreenView {
   private readonly observationWindow: ObservationWindow;
 
-  private readonly modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), OBSERVATION_WINDOW_BOUNDS.center, OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH );
+  private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), OBSERVATION_WINDOW_BOUNDS.center, OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH );
 
   public constructor(
     public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
@@ -40,7 +40,15 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     super( options );
 
-    this.observationWindow = new ObservationWindow( this.modelViewTransform, OBSERVATION_WINDOW_BOUNDS );
+    // A model to view transform that maps a model point to a positionin the screen view. This transform includes the translation
+    // of the observation window so that you can position view components relative to things within the observation window.
+    const screenViewModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+      new Vector2( 0, 0 ),
+      OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN ),
+      OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH
+    );
+
+    this.observationWindow = new ObservationWindow( this.observationWindowModelViewTransform, OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
 
     // TODO: Move inside ObservationWindow
@@ -76,11 +84,21 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( soluteBarChartsAccordionBox );
 
+    const testToolbox = new Rectangle( 0, 0, 100, 100, { fill: 'grey' } );
+    const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
+
+    this.addChild( testToolbox );
+    this.addChild( circleIcon );
+
     // layout
+    // TODO: Use x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
     this.observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
     resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
     timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
     timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    // To test the model view transform.
+    circleIcon.center = screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) );
 
     observationWindowFrame.center = this.observationWindow.center;
 
