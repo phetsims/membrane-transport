@@ -42,6 +42,13 @@ const MembraneChannelsColors = {
   } ),
   glucoseBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'glucoseBarChartColor', {
     default: 'rgb(106,42,211)'
+  } ),
+
+  lipidTailColorProperty: new ProfileColorProperty( membraneChannels, 'lipidTailColor', {
+    default: 'rgb(229,68,143)'
+  } ),
+  lipidHeadColorProperty: new ProfileColorProperty( membraneChannels, 'lipidHeadColor', {
+    default: 'rgb(248,161,46)'
   } )
 };
 

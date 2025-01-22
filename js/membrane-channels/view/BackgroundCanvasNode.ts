@@ -16,10 +16,6 @@ import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 
-// TODO: Move to color file
-const TAIL_COLOR = 'rgb(229,68,143)';
-const LIPID_HEAD_COLOR = 'rgb(248,161,46)';
-
 // Head parameters
 const headRadius = 2;
 const headY = 22;
@@ -128,7 +124,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
    */
   public drawTails( context: CanvasRenderingContext2D, side: 'inner' | 'outer' ): void {
 
-    context.strokeStyle = TAIL_COLOR;
+    context.strokeStyle = MembraneChannelsColors.lipidTailColorProperty.value.toCSS();
     context.lineWidth = 2;
 
     // For each tail state, draw a cubic Bézier curve using the anchor, the two control points,
@@ -168,7 +164,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     this.drawTails( context, 'outer' );
 
     // --- Draw the heads ---
-    context.fillStyle = LIPID_HEAD_COLOR;
+    context.fillStyle = MembraneChannelsColors.lipidHeadColorProperty.value.toCSS();
     context.strokeStyle = 'black';
     context.lineWidth = 2;
 
