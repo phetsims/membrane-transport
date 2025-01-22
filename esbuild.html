@@ -88,7 +88,6 @@
     '../sherpa/lib/jquery-2.1.0.js',
     '../sherpa/lib/lodash-4.17.4.js',
     '../sherpa/lib/FileSaver-b8054a2.js',
-    '../sherpa/lib/himalaya-1.1.0.js', // Help out RichText, see https://github.com/phetsims/scenery/issues/1583 and https://github.com/phetsims/chipper/issues/1409
     '../sherpa/lib/linebreak-1.1.0.js',
     '../sherpa/lib/flatqueue-1.2.1.js',
     '../sherpa/lib/paper-js-0.12.17.js',
@@ -100,6 +99,14 @@
     '../sherpa/lib/base64-js-1.2.0.js',
     '../sherpa/lib/TextEncoderLite-3c9f6f0.js'
   ];
+
+  const query = new URLSearchParams( window.location.search );
+  const esbuild = !!query.has( 'esbuild' );
+  const liveReload = !!query.has( 'liveReload' );
+
+  if ( esbuild ) {
+    preloads.push( '../sherpa/lib/himalaya-1.1.0.js' ) // Help out RichText, see https://github.com/phetsims/scenery/issues/1583 and https://github.com/phetsims/chipper/issues/1409
+  }
 
   if ( brand === 'phet-io' ) {
     preloads = preloads.concat( [
@@ -127,12 +134,16 @@
   // Queue all of the preloads to be loaded.
   preloads.forEach( preload => loadURL( preload ) );
 
+  const targetSource = esbuild ? './dist/bundlefile.js' : '../chipper/dist/js/membrane-channels/js/membrane-channels-main.js';
+
   // Module loading in compilation-free (development) mode will be kicked off once strings are loaded.
   // This is done in load-unbuilt-strings.js
-  window.phet.chipper.loadModules = () => loadURL( './dist/bundlefile.js', 'module' );
+  window.phet.chipper.loadModules = () => loadURL( targetSource, 'module' );
 
   // Live reload, see https://esbuild.github.io/api/#live-reload
-  new EventSource( '/esbuild' ).addEventListener( 'change', () => location.reload() );
+  if ( liveReload ) {
+    new EventSource( '/esbuild' ).addEventListener( 'change', () => location.reload() );
+  }
 </script>
 </body>
 </html>
