@@ -8,14 +8,17 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Circle, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Rectangle } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
@@ -84,11 +87,49 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( soluteBarChartsAccordionBox );
 
-    const testToolbox = new Rectangle( 0, 0, 100, 100, { fill: 'grey' } );
+    const testToolbox = new Rectangle( 0, 0, 100, 100, { fill: 'grey', left: 100, top: 200 } );
     const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
 
     this.addChild( testToolbox );
-    this.addChild( circleIcon );
+    testToolbox.addChild( circleIcon );
+
+    const realCircle = new Circle( 15, {
+      fill: 'rgba( 0,0,255,0.5)',
+      left: 0,
+      top: 0,
+      cursor: 'pointer',
+      visible: false
+    } );
+    this.addChild( realCircle );
+
+    const myCirclePositionProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    myCirclePositionProperty.link( position => {
+      realCircle.center = screenViewModelViewTransform.modelToViewPosition( position );
+    } );
+
+    // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
+    const modelBoundsProperty = new DerivedProperty( [ this.visibleBoundsProperty ], visibleBounds => {
+      return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
+    } );
+
+    const realCircleDragListener = new DragListener( {
+      useParentOffset: true,
+      dragBoundsProperty: modelBoundsProperty,
+      positionProperty: myCirclePositionProperty,
+      transform: screenViewModelViewTransform,
+      tandem: Tandem.OPT_OUT
+    } );
+    realCircle.addInputListener( realCircleDragListener );
+
+    circleIcon.addInputListener( DragListener.createForwardingListener( event => {
+
+      realCircle.visible = true;
+      const viewPoint = this.globalToLocalPoint( event.pointer.point );
+      const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
+      myCirclePositionProperty.value = modelPoint;
+
+      realCircleDragListener.press( event );
+    } ) );
 
     // layout
     // TODO: Use x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
@@ -96,9 +137,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
     resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
     timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
     timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-
-    // To test the model view transform.
-    circleIcon.center = screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) );
 
     observationWindowFrame.center = this.observationWindow.center;
 
