@@ -2,10 +2,12 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { Node, Rectangle, Text, TextOptions } from '../../../../scenery/js/imports.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import BackgroundCanvasNode from './BackgroundCanvasNode.js';
 import LigandNode from './LigandNode.js';
 
@@ -45,6 +47,15 @@ export default class ObservationWindow extends Node {
 
     const ligandNode = new LigandNode();
     clipNode.addChild( ligandNode );
+
+    // NOTE: Duplication with SoluteBarChartsAccordionBox
+    const TEXT_MARGIN = 3;
+    const textOptions = { fontSize: 13, right: MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN, maxWidth: 200 };
+    const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: 0 + TEXT_MARGIN }, textOptions ) );
+    const insideText = new Text( membraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN }, textOptions ) );
+
+    this.addChild( outsideText );
+    this.addChild( insideText );
   }
 
   public step( dt: number ): void {

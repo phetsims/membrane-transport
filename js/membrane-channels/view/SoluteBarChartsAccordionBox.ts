@@ -53,8 +53,8 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( topHalf );
     contentNode.addChild( bottomHalf );
 
+    // NOTE: Duplication with ObservationWindow
     const TEXT_MARGIN = 3;
-
     const textOptions = { fontSize: 13, left: TEXT_MARGIN, maxWidth: 200 };
     const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
     const insideText = new Text( membraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
