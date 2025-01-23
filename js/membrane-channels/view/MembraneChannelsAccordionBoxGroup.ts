@@ -40,17 +40,17 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         titleNode: new Text( 'Leakage', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'leakageAccordionBox' )
       }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( {
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: false,
         titleNode: new Text( 'Voltage', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'voltageAccordionBox' )
       }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( {
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: false,
         titleNode: new Text( 'Ligand', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'ligandAccordionBox' )
       }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( {
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: false,
         titleNode: new Text( 'Active', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'activeAccordionBox' )
