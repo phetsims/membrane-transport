@@ -22,6 +22,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 
@@ -132,6 +133,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
       realCircleDragListener.press( event );
     } ) );
 
+    const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup();
+    this.addChild( membraneChannelsAccordionBoxGroup );
+
     // layout
     // TODO: Use x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
     this.observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
@@ -143,6 +147,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
     soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
+
+    membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
+    membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
   }
 
   /**
