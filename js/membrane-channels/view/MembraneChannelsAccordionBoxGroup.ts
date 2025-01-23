@@ -18,7 +18,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
 
   public constructor( tandem: Tandem, createCircle: ( event: PressListenerEvent ) => void ) {
 
-    const fontSize = 14;
+    const fontSize = 18;
     const options: AccordionBoxOptions = {
       useExpandedBoundsWhenCollapsed: false,
       cornerRadius: 0,
