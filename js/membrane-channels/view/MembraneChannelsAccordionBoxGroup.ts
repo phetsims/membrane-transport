@@ -4,6 +4,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { AlignGroup, Circle, DragListener, HSeparator, Node, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 
 /**
@@ -14,7 +15,8 @@ import membraneChannels from '../../membraneChannels.js';
 
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
-  public constructor( createCircle: ( event: PressListenerEvent ) => void ) {
+
+  public constructor( tandem: Tandem, createCircle: ( event: PressListenerEvent ) => void ) {
 
     const fontSize = 14;
     const options: AccordionBoxOptions = {
@@ -33,10 +35,26 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const contentAlignGroup = new AlignGroup();
 
     const accordionBoxes = [
-      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: true, titleNode: new Text( 'Leakage', { fontSize: fontSize } ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: false, titleNode: new Text( 'Voltage', { fontSize: fontSize } ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: false, titleNode: new Text( 'Ligand', { fontSize: fontSize } ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: false, titleNode: new Text( 'Active', { fontSize: fontSize } ) }, options ) )
+      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: true,
+        titleNode: new Text( 'Leakage', { fontSize: fontSize } ),
+        tandem: tandem.createTandem( 'leakageAccordionBox' )
+      }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: false,
+        titleNode: new Text( 'Voltage', { fontSize: fontSize } ),
+        tandem: tandem.createTandem( 'voltageAccordionBox' )
+      }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: false,
+        titleNode: new Text( 'Ligand', { fontSize: fontSize } ),
+        tandem: tandem.createTandem( 'ligandAccordionBox' )
+      }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: false,
+        titleNode: new Text( 'Active', { fontSize: fontSize } ),
+        tandem: tandem.createTandem( 'activeAccordionBox' )
+      }, options ) )
     ];
     accordionBoxes.forEach( box => {
       box.expandedProperty.link( expanded => {

@@ -120,7 +120,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     realCircle.addInputListener( realCircleDragListener );
 
-    const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( event => {
+    const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), event => {
       realCircle.visible = true;
       realCircle.moveToFront();
       const viewPoint = this.globalToLocalPoint( event.pointer.point );
