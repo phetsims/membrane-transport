@@ -14,8 +14,8 @@ const MembraneChannelsConstants = {
   SCREEN_VIEW_Y_MARGIN: 8,
 
   // Size of the observation window
-  OBSERVATION_WINDOW_WIDTH: 448,
-  OBSERVATION_WINDOW_HEIGHT: 400
+  OBSERVATION_WINDOW_WIDTH: 490,
+  OBSERVATION_WINDOW_HEIGHT: 448
 };
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
