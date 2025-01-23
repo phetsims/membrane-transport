@@ -18,7 +18,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Circle, DragListener, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -56,13 +56,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     this.observationWindow = new ObservationWindow( this.observationWindowModelViewTransform, OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
-
-    // TODO: Move inside ObservationWindow
-    const observationWindowFrame = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
-      stroke: 'black',
-      lineWidth: 2
-    } );
-    this.addChild( observationWindowFrame );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       timeSpeedProperty: model.timeSpeedProperty,
@@ -138,19 +131,27 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( resetAllButton );
 
     // layout
-    // TODO: Use x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
-    this.observationWindow.centerTop = this.layoutBounds.centerTop.plusXY( 0, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN );
+
+    // Note: x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
+    // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width
+    this.observationWindow.x = this.layoutBounds.centerX - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2;
+    this.observationWindow.y = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
     resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
-    timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
     timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
-    observationWindowFrame.center = this.observationWindow.center;
-
-    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
     soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
+    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
     membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    if ( phet.chipper.queryParameters.dev ) {
+      this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );
+    }
+
   }
 
   /**

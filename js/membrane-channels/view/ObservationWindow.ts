@@ -20,32 +20,31 @@ export default class ObservationWindow extends Node {
   private readonly backgroundCanvasNode: BackgroundCanvasNode;
 
   public constructor( modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
-    super( {
+
+    const frameNode = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
+      stroke: 'black',
+      lineWidth: 2
+    } );
+
+    // Clipping region that contains the background canvas and the ligand node
+    // TODO: The canvas node doesn't actually need to be clippped since it can only draw within its bounds.
+    const clipNode = new Node( {
       clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
-    const rectangle = new Rectangle(
-      0,
-      0,
-      MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH,
-      MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
-        fill: 'white',
-        stroke: 'black',
 
-        // NOTE: This is sheared in half by the clipArea above
-        lineWidth: 1
-      }
-    );
-    this.addChild( rectangle );
+    super( {
+      children: [ clipNode, frameNode ]
+    } );
 
     // first, we will have a background canvas layer for the performance intensive parts
     this.backgroundCanvasNode = new BackgroundCanvasNode( modelViewTransform, canvasBounds );
-    this.addChild( this.backgroundCanvasNode );
+    clipNode.addChild( this.backgroundCanvasNode );
 
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
 
     const ligandNode = new LigandNode();
-    this.addChild( ligandNode );
+    clipNode.addChild( ligandNode );
   }
 
   public step( dt: number ): void {

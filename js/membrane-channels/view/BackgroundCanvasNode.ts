@@ -4,6 +4,8 @@
  * The canvas renderer for background content in the observation window. This is for rendering
  * many particles that are not interactive.
  *
+ * TODO: Let's give a more descriptive name
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -195,14 +197,16 @@ export default class BackgroundCanvasNode extends CanvasNode {
     }
 
     // --- Draw crosshairs at the origin ---
-    context.strokeStyle = 'black';
-    context.lineWidth = 2;
-    context.beginPath();
-    this.moveTo( context, 0, -5 );
-    this.lineTo( context, 0, 5 );
-    this.moveTo( context, -5, 0 );
-    this.lineTo( context, 5, 0 );
-    context.stroke();
+    if ( phet.chipper.queryParameters.dev ) {
+      context.strokeStyle = 'black';
+      context.lineWidth = 2;
+      context.beginPath();
+      this.moveTo( context, 0, -5 );
+      this.lineTo( context, 0, 5 );
+      this.moveTo( context, -5, 0 );
+      this.lineTo( context, 5, 0 );
+      context.stroke();
+    }
   }
 }
 membraneChannels.register( 'BackgroundCanvasNode', BackgroundCanvasNode );
