@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import { AlignGroup, HSeparator, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Circle, DragListener, HSeparator, Node, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import membraneChannels from '../../membraneChannels.js';
 
@@ -12,7 +12,7 @@ import membraneChannels from '../../membraneChannels.js';
  */
 
 export default class MembraneChannelsAccordionBoxGroup extends Node {
-  public constructor() {
+  public constructor( createCircle: ( event: PressListenerEvent ) => void ) {
 
     const fontSize = 14;
     const ag = new AlignGroup();
@@ -22,8 +22,15 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       lineWidth: 0,
       titleAlignX: 'left'
     };
+
+    const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
+
+    circleIcon.addInputListener( DragListener.createForwardingListener( event => {
+      createCircle( event );
+    } ) );
+
     const accordionBoxes = [
-      new AccordionBox( new Text( 'hellanosteuhasontehuo' ), combineOptions<AccordionBoxOptions>( { titleNode: ag.createBox( new Text( 'Leakage', { fontSize: fontSize } ) ) }, options ) ),
+      new AccordionBox( circleIcon, combineOptions<AccordionBoxOptions>( { titleNode: ag.createBox( new Text( 'Leakage', { fontSize: fontSize } ) ) }, options ) ),
       new AccordionBox( new Text( 'hellanosteuhasontehuo' ), combineOptions<AccordionBoxOptions>( { titleNode: ag.createBox( new Text( 'Voltage', { fontSize: fontSize } ) ) }, options ) ),
       new AccordionBox( new Text( 'hellanosteuhasontehuo' ), combineOptions<AccordionBoxOptions>( { titleNode: ag.createBox( new Text( 'Ligand', { fontSize: fontSize } ) ) }, options ) ),
       new AccordionBox( new Text( 'hellanosteuhasontehuo' ), combineOptions<AccordionBoxOptions>( { titleNode: ag.createBox( new Text( 'Active', { fontSize: fontSize } ) ) }, options ) )

@@ -88,12 +88,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( soluteBarChartsAccordionBox );
 
-    const testToolbox = new Rectangle( 0, 0, 100, 100, { fill: 'grey', left: 100, top: 200 } );
-    const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
-
-    this.addChild( testToolbox );
-    testToolbox.addChild( circleIcon );
-
     const realCircle = new Circle( 15, {
       fill: 'rgba( 0,0,255,0.5)',
       left: 0,
@@ -123,17 +117,16 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     realCircle.addInputListener( realCircleDragListener );
 
-    circleIcon.addInputListener( DragListener.createForwardingListener( event => {
-
+    const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( event => {
       realCircle.visible = true;
+      realCircle.moveToFront();
       const viewPoint = this.globalToLocalPoint( event.pointer.point );
       const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
       myCirclePositionProperty.value = modelPoint;
 
       realCircleDragListener.press( event );
-    } ) );
 
-    const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup();
+    } );
     this.addChild( membraneChannelsAccordionBoxGroup );
 
     // layout
