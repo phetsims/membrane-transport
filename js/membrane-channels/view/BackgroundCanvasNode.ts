@@ -26,6 +26,10 @@ const headY = 8;
 const controlPointStepSize = 0.1; // the random component for the change in velocity
 const friction = 0.9999;          // a friction coefficient for momentum (0 to 1)
 
+// Introduce a positive-valued "angle" (really a horizontal offset) to separate the two tails
+// from each lipid head. Adjust as needed for appearance.
+const TAIL_OFFSET = 0.3;
+
 // Define an interface for a control point.
 // We add a velocity component "vx" for horizontal momentum.
 type ControlPoint = {
@@ -35,7 +39,6 @@ type ControlPoint = {
 };
 
 // For each tail, we want to store its anchor (head center) and a list of control points.
-// (Later, you could also include additional parameters like target endpoint offsets.)
 type TailState = {
   anchorX: number;
   anchorY: number;
@@ -46,7 +49,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
   private time = 0;
 
-  // We use separate tail states for inner and outer layers.
+  // We use separate tail states for inner and outer layers, each with two tails per head.
   private tailStatesInner: TailState[] = [];
   private tailStatesOuter: TailState[] = [];
 
@@ -74,24 +77,62 @@ export default class BackgroundCanvasNode extends CanvasNode {
     this.updateTailStatesFor( dt, this.tailStatesOuter );
   }
 
-  // Initialize two sets of tail states: one for the inner side and one for the outer side.
+  // Initialize two sets of tail states (inner and outer). For each "head" position,
+  // we now create two tails instead of one by horizontally offsetting each tail’s anchor.
   private initializeTailStates(): void {
 
     // TODO: Make sure not too many tails
     for ( let i = -40; i <= 40; i++ ) {
+
+      // For each head, its center is anchorX on the horizontal axis
       const anchorX = i * headRadius * 2;
 
-      // Inner side initialization:
-      const innerAnchorY = -headY; // inner layer uses negative headY
-      const cp1Inner: ControlPoint = { x: anchorX, y: innerAnchorY + headY / 2, vx: 0 };
-      const cp2Inner: ControlPoint = { x: anchorX, y: innerAnchorY + headY, vx: 0 };
-      this.tailStatesInner.push( { anchorX: anchorX, anchorY: innerAnchorY, controlPoints: [ cp1Inner, cp2Inner ] } );
+      // We'll create two separate anchorX positions, each offset by ± TAIL_ANGLE/2
+      // so that we have two tails at slightly different angles.
+      const anchorXLeft = anchorX - TAIL_OFFSET / 2;
+      const anchorXRight = anchorX + TAIL_OFFSET / 2;
 
-      // Outer side initialization:
-      const outerAnchorY = headY; // outer layer uses positive headY
-      const cp1Outer: ControlPoint = { x: anchorX, y: outerAnchorY - headY / 2, vx: 0 };
-      const cp2Outer: ControlPoint = { x: anchorX, y: outerAnchorY - headY, vx: 0 };
-      this.tailStatesOuter.push( { anchorX: anchorX, anchorY: outerAnchorY, controlPoints: [ cp1Outer, cp2Outer ] } );
+      // 1) Inner side: anchorY is -headY
+      const innerAnchorY = -headY;
+
+      // Tail A (left offset) for the inner side
+      const cp1InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY / 2, vx: 0 };
+      const cp2InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY, vx: 0 };
+      this.tailStatesInner.push( {
+        anchorX: anchorXLeft,
+        anchorY: innerAnchorY,
+        controlPoints: [ cp1InnerLeft, cp2InnerLeft ]
+      } );
+
+      // Tail B (right offset) for the inner side
+      const cp1InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY / 2, vx: 0 };
+      const cp2InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY, vx: 0 };
+      this.tailStatesInner.push( {
+        anchorX: anchorXRight,
+        anchorY: innerAnchorY,
+        controlPoints: [ cp1InnerRight, cp2InnerRight ]
+      } );
+
+      // 2) Outer side: anchorY is +headY
+      const outerAnchorY = headY;
+
+      // Tail A (left offset) for the outer side
+      const cp1OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY / 2, vx: 0 };
+      const cp2OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY, vx: 0 };
+      this.tailStatesOuter.push( {
+        anchorX: anchorXLeft,
+        anchorY: outerAnchorY,
+        controlPoints: [ cp1OuterLeft, cp2OuterLeft ]
+      } );
+
+      // Tail B (right offset) for the outer side
+      const cp1OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY / 2, vx: 0 };
+      const cp2OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY, vx: 0 };
+      this.tailStatesOuter.push( {
+        anchorX: anchorXRight,
+        anchorY: outerAnchorY,
+        controlPoints: [ cp1OuterRight, cp2OuterRight ]
+      } );
     }
   }
 
@@ -133,15 +174,16 @@ export default class BackgroundCanvasNode extends CanvasNode {
     const OFFSET = 0.8;
     const endpointOffset = side === 'inner' ? -OFFSET : OFFSET;
 
-    // Depending on the side, pick the correct tail state array and update it.
     const tailStates = side === 'inner' ? this.tailStatesInner : this.tailStatesOuter;
 
     for ( const state of tailStates ) {
+      context.beginPath();
+
+      // The last control point helps define our endpoint
       const lastCP = state.controlPoints[ state.controlPoints.length - 1 ];
       const tailEndX = lastCP.x;
       const tailEndY = lastCP.y + endpointOffset;
 
-      context.beginPath();
       this.moveTo( context, state.anchorX, state.anchorY );
       context.bezierCurveTo(
         this.modelViewTransform.modelToViewX( state.controlPoints[ 0 ].x ), this.modelViewTransform.modelToViewY( state.controlPoints[ 0 ].y ),
@@ -160,7 +202,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
     context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
-    // Draw tails independently for inner and outer layers.
+    // Draw tails independently for inner and outer layers (which now each have 2 tails per head).
     this.drawTails( context, 'inner' );
     this.drawTails( context, 'outer' );
 
