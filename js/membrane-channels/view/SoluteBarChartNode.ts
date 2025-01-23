@@ -3,6 +3,8 @@
 /**
  * In the SoluteBarChartsAccordionBox, the node that shows an icon, bar chart and arrow for one solute.
  *
+ * TODO: Description, keyboard, sonification
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
@@ -26,7 +28,7 @@ export default class SoluteBarChartNode extends Node {
       // TODO: Eliminate the clip area once we are sure everything remains in bounds.
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
 
-      // TODO: Pass through options
+      // TODO: Pass through options?
       tandem: tandem
     } );
 

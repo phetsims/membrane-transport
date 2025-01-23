@@ -77,7 +77,6 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
       bottomHalf.setRectWidth( rectWidth );
     } );
 
-    // TODO: Fit contentNode to the hbox, so that removal of solutes will shrink the box horizontally. Like a Panel.
     super( contentNode, options );
   }
 }
