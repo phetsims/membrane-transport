@@ -19,8 +19,8 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 
 // Head parameters
-const headRadius = 2;
-const headY = 22;
+const headRadius = 1.3;
+const headY = 8;
 
 // Constants controlling the tail control point movement
 const controlPointStepSize = 0.1; // the random component for the change in velocity
@@ -50,9 +50,6 @@ export default class BackgroundCanvasNode extends CanvasNode {
   private tailStatesInner: TailState[] = [];
   private tailStatesOuter: TailState[] = [];
 
-  // Number of phospholipids in our demo.
-  private readonly numTails: number = 61; // for i from -30 to 30
-
   public constructor( private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
       canvasBounds: canvasBounds
@@ -79,8 +76,9 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
   // Initialize two sets of tail states: one for the inner side and one for the outer side.
   private initializeTailStates(): void {
-    // For this demo, let i run from -30 to 30.
-    for ( let i = -30; i <= 30; i++ ) {
+
+    // TODO: Make sure not too many tails
+    for ( let i = -40; i <= 40; i++ ) {
       const anchorX = i * headRadius * 2;
 
       // Inner side initialization:
@@ -171,6 +169,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.lineWidth = 2;
 
     // Draw inner heads
+    // TODO: Make sure not too many heads
     for ( let i = -100; i < 100; i++ ) {
       context.beginPath();
       context.arc(
@@ -184,6 +183,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     }
 
     // Draw outer heads
+    // TODO: Make sure not too many heads
     for ( let i = -100; i < 100; i++ ) {
       context.beginPath();
       context.arc(
