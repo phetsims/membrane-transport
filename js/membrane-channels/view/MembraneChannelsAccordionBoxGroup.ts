@@ -28,11 +28,12 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
   public constructor( tandem: Tandem, createCircle: ( event: PressListenerEvent ) => void ) {
 
     const fontSize = 18;
-    const options: AccordionBoxOptions = {
+    const accordionBoxOptions: AccordionBoxOptions = {
       useExpandedBoundsWhenCollapsed: false,
       cornerRadius: 0,
       lineWidth: 0,
-      titleAlignX: 'left'
+      titleAlignX: 'left',
+      fill: 'white'
     };
 
     const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
@@ -48,22 +49,22 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         expandedDefaultValue: true,
         titleNode: new Text( 'Leakage', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'leakageAccordionBox' )
-      }, options ) ),
+      }, accordionBoxOptions ) ),
       new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: false,
         titleNode: new Text( 'Voltage', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'voltageAccordionBox' )
-      }, options ) ),
+      }, accordionBoxOptions ) ),
       new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: false,
         titleNode: new Text( 'Ligand', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'ligandAccordionBox' )
-      }, options ) ),
+      }, accordionBoxOptions ) ),
       new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: false,
         titleNode: new Text( 'Active', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'activeAccordionBox' )
-      }, options ) )
+      }, accordionBoxOptions ) )
     ];
     accordionBoxes.forEach( box => {
       box.expandedProperty.link( expanded => {
