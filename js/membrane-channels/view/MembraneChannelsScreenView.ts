@@ -71,7 +71,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
       },
       tandem: options.tandem.createTandem( 'timeControlNode' )
     } );
-    this.addChild( timeControlNode );
 
     const resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -83,12 +82,12 @@ export default class MembraneChannelsScreenView extends ScreenView {
       bottom: this.layoutBounds.maxY - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
-    this.addChild( resetAllButton );
+
 
     const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( model, {
       tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
     } );
-    this.addChild( soluteBarChartsAccordionBox );
+
     this.resetEmitter.addListener( () => soluteBarChartsAccordionBox.reset() );
 
     const realCircle = new Circle( 15, {
@@ -130,8 +129,13 @@ export default class MembraneChannelsScreenView extends ScreenView {
       realCircleDragListener.press( event );
 
     } );
-    this.addChild( membraneChannelsAccordionBoxGroup );
     this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
+
+    // z-order = tab-traversal order
+    this.addChild( membraneChannelsAccordionBoxGroup );
+    this.addChild( soluteBarChartsAccordionBox );
+    this.addChild( timeControlNode );
+    this.addChild( resetAllButton );
 
     // layout
     // TODO: Use x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
