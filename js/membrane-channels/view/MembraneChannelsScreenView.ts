@@ -9,6 +9,7 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -36,6 +37,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
   private readonly observationWindow: ObservationWindow;
 
   private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), OBSERVATION_WINDOW_BOUNDS.center, OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH );
+  private readonly resetEmitter = new Emitter();
 
   public constructor(
     public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
@@ -87,6 +89,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
     } );
     this.addChild( soluteBarChartsAccordionBox );
+    this.resetEmitter.addListener( () => soluteBarChartsAccordionBox.reset() );
 
     const realCircle = new Circle( 15, {
       fill: 'rgba( 0,0,255,0.5)',
@@ -128,6 +131,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     } );
     this.addChild( membraneChannelsAccordionBoxGroup );
+    this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
     // layout
     // TODO: Use x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
@@ -149,7 +153,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * Resets the view.
    */
   public reset(): void {
-    // Implement reset...
+    this.resetEmitter.emit();
   }
 
   /**

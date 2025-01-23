@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { AlignGroup, Circle, DragListener, HSeparator, Node, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
@@ -12,6 +13,7 @@ import membraneChannels from '../../membraneChannels.js';
  */
 
 export default class MembraneChannelsAccordionBoxGroup extends Node {
+  public readonly resetEmitter = new Emitter();
   public constructor( createCircle: ( event: PressListenerEvent ) => void ) {
 
     const fontSize = 14;
@@ -31,10 +33,10 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const contentAlignGroup = new AlignGroup();
 
     const accordionBoxes = [
-      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Leakage', { fontSize: fontSize } ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Voltage', { fontSize: fontSize } ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Ligand', { fontSize: fontSize } ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Active', { fontSize: fontSize } ) }, options ) )
+      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: true, titleNode: new Text( 'Leakage', { fontSize: fontSize } ) }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: false, titleNode: new Text( 'Voltage', { fontSize: fontSize } ) }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: false, titleNode: new Text( 'Ligand', { fontSize: fontSize } ) }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { expandedDefaultValue: false, titleNode: new Text( 'Active', { fontSize: fontSize } ) }, options ) )
     ];
     accordionBoxes.forEach( box => {
       box.expandedProperty.link( expanded => {
@@ -73,7 +75,13 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       children: [ vbox ]
     } );
 
+    this.resetEmitter.addListener( () => accordionBoxes.forEach( box => box.reset() ) );
+
     this.mutate( { left: 20, top: 20 } );
+  }
+
+  public reset(): void {
+    this.resetEmitter.emit();
   }
 }
 
