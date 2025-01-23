@@ -10,6 +10,13 @@ import membraneChannels from '../../membraneChannels.js';
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
  *
+ * TODO:
+ * - maxWidth
+ * - dynamic layout
+ * - PhET-iO
+ * - keyboard
+ * - description
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 

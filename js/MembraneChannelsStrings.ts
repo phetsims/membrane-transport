@@ -24,6 +24,8 @@ type StringsType = {
   'potassiumIonStringProperty': LocalizedStringProperty;
   'glucoseStringProperty': LocalizedStringProperty;
   'atpStringProperty': LocalizedStringProperty;
+  'outsideStringProperty': LocalizedStringProperty;
+  'insideStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;

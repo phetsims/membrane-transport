@@ -22,5 +22,11 @@
   },
   "atp": {
     "value": "ATP"
+  },
+  "outside": {
+    "value": "Outside"
+  },
+  "inside": {
+    "value": "Inside"
   }
 }

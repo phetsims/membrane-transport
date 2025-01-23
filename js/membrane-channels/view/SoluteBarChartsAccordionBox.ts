@@ -1,10 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { HBox, Rectangle, Text, TextOptions } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../membraneChannels.js';
+import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartTandemName, SoluteTypes } from '../model/SoluteType.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
@@ -54,9 +55,9 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
     const TEXT_MARGIN = 3;
 
-    // TODO: i18n
-    const outsideText = new Text( 'Outside', { fontSize: 13, top: contentNode.top + TEXT_MARGIN, left: TEXT_MARGIN } );
-    const insideText = new Text( 'Inside', { fontSize: 13, bottom: contentNode.bottom - TEXT_MARGIN, left: TEXT_MARGIN } );
+    const textOptions = { fontSize: 13, left: TEXT_MARGIN, maxWidth: 200 };
+    const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
+    const insideText = new Text( membraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
 
     contentNode.addChild( outsideText );
     contentNode.addChild( insideText );
