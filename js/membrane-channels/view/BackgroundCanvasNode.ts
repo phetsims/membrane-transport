@@ -130,7 +130,8 @@ export default class BackgroundCanvasNode extends CanvasNode {
     // For each tail state, draw a cubic Bézier curve using the anchor, the two control points,
     // and then a tail endpoint defined relative to the last control point.
     // (Adjust the endpoint offset if needed.)
-    const endpointOffset = 0;
+    const OFFSET = 0.8;
+    const endpointOffset = side === 'inner' ? -OFFSET : OFFSET;
 
     // Depending on the side, pick the correct tail state array and update it.
     const tailStates = side === 'inner' ? this.tailStatesInner : this.tailStatesOuter;
