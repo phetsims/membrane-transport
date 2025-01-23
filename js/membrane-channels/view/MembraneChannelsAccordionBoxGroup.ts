@@ -15,7 +15,6 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
   public constructor( createCircle: ( event: PressListenerEvent ) => void ) {
 
     const fontSize = 14;
-    const titleAlignGroup = new AlignGroup();
     const options: AccordionBoxOptions = {
       useExpandedBoundsWhenCollapsed: false,
       cornerRadius: 0,
@@ -32,10 +31,10 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const contentAlignGroup = new AlignGroup();
 
     const accordionBoxes = [
-      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( { titleNode: titleAlignGroup.createBox( new Text( 'Leakage', { fontSize: fontSize } ) ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: titleAlignGroup.createBox( new Text( 'Voltage', { fontSize: fontSize } ) ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: titleAlignGroup.createBox( new Text( 'Ligand', { fontSize: fontSize } ) ) }, options ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: titleAlignGroup.createBox( new Text( 'Active', { fontSize: fontSize } ) ) }, options ) )
+      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Leakage', { fontSize: fontSize } ) }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Voltage', { fontSize: fontSize } ) }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Ligand', { fontSize: fontSize } ) }, options ) ),
+      new AccordionBox( contentAlignGroup.createBox( new Text( 'hellanosteuhasontehuo' ) ), combineOptions<AccordionBoxOptions>( { titleNode: new Text( 'Active', { fontSize: fontSize } ) }, options ) )
     ];
     accordionBoxes.forEach( box => {
       box.expandedProperty.link( expanded => {
