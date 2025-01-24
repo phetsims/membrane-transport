@@ -128,7 +128,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
     // z-order = tab-traversal order
-    this.addChild( solutesPanel );
+    this.pdomPlayAreaNode.addChild( solutesPanel );
     this.addChild( membraneChannelsAccordionBoxGroup );
     this.addChild( soluteBarChartsAccordionBox );
     this.addChild( timeControlNode );
