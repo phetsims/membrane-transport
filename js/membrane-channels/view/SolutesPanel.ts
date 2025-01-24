@@ -9,6 +9,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import SoluteType, { getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import ATPNode from './solutes/ATPNode.js';
 import CarbonDioxideNode from './solutes/CarbonDioxideNode.js';
@@ -86,7 +87,7 @@ export default class SolutesPanel extends Node {
       tandem: tandem.createTandem( 'soluteRadioButtonGroup' ),
 
       // TODO: To discuss, should all a11y strings be in fluent, or only the complex ones?
-      helpText: 'Choose solute then add or remove ((to inside or outside of membrane)).'
+      helpText: MembraneChannelsMessages.soluteRadioButtonGroupHelpTextMessageProperty
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally
