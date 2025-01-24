@@ -2,7 +2,7 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { AlignGroup, Circle, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Rectangle, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -36,6 +36,7 @@ export default class SolutesPanel extends Node {
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),
         createNode: tandem => {
           return alignGroup.createBox( new VBox( {
+            spacing: 2,
             children: [
 
               // TODO: Hack idea to center the icons in the buttons. Probably a bad idea.
@@ -45,7 +46,7 @@ export default class SolutesPanel extends Node {
                 opacity: 0
               } ),
 
-              new Circle( 25, {
+              new Rectangle( 0, 0, 50, 25, {
               fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
             } ),
 
