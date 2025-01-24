@@ -2,14 +2,15 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { AlignGroup, Node, Rectangle, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import SoluteType, { getSoluteBarChartColorProperty, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
+import SoluteType, { getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
+import ATPNode from './solutes/ATPNode.js';
 import CarbonDioxideNode from './solutes/CarbonDioxideNode.js';
 import GlucoseNode from './solutes/GlucoseNode.js';
 import OxygenNode from './solutes/OxygenNode.js';
@@ -46,9 +47,7 @@ export default class SolutesPanel extends Node {
                        soluteType === 'sodiumIon' ? new SodiumIonNode() :
                        soluteType === 'potassiumIon' ? new PotassiumIonNode() :
                        soluteType === 'glucose' ? new GlucoseNode() :
-                       new Rectangle( 0, 0, 50, 25, {
-            fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
-          } );
+                       new ATPNode();
           icon.setScaleMagnitude( 0.65 ); // TODO: Match with SoluteBarChartNode?
 
           return alignGroup.createBox( new VBox( {
