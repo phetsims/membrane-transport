@@ -36,11 +36,18 @@ export default class SolutesPanel extends Node {
 
     const alignGroup = new AlignGroup();
 
+    // TODO: For a designer, when studio hides a radio button, the layout isn't perfect. If we need to do something
+    // more sophisticated, perhaps we can consult with Marla or Jonathan
     const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, SoluteTypes.map( soluteType => {
       return {
         value: soluteType,
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),
-        createNode: tandem => {
+        options: {
+
+          // TODO: Specify the names for each one
+          accessibleName: 'Oxygen, O2, nonpolar, small'
+        },
+        createNode: () => {
 
           const icon = soluteType === 'oxygen' ? new OxygenNode() :
                        soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
@@ -76,16 +83,21 @@ export default class SolutesPanel extends Node {
       preferredWidth: 200,
       lineSpacing: 5,
       spacing: 5,
-      tandem: tandem.createTandem( 'soluteRadioButtonGroup' )
+      tandem: tandem.createTandem( 'soluteRadioButtonGroup' ),
+
+      // TODO: To discuss, should all a11y strings be in fluent, or only the complex ones?
+      helpText: 'Choose solute then add or remove ((to inside or outside of membrane)).'
     } );
 
-    const myNode = new Node( {
+    // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally
+    // and we end up with one column.
+    const wrapperNode = new Node( {
       children: [ soluteRadioButtonGroup ]
     } );
     const content = new VBox( {
       children: [ title,
 
-        myNode
+        wrapperNode
       ],
       spacing: 5
     } );

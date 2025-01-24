@@ -59,6 +59,7 @@ const MembraneChannelsColors = {
   } ),
   atpColorProperty: new ProfileColorProperty( membraneChannels, 'atpColorProperty', {
     default: 'rgb(59,147,74)'
+    // default: 'rgb(72,184,90)' // from the SVG file
   } )
 };
 
