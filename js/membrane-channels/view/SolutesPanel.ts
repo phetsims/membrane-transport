@@ -49,6 +49,7 @@ export default class SolutesPanel extends Node {
                        new Rectangle( 0, 0, 50, 25, {
             fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
           } );
+          icon.setScaleMagnitude( 0.65 ); // TODO: Match with SoluteBarChartNode?
 
           return alignGroup.createBox( new VBox( {
             spacing: 2,
