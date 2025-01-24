@@ -15,6 +15,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 import membraneChannels from '../membraneChannels.js';
 
@@ -28,8 +29,12 @@ const MembraneChannelsColors = {
     default: 'rgb(101,185,234)'
   } ),
 
+  // TODO: Differs from oxygenColor below
   oxygenBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
-    default: 'rgb(250,0,6)'
+    default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
+  } ),
+  oxygenColorProperty: new ProfileColorProperty( membraneChannels, 'O2Color', {
+    default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
   } ),
   carbonDioxideBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
     default: 'rgb(95,80,69)'

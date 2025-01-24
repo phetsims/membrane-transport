@@ -10,6 +10,7 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import SoluteType, { getSoluteBarChartColorProperty, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
+import OxygenNode from './solutes/OxygenNode.js';
 
 /**
  * In the top left, show radio buttons to select a Solute which can be added to the simulation.
@@ -35,24 +36,25 @@ export default class SolutesPanel extends Node {
         value: soluteType,
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),
         createNode: tandem => {
+
+          const icon = soluteType === 'oxygen' ? new OxygenNode() : new Rectangle( 0, 0, 50, 25, {
+            fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
+          } );
+
           return alignGroup.createBox( new VBox( {
             spacing: 2,
             children: [
 
               // TODO: Hack idea to center the icons in the buttons. Probably a bad idea.
               new RichText( getSoluteTypeString( soluteType ), {
-                font: new PhetFont( 12 ),
+                font: new PhetFont( 14 ),
                 maxWidth: 100,
                 opacity: 0
               } ),
-
-              new Rectangle( 0, 0, 50, 25, {
-              fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
-            } ),
-
+              icon,
               // TODO: The texts will be different size and different y position. Maybe they should share a maxWidth sort of thing?
               new RichText( getSoluteTypeString( soluteType ), {
-                font: new PhetFont( 12 ),
+                font: new PhetFont( 14 ),
                 maxWidth: 100
               } ) ]
           } ) );
