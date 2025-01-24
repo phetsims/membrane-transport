@@ -23,6 +23,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
@@ -44,7 +45,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
     public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
 
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
-
     super( options );
 
     // A model to view transform that maps a model point to a positionin the screen view. This transform includes the translation
@@ -54,6 +54,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
       OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN ),
       OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH
     );
+
+    const macroCellNode = new MacroCellNode();
+    this.addChild( macroCellNode );
 
     this.observationWindow = new ObservationWindow( this.observationWindowModelViewTransform, OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
@@ -157,8 +160,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );
+      macroCellNode.moveToFront();
     }
-
   }
 
   /**
