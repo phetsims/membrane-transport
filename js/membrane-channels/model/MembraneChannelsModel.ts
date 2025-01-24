@@ -6,6 +6,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
@@ -39,6 +40,8 @@ export default class MembraneChannelsModel implements TModel {
   public readonly insideConcentrationProperties!: Record<SoluteType, NumberProperty>;
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
+  private readonly resetEmitter = new Emitter();
+
   public constructor( providedOptions: MembraneChannelsModelOptions ) {
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
@@ -46,15 +49,18 @@ export default class MembraneChannelsModel implements TModel {
       tandem: providedOptions.tandem.createTandem( 'selectedSoluteProperty' ),
       phetioFeatured: true
     } );
+    this.resetEmitter.addListener( () => this.selectedSoluteProperty.reset() );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),
       phetioFeatured: true
     } );
+    this.resetEmitter.addListener( () => this.timeSpeedProperty.reset() );
     this.isPlayingProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true
     } );
+    this.resetEmitter.addListener( () => this.isPlayingProperty.reset() );
 
     // TODO
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -75,8 +81,7 @@ export default class MembraneChannelsModel implements TModel {
    * Resets the model.
    */
   public reset(): void {
-    this.timeSpeedProperty.reset();
-    this.isPlayingProperty.reset();
+    this.resetEmitter.emit();
   }
 
   /**
