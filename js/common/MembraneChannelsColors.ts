@@ -42,6 +42,8 @@ const MembraneChannelsColors = {
   sodiumIonBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
     default: 'rgb(255,255,11)'
   } ),
+
+  // TODO: If colors are reused, rename the property to the more general name
   potassiumIonBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
     default: 'rgb(32,255,253)'
   } ),

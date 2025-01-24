@@ -11,13 +11,13 @@ import membraneChannels from '../../../membraneChannels.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class SodiumIonNode extends Node {
+export default class PotassiumIonNode extends Node {
 
   public constructor() {
 
-    const radius = 16;
+    const radius = 20;
     const options: ShadedSphereNodeOptions = {
-      mainColor: MembraneChannelsColors.sodiumIonBarChartColorProperty,
+      mainColor: MembraneChannelsColors.potassiumIonBarChartColorProperty,
       highlightColor: new Color( 255, 255, 255 ),
       lineWidth: 1,
       stroke: 'black'
@@ -36,4 +36,4 @@ export default class SodiumIonNode extends Node {
   }
 }
 
-membraneChannels.register( 'SodiumIonNode', SodiumIonNode );
+membraneChannels.register( 'PotassiumIonNode', PotassiumIonNode );

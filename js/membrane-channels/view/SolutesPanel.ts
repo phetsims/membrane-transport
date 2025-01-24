@@ -12,6 +12,7 @@ import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import SoluteType, { getSoluteBarChartColorProperty, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import CarbonDioxideNode from './solutes/CarbonDioxideNode.js';
 import OxygenNode from './solutes/OxygenNode.js';
+import PotassiumIonNode from './solutes/PotassiumIonNode.js';
 import SodiumIonNode from './solutes/SodiumIonNode.js';
 
 /**
@@ -42,6 +43,7 @@ export default class SolutesPanel extends Node {
           const icon = soluteType === 'oxygen' ? new OxygenNode() :
                        soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
                        soluteType === 'sodiumIon' ? new SodiumIonNode() :
+                       soluteType === 'potassiumIon' ? new PotassiumIonNode() :
                        new Rectangle( 0, 0, 50, 25, {
             fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
           } );
