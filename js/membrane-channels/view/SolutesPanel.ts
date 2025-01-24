@@ -36,9 +36,20 @@ export default class SolutesPanel extends Node {
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),
         createNode: tandem => {
           return alignGroup.createBox( new VBox( {
-            children: [ new Circle( 25, {
+            children: [
+
+              // TODO: Hack idea to center the icons in the buttons. Probably a bad idea.
+              new RichText( getSoluteTypeString( soluteType ), {
+                font: new PhetFont( 12 ),
+                maxWidth: 100,
+                opacity: 0
+              } ),
+
+              new Circle( 25, {
               fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
             } ),
+
+              // TODO: The texts will be different size and different y position. Maybe they should share a maxWidth sort of thing?
               new RichText( getSoluteTypeString( soluteType ), {
                 font: new PhetFont( 12 ),
                 maxWidth: 100
