@@ -8,6 +8,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import SoluteType, { getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
@@ -87,6 +88,7 @@ export default class SolutesPanel extends Node {
       tandem: tandem.createTandem( 'soluteRadioButtonGroup' ),
 
       // TODO: To discuss, should all a11y strings be in fluent, or only the complex ones?
+      accessibleName: MembraneChannelsStrings.solutesStringProperty,
       helpText: MembraneChannelsMessages.soluteRadioButtonGroupHelpTextMessageProperty
     } );
 

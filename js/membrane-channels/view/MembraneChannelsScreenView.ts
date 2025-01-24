@@ -130,12 +130,17 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
-    // z-order = tab-traversal order
-    this.pdomPlayAreaNode.addChild( solutesPanel );
+    // z-order
+    this.addChild( solutesPanel );
     this.addChild( membraneChannelsAccordionBoxGroup );
     this.addChild( soluteBarChartsAccordionBox );
     this.addChild( timeControlNode );
     this.addChild( resetAllButton );
+
+    // pdom order
+    // TODO:Design - Identify which components go in each section.
+    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, membraneChannelsAccordionBoxGroup ];
+    this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 
     // layout
 
