@@ -8,6 +8,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -36,8 +37,15 @@ export default class MembraneChannelsModel implements TModel {
   // Mock proxies for testing the bar charts. Ultimately these values will be derived from the particle locations
   public readonly outsideConcentrationProperties!: Record<SoluteType, NumberProperty>;
   public readonly insideConcentrationProperties!: Record<SoluteType, NumberProperty>;
+  public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
   public constructor( providedOptions: MembraneChannelsModelOptions ) {
+
+    this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
+      validValues: SoluteTypes,
+      tandem: providedOptions.tandem.createTandem( 'selectedSoluteProperty' ),
+      phetioFeatured: true
+    } );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),

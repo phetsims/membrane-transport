@@ -26,6 +26,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
+import SolutesPanel from './SolutesPanel.js';
 
 const OBSERVATION_WINDOW_BOUNDS = new Bounds2( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT );
 
@@ -103,6 +104,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
+    const solutesPanel = new SolutesPanel( model.selectedSoluteProperty, options.tandem.createTandem( 'solutesPanel' ) );
+
     const realCircleDragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
@@ -125,6 +128,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
     // z-order = tab-traversal order
+    this.addChild( solutesPanel );
     this.addChild( membraneChannelsAccordionBoxGroup );
     this.addChild( soluteBarChartsAccordionBox );
     this.addChild( timeControlNode );
@@ -136,6 +140,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width
     this.observationWindow.x = this.layoutBounds.centerX - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2;
     this.observationWindow.y = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    solutesPanel.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
+    solutesPanel.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
 

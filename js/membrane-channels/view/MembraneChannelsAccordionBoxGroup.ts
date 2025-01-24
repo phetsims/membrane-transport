@@ -5,7 +5,9 @@ import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { AlignGroup, Circle, DragListener, HSeparator, Node, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -92,8 +94,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const vbox = new VBox( {
       spacing: 0,
       children: [
-        new Text( 'Membrane Channels', {
-          fontSize: fontSize
+        new Text( membraneChannelsStrings.membraneChannelsStringProperty, {
+          fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE
         } ),
 
         ...interleaveHSeparators( accordionBoxes )

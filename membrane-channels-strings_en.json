@@ -28,5 +28,11 @@
   },
   "inside": {
     "value": "Inside"
+  },
+  "solutes": {
+    "value": "Solutes"
+  },
+  "membraneChannels": {
+    "value": "Membrane Channels"
   }
 }

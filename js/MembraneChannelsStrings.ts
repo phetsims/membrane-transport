@@ -26,6 +26,8 @@ type StringsType = {
   'atpStringProperty': LocalizedStringProperty;
   'outsideStringProperty': LocalizedStringProperty;
   'insideStringProperty': LocalizedStringProperty;
+  'solutesStringProperty': LocalizedStringProperty;
+  'membraneChannelsStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;

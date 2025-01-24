@@ -34,3 +34,5 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
 
 export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ): string =>
   `${soluteType}BarChart`;
+
+export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): string => `${soluteType}RadioButton`;
