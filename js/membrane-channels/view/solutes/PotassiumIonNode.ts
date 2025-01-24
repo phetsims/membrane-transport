@@ -7,7 +7,7 @@ import MembraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 
 /**
- * Sodium ion node. Does not rotate.
+ * Potassium ion node. Does not rotate.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
