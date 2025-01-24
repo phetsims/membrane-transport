@@ -10,7 +10,9 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import SoluteType, { getSoluteBarChartColorProperty, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
+import CarbonDioxideNode from './solutes/CarbonDioxideNode.js';
 import OxygenNode from './solutes/OxygenNode.js';
+import SodiumIonNode from './solutes/SodiumIonNode.js';
 
 /**
  * In the top left, show radio buttons to select a Solute which can be added to the simulation.
@@ -37,7 +39,10 @@ export default class SolutesPanel extends Node {
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),
         createNode: tandem => {
 
-          const icon = soluteType === 'oxygen' ? new OxygenNode() : new Rectangle( 0, 0, 50, 25, {
+          const icon = soluteType === 'oxygen' ? new OxygenNode() :
+                       soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
+                       soluteType === 'sodiumIon' ? new SodiumIonNode() :
+                       new Rectangle( 0, 0, 50, 25, {
             fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
           } );
 

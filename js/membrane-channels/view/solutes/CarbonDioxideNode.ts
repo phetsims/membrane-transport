@@ -8,28 +8,34 @@ import membraneChannels from '../../../membraneChannels.js';
 
 
 /**
- * Diatomic oxygen molecule. Does not rotate.
+ * Carbon dioxide molecule node. Does not rotate.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class OxygenNode extends Node {
+export default class CarbonDioxideNode extends Node {
 
   public constructor() {
 
     const radius = 18;
     const options: ShadedSphereNodeOptions = {
-      mainColor: MembraneChannelsColors.oxygenColorProperty,
       highlightColor: new Color( 255, 255, 255 ),
       lineWidth: 1,
       stroke: 'black'
     };
-    const o1 = new ShadedSphereNode( radius, options );
+    const o1 = new ShadedSphereNode( radius, combineOptions<ShadedSphereNodeOptions>( {
+      mainColor: MembraneChannelsColors.oxygenColorProperty
+    }, options ) );
+    const c = new ShadedSphereNode( radius * 1.18, combineOptions<ShadedSphereNodeOptions>( {
+      mainColor: MembraneChannelsColors.carbonDioxideBarChartColorProperty,
+      x: 10
+    }, options ) );
     const o2 = new ShadedSphereNode( radius, combineOptions<ShadedSphereNodeOptions>( {
-      x: 8
+      mainColor: MembraneChannelsColors.oxygenColorProperty,
+      x: 20
     }, options ) );
 
-    super( { children: [ o1, o2 ] } );
+    super( { children: [ o1, c, o2 ] } );
   }
 }
 
-membraneChannels.register( 'OxygenNode', OxygenNode );
+membraneChannels.register( 'CarbonDioxideNode', CarbonDioxideNode );
