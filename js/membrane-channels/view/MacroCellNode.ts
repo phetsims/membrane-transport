@@ -97,16 +97,21 @@ const line3EndProperty = new Vector2Property( new Vector2( ${Utils.roundSymmetri
       }
     } );
 
+    // Solid blue shape at the bottom
     this.addChild( new Path( shapeProperty, {
       fill: membraneChannelsColors.insideCellColorProperty,
       stroke: null
     } ) );
+
+    // Orange outer heads
     this.addChild( new Path( shapeProperty, {
-      lineWidth: 12,
+      lineWidth: 13,
       stroke: 'rgb(220,120,39)' // outer heads TODO: Move to color file
     } ) );
+
+    // Pink inner tails
     this.addChild( new Path( shapeProperty, {
-      lineWidth: 3,
+      lineWidth: 4,
       stroke: 'rgb(234,144,255)' // inner tails TODO: Move to color file
     } ) );
 
