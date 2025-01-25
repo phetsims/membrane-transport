@@ -12,12 +12,7 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import SoluteType, { getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
-import ATPNode from './solutes/ATPNode.js';
-import CarbonDioxideNode from './solutes/CarbonDioxideNode.js';
-import GlucoseNode from './solutes/GlucoseNode.js';
-import OxygenNode from './solutes/OxygenNode.js';
-import PotassiumIonNode from './solutes/PotassiumIonNode.js';
-import SodiumIonNode from './solutes/SodiumIonNode.js';
+import getSoluteNode from './solutes/getSoluteNode.js';
 
 /**
  * In the top left, show radio buttons to select a Solute which can be added to the simulation.
@@ -51,12 +46,7 @@ export default class SolutesPanel extends Node {
         },
         createNode: () => {
 
-          const icon = soluteType === 'oxygen' ? new OxygenNode() :
-                       soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
-                       soluteType === 'sodiumIon' ? new SodiumIonNode() :
-                       soluteType === 'potassiumIon' ? new PotassiumIonNode() :
-                       soluteType === 'glucose' ? new GlucoseNode() :
-                       new ATPNode();
+          const icon = getSoluteNode( soluteType );
           icon.setScaleMagnitude( 0.65 ); // TODO: Match with SoluteBarChartNode?
 
           return alignGroup.createBox( new VBox( {

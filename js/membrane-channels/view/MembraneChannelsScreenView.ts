@@ -58,7 +58,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const macroCellNode = new MacroCellNode();
     this.addChild( macroCellNode );
 
-    this.observationWindow = new ObservationWindow( this.observationWindowModelViewTransform, OBSERVATION_WINDOW_BOUNDS );
+    this.observationWindow = new ObservationWindow( model, this.observationWindowModelViewTransform, OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {

@@ -19,6 +19,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import membraneChannels from '../../membraneChannels.js';
+import Solute from './Solute.js';
 import SoluteType, { SoluteTypes } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -39,6 +40,8 @@ export default class MembraneChannelsModel implements TModel {
   public readonly outsideConcentrationProperties!: Record<SoluteType, NumberProperty>;
   public readonly insideConcentrationProperties!: Record<SoluteType, NumberProperty>;
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
+
+  public readonly solutes: Solute[] = [];
 
   private readonly resetEmitter = new Emitter();
 
@@ -75,6 +78,11 @@ export default class MembraneChannelsModel implements TModel {
       this.outsideConcentrationProperties[ soluteType ] = new NumberProperty( 0 );
       this.insideConcentrationProperties[ soluteType ] = new NumberProperty( 0 );
     } );
+
+    // A random sample of solutes in the solutes array
+    for ( let i = 0; i < 30; i++ ) {
+      this.solutes.push( new Solute( dotRandom.sample( SoluteTypes ) ) );
+    }
   }
 
   /**
@@ -94,6 +102,12 @@ export default class MembraneChannelsModel implements TModel {
       SoluteTypes.forEach( soluteType => {
         this.outsideConcentrationProperties[ soluteType ].value = Utils.clamp( this.outsideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed, 0, 1 );
         this.insideConcentrationProperties[ soluteType ].value = Utils.clamp( this.insideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed, 0, 1 );
+      } );
+
+      // Random walk for the solute positions
+      this.solutes.forEach( solute => {
+        solute.position.x += ( dotRandom.nextDouble() - 0.5 ) * speed;
+        solute.position.y += ( dotRandom.nextDouble() - 0.5 ) * speed;
       } );
     }
   }

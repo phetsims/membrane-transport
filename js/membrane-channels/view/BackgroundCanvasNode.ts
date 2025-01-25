@@ -17,6 +17,9 @@ import { CanvasNode } from '../../../../scenery/js/imports.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import SoluteType, { SoluteTypes } from '../model/SoluteType.js';
+import getSoluteNode from './solutes/getSoluteNode.js';
 
 // Head parameters
 const headRadius = 1.3;
@@ -53,12 +56,29 @@ export default class BackgroundCanvasNode extends CanvasNode {
   private tailStatesInner: TailState[] = [];
   private tailStatesOuter: TailState[] = [];
 
-  public constructor( private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement>();
+
+
+  public constructor( private readonly model: Pick<MembraneChannelsModel, 'solutes'>, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
       canvasBounds: canvasBounds
     } );
 
+    SoluteTypes.forEach( soluteType => {
+      this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
+    } );
     this.initializeTailStates();
+  }
+
+  private createImage( soluteType: SoluteType ): HTMLImageElement {
+
+    const iconNode = getSoluteNode( soluteType );
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error - TODO: Can rasterized return an Image if wrap is false?
+    // public rasterized( options?: RasterizedOptions & { wrap?: true } ): Node;
+    // public rasterized( options: RasterizedOptions & { wrap: false } ): Image;
+    return iconNode.rasterized( { wrap: false } ).image;
   }
 
   // Convenience functions to move and line in model coordinates
@@ -194,6 +214,14 @@ export default class BackgroundCanvasNode extends CanvasNode {
     }
   }
 
+  private drawParticles( context: CanvasRenderingContext2D ): void {
+
+    // Draw the particles as images
+    for ( const solute of this.model.solutes ) {
+      context.drawImage( this.soluteTypeToImageMap.get( solute.type )!, this.modelViewTransform.modelToViewX( solute.position.x ), this.modelViewTransform.modelToViewY( solute.position.y ) );
+    }
+  }
+
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
     // Draw the background: upper half for outside cell, lower half for inside cell.
@@ -201,6 +229,8 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
     context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
     context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+
+    this.drawParticles( context );
 
     // Draw tails independently for inner and outer layers (which now each have 2 tails per head).
     this.drawTails( context, 'inner' );

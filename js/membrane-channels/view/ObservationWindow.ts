@@ -8,6 +8,7 @@ import { Node, Rectangle, Text, TextOptions } from '../../../../scenery/js/impor
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import BackgroundCanvasNode from './BackgroundCanvasNode.js';
 import LigandNode from './LigandNode.js';
 
@@ -21,7 +22,7 @@ import LigandNode from './LigandNode.js';
 export default class ObservationWindow extends Node {
   private readonly backgroundCanvasNode: BackgroundCanvasNode;
 
-  public constructor( modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor( model: Pick<MembraneChannelsModel, 'solutes'>, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
 
     const frameNode = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
@@ -39,7 +40,7 @@ export default class ObservationWindow extends Node {
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
-    this.backgroundCanvasNode = new BackgroundCanvasNode( modelViewTransform, canvasBounds );
+    this.backgroundCanvasNode = new BackgroundCanvasNode( model, modelViewTransform, canvasBounds );
     clipNode.addChild( this.backgroundCanvasNode );
 
     // ligand and membrane channel layer

@@ -16,11 +16,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
-import CarbonDioxideNode from './solutes/CarbonDioxideNode.js';
-import GlucoseNode from './solutes/GlucoseNode.js';
-import OxygenNode from './solutes/OxygenNode.js';
-import PotassiumIonNode from './solutes/PotassiumIonNode.js';
-import SodiumIonNode from './solutes/SodiumIonNode.js';
+import getSoluteNode from './solutes/getSoluteNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 100;
@@ -40,16 +36,8 @@ export default class SoluteBarChartNode extends Node {
     // For layout, not just for debugging
     const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, { fill: 'red', opacity: 0 } );
 
-    // TODO: Duplicated in SolutesPanel.
-    const icon = soluteType === 'oxygen' ? new OxygenNode() :
-                 soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
-                 soluteType === 'sodiumIon' ? new SodiumIonNode() :
-                 soluteType === 'potassiumIon' ? new PotassiumIonNode() :
-                 soluteType === 'glucose' ? new GlucoseNode() :
-                 new Rectangle( 0, 0, 50, 25, {
-                   fill: soluteType === 'atp' ? 'black' : getSoluteBarChartColorProperty( soluteType )
-                 } );
-    icon.setScaleMagnitude( 0.65 );
+    const icon = getSoluteNode( soluteType );
+    icon.setScaleMagnitude( 0.65 ); // TODO: Same scale used in SolutesPanel (duplication)?
     icon.left = 8;
     icon.bottom = BOX_HEIGHT / 2 - 3;
 
