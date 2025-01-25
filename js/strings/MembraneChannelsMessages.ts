@@ -13,12 +13,11 @@ import LocalizedMessageProperty from '../../../chipper/js/browser/LocalizedMessa
 import type TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 
 type MembraneChannelsFluentType = {
-  'membraneChannelsMessageProperty': TReadOnlyProperty<string>;
   'soluteRadioButtonGroupHelpTextMessageProperty': TReadOnlyProperty<string>;
 };
 
 const MembraneChannelsMessages = getFluentModule( {
-  "en": "membraneChannels = Membrane Channels\r\n\r\nsoluteRadioButtonGroupHelpText = Choose solute then add or remove ((to inside or outside of membrane))."
+  "en": "soluteRadioButtonGroupHelpText = Choose solute then add or remove ((to inside or outside of membrane))."
 } ) as unknown as MembraneChannelsFluentType;
 
 membraneChannels.register( 'MembraneChannelsMessages', MembraneChannelsMessages );
