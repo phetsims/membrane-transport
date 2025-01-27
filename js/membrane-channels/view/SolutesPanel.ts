@@ -2,7 +2,7 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { AlignGroup, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, RichText, Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -50,15 +50,16 @@ export default class SolutesPanel extends Node {
           icon.setScaleMagnitude( 0.65 ); // TODO: Match with SoluteBarChartNode?
 
           return alignGroup.createBox( new VBox( {
-            spacing: 2,
+            spacing: 3,
             children: [
+              new VStrut( 2 ),
 
               // TODO: Hack idea to center the icons in the buttons. Probably a bad idea.
-              new RichText( getSoluteTypeString( soluteType ), {
-                font: new PhetFont( 14 ),
-                maxWidth: 100,
-                opacity: 0
-              } ),
+              // new RichText( getSoluteTypeString( soluteType ), {
+              //   font: new PhetFont( 14 ),
+              //   maxWidth: 100,
+              //   opacity: 0
+              // } ),
               icon,
               // TODO: The texts will be different size and different y position. Maybe they should share a maxWidth sort of thing?
               new RichText( getSoluteTypeString( soluteType ), {

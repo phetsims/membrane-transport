@@ -78,7 +78,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     // @ts-expect-error - TODO: Can rasterized return an Image if wrap is false?
     // public rasterized( options?: RasterizedOptions & { wrap?: true } ): Node;
     // public rasterized( options: RasterizedOptions & { wrap: false } ): Image;
-    return iconNode.rasterized( { wrap: false } ).image;
+    return iconNode.rasterized( { wrap: false, resolution: 4 } ).image;
   }
 
   // Convenience functions to move and line in model coordinates
@@ -214,11 +214,20 @@ export default class BackgroundCanvasNode extends CanvasNode {
     }
   }
 
-  private drawParticles( context: CanvasRenderingContext2D ): void {
+  private drawSolutes( context: CanvasRenderingContext2D ): void {
 
     // Draw the particles as images
     for ( const solute of this.model.solutes ) {
-      context.drawImage( this.soluteTypeToImageMap.get( solute.type )!, this.modelViewTransform.modelToViewX( solute.position.x ), this.modelViewTransform.modelToViewY( solute.position.y ) );
+      // context.drawImage( this.soluteTypeToImageMap.get( solute.type )!, this.modelViewTransform.modelToViewX( solute.position.x ), this.modelViewTransform.modelToViewY( solute.position.y ) );
+
+      // draw image scaled by a factor of 4 in each dimension
+      const image = this.soluteTypeToImageMap.get( solute.type )!;
+      const x = this.modelViewTransform.modelToViewX( solute.position.x );
+      const y = this.modelViewTransform.modelToViewY( solute.position.y );
+      const scale = 0.3;
+      const width = this.modelViewTransform.modelToViewDeltaX( image.width / 4 * scale );
+      const height = this.modelViewTransform.modelToViewDeltaY( image.height / 4 * scale );
+      context.drawImage( image, x, y, width, height );
     }
   }
 
@@ -230,7 +239,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
     context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
-    this.drawParticles( context );
+    this.drawSolutes( context );
 
     // Draw tails independently for inner and outer layers (which now each have 2 tails per head).
     this.drawTails( context, 'inner' );

@@ -13,6 +13,7 @@ import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import TModel from '../../../../joist/js/TModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -81,7 +82,7 @@ export default class MembraneChannelsModel implements TModel {
 
     // A random sample of solutes in the solutes array
     for ( let i = 0; i < 30; i++ ) {
-      this.solutes.push( new Solute( dotRandom.sample( SoluteTypes ) ) );
+      this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -100, 100 ), dotRandom.nextDoubleBetween( -100, 100 ) ), dotRandom.sample( SoluteTypes ) ) );
     }
   }
 
@@ -93,21 +94,123 @@ export default class MembraneChannelsModel implements TModel {
   }
 
   /**
-   * Steps the model.
+   * Steps the simulation forward by dt seconds.
    * @param dt - time step, in seconds
    */
   public step( dt: number ): void {
+
+    /**
+     * Helper function: Interpolate between two vectors and normalize the result.
+     */
+    function interpolateAndNormalize( start: Vector2, end: Vector2, alpha: number ): Vector2 {
+      // LERP: newVector = (1-alpha)*start + alpha*end
+      const x = ( 1 - alpha ) * start.x + alpha * end.x;
+      const y = ( 1 - alpha ) * start.y + alpha * end.y;
+
+      // Normalize to get a unit vector
+      const length = Math.sqrt( x * x + y * y );
+      if ( length === 0 ) {
+        // fallback if both directions are zero or near-zero
+        return new Vector2( 1, 0 );
+      }
+      return new Vector2( x / length, y / length );
+    }
+
+    /**
+     * Helper function: gets the "current" interpolated direction based on how
+     * far we’ve turned so far, so we can store or use it if we choose a new target.
+     */
+    function getInterpolatedDirection( solute: Solute ): Vector2 {
+      const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
+      return interpolateAndNormalize( solute.currentDirection, solute.targetDirection, alpha );
+    }
+
     if ( this.isPlayingProperty.value ) {
       const speed = dt * 3;
+
+      // Just an example for updating some "concentration" state
       SoluteTypes.forEach( soluteType => {
-        this.outsideConcentrationProperties[ soluteType ].value = Utils.clamp( this.outsideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed, 0, 1 );
-        this.insideConcentrationProperties[ soluteType ].value = Utils.clamp( this.insideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed, 0, 1 );
+        this.outsideConcentrationProperties[ soluteType ].value = Utils.clamp(
+          this.outsideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed,
+          0,
+          1
+        );
+        this.insideConcentrationProperties[ soluteType ].value = Utils.clamp(
+          this.insideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed,
+          0,
+          1
+        );
       } );
 
-      // Random walk for the solute positions
+      // We'll use a base "random walk speed" for solutes
+      const randomWalkSpeed = 10;
+
       this.solutes.forEach( solute => {
-        solute.position.x += ( dotRandom.nextDouble() - 0.5 ) * speed;
-        solute.position.y += ( dotRandom.nextDouble() - 0.5 ) * speed;
+        if ( solute.mode === 'randomWalk' ) {
+          // Simple random walk: changes direction every frame
+          solute.position.x += ( dotRandom.nextDouble() - 0.5 ) * speed * randomWalkSpeed;
+          solute.position.y += ( dotRandom.nextDouble() - 0.5 ) * speed * randomWalkSpeed;
+        }
+        else if ( solute.mode === 'delayedWalk' ) {
+          // Delayed walk: direction updates only every few seconds, but changes *instantly*.
+          solute.timeUntilNextDirection -= dt;
+          if ( solute.timeUntilNextDirection <= 0 ) {
+            // choose a brand new direction and reset the timer
+            solute.currentDirection = Solute.createRandomUnitVector();
+            solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+          }
+          // move in the chosen direction (assuming length=1) times speed
+          solute.position.x += solute.currentDirection.x * speed * randomWalkSpeed;
+          solute.position.y += solute.currentDirection.y * speed * randomWalkSpeed;
+        }
+        else if ( solute.mode === 'smoothDelayedWalk' ) {
+          // =============================================================
+          // SMOOTH (CURVED) DELAYED RANDOM WALK
+          // =============================================================
+
+          // 1) Decrement the time until we pick a NEW target direction
+          solute.timeUntilNextDirection -= dt;
+
+          // If it's time for a new direction, store the final "currentDirection"
+          // (so we don't lose any partial turn) and pick a new random direction.
+          if ( solute.timeUntilNextDirection <= 0 ) {
+
+            // Set currentDirection to the "latest" direction from the end of the last turn
+            // to avoid small rounding errors during interpolation.
+            const lastDir = getInterpolatedDirection( solute );
+            solute.currentDirection = lastDir; // store it
+
+            // Choose a new target direction
+            solute.targetDirection = Solute.createRandomUnitVector();
+
+            // Decide how long it will take to turn to this new target
+            solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+            solute.turnElapsed = 0;
+
+            // Reset the time until next direction change (in 1–4 seconds again)
+            solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+          }
+
+          // 2) Accumulate turn time
+          solute.turnElapsed += dt;
+          // We clamp in case we exceed the turn duration
+          const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
+
+          // 3) Interpolate from currentDirection to targetDirection by alpha
+          // Then normalize for a unit vector
+          const direction = interpolateAndNormalize(
+            solute.currentDirection,
+            solute.targetDirection,
+            alpha
+          );
+
+          // 4) Move the solute along this direction
+          solute.position.x += direction.x * speed * randomWalkSpeed;
+          solute.position.y += direction.y * speed * randomWalkSpeed;
+        }
+        else if ( solute.mode === 'bound' ) {
+          // Mode where solute doesn’t move, or does something special
+        }
       } );
     }
   }
