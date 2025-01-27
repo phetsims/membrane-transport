@@ -20,6 +20,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import Solute from './Solute.js';
 import SoluteType, { SoluteTypes } from './SoluteType.js';
@@ -33,9 +34,6 @@ export default class MembraneChannelsModel implements TModel {
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
 
-  // The full width in model coordinates for the area that you can see in the observation window.
-  public static readonly MODEL_WIDTH = 200;
-
   // TODO: group these together?
   // TODO: naming?
   // Mock proxies for testing the bar charts. Ultimately these values will be derived from the particle locations
@@ -44,7 +42,7 @@ export default class MembraneChannelsModel implements TModel {
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
   // Bounds of the membrane for collision detection and rendering.
-  public readonly membraneBounds = new Bounds2( -MembraneChannelsModel.MODEL_WIDTH / 2, -10, MembraneChannelsModel.MODEL_WIDTH / 2, 10 );
+  public readonly membraneBounds = new Bounds2( -MembraneChannelsConstants.MODEL_WIDTH / 2, -10, MembraneChannelsConstants.MODEL_WIDTH / 2, 10 );
 
   public readonly solutes: Solute[] = [];
 

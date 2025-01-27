@@ -10,7 +10,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
@@ -29,7 +28,6 @@ import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 import SolutesPanel from './SolutesPanel.js';
 
-const OBSERVATION_WINDOW_BOUNDS = new Bounds2( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT );
 
 type SelfOptions = EmptySelfOptions;
 
@@ -38,7 +36,6 @@ type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default class MembraneChannelsScreenView extends ScreenView {
   private readonly observationWindow: ObservationWindow;
 
-  private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), OBSERVATION_WINDOW_BOUNDS.center, OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH );
   private readonly resetEmitter = new Emitter();
 
   public constructor(
@@ -51,14 +48,14 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // of the observation window so that you can position view components relative to things within the observation window.
     const screenViewModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ),
-      OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN ),
-      OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsModel.MODEL_WIDTH
+      MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN ),
+      MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
     );
 
     const macroCellNode = new MacroCellNode();
     this.addChild( macroCellNode );
 
-    this.observationWindow = new ObservationWindow( model, this.observationWindowModelViewTransform, OBSERVATION_WINDOW_BOUNDS );
+    this.observationWindow = new ObservationWindow( model, MembraneChannelsConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
