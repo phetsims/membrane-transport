@@ -11,6 +11,7 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -41,6 +42,9 @@ export default class MembraneChannelsModel implements TModel {
   public readonly outsideConcentrationProperties!: Record<SoluteType, NumberProperty>;
   public readonly insideConcentrationProperties!: Record<SoluteType, NumberProperty>;
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
+
+  // Bounds of the membrane for collision detection and rendering.
+  public readonly membraneBounds = new Bounds2( -MembraneChannelsModel.MODEL_WIDTH / 2, -10, MembraneChannelsModel.MODEL_WIDTH / 2, 10 );
 
   public readonly solutes: Solute[] = [];
 
@@ -203,6 +207,42 @@ export default class MembraneChannelsModel implements TModel {
             solute.targetDirection,
             alpha
           );
+
+          const soluteBounds = solute.dimension.toBounds(
+            solute.position.x - solute.dimension.width / 2,
+            solute.position.y - solute.dimension.height / 2
+          );
+
+          const outsideOfCell = solute.position.y > 0;
+
+          if ( this.membraneBounds.intersectsBounds( soluteBounds ) ) {
+            if ( outsideOfCell ) {
+              const overlap = this.membraneBounds.maxY - soluteBounds.minY;
+
+              // push the solute back out of the membrane
+              solute.position.y += overlap;
+
+              // Make it move up.
+              direction.y = Math.abs( direction.y );
+
+              // Also make the current and target direction go up (for smooth walking algorithms)
+              solute.currentDirection.y = Math.abs( solute.currentDirection.y );
+              solute.targetDirection.y = Math.abs( solute.targetDirection.y );
+            }
+            else {
+              const overlap = soluteBounds.maxY - this.membraneBounds.minY;
+
+              // push the solute back out of the membrane
+              solute.position.y -= overlap;
+
+              // Make it move down.
+              direction.y = -Math.abs( direction.y );
+
+              // Also make the current and target direction go down (for smooth walking algorithms)
+              solute.currentDirection.y = -Math.abs( solute.currentDirection.y );
+              solute.targetDirection.y = -Math.abs( solute.targetDirection.y );
+            }
+          }
 
           // 4) Move the solute along this direction
           solute.position.x += direction.x * speed * randomWalkSpeed;

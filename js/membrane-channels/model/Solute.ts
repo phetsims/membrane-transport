@@ -28,8 +28,10 @@
 //  - Create an array of these with some examples
 //  - Render them in the canvas.
 
+import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import SoluteType from './SoluteType.js';
 
@@ -65,10 +67,14 @@ export default class Solute {
   // How long (in seconds) we continue traveling before choosing a new targetDirection.
   public timeUntilNextDirection: number;
 
+  // Size of the solute in model coordinates.
+  public readonly dimension: Dimension2;
+
   public constructor(
     public readonly position: Vector2,
     public readonly type: SoluteType
   ) {
+    this.dimension = MembraneChannelsConstants.SOLUTE_DIMENSION_MAP[ type ];
 
     // For smooth turning, initialize both directions to something random.
     this.currentDirection = Solute.createRandomUnitVector();

@@ -12,6 +12,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { CanvasNode } from '../../../../scenery/js/imports.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
@@ -23,7 +24,6 @@ import getSoluteNode from './solutes/getSoluteNode.js';
 
 // Head parameters
 const headRadius = 1.3;
-const headY = 8;
 
 // Constants controlling the tail control point movement
 const controlPointStepSize = 0.1; // the random component for the change in velocity
@@ -56,13 +56,18 @@ export default class BackgroundCanvasNode extends CanvasNode {
   private tailStatesInner: TailState[] = [];
   private tailStatesOuter: TailState[] = [];
 
+  private readonly headY: number;
+
   private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement>();
 
 
-  public constructor( private readonly model: Pick<MembraneChannelsModel, 'solutes'>, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor( private readonly model: Pick<MembraneChannelsModel, 'solutes' | 'membraneBounds'>, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
       canvasBounds: canvasBounds
     } );
+
+    // So that the edge of the head is at the edge of the bounds.
+    this.headY = model.membraneBounds.maxY - headRadius;
 
     SoluteTypes.forEach( soluteType => {
       this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
@@ -90,6 +95,10 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.lineTo( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( y ) );
   }
 
+  private strokeRect( context: CanvasRenderingContext2D, x: number, y: number, width: number, height: number ): void {
+    context.strokeRect( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( y ), this.modelViewTransform.modelToViewDeltaX( width ), this.modelViewTransform.modelToViewDeltaY( height ) );
+  }
+
   public step( dt: number ): void {
     this.time = this.time + dt;
 
@@ -113,11 +122,11 @@ export default class BackgroundCanvasNode extends CanvasNode {
       const anchorXRight = anchorX + TAIL_OFFSET / 2;
 
       // 1) Inner side: anchorY is -headY
-      const innerAnchorY = -headY;
+      const innerAnchorY = -this.headY;
 
       // Tail A (left offset) for the inner side
-      const cp1InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY / 2, vx: 0 };
-      const cp2InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY, vx: 0 };
+      const cp1InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + this.headY / 2, vx: 0 };
+      const cp2InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + this.headY, vx: 0 };
       this.tailStatesInner.push( {
         anchorX: anchorXLeft,
         anchorY: innerAnchorY,
@@ -125,8 +134,8 @@ export default class BackgroundCanvasNode extends CanvasNode {
       } );
 
       // Tail B (right offset) for the inner side
-      const cp1InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY / 2, vx: 0 };
-      const cp2InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY, vx: 0 };
+      const cp1InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + this.headY / 2, vx: 0 };
+      const cp2InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + this.headY, vx: 0 };
       this.tailStatesInner.push( {
         anchorX: anchorXRight,
         anchorY: innerAnchorY,
@@ -134,11 +143,11 @@ export default class BackgroundCanvasNode extends CanvasNode {
       } );
 
       // 2) Outer side: anchorY is +headY
-      const outerAnchorY = headY;
+      const outerAnchorY = this.headY;
 
       // Tail A (left offset) for the outer side
-      const cp1OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY / 2, vx: 0 };
-      const cp2OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY, vx: 0 };
+      const cp1OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - this.headY / 2, vx: 0 };
+      const cp2OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - this.headY, vx: 0 };
       this.tailStatesOuter.push( {
         anchorX: anchorXLeft,
         anchorY: outerAnchorY,
@@ -146,8 +155,8 @@ export default class BackgroundCanvasNode extends CanvasNode {
       } );
 
       // Tail B (right offset) for the outer side
-      const cp1OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY / 2, vx: 0 };
-      const cp2OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY, vx: 0 };
+      const cp1OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - this.headY / 2, vx: 0 };
+      const cp2OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - this.headY, vx: 0 };
       this.tailStatesOuter.push( {
         anchorX: anchorXRight,
         anchorY: outerAnchorY,
@@ -227,7 +236,23 @@ export default class BackgroundCanvasNode extends CanvasNode {
       const scale = 0.3;
       const width = this.modelViewTransform.modelToViewDeltaX( image.width / 4 * scale );
       const height = this.modelViewTransform.modelToViewDeltaY( image.height / 4 * scale );
-      context.drawImage( image, x, y, width, height );
+
+      // Draw the image centered at the position.
+      context.drawImage( image, x - width / 2, y - height / 2, width, height );
+
+      if ( phet.chipper.queryParameters.dev ) {
+
+        // Draw the solute's bounding box
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        this.strokeRect(
+          context,
+          ( solute.position.x - solute.dimension.width / 2 ),
+          ( solute.position.y - solute.dimension.height / 2 ),
+          ( solute.dimension.width ),
+          ( solute.dimension.height )
+        );
+      }
     }
   }
 
@@ -256,7 +281,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
       context.beginPath();
       context.arc(
         this.modelViewTransform.modelToViewX( i * headRadius * 2 ),
-        this.modelViewTransform.modelToViewY( -headY ), // inner heads
+        this.modelViewTransform.modelToViewY( -this.headY ), // inner heads
         this.modelViewTransform.modelToViewDeltaX( headRadius ),
         0, 2 * Math.PI
       );
@@ -270,7 +295,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
       context.beginPath();
       context.arc(
         this.modelViewTransform.modelToViewX( i * headRadius * 2 ),
-        this.modelViewTransform.modelToViewY( headY ),  // outer heads
+        this.modelViewTransform.modelToViewY( this.headY ),  // outer heads
         this.modelViewTransform.modelToViewDeltaX( headRadius ),
         0, 2 * Math.PI
       );
@@ -278,17 +303,27 @@ export default class BackgroundCanvasNode extends CanvasNode {
       context.stroke();
     }
 
-    // --- Draw crosshairs at the origin ---
+    // --- Debugging code to check transforms ---
     if ( phet.chipper.queryParameters.dev ) {
-      context.strokeStyle = 'black';
-      context.lineWidth = 2;
-      context.beginPath();
-      this.moveTo( context, 0, -5 );
-      this.lineTo( context, 0, 5 );
-      this.moveTo( context, -5, 0 );
-      this.lineTo( context, 5, 0 );
-      context.stroke();
+      this.drawCrosshairsAt( context, new Vector2( 0, 0 ) );
+      this.drawCrosshairsAt( context, new Vector2( 0, 10 ) );
     }
+  }
+
+  /**
+   * For debugging, to see where model points are on the canvas.
+   * @param context
+   * @param point - in model coordinates
+   */
+  private drawCrosshairsAt( context: CanvasRenderingContext2D, point: Vector2 ): void {
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    context.beginPath();
+    this.moveTo( context, point.x, point.y - 5 );
+    this.lineTo( context, point.x, point.y + 5 );
+    this.moveTo( context, point.x - 5, point.y );
+    this.lineTo( context, point.x + 5, point.y );
+    context.stroke();
   }
 }
 membraneChannels.register( 'BackgroundCanvasNode', BackgroundCanvasNode );
