@@ -33,7 +33,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import SoluteType from './SoluteType.js';
+import SoluteType, { getSoluteModelWidth } from './SoluteType.js';
 
 /**
  * Solute class for Membrane Channels sim, supporting multiple modes of motion,
@@ -74,7 +74,10 @@ export default class Solute {
     public readonly position: Vector2,
     public readonly type: SoluteType
   ) {
-    this.dimension = MembraneChannelsConstants.SOLUTE_DIMENSION_MAP[ type ];
+    this.dimension = new Dimension2(
+      getSoluteModelWidth( type ),
+      getSoluteModelWidth( type ) * 1 / MembraneChannelsConstants.SOLUTE_ASPECT_RATIO_MAP[ type ]
+    );
 
     // For smooth turning, initialize both directions to something random.
     this.currentDirection = Solute.createRandomUnitVector();

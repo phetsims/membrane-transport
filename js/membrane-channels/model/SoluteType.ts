@@ -32,6 +32,14 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
   soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonBarChartColorProperty :
   MembraneChannelsColors.glucoseBarChartColorProperty;
 
+export const getSoluteModelWidth = ( soluteType: SoluteType ): number =>
+  soluteType === 'oxygen' ? 6 :
+  soluteType === 'carbonDioxide' ? 10 :
+  soluteType === 'sodiumIon' ? 4 :
+  soluteType === 'potassiumIon' ? 6 :
+  soluteType === 'glucose' ? 10 :
+  10;
+
 export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ): string =>
   `${soluteType}BarChart`;
 

@@ -227,15 +227,17 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
     // Draw the particles as images
     for ( const solute of this.model.solutes ) {
-      // context.drawImage( this.soluteTypeToImageMap.get( solute.type )!, this.modelViewTransform.modelToViewX( solute.position.x ), this.modelViewTransform.modelToViewY( solute.position.y ) );
 
       // draw image scaled by a factor of 4 in each dimension
       const image = this.soluteTypeToImageMap.get( solute.type )!;
       const x = this.modelViewTransform.modelToViewX( solute.position.x );
       const y = this.modelViewTransform.modelToViewY( solute.position.y );
-      const scale = 0.3;
-      const width = this.modelViewTransform.modelToViewDeltaX( image.width / 4 * scale );
-      const height = this.modelViewTransform.modelToViewDeltaY( image.height / 4 * scale );
+
+      // A scale from model to view coordinates.
+      const scale = this.modelViewTransform.modelToViewDeltaX( solute.dimension.width ) / image.width;
+
+      const width = image.width * scale;
+      const height = image.height * scale;
 
       // Draw the image centered at the position.
       context.drawImage( image, x - width / 2, y - height / 2, width, height );

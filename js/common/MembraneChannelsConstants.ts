@@ -8,9 +8,6 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import Dimension2 from '../../../dot/js/Dimension2.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoluteType, { SoluteTypes } from '../membrane-channels/model/SoluteType.js';
 import getSoluteNode from '../membrane-channels/view/solutes/getSoluteNode.js';
 import membraneChannels from '../membraneChannels.js';
@@ -22,22 +19,13 @@ const OBSERVATION_WINDOW_BOUNDS = new Bounds2( 0, 0, OBSERVATION_WINDOW_WIDTH, O
 // The full width in model coordinates for the area that you can see in the observation window.
 const MODEL_WIDTH = 200;
 
-// TODO: Review with SR - We need the solute dimensions in model coordinates. Pulling from the Node bounds
-//   gives us view dimensions so we need the modelViewTransform in Constants so it can be used in the
-//   SOLUTE_DIMENSION_MAP.
-const OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
-  new Vector2( 0, 0 ),
-  OBSERVATION_WINDOW_BOUNDS.center,
-  OBSERVATION_WINDOW_BOUNDS.width / MODEL_WIDTH
-);
-
-// Create Nodes for each Solute so that we can inspect the bounds (keeping the aspect ratio).
-// Bounds are in model coordinates.
-const SOLUTE_DIMENSION_MAP = {} as Record<SoluteType, Dimension2>;
+// A map of solute type to the aspect ratio of its artwork so that we can create bounds
+// in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
+const SOLUTE_ASPECT_RATIO_MAP = {} as Record<SoluteType, number>;
 
 SoluteTypes.forEach( soluteType => {
-  const bounds = OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelBounds( getSoluteNode( soluteType ).bounds );
-  SOLUTE_DIMENSION_MAP[ soluteType ] = new Dimension2( bounds.width, bounds.height );
+  const soluteNode = getSoluteNode( soluteType ).bounds;
+  SOLUTE_ASPECT_RATIO_MAP[ soluteType ] = soluteNode.width / soluteNode.height;
 } );
 
 const MembraneChannelsConstants = {
@@ -52,11 +40,9 @@ const MembraneChannelsConstants = {
 
   OBSERVATION_WINDOW_BOUNDS: OBSERVATION_WINDOW_BOUNDS,
 
-  OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM: OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM,
-
   PANEL_TITLE_FONT_SIZE: 18,
 
-  SOLUTE_DIMENSION_MAP: SOLUTE_DIMENSION_MAP
+  SOLUTE_ASPECT_RATIO_MAP: SOLUTE_ASPECT_RATIO_MAP
 };
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );

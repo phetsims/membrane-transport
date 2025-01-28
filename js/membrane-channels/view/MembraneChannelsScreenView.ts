@@ -38,6 +38,12 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
   private readonly resetEmitter = new Emitter();
 
+  private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+    new Vector2( 0, 0 ),
+    MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.center,
+    MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
+  );
+
   public constructor(
     public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
 
@@ -55,7 +61,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const macroCellNode = new MacroCellNode();
     this.addChild( macroCellNode );
 
-    this.observationWindow = new ObservationWindow( model, MembraneChannelsConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS );
+    this.observationWindow = new ObservationWindow( model, this.observationWindowModelViewTransform, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS );
     this.addChild( this.observationWindow );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
