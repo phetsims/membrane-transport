@@ -16,12 +16,14 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import { Circle, DragListener } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import { SoluteTypes } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -62,15 +64,13 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( macroCellNode );
 
     this.observationWindow = new ObservationWindow( model, this.observationWindowModelViewTransform, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS );
-    this.addChild( this.observationWindow );
 
-    const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
-      timeSpeedProperty: model.timeSpeedProperty,
-      playPauseStepButtonOptions: {
-        includeStepForwardButton: false
-      },
-      tandem: options.tandem.createTandem( 'timeControlNode' )
-    } );
+    // Note: x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
+    // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width
+    this.observationWindow.x = this.layoutBounds.centerX - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2;
+    this.observationWindow.y = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    this.addChild( this.observationWindow );
 
     const resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -83,12 +83,33 @@ export default class MembraneChannelsScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
+    resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
+
+    this.addChild( resetAllButton );
+
+    const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+      timeSpeedProperty: model.timeSpeedProperty,
+      playPauseStepButtonOptions: {
+        includeStepForwardButton: false
+      },
+      tandem: options.tandem.createTandem( 'timeControlNode' )
+    } );
+
+    timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    this.addChild( timeControlNode );
 
     const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( model, {
       tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
     } );
 
     this.resetEmitter.addListener( () => soluteBarChartsAccordionBox.reset() );
+
+    soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
+    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    this.addChild( soluteBarChartsAccordionBox );
 
     const realCircle = new Circle( 15, {
       fill: 'rgba( 0,0,255,0.5)',
@@ -112,6 +133,31 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const solutesPanel = new SolutesPanel( model.selectedSoluteProperty, options.tandem.createTandem( 'solutesPanel' ) );
 
+    // TODO: Move to options?
+    solutesPanel.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
+    solutesPanel.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
+    this.addChild( solutesPanel );
+
+    // Number controls for the 'outside' solute concentrations
+    // Loop through the outsideConcentrationProperties record and create a FineCoarseSpinner for each one
+    SoluteTypes.forEach( soluteType => {
+      const outsideConcentrationProperty = model.outsideConcentrationProperties[ soluteType ];
+
+      const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
+        return soluteType === selectedSolute;
+      } );
+
+      const spinnerBottom = screenViewModelViewTransform.modelToViewY( model.membraneBounds.maxY );
+      const spinnerCenterX = ( this.observationWindow.left - this.layoutBounds.left ) / 2;
+
+      const spinner = new FineCoarseSpinner( outsideConcentrationProperty, {
+        visibleProperty: visibleProperty,
+        centerBottom: new Vector2( spinnerCenterX, spinnerBottom )
+      } );
+      this.addChild( spinner );
+    } );
+
     const realCircleDragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
@@ -133,38 +179,15 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
-    // z-order
-    this.addChild( solutesPanel );
+    membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
+    membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+
     this.addChild( membraneChannelsAccordionBoxGroup );
-    this.addChild( soluteBarChartsAccordionBox );
-    this.addChild( timeControlNode );
-    this.addChild( resetAllButton );
 
     // pdom order
     // TODO:Design - Identify which components go in each section.
     this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, membraneChannelsAccordionBoxGroup ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
-
-    // layout
-
-    // Note: x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
-    // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width
-    this.observationWindow.x = this.layoutBounds.centerX - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2;
-    this.observationWindow.y = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-
-    solutesPanel.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
-    solutesPanel.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-
-    resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
-
-    timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-    timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-
-    soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
-    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-
-    membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
-    membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );

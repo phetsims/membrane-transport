@@ -133,14 +133,14 @@ export default class MembraneChannelsModel implements TModel {
       // Just an example for updating some "concentration" state
       SoluteTypes.forEach( soluteType => {
         this.outsideConcentrationProperties[ soluteType ].value = Utils.clamp(
-          this.outsideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed,
+          this.outsideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed * 30,
           0,
-          1
+          100
         );
         this.insideConcentrationProperties[ soluteType ].value = Utils.clamp(
-          this.insideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed,
+          this.insideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed * 30,
           0,
-          1
+          100
         );
       } );
 

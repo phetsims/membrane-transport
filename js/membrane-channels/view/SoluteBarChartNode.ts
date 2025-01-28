@@ -72,12 +72,12 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     model.getOutsideConcentrationProperty( soluteType ).link( outsideConcentration => {
-      outsideBar.setRectHeight( 25 * outsideConcentration );
+      outsideBar.setRectHeight( 0.25 * outsideConcentration );
       outsideBar.bottom = BOX_HEIGHT / 2 + barLineWidth;
     } );
 
     model.getInsideConcentrationProperty( soluteType ).link( insideConcentration => {
-      insideBar.setRectHeight( 25 * insideConcentration );
+      insideBar.setRectHeight( 0.25 * insideConcentration );
       insideBar.top = BOX_HEIGHT / 2 - barLineWidth;
     } );
 
