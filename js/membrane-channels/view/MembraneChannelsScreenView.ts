@@ -10,6 +10,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
@@ -29,7 +30,6 @@ import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGro
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 import SolutesPanel from './SolutesPanel.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -226,9 +226,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
-    if ( this.model.isPlayingProperty.value ) {
-      this.observationWindow.step( dt );
-    }
+    this.observationWindow.step( dt );
   }
 }
 
