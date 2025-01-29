@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Node } from '../../../../../scenery/js/imports.js';
+import { Node, NodeOptions } from '../../../../../scenery/js/imports.js';
 import SoluteType from '../../model/SoluteType.js';
 import ATPNode from './ATPNode.js';
 import CarbonDioxideNode from './CarbonDioxideNode.js';
@@ -16,13 +16,16 @@ import OxygenNode from './OxygenNode.js';
 import PotassiumIonNode from './PotassiumIonNode.js';
 import SodiumIonNode from './SodiumIonNode.js';
 
-const getSoluteNode = ( soluteType: SoluteType ): Node => {
-  return soluteType === 'oxygen' ? new OxygenNode() :
-         soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
-         soluteType === 'sodiumIon' ? new SodiumIonNode() :
-         soluteType === 'potassiumIon' ? new PotassiumIonNode() :
-         soluteType === 'glucose' ? new GlucoseNode() :
-         new ATPNode();
+const getSoluteNode = ( soluteType: SoluteType, options?: NodeOptions ): Node => {
+  const soluteNode = soluteType === 'oxygen' ? new OxygenNode() :
+                     soluteType === 'carbonDioxide' ? new CarbonDioxideNode() :
+                     soluteType === 'sodiumIon' ? new SodiumIonNode() :
+                     soluteType === 'potassiumIon' ? new PotassiumIonNode() :
+                     soluteType === 'glucose' ? new GlucoseNode() :
+                     new ATPNode();
+
+  options && soluteNode.mutate( options );
+  return soluteNode;
 };
 
 export default getSoluteNode;

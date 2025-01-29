@@ -19,7 +19,8 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Circle, DragListener } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Node } from '../../../../scenery/js/imports.js';
+import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -29,6 +30,7 @@ import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
+import getSoluteNode from './solutes/getSoluteNode.js';
 import SolutesPanel from './SolutesPanel.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -147,9 +149,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
         return soluteType === selectedSolute;
       } );
 
-      const spinnerBottom = screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY );
-      const spinnerCenterX = ( this.observationWindow.left - this.layoutBounds.left ) / 2;
-
       // Create a proxy property for the FineCoarseSpinner
       // When the proxy Property changes, create new solutes based on that value
       const userControlledConcentrationProperty = new NumberProperty( 0 );
@@ -171,10 +170,24 @@ export default class MembraneChannelsScreenView extends ScreenView {
       const spinner = new FineCoarseSpinner( userControlledConcentrationProperty, {
         deltaFine: 2,
         deltaCoarse: 10,
-        visibleProperty: visibleProperty,
-        centerBottom: new Vector2( spinnerCenterX, spinnerBottom )
+        numberDisplayOptions: {
+          opacity: 0,
+          scale: 0.65
+        }
       } );
-      this.addChild( spinner );
+
+      const icon = getSoluteNode( soluteType, {
+        center: spinner.center
+      } );
+
+      const panel = new Panel( new Node( {
+        children: [ spinner, icon ]
+      } ), {
+        centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
+        bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
+        visibleProperty: visibleProperty
+      } );
+      this.addChild( panel );
     } );
 
     const realCircleDragListener = new DragListener( {
