@@ -10,8 +10,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -37,12 +35,9 @@ export default class MembraneChannelsModel implements TModel {
   // TODO: group these together?
   // TODO: naming?
   // Mock proxies for testing the bar charts. Ultimately these values will be derived from the particle locations
-  public readonly outsideConcentrationProperties!: Record<SoluteType, NumberProperty>;
-  public readonly insideConcentrationProperties!: Record<SoluteType, NumberProperty>;
+  public readonly outsideSoluteCountProperties!: Record<SoluteType, NumberProperty>;
+  public readonly insideSoluteCountProperties!: Record<SoluteType, NumberProperty>;
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
-
-  // Bounds of the membrane for collision detection and rendering.
-  public readonly membraneBounds = new Bounds2( -MembraneChannelsConstants.MODEL_WIDTH / 2, -10, MembraneChannelsConstants.MODEL_WIDTH / 2, 10 );
 
   public readonly solutes: Solute[] = [];
 
@@ -71,20 +66,41 @@ export default class MembraneChannelsModel implements TModel {
     // TODO
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    this.outsideConcentrationProperties = {};
+    this.outsideSoluteCountProperties = {};
 
     // TODO
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    this.insideConcentrationProperties = {};
+    this.insideSoluteCountProperties = {};
     SoluteTypes.forEach( soluteType => {
-      this.outsideConcentrationProperties[ soluteType ] = new NumberProperty( 0 );
-      this.insideConcentrationProperties[ soluteType ] = new NumberProperty( 0 );
+      this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
+      this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
     } );
 
     // A random sample of solutes in the solutes array
     for ( let i = 0; i < 30; i++ ) {
       this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -100, 100 ), dotRandom.nextDoubleBetween( -100, 100 ) ), dotRandom.sample( SoluteTypes ) ) );
+    }
+  }
+
+  public addSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
+    const cellBounds = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
+    for ( let i = 0; i < count; i++ ) {
+      this.solutes.push( new Solute( dotRandom.nextPointInBounds( cellBounds ), soluteType ) );
+    }
+  }
+
+  public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
+    const cellBounds = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
+
+    // TODO: The design calls for removing the randomly (not the most recent ones)
+    for ( let i = 0; i < count; i++ ) {
+      const index = this.solutes.findIndex( solute => {
+        return solute.type === soluteType && cellBounds.containsPoint( solute.position );
+      } );
+      if ( index !== -1 ) {
+        this.solutes.splice( index, 1 );
+      }
     }
   }
 
@@ -129,20 +145,6 @@ export default class MembraneChannelsModel implements TModel {
 
     if ( this.isPlayingProperty.value ) {
       const speed = dt * 3;
-
-      // Just an example for updating some "concentration" state
-      SoluteTypes.forEach( soluteType => {
-        this.outsideConcentrationProperties[ soluteType ].value = Utils.clamp(
-          this.outsideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed * 30,
-          0,
-          100
-        );
-        this.insideConcentrationProperties[ soluteType ].value = Utils.clamp(
-          this.insideConcentrationProperties[ soluteType ].value + ( dotRandom.nextDouble() - 0.5 ) * speed * 30,
-          0,
-          100
-        );
-      } );
 
       // We'll use a base "random walk speed" for solutes
       const randomWalkSpeed = 10;
@@ -213,9 +215,9 @@ export default class MembraneChannelsModel implements TModel {
 
           const outsideOfCell = solute.position.y > 0;
 
-          if ( this.membraneBounds.intersectsBounds( soluteBounds ) ) {
+          if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( soluteBounds ) ) {
             if ( outsideOfCell ) {
-              const overlap = this.membraneBounds.maxY - soluteBounds.minY;
+              const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - soluteBounds.minY;
 
               // push the solute back out of the membrane
               solute.position.y += overlap;
@@ -228,7 +230,7 @@ export default class MembraneChannelsModel implements TModel {
               solute.targetDirection.y = Math.abs( solute.targetDirection.y );
             }
             else {
-              const overlap = soluteBounds.maxY - this.membraneBounds.minY;
+              const overlap = soluteBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
 
               // push the solute back out of the membrane
               solute.position.y -= overlap;
@@ -251,15 +253,24 @@ export default class MembraneChannelsModel implements TModel {
         }
       } );
     }
+
+    // Update the solute counts after the solutes have moved
+    SoluteTypes.forEach( soluteType => {
+      this.outsideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'outside' );
+      this.insideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'inside' );
+    } );
   }
 
-  // TODO: Do we like this pattern?
-  public getOutsideConcentrationProperty( soluteType: SoluteType ): TReadOnlyProperty<number> {
-    return this.outsideConcentrationProperties[ soluteType ];
-  }
+  /**
+   * Count the number of solutes inside or outside of the cell membrane.
+   */
+  public countSolutes( soluteType: SoluteType, location: 'inside' | 'outside' ): number {
+    return this.solutes.filter( solute => {
 
-  public getInsideConcentrationProperty( soluteType: SoluteType ): TReadOnlyProperty<number> {
-    return this.insideConcentrationProperties[ soluteType ];
+      // Compare against the y value becase a solute is still considered 'inside' until it full passes through
+      // the middle of the membrane.
+      return solute.type === soluteType && ( location === 'inside' ? solute.position.y < 0 : solute.position.y > 0 );
+    } ).length;
   }
 }
 

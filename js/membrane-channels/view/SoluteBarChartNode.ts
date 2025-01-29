@@ -22,6 +22,9 @@ import getSoluteNode from './solutes/getSoluteNode.js';
 const BOX_WIDTH = 100;
 const BOX_HEIGHT = 100;
 
+// When there are this many solutes of one type in an area of the cell, the bar will take up the full BOX_HEIGHT.
+const MAX_SOLUTES = 200;
+
 export default class SoluteBarChartNode extends Node {
   public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
     super( {
@@ -71,13 +74,13 @@ export default class SoluteBarChartNode extends Node {
       centerY: BOX_HEIGHT / 2
     } );
 
-    model.getOutsideConcentrationProperty( soluteType ).link( outsideConcentration => {
-      outsideBar.setRectHeight( 0.25 * outsideConcentration );
+    model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
+      outsideBar.setRectHeight( soluteCount / MAX_SOLUTES * BOX_HEIGHT / 2 );
       outsideBar.bottom = BOX_HEIGHT / 2 + barLineWidth;
     } );
 
-    model.getInsideConcentrationProperty( soluteType ).link( insideConcentration => {
-      insideBar.setRectHeight( 0.25 * insideConcentration );
+    model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
+      insideBar.setRectHeight( soluteCount / MAX_SOLUTES * BOX_HEIGHT / 2 );
       insideBar.top = BOX_HEIGHT / 2 - barLineWidth;
     } );
 

@@ -29,7 +29,7 @@ import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGro
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 import SolutesPanel from './SolutesPanel.js';
-
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -140,18 +140,37 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( solutesPanel );
 
     // Number controls for the 'outside' solute concentrations
-    // Loop through the outsideConcentrationProperties record and create a FineCoarseSpinner for each one
+    // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
     SoluteTypes.forEach( soluteType => {
-      const outsideConcentrationProperty = model.outsideConcentrationProperties[ soluteType ];
 
       const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
         return soluteType === selectedSolute;
       } );
 
-      const spinnerBottom = screenViewModelViewTransform.modelToViewY( model.membraneBounds.maxY );
+      const spinnerBottom = screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY );
       const spinnerCenterX = ( this.observationWindow.left - this.layoutBounds.left ) / 2;
 
-      const spinner = new FineCoarseSpinner( outsideConcentrationProperty, {
+      // Create a proxy property for the FineCoarseSpinner
+      // When the proxy Property changes, create new solutes based on that value
+      const userControlledConcentrationProperty = new NumberProperty( 0 );
+
+      userControlledConcentrationProperty.lazyLink( ( value, oldValue ) => {
+        const difference = value - oldValue;
+        if ( difference > 0 ) {
+
+          // We need to add solutes to the outside of the membrane
+          model.addSolutes( soluteType, 'outside', difference );
+        }
+        else {
+
+          // We need to remove solutes from the outside of the membrane
+          model.removeSolutes( soluteType, 'outside', -difference );
+        }
+      } );
+
+      const spinner = new FineCoarseSpinner( userControlledConcentrationProperty, {
+        deltaFine: 2,
+        deltaCoarse: 10,
         visibleProperty: visibleProperty,
         centerBottom: new Vector2( spinnerCenterX, spinnerBottom )
       } );

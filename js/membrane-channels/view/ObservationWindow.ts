@@ -22,7 +22,7 @@ import LigandNode from './LigandNode.js';
 export default class ObservationWindow extends Node {
   private readonly backgroundCanvasNode: BackgroundCanvasNode;
 
-  public constructor( model: Pick<MembraneChannelsModel, 'solutes' | 'membraneBounds'>, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
 
     const frameNode = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',

@@ -60,14 +60,13 @@ export default class BackgroundCanvasNode extends CanvasNode {
 
   private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement>();
 
-
-  public constructor( private readonly model: Pick<MembraneChannelsModel, 'solutes' | 'membraneBounds'>, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor( private readonly model: MembraneChannelsModel, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
       canvasBounds: canvasBounds
     } );
 
     // So that the edge of the head is at the edge of the bounds.
-    this.headY = model.membraneBounds.maxY - headRadius;
+    this.headY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - headRadius;
 
     SoluteTypes.forEach( soluteType => {
       this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
@@ -305,10 +304,19 @@ export default class BackgroundCanvasNode extends CanvasNode {
       context.stroke();
     }
 
-    // --- Debugging code to check transforms ---
+    // --- Debugging code to check transforms and bounds ---
     if ( phet.chipper.queryParameters.dev ) {
       this.drawCrosshairsAt( context, new Vector2( 0, 0 ) );
       this.drawCrosshairsAt( context, new Vector2( 0, 10 ) );
+
+      context.strokeStyle = 'red';
+      context.lineWidth = 5;
+
+      const outsideBounds = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
+      this.strokeRect( context, outsideBounds.minX, outsideBounds.minY, outsideBounds.width, outsideBounds.height );
+
+      const insideBounds = MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+      this.strokeRect( context, insideBounds.minX, insideBounds.minY, insideBounds.width, insideBounds.height );
     }
   }
 
