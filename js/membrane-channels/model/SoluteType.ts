@@ -44,3 +44,5 @@ export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ):
   `${soluteType}BarChart`;
 
 export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): string => `${soluteType}RadioButton`;
+
+export const getSoluteSpinnerTandemName = ( soluteType: SoluteType ): string => `${soluteType}Spinner`;

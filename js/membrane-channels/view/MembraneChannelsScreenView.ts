@@ -25,7 +25,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import { SoluteTypes } from '../model/SoluteType.js';
+import { getSoluteSpinnerTandemName, SoluteTypes } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -167,13 +167,16 @@ export default class MembraneChannelsScreenView extends ScreenView {
         }
       } );
 
+      const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
+
       const spinner = new FineCoarseSpinner( userControlledConcentrationProperty, {
         deltaFine: 2,
         deltaCoarse: 10,
         numberDisplayOptions: {
           opacity: 0,
           scale: 0.65
-        }
+        },
+        tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
 
       const icon = getSoluteNode( soluteType, {
