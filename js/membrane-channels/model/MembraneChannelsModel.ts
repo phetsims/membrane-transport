@@ -160,7 +160,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       const randomWalkSpeed = 10;
 
       this.solutes.forEach( solute => {
-        if ( solute.mode === 'smoothDelayedWalk' ) {
+        if ( solute.mode === 'randomWalk' ) {
           // =============================================================
           // SMOOTH (CURVED) DELAYED RANDOM WALK
           // =============================================================
