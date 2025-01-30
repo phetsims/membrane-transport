@@ -138,6 +138,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     this.addChild( solutesPanel );
 
+    const soluteControls: SoluteControl[] = [];
+
     // Number controls for the 'outside' solute concentrations
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
     SoluteTypes.forEach( soluteType => {
@@ -150,6 +152,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
         tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
       this.addChild( outsideSoluteControl );
+      soluteControls.push( outsideSoluteControl );
 
       const insideSoluteControlsTandem = options.tandem.createTandem( 'insideSoluteControls' );
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
@@ -158,6 +161,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
         tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
       this.addChild( insideSoluteControl );
+      soluteControls.push( insideSoluteControl );
     } );
 
     const realCircleDragListener = new DragListener( {
@@ -188,7 +192,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     // pdom order
     // TODO:Design - Identify which components go in each section.
-    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, membraneChannelsAccordionBoxGroup ];
+    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, membraneChannelsAccordionBoxGroup ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 
     if ( phet.chipper.queryParameters.dev ) {
