@@ -21,7 +21,7 @@ type SoluteControlOptions = SelfOptions & NodeOptions;
  */
 export default class SoluteControl extends Panel {
 
-  public constructor( model: MembraneChannelsModel, soluteType: SoluteType, providedOptions: SoluteControlOptions ) {
+  public constructor( model: MembraneChannelsModel, soluteType: SoluteType, side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {
 
     const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
       return soluteType === selectedSolute;
@@ -41,12 +41,12 @@ export default class SoluteControl extends Panel {
       if ( difference > 0 ) {
 
         // We need to add solutes to the outside of the membrane
-        model.addSolutes( soluteType, 'outside', difference );
+        model.addSolutes( soluteType, side, difference );
       }
       else {
 
         // We need to remove solutes from the outside of the membrane
-        model.removeSolutes( soluteType, 'outside', -difference );
+        model.removeSolutes( soluteType, side, -difference );
       }
     } );
 

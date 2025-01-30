@@ -144,13 +144,20 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
       const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
 
-      const control = new SoluteControl( this.model, soluteType, {
+      const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {
         centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
         bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
         tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
-      this.addChild( control );
+      this.addChild( outsideSoluteControl );
 
+      const insideSoluteControlsTandem = options.tandem.createTandem( 'insideSoluteControls' );
+      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
+        centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
+        top: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ),
+        tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
+      } );
+      this.addChild( insideSoluteControl );
     } );
 
     const realCircleDragListener = new DragListener( {
