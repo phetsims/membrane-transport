@@ -32,9 +32,10 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
   soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonBarChartColorProperty :
   MembraneChannelsColors.glucoseBarChartColorProperty;
 
+// TODO: Oxygen in o2 should be same size as oxygen in co2.
 export const getSoluteModelWidth = ( soluteType: SoluteType ): number =>
-  soluteType === 'oxygen' ? 6 :
-  soluteType === 'carbonDioxide' ? 10 :
+  soluteType === 'oxygen' ? 3 :
+  soluteType === 'carbonDioxide' ? 5 :
   soluteType === 'sodiumIon' ? 4 :
   soluteType === 'potassiumIon' ? 6 :
   soluteType === 'glucose' ? 10 :

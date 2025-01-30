@@ -151,6 +151,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
       // Create a proxy property for the FineCoarseSpinner
       // When the proxy Property changes, create new solutes based on that value
+      // TODO: We will need to update this Property to reflect the number of solutes in the cellular area.
       const userControlledConcentrationProperty = new NumberProperty( 0 );
 
       userControlledConcentrationProperty.lazyLink( ( value, oldValue ) => {
