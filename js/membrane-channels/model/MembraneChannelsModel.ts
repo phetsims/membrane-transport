@@ -152,6 +152,8 @@ export default class MembraneChannelsModel extends PhetioObject {
         else if ( solute.mode === 'passThroughToInside' ) {
           // Mode where solute passes through the membrane to the inside
           solute.position.y -= 5 * dt;
+
+          // TODO: I had difficulty getting the solutes not to go right back to the other side. Also it is supposed to do a constrained random walk through the membrane.
           if ( solute.position.y < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY - 10 ) {
             solute.mode = 'randomWalk';
             // solute.currentDirection = new Vector2( 0, -1 );
