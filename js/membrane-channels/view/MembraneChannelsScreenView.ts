@@ -10,17 +10,14 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Circle, DragListener, Node } from '../../../../scenery/js/imports.js';
-import Panel from '../../../../sun/js/Panel.js';
+import { Circle, DragListener } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -30,7 +27,7 @@ import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
-import getSoluteNode from './solutes/getSoluteNode.js';
+import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -145,53 +142,15 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
     SoluteTypes.forEach( soluteType => {
 
-      const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
-        return soluteType === selectedSolute;
-      } );
-
-      // Create a proxy property for the FineCoarseSpinner
-      // When the proxy Property changes, create new solutes based on that value
-      // TODO: We will need to update this Property to reflect the number of solutes in the cellular area.
-      const userControlledConcentrationProperty = new NumberProperty( 0 );
-
-      userControlledConcentrationProperty.lazyLink( ( value, oldValue ) => {
-        const difference = value - oldValue;
-        if ( difference > 0 ) {
-
-          // We need to add solutes to the outside of the membrane
-          model.addSolutes( soluteType, 'outside', difference );
-        }
-        else {
-
-          // We need to remove solutes from the outside of the membrane
-          model.removeSolutes( soluteType, 'outside', -difference );
-        }
-      } );
-
       const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
 
-      const spinner = new FineCoarseSpinner( userControlledConcentrationProperty, {
-        deltaFine: 2,
-        deltaCoarse: 10,
-        numberDisplayOptions: {
-          opacity: 0,
-          scale: 0.65
-        },
-        tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
-      } );
-
-      const icon = getSoluteNode( soluteType, {
-        center: spinner.center
-      } );
-
-      const panel = new Panel( new Node( {
-        children: [ spinner, icon ]
-      } ), {
+      const control = new SoluteControl( this.model, soluteType, {
         centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
         bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
-        visibleProperty: visibleProperty
+        tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
-      this.addChild( panel );
+      this.addChild( control );
+
     } );
 
     const realCircleDragListener = new DragListener( {
