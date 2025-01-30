@@ -10,29 +10,12 @@ import Solute from './Solute.js';
 const randomWalkSpeed = 10;
 
 /**
- * Helper function: Interpolate between two vectors and normalize the result.
- */
-function interpolateAndNormalize( start: Vector2, end: Vector2, alpha: number ): Vector2 {
-  // LERP: newVector = (1-alpha)*start + alpha*end
-  const x = ( 1 - alpha ) * start.x + alpha * end.x;
-  const y = ( 1 - alpha ) * start.y + alpha * end.y;
-
-  // Normalize to get a unit vector
-  const length = Math.sqrt( x * x + y * y );
-  if ( length === 0 ) {
-    // fallback if both directions are zero or near-zero
-    return new Vector2( 1, 0 );
-  }
-  return new Vector2( x / length, y / length );
-}
-
-/**
  * Helper function: gets the "current" interpolated direction based on how
  * far we’ve turned so far, so we can store or use it if we choose a new target.
  */
 function getInterpolatedDirection( solute: Solute ): Vector2 {
   const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
-  return interpolateAndNormalize( solute.currentDirection, solute.targetDirection, alpha );
+  return solute.currentDirection.blend( solute.targetDirection, alpha ).normalized();
 }
 
 /**
@@ -74,11 +57,7 @@ export default function stepSoluteRandomWalk( solute: Solute, dt: number ): void
 
   // 3) Interpolate from currentDirection to targetDirection by alpha
   // Then normalize for a unit vector
-  const direction = interpolateAndNormalize(
-    solute.currentDirection,
-    solute.targetDirection,
-    alpha
-  );
+  const direction = solute.currentDirection.blend( solute.targetDirection, alpha );
 
   const soluteBounds = solute.dimension.toBounds(
     solute.position.x - solute.dimension.width / 2,
