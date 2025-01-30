@@ -1,6 +1,8 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
+ * TODO: What to do for the directory structure for this sim?
+ *
  * @author Sam Reid (PhET Interactive Simulations
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -158,24 +160,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       const randomWalkSpeed = 10;
 
       this.solutes.forEach( solute => {
-        if ( solute.mode === 'randomWalk' ) {
-          // Simple random walk: changes direction every frame
-          solute.position.x += ( dotRandom.nextDouble() - 0.5 ) * speed * randomWalkSpeed;
-          solute.position.y += ( dotRandom.nextDouble() - 0.5 ) * speed * randomWalkSpeed;
-        }
-        else if ( solute.mode === 'delayedWalk' ) {
-          // Delayed walk: direction updates only every few seconds, but changes *instantly*.
-          solute.timeUntilNextDirection -= dt;
-          if ( solute.timeUntilNextDirection <= 0 ) {
-            // choose a brand new direction and reset the timer
-            solute.currentDirection = Solute.createRandomUnitVector();
-            solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
-          }
-          // move in the chosen direction (assuming length=1) times speed
-          solute.position.x += solute.currentDirection.x * speed * randomWalkSpeed;
-          solute.position.y += solute.currentDirection.y * speed * randomWalkSpeed;
-        }
-        else if ( solute.mode === 'smoothDelayedWalk' ) {
+        if ( solute.mode === 'smoothDelayedWalk' ) {
           // =============================================================
           // SMOOTH (CURVED) DELAYED RANDOM WALK
           // =============================================================

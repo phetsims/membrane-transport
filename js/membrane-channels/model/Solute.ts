@@ -44,11 +44,9 @@ import SoluteType, { getSoluteModelWidth } from './SoluteType.js';
 export default class Solute {
 
   // Possible modes of motion:
-  //   - 'randomWalk'         -> simple random walk, changes every frame
-  //   - 'delayedWalk'        -> random direction change after every few seconds
   //   - 'smoothDelayedWalk'  -> same as 'delayedWalk' but direction changes are gradual
   //   - 'bound'              -> solute is bound (for example, to a channel)
-  public mode: 'randomWalk' | 'delayedWalk' | 'smoothDelayedWalk' | 'bound' = 'smoothDelayedWalk';
+  public mode: 'smoothDelayedWalk' | 'bound' = 'smoothDelayedWalk';
 
   // =============================================================
   // FIELDS FOR SMOOTH, DELAYED RANDOM WALK
