@@ -63,6 +63,15 @@ export default function stepSoluteRandomWalk( solute: Solute, dt: number ): void
   // Check overlap with membrane bounds
   if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( soluteBounds ) ) {
 
+    // Oxygen and carbon dioxide solutes can pass through the membrane
+    if ( solute.type === 'oxygen' || solute.type === 'carbonDioxide' ) {
+      if ( dotRandom.nextDouble() < 0.90 ) {
+        solute.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+
+        return;
+      }
+    }
+
     if ( outsideOfCell ) {
       // Overlap with the membrane from above
       const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - soluteBounds.minY;

@@ -46,7 +46,7 @@ export default class Solute {
   // Possible modes of motion:
   //   - 'randomWalk'  -> same as 'delayedWalk' but direction changes are gradual
   //   - 'bound'              -> solute is bound (for example, to a channel)
-  public mode: 'randomWalk' | 'bound' = 'randomWalk';
+  public mode: 'randomWalk' | 'bound' | 'passThroughToInside' | 'passThroughToOutside' = 'randomWalk';
 
   // =============================================================
   // FIELDS FOR SMOOTH, DELAYED RANDOM WALK

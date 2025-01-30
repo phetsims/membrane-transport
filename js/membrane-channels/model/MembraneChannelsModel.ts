@@ -67,7 +67,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       phetioFeatured: true
     } );
     this.resetEmitter.addListener( () => this.timeSpeedProperty.reset() );
-    this.isPlayingProperty = new BooleanProperty( false, {
+    this.isPlayingProperty = new BooleanProperty( true, { // TODO: I set this true for development, but should it also be true for production?
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true
     } );
@@ -144,12 +144,34 @@ export default class MembraneChannelsModel extends PhetioObject {
 
       this.solutes.forEach( solute => {
         if ( solute.mode === 'randomWalk' ) {
-
           stepSoluteRandomWalk( solute, dt );
-
         }
         else if ( solute.mode === 'bound' ) {
           // Mode where solute doesn’t move, or does something special
+        }
+        else if ( solute.mode === 'passThroughToInside' ) {
+          // Mode where solute passes through the membrane to the inside
+          solute.position.y -= 5 * dt;
+          if ( solute.position.y < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY - 10 ) {
+            solute.mode = 'randomWalk';
+            // solute.currentDirection = new Vector2( 0, -1 );
+            // solute.targetDirection = new Vector2( 0, -1 );
+            // solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+            // solute.turnElapsed = 0;
+            // solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+          }
+        }
+        else if ( solute.mode === 'passThroughToOutside' ) {
+          // Mode where solute passes through the membrane to the outside
+          solute.position.y += 5 * dt;
+          if ( solute.position.y > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY + 10 ) {
+            solute.mode = 'randomWalk';
+            // solute.currentDirection = new Vector2( 0, +1 );
+            // solute.targetDirection = new Vector2( 0, +1 );
+            // solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+            // solute.turnElapsed = 0;
+            // solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+          }
         }
       } );
     }
