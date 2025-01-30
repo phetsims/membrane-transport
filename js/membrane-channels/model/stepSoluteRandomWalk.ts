@@ -11,7 +11,7 @@ const randomWalkSpeed = 10;
 
 /**
  * Helper function: gets the "current" interpolated direction based on how
- * far we’ve turned so far, so we can store or use it if we choose a new target.
+ * far we've turned so far, so we can store or use it if we choose a new target.
  */
 function getInterpolatedDirection( solute: Solute ): Vector2 {
   const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
@@ -19,83 +19,127 @@ function getInterpolatedDirection( solute: Solute ): Vector2 {
 }
 
 /**
- * Step the solute along a random walk path.
+ * Step the solute along a random walk path, causing it to bounce off the
+ * membrane (central horizontal band) AND also bounce off the bounding walls.
  *
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 export default function stepSoluteRandomWalk( solute: Solute, dt: number ): void {
 
-  const speed = dt * 3;
-
-  // 1) Decrement the time until we pick a NEW target direction
+  // 1) Possibly update direction choices
   solute.timeUntilNextDirection -= dt;
-
-  // If it's time for a new direction, store the final "currentDirection"
-  // (so we don't lose any partial turn) and pick a new random direction.
   if ( solute.timeUntilNextDirection <= 0 ) {
 
-    // Set currentDirection to the "latest" direction from the end of the last turn
-    // to avoid small rounding errors during interpolation.
-    const lastDir = getInterpolatedDirection( solute );
-    solute.currentDirection = lastDir; // store it
+    // finalize "currentDirection" from the previous interpolation
+    solute.currentDirection = getInterpolatedDirection( solute );
 
-    // Choose a new target direction
+    // choose a new target direction randomly
     solute.targetDirection = Solute.createRandomUnitVector();
 
-    // Decide how long it will take to turn to this new target
+    // decide how long to turn to this target
     solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
     solute.turnElapsed = 0;
 
-    // Reset the time until next direction change (in 1–4 seconds again)
+    // reset the time until next direction change
     solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
   }
 
-  // 2) Accumulate turn time
+  // 2) Accumulate turn time and compute interpolated direction
   solute.turnElapsed += dt;
-  // We clamp in case we exceed the turn duration
   const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
-
-  // 3) Interpolate from currentDirection to targetDirection by alpha
-  // Then normalize for a unit vector
   const direction = solute.currentDirection.blend( solute.targetDirection, alpha );
 
+  // 3) If the solute is overlapping the membrane, bounce off of it
+  //    (this is the original membrane-bounce logic).
   const soluteBounds = solute.dimension.toBounds(
     solute.position.x - solute.dimension.width / 2,
     solute.position.y - solute.dimension.height / 2
   );
 
+  // Are we above (y>0) or below (y<0) the membrane region?
   const outsideOfCell = solute.position.y > 0;
 
+  // Check overlap with membrane bounds
   if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( soluteBounds ) ) {
+
     if ( outsideOfCell ) {
+      // Overlap with the membrane from above
       const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - soluteBounds.minY;
 
       // push the solute back out of the membrane
       solute.position.y += overlap;
 
-      // Make it move up.
+      // Reflect the motion upward
       direction.y = Math.abs( direction.y );
-
-      // Also make the current and target direction go up (for smooth walking algorithms)
       solute.currentDirection.y = Math.abs( solute.currentDirection.y );
       solute.targetDirection.y = Math.abs( solute.targetDirection.y );
     }
     else {
+      // Overlap with the membrane from below
       const overlap = soluteBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
 
       // push the solute back out of the membrane
       solute.position.y -= overlap;
 
-      // Make it move down.
+      // Reflect the motion downward
       direction.y = -Math.abs( direction.y );
-
-      // Also make the current and target direction go down (for smooth walking algorithms)
       solute.currentDirection.y = -Math.abs( solute.currentDirection.y );
       solute.targetDirection.y = -Math.abs( solute.targetDirection.y );
     }
   }
 
-  // 4) Move the solute along this direction
+  // 4) Move the solute according to the direction and speed
+  //    (do this AFTER membrane collisions are handled).
+  const speed = dt * 3;
   solute.position.x += direction.x * speed * randomWalkSpeed;
   solute.position.y += direction.y * speed * randomWalkSpeed;
+
+  // 5) Now bounce off the 3 other walls in whichever bounding region we are in
+  //    (INSIDE_CELL_BOUNDS if y<0, or OUTSIDE_CELL_BOUNDS if y>0).
+  const boundingRegion = outsideOfCell ?
+                         MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS :
+                         MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+
+  // Recompute soluteBounds after the move
+  const updatedBounds = solute.dimension.toBounds(
+    solute.position.x - solute.dimension.width / 2,
+    solute.position.y - solute.dimension.height / 2
+  );
+
+  // Collide with left wall
+  if ( updatedBounds.minX < boundingRegion.minX ) {
+    const overlap = boundingRegion.minX - updatedBounds.minX;
+    solute.position.x += overlap;
+    direction.x = Math.abs( direction.x );
+    solute.currentDirection.x = Math.abs( solute.currentDirection.x );
+    solute.targetDirection.x = Math.abs( solute.targetDirection.x );
+  }
+
+  // Collide with right wall
+  if ( updatedBounds.maxX > boundingRegion.maxX ) {
+    const overlap = updatedBounds.maxX - boundingRegion.maxX;
+    solute.position.x -= overlap;
+    direction.x = -Math.abs( direction.x );
+    solute.currentDirection.x = -Math.abs( solute.currentDirection.x );
+    solute.targetDirection.x = -Math.abs( solute.targetDirection.x );
+  }
+
+  // Collide with bottom wall
+  if ( updatedBounds.minY < boundingRegion.minY ) {
+    const overlap = boundingRegion.minY - updatedBounds.minY;
+    solute.position.y += overlap;
+    direction.y = Math.abs( direction.y );
+    solute.currentDirection.y = Math.abs( solute.currentDirection.y );
+    solute.targetDirection.y = Math.abs( solute.targetDirection.y );
+  }
+
+  // Collide with top wall
+  if ( updatedBounds.maxY > boundingRegion.maxY ) {
+    const overlap = updatedBounds.maxY - boundingRegion.maxY;
+    solute.position.y -= overlap;
+    direction.y = -Math.abs( direction.y );
+    solute.currentDirection.y = -Math.abs( solute.currentDirection.y );
+    solute.targetDirection.y = -Math.abs( solute.targetDirection.y );
+  }
 }
