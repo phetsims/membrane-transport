@@ -13,11 +13,12 @@ import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import TModel from '../../../../joist/js/TModel.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import Solute from './Solute.js';
@@ -27,7 +28,7 @@ type SelfOptions = EmptySelfOptions;
 
 type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class MembraneChannelsModel implements TModel {
+export default class MembraneChannelsModel extends PhetioObject {
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
@@ -44,6 +45,13 @@ export default class MembraneChannelsModel implements TModel {
   private readonly resetEmitter = new Emitter();
 
   public constructor( providedOptions: MembraneChannelsModelOptions ) {
+
+    const options = optionize<MembraneChannelsModelOptions, SelfOptions, PhetioObjectOptions>()( {
+      phetioType: MembraneChannelsModel.MembraneChannelsModelIO,
+      phetioState: true
+    }, providedOptions );
+
+    super( options );
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: SoluteTypes,
@@ -272,6 +280,17 @@ export default class MembraneChannelsModel implements TModel {
       return solute.type === soluteType && ( location === 'inside' ? solute.position.y < 0 : solute.position.y > 0 );
     } ).length;
   }
+
+  /**
+   * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
+   * Please see that documentation for more information.
+   */
+  public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
+    valueType: MembraneChannelsModel,
+    stateSchema: {
+      solutes: ReferenceArrayIO( Solute.SoluteIO )
+    }
+  } );
 }
 
 membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );
