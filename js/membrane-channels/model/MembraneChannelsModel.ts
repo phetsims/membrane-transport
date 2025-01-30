@@ -87,16 +87,29 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
     } );
 
-    // A random sample of solutes in the solutes array
-    for ( let i = 0; i < 30; i++ ) {
-      this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -100, 100 ), dotRandom.nextDoubleBetween( -100, 100 ) ), dotRandom.sample( SoluteTypes ) ) );
-    }
+    const populateInitialSolutes = () => {
+      // A random sample of solutes in the solutes array
+      for ( let i = 0; i < 30; i++ ) {
+        this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -100, 100 ), dotRandom.nextDoubleBetween( -100, 100 ) ), dotRandom.sample( SoluteTypes ) ) );
+      }
+    };
+
+    this.resetEmitter.addListener( () => {
+      this.solutes.length = 0;
+      populateInitialSolutes();
+    } );
+
+    populateInitialSolutes();
   }
 
+  /**
+   * Add a solute that will enter from a random location along the edge of the observation window.
+   */
   public addSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
-    const cellBounds = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
     for ( let i = 0; i < count; i++ ) {
-      this.solutes.push( new Solute( dotRandom.nextPointInBounds( cellBounds ), soluteType ) );
+      const x = dotRandom.nextDoubleBetween( MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minX, MembraneChannelsConstants.INSIDE_CELL_BOUNDS.maxX );
+      const y = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minY : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.maxY;
+      this.solutes.push( new Solute( new Vector2( x, y ), soluteType ) );
     }
   }
 
