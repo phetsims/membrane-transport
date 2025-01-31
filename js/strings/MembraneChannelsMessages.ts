@@ -17,7 +17,7 @@ type MembraneChannelsFluentType = {
 };
 
 const MembraneChannelsMessages = getFluentModule( {
-  "en": "soluteRadioButtonGroupHelpText = Choose solute then add or remove ((to inside or outside of membrane))."
+  "en": "soluteRadioButtonGroupHelpText = Choose solute then add or remove to inside or outside of membrane."
 } ) as unknown as MembraneChannelsFluentType;
 
 membraneChannels.register( 'MembraneChannelsMessages', MembraneChannelsMessages );
