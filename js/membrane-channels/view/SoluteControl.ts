@@ -10,6 +10,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & NodeOptions;
@@ -57,6 +58,14 @@ export default class SoluteControl extends Panel {
         opacity: 0,
         scale: 0.65
       },
+      accessibleName: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
+                      MembraneChannelsMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
+
+      helpText: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerHelpTextMessageProperty :
+                MembraneChannelsMessages.outsideMembraneSpinnerHelpTextMessageProperty,
+
+      accessibleRoleDescription: MembraneChannelsMessages.soluteSpinnerRoleDescriptionMessageProperty,
+
       tandem: options.tandem
     } );
 
