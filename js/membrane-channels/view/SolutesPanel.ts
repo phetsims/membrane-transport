@@ -11,7 +11,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import SoluteType, { getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
+import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
 
 /**
@@ -41,8 +41,7 @@ export default class SolutesPanel extends Node {
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),
         options: {
 
-          // TODO: Specify the names for each one
-          accessibleName: 'Oxygen, O2, nonpolar, small'
+          accessibleName: getSoluteAccessibleName( soluteType )
         },
         createNode: () => {
 

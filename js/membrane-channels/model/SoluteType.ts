@@ -47,3 +47,12 @@ export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ):
 export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): string => `${soluteType}RadioButton`;
 
 export const getSoluteSpinnerTandemName = ( soluteType: SoluteType ): string => `${soluteType}Spinner`;
+
+export const getSoluteAccessibleName = ( soluteType: SoluteType ): string => {
+  return soluteType === 'oxygen' ? 'Oxygen, O2, nonpolar, small' :
+         soluteType === 'carbonDioxide' ? 'Carbon Dioxide, CO2, nonpolar, small' :
+         soluteType === 'sodiumIon' ? 'Sodium Ion, Na, positive, small' :
+         soluteType === 'potassiumIon' ? 'Potassium Ion, K, positive, small' :
+         soluteType === 'glucose' ? 'Glucose, hexagonal ring, large' :
+         'Adenosine Triphosphate, ATP, complex, large';
+};
