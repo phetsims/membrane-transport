@@ -34,7 +34,7 @@
         "esbuild": "^0.24.2"
       },
       "scripts": {
-        "serve-dev": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundlefile.js --sourcemap --watch --servedir=.. --serve=80"
+        "serve-dev": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=80"
       },
       "phet": {
         "requirejsNamespace": "MEMBRANE_CHANNELS",
@@ -50,7 +50,13 @@
           "supportsDynamicLocale": true,
           "supportsInteractiveDescription": true,
           "supportsSound": true
-        }
+        },
+        "screenNameKeys": [
+          "MEMBRANE_CHANNELS/screen.simpleDiffusion",
+          "MEMBRANE_CHANNELS/screen.facilitatedDiffusion",
+          "MEMBRANE_CHANNELS/screen.activeTransport",
+          "MEMBRANE_CHANNELS/screen.playground"
+        ]
       }
     };
   window.phet.chipper.stringRepos =

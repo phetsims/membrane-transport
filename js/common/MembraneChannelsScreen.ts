@@ -5,31 +5,25 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PhetioProperty from '../../../axon/js/PhetioProperty.js';
+import Screen from '../../../joist/js/Screen.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import MembraneChannelsColors from '../common/MembraneChannelsColors.js';
 import membraneChannels from '../membraneChannels.js';
-import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
 import MembraneChannelsModel from './model/MembraneChannelsModel.js';
 import MembraneChannelsScreenView from './view/MembraneChannelsScreenView.js';
 
-type SelfOptions = EmptySelfOptions;
-
-type MembraneChannelsScreenOptions = SelfOptions & ScreenOptions;
-
 export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel, MembraneChannelsScreenView> {
 
-  public constructor( providedOptions: MembraneChannelsScreenOptions ) {
-
-    const options = optionize<MembraneChannelsScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: MembraneChannelsStrings.screen.nameStringProperty,
-      backgroundColorProperty: MembraneChannelsColors.outsideCellColorProperty
-    }, providedOptions );
+  public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem ) {
 
     super(
-      () => new MembraneChannelsModel( { tandem: options.tandem.createTandem( 'model' ) } ),
-      model => new MembraneChannelsScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
-      options
+      () => new MembraneChannelsModel( { tandem: tandem.createTandem( 'model' ) } ),
+      model => new MembraneChannelsScreenView( model, { tandem: tandem.createTandem( 'view' ) } ), {
+        name: nameProperty,
+        backgroundColorProperty: MembraneChannelsColors.outsideCellColorProperty,
+        tandem: tandem
+      }
     );
   }
 }
