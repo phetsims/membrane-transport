@@ -16,7 +16,10 @@ type StringsType = {
     'titleStringProperty': LocalizedStringProperty;
   };
   'screen': {
-    'nameStringProperty': LocalizedStringProperty;
+    'simpleDiffusionStringProperty': LocalizedStringProperty;
+    'facilitatedDiffusionStringProperty': LocalizedStringProperty;
+    'activeTransportStringProperty': LocalizedStringProperty;
+    'playgroundStringProperty': LocalizedStringProperty;
   };
   'oxygenStringProperty': LocalizedStringProperty;
   'carbonDioxideStringProperty': LocalizedStringProperty;
