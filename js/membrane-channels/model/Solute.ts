@@ -113,7 +113,7 @@ export default class Solute {
     },
     fromStateObject: ( stateObject: SoluteStateObject ) => {
       return new Solute(
-        stateObject.position,
+        new Vector2( stateObject.position.x, stateObject.position.y ),
         stateObject.type
       );
     }
