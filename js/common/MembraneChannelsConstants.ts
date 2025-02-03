@@ -8,8 +8,8 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import SoluteType, { SoluteTypes } from '../membrane-channels/model/SoluteType.js';
-import getSoluteNode from '../membrane-channels/view/solutes/getSoluteNode.js';
+import SoluteType, { SoluteTypes } from '../common/model/SoluteType.js';
+import getSoluteNode from '../common/view/solutes/getSoluteNode.js';
 import membraneChannels from '../membraneChannels.js';
 
 const OBSERVATION_WINDOW_WIDTH = 534;
