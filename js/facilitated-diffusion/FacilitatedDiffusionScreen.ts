@@ -11,7 +11,7 @@ import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
 export default class FacilitatedDiffusionScreen extends MembraneChannelsScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneChannelsStrings.screen.facilitatedDiffusionStringProperty, tandem );
+    super( MembraneChannelsStrings.screen.facilitatedDiffusionStringProperty, tandem, 'facilitatedDiffusion' );
   }
 }
 

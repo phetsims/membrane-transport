@@ -11,7 +11,7 @@ import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
 export default class PlaygroundScreen extends MembraneChannelsScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneChannelsStrings.screen.playgroundStringProperty, tandem );
+    super( MembraneChannelsStrings.screen.playgroundStringProperty, tandem, 'playground' );
   }
 
 }

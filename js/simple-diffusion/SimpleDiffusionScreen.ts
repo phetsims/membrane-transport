@@ -11,7 +11,7 @@ import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
 export default class SimpleDiffusionScreen extends MembraneChannelsScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneChannelsStrings.screen.simpleDiffusionStringProperty, tandem );
+    super( MembraneChannelsStrings.screen.simpleDiffusionStringProperty, tandem, 'simpleDiffusion' );
   }
 
 }

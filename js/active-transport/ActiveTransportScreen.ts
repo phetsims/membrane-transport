@@ -11,7 +11,7 @@ import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
 export default class ActiveTransportScreen extends MembraneChannelsScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneChannelsStrings.screen.activeTransportStringProperty, tandem );
+    super( MembraneChannelsStrings.screen.activeTransportStringProperty, tandem, 'activeTransport' );
   }
 }
 

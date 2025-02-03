@@ -17,7 +17,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { Circle, DragListener } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -46,7 +46,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
   );
 
   public constructor(
-    public readonly model: MembraneChannelsModel, providedOptions: MembraneChannelsScreenViewOptions ) {
+    public readonly model: MembraneChannelsModel,
+    featureSet: 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground',
+    providedOptions: MembraneChannelsScreenViewOptions ) {
 
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( options );
@@ -173,26 +175,30 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     realCircle.addInputListener( realCircleDragListener );
 
-    const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), event => {
-      realCircle.visible = true;
-      realCircle.moveToFront();
-      const viewPoint = this.globalToLocalPoint( event.pointer.point );
-      const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
-      myCirclePositionProperty.value = modelPoint;
+    const additionalPlayAreaOrder: Node[] = [];
+    if ( featureSet !== 'simpleDiffusion' ) {
+      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), event => {
+        realCircle.visible = true;
+        realCircle.moveToFront();
+        const viewPoint = this.globalToLocalPoint( event.pointer.point );
+        const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
+        myCirclePositionProperty.value = modelPoint;
 
-      realCircleDragListener.press( event );
+        realCircleDragListener.press( event );
 
-    } );
-    this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
+      } );
+      this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
-    membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
-    membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+      membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
+      membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
-    this.addChild( membraneChannelsAccordionBoxGroup );
+      this.addChild( membraneChannelsAccordionBoxGroup );
+      additionalPlayAreaOrder.push( membraneChannelsAccordionBoxGroup );
+    }
 
     // pdom order
     // TODO:Design - Identify which components go in each section.
-    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, membraneChannelsAccordionBoxGroup ];
+    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, ...additionalPlayAreaOrder ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 
     if ( phet.chipper.queryParameters.dev ) {
