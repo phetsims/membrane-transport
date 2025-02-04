@@ -8,6 +8,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -27,7 +28,7 @@ import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( tandem: Tandem, createCircle: ( event: PressListenerEvent ) => void ) {
+  public constructor( model: MembraneChannelsModel, tandem: Tandem, createCircle: ( event: PressListenerEvent ) => void ) {
 
     const fontSize = 18;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -46,28 +47,34 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
 
     const contentAlignGroup = new AlignGroup();
 
-    const accordionBoxes = [
-      new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( {
-        expandedDefaultValue: true,
-        titleNode: new Text( 'Leakage', { fontSize: fontSize } ),
-        tandem: tandem.createTandem( 'leakageAccordionBox' )
-      }, accordionBoxOptions ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
-        expandedDefaultValue: false,
-        titleNode: new Text( 'Voltage', { fontSize: fontSize } ),
-        tandem: tandem.createTandem( 'voltageAccordionBox' )
-      }, accordionBoxOptions ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
-        expandedDefaultValue: false,
-        titleNode: new Text( 'Ligand', { fontSize: fontSize } ),
-        tandem: tandem.createTandem( 'ligandAccordionBox' )
-      }, accordionBoxOptions ) ),
-      new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
-        expandedDefaultValue: false,
+    const accordionBoxes: AccordionBox[] = [];
+
+    if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
+      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( {
+          expandedDefaultValue: true,
+          titleNode: new Text( 'Leakage', { fontSize: fontSize } ),
+          tandem: tandem.createTandem( 'leakageAccordionBox' )
+        }, accordionBoxOptions ) ),
+        new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
+          expandedDefaultValue: false,
+          titleNode: new Text( 'Voltage', { fontSize: fontSize } ),
+          tandem: tandem.createTandem( 'voltageAccordionBox' )
+        }, accordionBoxOptions ) ),
+        new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
+          expandedDefaultValue: false,
+          titleNode: new Text( 'Ligand', { fontSize: fontSize } ),
+          tandem: tandem.createTandem( 'ligandAccordionBox' )
+        }, accordionBoxOptions ) ) );
+    }
+
+    if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
+      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: model.featureSet === 'activeTransport',
         titleNode: new Text( 'Active', { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'activeAccordionBox' )
-      }, accordionBoxOptions ) )
-    ];
+      }, accordionBoxOptions ) ) );
+    }
+
     accordionBoxes.forEach( box => {
       box.expandedProperty.link( expanded => {
         if ( expanded ) {
