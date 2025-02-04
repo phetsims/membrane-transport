@@ -10,12 +10,13 @@ import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import MembraneChannelsColors from '../common/MembraneChannelsColors.js';
 import membraneChannels from '../membraneChannels.js';
+import MembraneChannelsFeatureSet from './MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from './model/MembraneChannelsModel.js';
 import MembraneChannelsScreenView from './view/MembraneChannelsScreenView.js';
 
 export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel, MembraneChannelsScreenView> {
 
-  public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem, featureSet: 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground' ) {
+  public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem, featureSet: MembraneChannelsFeatureSet ) {
 
     super(
       () => new MembraneChannelsModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),

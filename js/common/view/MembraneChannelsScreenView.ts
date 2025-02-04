@@ -132,7 +132,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
-    const solutesPanel = new SolutesPanel( model.selectedSoluteProperty, options.tandem.createTandem( 'solutesPanel' ) );
+    const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, options.tandem.createTandem( 'solutesPanel' ) );
 
     // TODO: Move to options?
     solutesPanel.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;

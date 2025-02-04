@@ -11,6 +11,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
+import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
 
@@ -21,7 +22,7 @@ import getSoluteNode from './solutes/getSoluteNode.js';
  */
 
 export default class SolutesPanel extends Node {
-  public constructor( selectedSoluteProperty: PhetioProperty<SoluteType>, tandem: Tandem ) {
+  public constructor( featureSet: MembraneChannelsFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, tandem: Tandem ) {
     super( {
       tandem: tandem
     } );
@@ -33,9 +34,11 @@ export default class SolutesPanel extends Node {
 
     const alignGroup = new AlignGroup();
 
+    const soluteTypes = getFeatureSetSoluteTypes( featureSet );
+
     // TODO: For a designer, when studio hides a radio button, the layout isn't perfect. If we need to do something
     // more sophisticated, perhaps we can consult with Marla or Jonathan
-    const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, SoluteTypes.map( soluteType => {
+    const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, soluteTypes.map( soluteType => {
       return {
         value: soluteType,
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),

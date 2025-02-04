@@ -24,6 +24,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsFeatureSet from '../MembraneChannelsFeatureSet.js';
 import Solute from './Solute.js';
 import SoluteType, { SoluteTypes } from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
@@ -52,7 +53,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   private readonly resetEmitter = new Emitter();
 
   public constructor(
-    public readonly featureSet: 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground',
+    public readonly featureSet: MembraneChannelsFeatureSet,
     providedOptions: MembraneChannelsModelOptions ) {
 
     const options = optionize<MembraneChannelsModelOptions, SelfOptions, PhetioObjectOptions>()( {
