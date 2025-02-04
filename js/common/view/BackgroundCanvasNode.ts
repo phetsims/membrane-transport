@@ -14,7 +14,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { CanvasNode } from '../../../../scenery/js/imports.js';
+import { CanvasNode, rasterized } from '../../../../scenery/js/imports.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -82,7 +82,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     // @ts-expect-error - TODO: Can rasterized return an Image if wrap is false?
     // public rasterized( options?: RasterizedOptions & { wrap?: true } ): Node;
     // public rasterized( options: RasterizedOptions & { wrap: false } ): Image;
-    return iconNode.rasterized( { wrap: false, resolution: 4 } ).image;
+    return rasterized( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 
   // Convenience functions to move and line in model coordinates
