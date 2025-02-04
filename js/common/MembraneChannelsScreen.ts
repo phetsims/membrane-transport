@@ -18,8 +18,8 @@ export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel
   public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem, featureSet: 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground' ) {
 
     super(
-      () => new MembraneChannelsModel( { tandem: tandem.createTandem( 'model' ) } ),
-      model => new MembraneChannelsScreenView( model, featureSet, { tandem: tandem.createTandem( 'view' ) } ), {
+      () => new MembraneChannelsModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),
+      model => new MembraneChannelsScreenView( model, { tandem: tandem.createTandem( 'view' ) } ), {
         name: nameProperty,
         backgroundColorProperty: MembraneChannelsColors.outsideCellColorProperty,
         tandem: tandem

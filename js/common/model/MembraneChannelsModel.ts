@@ -11,6 +11,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -18,6 +19,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
@@ -42,11 +44,16 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly insideSoluteCountProperties!: Record<SoluteType, NumberProperty>;
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
+  public readonly isShowingMembranePotentialLabelsProperty: PhetioProperty<boolean>;
+  public readonly membraneVoltagePotentialProperty: PhetioProperty<number>;
+
   public readonly solutes: Solute[] = [];
 
   private readonly resetEmitter = new Emitter();
 
-  public constructor( providedOptions: MembraneChannelsModelOptions ) {
+  public constructor(
+    public readonly featureSet: 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground',
+    providedOptions: MembraneChannelsModelOptions ) {
 
     const options = optionize<MembraneChannelsModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: MembraneChannelsModel.MembraneChannelsModelIO,
@@ -72,6 +79,16 @@ export default class MembraneChannelsModel extends PhetioObject {
       phetioFeatured: true
     } );
     this.resetEmitter.addListener( () => this.isPlayingProperty.reset() );
+
+    this.isShowingMembranePotentialLabelsProperty = new BooleanProperty( false, {
+      tandem: this.featureSet === 'facilitatedDiffusion' || this.featureSet === 'playground' ? providedOptions.tandem.createTandem( 'isShowingMembranePotentialLabelsProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true
+    } );
+
+    this.membraneVoltagePotentialProperty = new NumberProperty( -70, {
+      tandem: this.featureSet === 'facilitatedDiffusion' || this.featureSet === 'playground' ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true
+    } );
 
     // TODO
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

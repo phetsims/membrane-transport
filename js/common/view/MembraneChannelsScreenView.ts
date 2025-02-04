@@ -25,6 +25,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteSpinnerTandemName, SoluteTypes } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
+import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 import SoluteControl from './SoluteControl.js';
@@ -47,7 +48,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
   public constructor(
     public readonly model: MembraneChannelsModel,
-    featureSet: 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground',
     providedOptions: MembraneChannelsScreenViewOptions ) {
 
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -176,7 +176,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     realCircle.addInputListener( realCircleDragListener );
 
     const additionalPlayAreaOrder: Node[] = [];
-    if ( featureSet !== 'simpleDiffusion' ) {
+    if ( model.featureSet !== 'simpleDiffusion' ) {
       const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), event => {
         realCircle.visible = true;
         realCircle.moveToFront();
@@ -194,6 +194,14 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
       this.addChild( membraneChannelsAccordionBoxGroup );
       additionalPlayAreaOrder.push( membraneChannelsAccordionBoxGroup );
+    }
+
+    if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
+      const membranePotentialPanel = new MembranePotentialPanel( model, options.tandem.createTandem( 'membranePotentialPanel' ) );
+      membranePotentialPanel.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+      membranePotentialPanel.right = this.layoutBounds.right - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
+      this.addChild( membranePotentialPanel );
+      additionalPlayAreaOrder.push( membranePotentialPanel );
     }
 
     // pdom order
