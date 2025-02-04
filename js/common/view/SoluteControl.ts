@@ -11,6 +11,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
+import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & NodeOptions;
@@ -34,10 +35,12 @@ export default class SoluteControl extends Panel {
 
     // Create a proxy property for the FineCoarseSpinner
     // When the proxy Property changes, create new solutes based on that value
-    // TODO: We will need to update this Property to reflect the number of solutes in the cellular area.
-    const userControlledConcentrationProperty = new NumberProperty( 0 );
+    const userControlledCountProperty = new NumberProperty( 0 );
 
-    userControlledConcentrationProperty.lazyLink( ( value, oldValue ) => {
+    const actualCountProperty = side === 'inside' ? model.insideSoluteCountProperties[ soluteType ] :
+                                model.outsideSoluteCountProperties[ soluteType ];
+
+    userControlledCountProperty.lazyLink( ( value, oldValue ) => {
       const difference = value - oldValue;
       if ( difference > 0 ) {
 
@@ -51,7 +54,20 @@ export default class SoluteControl extends Panel {
       }
     } );
 
-    const spinner = new FineCoarseSpinner( userControlledConcentrationProperty, {
+    const qualitativeCountProperty = new DerivedProperty( [ actualCountProperty ], actualCount => {
+      return actualCount === 0 ? 'none' :
+             actualCount === 1 ? 'one' :
+             actualCount < 10 ? 'few' :
+             actualCount < 20 ? 'some' :
+             'many';
+    } );
+
+    const messageProperty = new PatternMessageProperty( MembraneChannelsMessages.soluteSpinnerObjectResponsePatternMessageProperty, {
+      amount: qualitativeCountProperty,
+      soluteType: model.selectedSoluteProperty
+    } );
+
+    const spinner = new FineCoarseSpinner( userControlledCountProperty, {
       deltaFine: 2,
       deltaCoarse: 10,
       numberDisplayOptions: {
@@ -65,6 +81,11 @@ export default class SoluteControl extends Panel {
                 MembraneChannelsMessages.outsideMembraneSpinnerHelpTextMessageProperty,
 
       accessibleRoleDescription: MembraneChannelsMessages.soluteSpinnerRoleDescriptionMessageProperty,
+
+      pdomCreateAriaValueText: ( value: number ) => {
+        return messageProperty;
+      },
+      pdomDependencies: [ messageProperty ],
 
       tandem: options.tandem
     } );
