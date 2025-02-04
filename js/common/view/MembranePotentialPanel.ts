@@ -1,8 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Range from '../../../../dot/js/Range.js';
-import NumberControl from '../../../../scenery-phet/js/NumberControl.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -18,25 +17,45 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 
 export default class MembranePotentialPanel extends Panel {
   public constructor( model: MembraneChannelsModel, tandem: Tandem ) {
+
+    const rectGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
+      value: '-70',
+      createNode: tandem => new Text( '-70' )
+    },
+      {
+        value: '-50',
+        createNode: tandem => new Text( '-50' )
+      },
+      {
+        value: '+30',
+        createNode: tandem => new Text( '+30' )
+      } ], {
+      orientation: 'horizontal'
+    } );
+
     const content = new VBox( {
+      spacing: 10,
       align: 'left',
       children: [
         new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneChannelsStrings.membranePotentialLabelsStringProperty ), {
           tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' )
         } ),
+        new Text( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty ),
 
-        new NumberControl( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty, model.membraneVoltagePotentialProperty, new Range( -70, 30 ), {
-          delta: 50,
-          sliderOptions: {
+        rectGroup
 
-            majorTicks: [
-              { value: -70, label: new Text( '-70' ) },
-              { value: -50, label: new Text( '-50' ) },
-              { value: +30, label: new Text( '+30' ) }
-            ]
-          },
-          tandem: tandem.createTandem( 'membraneVoltagePotentialNumberControl' )
-        } )
+        // new NumberControl( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty, model.membraneVoltagePotentialProperty, new Range( -70, 30 ), {
+        //   delta: 50,
+        //   sliderOptions: {
+        //
+        //     majorTicks: [
+        //       { value: -70, label: new Text( '-70' ) },
+        //       { value: -50, label: new Text( '-50' ) },
+        //       { value: +30, label: new Text( '+30' ) }
+        //     ]
+        //   },
+        //   tandem: tandem.createTandem( 'membraneVoltagePotentialNumberControl' )
+        // } )
       ]
     } );
     super( content, {
