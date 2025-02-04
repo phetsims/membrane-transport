@@ -257,6 +257,13 @@ export default class BackgroundCanvasNode extends CanvasNode {
     }
   }
 
+  // TODO: Not working yet
+  private drawCharges( context: CanvasRenderingContext2D ): void {
+    for ( let i = -100; i < 100; i += 10 ) {
+      this.drawCrosshairsAt( context, new Vector2( i, 100 ) );
+    }
+  }
+
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
     // Draw the background: upper half for outside cell, lower half for inside cell.
@@ -264,6 +271,10 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
     context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
     context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+
+    if ( this.model.isShowingMembranePotentialLabelsProperty.value ) {
+      this.drawCharges( context );
+    }
 
     this.drawSolutes( context );
 
