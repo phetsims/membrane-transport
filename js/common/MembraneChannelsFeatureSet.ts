@@ -26,3 +26,7 @@ export default MembraneChannelsFeatureSet;
 export const getFeatureSetSoluteTypes = ( featureSet: MembraneChannelsFeatureSet ): readonly SoluteType[] => {
   return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypes : SoluteTypes.filter( type => type !== 'atp' );
 };
+
+export const getFeatureSetHasVoltages = ( featureSet: MembraneChannelsFeatureSet ): boolean => {
+  return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
+};

@@ -24,7 +24,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsFeatureSet from '../MembraneChannelsFeatureSet.js';
+import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages } from '../MembraneChannelsFeatureSet.js';
 import Solute from './Solute.js';
 import SoluteType, { SoluteTypes } from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
@@ -82,12 +82,12 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.resetEmitter.addListener( () => this.isPlayingProperty.reset() );
 
     this.isShowingMembranePotentialLabelsProperty = new BooleanProperty( false, {
-      tandem: this.featureSet === 'facilitatedDiffusion' || this.featureSet === 'playground' ? providedOptions.tandem.createTandem( 'isShowingMembranePotentialLabelsProperty' ) : Tandem.OPT_OUT,
+      tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'isShowingMembranePotentialLabelsProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
 
     this.membraneVoltagePotentialProperty = new StringUnionProperty( '-70', {
-      tandem: this.featureSet === 'facilitatedDiffusion' || this.featureSet === 'playground' ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
+      tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
       validValues: [ '-70', '-50', '30' ],
       phetioFeatured: true
     } );

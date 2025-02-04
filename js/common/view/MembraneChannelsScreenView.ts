@@ -21,6 +21,7 @@ import { Circle, DragListener, Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import { getFeatureSetHasVoltages } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteSpinnerTandemName, SoluteTypes } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
@@ -196,7 +197,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       additionalPlayAreaOrder.push( membraneChannelsAccordionBoxGroup );
     }
 
-    if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
+    if ( getFeatureSetHasVoltages( model.featureSet ) ) {
       const membranePotentialPanel = new MembranePotentialPanel( model, options.tandem.createTandem( 'membranePotentialPanel' ) );
       membranePotentialPanel.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
       membranePotentialPanel.right = this.layoutBounds.right - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
