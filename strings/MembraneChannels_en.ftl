@@ -9,12 +9,12 @@ insideMembraneSpinnerHelpText = Add or remove chosen solute to inside of membran
 soluteSpinnerRoleDescription = solute amount adjuster
 
 solute = { $soluteType ->
-  [oxygen] oxygen
-  [carbonDioxide] carbon dioxide
-  [sodiumIon] sodium ion
-  [potassiumIon] potassium ion
-  [glucose] glucose
-  *[atp] ATP
+  [oxygen] oxygen molecules
+  [carbonDioxide] carbon dioxide molecules
+  [sodiumIon] sodium ions
+  [potassiumIon] potassium ions
+  [glucose] glucose molecules
+  *[atp] ATP molecules
 }
 
 ## TODO You cannot use selectors in placeables with terms. Catch that during modulify.
@@ -25,4 +25,4 @@ soluteSpinnerObjectResponsePattern = { $amount ->
   [few] a few
   [some] some
   *[many] many
-} { solute } molecules
+} { solute }
