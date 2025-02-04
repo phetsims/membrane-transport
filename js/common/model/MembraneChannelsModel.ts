@@ -12,7 +12,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -46,7 +45,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
   public readonly isShowingMembranePotentialLabelsProperty: PhetioProperty<boolean>;
-  public readonly membraneVoltagePotentialProperty: PhetioProperty<'-70' | '-50' | '+30'>;
+  public readonly membraneVoltagePotentialProperty: PhetioProperty<'-70' | '-50' | '30'>;
 
   public readonly solutes: Solute[] = [];
 
@@ -86,8 +85,9 @@ export default class MembraneChannelsModel extends PhetioObject {
       phetioFeatured: true
     } );
 
-    this.membraneVoltagePotentialProperty = new Property( '-70', {
+    this.membraneVoltagePotentialProperty = new StringUnionProperty( '-70', {
       tandem: this.featureSet === 'facilitatedDiffusion' || this.featureSet === 'playground' ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
+      validValues: [ '-70', '-50', '30' ],
       phetioFeatured: true
     } );
 

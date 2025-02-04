@@ -18,19 +18,23 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 export default class MembranePotentialPanel extends Panel {
   public constructor( model: MembraneChannelsModel, tandem: Tandem ) {
 
-    const rectGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
+    const membraneVoltagePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
       value: '-70',
-      createNode: tandem => new Text( '-70' )
+      createNode: tandem => new Text( '-70' ),
+      tandemName: 'minus70RadioButton'
     },
       {
         value: '-50',
-        createNode: tandem => new Text( '-50' )
+        createNode: tandem => new Text( '-50' ),
+        tandemName: 'minus50RadioButton'
       },
       {
-        value: '+30',
-        createNode: tandem => new Text( '+30' )
+        value: '30',
+        createNode: tandem => new Text( '+30' ),
+        tandemName: 'plus30RadioButton'
       } ], {
-      orientation: 'horizontal'
+      orientation: 'horizontal',
+      tandem: tandem.createTandem( 'membraneVoltagePotentialRadioButtonGroup' )
     } );
 
     const content = new VBox( {
@@ -42,7 +46,7 @@ export default class MembranePotentialPanel extends Panel {
         } ),
         new Text( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty ),
 
-        rectGroup
+        membraneVoltagePotentialRadioButtonGroup
 
         // new NumberControl( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty, model.membraneVoltagePotentialProperty, new Range( -70, 30 ), {
         //   delta: 50,
