@@ -12,7 +12,7 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
-import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, SoluteTypes, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
+import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
 
 /**
