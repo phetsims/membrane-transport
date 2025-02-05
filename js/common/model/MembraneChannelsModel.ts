@@ -313,7 +313,10 @@ export default class MembraneChannelsModel extends PhetioObject {
       solutes: ReferenceArrayIO( Solute.SoluteIO ),
       fluxEntries: ReferenceArrayIO( FluxEntryIO ),
       time: NumberIO,
-      soluteTypeToSmoothedFlux: ObjectLiteralIO // TODO: Schema for this?
+
+      // TODO: Schema for this?
+      // TODO: Better name, since it will be in phet-io state?
+      soluteTypeToSmoothedFlux: ObjectLiteralIO
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Solute.SoluteIO ).applyState( model.solutes, state.solutes );
