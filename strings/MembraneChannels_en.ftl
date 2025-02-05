@@ -17,8 +17,6 @@ solute = { $soluteType ->
   *[atp] ATP molecules
 }
 
-## TODO You cannot use selectors in placeables with terms. Catch that during modulify.
-## TODO Can we catch if you forget a default * case during modulify?
 soluteSpinnerObjectResponsePattern = { $amount ->
   [none] no
   [one] one
