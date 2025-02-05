@@ -101,7 +101,9 @@ export default class SoluteBarChartNode extends Node {
       const alpha = dt / ( smoothingTimeConstant + dt );
       smoothedNet = alpha * newNet + ( 1 - alpha ) * smoothedNet;
       arrow.setTailAndTip( 80, 0, 80, smoothedNet * 20 );
-      arrow.centerY = BOX_HEIGHT / 2;
+      if ( !arrow.bounds.isEmpty() ) {
+        arrow.centerY = BOX_HEIGHT / 2;
+      }
     } );
 
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
