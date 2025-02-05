@@ -257,11 +257,36 @@ export default class BackgroundCanvasNode extends CanvasNode {
     }
   }
 
-  // TODO: Not working yet
   private drawCharges( context: CanvasRenderingContext2D ): void {
-    for ( let i = -100; i < 100; i += 10 ) {
-      this.drawCrosshairsAt( context, new Vector2( i, 100 ) );
+    const numberOfCharges = 18;
+    const margin = 5;
+    const separation = ( MembraneChannelsConstants.MEMBRANE_BOUNDS.width - margin * 2 ) / ( numberOfCharges - 1 );
+
+    for ( let i = 0; i < numberOfCharges; i++ ) {
+      this.drawSign( context, '+', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, 15 ) );
     }
+    for ( let i = 0; i < numberOfCharges; i++ ) {
+      this.drawSign( context, '-', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, -15 ) );
+    }
+  }
+
+  /**
+   * For debugging, to see where model points are on the canvas.
+   * @param context
+   * @param point - in model coordinates
+   */
+  private drawSign( context: CanvasRenderingContext2D, sign: '+' | '-', point: Vector2 ): void {
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    const radius = 2;
+    context.beginPath();
+    if ( sign === '+' ) {
+      this.moveTo( context, point.x, point.y - radius );
+      this.lineTo( context, point.x, point.y + radius );
+    }
+    this.moveTo( context, point.x - radius, point.y );
+    this.lineTo( context, point.x + radius, point.y );
+    context.stroke();
   }
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
