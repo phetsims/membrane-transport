@@ -30,6 +30,8 @@ import Solute from './Solute.js';
 import SoluteType from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -40,6 +42,23 @@ type FluxEntry = {
   time: number;
   direction: 'inward' | 'outward';
 };
+
+/**
+ * The IOType that lets us track the flux of solutes in PhET-IO state.
+ */
+const FluxEntryIO = new IOType<FluxEntry, FluxEntry>( 'SoluteIO', {
+  isValidValue: value => {
+    return value.hasOwnProperty( 'soluteType' ) && value.hasOwnProperty( 'time' ) && value.hasOwnProperty( 'direction' );
+  },
+  stateSchema: {
+    soluteType: StringIO,
+    time: NumberIO,
+    direction: StringIO
+  },
+  fromStateObject: ( stateObject: FluxEntry ) => {
+    return stateObject;
+  }
+} );
 
 export default class MembraneChannelsModel extends PhetioObject {
 
@@ -60,9 +79,13 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   private readonly resetEmitter = new Emitter();
 
-  // This is overwritten with a filter to prune old entries
-  private recentSoluteFluxEntries: FluxEntry[] = []; // TODO (phet-io): This DOES need to be stateful.
+  // The flux entries are used to track the recent flux of solutes through the membrane.
+  private readonly fluxEntries: FluxEntry[] = []; // TODO (phet-io): This DOES need to be stateful.
   private time = 0; // TODO (phet-io): This DOES need to be instrumented to support the above TODO.
+
+  private readonly fluxSmoothingTimeConstant = 0.25;
+
+  private soluteTypeToSmoothedFlux = {} as Record<SoluteType, number>;
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -107,12 +130,10 @@ export default class MembraneChannelsModel extends PhetioObject {
       phetioFeatured: true
     } );
 
-    this.outsideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
-    this.insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
-
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
+      this.soluteTypeToSmoothedFlux[ soluteType ] = 0;
     } );
 
     if ( MembraneChannelsQueryParameters.defaultSolutes ) {
@@ -217,19 +238,34 @@ export default class MembraneChannelsModel extends PhetioObject {
         }
       } );
 
-      // Prune any recentSoluteFlux that is more than 1000ms old
-      this.recentSoluteFluxEntries = this.recentSoluteFluxEntries.filter( fluxEntry => this.time - fluxEntry.time < 1 );
+      // Prune any recentSoluteFlux that is more than 1000ms old.
+      this.fluxEntries.slice().forEach( fluxEntry => {
+        if ( this.time - fluxEntry.time > 1 ) {
+          this.fluxEntries.splice( this.fluxEntries.indexOf( fluxEntry ), 1 );
+        }
+      } );
 
       // track which solutes changed sign of y value. Do this after pruning, to speed up the pruning slightly
       this.solutes.forEach( solute => {
         if ( soluteInitialYValues.has( solute ) &&
              soluteInitialYValues.get( solute )! * solute.position.y < 0 ) {
-          this.recentSoluteFluxEntries.push( {
+          this.fluxEntries.push( {
             soluteType: solute.type,
             time: this.time,
             direction: solute.position.y < 0 ? 'inward' : 'outward'
           } );
         }
+      } );
+
+      const fluxSmoothingAlpha = dt / ( this.fluxSmoothingTimeConstant + dt );
+
+      getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
+
+        const recentFlux = this.fluxEntries.filter( fluxEntry => fluxEntry.soluteType === soluteType ).reduce( ( sum, fluxEntry ) => {
+          return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
+        }, 0 );
+
+        this.soluteTypeToSmoothedFlux[ soluteType ] = fluxSmoothingAlpha * recentFlux + ( 1 - fluxSmoothingAlpha ) * this.soluteTypeToSmoothedFlux[ soluteType ];
       } );
     }
 
@@ -240,10 +276,8 @@ export default class MembraneChannelsModel extends PhetioObject {
    * Sum up all of the flux history for a given solute type. Positive values indicate that the solute has passed
    * through the membrane from the outside to the inside, and negative values indicate the opposite.
    */
-  public getRecentSoluteFlux( soluteType: SoluteType ): number {
-    return this.recentSoluteFluxEntries.filter( fluxEntry => fluxEntry.soluteType === soluteType ).reduce( ( sum, fluxEntry ) => {
-      return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
-    }, 0 );
+  public getRecentSoluteFluxWithSmoothing( soluteType: SoluteType ): number {
+    return this.soluteTypeToSmoothedFlux[ soluteType ];
   }
 
   private updateSoluteCounts(): void {
@@ -274,7 +308,9 @@ export default class MembraneChannelsModel extends PhetioObject {
   public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
     valueType: MembraneChannelsModel,
     stateSchema: {
-      solutes: ReferenceArrayIO( Solute.SoluteIO )
+      solutes: ReferenceArrayIO( Solute.SoluteIO ),
+      fluxEntries: ReferenceArrayIO( FluxEntryIO ),
+      time: NumberIO
     }
   } );
 }

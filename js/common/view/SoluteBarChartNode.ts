@@ -86,17 +86,12 @@ export default class SoluteBarChartNode extends Node {
     //   arrow.centerY = BOX_HEIGHT / 2;
     // } );
 
-    // Pseudocode for EMA in the view
-    let smoothedNet = 0;
-    const smoothingTimeConstant = 0.25;
     this.stepEmitter.addListener( dt => {
 
       // Net positive is into the cell
       // TODO: Should this be smoothed out?
       // TODO: How to normalize?
-      const newNet = model.getRecentSoluteFlux( soluteType );
-      const alpha = dt / ( smoothingTimeConstant + dt );
-      smoothedNet = alpha * newNet + ( 1 - alpha ) * smoothedNet;
+      const smoothedNet = model.getRecentSoluteFluxWithSmoothing( soluteType );
       if ( Math.abs( smoothedNet ) > 0.01 ) {
         arrow.visible = true;
         arrow.setTailAndTip( 80, 0, 80, smoothedNet * 20 );
