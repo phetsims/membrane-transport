@@ -147,14 +147,14 @@ export default class MembraneChannelsModel extends PhetioObject {
   public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
     const cellBounds = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
 
-    // TODO: The design calls for removing the randomly (not the most recent ones)
-    for ( let i = 0; i < count; i++ ) {
-      const index = this.solutes.findIndex( solute => {
-        return solute.type === soluteType && cellBounds.containsPoint( solute.position );
-      } );
-      if ( index !== -1 ) {
-        this.solutes.splice( index, 1 );
-      }
+    const removableSolutes = this.solutes.filter( solute => solute.type === soluteType && cellBounds.containsPoint( solute.position ) );
+
+    // So that solutes are randomly removed instead of removing the oldest ones.
+    const shuffledRemovables = dotRandom.shuffle( removableSolutes );
+
+    for ( let i = 0; i < count && i < shuffledRemovables.length; i++ ) {
+      const index = this.solutes.indexOf( shuffledRemovables[ i ] );
+      this.solutes.splice( index, 1 );
     }
   }
 
