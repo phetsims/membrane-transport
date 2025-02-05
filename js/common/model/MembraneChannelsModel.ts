@@ -33,6 +33,12 @@ type SelfOptions = EmptySelfOptions;
 
 type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
+type TPassage = {
+  soluteType: SoluteType;
+  time: number;
+  direction: 'inward' | 'outward';
+};
+
 export default class MembraneChannelsModel extends PhetioObject {
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -51,6 +57,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly solutes: Solute[] = [];
 
   private readonly resetEmitter = new Emitter();
+  private passageHistory: TPassage[] = []; // TODO: OK to be non-readonly? For the filter. // TODO: PhET-iO, or is this transient?
+  private time = 0; // TODO: PhET-iO?
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -109,7 +117,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     const populateInitialSolutes = () => {
       // A random sample of solutes in the solutes array
       for ( let i = 0; i < 30; i++ ) {
-        this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -100, 100 ), dotRandom.nextDoubleBetween( -100, 100 ) ), dotRandom.sample( SoluteTypes ) ) );
+        this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( SoluteTypes ) ) );
       }
     };
 
@@ -167,6 +175,14 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     if ( this.isPlayingProperty.value ) {
 
+      this.time += dt;
+
+      // capture the initial y value of each solute. This is the preferable alternative to having to remember to check
+      // in each place a solute's y value is changed.
+      const soluteInitialYValues = new Map<Solute, number>();
+      this.solutes.forEach( solute => soluteInitialYValues.set( solute, solute.position.y ) );
+
+
       this.solutes.forEach( solute => {
         if ( solute.mode === 'randomWalk' ) {
           stepSoluteRandomWalk( solute, dt );
@@ -201,9 +217,34 @@ export default class MembraneChannelsModel extends PhetioObject {
           }
         }
       } );
+
+      // Prune any passageHistory that is more than 1000ms old
+      this.passageHistory = this.passageHistory.filter( passage => this.time - passage.time < 1 );
+
+      // track which solutes changed sign of y value. Do this after pruning, to speed up the pruning slightly
+      this.solutes.forEach( solute => {
+        if ( soluteInitialYValues.has( solute ) &&
+             soluteInitialYValues.get( solute )! * solute.position.y < 0 ) {
+          this.passageHistory.push( {
+            soluteType: solute.type,
+            time: this.time,
+            direction: solute.position.y < 0 ? 'inward' : 'outward'
+          } );
+        }
+      } );
     }
 
     this.updateSoluteCounts();
+  }
+
+  /**
+   * Sum up all of the passage history for a given solute type. Positive values indicate that the solute has passed
+   * through the membrane from the outside to the inside, and negative values indicate the opposite.
+   */
+  public getNetPassageHistory( soluteType: SoluteType ): number {
+    return this.passageHistory.filter( passage => passage.soluteType === soluteType ).reduce( ( sum, passage ) => {
+      return sum + ( passage.direction === 'inward' ? 1 : -1 );
+    }, 0 );
   }
 
   private updateSoluteCounts(): void {

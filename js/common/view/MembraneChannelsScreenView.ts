@@ -42,6 +42,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
   private readonly observationWindow: ObservationWindow;
 
   private readonly resetEmitter = new Emitter();
+  private readonly stepEmitter = new Emitter<[ number ]>( {
+    parameters: [ { valueType: 'number' } ]
+  } );
 
   private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     new Vector2( 0, 0 ),
@@ -68,6 +71,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( macroCellNode );
 
     this.observationWindow = new ObservationWindow( model, this.observationWindowModelViewTransform, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS );
+    this.stepEmitter.addListener( dt => this.observationWindow.step( dt ) );
 
     // Note: x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
     // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width
@@ -126,6 +130,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( soluteBarChartsAccordionBox );
+    this.stepEmitter.addListener( dt => soluteBarChartsAccordionBox.stepEmitter.emit( dt ) );
 
     const realCircle = new Circle( 15, {
       fill: 'rgba( 0,0,255,0.5)',
@@ -242,7 +247,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
-    this.observationWindow.step( dt );
+    this.stepEmitter.emit( dt );
   }
 }
 

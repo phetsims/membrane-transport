@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Rectangle, Text, TextOptions } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
@@ -22,6 +23,8 @@ type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
  */
 export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
+  public readonly stepEmitter: Emitter<[ number ]>;
+
   // TODO: Just pass the part of the model needed here?
   public constructor( model: MembraneChannelsModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
@@ -40,6 +43,10 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     const contentNode = new Rectangle( 0, 0, contentWidth, 100, {
       stroke: 'black',
       lineWidth: 1
+    } );
+
+    const stepEmitter = new Emitter<[ number ]>( {
+      parameters: [ { valueType: 'number' } ]
     } );
 
     // the top half is extracelluar
@@ -63,7 +70,11 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( insideText );
 
     const hbox = new HBox( {
-      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => new SoluteBarChartNode( model, soluteType, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) ) ),
+      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => {
+        const soluteBarChartNode = new SoluteBarChartNode( model, soluteType, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) );
+        stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
+        return soluteBarChartNode;
+      } ),
       spacing: 30,
       left: 50
     } );
@@ -79,6 +90,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     } );
 
     super( contentNode, options );
+    this.stepEmitter = stepEmitter;
   }
 }
 membraneChannels.register( 'SoluteBarChartsAccordionBox', SoluteBarChartsAccordionBox );

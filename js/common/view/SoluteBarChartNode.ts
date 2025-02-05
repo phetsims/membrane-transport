@@ -8,6 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -26,6 +27,9 @@ const BOX_HEIGHT = 100;
 const MAX_SOLUTES = 200;
 
 export default class SoluteBarChartNode extends Node {
+  public readonly stepEmitter = new Emitter<[ number ]>( {
+    parameters: [ { valueType: 'number' } ]
+  } );
   public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
     super( {
 
@@ -68,10 +72,36 @@ export default class SoluteBarChartNode extends Node {
       lineWidth: barLineWidth,
       top: BOX_HEIGHT / 2 - barLineWidth
     } );
-    const arrow = new ArrowNode( 80, BOX_HEIGHT / 2, 80, 20, {
+    const arrow = new ArrowNode( 80, 0, 80, 0, {
       fill: fillColorProperty,
       stroke: 'black',
       centerY: BOX_HEIGHT / 2
+    } );
+
+    // // Update the arrow when the passage history changes
+    // this.stepEmitter.addListener( dt => {
+    //
+    //   // Net positive is into the cell
+    //   // TODO: Should this be smoothed out?
+    //   // TODO: How to normalize?
+    //   const historyAccumulation = model.getNetPassageHistory( soluteType );
+    //   arrow.setTailAndTip( 80, 0, 80, historyAccumulation * 20 );
+    //   arrow.centerY = BOX_HEIGHT / 2;
+    // } );
+
+    // Pseudocode for EMA in the view
+    let smoothedNet = 0;
+    const smoothingTimeConstant = 0.25;
+    this.stepEmitter.addListener( dt => {
+
+      //   // Net positive is into the cell
+      //   // TODO: Should this be smoothed out?
+      //   // TODO: How to normalize?
+      const newNet = model.getNetPassageHistory( soluteType );
+      const alpha = dt / ( smoothingTimeConstant + dt );
+      smoothedNet = alpha * newNet + ( 1 - alpha ) * smoothedNet;
+      arrow.setTailAndTip( 80, 0, 80, smoothedNet * 20 );
+      arrow.centerY = BOX_HEIGHT / 2;
     } );
 
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
