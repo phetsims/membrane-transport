@@ -225,7 +225,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     }
 
     // pdom order
-    // TODO:Design - Identify which components go in each section.
+    // TODO (design:a11y) - Identify which components go in each section.
     this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, ...additionalPlayAreaOrder ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 

@@ -17,8 +17,7 @@ type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
 
 /**
  * In the bottom left of the screen view, the accordion box that contains the solute bar charts.
- * TODO: Description?
- * TODO: PhET-iO?
+ * TODO: Description, phet-io
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

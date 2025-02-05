@@ -78,12 +78,9 @@ export default class SoluteBarChartNode extends Node {
       centerY: BOX_HEIGHT / 2
     } );
 
-    // // Update the arrow when the passage history changes
+    // // Update the arrow when the passage history changes - Discrete version
     // this.stepEmitter.addListener( dt => {
-    //
     //   // Net positive is into the cell
-    //   // TODO: Should this be smoothed out?
-    //   // TODO: How to normalize?
     //   const historyAccumulation = model.getNetPassageHistory( soluteType );
     //   arrow.setTailAndTip( 80, 0, 80, historyAccumulation * 20 );
     //   arrow.centerY = BOX_HEIGHT / 2;
