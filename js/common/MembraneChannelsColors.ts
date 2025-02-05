@@ -51,6 +51,12 @@ const MembraneChannelsColors = {
   } ),
   atpColorProperty: new ProfileColorProperty( membraneChannels, 'atpColorProperty', {
     default: 'rgb(59,147,74)'
+  } ),
+  phospholipidHeadColorProperty: new ProfileColorProperty( membraneChannels, 'phospholipidHeadColor', {
+    default: 'rgb(220,120,39)'
+  } ),
+  phospholipidTailColorProperty: new ProfileColorProperty( membraneChannels, 'phospholipidTailColor', {
+    default: 'rgb(234,144,255)'
   } )
 };
 

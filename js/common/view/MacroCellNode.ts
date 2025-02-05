@@ -106,13 +106,13 @@ const line3EndProperty = new Vector2Property( new Vector2( ${Utils.roundSymmetri
     // Orange outer heads
     this.addChild( new Path( shapeProperty, {
       lineWidth: 13,
-      stroke: 'rgb(220,120,39)' // outer heads TODO: Move to color file
+      stroke: membraneChannelsColors.phospholipidHeadColorProperty
     } ) );
 
     // Pink inner tails
     this.addChild( new Path( shapeProperty, {
       lineWidth: 4,
-      stroke: 'rgb(234,144,255)' // inner tails TODO: Move to color file
+      stroke: membraneChannelsColors.phospholipidTailColorProperty
     } ) );
 
     if ( phet.chipper.queryParameters.dev ) {
