@@ -91,6 +91,20 @@ export default class Solute {
     this.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
   }
 
+  /**
+   * Make the solute move toward a target location right away. It will continue to move in that direction for the
+   * specified duration.
+   *
+   * While moving toward the destination, the solute will be in 'randomWalk' mode.
+   */
+  public moveToward( target: Vector2, duration: number ): void {
+    this.mode = 'randomWalk';
+
+    this.currentDirection = target;
+    this.targetDirection = target;
+    this.timeUntilNextDirection = duration;
+  }
+
   public static createRandomUnitVector(): Vector2 {
     // Create a random direction by picking a random angle between 0 and 2π.
     const angle = dotRandom.nextDouble() * 2 * Math.PI;

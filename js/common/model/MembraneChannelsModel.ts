@@ -198,26 +198,21 @@ export default class MembraneChannelsModel extends PhetioObject {
           // Mode where solute passes through the membrane to the inside
           solute.position.y -= 5 * dt;
 
-          // TODO: I had difficulty getting the solutes not to go right back to the other side. Also it is supposed to do a constrained random walk through the membrane.
-          if ( solute.position.y < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY - 10 ) {
-            solute.mode = 'randomWalk';
-            // solute.currentDirection = new Vector2( 0, -1 );
-            // solute.targetDirection = new Vector2( 0, -1 );
-            // solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
-            // solute.turnElapsed = 0;
-            // solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+          // TODO: Solutes are supposed to do a constrained random walk through the membrane.
+          if ( ( solute.position.y + solute.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+
+            // The next direction should mostly point down so that the solute doesn't go right back out
+            const downwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( -1, 0 ) ).normalize();
+            solute.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
           }
         }
         else if ( solute.mode === 'passThroughToOutside' ) {
           // Mode where solute passes through the membrane to the outside
           solute.position.y += 5 * dt;
-          if ( solute.position.y > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY + 10 ) {
-            solute.mode = 'randomWalk';
-            // solute.currentDirection = new Vector2( 0, +1 );
-            // solute.targetDirection = new Vector2( 0, +1 );
-            // solute.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
-            // solute.turnElapsed = 0;
-            // solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+          if ( ( solute.position.y - solute.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
+
+            const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
+            solute.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
           }
         }
       } );
