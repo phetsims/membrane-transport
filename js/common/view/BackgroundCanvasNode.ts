@@ -12,6 +12,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { CanvasNode, rasterized } from '../../../../scenery/js/imports.js';
@@ -258,15 +259,20 @@ export default class BackgroundCanvasNode extends CanvasNode {
   }
 
   private drawCharges( context: CanvasRenderingContext2D ): void {
-    const numberOfCharges = 18;
+    const potentialString = this.model.membraneVoltagePotentialProperty.value;
+    const potentialNumber = potentialString === '-70' ? -70 :
+                            potentialString === '-50' ? -50 :
+                            30;
+
+    const numberOfCharges = Utils.roundSymmetric( 18 * Math.abs( potentialNumber ) / 70 );
     const margin = 5;
     const separation = ( MembraneChannelsConstants.MEMBRANE_BOUNDS.width - margin * 2 ) / ( numberOfCharges - 1 );
 
     for ( let i = 0; i < numberOfCharges; i++ ) {
-      this.drawSign( context, '+', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, 15 ) );
+      this.drawSign( context, potentialNumber < 0 ? '+' : '-', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, 15 ) );
     }
     for ( let i = 0; i < numberOfCharges; i++ ) {
-      this.drawSign( context, '-', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, -15 ) );
+      this.drawSign( context, potentialNumber < 0 ? '-' : '+', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, -15 ) );
     }
   }
 
