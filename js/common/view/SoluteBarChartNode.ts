@@ -33,7 +33,7 @@ export default class SoluteBarChartNode extends Node {
   public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
     super( {
 
-      // TODO: Eliminate the clip area once we are sure everything remains in bounds.
+      // TODO: Eliminate the clip area once we are sure everything remains in bounds?
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
 
       // TODO: Pass through options?
@@ -91,9 +91,9 @@ export default class SoluteBarChartNode extends Node {
     const smoothingTimeConstant = 0.25;
     this.stepEmitter.addListener( dt => {
 
-      //   // Net positive is into the cell
-      //   // TODO: Should this be smoothed out?
-      //   // TODO: How to normalize?
+      // Net positive is into the cell
+      // TODO: Should this be smoothed out?
+      // TODO: How to normalize?
       const newNet = model.getRecentSoluteFlux( soluteType );
       const alpha = dt / ( smoothingTimeConstant + dt );
       smoothedNet = alpha * newNet + ( 1 - alpha ) * smoothedNet;

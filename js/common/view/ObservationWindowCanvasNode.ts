@@ -103,7 +103,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   // we now create two tails instead of one by horizontally offsetting each tail’s anchor.
   private initializeTailStates(): void {
 
-    // TODO: Make sure not too many tails
+    // TODO: Make sure not too many tails, you can see they go out of bounds if you remove the clip area
     for ( let i = -40; i <= 40; i++ ) {
 
       // For each head, its center is anchorX on the horizontal axis
@@ -312,7 +312,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.lineWidth = 2;
 
     // Draw inner heads
-    // TODO: Make sure not too many heads
+    // TODO: Make sure not too many heads, you can see they go out of bounds if you remove the clip area
     for ( let i = -100; i < 100; i++ ) {
       context.beginPath();
       context.arc(
@@ -326,7 +326,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     }
 
     // Draw outer heads
-    // TODO: Make sure not too many heads
+    // TODO: Make sure not too many heads, you can see they go out of bounds if you remove the clip area
     for ( let i = -100; i < 100; i++ ) {
       context.beginPath();
       context.arc(

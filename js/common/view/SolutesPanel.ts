@@ -52,13 +52,6 @@ export default class SolutesPanel extends Node {
             spacing: 3,
             children: [
               new VStrut( 2 ),
-
-              // TODO: Hack idea to center the icons in the buttons. Probably a bad idea.
-              // new RichText( getSoluteTypeString( soluteType ), {
-              //   font: new PhetFont( 14 ),
-              //   maxWidth: 100,
-              //   opacity: 0
-              // } ),
               icon,
               // TODO: The texts will be different size and different y position. Maybe they should share a maxWidth sort of thing?
               new RichText( getSoluteTypeString( soluteType ), {
@@ -76,8 +69,6 @@ export default class SolutesPanel extends Node {
       lineSpacing: 5,
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
-
-      // TODO: To discuss, should all a11y strings be in fluent, or only the complex ones?
       accessibleName: MembraneChannelsStrings.solutesStringProperty,
       helpText: MembraneChannelsMessages.soluteRadioButtonGroupHelpTextMessageProperty
     } );

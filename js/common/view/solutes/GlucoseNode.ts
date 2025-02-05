@@ -11,7 +11,7 @@ import membraneChannels from '../../../membraneChannels.js';
  * The radius is defined as the distance from the center to the left or right edge of the hexagon.
  * The hexagon is non-regular, the length of the top and bottom horizontal segments is given by horizontalSegmentLength
  *
- * TODO: Glucose looks too much like an eyeball
+ * TODO (design): Glucose looks too much like an eyeball
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

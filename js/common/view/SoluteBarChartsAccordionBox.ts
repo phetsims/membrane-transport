@@ -25,7 +25,6 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
   public readonly stepEmitter: Emitter<[ number ]>;
 
-  // TODO: Just pass the part of the model needed here?
   public constructor( model: MembraneChannelsModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
