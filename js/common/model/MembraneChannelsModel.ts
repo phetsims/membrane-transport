@@ -17,21 +17,23 @@ import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
+import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
 import Solute from './Solute.js';
 import SoluteType from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
-import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -60,6 +62,8 @@ const FluxEntryIO = new IOType<FluxEntry, FluxEntry>( 'SoluteIO', {
   }
 } );
 
+const fluxSmoothingTimeConstant = 0.25;
+
 export default class MembraneChannelsModel extends PhetioObject {
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -82,8 +86,6 @@ export default class MembraneChannelsModel extends PhetioObject {
   // The flux entries are used to track the recent flux of solutes through the membrane.
   private readonly fluxEntries: FluxEntry[] = []; // TODO (phet-io): This DOES need to be stateful.
   private time = 0; // TODO (phet-io): This DOES need to be instrumented to support the above TODO.
-
-  private readonly fluxSmoothingTimeConstant = 0.25;
 
   private soluteTypeToSmoothedFlux = {} as Record<SoluteType, number>;
 
@@ -257,7 +259,7 @@ export default class MembraneChannelsModel extends PhetioObject {
         }
       } );
 
-      const fluxSmoothingAlpha = dt / ( this.fluxSmoothingTimeConstant + dt );
+      const fluxSmoothingAlpha = dt / ( fluxSmoothingTimeConstant + dt );
 
       getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
 
@@ -310,7 +312,15 @@ export default class MembraneChannelsModel extends PhetioObject {
     stateSchema: {
       solutes: ReferenceArrayIO( Solute.SoluteIO ),
       fluxEntries: ReferenceArrayIO( FluxEntryIO ),
-      time: NumberIO
+      time: NumberIO,
+      soluteTypeToSmoothedFlux: ObjectLiteralIO // TODO: Schema for this?
+    },
+    applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
+      ReferenceArrayIO( Solute.SoluteIO ).applyState( model.solutes, state.solutes );
+      ReferenceArrayIO( FluxEntryIO ).applyState( model.fluxEntries, state.fluxEntries );
+      model.time = state.time;
+      model.soluteTypeToSmoothedFlux = state.soluteTypeToSmoothedFlux;
+      model.updateSoluteCounts();
     }
   } );
 }
