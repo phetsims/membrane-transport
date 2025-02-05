@@ -100,9 +100,13 @@ export default class SoluteBarChartNode extends Node {
       const newNet = model.getNetPassageHistory( soluteType );
       const alpha = dt / ( smoothingTimeConstant + dt );
       smoothedNet = alpha * newNet + ( 1 - alpha ) * smoothedNet;
-      arrow.setTailAndTip( 80, 0, 80, smoothedNet * 20 );
-      if ( !arrow.bounds.isEmpty() ) {
+      if ( Math.abs( smoothedNet ) > 0.01 ) {
+        arrow.visible = true;
+        arrow.setTailAndTip( 80, 0, 80, smoothedNet * 20 );
         arrow.centerY = BOX_HEIGHT / 2;
+      }
+      else {
+        arrow.visible = false;
       }
     } );
 
