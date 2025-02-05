@@ -13,8 +13,6 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
  *
- * TODO: Better name to indicate this is for a control panel and not named MembraneChannels because of the sim name?
- *
  * TODO:
  * - maxWidth
  * - dynamic layout

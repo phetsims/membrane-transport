@@ -30,7 +30,7 @@ export default class ObservationWindow extends Node {
     } );
 
     // Clipping region that contains the background canvas and the ligand node
-    // TODO: The canvas node doesn't actually need to be clippped since it can only draw within its bounds.
+    // TODO: The canvas node doesn't actually need to be clippped since it can only draw within its bounds. UPDATE: Removing the clip shows a lot of drawing out of the bounds.
     const clipNode = new Node( {
       clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT )
     } );

@@ -141,22 +141,22 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( realCircle );
 
+    // TODO: Keyboard support
     const myCirclePositionProperty = new Vector2Property( new Vector2( 0, 0 ) );
     myCirclePositionProperty.link( position => {
       realCircle.center = screenViewModelViewTransform.modelToViewPosition( position );
     } );
 
     // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
-    // TODO: Keyboard support
     const modelBoundsProperty = new DerivedProperty( [ this.visibleBoundsProperty ], visibleBounds => {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
-    const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, options.tandem.createTandem( 'solutesPanel' ) );
-
-    // TODO: Move to options?
-    solutesPanel.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
-    solutesPanel.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, {
+      tandem: options.tandem.createTandem( 'solutesPanel' ),
+      left: this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
+      top: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
+    } );
 
     this.addChild( solutesPanel );
 

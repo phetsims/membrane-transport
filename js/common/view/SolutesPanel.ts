@@ -1,11 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { AlignGroup, Node, RichText, Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, NodeOptions, RichText, Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Panel from '../../../../sun/js/Panel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
@@ -20,12 +20,9 @@ import getSoluteNode from './solutes/getSoluteNode.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-
 export default class SolutesPanel extends Node {
-  public constructor( featureSet: MembraneChannelsFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, tandem: Tandem ) {
-    super( {
-      tandem: tandem
-    } );
+  public constructor( featureSet: MembraneChannelsFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+    super();
 
     const title = new Text( membraneChannelsStrings.solutesStringProperty, {
       fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE,
@@ -78,7 +75,7 @@ export default class SolutesPanel extends Node {
       preferredWidth: 200,
       lineSpacing: 5,
       spacing: 5,
-      tandem: tandem.createTandem( 'soluteRadioButtonGroup' ),
+      tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
 
       // TODO: To discuss, should all a11y strings be in fluent, or only the complex ones?
       accessibleName: MembraneChannelsStrings.solutesStringProperty,
@@ -99,6 +96,8 @@ export default class SolutesPanel extends Node {
     } );
     const panel = new Panel( content );
     this.addChild( panel );
+
+    this.mutate( providedOptions );
   }
 }
 
