@@ -19,8 +19,9 @@ import { CanvasNode, rasterized } from '../../../../scenery/js/imports.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import SoluteType, { SoluteTypes } from '../model/SoluteType.js';
+import SoluteType from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
 
 // Head parameters
@@ -69,7 +70,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
     // So that the edge of the head is at the edge of the bounds.
     this.headY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - headRadius;
 
-    SoluteTypes.forEach( soluteType => {
+    getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
       this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
     } );
     this.initializeTailStates();

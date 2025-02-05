@@ -7,8 +7,9 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import { getSoluteBarChartTandemName, SoluteTypes } from '../model/SoluteType.js';
+import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -70,7 +71,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( insideText );
 
     const hbox = new HBox( {
-      children: SoluteTypes.filter( solute => solute !== 'atp' ).map( soluteType => {
+      children: getFeatureSetSoluteTypes( model.featureSet ).filter( solute => solute !== 'atp' ).map( soluteType => {
         const soluteBarChartNode = new SoluteBarChartNode( model, soluteType, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) );
         stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
         return soluteBarChartNode;

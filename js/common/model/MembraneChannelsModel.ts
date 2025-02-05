@@ -25,9 +25,9 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages } from '../MembraneChannelsFeatureSet.js';
+import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import Solute from './Solute.js';
-import SoluteType, { SoluteTypes } from './SoluteType.js';
+import SoluteType from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -45,11 +45,11 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
 
-  // TODO: group these together?
-  // TODO: naming?
-  // Mock proxies for testing the bar charts. Ultimately these values will be derived from the particle locations
-  public readonly outsideSoluteCountProperties!: Record<SoluteType, NumberProperty>;
-  public readonly insideSoluteCountProperties!: Record<SoluteType, NumberProperty>;
+  // One NumberProperty for the count of each type of solute, populated in the constructor
+  // Note that not all screens have all solute types. Use getFeatureSetSoluteTypes to get the list of solute types
+  public readonly outsideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
+  public readonly insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
+
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
   public readonly isShowingMembranePotentialLabelsProperty: PhetioProperty<boolean>;
@@ -75,7 +75,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     super( options );
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
-      validValues: SoluteTypes,
+      validValues: getFeatureSetSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'selectedSoluteProperty' ),
       phetioFeatured: true
     } );
@@ -86,7 +86,10 @@ export default class MembraneChannelsModel extends PhetioObject {
       phetioFeatured: true
     } );
     this.resetEmitter.addListener( () => this.timeSpeedProperty.reset() );
-    this.isPlayingProperty = new BooleanProperty( true, { // TODO: I set this true for development, but should it also be true for production?
+
+    // TODO - design: I set this true for development, but should it also be true for production?
+    // TODO - design: if the sim is paused, and the user adds solute, it is barely visible! that is a confusing UX
+    this.isPlayingProperty = new BooleanProperty( true, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true
     } );
@@ -103,16 +106,10 @@ export default class MembraneChannelsModel extends PhetioObject {
       phetioFeatured: true
     } );
 
-    // TODO
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    this.outsideSoluteCountProperties = {};
+    this.outsideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
+    this.insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
 
-    // TODO
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    this.insideSoluteCountProperties = {};
-    SoluteTypes.forEach( soluteType => {
+    getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
     } );
@@ -121,7 +118,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     const populateInitialSolutes = () => {
       // A random sample of solutes in the solutes array
       for ( let i = 0; i < 30; i++ ) {
-        this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( SoluteTypes ) ) );
+        this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( getFeatureSetSoluteTypes( this.featureSet ) ) ) );
       }
     };
 
@@ -254,7 +251,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   private updateSoluteCounts(): void {
 
     // Update the solute counts after the solutes have moved
-    SoluteTypes.forEach( soluteType => {
+    getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'outside' );
       this.insideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'inside' );
     } );

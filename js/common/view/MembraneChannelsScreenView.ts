@@ -23,9 +23,9 @@ import { Circle, DragListener, Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import { getFeatureSetHasVoltages } from '../MembraneChannelsFeatureSet.js';
+import { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import { getSoluteSpinnerTandemName, SoluteTypes } from '../model/SoluteType.js';
+import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
@@ -164,7 +164,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     // Number controls for the 'outside' solute concentrations
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
-    SoluteTypes.forEach( soluteType => {
+    getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
 
       const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
 
