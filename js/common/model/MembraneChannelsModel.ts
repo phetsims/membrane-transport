@@ -1,7 +1,8 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
- * TODO: What to do for the directory structure for this sim?
+ * The main model for Membrane Channels. This manages the solutes, membrane channels, and methods for moving them
+ * and counting them.
  *
  * @author Sam Reid (PhET Interactive Simulations
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -33,8 +34,7 @@ type SelfOptions = EmptySelfOptions;
 
 type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-// TODO: Name? Crossing?
-type TPassage = {
+type FluxEntry = {
   soluteType: SoluteType;
   time: number;
   direction: 'inward' | 'outward';
@@ -58,8 +58,10 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly solutes: Solute[] = [];
 
   private readonly resetEmitter = new Emitter();
-  private passageHistory: TPassage[] = []; // TODO: OK to be non-readonly? For the filter. // TODO: PhET-iO, or is this transient?
-  private time = 0; // TODO: PhET-iO?
+
+  // This is overwritten with a filter to prune old entries
+  private recentSoluteFluxEntries: FluxEntry[] = []; // TODO: Ask designers if this is transient or necessary for PhET-iO?
+  private time = 0; // TODO: Instrument this for PhET-iO if recentSoluteFluxEntries is
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -220,14 +222,14 @@ export default class MembraneChannelsModel extends PhetioObject {
         }
       } );
 
-      // Prune any passageHistory that is more than 1000ms old
-      this.passageHistory = this.passageHistory.filter( passage => this.time - passage.time < 1 );
+      // Prune any recentSoluteFlux that is more than 1000ms old
+      this.recentSoluteFluxEntries = this.recentSoluteFluxEntries.filter( fluxEntry => this.time - fluxEntry.time < 1 );
 
       // track which solutes changed sign of y value. Do this after pruning, to speed up the pruning slightly
       this.solutes.forEach( solute => {
         if ( soluteInitialYValues.has( solute ) &&
              soluteInitialYValues.get( solute )! * solute.position.y < 0 ) {
-          this.passageHistory.push( {
+          this.recentSoluteFluxEntries.push( {
             soluteType: solute.type,
             time: this.time,
             direction: solute.position.y < 0 ? 'inward' : 'outward'
@@ -240,12 +242,12 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   /**
-   * Sum up all of the passage history for a given solute type. Positive values indicate that the solute has passed
+   * Sum up all of the flux history for a given solute type. Positive values indicate that the solute has passed
    * through the membrane from the outside to the inside, and negative values indicate the opposite.
    */
-  public getNetPassageHistory( soluteType: SoluteType ): number {
-    return this.passageHistory.filter( passage => passage.soluteType === soluteType ).reduce( ( sum, passage ) => {
-      return sum + ( passage.direction === 'inward' ? 1 : -1 );
+  public getRecentSoluteFlux( soluteType: SoluteType ): number {
+    return this.recentSoluteFluxEntries.filter( fluxEntry => fluxEntry.soluteType === soluteType ).reduce( ( sum, fluxEntry ) => {
+      return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
     }, 0 );
   }
 

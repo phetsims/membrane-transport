@@ -97,7 +97,7 @@ export default class SoluteBarChartNode extends Node {
       //   // Net positive is into the cell
       //   // TODO: Should this be smoothed out?
       //   // TODO: How to normalize?
-      const newNet = model.getNetPassageHistory( soluteType );
+      const newNet = model.getRecentSoluteFlux( soluteType );
       const alpha = dt / ( smoothingTimeConstant + dt );
       smoothedNet = alpha * newNet + ( 1 - alpha ) * smoothedNet;
       if ( Math.abs( smoothedNet ) > 0.01 ) {
