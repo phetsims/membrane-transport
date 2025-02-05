@@ -15,7 +15,9 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import MoveToTrashButton from '../../../../scenery-phet/js/buttons/MoveToTrashButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import { Circle, DragListener, Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -101,6 +103,18 @@ export default class MembraneChannelsScreenView extends ScreenView {
     timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( timeControlNode );
+
+    const trashButton = new MoveToTrashButton( {
+      baseColor: 'rgb(220,220,232)',
+      arrowColor: PhetColorScheme.RED_COLORBLIND,
+      tandem: options.tandem.createTandem( 'trashButton' ),
+      left: this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.observationWindow.bottom
+    } );
+    trashButton.addListener( () => model.clear() );
+    this.addChild( trashButton );
+
+    // Solute bar charts
 
     const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( model, {
       tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )

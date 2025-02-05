@@ -146,11 +146,17 @@ export default class MembraneChannelsModel extends PhetioObject {
     }
   }
 
+  public clear(): void {
+    this.solutes.length = 0;
+    this.updateSoluteCounts();
+  }
+
   /**
    * Resets the model.
    */
   public reset(): void {
     this.resetEmitter.emit();
+    this.updateSoluteCounts();
   }
 
   /**
@@ -196,6 +202,11 @@ export default class MembraneChannelsModel extends PhetioObject {
         }
       } );
     }
+
+    this.updateSoluteCounts();
+  }
+
+  private updateSoluteCounts(): void {
 
     // Update the solute counts after the solutes have moved
     SoluteTypes.forEach( soluteType => {
