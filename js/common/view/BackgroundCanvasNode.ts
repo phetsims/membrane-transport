@@ -277,7 +277,7 @@ export default class BackgroundCanvasNode extends CanvasNode {
   }
 
   /**
-   * For debugging, to see where model points are on the canvas.
+   * Draw a + or - to show the charges
    * @param context
    * @param point - in model coordinates
    */

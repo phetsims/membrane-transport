@@ -17,7 +17,7 @@ export default class PotassiumIonNode extends Node {
 
     const radius = 20;
     const options: ShadedSphereNodeOptions = {
-      mainColor: MembraneChannelsColors.potassiumIonBarChartColorProperty,
+      mainColor: MembraneChannelsColors.potassiumIonColorProperty,
       highlightColor: new Color( 255, 255, 255 ),
       lineWidth: 1,
       stroke: 'black'

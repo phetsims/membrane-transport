@@ -26,11 +26,11 @@ export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringPr
   MembraneChannelsStrings.atpStringProperty;
 
 export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes ): ProfileColorProperty =>
-  soluteType === 'oxygen' ? MembraneChannelsColors.oxygenBarChartColorProperty :
-  soluteType === 'carbonDioxide' ? MembraneChannelsColors.carbonDioxideBarChartColorProperty :
-  soluteType === 'sodiumIon' ? MembraneChannelsColors.sodiumIonBarChartColorProperty :
-  soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonBarChartColorProperty :
-  MembraneChannelsColors.glucoseBarChartColorProperty;
+  soluteType === 'oxygen' ? MembraneChannelsColors.oxygenColorProperty :
+  soluteType === 'carbonDioxide' ? MembraneChannelsColors.carbonDioxideColorProperty :
+  soluteType === 'sodiumIon' ? MembraneChannelsColors.sodiumIonColorProperty :
+  soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonColorProperty :
+  MembraneChannelsColors.glucoseColorProperty;
 
 // TODO: Oxygen in o2 should be same size as oxygen in co2.
 export const getSoluteModelWidth = ( soluteType: SoluteType ): number =>

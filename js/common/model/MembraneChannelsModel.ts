@@ -33,6 +33,7 @@ type SelfOptions = EmptySelfOptions;
 
 type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
+// TODO: Name? Crossing?
 type TPassage = {
   soluteType: SoluteType;
   time: number;
@@ -114,6 +115,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
     } );
 
+    // TODO: This is just for testing
     const populateInitialSolutes = () => {
       // A random sample of solutes in the solutes array
       for ( let i = 0; i < 30; i++ ) {

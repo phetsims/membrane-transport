@@ -26,7 +26,7 @@ export default class CarbonDioxideNode extends Node {
       mainColor: MembraneChannelsColors.oxygenColorProperty
     }, options ) );
     const c = new ShadedSphereNode( radius * 1.18, combineOptions<ShadedSphereNodeOptions>( {
-      mainColor: MembraneChannelsColors.carbonDioxideBarChartColorProperty,
+      mainColor: MembraneChannelsColors.carbonDioxideColorProperty,
       x: 10
     }, options ) );
     const o2 = new ShadedSphereNode( radius, combineOptions<ShadedSphereNodeOptions>( {

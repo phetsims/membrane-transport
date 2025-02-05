@@ -28,29 +28,21 @@ const MembraneChannelsColors = {
   insideCellColorProperty: new ProfileColorProperty( membraneChannels, 'insideCellColor', {
     default: 'rgb(101,185,234)'
   } ),
-
-  // TODO: Differs from oxygenColor below
-  oxygenBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'O2BarChartColor', {
-    default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
-  } ),
   oxygenColorProperty: new ProfileColorProperty( membraneChannels, 'O2Color', {
     default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
   } ),
-  carbonDioxideBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
+  carbonDioxideColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
     default: 'rgb(95,80,69)'
   } ),
-  sodiumIonBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
+  sodiumIonColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
     default: 'rgb(255,255,11)'
   } ),
-
-  // TODO: If colors are reused, rename the property to the more general name
-  potassiumIonBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
+  potassiumIonColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
     default: 'rgb(32,255,253)'
   } ),
-  glucoseBarChartColorProperty: new ProfileColorProperty( membraneChannels, 'glucoseBarChartColor', {
+  glucoseColorProperty: new ProfileColorProperty( membraneChannels, 'glucoseBarChartColor', {
     default: 'rgb(106,42,211)'
   } ),
-
   lipidTailColorProperty: new ProfileColorProperty( membraneChannels, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
   } ),
@@ -59,7 +51,6 @@ const MembraneChannelsColors = {
   } ),
   atpColorProperty: new ProfileColorProperty( membraneChannels, 'atpColorProperty', {
     default: 'rgb(59,147,74)'
-    // default: 'rgb(72,184,90)' // from the SVG file
   } )
 };
 

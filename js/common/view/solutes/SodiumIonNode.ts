@@ -17,7 +17,7 @@ export default class SodiumIonNode extends Node {
 
     const radius = 16;
     const options: ShadedSphereNodeOptions = {
-      mainColor: MembraneChannelsColors.sodiumIonBarChartColorProperty,
+      mainColor: MembraneChannelsColors.sodiumIonColorProperty,
       highlightColor: new Color( 255, 255, 255 ),
       lineWidth: 1,
       stroke: 'black'
