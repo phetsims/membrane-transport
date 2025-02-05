@@ -12,7 +12,12 @@ import logGlobal from '../../../phet-core/js/logGlobal.js';
 import membraneChannels from '../membraneChannels.js';
 
 const SCHEMA_MAP = {
-};
+
+  // A flag that populates the sim with a set of default solutes.
+  defaultSolutes: {
+    type: 'flag'
+  }
+} as const;
 
 const MembraneChannelsQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
 

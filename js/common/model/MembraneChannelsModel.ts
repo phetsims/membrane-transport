@@ -29,6 +29,7 @@ import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSolu
 import Solute from './Solute.js';
 import SoluteType from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
+import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -60,8 +61,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   private readonly resetEmitter = new Emitter();
 
   // This is overwritten with a filter to prune old entries
-  private recentSoluteFluxEntries: FluxEntry[] = []; // TODO: Ask designers if this is transient or necessary for PhET-iO?
-  private time = 0; // TODO: Instrument this for PhET-iO if recentSoluteFluxEntries is
+  private recentSoluteFluxEntries: FluxEntry[] = []; // TODO (design): Ask designers if this is transient or necessary for PhET-iO?
+  private time = 0; // TODO (design): Instrument this for PhET-iO if recentSoluteFluxEntries is
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -87,8 +88,8 @@ export default class MembraneChannelsModel extends PhetioObject {
     } );
     this.resetEmitter.addListener( () => this.timeSpeedProperty.reset() );
 
-    // TODO - design: I set this true for development, but should it also be true for production?
-    // TODO - design: if the sim is paused, and the user adds solute, it is barely visible! that is a confusing UX
+    // TODO (design): I set this true for development, but should it also be true for production?
+    // TODO (design): if the sim is paused, and the user adds solute, it is barely visible! that is a confusing UX
     this.isPlayingProperty = new BooleanProperty( true, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true
@@ -114,20 +115,22 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
     } );
 
-    // TODO: This is just for testing
-    const populateInitialSolutes = () => {
-      // A random sample of solutes in the solutes array
-      for ( let i = 0; i < 30; i++ ) {
-        this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( getFeatureSetSoluteTypes( this.featureSet ) ) ) );
-      }
-    };
+    if ( MembraneChannelsQueryParameters.defaultSolutes ) {
 
-    this.resetEmitter.addListener( () => {
-      this.solutes.length = 0;
+      const populateInitialSolutes = () => {
+        // A random sample of solutes in the solutes array
+        for ( let i = 0; i < 30; i++ ) {
+          this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( getFeatureSetSoluteTypes( this.featureSet ) ) ) );
+        }
+      };
+
+      this.resetEmitter.addListener( () => {
+        this.solutes.length = 0;
+        populateInitialSolutes();
+      } );
+
       populateInitialSolutes();
-    } );
-
-    populateInitialSolutes();
+    }
   }
 
   /**
