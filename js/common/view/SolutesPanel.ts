@@ -33,8 +33,6 @@ export default class SolutesPanel extends Node {
 
     const soluteTypes = getFeatureSetSoluteTypes( featureSet );
 
-    // TODO (design:phet-io): For a designer, when studio hides a radio button, the layout isn't perfect. If we need to do something
-    // more sophisticated, perhaps we can consult with Marla or Jonathan
     const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, soluteTypes.map( soluteType => {
       return {
         value: soluteType,
@@ -66,6 +64,7 @@ export default class SolutesPanel extends Node {
       wrap: true,
       justifyLines: 'top',
       preferredWidth: 200,
+      justify: 'left',
       lineSpacing: 5,
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),

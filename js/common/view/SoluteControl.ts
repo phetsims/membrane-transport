@@ -94,7 +94,7 @@ export default class SoluteControl extends Panel {
       center: spinner.center
     } );
 
-    // TODO (design:phet-io): Is this level of instrumentation correct? Should the outer panel be instrumented? How should it be implemented?
+    // TODO (phet-io) Take tandem out of options and make it a required parameter. Pass it through for the buttons.
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     delete options.tandem;

@@ -61,8 +61,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   private readonly resetEmitter = new Emitter();
 
   // This is overwritten with a filter to prune old entries
-  private recentSoluteFluxEntries: FluxEntry[] = []; // TODO (design:phet-io): Ask designers if this is transient or necessary for PhET-iO?
-  private time = 0; // TODO (design:phet-io): Instrument this for PhET-iO if recentSoluteFluxEntries is
+  private recentSoluteFluxEntries: FluxEntry[] = []; // TODO (phet-io): This DOES need to be stateful.
+  private time = 0; // TODO (phet-io): This DOES need to be instrumented to support the above TODO.
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
