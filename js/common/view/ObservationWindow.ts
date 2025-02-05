@@ -9,7 +9,7 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import BackgroundCanvasNode from './BackgroundCanvasNode.js';
+import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import LigandNode from './LigandNode.js';
 
 /**
@@ -20,7 +20,7 @@ import LigandNode from './LigandNode.js';
  */
 
 export default class ObservationWindow extends Node {
-  private readonly backgroundCanvasNode: BackgroundCanvasNode;
+  private readonly observationWindowCanvasNode: ObservationWindowCanvasNode;
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
 
@@ -40,8 +40,8 @@ export default class ObservationWindow extends Node {
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
-    this.backgroundCanvasNode = new BackgroundCanvasNode( model, modelViewTransform, canvasBounds );
-    clipNode.addChild( this.backgroundCanvasNode );
+    this.observationWindowCanvasNode = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds );
+    clipNode.addChild( this.observationWindowCanvasNode );
 
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
@@ -60,8 +60,8 @@ export default class ObservationWindow extends Node {
   }
 
   public step( dt: number ): void {
-    this.backgroundCanvasNode.step( dt );
-    this.backgroundCanvasNode.invalidatePaint();
+    this.observationWindowCanvasNode.step( dt );
+    this.observationWindowCanvasNode.invalidatePaint();
   }
 
 }

@@ -4,8 +4,6 @@
  * The canvas renderer for background content in the observation window. This is for rendering
  * many particles that are not interactive.
  *
- * TODO: Let's give a more descriptive name
- *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -50,7 +48,7 @@ type TailState = {
   controlPoints: ControlPoint[];
 };
 
-export default class BackgroundCanvasNode extends CanvasNode {
+export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private time = 0;
 
@@ -379,4 +377,4 @@ export default class BackgroundCanvasNode extends CanvasNode {
     context.stroke();
   }
 }
-membraneChannels.register( 'BackgroundCanvasNode', BackgroundCanvasNode );
+membraneChannels.register( 'ObservationWindowCanvasNode', ObservationWindowCanvasNode );
