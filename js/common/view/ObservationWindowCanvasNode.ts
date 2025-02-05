@@ -58,7 +58,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private readonly headY: number;
 
-  private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement>();
+  private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement | HTMLCanvasElement>();
 
   public constructor( private readonly model: MembraneChannelsModel, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
     super( {
@@ -74,14 +74,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     this.initializeTailStates();
   }
 
-  private createImage( soluteType: SoluteType ): HTMLImageElement {
-
+  private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
     const iconNode = getSoluteNode( soluteType );
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error - TODO: Can rasterized return an Image if wrap is false?
-    // public rasterized( options?: RasterizedOptions & { wrap?: true } ): Node;
-    // public rasterized( options: RasterizedOptions & { wrap: false } ): Image;
     return rasterized( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 
