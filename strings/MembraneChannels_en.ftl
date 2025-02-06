@@ -41,7 +41,7 @@ soluteSpinnerContextResponsePattern =
         [more] more
        *[less] less
     }
-    { $solute }
+    { solute }
     { $directionality ->
         [insideThanOutside] inside than outside
        *[outsideThanInside] outside than inside

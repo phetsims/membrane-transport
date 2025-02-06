@@ -117,7 +117,7 @@ export default class SoluteControl extends Panel {
             addedOrRemoved: addedOrRemoved, // added / removed
             differenceSize: differenceSize, // aLittle / aLot
             moreOrLess: moreOrLess, // more / less
-            solute: soluteType,       // e.g. 'Na⁺'
+            soluteType: soluteType,       // e.g. 'Na⁺'
             directionality: directionality  // insideThanOutside / outsideThanInside
           }
         );
