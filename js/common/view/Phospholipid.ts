@@ -16,11 +16,10 @@ import MembraneChannelsColors from '../MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 
 // Constants controlling the tail control point movement
-const controlPointStepSize = 0.1; // the random component for the change in velocity
-const friction = 0.9999;          // a friction coefficient for momentum (0 to 1)
+const controlPointStepSize = 0.1; // random component for the change in velocity
+const friction = 0.9999;          // friction coefficient for momentum (0 to 1)
 
-// Introduce a positive-valued "angle" (really a horizontal offset) to separate the two tails
-// from each lipid head. Adjust as needed for appearance.
+// Horizontal offset between the two lipid tails on each phospholipid
 const TAIL_OFFSET = 0.3;
 
 // Define an interface for a control point.
@@ -63,23 +62,37 @@ export default class Phospholipid {
 
     const anchorY = this.side === 'inner' ? -headY : +headY;
 
-    // Tail A (left offset) for the inner side
+    // ----------
+    // TAIL A (left)
+    // ----------
     this.tailStates.push( {
       anchorX: anchorXLeft,
       anchorY: anchorY,
+
+      // More control points along the tail.
+      // For illustration, these are spaced evenly in 'y',
+      // and initially all lined up in 'x' = anchorXLeft.
       controlPoints: [
-        { x: anchorXLeft, y: anchorY - anchorY / 2, vx: 0 },
-        { x: anchorXLeft, y: anchorY - anchorY, vx: 0 }
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 1, vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 2, vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 3, vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 4, vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 5, vx: 0 }
       ]
     } );
 
-    // Tail B (right offset) for the inner side
+    // ----------
+    // TAIL B (right)
+    // ----------
     this.tailStates.push( {
       anchorX: anchorXRight,
       anchorY: anchorY,
       controlPoints: [
-        { x: anchorXRight, y: anchorY - anchorY / 2, vx: 0 },
-        { x: anchorXRight, y: anchorY - anchorY, vx: 0 }
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 1, vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 2, vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 3, vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 4, vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 5, vx: 0 }
       ]
     } );
   }
@@ -92,11 +105,10 @@ export default class Phospholipid {
 
   public drawHead( context: CanvasRenderingContext2D ): void {
 
-    // Draw outer heads
     context.beginPath();
     context.arc(
       this.modelViewTransform.modelToViewX( this.anchorX ),
-      this.modelViewTransform.modelToViewY( this.side === 'outer' ? headY : -headY ),  // outer heads
+      this.modelViewTransform.modelToViewY( this.side === 'outer' ? headY : -headY ),
       this.modelViewTransform.modelToViewDeltaX( headRadius ),
       0, 2 * Math.PI
     );
@@ -111,26 +123,40 @@ export default class Phospholipid {
 
   public drawTails( context: CanvasRenderingContext2D ): void {
 
-    // For each tail state, draw a cubic Bézier curve using the anchor, the two control points,
-    // and then a tail endpoint defined relative to the last control point.
-    // (Adjust the endpoint offset if needed.)
+    // We now have 5 control points. We'll split them into two segments:
+    //  - The first Bézier uses indices [0,1,2]
+    //  - The second Bézier uses indices [3,4], then extends to the tail end
     const OFFSET = 0.8;
     const endpointOffset = this.side === 'inner' ? -OFFSET : OFFSET;
 
     for ( const state of this.tailStates ) {
       context.beginPath();
 
+      const cps = state.controlPoints;
+
       // The last control point helps define our endpoint
-      const lastCP = state.controlPoints[ state.controlPoints.length - 1 ];
+      const lastCP = cps[ cps.length - 1 ];
       const tailEndX = lastCP.x;
       const tailEndY = lastCP.y + endpointOffset;
 
+      // Move to the anchor
       this.moveTo( context, state.anchorX, state.anchorY );
+
+      // First segment: anchor -> cp0, cp1 -> cp2
       context.bezierCurveTo(
-        this.modelViewTransform.modelToViewX( state.controlPoints[ 0 ].x ), this.modelViewTransform.modelToViewY( state.controlPoints[ 0 ].y ),
-        this.modelViewTransform.modelToViewX( state.controlPoints[ 1 ].x ), this.modelViewTransform.modelToViewY( state.controlPoints[ 1 ].y ),
+        this.modelViewTransform.modelToViewX( cps[ 0 ].x ), this.modelViewTransform.modelToViewY( cps[ 0 ].y ),
+        this.modelViewTransform.modelToViewX( cps[ 1 ].x ), this.modelViewTransform.modelToViewY( cps[ 1 ].y ),
+        this.modelViewTransform.modelToViewX( cps[ 2 ].x ), this.modelViewTransform.modelToViewY( cps[ 2 ].y )
+      );
+
+      // Second segment: cp2 -> cp3, cp4 -> tail end
+      // (You can also consider hooking cp2 to cp3 more smoothly with the "current point" approach.)
+      context.bezierCurveTo(
+        this.modelViewTransform.modelToViewX( cps[ 3 ].x ), this.modelViewTransform.modelToViewY( cps[ 3 ].y ),
+        this.modelViewTransform.modelToViewX( cps[ 4 ].x ), this.modelViewTransform.modelToViewY( cps[ 4 ].y ),
         this.modelViewTransform.modelToViewX( tailEndX ), this.modelViewTransform.modelToViewY( tailEndY )
       );
+
       context.stroke();
     }
   }
@@ -140,21 +166,21 @@ export default class Phospholipid {
     context.moveTo( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( y ) );
   }
 
-  // Update control point positions via a random walk with momentum, for a given set of tail states.
+  // Keep the random walk the same, but now it applies to more points per tail
   public step( dt: number ): void {
     for ( const state of this.tailStates ) {
 
-      // Define horizontal bounds relative to the tail's anchor.
+      // Define horizontal bounds for each tail
       const tailWindowSize = 1;
       const minX = state.anchorX - tailWindowSize;
       const maxX = state.anchorX + tailWindowSize;
 
-      // For each control point, update its x using momentum, leaving y unchanged.
+      // For each control point, update x by random-walk logic
       for ( const cp of state.controlPoints ) {
         cp.vx = cp.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize * dt;
         cp.x += cp.vx;
 
-        // Clamp the x position to within [anchorX - tailWindowSize, anchorX + tailWindowSize]
+        // Clamp
         if ( cp.x < minX ) {
           cp.x = minX;
           cp.vx = 0;
