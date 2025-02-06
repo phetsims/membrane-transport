@@ -143,14 +143,17 @@ export default class Phospholipid {
   // Update control point positions via a random walk with momentum, for a given set of tail states.
   public step( dt: number ): void {
     for ( const state of this.tailStates ) {
+
       // Define horizontal bounds relative to the tail's anchor.
       const tailWindowSize = 1;
       const minX = state.anchorX - tailWindowSize;
       const maxX = state.anchorX + tailWindowSize;
+
       // For each control point, update its x using momentum, leaving y unchanged.
       for ( const cp of state.controlPoints ) {
         cp.vx = cp.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize * dt;
         cp.x += cp.vx;
+
         // Clamp the x position to within [anchorX - tailWindowSize, anchorX + tailWindowSize]
         if ( cp.x < minX ) {
           cp.x = minX;
