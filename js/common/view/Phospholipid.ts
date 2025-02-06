@@ -23,7 +23,7 @@ const friction = 0.99;          // friction coefficient for momentum (0 to 1)
 const TAIL_OFFSET = 0.3;
 
 // Define horizontal bounds for each tail
-const tailWindowSize = 1;
+const tailWindowSize = 0.65;
 
 // Define an interface for a control point.
 // We add a velocity component "vx" for horizontal momentum.
@@ -130,7 +130,7 @@ export default class Phospholipid {
 
   public static initTails( context: CanvasRenderingContext2D ): void {
     context.strokeStyle = MembraneChannelsColors.lipidTailColorProperty.value.toCSS();
-    context.lineWidth = 2;
+    context.lineWidth = 1.3;
   }
 
   public drawTails( context: CanvasRenderingContext2D ): void {
