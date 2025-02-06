@@ -24,3 +24,25 @@ soluteSpinnerObjectResponsePattern = { $amount ->
   [some] some
   *[many] many
 } { solute }
+
+soluteSpinnerContextResponsePattern =
+    { $amount ->
+        [aLittle] a little
+       *[aLot] a lot
+    } { $addedOrRemoved ->
+        [added] added
+       *[removed] removed
+    }. Now
+    { $differenceSize ->
+        [aLittle] a little
+       *[aLot] a lot
+    }
+    { $moreOrLess ->
+        [more] more
+       *[less] less
+    }
+    { $solute }
+    { $directionality ->
+        [insideThanOutside] inside than outside
+       *[outsideThanInside] outside than inside
+    }.
