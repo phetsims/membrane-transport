@@ -22,6 +22,9 @@ const friction = 0.9999;          // friction coefficient for momentum (0 to 1)
 // Horizontal offset between the two lipid tails on each phospholipid
 const TAIL_OFFSET = 0.3;
 
+// Define horizontal bounds for each tail
+const tailWindowSize = 1;
+
 // Define an interface for a control point.
 // We add a velocity component "vx" for horizontal momentum.
 type ControlPoint = {
@@ -62,6 +65,10 @@ export default class Phospholipid {
 
     const anchorY = this.side === 'inner' ? -headY : +headY;
 
+    // randomness to stagger the control points vertically
+    const minStaggerY = 0.9;
+    const maxStaggerY = 1.1;
+
     // ----------
     // TAIL A (left)
     // ----------
@@ -73,11 +80,11 @@ export default class Phospholipid {
       // For illustration, these are spaced evenly in 'y',
       // and initially all lined up in 'x' = anchorXLeft.
       controlPoints: [
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 1, vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 2, vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 3, vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 4, vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 5, vx: 0 }
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
       ]
     } );
 
@@ -88,13 +95,18 @@ export default class Phospholipid {
       anchorX: anchorXRight,
       anchorY: anchorY,
       controlPoints: [
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 1, vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 2, vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 3, vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 4, vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 5, vx: 0 }
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
       ]
     } );
+
+    // Initialize at correct positions, takes around 2.5% startup time on macbook air m1 + chrome
+    for ( let i = 0; i < 60; i++ ) {
+      this.step( 1 / 60 );
+    }
   }
 
   public static initHeads( context: CanvasRenderingContext2D ): void {
@@ -132,28 +144,28 @@ export default class Phospholipid {
     for ( const state of this.tailStates ) {
       context.beginPath();
 
-      const cps = state.controlPoints;
+      const controlPoints = state.controlPoints;
 
       // The last control point helps define our endpoint
-      const lastCP = cps[ cps.length - 1 ];
-      const tailEndX = lastCP.x;
-      const tailEndY = lastCP.y + endpointOffset;
+      const lastControlPoint = controlPoints[ controlPoints.length - 1 ];
+      const tailEndX = lastControlPoint.x;
+      const tailEndY = lastControlPoint.y + endpointOffset;
 
       // Move to the anchor
       this.moveTo( context, state.anchorX, state.anchorY );
 
       // First segment: anchor -> cp0, cp1 -> cp2
       context.bezierCurveTo(
-        this.modelViewTransform.modelToViewX( cps[ 0 ].x ), this.modelViewTransform.modelToViewY( cps[ 0 ].y ),
-        this.modelViewTransform.modelToViewX( cps[ 1 ].x ), this.modelViewTransform.modelToViewY( cps[ 1 ].y ),
-        this.modelViewTransform.modelToViewX( cps[ 2 ].x ), this.modelViewTransform.modelToViewY( cps[ 2 ].y )
+        this.modelViewTransform.modelToViewX( controlPoints[ 0 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 0 ].y ),
+        this.modelViewTransform.modelToViewX( controlPoints[ 1 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 1 ].y ),
+        this.modelViewTransform.modelToViewX( controlPoints[ 2 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 2 ].y )
       );
 
       // Second segment: cp2 -> cp3, cp4 -> tail end
       // (You can also consider hooking cp2 to cp3 more smoothly with the "current point" approach.)
       context.bezierCurveTo(
-        this.modelViewTransform.modelToViewX( cps[ 3 ].x ), this.modelViewTransform.modelToViewY( cps[ 3 ].y ),
-        this.modelViewTransform.modelToViewX( cps[ 4 ].x ), this.modelViewTransform.modelToViewY( cps[ 4 ].y ),
+        this.modelViewTransform.modelToViewX( controlPoints[ 3 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 3 ].y ),
+        this.modelViewTransform.modelToViewX( controlPoints[ 4 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 4 ].y ),
         this.modelViewTransform.modelToViewX( tailEndX ), this.modelViewTransform.modelToViewY( tailEndY )
       );
 
@@ -170,24 +182,22 @@ export default class Phospholipid {
   public step( dt: number ): void {
     for ( const state of this.tailStates ) {
 
-      // Define horizontal bounds for each tail
-      const tailWindowSize = 1;
       const minX = state.anchorX - tailWindowSize;
       const maxX = state.anchorX + tailWindowSize;
 
       // For each control point, update x by random-walk logic
-      for ( const cp of state.controlPoints ) {
-        cp.vx = cp.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize * dt;
-        cp.x += cp.vx;
+      for ( const controlPoint of state.controlPoints ) {
+        controlPoint.vx = controlPoint.vx * friction + ( dotRandom.nextDouble() * 2 - 1 ) * controlPointStepSize * dt;
+        controlPoint.x += controlPoint.vx;
 
         // Clamp
-        if ( cp.x < minX ) {
-          cp.x = minX;
-          cp.vx = 0;
+        if ( controlPoint.x < minX ) {
+          controlPoint.x = minX;
+          controlPoint.vx = 0;
         }
-        else if ( cp.x > maxX ) {
-          cp.x = maxX;
-          cp.vx = 0;
+        else if ( controlPoint.x > maxX ) {
+          controlPoint.x = maxX;
+          controlPoint.vx = 0;
         }
       }
     }
