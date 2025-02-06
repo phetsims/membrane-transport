@@ -38,21 +38,21 @@ type TailState = {
   controlPoints: ControlPoint[];
 };
 
+const headRadius = 1.3;
+
+// So that the edge of the head is at the edge of the bounds.
+const headY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - headRadius;
+
 export default class Phospholipid {
-  private readonly headY: number;
 
   private readonly tailStates: TailState[] = [];
-
-  // Head parameters
-  public static readonly headRadius = 1.3;
+  public static readonly headRadius = headRadius;
 
   public constructor(
     public readonly side: 'outer' | 'inner',
     public readonly anchorX: number,
     private readonly modelViewTransform: ModelViewTransform2
   ) {
-    // So that the edge of the head is at the edge of the bounds.
-    this.headY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - Phospholipid.headRadius;
 
     // For each head, its center is anchorX on the horizontal axis
 
@@ -64,11 +64,11 @@ export default class Phospholipid {
     if ( this.side === 'inner' ) {
 
       // 1) Inner side: anchorY is -headY
-      const innerAnchorY = -this.headY;
+      const innerAnchorY = -headY;
 
       // Tail A (left offset) for the inner side
-      const cp1InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + this.headY / 2, vx: 0 };
-      const cp2InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + this.headY, vx: 0 };
+      const cp1InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY / 2, vx: 0 };
+      const cp2InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY, vx: 0 };
       this.tailStates.push( {
         anchorX: anchorXLeft,
         anchorY: innerAnchorY,
@@ -76,8 +76,8 @@ export default class Phospholipid {
       } );
 
       // Tail B (right offset) for the inner side
-      const cp1InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + this.headY / 2, vx: 0 };
-      const cp2InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + this.headY, vx: 0 };
+      const cp1InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY / 2, vx: 0 };
+      const cp2InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY, vx: 0 };
       this.tailStates.push( {
         anchorX: anchorXRight,
         anchorY: innerAnchorY,
@@ -87,11 +87,11 @@ export default class Phospholipid {
 
     if ( this.side === 'outer' ) {
       // 2) Outer side: anchorY is +headY
-      const outerAnchorY = this.headY;
+      const outerAnchorY = headY;
 
       // Tail A (left offset) for the outer side
-      const cp1OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - this.headY / 2, vx: 0 };
-      const cp2OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - this.headY, vx: 0 };
+      const cp1OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY / 2, vx: 0 };
+      const cp2OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY, vx: 0 };
       this.tailStates.push( {
         anchorX: anchorXLeft,
         anchorY: outerAnchorY,
@@ -99,8 +99,8 @@ export default class Phospholipid {
       } );
 
       // Tail B (right offset) for the outer side
-      const cp1OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - this.headY / 2, vx: 0 };
-      const cp2OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - this.headY, vx: 0 };
+      const cp1OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY / 2, vx: 0 };
+      const cp2OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY, vx: 0 };
       this.tailStates.push( {
         anchorX: anchorXRight,
         anchorY: outerAnchorY,
@@ -117,27 +117,12 @@ export default class Phospholipid {
 
   public drawHead( context: CanvasRenderingContext2D ): void {
 
-    // --- Draw the heads ---
-
-    // Draw inner heads
-    // TODO: Make sure not too many heads, you can see they go out of bounds if you remove the clip area
-    context.beginPath();
-    context.arc(
-      this.modelViewTransform.modelToViewX( this.anchorX ),
-      this.modelViewTransform.modelToViewY( -this.headY ), // inner heads
-      this.modelViewTransform.modelToViewDeltaX( Phospholipid.headRadius ),
-      0, 2 * Math.PI
-    );
-    context.fill();
-    context.stroke();
-
     // Draw outer heads
-    // TODO: Make sure not too many heads, you can see they go out of bounds if you remove the clip area
     context.beginPath();
     context.arc(
       this.modelViewTransform.modelToViewX( this.anchorX ),
-      this.modelViewTransform.modelToViewY( this.headY ),  // outer heads
-      this.modelViewTransform.modelToViewDeltaX( Phospholipid.headRadius ),
+      this.modelViewTransform.modelToViewY( this.side === 'outer' ? headY : -headY ),  // outer heads
+      this.modelViewTransform.modelToViewDeltaX( headRadius ),
       0, 2 * Math.PI
     );
     context.fill();
