@@ -1,6 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
-import { ProfileColorProperty } from '../../../../scenery/js/imports.js';
+import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 

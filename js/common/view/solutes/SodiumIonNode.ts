@@ -2,7 +2,9 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../../../scenery-phet/js/ShadedSphereNode.js';
-import { Color, Line, Node } from '../../../../../scenery/js/imports.js';
+import Color from '../../../../../scenery/js/util/Color.js';
+import Line from '../../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
 import MembraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 

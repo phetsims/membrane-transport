@@ -7,7 +7,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Node, NodeOptions } from '../../../../../scenery/js/imports.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import SoluteType from '../../model/SoluteType.js';
 import ATPNode from './ATPNode.js';
 import CarbonDioxideNode from './CarbonDioxideNode.js';

@@ -1,7 +1,9 @@
 // Copyright 2025, University of Colorado Boulder
 
-import { Shape } from '../../../../../kite/js/imports.js';
-import { Node, Path, RadialGradient } from '../../../../../scenery/js/imports.js';
+import Shape from '../../../../../kite/js/Shape.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../../scenery/js/nodes/Path.js';
+import RadialGradient from '../../../../../scenery/js/util/RadialGradient.js';
 import membraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 
