@@ -168,13 +168,16 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
       const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
 
-      const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {
-        centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-        bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
-        tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
-      } );
-      this.addChild( outsideSoluteControl );
-      soluteControls.push( outsideSoluteControl );
+      // ATP can only be added inside the cell
+      if ( soluteType !== 'atp' ) {
+        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {
+          centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
+          bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
+          tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
+        } );
+        this.addChild( outsideSoluteControl );
+        soluteControls.push( outsideSoluteControl );
+      }
 
       const insideSoluteControlsTandem = options.tandem.createTandem( 'insideSoluteControls' );
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
