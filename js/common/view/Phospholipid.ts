@@ -69,6 +69,8 @@ export default class Phospholipid {
     const minStaggerY = 0.9;
     const maxStaggerY = 1.1;
 
+    const spacing = anchorY / 6.3;
+
     // ----------
     // TAIL A (left)
     // ----------
@@ -80,11 +82,12 @@ export default class Phospholipid {
       // For illustration, these are spaced evenly in 'y',
       // and initially all lined up in 'x' = anchorXLeft.
       controlPoints: [
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - ( anchorY / 5 ) * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
+        { x: anchorXLeft, y: anchorY - spacing * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - spacing * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - spacing * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - spacing * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - spacing * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXLeft, y: anchorY - spacing * 6 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
       ]
     } );
 
@@ -95,15 +98,17 @@ export default class Phospholipid {
       anchorX: anchorXRight,
       anchorY: anchorY,
       controlPoints: [
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - ( anchorY / 5 ) * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
+        { x: anchorXRight, y: anchorY - spacing * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - spacing * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - spacing * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - spacing * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - spacing * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
+        { x: anchorXRight, y: anchorY - spacing * 6 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
       ]
     } );
 
     // Initialize at correct positions, takes around 2.5% startup time on macbook air m1 + chrome
+    // TODO: randomize on init to make this unnecessary
     for ( let i = 0; i < 60; i++ ) {
       this.step( 1 / 60 );
     }
@@ -135,21 +140,10 @@ export default class Phospholipid {
 
   public drawTails( context: CanvasRenderingContext2D ): void {
 
-    // We now have 5 control points. We'll split them into two segments:
-    //  - The first Bézier uses indices [0,1,2]
-    //  - The second Bézier uses indices [3,4], then extends to the tail end
-    const OFFSET = 0.8;
-    const endpointOffset = this.side === 'inner' ? -OFFSET : OFFSET;
-
     for ( const state of this.tailStates ) {
       context.beginPath();
 
       const controlPoints = state.controlPoints;
-
-      // The last control point helps define our endpoint
-      const lastControlPoint = controlPoints[ controlPoints.length - 1 ];
-      const tailEndX = lastControlPoint.x;
-      const tailEndY = lastControlPoint.y + endpointOffset;
 
       // Move to the anchor
       this.moveTo( context, state.anchorX, state.anchorY );
@@ -166,7 +160,7 @@ export default class Phospholipid {
       context.bezierCurveTo(
         this.modelViewTransform.modelToViewX( controlPoints[ 3 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 3 ].y ),
         this.modelViewTransform.modelToViewX( controlPoints[ 4 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 4 ].y ),
-        this.modelViewTransform.modelToViewX( tailEndX ), this.modelViewTransform.modelToViewY( tailEndY )
+        this.modelViewTransform.modelToViewX( controlPoints[ 5 ].x ), this.modelViewTransform.modelToViewY( controlPoints[ 5 ].y )
       );
 
       context.stroke();
