@@ -26,7 +26,6 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
@@ -44,23 +43,6 @@ type FluxEntry = {
   time: number;
   direction: 'inward' | 'outward';
 };
-
-/**
- * The IOType that lets us track the flux of solutes in PhET-IO state.
- */
-const FluxEntryIO = new IOType<FluxEntry, FluxEntry>( 'SoluteIO', {
-  isValidValue: value => {
-    return value.hasOwnProperty( 'soluteType' ) && value.hasOwnProperty( 'time' ) && value.hasOwnProperty( 'direction' );
-  },
-  stateSchema: {
-    soluteType: StringIO,
-    time: NumberIO,
-    direction: StringIO
-  },
-  fromStateObject: ( stateObject: FluxEntry ) => {
-    return stateObject;
-  }
-} );
 
 const fluxSmoothingTimeConstant = 0.25;
 
@@ -84,10 +66,10 @@ export default class MembraneChannelsModel extends PhetioObject {
   private readonly resetEmitter = new Emitter();
 
   // The flux entries are used to track the recent flux of solutes through the membrane.
-  private readonly fluxEntries: FluxEntry[] = []; // TODO (phet-io): This DOES need to be stateful.
-  private time = 0; // TODO (phet-io): This DOES need to be instrumented to support the above TODO.
+  private readonly fluxEntries: FluxEntry[] = [];
+  private time = 0;
 
-  private soluteTypeToSmoothedFlux = {} as Record<SoluteType, number>;
+  private soluteTypeFlux = {} as Record<SoluteType, number>;
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -135,7 +117,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
-      this.soluteTypeToSmoothedFlux[ soluteType ] = 0;
+      this.soluteTypeFlux[ soluteType ] = 0;
     } );
 
     if ( MembraneChannelsQueryParameters.defaultSolutes ) {
@@ -267,7 +249,7 @@ export default class MembraneChannelsModel extends PhetioObject {
           return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
         }, 0 );
 
-        this.soluteTypeToSmoothedFlux[ soluteType ] = fluxSmoothingAlpha * recentFlux + ( 1 - fluxSmoothingAlpha ) * this.soluteTypeToSmoothedFlux[ soluteType ];
+        this.soluteTypeFlux[ soluteType ] = fluxSmoothingAlpha * recentFlux + ( 1 - fluxSmoothingAlpha ) * this.soluteTypeFlux[ soluteType ];
       } );
     }
 
@@ -279,7 +261,7 @@ export default class MembraneChannelsModel extends PhetioObject {
    * through the membrane from the outside to the inside, and negative values indicate the opposite.
    */
   public getRecentSoluteFluxWithSmoothing( soluteType: SoluteType ): number {
-    return this.soluteTypeToSmoothedFlux[ soluteType ];
+    return this.soluteTypeFlux[ soluteType ];
   }
 
   private updateSoluteCounts(): void {
@@ -311,18 +293,15 @@ export default class MembraneChannelsModel extends PhetioObject {
     valueType: MembraneChannelsModel,
     stateSchema: {
       solutes: ReferenceArrayIO( Solute.SoluteIO ),
-      fluxEntries: ReferenceArrayIO( FluxEntryIO ),
+      fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
-
-      // TODO: Schema for this?
-      // TODO: Better name, since it will be in phet-io state?
-      soluteTypeToSmoothedFlux: ObjectLiteralIO
+      soluteTypeFlux: ObjectLiteralIO
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Solute.SoluteIO ).applyState( model.solutes, state.solutes );
-      ReferenceArrayIO( FluxEntryIO ).applyState( model.fluxEntries, state.fluxEntries );
+      ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
-      model.soluteTypeToSmoothedFlux = state.soluteTypeToSmoothedFlux;
+      model.soluteTypeFlux = state.soluteTypeFlux;
       model.updateSoluteCounts();
     }
   } );
