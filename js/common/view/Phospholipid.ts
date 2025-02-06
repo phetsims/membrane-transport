@@ -61,52 +61,27 @@ export default class Phospholipid {
     const anchorXLeft = anchorX - TAIL_OFFSET / 2;
     const anchorXRight = anchorX + TAIL_OFFSET / 2;
 
-    if ( this.side === 'inner' ) {
+    const anchorY = this.side === 'inner' ? -headY : +headY;
 
-      // 1) Inner side: anchorY is -headY
-      const innerAnchorY = -headY;
+    // Tail A (left offset) for the inner side
+    this.tailStates.push( {
+      anchorX: anchorXLeft,
+      anchorY: anchorY,
+      controlPoints: [
+        { x: anchorXLeft, y: anchorY - anchorY / 2, vx: 0 },
+        { x: anchorXLeft, y: anchorY - anchorY, vx: 0 }
+      ]
+    } );
 
-      // Tail A (left offset) for the inner side
-      const cp1InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY / 2, vx: 0 };
-      const cp2InnerLeft: ControlPoint = { x: anchorXLeft, y: innerAnchorY + headY, vx: 0 };
-      this.tailStates.push( {
-        anchorX: anchorXLeft,
-        anchorY: innerAnchorY,
-        controlPoints: [ cp1InnerLeft, cp2InnerLeft ]
-      } );
-
-      // Tail B (right offset) for the inner side
-      const cp1InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY / 2, vx: 0 };
-      const cp2InnerRight: ControlPoint = { x: anchorXRight, y: innerAnchorY + headY, vx: 0 };
-      this.tailStates.push( {
-        anchorX: anchorXRight,
-        anchorY: innerAnchorY,
-        controlPoints: [ cp1InnerRight, cp2InnerRight ]
-      } );
-    }
-
-    if ( this.side === 'outer' ) {
-      // 2) Outer side: anchorY is +headY
-      const outerAnchorY = headY;
-
-      // Tail A (left offset) for the outer side
-      const cp1OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY / 2, vx: 0 };
-      const cp2OuterLeft: ControlPoint = { x: anchorXLeft, y: outerAnchorY - headY, vx: 0 };
-      this.tailStates.push( {
-        anchorX: anchorXLeft,
-        anchorY: outerAnchorY,
-        controlPoints: [ cp1OuterLeft, cp2OuterLeft ]
-      } );
-
-      // Tail B (right offset) for the outer side
-      const cp1OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY / 2, vx: 0 };
-      const cp2OuterRight: ControlPoint = { x: anchorXRight, y: outerAnchorY - headY, vx: 0 };
-      this.tailStates.push( {
-        anchorX: anchorXRight,
-        anchorY: outerAnchorY,
-        controlPoints: [ cp1OuterRight, cp2OuterRight ]
-      } );
-    }
+    // Tail B (right offset) for the inner side
+    this.tailStates.push( {
+      anchorX: anchorXRight,
+      anchorY: anchorY,
+      controlPoints: [
+        { x: anchorXRight, y: anchorY - anchorY / 2, vx: 0 },
+        { x: anchorXRight, y: anchorY - anchorY, vx: 0 }
+      ]
+    } );
   }
 
   public static initHeads( context: CanvasRenderingContext2D ): void {
