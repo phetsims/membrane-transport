@@ -16,8 +16,8 @@ import MembraneChannelsColors from '../MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 
 // Constants controlling the tail control point movement
-const controlPointStepSize = 0.1; // random component for the change in velocity
-const friction = 0.9999;          // friction coefficient for momentum (0 to 1)
+const controlPointStepSize = 0.2; // random component for the change in velocity
+const friction = 0.99;          // friction coefficient for momentum (0 to 1)
 
 // Horizontal offset between the two lipid tails on each phospholipid
 const TAIL_OFFSET = 0.3;
