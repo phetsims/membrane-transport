@@ -1,3 +1,65 @@
+# ..................................................
+# REUSABLE STRINGS
+# Strings that may be used in multiple patterns below to assemble
+# accessible descriptions for both State and Responsive Descriptions.
+# ..................................................
+
+# ..
+# PlayAreaSummary strings vary based on screen.
+-playAreaSummaryIntro = An observation window zooms in on a cross-section of a cell’s membrane. The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet, that separates fluids inside and outside of cell. Added solute particles are suspended in fluid and randomly move with Brownian motion.
+
+-playAreaSummarySolutes = You can choose from a list of solutes and add them to inside and outside.
+
+-playAreaSummaryProteins = Transport proteins can be added directly to membrane.
+
+-playAreaSummaryVoltagePotential = There are options to change membrane voltage potential and optionally hide visual charge labels.
+
+-playAreaSummaryBarcharts = Solute barcharts provide a comparative summary for amount of each solute inside and outside membrane.
+
+
+# END REUSABLE STRINGS .............................
+
+# ..................................................
+# State descriptions for SCREEN SUMMARY
+# - Sim Overview
+# - Current Details
+# - Interaction Hint
+# ..................................................
+# ..........
+# Sim Overview
+# ..
+# Play Area Summary - Screen 1
+playAreaSummaryScreen1 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryBarcharts}
+
+# ..
+# Play Area Summary - Screen 2 and 4
+playAreaSummaryScreen2and4 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryProteins } { -playAreaSummaryVoltagePotential } { -playAreaSummaryBarcharts }
+
+# ..
+# Play Area Summary - Screen 3
+playAreaSummaryScreen3 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryProteins } { -playAreaSummaryBarcharts }
+
+# ..
+# Control Area Summary - All Screens
+controlAreaSummary = There are options for how fast the action happens in the observation window, including a button to pause. Also, you can clear the solutes from both sides of the membrane or reset the sim.
+
+# ..........
+# Interaction Hint
+interactionHint = Add or remove solute to inside or outside of membrane.
+interactionHintScreens234 = Add or remove solutes to inside or outside of membrane, and play with transport channels.
+
+# ..........
+# Current Details
+# Working on this in design doc!
+
+# END SCREEN SUMMARY .............................
+
+# ..................................................
+# State descriptions for PLAY AREA
+# ..................................................
+
+# ..
+# Solutes radio button group - group names and help text
 soluteRadioButtonGroupHelpText = Choose solute then add or remove to inside or outside of membrane.
 
 outsideMembraneSpinnerAccessibleName = Outside Membrane
