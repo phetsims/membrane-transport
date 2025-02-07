@@ -22,7 +22,7 @@ import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import Phospholipid from './Phospholipid.js';
-import getSoluteNode from './solutes/getSoluteNode.js';
+import getParticleNode from './solutes/getParticleNode.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
 
@@ -48,7 +48,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   }
 
   private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
-    const iconNode = getSoluteNode( soluteType );
+    const iconNode = getParticleNode( soluteType );
     return rasterized( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 

@@ -30,8 +30,8 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
-import Solute from './Solute.js';
-import SoluteType from './SoluteType.js';
+import Particle from './Particle.js';
+import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -61,7 +61,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly isShowingMembranePotentialLabelsProperty: PhetioProperty<boolean>;
   public readonly membraneVoltagePotentialProperty: PhetioProperty<'-70' | '-50' | '30'>;
 
-  public readonly solutes: Solute[] = [];
+  public readonly solutes: Particle<SoluteType>[] = [];
+  public readonly ligands: Particle<LigandType>[] = [];
 
   private readonly resetEmitter = new Emitter();
 
@@ -126,12 +127,24 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.soluteTypeFlux[ soluteType ] = 0;
     } );
 
+
+    // Ligands are added and removed in response to the areLigandsAddedProperty so that clients can add/remove them
+    // by controlling the Property.
+    this.areLigandsAddedProperty.lazyLink( areLigandsAdded => {
+      if ( areLigandsAdded ) {
+        this.addLigands();
+      }
+      else {
+        this.removeLigands();
+      }
+    } );
+
     if ( MembraneChannelsQueryParameters.defaultSolutes ) {
 
       const populateInitialSolutes = () => {
         // A random sample of solutes in the solutes array
         for ( let i = 0; i < 30; i++ ) {
-          this.solutes.push( new Solute( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( getFeatureSetSoluteTypes( this.featureSet ) ) ) );
+          this.solutes.push( new Particle( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( getFeatureSetSoluteTypes( this.featureSet ) ) ) );
         }
       };
 
@@ -148,11 +161,27 @@ export default class MembraneChannelsModel extends PhetioObject {
    * Add a solute that will enter from a random location along the edge of the observation window.
    */
   public addSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
+    this.addParticles( soluteType, location, count, this.solutes );
+  }
+
+  public addLigands(): void {
+    this.addParticles( 'ligandA', 'outside', 10, this.ligands );
+    this.addParticles( 'ligandB', 'outside', 10, this.ligands );
+  }
+
+  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, targetArray: Particle<SoluteType | LigandType>[] ): void {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minX, MembraneChannelsConstants.INSIDE_CELL_BOUNDS.maxX );
       const y = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minY : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.maxY;
-      this.solutes.push( new Solute( new Vector2( x, y ), soluteType ) );
+      targetArray.push( new Particle( new Vector2( x, y ), soluteType ) );
     }
+  }
+
+  /**
+   * Removes all ligands (both types) from the model.
+   */
+  public removeLigands(): void {
+    this.ligands.length = 0;
   }
 
   public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
@@ -194,36 +223,37 @@ export default class MembraneChannelsModel extends PhetioObject {
 
       // capture the initial y value of each solute. This is the preferable alternative to having to remember to check
       // in each place a solute's y value is changed.
-      const soluteInitialYValues = new Map<Solute, number>();
+      const soluteInitialYValues = new Map<Particle<SoluteType>, number>();
       this.solutes.forEach( solute => soluteInitialYValues.set( solute, solute.position.y ) );
 
 
-      this.solutes.forEach( solute => {
-        if ( solute.mode === 'randomWalk' ) {
-          stepSoluteRandomWalk( solute, dt );
+      const allParticles = [ ...this.solutes, ...this.ligands ];
+      allParticles.forEach( particle => {
+        if ( particle.mode === 'randomWalk' ) {
+          stepSoluteRandomWalk( particle, dt );
         }
-        else if ( solute.mode === 'bound' ) {
+        else if ( particle.mode === 'bound' ) {
           // Mode where solute doesn’t move, or does something special
         }
-        else if ( solute.mode === 'passThroughToInside' ) {
+        else if ( particle.mode === 'passThroughToInside' ) {
           // Mode where solute passes through the membrane to the inside
-          solute.position.y -= 5 * dt;
+          particle.position.y -= 5 * dt;
 
           // TODO: Solutes are supposed to do a constrained random walk through the membrane.
-          if ( ( solute.position.y + solute.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+          if ( ( particle.position.y + particle.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
 
             // The next direction should mostly point down so that the solute doesn't go right back out
             const downwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( -1, 0 ) ).normalize();
-            solute.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
+            particle.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
           }
         }
-        else if ( solute.mode === 'passThroughToOutside' ) {
+        else if ( particle.mode === 'passThroughToOutside' ) {
           // Mode where solute passes through the membrane to the outside
-          solute.position.y += 5 * dt;
-          if ( ( solute.position.y - solute.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
+          particle.position.y += 5 * dt;
+          if ( ( particle.position.y - particle.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
 
             const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
-            solute.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
+            particle.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
           }
         }
       } );
@@ -298,13 +328,15 @@ export default class MembraneChannelsModel extends PhetioObject {
   public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
     valueType: MembraneChannelsModel,
     stateSchema: {
-      solutes: ReferenceArrayIO( Solute.SoluteIO ),
+      solutes: ReferenceArrayIO( Particle.ParticleIO ),
+      ligands: ReferenceArrayIO( Particle.ParticleIO ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
       soluteTypeFlux: ObjectLiteralIO
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
-      ReferenceArrayIO( Solute.SoluteIO ).applyState( model.solutes, state.solutes );
+      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
+      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.ligands, state.ligands );
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
       model.soluteTypeFlux = state.soluteTypeFlux;

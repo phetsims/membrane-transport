@@ -10,11 +10,18 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export const SoluteTypes = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp' ] as const;
+export const LigandTypes = [ 'ligandA', 'ligandB' ] as const;
+export const ParticleTypes = [ ...SoluteTypes, ...LigandTypes ] as const;
 
 export type PlottableSoluteTypes = Exclude<SoluteType, 'atp'>;
 
 type SoluteType = typeof SoluteTypes[number];
 export default SoluteType;
+
+type LigandType = typeof LigandTypes[number];
+type ParticleType = typeof ParticleTypes[number];
+
+export type { LigandType, ParticleType };
 
 export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringProperty =>
 
@@ -33,12 +40,15 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
   MembraneChannelsColors.glucoseColorProperty;
 
 // TODO: Oxygen in o2 should be same size as oxygen in co2.
-export const getSoluteModelWidth = ( soluteType: SoluteType ): number =>
-  soluteType === 'oxygen' ? 3 :
-  soluteType === 'carbonDioxide' ? 5 :
-  soluteType === 'sodiumIon' ? 4 :
-  soluteType === 'potassiumIon' ? 6 :
-  soluteType === 'glucose' ? 10 :
+// TODO: Rename to getParticleModelWidth
+export const getSoluteModelWidth = ( particleType: ParticleType ): number =>
+  particleType === 'oxygen' ? 3 :
+  particleType === 'carbonDioxide' ? 5 :
+  particleType === 'sodiumIon' ? 4 :
+  particleType === 'potassiumIon' ? 6 :
+  particleType === 'glucose' ? 10 :
+  particleType === 'ligandA' ? 10 :
+  particleType === 'ligandB' ? 10 :
   10;
 
 export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ): string =>
@@ -56,3 +66,6 @@ export const getSoluteAccessibleName = ( soluteType: SoluteType ): string => {
          soluteType === 'glucose' ? 'Glucose, hexagonal ring, large' :
          'Adenosine Triphosphate, ATP, complex, large';
 };
+
+export const isSolute = ( particleType: ParticleType ): particleType is SoluteType => SoluteTypes.includes( particleType as SoluteType );
+export const isLigand = ( particleType: ParticleType ): particleType is LigandType => LigandTypes.includes( particleType as LigandType );

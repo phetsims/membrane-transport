@@ -19,7 +19,7 @@ import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
-import getSoluteNode from './solutes/getSoluteNode.js';
+import getParticleNode from './solutes/getParticleNode.js';
 
 /**
  * In the top left, show radio buttons to select a Solute which can be added to the simulation.
@@ -49,7 +49,7 @@ export default class SolutesPanel extends Node {
         },
         createNode: () => {
 
-          const icon = getSoluteNode( soluteType );
+          const icon = getParticleNode( soluteType );
           icon.setScaleMagnitude( 0.65 ); // TODO: Match with SoluteBarChartNode?
 
           return alignGroup.createBox( new VBox( {

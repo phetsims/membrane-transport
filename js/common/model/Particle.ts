@@ -7,27 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-//
-// Particle
-//  type
-//  location
-//  binding (ligand)
-//  state (walking, moving through channel, moving toward channel)
-//  bounds (for collision detection)
-//  velocity (if necessary, depends on the behavior of the random walk)
-//
-// Most of this can be in a base type Particle. Some specific behavior can be in a subclass for a
-// specific solute.
-//
-// Particles do not need to be in phet-io state. However, it is best to capture locations.
-// Keep as much stateful as possible.
-//
-//
-// Solute.ts
-//  - Some of these fields (like position)
-//  - Create an array of these with some examples
-//  - Render them in the canvas.
-
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -35,13 +14,13 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import SoluteType, { getSoluteModelWidth } from './SoluteType.js';
+import SoluteType, { getSoluteModelWidth, ParticleType } from './SoluteType.js';
 
 /**
  * Solute class for Membrane Channels sim, supporting multiple modes of motion,
  * including a smooth "curved" random walk.
  */
-export default class Solute {
+export default class Particle<T extends ParticleType> {
 
   // Possible modes of motion:
   //   - 'randomWalk'  -> same as 'delayedWalk' but direction changes are gradual
@@ -72,16 +51,16 @@ export default class Solute {
 
   public constructor(
     public readonly position: Vector2,
-    public readonly type: SoluteType
+    public readonly type: T
   ) {
     this.dimension = new Dimension2(
       getSoluteModelWidth( type ),
-      getSoluteModelWidth( type ) * 1 / MembraneChannelsConstants.SOLUTE_ASPECT_RATIO_MAP[ type ]
+      getSoluteModelWidth( type ) / MembraneChannelsConstants.SOLUTE_ASPECT_RATIO_MAP[ type ]
     );
 
     // For smooth turning, initialize both directions to something random.
-    this.currentDirection = Solute.createRandomUnitVector();
-    this.targetDirection = Solute.createRandomUnitVector();
+    this.currentDirection = Particle.createRandomUnitVector();
+    this.targetDirection = Particle.createRandomUnitVector();
 
     // Initialize how long it takes to turn (e.g., 0.5 to 1.5 seconds).
     this.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
@@ -113,20 +92,20 @@ export default class Solute {
 
   /**
    * Individual Solute instances are not PhET-iO Instrumented. Instead, the container that contains the Solutes
-   * calls SoluteIO.toStateObject to serialize the Solute instances. MembraneChannelsModel uses reference type serialization
+   * calls ParticleIO.toStateObject to serialize the Solute instances. MembraneChannelsModel uses reference type serialization
    * as a composite of the Solutes, which use data type serialization.
    *
    * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    * for more information on the different serialization types.
    */
-  public static readonly SoluteIO = new IOType<Solute, SoluteStateObject>( 'SoluteIO', {
-    valueType: Solute,
+  public static readonly ParticleIO = new IOType<Particle<ParticleType>, SoluteStateObject>( 'ParticleIO', {
+    valueType: Particle,
     stateSchema: {
       position: Vector2.Vector2IO,
       type: StringIO
     },
     fromStateObject: ( stateObject: SoluteStateObject ) => {
-      return new Solute(
+      return new Particle(
         new Vector2( stateObject.position.x, stateObject.position.y ),
         stateObject.type
       );
@@ -139,5 +118,4 @@ export type SoluteStateObject = {
   type: SoluteType;
 };
 
-
-membraneChannels.register( 'Solute', Solute );
+membraneChannels.register( 'Particle', Particle );

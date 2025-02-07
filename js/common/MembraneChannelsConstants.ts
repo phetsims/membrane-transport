@@ -8,8 +8,8 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import SoluteType, { SoluteTypes } from '../common/model/SoluteType.js';
-import getSoluteNode from '../common/view/solutes/getSoluteNode.js';
+import { ParticleType, ParticleTypes } from '../common/model/SoluteType.js';
+import getParticleNode from './view/solutes/getParticleNode.js';
 import membraneChannels from '../membraneChannels.js';
 
 const OBSERVATION_WINDOW_WIDTH = 534;
@@ -22,10 +22,11 @@ const MODEL_HEIGHT = MODEL_WIDTH * OBSERVATION_WINDOW_HEIGHT / OBSERVATION_WINDO
 
 // A map of solute type to the aspect ratio of its artwork so that we can create bounds
 // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
-const SOLUTE_ASPECT_RATIO_MAP = {} as Record<SoluteType, number>;
+// TODO: Rename to PARTICLE_ASPECT_RATIO_MAP
+const SOLUTE_ASPECT_RATIO_MAP = {} as Record<ParticleType, number>;
 
-SoluteTypes.forEach( soluteType => {
-  const soluteNode = getSoluteNode( soluteType ).bounds;
+ParticleTypes.forEach( soluteType => {
+  const soluteNode = getParticleNode( soluteType ).bounds;
   SOLUTE_ASPECT_RATIO_MAP[ soluteType ] = soluteNode.width / soluteNode.height;
 } );
 

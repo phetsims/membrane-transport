@@ -12,7 +12,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
-import getSoluteNode from './solutes/getSoluteNode.js';
+import getParticleNode from './solutes/getParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & NodeOptions;
@@ -127,7 +127,7 @@ export default class SoluteControl extends Panel {
       tandem: options.tandem
     } );
 
-    const icon = getSoluteNode( soluteType, {
+    const icon = getParticleNode( soluteType, {
       center: spinner.center
     } );
 

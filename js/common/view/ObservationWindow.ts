@@ -1,7 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -24,6 +23,8 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 
 export default class ObservationWindow extends Node {
   private readonly observationWindowCanvasNode: ObservationWindowCanvasNode;
+
+  private readonly ligandNodes: LigandNode[] = [];
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
 
@@ -50,9 +51,9 @@ export default class ObservationWindow extends Node {
     // On top, we will have a layer for the interactive parts of the simulation
 
     for ( let i = 0; i < 10; i++ ) {
-      const ligandNode = new LigandNode( model );
-      ligandNode.translate( dotRandom.nextDoubleBetween( 100, 300 ), dotRandom.nextDoubleBetween( 100, 300 ) );
+      const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i, modelViewTransform );
       clipNode.addChild( ligandNode );
+      this.ligandNodes.push( ligandNode );
     }
 
     // NOTE: Duplication with SoluteBarChartsAccordionBox
@@ -68,6 +69,8 @@ export default class ObservationWindow extends Node {
   public step( dt: number ): void {
     this.observationWindowCanvasNode.step( dt );
     this.observationWindowCanvasNode.invalidatePaint();
+
+    this.ligandNodes.forEach( ligandNode => ligandNode.step( dt ) );
   }
 
 }

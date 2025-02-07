@@ -20,7 +20,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
-import getSoluteNode from './solutes/getSoluteNode.js';
+import getParticleNode from './solutes/getParticleNode.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 // import Property from '../../../../axon/js/Property.js';
@@ -79,7 +79,7 @@ export default class SoluteBarChartNode extends Node {
     // For layout, not just for debugging
     const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, { fill: 'red', opacity: 0 } );
 
-    const icon = getSoluteNode( soluteType );
+    const icon = getParticleNode( soluteType );
     icon.setScaleMagnitude( 0.65 ); // TODO: Same scale used in SolutesPanel (duplication)?
     icon.left = 8;
     icon.bottom = BOX_HEIGHT / 2 - 3;

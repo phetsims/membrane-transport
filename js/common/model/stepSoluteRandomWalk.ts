@@ -4,7 +4,8 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import Solute from './Solute.js';
+import Particle from './Particle.js';
+import { ParticleType } from './SoluteType.js';
 
 // We'll use a base "random walk speed" for solutes
 const randomWalkSpeed = 10;
@@ -13,7 +14,7 @@ const randomWalkSpeed = 10;
  * Helper function: gets the "current" interpolated direction based on how
  * far we've turned so far, so we can store or use it if we choose a new target.
  */
-function getInterpolatedDirection( solute: Solute ): Vector2 {
+function getInterpolatedDirection( solute: Particle<ParticleType> ): Vector2 {
   const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
   return solute.currentDirection.blend( solute.targetDirection, alpha ).normalized();
 }
@@ -25,7 +26,7 @@ function getInterpolatedDirection( solute: Solute ): Vector2 {
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default function stepSoluteRandomWalk( solute: Solute, dt: number ): void {
+export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt: number ): void {
 
   // 1) Possibly update direction choices
   solute.timeUntilNextDirection -= dt;
@@ -35,7 +36,7 @@ export default function stepSoluteRandomWalk( solute: Solute, dt: number ): void
     solute.currentDirection = getInterpolatedDirection( solute );
 
     // choose a new target direction randomly
-    solute.targetDirection = Solute.createRandomUnitVector();
+    solute.targetDirection = Particle.createRandomUnitVector();
 
     // decide how long to turn to this target
     solute.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
@@ -135,6 +136,7 @@ export default function stepSoluteRandomWalk( solute: Solute, dt: number ): void
   }
 
   // Collide with bottom wall
+  console.log( updatedBounds );
   if ( updatedBounds.minY < boundingRegion.minY ) {
     const overlap = boundingRegion.minY - updatedBounds.minY;
     solute.position.y += overlap;
