@@ -70,6 +70,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   private time = 0;
 
   private soluteTypeFlux = {} as Record<SoluteType, number>;
+  public readonly areLigandsAddedProperty: BooleanProperty;
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -111,6 +112,11 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.membraneVoltagePotentialProperty = new StringUnionProperty( '-70', {
       tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
       validValues: [ '-70', '-50', '30' ],
+      phetioFeatured: true
+    } );
+
+    this.areLigandsAddedProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'areLigandsAddedProperty' ),
       phetioFeatured: true
     } );
 

@@ -57,6 +57,9 @@ const MembraneChannelsColors = {
   } ),
   phospholipidTailColorProperty: new ProfileColorProperty( membraneChannels, 'phospholipidTailColor', {
     default: 'rgb(234,144,255)'
+  } ),
+  ligandButtonColorProperty: new ProfileColorProperty( membraneChannels, 'ligandButtonColor', {
+    default: 'rgb(224,200,88)'
   } )
 };
 

@@ -19,15 +19,16 @@ import MoveToTrashButton from '../../../../scenery-phet/js/buttons/MoveToTrashBu
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
+import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
+import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
@@ -227,6 +228,15 @@ export default class MembraneChannelsScreenView extends ScreenView {
       membranePotentialPanel.right = this.layoutBounds.right - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
       this.addChild( membranePotentialPanel );
       additionalPlayAreaOrder.push( membranePotentialPanel );
+    }
+
+    if ( getFeatureSetHasLigands( model.featureSet ) ) {
+      const ligandControl = new LigandControl( model, options.tandem, {
+        left: this.observationWindow.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
+        top: this.observationWindow.top + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
+      } );
+      this.addChild( ligandControl );
+      additionalPlayAreaOrder.push( ligandControl );
     }
 
     // pdom order

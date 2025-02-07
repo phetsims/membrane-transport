@@ -30,3 +30,7 @@ export const getFeatureSetSoluteTypes = ( featureSet: MembraneChannelsFeatureSet
 export const getFeatureSetHasVoltages = ( featureSet: MembraneChannelsFeatureSet ): boolean => {
   return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
 };
+
+export const getFeatureSetHasLigands = ( featureSet: MembraneChannelsFeatureSet ): boolean => {
+  return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
+};
