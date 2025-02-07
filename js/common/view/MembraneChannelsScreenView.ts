@@ -135,19 +135,19 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( soluteBarChartsAccordionBox );
     this.stepEmitter.addListener( dt => soluteBarChartsAccordionBox.stepEmitter.emit( dt ) );
 
-    const realCircle = new Circle( 15, {
+    const membraneChannelNode = new Circle( 15, {
       fill: 'rgba( 0,0,255,0.5)',
       left: 0,
       top: 0,
       cursor: 'pointer',
       visible: false
     } );
-    this.addChild( realCircle );
+    this.addChild( membraneChannelNode );
 
     // TODO: Keyboard support
-    const myCirclePositionProperty = new Vector2Property( new Vector2( 0, 0 ) );
-    myCirclePositionProperty.link( position => {
-      realCircle.center = screenViewModelViewTransform.modelToViewPosition( position );
+    const membraneChannelPosition = new Vector2Property( new Vector2( 0, 0 ) );
+    membraneChannelPosition.link( position => {
+      membraneChannelNode.center = screenViewModelViewTransform.modelToViewPosition( position );
     } );
 
     // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
@@ -195,20 +195,20 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const realCircleDragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
-      positionProperty: myCirclePositionProperty,
+      positionProperty: membraneChannelPosition,
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT
     } );
-    realCircle.addInputListener( realCircleDragListener );
+    membraneChannelNode.addInputListener( realCircleDragListener );
 
     const additionalPlayAreaOrder: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
       const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), event => {
-        realCircle.visible = true;
-        realCircle.moveToFront();
+        membraneChannelNode.visible = true;
+        membraneChannelNode.moveToFront();
         const viewPoint = this.globalToLocalPoint( event.pointer.point );
         const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
-        myCirclePositionProperty.value = modelPoint;
+        membraneChannelPosition.value = modelPoint;
 
         realCircleDragListener.press( event );
 
