@@ -25,7 +25,7 @@ export default class LigandControl extends Node {
     // Align so the buttons are the same size.
     const alignGroup = new AlignGroup();
 
-    // Separate buttons to make a11y navigation easier
+    // Separate buttons to make a11y navigation easier // TODO: or, perhaps, no?
     const options = combineOptions<NodeOptions>( {
       children: [
 
