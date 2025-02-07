@@ -7,10 +7,12 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
+import MembraneChannelsPreferencesNode from './common/view/MembraneChannelsPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
 import MembraneChannelsStrings from './MembraneChannelsStrings.js';
 import './common/MembraneChannelsQueryParameters.js';
@@ -41,7 +43,15 @@ simLauncher.launch( () => {
       graphicArts: '',
       soundDesign: '',
       thanks: ''
-    }
+    },
+
+    preferencesModel: new PreferencesModel( {
+      simulationOptions: {
+        customPreferences: [ {
+          createContent: tandem => new MembraneChannelsPreferencesNode( tandem )
+        } ]
+      }
+    } )
   };
 
   const sim = new Sim( titleStringProperty, screens, options );

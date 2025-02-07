@@ -16,6 +16,12 @@ const SCHEMA_MAP = {
   // A flag that populates the sim with a set of default solutes.
   defaultSolutes: {
     type: 'flag'
+  },
+
+  animateLipids: {
+    type: 'boolean',
+    defaultValue: true,
+    public: true
   }
 } as const;
 

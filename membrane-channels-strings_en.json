@@ -49,5 +49,11 @@
   },
   "membraneVoltagePotentialmV": {
     "value": "Membrane Voltage Potential (mV)"
+  },
+  "animateLipids": {
+    "value": "Animate Lipids"
+  },
+  "animateLipidsDescription": {
+    "value": "Whether the phospholipids forming the cell membrane should be animated"
   }
 }

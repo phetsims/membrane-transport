@@ -18,6 +18,7 @@ import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
+import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import Phospholipid from './Phospholipid.js';
@@ -66,7 +67,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   public step( dt: number ): void {
 
-    if ( this.model.isPlayingProperty.value ) {
+    if ( this.model.isPlayingProperty.value && animateLipidsProperty.value ) {
 
       // Update the phospholipids
       for ( let i = 0; i < this.phospholipids.length; i++ ) {

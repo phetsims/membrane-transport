@@ -33,6 +33,8 @@ type StringsType = {
   'membraneChannelsStringProperty': LocalizedStringProperty;
   'membranePotentialLabelsStringProperty': LocalizedStringProperty;
   'membraneVoltagePotentialmVStringProperty': LocalizedStringProperty;
+  'animateLipidsStringProperty': LocalizedStringProperty;
+  'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;
