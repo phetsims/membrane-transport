@@ -145,8 +145,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( membraneChannelNode );
 
     // TODO: Keyboard support
-    const membraneChannelPosition = new Vector2Property( new Vector2( 0, 0 ) );
-    membraneChannelPosition.link( position => {
+    const membraneChannelPositionProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    membraneChannelPositionProperty.link( position => {
       membraneChannelNode.center = screenViewModelViewTransform.modelToViewPosition( position );
     } );
 
@@ -195,7 +195,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const realCircleDragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
-      positionProperty: membraneChannelPosition,
+      positionProperty: membraneChannelPositionProperty,
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT
     } );
@@ -208,7 +208,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
         membraneChannelNode.moveToFront();
         const viewPoint = this.globalToLocalPoint( event.pointer.point );
         const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
-        membraneChannelPosition.value = modelPoint;
+        membraneChannelPositionProperty.value = modelPoint;
 
         realCircleDragListener.press( event );
 
