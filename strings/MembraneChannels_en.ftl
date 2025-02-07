@@ -46,3 +46,20 @@ soluteSpinnerContextResponsePattern =
         [insideThanOutside] inside than outside
        *[outsideThanInside] outside than inside
     }.
+
+soluteBarChartsDescriptionParagraph = A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
+
+# {{a lot more outside than inside}}; {{large}} {{downward}} arrow indicates passage {{from outside to inside}}.
+barChartPattern = { $amount ->
+  [aLittleMore] A little more
+  [aLotMore] A lot more
+  [aLittleLess] A little less
+  *[aLotLess] A lot less
+} outside than inside; { $size ->
+  [small] small
+  [medium] medium
+  *[large] large
+} { $direction ->
+  [upward] upward from outside to inside
+  *[downward] downward from inside to outside
+}.

@@ -14,6 +14,7 @@ import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
@@ -78,7 +79,12 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
         return soluteBarChartNode;
       } ),
       spacing: 30,
-      left: 50
+      left: 50,
+
+      tagName: 'ul',
+
+      descriptionTagName: 'p',
+      descriptionContent: MembraneChannelsMessages.soluteBarChartsDescriptionParagraphMessageProperty
     } );
     contentNode.addChild( hbox );
 

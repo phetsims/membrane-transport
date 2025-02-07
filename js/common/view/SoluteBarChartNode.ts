@@ -21,6 +21,10 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import getSoluteNode from './solutes/getSoluteNode.js';
+import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
+// import Property from '../../../../axon/js/Property.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 100;
@@ -34,13 +38,42 @@ export default class SoluteBarChartNode extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
   public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
+
+    const outsideAmountProperty = model.outsideSoluteCountProperties[ soluteType ];
+    const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
+
+    // If time passes, the flux will change.
+    // TODO: This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive
+    //    the description?
+    // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
+
+    // TODO: Consider creating a utility function for thresholding.
+    // TODO: Consider building that into Fluent directly???
+    const soluteDifferenceProperty = new DerivedProperty( [ outsideAmountProperty, insideAmountProperty ], ( outsideAmount, insideAmount ) => {
+      const difference = outsideAmount - insideAmount;
+      return difference > 10 ? 'aLotMore' :
+             difference > 5 ? 'aLittleMore' :
+             difference > -5 ? 'aLittleLess' :
+             'aLotLess';
+    } );
+
+    const descriptionProperty = new PatternMessageProperty( MembraneChannelsMessages.barChartPatternMessageProperty, {
+      amount: soluteDifferenceProperty,
+      size: 'small', // TODO: This is a placeholder
+      direction: 'upward' // TODO: This is a placeholder
+    } );
+
     super( {
 
       // TODO: Eliminate the clip area once we are sure everything remains in bounds?
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
 
       // TODO: Pass through options?
-      tandem: tandem
+      tandem: tandem,
+
+      // pdom
+      tagName: 'li',
+      accessibleName: descriptionProperty
     } );
 
     // For layout, not just for debugging
