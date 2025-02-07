@@ -25,30 +25,35 @@ export default class LigandControl extends Node {
     // Align so the buttons are the same size.
     const alignGroup = new AlignGroup();
 
-    // Separate buttons to make a11y navigation easier // TODO: or, perhaps, no?
-    const options = combineOptions<NodeOptions>( {
-      children: [
+    const addLigandsButton = new RectangularPushButton( {
+      baseColor: MembraneChannelsColors.ligandButtonColorProperty,
+      content: alignGroup.createBox( new Text( MembraneChannelsStrings.addLigandsStringProperty, {
+        fontSize: 14
+      } ) ),
+      tandem: tandem.createTandem( 'addLigandsButton' ),
+      visibleProperty: DerivedProperty.not( model.areLigandsAddedProperty ),
+      listener: () => {
+        model.areLigandsAddedProperty.set( true );
+        removeLigandsButton.focus();
+      }
+    } );
 
-        // TODO: Should be combined into one button so that spacebar can toggle it on and off.
-        new RectangularPushButton( {
-          baseColor: MembraneChannelsColors.ligandButtonColorProperty,
-          content: alignGroup.createBox( new Text( MembraneChannelsStrings.addLigandsStringProperty, {
-            fontSize: 14
-          } ) ),
-          tandem: tandem.createTandem( 'addLigandsButton' ),
-          visibleProperty: DerivedProperty.not( model.areLigandsAddedProperty ),
-          listener: () => model.areLigandsAddedProperty.set( true )
-        } ),
-        new RectangularPushButton( {
-          baseColor: MembraneChannelsColors.ligandButtonColorProperty,
-          content: alignGroup.createBox( new Text( MembraneChannelsStrings.removeLigandsStringProperty, {
-            fontSize: 14
-          } ) ),
-          tandem: tandem.createTandem( 'removeLigandsButton' ),
-          visibleProperty: model.areLigandsAddedProperty,
-          listener: () => model.areLigandsAddedProperty.set( false )
-        } )
-      ]
+    const removeLigandsButton = new RectangularPushButton( {
+      baseColor: MembraneChannelsColors.ligandButtonColorProperty,
+      content: alignGroup.createBox( new Text( MembraneChannelsStrings.removeLigandsStringProperty, {
+        fontSize: 14
+      } ) ),
+      tandem: tandem.createTandem( 'removeLigandsButton' ),
+      visibleProperty: model.areLigandsAddedProperty,
+      listener: () => {
+        model.areLigandsAddedProperty.set( false );
+        addLigandsButton.focus();
+      }
+    } );
+
+    // Separate buttons to make a11y navigation easier
+    const options = combineOptions<NodeOptions>( {
+      children: [ addLigandsButton, removeLigandsButton ]
     }, providedOptions );
     super( options );
   }
