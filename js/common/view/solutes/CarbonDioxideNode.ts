@@ -2,8 +2,8 @@
 
 import { combineOptions } from '../../../../../phet-core/js/optionize.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../../../scenery-phet/js/ShadedSphereNode.js';
-import Color from '../../../../../scenery/js/util/Color.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
+import Color from '../../../../../scenery/js/util/Color.js';
 import MembraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 

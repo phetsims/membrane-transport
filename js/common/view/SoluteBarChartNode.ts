@@ -8,7 +8,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+// import Property from '../../../../axon/js/Property.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -18,13 +21,10 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import getParticleNode from './solutes/getParticleNode.js';
-import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-// import Property from '../../../../axon/js/Property.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 100;
@@ -37,6 +37,7 @@ export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
+
   public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
 
     const outsideAmountProperty = model.outsideSoluteCountProperties[ soluteType ];

@@ -9,8 +9,8 @@
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import { ParticleType, ParticleTypes } from '../common/model/SoluteType.js';
-import getParticleNode from './view/solutes/getParticleNode.js';
 import membraneChannels from '../membraneChannels.js';
+import getParticleNode from './view/solutes/getParticleNode.js';
 
 const OBSERVATION_WINDOW_WIDTH = 534;
 const OBSERVATION_WINDOW_HEIGHT = 448;

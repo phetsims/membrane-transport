@@ -3,13 +3,13 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
-import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';

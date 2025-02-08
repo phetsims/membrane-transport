@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
