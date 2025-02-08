@@ -20,7 +20,7 @@ import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
 
-class LigandANode extends Node {
+export class LigandANode extends Node {
   public constructor( providedOptions?: NodeOptions ) {
     super( providedOptions );
 
@@ -30,6 +30,31 @@ class LigandANode extends Node {
       new Vector2( -10, 15 )
     ] ), {
       fill: new LinearGradient( -10, 0, 10, 0 ).addColorStop( 0, 'rgb(254,241,227)' ).addColorStop( 1, 'rgb(246,148,72)' ),
+      stroke: 'black'
+    } ) );
+  }
+}
+
+/**
+ * A 4-pointed star shape.
+ */
+export class LigandBNode extends Node {
+  public constructor( providedOptions?: NodeOptions ) {
+    super( providedOptions );
+    const innerRadius = 4;
+    const outerRadius = 14;
+
+    this.addChild( new Path( Shape.polygon( [
+      Vector2.createPolar( innerRadius, 0 * Math.PI / 4 ),
+      Vector2.createPolar( outerRadius, 1 * Math.PI / 4 ),
+      Vector2.createPolar( innerRadius, 2 * Math.PI / 4 ),
+      Vector2.createPolar( outerRadius, 3 * Math.PI / 4 ),
+      Vector2.createPolar( innerRadius, 4 * Math.PI / 4 ),
+      Vector2.createPolar( outerRadius, 5 * Math.PI / 4 ),
+      Vector2.createPolar( innerRadius, 6 * Math.PI / 4 ),
+      Vector2.createPolar( outerRadius, 7 * Math.PI / 4 )
+    ] ), {
+      fill: new LinearGradient( -10, 0, 10, 0 ).addColorStop( 0, 'rgb(192,209,231)' ).addColorStop( 1, 'rgb(72,114,176)' ),
       stroke: 'black'
     } ) );
   }
@@ -45,7 +70,7 @@ export default class LigandNode extends Node {
   ) {
 
     const options = combineOptions<NodeOptions>( {
-      children: [ new LigandANode() ],
+      children: [ new LigandBNode() ],
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
       accessibleName: 'Ligand', // TODO: What should this be?
@@ -121,5 +146,3 @@ export default class LigandNode extends Node {
   }
 }
 membraneChannels.register( 'LigandNode', LigandNode );
-
-export { LigandANode };
