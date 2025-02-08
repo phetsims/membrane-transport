@@ -136,7 +136,6 @@ export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt
   }
 
   // Collide with bottom wall
-  console.log( updatedBounds );
   if ( updatedBounds.minY < boundingRegion.minY ) {
     const overlap = boundingRegion.minY - updatedBounds.minY;
     solute.position.y += overlap;

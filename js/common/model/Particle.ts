@@ -25,7 +25,8 @@ export default class Particle<T extends ParticleType> {
   // Possible modes of motion:
   //   - 'randomWalk'  -> same as 'delayedWalk' but direction changes are gradual
   //   - 'bound'              -> solute is bound (for example, to a channel)
-  public mode: 'randomWalk' | 'bound' | 'passThroughToInside' | 'passThroughToOutside' = 'randomWalk';
+  // TODO: Do we need a subclass for Particles that can be userControlled (like ligands)?
+  public mode: 'randomWalk' | 'bound' | 'passThroughToInside' | 'passThroughToOutside' | 'userControlled' | 'userOver' = 'randomWalk';
 
   // =============================================================
   // FIELDS FOR SMOOTH, DELAYED RANDOM WALK

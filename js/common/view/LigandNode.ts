@@ -14,6 +14,10 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Shape from '../../../../kite/js/Shape.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 
 class LigandNodeView extends Node {
   public constructor( providedOptions?: NodeOptions ) {
@@ -37,16 +41,73 @@ export default class LigandNode extends LigandNodeView {
     private readonly ligandIndex: number,
     private readonly modelViewTransform: ModelViewTransform2
   ) {
-    super( {
-      visibleProperty: areLigandsAddedProperty
+
+    const options = combineOptions<NodeOptions>( {
+      visibleProperty: areLigandsAddedProperty,
+      cursor: 'pointer',
+      accessibleName: 'Ligand', // TODO: What should this be?
+      focusable: ligandIndex === 0 // TODO: Just one ligand is focusable for now, but how should this behave?
+    }, AccessibleDraggableOptions );
+
+    super( options );
+
+    const soundRichDragListener = new SoundRichDragListener( {
+      start: ( event, listener ) => {
+        this.operateOnLigand( ligand => {
+          ligand.mode = 'userControlled';
+        } );
+      },
+      drag: ( event, listener ) => {
+        this.operateOnLigand( ligand => {
+
+          // TODO: Handle the ligand becoming detached from the pointer.
+
+          // The DragListener cannot use dragBoundsProperty option unless using translateNode or positionProperty
+          // so that check is done manually here.
+          const proposedPosition = ligand.position.plus( listener.modelDelta );
+          const boundModelPoint = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
+          ligand.position.set( boundModelPoint );
+        } );
+      },
+      end: ( event, listener ) => {
+        this.operateOnLigand( ligand => {
+          ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? 'userOver' : 'randomWalk';
+        } );
+      },
+      transform: this.modelViewTransform
+    } );
+    this.addInputListener( soundRichDragListener );
+
+    // TODO: Rename looksOverProperty? Or maybe we need a new Property for isOverProperty || focusedProperty
+    soundRichDragListener.dragListener.looksOverProperty.link( isOver => {
+      this.operateOnLigand( ligand => {
+
+        // If the ligand is already controlled, don't start walking when the pointer goes out
+        if ( ligand.mode !== 'userControlled' ) {
+          ligand.mode = isOver ? 'userOver' : 'randomWalk';
+        }
+      } );
     } );
   }
 
-  public step( dt: number ): void {
-    const ligand = this.ligands[ this.ligandIndex ];
+  /**
+   * Do some work on the Ligand associate with this Node if it exists. Otherwise, do nothing. The ligand in the model
+   * may be added or removed but the view component will always exist.
+   */
+  private operateOnLigand( operation: ( ligand: Particle<LigandType> ) => void ): void {
+    const ligand = this.ligands[ this.ligandIndex ] || null;
     if ( ligand ) {
-      this.center = this.modelViewTransform.modelToViewPosition( ligand.position );
+      operation( ligand );
     }
+  }
+
+  /**
+   * Update the view with the animation state since the positions are not observable.
+   */
+  public step(): void {
+    this.operateOnLigand( ligand => {
+      this.center = this.modelViewTransform.modelToViewPosition( ligand.position );
+    } );
   }
 }
 membraneChannels.register( 'LigandNode', LigandNode );
