@@ -9,7 +9,7 @@
 
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import { ParticleType } from '../../model/SoluteType.js';
-import { LigandNodeView } from '../LigandNode.js';
+import { LigandANode } from '../LigandNode.js';
 import ATPNode from './ATPNode.js';
 import CarbonDioxideNode from './CarbonDioxideNode.js';
 import GlucoseNode from './GlucoseNode.js';
@@ -23,8 +23,8 @@ const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): N
                        particleType === 'sodiumIon' ? new SodiumIonNode() :
                        particleType === 'potassiumIon' ? new PotassiumIonNode() :
                        particleType === 'glucose' ? new GlucoseNode() :
-                       particleType === 'ligandA' ? new LigandNodeView() :
-                       particleType === 'ligandB' ? new LigandNodeView() :
+                       particleType === 'ligandA' ? new LigandANode() :
+                       particleType === 'ligandB' ? new LigandANode() :
                        new ATPNode();
 
   options && particleNode.mutate( options );

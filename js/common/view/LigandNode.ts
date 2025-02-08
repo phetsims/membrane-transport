@@ -20,7 +20,7 @@ import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
 
-class LigandNodeView extends Node {
+class LigandANode extends Node {
   public constructor( providedOptions?: NodeOptions ) {
     super( providedOptions );
 
@@ -35,7 +35,7 @@ class LigandNodeView extends Node {
   }
 }
 
-export default class LigandNode extends LigandNodeView {
+export default class LigandNode extends Node {
   public constructor(
     areLigandsAddedProperty: TProperty<boolean>,
     private readonly ligands: Particle<LigandType>[],
@@ -45,6 +45,7 @@ export default class LigandNode extends LigandNodeView {
   ) {
 
     const options = combineOptions<NodeOptions>( {
+      children: [ new LigandANode() ],
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
       accessibleName: 'Ligand', // TODO: What should this be?
@@ -121,4 +122,4 @@ export default class LigandNode extends LigandNodeView {
 }
 membraneChannels.register( 'LigandNode', LigandNode );
 
-export { LigandNodeView };
+export { LigandANode };
