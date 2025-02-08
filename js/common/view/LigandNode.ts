@@ -5,19 +5,20 @@
  */
 
 import TProperty from '../../../../axon/js/TProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Shape from '../../../../kite/js/Shape.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Path from '../../../../scenery/js/nodes/Path.js';
-import Shape from '../../../../kite/js/Shape.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 
 class LigandNodeView extends Node {
   public constructor( providedOptions?: NodeOptions ) {
@@ -39,7 +40,8 @@ export default class LigandNode extends LigandNodeView {
     areLigandsAddedProperty: TProperty<boolean>,
     private readonly ligands: Particle<LigandType>[],
     private readonly ligandIndex: number,
-    private readonly modelViewTransform: ModelViewTransform2
+    private readonly modelViewTransform: ModelViewTransform2,
+    tandem: Tandem
   ) {
 
     const options = combineOptions<NodeOptions>( {
@@ -74,7 +76,14 @@ export default class LigandNode extends LigandNodeView {
           ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? 'userOver' : 'randomWalk';
         } );
       },
-      transform: this.modelViewTransform
+      transform: this.modelViewTransform,
+      dragListenerOptions: {
+        tandem: tandem.createTandem( 'soundRichDragListener' )
+      },
+      keyboardDragListenerOptions: {
+        tandem: tandem.createTandem( 'keyboardDragListener' )
+      }
+
     } );
     this.addInputListener( soundRichDragListener );
 

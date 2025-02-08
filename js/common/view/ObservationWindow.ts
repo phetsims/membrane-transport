@@ -7,6 +7,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
@@ -26,7 +27,7 @@ export default class ObservationWindow extends Node {
 
   private readonly ligandNodes: LigandNode[] = [];
 
-  public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
     const frameNode = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
@@ -50,8 +51,9 @@ export default class ObservationWindow extends Node {
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
 
+    const groupTandem = tandem.createGroupTandem( 'ligandNodes' );
     for ( let i = 0; i < 10; i++ ) {
-      const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i, modelViewTransform );
+      const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i, modelViewTransform, groupTandem.createNextTandem() );
       clipNode.addChild( ligandNode );
       this.ligandNodes.push( ligandNode );
     }
@@ -70,7 +72,7 @@ export default class ObservationWindow extends Node {
     this.observationWindowCanvasNode.step( dt );
     this.observationWindowCanvasNode.invalidatePaint();
 
-    this.ligandNodes.forEach( ligandNode => ligandNode.step( dt ) );
+    this.ligandNodes.forEach( ligandNode => ligandNode.step() );
   }
 
 }
