@@ -8,11 +8,12 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import LigandNode from './LigandNode.js';
+import LigandNode, { LigandANode, LigandBNode } from './LigandNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 
 /**
@@ -35,7 +36,7 @@ export default class ObservationWindow extends Node {
     } );
 
     // Clipping region that contains the background canvas and the ligand node
-    // TODO: The canvas node doesn't actually need to be clippped since it can only draw within its bounds. UPDATE: Removing the clip shows a lot of drawing out of the bounds.
+    // TODO: The canvas node doesn't actually need to be clipped since it can only draw within its bounds. UPDATE: Removing the clip shows a lot of drawing out of the bounds.
     const clipNode = new Node( {
       clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
@@ -51,11 +52,17 @@ export default class ObservationWindow extends Node {
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
 
-    const groupTandem = tandem.createGroupTandem( 'ligandNodes' );
-    for ( let i = 0; i < 10; i++ ) {
-      const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i, modelViewTransform, groupTandem.createNextTandem() );
-      clipNode.addChild( ligandNode );
-      this.ligandNodes.push( ligandNode );
+    if ( getFeatureSetHasLigands( model.featureSet ) ) {
+      const groupTandem = tandem.createGroupTandem( 'ligandNodes' );
+
+      const ligandNodes = [ new LigandANode(), new LigandBNode() ];
+      ligandNodes.forEach( ( ligandViewNode, j ) => {
+        for ( let i = 0; i < LIGAND_COUNT; i++ ) {
+          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem() );
+          clipNode.addChild( ligandNode );
+          this.ligandNodes.push( ligandNode );
+        }
+      } );
     }
 
     // NOTE: Duplication with SoluteBarChartsAccordionBox

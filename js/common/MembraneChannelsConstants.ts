@@ -33,6 +33,8 @@ ParticleTypes.forEach( soluteType => {
 // Bounds of the membrane for collision detection and rendering.
 const MEMBRANE_BOUNDS = new Bounds2( -MODEL_WIDTH / 2, -10, MODEL_WIDTH / 2, 10 );
 
+export const LIGAND_COUNT = 10; // Per ligand type
+
 const MembraneChannelsConstants = {
   SCREEN_VIEW_X_MARGIN: 8,
   SCREEN_VIEW_Y_MARGIN: 8,

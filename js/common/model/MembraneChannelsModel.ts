@@ -26,7 +26,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
@@ -165,8 +165,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   public addLigands(): void {
-    this.addParticles( 'ligandA', 'outside', 10, this.ligands );
-    this.addParticles( 'ligandB', 'outside', 10, this.ligands );
+    this.addParticles( 'ligandA', 'outside', LIGAND_COUNT, this.ligands );
+    this.addParticles( 'ligandB', 'outside', LIGAND_COUNT, this.ligands );
   }
 
   public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, targetArray: Particle<SoluteType | LigandType>[] ): void {

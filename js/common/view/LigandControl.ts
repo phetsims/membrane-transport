@@ -33,7 +33,7 @@ export default class LigandControl extends Node {
       tandem: tandem.createTandem( 'addLigandsButton' ),
       visibleProperty: DerivedProperty.not( model.areLigandsAddedProperty ),
       listener: () => {
-        model.areLigandsAddedProperty.set( true );
+        model.areLigandsAddedProperty.value = true;
         removeLigandsButton.focus();
       }
     } );
@@ -46,7 +46,7 @@ export default class LigandControl extends Node {
       tandem: tandem.createTandem( 'removeLigandsButton' ),
       visibleProperty: model.areLigandsAddedProperty,
       listener: () => {
-        model.areLigandsAddedProperty.set( false );
+        model.areLigandsAddedProperty.value = false;
         addLigandsButton.focus();
       }
     } );

@@ -66,11 +66,12 @@ export default class LigandNode extends Node {
     private readonly ligands: Particle<LigandType>[],
     private readonly ligandIndex: number,
     private readonly modelViewTransform: ModelViewTransform2,
+    ligandView: Node,
     tandem: Tandem
   ) {
 
     const options = combineOptions<NodeOptions>( {
-      children: [ new LigandBNode() ],
+      children: [ ligandView ],
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
       accessibleName: 'Ligand', // TODO: What should this be?
