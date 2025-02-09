@@ -1,6 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -55,14 +56,17 @@ export default class ObservationWindow extends Node {
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
       const groupTandem = tandem.createGroupTandem( 'ligandNodes' );
 
-      const ligandNodes = [ new LigandANode(), new LigandBNode() ];
-      ligandNodes.forEach( ( ligandViewNode, j ) => {
+      const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
+      ligandViewNodes.forEach( ( ligandViewNode, j ) => {
         for ( let i = 0; i < LIGAND_COUNT; i++ ) {
           const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem() );
-          clipNode.addChild( ligandNode );
           this.ligandNodes.push( ligandNode );
         }
       } );
+
+      // Put in random z-order
+      const shuffledLigandNodes = dotRandom.shuffle( this.ligandNodes );
+      shuffledLigandNodes.forEach( ligandNode => clipNode.addChild( ligandNode ) );
     }
 
     // NOTE: Duplication with SoluteBarChartsAccordionBox
