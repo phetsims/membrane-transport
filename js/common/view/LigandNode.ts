@@ -66,7 +66,7 @@ export default class LigandNode extends Node {
           ligand.position.set( boundModelPoint );
         } );
       },
-      end: ( event, listener ) => {
+      end: () => {
         this.operateOnLigand( ligand => {
           ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? 'userOver' : 'randomWalk';
         } );
