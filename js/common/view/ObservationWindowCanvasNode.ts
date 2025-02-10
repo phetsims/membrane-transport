@@ -132,6 +132,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   /**
    * Draw a + or - to show the charges
    * @param context
+   * @param sign - '+' or '-'
    * @param point - in model coordinates
    */
   private drawSign( context: CanvasRenderingContext2D, sign: '+' | '-', point: Vector2 ): void {
@@ -160,8 +161,6 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       this.drawCharges( context );
     }
 
-    this.drawSolutes( context );
-
     Phospholipid.initTails( context );
     for ( let i = 0; i < this.phospholipids.length; i++ ) {
       this.phospholipids[ i ].drawTails( context );
@@ -171,6 +170,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     for ( let i = 0; i < this.phospholipids.length; i++ ) {
       this.phospholipids[ i ].drawHead( context );
     }
+
+    this.drawSolutes( context );
 
     // --- Debugging code to check transforms and bounds ---
     if ( phet.chipper.queryParameters.dev ) {
