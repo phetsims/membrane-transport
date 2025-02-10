@@ -1,0 +1,1 @@
+- *.js and *.ts files do not end with a newline
