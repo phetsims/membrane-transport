@@ -14,8 +14,10 @@ import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import LigandNode, { LigandANode, LigandBNode } from './LigandNode.js';
+import LigandNode from './LigandNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
+import LigandANode from './solutes/LigandANode.js';
+import LigandBNode from './solutes/LigandBNode.js';
 
 /**
  * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, membrane channels are.

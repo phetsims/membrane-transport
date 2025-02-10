@@ -9,10 +9,11 @@
 
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import { ParticleType } from '../../model/SoluteType.js';
-import { LigandANode, LigandBNode } from '../LigandNode.js';
 import ATPNode from './ATPNode.js';
 import CarbonDioxideNode from './CarbonDioxideNode.js';
 import GlucoseNode from './GlucoseNode.js';
+import LigandANode from './LigandANode.js';
+import LigandBNode from './LigandBNode.js';
 import OxygenNode from './OxygenNode.js';
 import PotassiumIonNode from './PotassiumIonNode.js';
 import SodiumIonNode from './SodiumIonNode.js';
