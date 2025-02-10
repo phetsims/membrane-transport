@@ -1,64 +1,22 @@
 // Copyright 2025, University of Colorado Boulder
+
 /**
  * LigandNode is a node that represents a ligand in the simulation.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import TProperty from '../../../../axon/js/TProperty.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Shape from '../../../../kite/js/Shape.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
-import Path from '../../../../scenery/js/nodes/Path.js';
-import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
-
-export class LigandANode extends Node {
-  public constructor( providedOptions?: NodeOptions ) {
-    super( providedOptions );
-
-    this.addChild( new Path( Shape.polygon( [
-      new Vector2( 0, 0 ),
-      new Vector2( 10, 15 ),
-      new Vector2( -10, 15 )
-    ] ), {
-      fill: new LinearGradient( -10, 0, 10, 0 ).addColorStop( 0, 'rgb(254,241,227)' ).addColorStop( 1, 'rgb(246,148,72)' ),
-      stroke: 'black'
-    } ) );
-  }
-}
-
-/**
- * A 4-pointed star shape.
- */
-export class LigandBNode extends Node {
-  public constructor( providedOptions?: NodeOptions ) {
-    super( providedOptions );
-    const innerRadius = 4;
-    const outerRadius = 14;
-
-    this.addChild( new Path( Shape.polygon( [
-      Vector2.createPolar( innerRadius, 0 * Math.PI / 4 ),
-      Vector2.createPolar( outerRadius, 1 * Math.PI / 4 ),
-      Vector2.createPolar( innerRadius, 2 * Math.PI / 4 ),
-      Vector2.createPolar( outerRadius, 3 * Math.PI / 4 ),
-      Vector2.createPolar( innerRadius, 4 * Math.PI / 4 ),
-      Vector2.createPolar( outerRadius, 5 * Math.PI / 4 ),
-      Vector2.createPolar( innerRadius, 6 * Math.PI / 4 ),
-      Vector2.createPolar( outerRadius, 7 * Math.PI / 4 )
-    ] ), {
-      fill: new LinearGradient( -10, 0, 10, 0 ).addColorStop( 0, 'rgb(192,209,231)' ).addColorStop( 1, 'rgb(72,114,176)' ),
-      stroke: 'black'
-    } ) );
-  }
-}
 
 export default class LigandNode extends Node {
   public constructor(
