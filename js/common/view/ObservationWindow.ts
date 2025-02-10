@@ -88,7 +88,8 @@ export default class ObservationWindow extends Node {
         center: modelViewTransform.modelToViewXY( targetZone, 0 ),
         stroke: 'blue',
         lineWidth: 2,
-        lineDash: [ 4, 4 ]
+        lineDash: [ 4, 4 ],
+        visible: false
       } );
     } );
 

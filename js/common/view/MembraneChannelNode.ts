@@ -57,28 +57,44 @@ export default class MembraneChannelNode extends Node {
     // eslint-disable-next-line consistent-this,@typescript-eslint/no-this-alias
     const myself = this;
 
+    // TODO: Use SoundRichDragListener?
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
       positionProperty: positionProperty,
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT,
-      drag: () => {
-
+      start: () => {
         const closest = getClosestOverlappingTarget();
 
         observationWindow.targetZoneNodes.forEach( targetZoneNode => {
           targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
+          targetZoneNode.visible = true;
+        } );
+      },
+      drag: () => {
+
+        // TODO: Duplicated with above
+        const closest = getClosestOverlappingTarget();
+
+        observationWindow.targetZoneNodes.forEach( targetZoneNode => {
+          targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
+          targetZoneNode.visible = true;
         } );
       },
       end: () => {
+
+        observationWindow.targetZoneNodes.forEach( targetZoneNode => {
+          targetZoneNode.visible = false;
+        } );
 
         // drop into the selected target, or move back to the toolbox
         const closest = getClosestOverlappingTarget();
 
         if ( closest ) {
           // drop into the selected target
-          closest.fill = 'green';
+          // closest.fill = 'green';
+          this.center = closest.globalBounds.center;
         }
         else {
 
