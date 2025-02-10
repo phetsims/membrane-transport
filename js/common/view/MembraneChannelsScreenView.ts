@@ -1,17 +1,15 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
- * ScreenView for the Membrane Channels simulation. Note that this provides the full features of the Playgound screen,
+ * ScreenView for the Membrane Channels simulation. Note that this provides the full features of the Playground screen,
  * and the earlier screens opt-out of some of these features.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -19,10 +17,8 @@ import MoveToTrashButton from '../../../../scenery-phet/js/buttons/MoveToTrashBu
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
@@ -30,6 +26,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
+import MembraneChannelNode from './MembraneChannelNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -62,7 +59,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( options );
 
-    // A model to view transform that maps a model point to a positionin the screen view. This transform includes the translation
+    // A model to view transform that maps a model point to a position in the screen view. This transform includes the translation
     // of the observation window so that you can position view components relative to things within the observation window.
     const screenViewModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ),
@@ -135,26 +132,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( soluteBarChartsAccordionBox );
     this.stepEmitter.addListener( dt => soluteBarChartsAccordionBox.stepEmitter.emit( dt ) );
 
-    const membraneChannelNode = new Circle( 15, {
-      fill: 'rgba( 0,0,255,0.5)',
-      left: 0,
-      top: 0,
-      cursor: 'pointer',
-      visible: false
-    } );
-    this.addChild( membraneChannelNode );
-
-    // TODO: Keyboard support
-    const membraneChannelPositionProperty = new Vector2Property( new Vector2( 0, 0 ) );
-    membraneChannelPositionProperty.link( position => {
-      membraneChannelNode.center = screenViewModelViewTransform.modelToViewPosition( position );
-    } );
-
-    // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
-    const modelBoundsProperty = new DerivedProperty( [ this.visibleBoundsProperty ], visibleBounds => {
-      return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
-    } );
-
     const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, {
       tandem: options.tandem.createTandem( 'solutesPanel' ),
       left: this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
@@ -204,26 +181,16 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( outsideSoluteControlNode );
     this.addChild( insideSoluteControlNode );
 
-    const realCircleDragListener = new DragListener( {
-      useParentOffset: true,
-      dragBoundsProperty: modelBoundsProperty,
-      positionProperty: membraneChannelPositionProperty,
-      transform: screenViewModelViewTransform,
-      tandem: Tandem.OPT_OUT
-    } );
-    membraneChannelNode.addInputListener( realCircleDragListener );
-
     const additionalPlayAreaOrder: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
       const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), event => {
-        membraneChannelNode.visible = true;
-        membraneChannelNode.moveToFront();
+
         const viewPoint = this.globalToLocalPoint( event.pointer.point );
-        const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
-        membraneChannelPositionProperty.value = modelPoint;
 
-        realCircleDragListener.press( event );
+        const membraneChannelNode = new MembraneChannelNode( screenViewModelViewTransform, screenViewModelViewTransform.viewToModelPosition( viewPoint ), this.visibleBoundsProperty );
+        this.addChild( membraneChannelNode );
 
+        membraneChannelNode.press( event );
       } );
       this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
