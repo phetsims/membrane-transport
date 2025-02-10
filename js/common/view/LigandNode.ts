@@ -58,17 +58,25 @@ export default class LigandNode extends Node {
           pressOffset = modelPoint.minus( ligand.position );
         } );
       },
-      drag: event => {
+      drag: ( event, listener ) => {
+
         this.operateOnLigand( ligand => {
 
-          // Calculate desired position using stored offset
-          const localPoint = this.globalToParentPoint( event.pointer.point );
-          const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
-          const proposedPosition = modelPointerPosition.minus( pressOffset! );
+          const constrainPosition = ( proposedPosition: Vector2 ) => {
+            const boundModelPoint = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
+            ligand.position.set( boundModelPoint );
+          };
 
-          // Constrain to bounds while maintaining relative offset
-          const boundModelPoint = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
-          ligand.position.set( boundModelPoint );
+          if ( event.isFromPDOM() ) {
+            const proposedPosition = ligand.position.plus( listener.modelDelta );
+            constrainPosition( proposedPosition );
+          }
+          else {
+            const localPoint = this.globalToParentPoint( event.pointer.point );
+            const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
+            const proposedPosition = modelPointerPosition.minus( pressOffset! );
+            constrainPosition( proposedPosition );
+          }
         } );
       },
       end: () => {
@@ -82,9 +90,10 @@ export default class LigandNode extends Node {
         tandem: tandem.createTandem( 'soundRichDragListener' )
       },
       keyboardDragListenerOptions: {
-        tandem: tandem.createTandem( 'keyboardDragListener' )
+        tandem: tandem.createTandem( 'keyboardDragListener' ),
+        dragSpeed: 200,
+        shiftDragSpeed: 50
       }
-
     } );
     this.addInputListener( soundRichDragListener );
 
