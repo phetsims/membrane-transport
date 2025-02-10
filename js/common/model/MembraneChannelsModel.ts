@@ -228,7 +228,6 @@ export default class MembraneChannelsModel extends PhetioObject {
       const soluteInitialYValues = new Map<Particle<SoluteType>, number>();
       this.solutes.forEach( solute => soluteInitialYValues.set( solute, solute.position.y ) );
 
-
       const allParticles = [ ...this.solutes, ...this.ligands ];
       allParticles.forEach( particle => {
         if ( particle.mode === 'randomWalk' ) {
