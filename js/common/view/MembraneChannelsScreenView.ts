@@ -163,13 +163,23 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     this.addChild( solutesPanel );
 
+    // For keyboard focus order
     const soluteControls: SoluteControl[] = [];
+
+    const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
+    const insideSoluteControlsTandem = options.tandem.createTandem( 'insideSoluteControls' );
+
+    // Make it possible to hide or show the entire outside or inside solute control panel
+    const outsideSoluteControlNode = new Node( {
+      tandem: outsideSoluteControlsTandem
+    } );
+    const insideSoluteControlNode = new Node( {
+      tandem: insideSoluteControlsTandem
+    } );
 
     // Number controls for the 'outside' solute concentrations
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
     getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
-
-      const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
 
       // ATP can only be added inside the cell
       if ( soluteType !== 'atp' ) {
@@ -178,19 +188,21 @@ export default class MembraneChannelsScreenView extends ScreenView {
           bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
           tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
         } );
-        this.addChild( outsideSoluteControl );
+        outsideSoluteControlNode.addChild( outsideSoluteControl );
         soluteControls.push( outsideSoluteControl );
       }
 
-      const insideSoluteControlsTandem = options.tandem.createTandem( 'insideSoluteControls' );
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
         centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
         top: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ),
         tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
-      this.addChild( insideSoluteControl );
+      insideSoluteControlNode.addChild( insideSoluteControl );
       soluteControls.push( insideSoluteControl );
     } );
+
+    this.addChild( outsideSoluteControlNode );
+    this.addChild( insideSoluteControlNode );
 
     const realCircleDragListener = new DragListener( {
       useParentOffset: true,
