@@ -26,7 +26,8 @@ export default class LigandNode extends Node {
     private readonly ligandIndex: number,
     private readonly modelViewTransform: ModelViewTransform2,
     ligandView: Node,
-    tandem: Tandem
+    tandem: Tandem,
+    focusable: boolean
   ) {
 
     const options = combineOptions<NodeOptions>( {
@@ -34,8 +35,12 @@ export default class LigandNode extends Node {
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
       accessibleName: 'Ligand', // TODO: What should this be?
-      focusable: ligandIndex === 0 // TODO: Just one ligand is focusable for now, but how should this behave?
-    }, AccessibleDraggableOptions );
+      focusable: focusable
+    }, AccessibleDraggableOptions, {
+
+      // Must take precedence over the AccessibleDraggableOptions which has focusable: true
+      focusable: focusable
+    } );
 
     super( options );
 

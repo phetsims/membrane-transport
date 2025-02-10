@@ -61,7 +61,7 @@ export default class ObservationWindow extends Node {
       const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
       ligandViewNodes.forEach( ( ligandViewNode, j ) => {
         for ( let i = 0; i < LIGAND_COUNT; i++ ) {
-          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem() );
+          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem(), i === 0 );
           this.ligandNodes.push( ligandNode );
         }
       } );
