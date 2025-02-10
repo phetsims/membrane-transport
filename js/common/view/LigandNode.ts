@@ -7,6 +7,7 @@
  */
 
 import TProperty from '../../../../axon/js/TProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
@@ -38,20 +39,29 @@ export default class LigandNode extends Node {
 
     super( options );
 
+    // For dragging relative to the press point on the ligand
+    let pressOffset: null | Vector2 = null;
+
     const soundRichDragListener = new SoundRichDragListener( {
-      start: ( event, listener ) => {
+      start: event => {
         this.operateOnLigand( ligand => {
           ligand.mode = 'userControlled';
+
+          // Store initial offset from pointer to ligand position
+          const localPoint = this.globalToParentPoint( event.pointer.point );
+          const modelPoint = this.modelViewTransform.viewToModelPosition( localPoint );
+          pressOffset = modelPoint.minus( ligand.position );
         } );
       },
-      drag: ( event, listener ) => {
+      drag: event => {
         this.operateOnLigand( ligand => {
 
-          // TODO: Handle the ligand becoming detached from the pointer.
+          // Calculate desired position using stored offset
+          const localPoint = this.globalToParentPoint( event.pointer.point );
+          const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
+          const proposedPosition = modelPointerPosition.minus( pressOffset! );
 
-          // The DragListener cannot use dragBoundsProperty option unless using translateNode or positionProperty
-          // so that check is done manually here.
-          const proposedPosition = ligand.position.plus( listener.modelDelta );
+          // Constrain to bounds while maintaining relative offset
           const boundModelPoint = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
           ligand.position.set( boundModelPoint );
         } );
@@ -60,6 +70,7 @@ export default class LigandNode extends Node {
         this.operateOnLigand( ligand => {
           ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? 'userOver' : 'randomWalk';
         } );
+        pressOffset = null;
       },
       transform: this.modelViewTransform,
       dragListenerOptions: {
