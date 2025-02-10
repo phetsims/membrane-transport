@@ -8,6 +8,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Panel from '../../../../sun/js/Panel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
@@ -75,7 +76,8 @@ export default class SoluteControl extends Panel {
       deltaCoarse: coarseDelta,
       numberDisplayOptions: {
         opacity: 0,
-        scale: 0.65
+        scale: 0.65,
+        tandem: Tandem.OPT_OUT
       },
       accessibleName: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
                       MembraneChannelsMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
@@ -123,8 +125,12 @@ export default class SoluteControl extends Panel {
         );
       },
       pdomDependencies: [ objectResponseMessageProperty ],
-
-      tandem: options.tandem
+      tandem: options.tandem,
+      phetioVisiblePropertyInstrumented: false,
+      phetioEnabledPropertyInstrumented: false,
+      arrowButtonOptions: {
+        phetioVisiblePropertyInstrumented: false
+      }
     } );
 
     const icon = getParticleNode( soluteType, {
