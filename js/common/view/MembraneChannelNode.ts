@@ -11,7 +11,10 @@ import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListen
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
+import ObservationWindow from './ObservationWindow.js';
 
 /**
  * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific slots
@@ -23,7 +26,8 @@ import membraneChannels from '../../membraneChannels.js';
 export default class MembraneChannelNode extends Node {
   private readonly dragListener: DragListener;
 
-  public constructor( screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2> ) {
+  // TODO: Preallocate to make phet-io state trivial?
+  public constructor( observationWindow: ObservationWindow, screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, homes: Node[] ) {
     super();
 
     // TODO: Keyboard support
@@ -37,12 +41,70 @@ export default class MembraneChannelNode extends Node {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
+    const getClosestOverlappingTarget = () => {
+      // Check the observation window to find the closest rectangle we overlap
+      // If any rectangle overlaps, change its stroke color to red, Change all others back to black
+      const overlappingTargets = observationWindow.targetZoneNodes.filter( targetZoneNode => {
+        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds );
+      } );
+
+      const closest = _.sortBy( overlappingTargets, targetZoneNode => {
+        return targetZoneNode.globalBounds.center.distance( this.globalBounds.center );
+      } )[ 0 ];
+      return closest;
+    };
+
+    // eslint-disable-next-line consistent-this,@typescript-eslint/no-this-alias
+    const myself = this;
+
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
       positionProperty: positionProperty,
       transform: screenViewModelViewTransform,
-      tandem: Tandem.OPT_OUT
+      tandem: Tandem.OPT_OUT,
+      drag: () => {
+
+        const closest = getClosestOverlappingTarget();
+
+        observationWindow.targetZoneNodes.forEach( targetZoneNode => {
+          targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
+        } );
+      },
+      end: () => {
+
+        // drop into the selected target, or move back to the toolbox
+        const closest = getClosestOverlappingTarget();
+
+        if ( closest ) {
+          // drop into the selected target
+          closest.fill = 'green';
+        }
+        else {
+
+          // Animate back to the closest home
+          if ( homes[ 0 ].isVisible() ) {
+
+            myself.pickable = false; // Prevent being grabbed on the way home
+
+            const animation = new Animation( {
+              setValue: function( value ) {
+                const screenViewPoint = myself.globalToParentPoint( value );
+                positionProperty.value = screenViewModelViewTransform.viewToModelPosition( screenViewPoint );
+              },
+              from: this.globalBounds.center,
+              to: homes[ 0 ].globalBounds.center,
+              duration: 0.4,
+              easing: Easing.CUBIC_IN_OUT
+            } );
+            animation.endedEmitter.addListener( () => {
+              this.visible = false;
+            } );
+
+            animation.start();
+          }
+        }
+      }
     } );
     this.addInputListener( this.dragListener );
 

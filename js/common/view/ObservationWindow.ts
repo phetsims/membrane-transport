@@ -30,6 +30,7 @@ export default class ObservationWindow extends Node {
   private readonly observationWindowCanvasNode: ObservationWindowCanvasNode;
 
   private readonly ligandNodes: LigandNode[] = [];
+  public readonly targetZoneNodes: Rectangle[];
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
@@ -79,6 +80,21 @@ export default class ObservationWindow extends Node {
 
     this.addChild( outsideText );
     this.addChild( insideText );
+
+    this.targetZoneNodes = model.targetZones.map( targetZone => {
+
+      // Target zone for the outside cell
+      return new Rectangle( 0, 0, 60, 80, 15, 10, {
+        center: modelViewTransform.modelToViewXY( targetZone, 0 ),
+        stroke: 'blue',
+        lineWidth: 2,
+        lineDash: [ 4, 4 ]
+      } );
+    } );
+
+    this.targetZoneNodes.forEach( targetZoneNode => {
+      this.addChild( targetZoneNode );
+    } );
   }
 
   public step( dt: number ): void {

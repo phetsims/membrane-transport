@@ -33,7 +33,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( model: MembraneChannelsModel, tandem: Tandem, createCircle: ( event: PressListenerEvent ) => void ) {
+  public constructor( model: MembraneChannelsModel, tandem: Tandem, createCircle: ( event: PressListenerEvent, homes: Node[] ) => void ) {
 
     const fontSize = 18;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -47,7 +47,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
 
     circleIcon.addInputListener( DragListener.createForwardingListener( event => {
-      createCircle( event );
+      createCircle( event, [ circleIcon, this ] );
     } ) );
 
     const contentAlignGroup = new AlignGroup();
