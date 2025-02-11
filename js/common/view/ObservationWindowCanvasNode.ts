@@ -154,13 +154,14 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     const yView = this.modelViewTransform.modelToViewY( y );
     const widthView = this.modelViewTransform.modelToViewDeltaX( width );
     const heightView = this.modelViewTransform.modelToViewDeltaY( height );
+    const radiusView = this.modelViewTransform.modelToViewDeltaX( radius );
 
     context.beginPath();
-    context.moveTo( xView, yView - heightView / 2 );
-    context.arcTo( xView + widthView, yView - heightView / 2, xView + widthView, yView + heightView / 2, radius );
-    context.arcTo( xView + widthView, yView + heightView / 2, xView, yView + heightView / 2, radius );
-    context.arcTo( xView, yView + heightView / 2, xView, yView - heightView / 2, radius );
-    context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radius );
+    context.moveTo( xView + radiusView, yView - heightView / 2 );
+    context.arcTo( xView + widthView, yView - heightView / 2, xView + widthView, yView + heightView / 2, radiusView );
+    context.arcTo( xView + widthView, yView + heightView / 2, xView, yView + heightView / 2, radiusView );
+    context.arcTo( xView, yView + heightView / 2, xView, yView - heightView / 2, radiusView );
+    context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radiusView );
   }
 
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
@@ -173,22 +174,22 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         // add a rounded rectangle
         context.strokeStyle = 'black';
         context.lineWidth = 2;
-        context.fillStyle = 'green';
-        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, 20, modelHeight, 5 );
+        context.fillStyle = 'rgb(191,191,191)';
+        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, 20, modelHeight, 2 );
         context.fill();
         context.stroke();
 
         const semiWidth = 8;
 
         // on the left half, another rounded rect that is yellow
-        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, semiWidth, modelHeight, 5 );
-        context.fillStyle = 'green';
+        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, semiWidth, modelHeight, 2 );
+        context.fillStyle = 'rgb(254,254,254)';
         context.fill();
         context.stroke();
 
         // on the right half, another rounded rect that is red
-        this.drawRoundedRectangle( context, x + modelWidth / 2 - semiWidth, 0, semiWidth, modelHeight, 5 );
-        context.fillStyle = 'green';
+        this.drawRoundedRectangle( context, x + modelWidth / 2 - semiWidth, 0, semiWidth, modelHeight, 2 );
+        context.fillStyle = 'rgb(254,254,254)';
         context.fill();
         context.stroke();
       }
