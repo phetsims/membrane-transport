@@ -9,6 +9,7 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
@@ -16,7 +17,18 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import SoluteType, { getSoluteModelWidth, ParticleType } from './SoluteType.js';
-import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
+
+// We'll use a base "random walk speed" for solutes
+const randomWalkSpeed = 10;
+
+/**
+ * Helper function: gets the "current" interpolated direction based on how
+ * far we've turned so far, so we can store or use it if we choose a new target.
+ */
+function getInterpolatedDirection( solute: Particle<ParticleType> ): Vector2 {
+  const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
+  return solute.currentDirection.blend( solute.targetDirection, alpha ).normalized();
+}
 
 /**
  * Solute class for Membrane Channels sim, supporting multiple modes of motion,
@@ -89,7 +101,7 @@ export default class Particle<T extends ParticleType> {
 
   public step( dt: number, model: MembraneChannelsModel ): void {
     if ( this.mode === 'randomWalk' ) {
-      stepSoluteRandomWalk( this, dt, model );
+      this.stepRandomWalk( dt, model );
     }
     else if ( this.mode === 'bound' ) {
       // Mode where solute doesn’t move, or does something special
@@ -114,6 +126,144 @@ export default class Particle<T extends ParticleType> {
         const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
         this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
       }
+    }
+  }
+
+  /**
+   * Step the solute along a random walk path, causing it to bounce off the
+   * membrane (central horizontal band) AND also bounce off the bounding walls.
+   */
+  public stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
+
+    // 1) Possibly update direction choices
+    this.timeUntilNextDirection -= dt;
+    if ( this.timeUntilNextDirection <= 0 ) {
+
+      // finalize "currentDirection" from the previous interpolation
+      this.currentDirection = getInterpolatedDirection( this );
+
+      // choose a new target direction randomly
+      this.targetDirection = Particle.createRandomUnitVector();
+
+      // decide how long to turn to this target
+      this.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+      this.turnElapsed = 0;
+
+      // reset the time until next direction change
+      this.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+    }
+
+    // 2) Accumulate turn time and compute interpolated direction
+    this.turnElapsed += dt;
+    const alpha = Utils.clamp( this.turnElapsed / this.turnDuration, 0, 1 );
+    const direction = this.currentDirection.blend( this.targetDirection, alpha );
+
+    // 3) If the this is overlapping the membrane, bounce off of it
+    //    (this is the original membrane-bounce logic).
+    const thisBounds = this.dimension.toBounds(
+      this.position.x - this.dimension.width / 2,
+      this.position.y - this.dimension.height / 2
+    );
+
+    // Are we above (y>0) or below (y<0) the membrane region?
+    const outsideOfCell = this.position.y > 0;
+
+    // Check overlap with membrane bounds
+    if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
+
+      // Oxygen and carbon dioxide thiss can pass through the membrane
+      if ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) {
+
+        if ( model.canDiffuseThroughMembrane( this ) && dotRandom.nextDouble() < 0.90 ) {
+          this.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+
+          return;
+        }
+      }
+
+      if ( this.type === 'sodiumIon' && model.isCloseToSodiumChannel( this ) ) {
+        this.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+        return;
+      }
+
+      if ( outsideOfCell ) {
+        // Overlap with the membrane from above
+        const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY;
+
+        // push the this back out of the membrane
+        this.position.y += overlap;
+
+        // Reflect the motion upward
+        direction.y = Math.abs( direction.y );
+        this.currentDirection.y = Math.abs( this.currentDirection.y );
+        this.targetDirection.y = Math.abs( this.targetDirection.y );
+      }
+      else {
+        // Overlap with the membrane from below
+        const overlap = thisBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
+
+        // push the this back out of the membrane
+        this.position.y -= overlap;
+
+        // Reflect the motion downward
+        direction.y = -Math.abs( direction.y );
+        this.currentDirection.y = -Math.abs( this.currentDirection.y );
+        this.targetDirection.y = -Math.abs( this.targetDirection.y );
+      }
+    }
+
+    // 4) Move the this according to the direction and speed
+    //    (do this AFTER membrane collisions are handled).
+    const speed = dt * 3;
+    this.position.x += direction.x * speed * randomWalkSpeed;
+    this.position.y += direction.y * speed * randomWalkSpeed;
+
+    // 5) Now bounce off the 3 other walls in whichever bounding region we are in
+    //    (INSIDE_CELL_BOUNDS if y<0, or OUTSIDE_CELL_BOUNDS if y>0).
+    const boundingRegion = outsideOfCell ?
+                           MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS :
+                           MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+
+    // Recompute thisBounds after the move
+    const updatedBounds = this.dimension.toBounds(
+      this.position.x - this.dimension.width / 2,
+      this.position.y - this.dimension.height / 2
+    );
+
+    // Collide with left wall
+    if ( updatedBounds.minX < boundingRegion.minX ) {
+      const overlap = boundingRegion.minX - updatedBounds.minX;
+      this.position.x += overlap;
+      direction.x = Math.abs( direction.x );
+      this.currentDirection.x = Math.abs( this.currentDirection.x );
+      this.targetDirection.x = Math.abs( this.targetDirection.x );
+    }
+
+    // Collide with right wall
+    if ( updatedBounds.maxX > boundingRegion.maxX ) {
+      const overlap = updatedBounds.maxX - boundingRegion.maxX;
+      this.position.x -= overlap;
+      direction.x = -Math.abs( direction.x );
+      this.currentDirection.x = -Math.abs( this.currentDirection.x );
+      this.targetDirection.x = -Math.abs( this.targetDirection.x );
+    }
+
+    // Collide with bottom wall
+    if ( updatedBounds.minY < boundingRegion.minY ) {
+      const overlap = boundingRegion.minY - updatedBounds.minY;
+      this.position.y += overlap;
+      direction.y = Math.abs( direction.y );
+      this.currentDirection.y = Math.abs( this.currentDirection.y );
+      this.targetDirection.y = Math.abs( this.targetDirection.y );
+    }
+
+    // Collide with top wall
+    if ( updatedBounds.maxY > boundingRegion.maxY ) {
+      const overlap = updatedBounds.maxY - boundingRegion.maxY;
+      this.position.y -= overlap;
+      direction.y = -Math.abs( direction.y );
+      this.currentDirection.y = -Math.abs( this.currentDirection.y );
+      this.targetDirection.y = -Math.abs( this.targetDirection.y );
     }
   }
 
