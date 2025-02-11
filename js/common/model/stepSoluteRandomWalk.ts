@@ -80,7 +80,6 @@ export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt
       return;
     }
 
-
     if ( outsideOfCell ) {
       // Overlap with the membrane from above
       const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - soluteBounds.minY;
