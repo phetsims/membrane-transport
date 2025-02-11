@@ -169,7 +169,7 @@ export default class Particle<T extends ParticleType> {
     // Check overlap with membrane bounds
     if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
-      // Oxygen and carbon dioxide thiss can pass through the membrane
+      // Oxygen and carbon dioxide this can pass through the membrane
       if ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) {
 
         if ( model.canDiffuseThroughMembrane( this ) && dotRandom.nextDouble() < 0.90 ) {
@@ -227,8 +227,7 @@ export default class Particle<T extends ParticleType> {
 
     // Collide with left wall
     if ( updatedBounds.minX < boundingRegion.minX ) {
-      const overlap = boundingRegion.minX - updatedBounds.minX;
-      this.position.x += overlap;
+      this.position.x += boundingRegion.minX - updatedBounds.minX;
       direction.x = Math.abs( direction.x );
       this.currentDirection.x = Math.abs( this.currentDirection.x );
       this.targetDirection.x = Math.abs( this.targetDirection.x );
@@ -236,8 +235,7 @@ export default class Particle<T extends ParticleType> {
 
     // Collide with right wall
     if ( updatedBounds.maxX > boundingRegion.maxX ) {
-      const overlap = updatedBounds.maxX - boundingRegion.maxX;
-      this.position.x -= overlap;
+      this.position.x -= updatedBounds.maxX - boundingRegion.maxX;
       direction.x = -Math.abs( direction.x );
       this.currentDirection.x = -Math.abs( this.currentDirection.x );
       this.targetDirection.x = -Math.abs( this.targetDirection.x );
@@ -245,8 +243,7 @@ export default class Particle<T extends ParticleType> {
 
     // Collide with bottom wall
     if ( updatedBounds.minY < boundingRegion.minY ) {
-      const overlap = boundingRegion.minY - updatedBounds.minY;
-      this.position.y += overlap;
+      this.position.y += boundingRegion.minY - updatedBounds.minY;
       direction.y = Math.abs( direction.y );
       this.currentDirection.y = Math.abs( this.currentDirection.y );
       this.targetDirection.y = Math.abs( this.targetDirection.y );
@@ -254,8 +251,7 @@ export default class Particle<T extends ParticleType> {
 
     // Collide with top wall
     if ( updatedBounds.maxY > boundingRegion.maxY ) {
-      const overlap = updatedBounds.maxY - boundingRegion.maxY;
-      this.position.y -= overlap;
+      this.position.y -= updatedBounds.maxY - boundingRegion.maxY;
       direction.y = -Math.abs( direction.y );
       this.currentDirection.y = -Math.abs( this.currentDirection.y );
       this.targetDirection.y = -Math.abs( this.targetDirection.y );
