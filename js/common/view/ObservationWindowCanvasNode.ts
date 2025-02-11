@@ -13,7 +13,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CanvasNode from '../../../../scenery/js/nodes/CanvasNode.js';
-import { rasterized } from '../../../../scenery/js/util/rasterized.js';
+import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -49,7 +49,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
     const iconNode = getParticleNode( soluteType );
-    return rasterized( iconNode, { wrap: false, resolution: 4 } ).image;
+    return rasterizeNode( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 
   // Convenience functions to move and line in model coordinates
