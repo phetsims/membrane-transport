@@ -37,7 +37,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
 
   public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, createCircle: ( event: PressListenerEvent, homes: Node[] ) => void ) {
 
-    const fontSize = 18;
+    const fontSize = 16;
     const accordionBoxOptions: AccordionBoxOptions = {
       useExpandedBoundsWhenCollapsed: false,
       cornerRadius: 0,
@@ -64,20 +64,20 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         }, accordionBoxOptions ) ),
         new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: false,
-          titleNode: new Text( MembraneChannelsStrings.voltageChannelsStringProperty, { fontSize: fontSize } ),
+          titleNode: new Text( MembraneChannelsStrings.voltageGatedChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'voltageAccordionBox' )
         }, accordionBoxOptions ) ),
         new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: false,
-          titleNode: new Text( MembraneChannelsStrings.ligandChannelsStringProperty, { fontSize: fontSize } ),
+          titleNode: new Text( MembraneChannelsStrings.ligandGatedChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'ligandAccordionBox' )
         }, accordionBoxOptions ) ) );
     }
 
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
-      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
+      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text and more' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: model.featureSet === 'activeTransport',
-        titleNode: new Text( MembraneChannelsStrings.activeChannelsStringProperty, { fontSize: fontSize } ),
+        titleNode: new Text( MembraneChannelsStrings.activeTransportersStringProperty, { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'activeAccordionBox' )
       }, accordionBoxOptions ) ) );
     }
