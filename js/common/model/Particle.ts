@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -160,10 +161,7 @@ export default class Particle<T extends ParticleType> {
 
     // 3) If the this is overlapping the membrane, bounce off of it
     //    (this is the original membrane-bounce logic).
-    const thisBounds = this.dimension.toBounds(
-      this.position.x - this.dimension.width / 2,
-      this.position.y - this.dimension.height / 2
-    );
+    const thisBounds = this.getBounds();
 
     // Are we above (y>0) or below (y<0) the membrane region?
     const outsideOfCell = this.position.y > 0;
@@ -225,10 +223,7 @@ export default class Particle<T extends ParticleType> {
                            MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
 
     // Recompute thisBounds after the move
-    const updatedBounds = this.dimension.toBounds(
-      this.position.x - this.dimension.width / 2,
-      this.position.y - this.dimension.height / 2
-    );
+    const updatedBounds = this.getBounds();
 
     // Collide with left wall
     if ( updatedBounds.minX < boundingRegion.minX ) {
@@ -265,6 +260,13 @@ export default class Particle<T extends ParticleType> {
       this.currentDirection.y = -Math.abs( this.currentDirection.y );
       this.targetDirection.y = -Math.abs( this.targetDirection.y );
     }
+  }
+
+  public getBounds(): Bounds2 {
+    return this.dimension.toBounds(
+      this.position.x - this.dimension.width / 2,
+      this.position.y - this.dimension.height / 2
+    );
   }
 
   public static createRandomUnitVector(): Vector2 {
