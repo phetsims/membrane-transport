@@ -20,7 +20,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 
 
 export default class LigandControl extends Node {
-  public constructor( model: MembraneChannelsModel, tandem: Tandem, providedOptions: NodeOptions ) {
+  public constructor( model: MembraneChannelsModel, tandem: Tandem ) {
 
     // Align so the buttons are the same size.
     const alignGroup = new AlignGroup();
@@ -54,7 +54,7 @@ export default class LigandControl extends Node {
     // Separate buttons to make a11y navigation easier
     const options = combineOptions<NodeOptions>( {
       children: [ addLigandsButton, removeLigandsButton ]
-    }, providedOptions );
+    } );
     super( options );
   }
 }

@@ -17,6 +17,7 @@ import MoveToTrashButton from '../../../../scenery-phet/js/buttons/MoveToTrashBu
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
@@ -93,8 +94,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
-    resetAllButton.rightBottom = new Vector2( this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN, this.observationWindow.bottom );
-
     this.addChild( resetAllButton );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
@@ -106,7 +105,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
 
     timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-    timeControlNode.bottom = resetAllButton.top - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    timeControlNode.bottom = this.layoutBounds.maxY - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( timeControlNode );
 
@@ -183,7 +182,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( outsideSoluteControlNode );
     this.addChild( insideSoluteControlNode );
 
-    const additionalPlayAreaOrder: Node[] = [];
+    const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
       const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, this.observationWindowModelViewTransform, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), ( event, homes ) => {
 
@@ -196,33 +195,31 @@ export default class MembraneChannelsScreenView extends ScreenView {
       } );
       this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
-      membraneChannelsAccordionBoxGroup.centerX = ( this.layoutBounds.right + this.observationWindow.right ) / 2;
-      membraneChannelsAccordionBoxGroup.top = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-
-      this.addChild( membraneChannelsAccordionBoxGroup );
-      additionalPlayAreaOrder.push( membraneChannelsAccordionBoxGroup );
+      rightSideVBoxChildren.push( membraneChannelsAccordionBoxGroup );
     }
 
     if ( getFeatureSetHasVoltages( model.featureSet ) ) {
       const membranePotentialPanel = new MembranePotentialPanel( model, options.tandem.createTandem( 'membranePotentialPanel' ) );
-      membranePotentialPanel.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-      membranePotentialPanel.right = this.layoutBounds.right - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
-      this.addChild( membranePotentialPanel );
-      additionalPlayAreaOrder.push( membranePotentialPanel );
+      rightSideVBoxChildren.push( membranePotentialPanel );
     }
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const ligandControl = new LigandControl( model, options.tandem, {
-        left: this.observationWindow.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
-        top: this.observationWindow.top + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
-      } );
-      this.addChild( ligandControl );
-      additionalPlayAreaOrder.push( ligandControl );
+      const ligandControl = new LigandControl( model, options.tandem );
+
+      rightSideVBoxChildren.push( ligandControl );
     }
+
+    const rightSideVBox = new VBox( {
+      spacing: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
+      children: rightSideVBoxChildren,
+      top: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
+      centerX: ( this.layoutBounds.right + this.observationWindow.right ) / 2
+    } );
+    this.addChild( rightSideVBox );
 
     // pdom order
     // TODO (design:a11y) - Identify which components go in each section.
-    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, ...additionalPlayAreaOrder ];
+    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, rightSideVBox ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 
     if ( phet.chipper.queryParameters.dev ) {
