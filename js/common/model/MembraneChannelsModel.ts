@@ -244,7 +244,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       const allParticles = [ ...this.solutes, ...this.ligands ];
       allParticles.forEach( particle => {
         if ( particle.mode === 'randomWalk' ) {
-          stepSoluteRandomWalk( particle, dt );
+          stepSoluteRandomWalk( particle, dt, this );
         }
         else if ( particle.mode === 'bound' ) {
           // Mode where solute doesn’t move, or does something special
@@ -333,6 +333,17 @@ export default class MembraneChannelsModel extends PhetioObject {
       // the middle of the membrane.
       return solute.type === soluteType && ( location === 'inside' ? solute.position.y < 0 : solute.position.y > 0 );
     } ).length;
+  }
+
+  /**
+   * Do not passively diffuse if in the presence of a filled target protein.
+   */
+  public canPassThroughMembrane( solute: Particle<IntentionalAny> ): boolean {
+    const x = solute.position.x;
+
+    // it can cross if it isn't within 10 model units of any filled target
+    // TODO: Will this width be protein-dependent?
+    return ![ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
   }
 
   /**

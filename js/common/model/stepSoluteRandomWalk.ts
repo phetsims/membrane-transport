@@ -4,6 +4,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsModel from './MembraneChannelsModel.js';
 import Particle from './Particle.js';
 import { ParticleType } from './SoluteType.js';
 
@@ -26,7 +27,7 @@ function getInterpolatedDirection( solute: Particle<ParticleType> ): Vector2 {
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt: number ): void {
+export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt: number, model: MembraneChannelsModel ): void {
 
   // 1) Possibly update direction choices
   solute.timeUntilNextDirection -= dt;
@@ -67,8 +68,7 @@ export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt
     // Oxygen and carbon dioxide solutes can pass through the membrane
     if ( solute.type === 'oxygen' || solute.type === 'carbonDioxide' ) {
 
-      // TODO: Do not cross if in the proximity of a channel
-      if ( dotRandom.nextDouble() < 0.90 ) {
+      if ( model.canPassThroughMembrane( solute ) && dotRandom.nextDouble() < 0.90 ) {
         solute.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
 
         return;
