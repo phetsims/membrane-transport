@@ -30,7 +30,7 @@ type StringsType = {
   'outsideStringProperty': LocalizedStringProperty;
   'insideStringProperty': LocalizedStringProperty;
   'solutesStringProperty': LocalizedStringProperty;
-  'membraneChannelsStringProperty': LocalizedStringProperty;
+  'membraneProteinsStringProperty': LocalizedStringProperty;
   'membranePotentialLabelsStringProperty': LocalizedStringProperty;
   'membraneVoltagePotentialmVStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;

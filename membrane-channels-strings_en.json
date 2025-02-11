@@ -41,8 +41,8 @@
   "solutes": {
     "value": "Solutes"
   },
-  "membraneChannels": {
-    "value": "Membrane Channels"
+  "membraneProteins": {
+    "value": "Membrane Proteins"
   },
   "membranePotentialLabels": {
     "value": "Membrane Potential Labels"

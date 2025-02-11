@@ -107,7 +107,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const vbox = new VBox( {
       spacing: 0,
       children: [
-        new Text( membraneChannelsStrings.membraneChannelsStringProperty, {
+        new Text( membraneChannelsStrings.membraneProteinsStringProperty, {
           fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE
         } ),
 
