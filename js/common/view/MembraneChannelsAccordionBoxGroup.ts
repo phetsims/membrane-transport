@@ -14,6 +14,7 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LeakageNode from './LeakageNode.js';
@@ -58,17 +59,17 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
       accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: true,
-          titleNode: new Text( 'Leakage', { fontSize: fontSize } ),
+          titleNode: new Text( MembraneChannelsStrings.leakageChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'leakageAccordionBox' )
         }, accordionBoxOptions ) ),
         new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: false,
-          titleNode: new Text( 'Voltage', { fontSize: fontSize } ),
+          titleNode: new Text( MembraneChannelsStrings.voltageChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'voltageAccordionBox' )
         }, accordionBoxOptions ) ),
         new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: false,
-          titleNode: new Text( 'Ligand', { fontSize: fontSize } ),
+          titleNode: new Text( MembraneChannelsStrings.ligandChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'ligandAccordionBox' )
         }, accordionBoxOptions ) ) );
     }
@@ -76,7 +77,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
       accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: model.featureSet === 'activeTransport',
-        titleNode: new Text( 'Active', { fontSize: fontSize } ),
+        titleNode: new Text( MembraneChannelsStrings.activeChannelsStringProperty, { fontSize: fontSize } ),
         tandem: tandem.createTandem( 'activeAccordionBox' )
       }, accordionBoxOptions ) ) );
     }

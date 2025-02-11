@@ -37,6 +37,10 @@ type StringsType = {
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
   'addLigandsStringProperty': LocalizedStringProperty;
   'removeLigandsStringProperty': LocalizedStringProperty;
+  'leakageChannelsStringProperty': LocalizedStringProperty;
+  'voltageChannelsStringProperty': LocalizedStringProperty;
+  'ligandChannelsStringProperty': LocalizedStringProperty;
+  'activeChannelsStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;
