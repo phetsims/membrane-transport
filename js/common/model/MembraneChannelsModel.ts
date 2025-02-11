@@ -34,7 +34,6 @@ import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSolu
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
 import Particle from './Particle.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
-import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -241,36 +240,8 @@ export default class MembraneChannelsModel extends PhetioObject {
       const soluteInitialYValues = new Map<Particle<SoluteType>, number>();
       this.solutes.forEach( solute => soluteInitialYValues.set( solute, solute.position.y ) );
 
-      const allParticles = [ ...this.solutes, ...this.ligands ];
-      allParticles.forEach( particle => {
-        if ( particle.mode === 'randomWalk' ) {
-          stepSoluteRandomWalk( particle, dt, this );
-        }
-        else if ( particle.mode === 'bound' ) {
-          // Mode where solute doesn’t move, or does something special
-        }
-        else if ( particle.mode === 'passThroughToInside' ) {
-          // Mode where solute passes through the membrane to the inside
-          particle.position.y -= 5 * dt;
-
-          // TODO: Solutes are supposed to do a constrained random walk through the membrane.
-          if ( ( particle.position.y + particle.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
-
-            // The next direction should mostly point down so that the solute doesn't go right back out
-            const downwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( -1, 0 ) ).normalize();
-            particle.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
-          }
-        }
-        else if ( particle.mode === 'passThroughToOutside' ) {
-          // Mode where solute passes through the membrane to the outside
-          particle.position.y += 5 * dt;
-          if ( ( particle.position.y - particle.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
-
-            const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
-            particle.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
-          }
-        }
-      } );
+      this.solutes.forEach( solute => solute.step( dt, this ) );
+      this.ligands.forEach( ligand => ligand.step( dt, this ) );
 
       // Prune any recentSoluteFlux that is more than 1000ms old.
       this.fluxEntries.slice().forEach( fluxEntry => {

@@ -14,7 +14,9 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsModel from './MembraneChannelsModel.js';
 import SoluteType, { getSoluteModelWidth, ParticleType } from './SoluteType.js';
+import stepSoluteRandomWalk from './stepSoluteRandomWalk.js';
 
 /**
  * Solute class for Membrane Channels sim, supporting multiple modes of motion,
@@ -83,6 +85,36 @@ export default class Particle<T extends ParticleType> {
     this.currentDirection = target;
     this.targetDirection = target;
     this.timeUntilNextDirection = duration;
+  }
+
+  public step( dt: number, model: MembraneChannelsModel ): void {
+    if ( this.mode === 'randomWalk' ) {
+      stepSoluteRandomWalk( this, dt, model );
+    }
+    else if ( this.mode === 'bound' ) {
+      // Mode where solute doesn’t move, or does something special
+    }
+    else if ( this.mode === 'passThroughToInside' ) {
+      // Mode where solute passes through the membrane to the inside
+      this.position.y -= 5 * dt;
+
+      // TODO: Solutes are supposed to do a constrained random walk through the membrane.
+      if ( ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+
+        // The next direction should mostly point down so that the solute doesn't go right back out
+        const downwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( -1, 0 ) ).normalize();
+        this.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
+      }
+    }
+    else if ( this.mode === 'passThroughToOutside' ) {
+      // Mode where solute passes through the membrane to the outside
+      this.position.y += 5 * dt;
+      if ( ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
+
+        const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
+        this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
+      }
+    }
   }
 
   public static createRandomUnitVector(): Vector2 {
