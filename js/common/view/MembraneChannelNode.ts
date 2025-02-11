@@ -14,6 +14,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
@@ -27,7 +28,7 @@ export default class MembraneChannelNode extends Node {
   private readonly dragListener: DragListener;
 
   // TODO: Preallocate to make phet-io state trivial?
-  public constructor( observationWindow: ObservationWindow, screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, homes: Node[] ) {
+  public constructor( model: MembraneChannelsModel, observationWindow: ObservationWindow, screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, homes: Node[] ) {
     super();
 
     // TODO: Keyboard support
@@ -92,9 +93,9 @@ export default class MembraneChannelNode extends Node {
         const closest = getClosestOverlappingTarget();
 
         if ( closest ) {
+
           // drop into the selected target
-          // closest.fill = 'green';
-          this.center = closest.globalBounds.center;
+          model.targets.set( closest.modelX, true );
         }
         else {
 

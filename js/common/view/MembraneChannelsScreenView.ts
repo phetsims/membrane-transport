@@ -187,7 +187,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
         const viewPoint = this.globalToLocalPoint( event.pointer.point );
 
-        const membraneChannelNode = new MembraneChannelNode( this.observationWindow, screenViewModelViewTransform, screenViewModelViewTransform.viewToModelPosition( viewPoint ), this.visibleBoundsProperty, homes );
+        const membraneChannelNode = new MembraneChannelNode( model, this.observationWindow, screenViewModelViewTransform, screenViewModelViewTransform.viewToModelPosition( viewPoint ), this.visibleBoundsProperty, homes );
         this.addChild( membraneChannelNode );
 
         membraneChannelNode.press( event );

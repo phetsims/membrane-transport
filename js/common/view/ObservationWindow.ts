@@ -18,6 +18,7 @@ import LigandNode from './LigandNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import LigandANode from './solutes/LigandANode.js';
 import LigandBNode from './solutes/LigandBNode.js';
+import TargetZoneNode from './TargetZoneNode.js';
 
 /**
  * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, membrane channels are.
@@ -30,7 +31,7 @@ export default class ObservationWindow extends Node {
   private readonly observationWindowCanvasNode: ObservationWindowCanvasNode;
 
   private readonly ligandNodes: LigandNode[] = [];
-  public readonly targetZoneNodes: Rectangle[];
+  public readonly targetZoneNodes: TargetZoneNode[];
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
@@ -75,27 +76,14 @@ export default class ObservationWindow extends Node {
     // NOTE: Duplication with SoluteBarChartsAccordionBox
     const TEXT_MARGIN = 3;
     const textOptions = { fontSize: 13, right: MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN, maxWidth: 200 };
-    const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: 0 + TEXT_MARGIN }, textOptions ) );
+    const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: TEXT_MARGIN }, textOptions ) );
     const insideText = new Text( membraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN }, textOptions ) );
 
     this.addChild( outsideText );
     this.addChild( insideText );
 
-    this.targetZoneNodes = model.targetZones.map( targetZone => {
-
-      // Target zone for the outside cell
-      return new Rectangle( 0, 0, 60, 80, 15, 10, {
-        center: modelViewTransform.modelToViewXY( targetZone, 0 ),
-        stroke: 'blue',
-        lineWidth: 2,
-        lineDash: [ 4, 4 ],
-        visible: false
-      } );
-    } );
-
-    this.targetZoneNodes.forEach( targetZoneNode => {
-      this.addChild( targetZoneNode );
-    } );
+    this.targetZoneNodes = Array.from( model.targets.keys() ).map( targetZone => new TargetZoneNode( targetZone, modelViewTransform ) );
+    this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );
   }
 
   public step( dt: number ): void {

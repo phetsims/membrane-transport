@@ -73,7 +73,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   private soluteTypeFlux = {} as Record<SoluteType, number>;
   public readonly areLigandsAddedProperty: BooleanProperty;
 
-  public readonly targetZones = [ -80, -40, 0, 40, 80 ];
+  public readonly targets = new Map<number, boolean>( [ -80, -40, 0, 40, 80 ].map( targetZone => [ targetZone, false ] ) );
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
