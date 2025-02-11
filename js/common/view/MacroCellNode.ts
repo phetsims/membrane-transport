@@ -20,6 +20,11 @@ import membraneChannels from '../../membraneChannels.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class MacroCellNode extends Node {
+
+  // Make public so clients can access the points that define the ThumbnailNode
+  public readonly thumbnailCenterX;
+  public readonly thumbnailCenterY;
+
   public constructor() {
     super( {
       opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
@@ -45,6 +50,9 @@ export default class MacroCellNode extends Node {
     const line2EndProperty = new Vector2Property( new Vector2( -1500, 2000 ) );
     const line3EndProperty = new Vector2Property( new Vector2( -1500, 300 ) );
     // END_DATA
+
+    this.thumbnailCenterY = point1Property.value.y;
+    this.thumbnailCenterX = ( point1Property.value.x + point2Property.value.x ) / 2;
 
     const shapeProperty = new Property( new Shape().rect( 0, 0, 10, 10 ) );
 

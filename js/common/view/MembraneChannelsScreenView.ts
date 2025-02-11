@@ -33,6 +33,7 @@ import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
 import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
+import ThumbnailNode from './ThumbnailNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -78,6 +79,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.observationWindow.x = this.layoutBounds.centerX - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2;
     this.observationWindow.y = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
+    this.addChild( new ThumbnailNode( macroCellNode.thumbnailCenterX, macroCellNode.thumbnailCenterY, this.observationWindow.bounds ) );
     this.addChild( this.observationWindow );
 
     const resetAllButton = new ResetAllButton( {
