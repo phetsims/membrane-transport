@@ -3,12 +3,15 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -35,7 +38,7 @@ import LeakageNode from './LeakageNode.js';
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, createCircle: ( event: PressListenerEvent, homes: Node[] ) => void ) {
+  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, createLeakageNode: ( event: PressListenerEvent, homes: Node[] ) => void ) {
 
     const fontSize = 16;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -46,18 +49,27 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       fill: 'white'
     };
 
-    const circleIcon = new LeakageNode();
+    const sodiumIonLeakageNode = new LeakageNode();
+    sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => createLeakageNode( event, [ sodiumIonLeakageNode, this ] ) ) );
 
-    circleIcon.addInputListener( DragListener.createForwardingListener( event => {
-      createCircle( event, [ circleIcon, this ] );
-    } ) );
+    const potassiumIonLeakageNode = new LeakageNode();
+    potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => createLeakageNode( event, [ potassiumIonLeakageNode, this ] ) ) );
+
+    const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
+    const leakageContent = new HBox( {
+      spacing: 10,
+      children: [
+        new VBox( { spacing: 3, children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ] } ),
+        new VBox( { spacing: 3, children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ] } )
+      ]
+    } );
 
     const contentAlignGroup = new AlignGroup();
 
     const accordionBoxes: AccordionBox[] = [];
 
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
-      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( circleIcon ), combineOptions<AccordionBoxOptions>( {
+      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: true,
           titleNode: new Text( MembraneChannelsStrings.leakageChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'leakageAccordionBox' )

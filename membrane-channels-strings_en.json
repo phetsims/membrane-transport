@@ -73,5 +73,11 @@
   },
   "activeTransporters": {
     "value": "Active Transporters"
+  },
+  "sodiumIonNaPlus": {
+    "value": "Sodium Ion<br>(Na<sup>+</sup>)"
+  },
+  "potassiumIonKPlus": {
+    "value": "Potassium Ion<br>(K<sup>+</sup>)"
   }
 }

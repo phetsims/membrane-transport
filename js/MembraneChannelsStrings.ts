@@ -41,6 +41,8 @@ type StringsType = {
   'voltageGatedChannelsStringProperty': LocalizedStringProperty;
   'ligandGatedChannelsStringProperty': LocalizedStringProperty;
   'activeTransportersStringProperty': LocalizedStringProperty;
+  'sodiumIonNaPlusStringProperty': LocalizedStringProperty;
+  'potassiumIonKPlusStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;
