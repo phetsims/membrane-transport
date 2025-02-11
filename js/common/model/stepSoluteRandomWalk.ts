@@ -66,6 +66,8 @@ export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt
 
     // Oxygen and carbon dioxide solutes can pass through the membrane
     if ( solute.type === 'oxygen' || solute.type === 'carbonDioxide' ) {
+
+      // TODO: Do not cross if in the proximity of a channel
       if ( dotRandom.nextDouble() < 0.90 ) {
         solute.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
 

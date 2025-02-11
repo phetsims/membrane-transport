@@ -12,7 +12,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -58,8 +58,8 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
-  public readonly isShowingMembranePotentialLabelsProperty: PhetioProperty<boolean>;
-  public readonly membraneVoltagePotentialProperty: PhetioProperty<'-70' | '-50' | '30'>;
+  public readonly isShowingMembranePotentialLabelsProperty: Property<boolean>;
+  public readonly membraneVoltagePotentialProperty: Property<'-70' | '-50' | '30'>;
 
   public readonly solutes: Particle<SoluteType>[] = [];
   public readonly ligands: Particle<LigandType>[] = [];
@@ -113,12 +113,14 @@ export default class MembraneChannelsModel extends PhetioObject {
       tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'isShowingMembranePotentialLabelsProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
+    this.resetEmitter.addListener( () => this.isShowingMembranePotentialLabelsProperty.reset() );
 
     this.membraneVoltagePotentialProperty = new StringUnionProperty( '-70', {
       tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
       validValues: [ '-70', '-50', '30' ],
       phetioFeatured: true
     } );
+    this.resetEmitter.addListener( () => this.membraneVoltagePotentialProperty.reset() );
 
     this.areLigandsAddedProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'areLigandsAddedProperty' ),
@@ -159,6 +161,10 @@ export default class MembraneChannelsModel extends PhetioObject {
 
       populateInitialSolutes();
     }
+
+    this.resetEmitter.addListener( () => {
+      this.targets.clear();
+    } );
   }
 
   /**
