@@ -149,12 +149,12 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.stroke();
   }
 
-  private drawRoundedRectangle( context: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number ): void {
-    const xView = this.modelViewTransform.modelToViewX( x );
-    const yView = this.modelViewTransform.modelToViewY( y );
-    const widthView = this.modelViewTransform.modelToViewDeltaX( width );
-    const heightView = this.modelViewTransform.modelToViewDeltaY( height );
-    const radiusView = this.modelViewTransform.modelToViewDeltaX( radius );
+  public static drawRoundedRectangle( context: CanvasRenderingContext2D, modelViewTransform: ModelViewTransform2, x: number, y: number, width: number, height: number, radius: number ): void {
+    const xView = modelViewTransform.modelToViewX( x );
+    const yView = modelViewTransform.modelToViewY( y );
+    const widthView = modelViewTransform.modelToViewDeltaX( width );
+    const heightView = modelViewTransform.modelToViewDeltaY( height );
+    const radiusView = modelViewTransform.modelToViewDeltaX( radius );
 
     context.beginPath();
     context.moveTo( xView + radiusView, yView - heightView / 2 );
@@ -164,34 +164,36 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radiusView );
   }
 
+  public static drawMembraneChannel( context: CanvasRenderingContext2D, modelViewTransform: ModelViewTransform2, x: number ): void {
+
+    const modelWidth = 20;
+    const modelHeight = 25;
+
+    // add a rounded rectangle
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    context.fillStyle = 'rgb(191,191,191)';
+    ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x - modelWidth / 2, 0, 20, modelHeight, 2 );
+    context.fill();
+    context.stroke();
+
+    const semiWidth = 8;
+
+    ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x - modelWidth / 2, 0, semiWidth, modelHeight, 2 );
+    context.fillStyle = 'rgb(254,254,254)';
+    context.fill();
+    context.stroke();
+
+    ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x + modelWidth / 2 - semiWidth, 0, semiWidth, modelHeight, 2 );
+    context.fillStyle = 'rgb(254,254,254)';
+    context.fill();
+    context.stroke();
+  }
+
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
     this.model.targets.forEach( ( isTargeted, x ) => {
       if ( isTargeted ) {
-
-        const modelWidth = 20;
-        const modelHeight = 25;
-
-        // add a rounded rectangle
-        context.strokeStyle = 'black';
-        context.lineWidth = 2;
-        context.fillStyle = 'rgb(191,191,191)';
-        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, 20, modelHeight, 2 );
-        context.fill();
-        context.stroke();
-
-        const semiWidth = 8;
-
-        // on the left half, another rounded rect that is yellow
-        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, semiWidth, modelHeight, 2 );
-        context.fillStyle = 'rgb(254,254,254)';
-        context.fill();
-        context.stroke();
-
-        // on the right half, another rounded rect that is red
-        this.drawRoundedRectangle( context, x + modelWidth / 2 - semiWidth, 0, semiWidth, modelHeight, 2 );
-        context.fillStyle = 'rgb(254,254,254)';
-        context.fill();
-        context.stroke();
+        ObservationWindowCanvasNode.drawMembraneChannel( context, this.modelViewTransform, x );
       }
     } );
   }

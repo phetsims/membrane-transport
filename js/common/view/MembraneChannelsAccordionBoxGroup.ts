@@ -2,12 +2,12 @@
 
 import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
@@ -16,6 +16,7 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import LeakageNode from './LeakageNode.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -33,7 +34,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( model: MembraneChannelsModel, tandem: Tandem, createCircle: ( event: PressListenerEvent, homes: Node[] ) => void ) {
+  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, createCircle: ( event: PressListenerEvent, homes: Node[] ) => void ) {
 
     const fontSize = 18;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -44,7 +45,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       fill: 'white'
     };
 
-    const circleIcon = new Circle( 15, { fill: 'rgba( 255,0,0,0.5)' } );
+    const circleIcon = new LeakageNode();
 
     circleIcon.addInputListener( DragListener.createForwardingListener( event => {
       createCircle( event, [ circleIcon, this ] );

@@ -183,7 +183,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const additionalPlayAreaOrder: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), ( event, homes ) => {
+      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, this.observationWindowModelViewTransform, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), ( event, homes ) => {
 
         const viewPoint = this.globalToLocalPoint( event.pointer.point );
 

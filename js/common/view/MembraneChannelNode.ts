@@ -8,13 +8,13 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import LeakageNode from './LeakageNode.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
@@ -128,14 +128,7 @@ export default class MembraneChannelNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    const circle = new Circle( 15, {
-      fill: 'rgba( 0,0,255,0.5)',
-      left: 0,
-      top: 0,
-      cursor: 'pointer'
-    } );
-
-    this.addChild( circle );
+    this.addChild( new LeakageNode() );
   }
 
   public press( event: PressListenerEvent ): void {
