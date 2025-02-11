@@ -41,7 +41,14 @@ export default class Particle<T extends ParticleType> {
   //   - 'randomWalk'  -> same as 'delayedWalk' but direction changes are gradual
   //   - 'bound'              -> solute is bound (for example, to a channel)
   // TODO: Do we need a subclass for Particles that can be userControlled (like ligands)?
-  public mode: 'randomWalk' | 'bound' | 'passThroughToInside' | 'passThroughToOutside' | 'userControlled' | 'userOver' = 'randomWalk';
+  public mode:
+    'randomWalk' |
+    'bound' |
+    'passThroughToInside' |
+    'passThroughToOutside' |
+    'moveToCenterOfNearestChannel' |
+    'userControlled' |
+    'userOver' = 'randomWalk';
 
   // =============================================================
   // FIELDS FOR SMOOTH, DELAYED RANDOM WALK
@@ -106,6 +113,30 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode === 'bound' ) {
       // Mode where solute doesn’t move, or does something special
+    }
+    else if ( this.mode === 'moveToCenterOfNearestChannel' ) {
+      // Mode where solute moves toward the center of the nearest channel
+      const nearestChannelPosition = model.getNearestChannelPosition( this.position.x );
+      if ( typeof nearestChannelPosition === 'number' ) {
+        const currentPositionX = this.position.x;
+        const targetPositionX = nearestChannelPosition;
+
+        const speed = 10 * dt;
+        // move in the x direction toward the target
+        this.position.x += Math.sign( targetPositionX - currentPositionX ) * speed;
+
+        // If we're close enough to the target, switch to random walk mode
+        if ( Math.abs( targetPositionX - currentPositionX ) <= speed ) {
+
+          // Are we above (y>0) or below (y<0) the membrane region?
+          const outsideOfCell = this.position.y > 0;
+
+          this.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+        }
+      }
+      else {
+        this.mode = 'randomWalk';
+      }
     }
     else if ( this.mode === 'passThroughToInside' ) {
       // Mode where solute passes through the membrane to the inside
@@ -180,11 +211,12 @@ export default class Particle<T extends ParticleType> {
       }
 
       if ( this.type === 'sodiumIon' && model.isCloseToSodiumChannel( this ) ) {
-        this.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+        this.mode = 'moveToCenterOfNearestChannel';
         return;
       }
 
       if ( outsideOfCell ) {
+
         // Overlap with the membrane from above
         const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY;
 
@@ -197,6 +229,7 @@ export default class Particle<T extends ParticleType> {
         this.targetDirection.y = Math.abs( this.targetDirection.y );
       }
       else {
+
         // Overlap with the membrane from below
         const overlap = thisBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
 

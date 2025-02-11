@@ -324,6 +324,12 @@ export default class MembraneChannelsModel extends PhetioObject {
     return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
   }
 
+  public getNearestChannelPosition( x: number ): number|undefined {
+    // find the nearest target that has a filled target
+    // use _.sortBy to sort by distance from x
+    return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( a - x ) - Math.abs( b - x ) )[ 0 ];
+  }
+
   /**
    * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
