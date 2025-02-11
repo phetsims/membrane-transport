@@ -338,12 +338,19 @@ export default class MembraneChannelsModel extends PhetioObject {
   /**
    * Do not passively diffuse if in the presence of a filled target protein.
    */
-  public canPassThroughMembrane( solute: Particle<IntentionalAny> ): boolean {
+  public canDiffuseThroughMembrane( solute: Particle<IntentionalAny> ): boolean {
     const x = solute.position.x;
 
     // it can cross if it isn't within 10 model units of any filled target
     // TODO: Will this width be protein-dependent?
     return ![ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
+  }
+
+  public isCloseToSodiumChannel( solute: Particle<IntentionalAny> ): boolean {
+
+    // check if within 10 units of any filled target. TODO: grab radius?
+    const x = solute.position.x;
+    return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
   }
 
   /**

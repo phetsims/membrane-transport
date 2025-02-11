@@ -68,12 +68,18 @@ export default function stepSoluteRandomWalk( solute: Particle<ParticleType>, dt
     // Oxygen and carbon dioxide solutes can pass through the membrane
     if ( solute.type === 'oxygen' || solute.type === 'carbonDioxide' ) {
 
-      if ( model.canPassThroughMembrane( solute ) && dotRandom.nextDouble() < 0.90 ) {
+      if ( model.canDiffuseThroughMembrane( solute ) && dotRandom.nextDouble() < 0.90 ) {
         solute.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
 
         return;
       }
     }
+
+    if ( solute.type === 'sodiumIon' && model.isCloseToSodiumChannel( solute ) ) {
+      solute.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+      return;
+    }
+
 
     if ( outsideOfCell ) {
       // Overlap with the membrane from above
