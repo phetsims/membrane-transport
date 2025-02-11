@@ -207,7 +207,11 @@ export default class Particle<T extends ParticleType> {
         }
       }
 
-      if ( this.type === 'sodiumIon' && model.isCloseToSodiumChannel( this ) ) {
+      if ( this.type === 'sodiumIon' && model.isCloseToChannelType( this, 'sodiumLeakage' ) ) {
+        this.mode = 'moveToCenterOfNearestChannel';
+        return;
+      }
+      else if ( this.type === 'potassiumIon' && model.isCloseToChannelType( this, 'potassiumLeakage' ) ) {
         this.mode = 'moveToCenterOfNearestChannel';
         return;
       }

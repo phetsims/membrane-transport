@@ -13,7 +13,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
 import LeakageNode from './LeakageNode.js';
 import ObservationWindow from './ObservationWindow.js';
 
@@ -28,7 +28,8 @@ export default class MembraneChannelNode extends Node {
   private readonly dragListener: DragListener;
 
   // TODO: Preallocate to make phet-io state trivial?
-  public constructor( model: MembraneChannelsModel, observationWindow: ObservationWindow, screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, homes: Node[] ) {
+  public constructor( model: MembraneChannelsModel, observationWindow: ObservationWindow, screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, homes: Node[],
+                      public readonly type: ChannelType ) {
     super();
 
     // TODO: Keyboard support
@@ -95,7 +96,7 @@ export default class MembraneChannelNode extends Node {
         if ( closest ) {
 
           // drop into the selected target
-          model.targets.set( closest.modelX, true );
+          model.targets.set( closest.modelX, this.type );
 
           // Reuse
           this.visible = false;

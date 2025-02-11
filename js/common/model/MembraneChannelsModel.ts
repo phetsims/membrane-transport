@@ -22,12 +22,13 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import MapIO from '../../../../tandem/js/types/MapIO.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
@@ -46,6 +47,7 @@ type FluxEntry = {
 };
 
 const fluxSmoothingTimeConstant = 0.25;
+export type ChannelType = 'sodiumLeakage' | 'potassiumLeakage'; // TODO: Name
 
 export default class MembraneChannelsModel extends PhetioObject {
 
@@ -75,7 +77,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   // TODO: Better name for these targets?
-  public readonly targets = new Map<number, boolean>( [ -80, -40, 0, 40, 80 ].map( targetZone => [ targetZone, false ] ) );
+  public readonly targets = new Map<number, ChannelType | null>( [ -80, -40, 0, 40, 80 ].map( targetZone => [ targetZone, null ] ) );
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -88,7 +90,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     super( options );
 
-    this.targets.set( -40, true ); // TODO: For debugging only
+    this.targets.set( -40, 'sodiumLeakage' ); // TODO: For debugging only
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSoluteTypes( this.featureSet ),
@@ -134,7 +136,6 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
       this.soluteTypeFlux[ soluteType ] = 0;
     } );
-
 
     // Ligands are added and removed in response to the areLigandsAddedProperty so that clients can add/remove them
     // by controlling the Property.
@@ -317,14 +318,14 @@ export default class MembraneChannelsModel extends PhetioObject {
     return ![ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
   }
 
-  public isCloseToSodiumChannel( solute: Particle<IntentionalAny> ): boolean {
+  public isCloseToChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): boolean {
 
     // check if within 10 units of any filled target. TODO: grab radius?
     const x = solute.position.x;
-    return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
+    return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) === type );
   }
 
-  public getNearestChannelPosition( x: number ): number|undefined {
+  public getNearestChannelPosition( x: number ): number | undefined {
     // find the nearest target that has a filled target
     // use _.sortBy to sort by distance from x
     return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( a - x ) - Math.abs( b - x ) )[ 0 ];
@@ -342,7 +343,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
       soluteTypeFlux: ObjectLiteralIO,
-      targets: MapIO( NumberIO, BooleanIO )
+      targets: MapIO( NumberIO, NullableIO( StringIO ) )
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );

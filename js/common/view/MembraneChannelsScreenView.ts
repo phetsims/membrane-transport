@@ -18,12 +18,13 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
@@ -53,6 +54,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.center,
     MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
   );
+  private readonly screenViewModelViewTransform: ModelViewTransform2;
 
   public constructor(
     public readonly model: MembraneChannelsModel,
@@ -184,15 +186,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, this.observationWindowModelViewTransform, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), ( event, homes ) => {
-
-        const viewPoint = this.globalToLocalPoint( event.pointer.point );
-
-        const membraneChannelNode = new MembraneChannelNode( model, this.observationWindow, screenViewModelViewTransform, screenViewModelViewTransform.viewToModelPosition( viewPoint ), this.visibleBoundsProperty, homes );
-        this.addChild( membraneChannelNode );
-
-        membraneChannelNode.press( event );
-      } );
+      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, this.observationWindowModelViewTransform, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), this );
       this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
       rightSideVBoxChildren.push( membraneChannelsAccordionBoxGroup );
@@ -226,6 +220,28 @@ export default class MembraneChannelsScreenView extends ScreenView {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );
       macroCellNode.moveToFront();
     }
+
+    this.screenViewModelViewTransform = screenViewModelViewTransform;
+  }
+
+  /**
+   * Called when the user presses a membrane protein in the accordion box to create one.
+   *
+   * @param event
+   * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
+   */
+  public createLeakageNode( event: PressListenerEvent, type: ChannelType, homes: Node[] ): void {
+
+    const viewPoint = this.globalToLocalPoint( event.pointer.point );
+
+    const membraneChannelNode = new MembraneChannelNode(
+      this.model, this.observationWindow, this.screenViewModelViewTransform,
+      this.screenViewModelViewTransform.viewToModelPosition( viewPoint ), this.visibleBoundsProperty, homes,
+      type
+    );
+    this.addChild( membraneChannelNode );
+
+    membraneChannelNode.press( event );
   }
 
   /**

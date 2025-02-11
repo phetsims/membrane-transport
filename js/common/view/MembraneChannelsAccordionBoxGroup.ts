@@ -9,7 +9,6 @@ import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
-import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
@@ -21,6 +20,7 @@ import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LeakageNode from './LeakageNode.js';
+import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -38,7 +38,7 @@ import LeakageNode from './LeakageNode.js';
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, createLeakageNode: ( event: PressListenerEvent, homes: Node[] ) => void ) {
+  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, membraneChannelsScreenView: MembraneChannelsScreenView ) {
 
     const fontSize = 16;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -50,10 +50,10 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     };
 
     const sodiumIonLeakageNode = new LeakageNode();
-    sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => createLeakageNode( event, [ sodiumIonLeakageNode, this ] ) ) );
+    sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
 
     const potassiumIonLeakageNode = new LeakageNode();
-    potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => createLeakageNode( event, [ potassiumIonLeakageNode, this ] ) ) );
+    potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
 
     const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
     const leakageContent = new HBox( {
