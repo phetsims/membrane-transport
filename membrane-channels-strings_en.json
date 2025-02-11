@@ -63,15 +63,15 @@
     "value": "Remove Ligands"
   },
   "leakageChannels": {
-    "value": "Leakage Channels"
+    "value": "Leakage-gated Channels"
   },
   "voltageChannels": {
-    "value": "Voltage Channels"
+    "value": "Voltage-gated Channels"
   },
   "ligandChannels": {
-    "value": "Ligand Channels"
+    "value": "Ligand-gated Channels"
   },
   "activeChannels": {
-    "value": "Active Channels"
+    "value": "Active Transporters"
   }
 }
