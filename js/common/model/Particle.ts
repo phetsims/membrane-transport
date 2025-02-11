@@ -19,8 +19,8 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import SoluteType, { getSoluteModelWidth, ParticleType } from './SoluteType.js';
 
-// We'll use a base "random walk speed" for solutes
-const randomWalkSpeed = 10;
+// Typical speed for movement
+const typicalSpeed = 30;
 
 /**
  * Helper function: gets the "current" interpolated direction based on how
@@ -37,9 +37,6 @@ function getInterpolatedDirection( solute: Particle<ParticleType> ): Vector2 {
  */
 export default class Particle<T extends ParticleType> {
 
-  // Possible modes of motion:
-  //   - 'randomWalk'  -> same as 'delayedWalk' but direction changes are gradual
-  //   - 'bound'              -> solute is bound (for example, to a channel)
   // TODO: Do we need a subclass for Particles that can be userControlled (like ligands)?
   public mode:
     'randomWalk' |
@@ -121,12 +118,12 @@ export default class Particle<T extends ParticleType> {
         const currentPositionX = this.position.x;
         const targetPositionX = nearestChannelPosition;
 
-        const speed = 10 * dt;
         // move in the x direction toward the target
-        this.position.x += Math.sign( targetPositionX - currentPositionX ) * speed;
+        const maxStepSize = typicalSpeed * dt;
+        this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
         // If we're close enough to the target, switch to random walk mode
-        if ( Math.abs( targetPositionX - currentPositionX ) <= speed ) {
+        if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
 
           // Are we above (y>0) or below (y<0) the membrane region?
           const outsideOfCell = this.position.y > 0;
@@ -140,7 +137,7 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode === 'passThroughToInside' ) {
       // Mode where solute passes through the membrane to the inside
-      this.position.y -= 5 * dt;
+      this.position.y -= typicalSpeed * dt;
 
       // TODO: Solutes are supposed to do a constrained random walk through the membrane.
       if ( ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
@@ -152,7 +149,7 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode === 'passThroughToOutside' ) {
       // Mode where solute passes through the membrane to the outside
-      this.position.y += 5 * dt;
+      this.position.y += typicalSpeed * dt;
       if ( ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
 
         const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
@@ -245,9 +242,8 @@ export default class Particle<T extends ParticleType> {
 
     // 4) Move the this according to the direction and speed
     //    (do this AFTER membrane collisions are handled).
-    const speed = dt * 3;
-    this.position.x += direction.x * speed * randomWalkSpeed;
-    this.position.y += direction.y * speed * randomWalkSpeed;
+    this.position.x += direction.x * dt * typicalSpeed;
+    this.position.y += direction.y * dt * typicalSpeed;
 
     // 5) Now bounce off the 3 other walls in whichever bounding region we are in
     //    (INSIDE_CELL_BOUNDS if y<0, or OUTSIDE_CELL_BOUNDS if y>0).
