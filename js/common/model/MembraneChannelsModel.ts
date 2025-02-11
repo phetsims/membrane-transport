@@ -22,7 +22,9 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import MapIO from '../../../../tandem/js/types/MapIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
@@ -324,7 +326,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   public countSolutes( soluteType: SoluteType, location: 'inside' | 'outside' ): number {
     return this.solutes.filter( solute => {
 
-      // Compare against the y value becase a solute is still considered 'inside' until it full passes through
+      // Compare against the y value because a solute is still considered 'inside' until it full passes through
       // the middle of the membrane.
       return solute.type === soluteType && ( location === 'inside' ? solute.position.y < 0 : solute.position.y > 0 );
     } ).length;
@@ -341,7 +343,8 @@ export default class MembraneChannelsModel extends PhetioObject {
       ligands: ReferenceArrayIO( Particle.ParticleIO ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
-      soluteTypeFlux: ObjectLiteralIO
+      soluteTypeFlux: ObjectLiteralIO,
+      targets: MapIO( NumberIO, BooleanIO )
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
@@ -349,6 +352,13 @@ export default class MembraneChannelsModel extends PhetioObject {
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
       model.soluteTypeFlux = state.soluteTypeFlux;
+
+      // MapIO is data type serialization, so we need to manually update the model's targets Map
+      model.targets.clear();
+      for ( const [ key, value ] of state.targets ) {
+        model.targets.set( key, value );
+      }
+
       model.updateSoluteCounts();
     }
   } );
