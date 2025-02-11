@@ -86,6 +86,8 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     super( options );
 
+    this.targets.set( -40, true ); // TODO: For debugging only
+
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'selectedSoluteProperty' ),

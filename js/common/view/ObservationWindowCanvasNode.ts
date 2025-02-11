@@ -149,6 +149,52 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.stroke();
   }
 
+  private drawRoundedRectangle( context: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number ): void {
+    const xView = this.modelViewTransform.modelToViewX( x );
+    const yView = this.modelViewTransform.modelToViewY( y );
+    const widthView = this.modelViewTransform.modelToViewDeltaX( width );
+    const heightView = this.modelViewTransform.modelToViewDeltaY( height );
+
+    context.beginPath();
+    context.moveTo( xView, yView - heightView / 2 );
+    context.arcTo( xView + widthView, yView - heightView / 2, xView + widthView, yView + heightView / 2, radius );
+    context.arcTo( xView + widthView, yView + heightView / 2, xView, yView + heightView / 2, radius );
+    context.arcTo( xView, yView + heightView / 2, xView, yView - heightView / 2, radius );
+    context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radius );
+  }
+
+  private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
+    this.model.targets.forEach( ( isTargeted, x ) => {
+      if ( isTargeted ) {
+
+        const modelWidth = 20;
+        const modelHeight = 25;
+
+        // add a rounded rectangle
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        context.fillStyle = 'green';
+        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, 20, modelHeight, 5 );
+        context.fill();
+        context.stroke();
+
+        const semiWidth = 8;
+
+        // on the left half, another rounded rect that is yellow
+        this.drawRoundedRectangle( context, x - modelWidth / 2, 0, semiWidth, modelHeight, 5 );
+        context.fillStyle = 'green';
+        context.fill();
+        context.stroke();
+
+        // on the right half, another rounded rect that is red
+        this.drawRoundedRectangle( context, x + modelWidth / 2 - semiWidth, 0, semiWidth, modelHeight, 5 );
+        context.fillStyle = 'green';
+        context.fill();
+        context.stroke();
+      }
+    } );
+  }
+
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
     // Draw the background: upper half for outside cell, lower half for inside cell.
@@ -170,6 +216,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     for ( let i = 0; i < this.phospholipids.length; i++ ) {
       this.phospholipids[ i ].drawHead( context );
     }
+
+    this.drawMembraneChannels( context );
 
     this.drawSolutes( context );
 

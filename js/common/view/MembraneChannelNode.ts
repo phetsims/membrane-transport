@@ -96,6 +96,9 @@ export default class MembraneChannelNode extends Node {
 
           // drop into the selected target
           model.targets.set( closest.modelX, true );
+
+          // Reuse
+          this.visible = false;
         }
         else {
 
