@@ -20,13 +20,13 @@ const controlPointStepSize = 0.2; // random component for the change in velocity
 const friction = 0.99;          // friction coefficient for momentum (0 to 1)
 
 // Horizontal offset between the two lipid tails on each phospholipid
-const TAIL_OFFSET = 0.3;
+const TAIL_OFFSET = 1.2;
 
 // Define how far the head can wander left/right from its original anchor
 const HEAD_WINDOW_SIZE = 0.2;
 
 // Define horizontal bounds for each tail around its anchor
-const tailWindowSize = 0.65;
+const tailWindowSize = 0.3;
 
 // Define an interface for a control point (for the tail).
 type ControlPoint = {
