@@ -73,11 +73,11 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         //   Grabbing a Channel
         // Following the toolbox pattern, Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
 
+        // However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
+        // user can add several channels. BF 2025/02/12
         const emptyTarget = model.getLeftmostEmptyTarget();
         if ( emptyTarget !== undefined ) {
           model.targets.set( emptyTarget, 'sodiumLeakage' );
-
-          // TODO: Move focus over there
         }
       }
     } );
