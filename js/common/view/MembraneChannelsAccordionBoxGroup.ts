@@ -49,56 +49,57 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       fill: 'white'
     };
 
-    const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumLeakage' );
-    sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
-
-    const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
-    potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
-
-    const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
-
-    // TODO: Perhaps add ToolIconNode, which renders with a LeakageChannelNode (maybe with Text)?
-    const sodiumLeakageToolNode = new VBox( {
-      spacing: 3,
-      children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ],
-      tagName: 'button',
-      descriptionTagName: 'p',
-      descriptionContent: 'Press enter to add a sodium ion leakage channel to the membrane' // TODO i18n
-    } );
-    sodiumLeakageToolNode.addInputListener( {
-      click: () => {
-        // Removing and Repositioning Proteins (on membrane)
-        // Alternative Input for inside Accordion Boxes:
-        //   Toolbox Pattern can be used for inside the expanded accordion https://phetsims.github.io/binder/#sun-ToolboxPattern
-        //   Grabbing a Channel
-        // Following the toolbox pattern, Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
-
-        // However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
-        // user can add several channels. BF 2025/02/12
-        const emptyTarget = model.getLeftmostEmptyTarget();
-        if ( emptyTarget !== undefined ) {
-          model.targets.set( emptyTarget, 'sodiumLeakage' );
-          model.targetChangedEmitter.emit();
-        }
-      }
-    } );
-    const potassiumLeakageToolNode = new VBox( {
-      spacing: 3,
-      children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ],
-      tagName: 'button',
-      descriptionTagName: 'p',
-      descriptionContent: 'Press enter to add a sodium ion leakage channel to the membrane' // TODO i18n
-    } );
-    const leakageContent = new HBox( {
-      spacing: 10,
-      children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
-    } );
-
     const contentAlignGroup = new AlignGroup();
 
     const accordionBoxes: AccordionBox[] = [];
 
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
+
+      const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumLeakage' );
+      sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
+
+      const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
+      potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
+
+      const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
+
+      // TODO: Perhaps add ToolIconNode, which renders with a LeakageChannelNode (maybe with Text)?
+      const sodiumLeakageToolNode = new VBox( {
+        spacing: 3,
+        children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ],
+        tagName: 'button',
+        descriptionTagName: 'p',
+        descriptionContent: 'Press enter to add a sodium ion leakage channel to the membrane' // TODO i18n
+      } );
+      // Removing and Repositioning Proteins (on membrane)
+      // Alternative Input for inside Accordion Boxes:
+      //   Toolbox Pattern can be used for inside the expanded accordion https://phetsims.github.io/binder/#sun-ToolboxPattern
+      //   Grabbing a Channel
+      // Following the toolbox pattern, Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
+
+      // However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
+      // user can add several channels. BF 2025/02/12
+      sodiumLeakageToolNode.addInputListener( {
+        click: () => {
+          const emptyTarget = model.getLeftmostEmptyTarget();
+          if ( emptyTarget !== undefined ) {
+            model.targets.set( emptyTarget, 'sodiumLeakage' );
+            model.targetChangedEmitter.emit();
+          }
+        }
+      } );
+      const potassiumLeakageToolNode = new VBox( {
+        spacing: 3,
+        children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ],
+        tagName: 'button',
+        descriptionTagName: 'p',
+        descriptionContent: 'Press enter to add a sodium ion leakage channel to the membrane' // TODO i18n
+      } );
+      const leakageContent = new HBox( {
+        spacing: 10,
+        children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
+      } );
+
       accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: true,
           titleNode: new Text( MembraneChannelsStrings.leakageChannelsStringProperty, { fontSize: fontSize } ),
