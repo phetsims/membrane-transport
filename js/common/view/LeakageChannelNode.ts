@@ -15,7 +15,7 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class LeakageChannelNode extends CanvasNode {
-  public constructor( providedOptions?: CanvasNodeOptions ) {
+  public constructor( public readonly type: 'sodiumLeakage' | 'potassiumLeakage', providedOptions?: CanvasNodeOptions ) {
 
     super( combineOptions<CanvasNodeOptions>( {
       canvasBounds: new Bounds2( 0, 0, 45, 50 ),
@@ -34,7 +34,7 @@ export default class LeakageChannelNode extends CanvasNode {
     // Draw the membrane channel
     // TODO: Do we like this pattern? If so, how can we get the geometry to be explicit and accurate?
     // TODO: The stroke line width doesn't match up exactly
-    ObservationWindowCanvasNode.drawMembraneChannel( context, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
+    ObservationWindowCanvasNode.drawMembraneChannel( context, this.type, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
   }
 
   /**

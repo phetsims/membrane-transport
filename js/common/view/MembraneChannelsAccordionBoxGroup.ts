@@ -49,10 +49,10 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       fill: 'white'
     };
 
-    const sodiumIonLeakageNode = new LeakageChannelNode();
+    const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumLeakage' );
     sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
 
-    const potassiumIonLeakageNode = new LeakageChannelNode();
+    const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
     potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
 
     const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };

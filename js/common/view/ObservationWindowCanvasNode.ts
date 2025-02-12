@@ -169,10 +169,15 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radiusView );
   }
 
-  public static drawMembraneChannel( context: CanvasRenderingContext2D, modelViewTransform: ModelViewTransform2, x: number ): void {
+  // Static so it can be reused to create a scenery node for the toolbox
+  public static drawMembraneChannel( context: CanvasRenderingContext2D,
+                                     type: 'sodiumLeakage' | 'potassiumLeakage', modelViewTransform: ModelViewTransform2, x: number ): void {
 
     const modelWidth = 20;
     const modelHeight = 25;
+
+    // For the leakage channels, the sodium pore should be smaller than the potassium pore
+    const poreSize = type === 'sodiumLeakage' ? 4 : 6;
 
     // add a rounded rectangle
     context.strokeStyle = 'black';
@@ -182,7 +187,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.fill();
     context.stroke();
 
-    const semiWidth = 8;
+    const semiWidth = 10 - poreSize / 2;
 
     ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x - modelWidth / 2, 0, semiWidth, modelHeight, 2 );
     context.fillStyle = 'rgb(254,254,254)';
@@ -198,7 +203,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
     this.model.targets.forEach( ( isTargeted, x ) => {
       if ( isTargeted ) {
-        ObservationWindowCanvasNode.drawMembraneChannel( context, this.modelViewTransform, x );
+        ObservationWindowCanvasNode.drawMembraneChannel( context, this.model.targets.get( x )!, this.modelViewTransform, x );
       }
     } );
   }

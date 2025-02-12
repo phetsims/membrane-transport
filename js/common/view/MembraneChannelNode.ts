@@ -130,7 +130,7 @@ export default class MembraneChannelNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    this.addChild( new LeakageChannelNode() );
+    this.addChild( new LeakageChannelNode( type ) );
   }
 
   public press( event: PressListenerEvent ): void {
