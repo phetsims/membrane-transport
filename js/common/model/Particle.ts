@@ -138,9 +138,9 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode === 'passThroughToInside' ) {
 
       // Mode where solute passes through the membrane to the inside
-      this.position.y -= typicalSpeed / 4 * dt;
+      this.position.y -= typicalSpeed / 4 * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+      this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * typicalSpeed / 2 * dt;
 
-      // TODO: Solutes are supposed to do a constrained random walk through the membrane.
       if ( ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
 
         // The next direction should mostly point down so that the solute doesn't go right back out
@@ -151,7 +151,8 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode === 'passThroughToOutside' ) {
 
       // Mode where solute passes through the membrane to the outside
-      this.position.y += typicalSpeed / 4 * dt;
+      this.position.y += typicalSpeed / 4 * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+      this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * typicalSpeed / 2 * dt;
 
       if ( ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
 
