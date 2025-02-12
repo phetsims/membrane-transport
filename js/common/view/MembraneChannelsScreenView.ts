@@ -232,7 +232,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param type
    * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
    */
-  public createLeakageNode( event: PressListenerEvent, type: ChannelType, homes: Node[] ): void {
+  public createMembraneChannelNode( event: PressListenerEvent, type: ChannelType, homes: Node[] ): void {
 
     const viewPoint = this.globalToLocalPoint( event.pointer.point );
 

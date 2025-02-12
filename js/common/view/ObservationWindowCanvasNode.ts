@@ -181,8 +181,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   }
 
   // Static so it can be reused to create a scenery node for the toolbox
-  public static drawMembraneChannel( context: CanvasRenderingContext2D,
-                                     type: 'sodiumLeakage' | 'potassiumLeakage', modelViewTransform: ModelViewTransform2, x: number ): void {
+  public static drawLeakageChannel( context: CanvasRenderingContext2D,
+                                    type: 'sodiumLeakage' | 'potassiumLeakage', modelViewTransform: ModelViewTransform2, x: number ): void {
 
     const modelWidth = 20;
     const modelHeight = 25;
@@ -213,8 +213,13 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
     this.model.targets.forEach( ( isTargeted, x ) => {
-      if ( isTargeted ) {
-        ObservationWindowCanvasNode.drawMembraneChannel( context, this.model.targets.get( x )!, this.modelViewTransform, x );
+      const target = this.model.targets.get( x );
+      if ( target === 'sodiumLeakage' || target === 'potassiumLeakage' ) {
+        ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, x );
+      }
+      else {
+        // TODO: Draw sodium voltage channel
+        // ObservationWindowCanvasNode.drawSodiumVoltageChannel( context, target, this.modelViewTransform, x );
       }
     } );
   }

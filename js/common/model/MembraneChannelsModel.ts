@@ -47,7 +47,9 @@ type FluxEntry = {
 };
 
 const fluxSmoothingTimeConstant = 0.25;
-export type ChannelType = 'sodiumLeakage' | 'potassiumLeakage'; // TODO: Name
+export type ChannelType =
+  'sodiumLeakage' | 'potassiumLeakage' |
+  'sodiumVoltageGated'; // TODO: Name
 
 // TODO: Naming?
 const TARGET_COUNT = 7;

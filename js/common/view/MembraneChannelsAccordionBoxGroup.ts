@@ -21,6 +21,7 @@ import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -78,37 +79,67 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
 
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
 
-      const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumLeakage' );
-      sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
+      const createLeakageAccordionBox = ( () => {
+        const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumLeakage' );
+        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
 
-      const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
-      potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
+        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
+        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
 
-      const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
-        children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
-      } ) );
-      sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumLeakage' ) );
+        const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
+          children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
+        } ) );
+        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumLeakage' ) );
 
-      const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
-        children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
-      } ) );
-      potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumLeakage' ) );
+        const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
+          children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
+        } ) );
+        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumLeakage' ) );
 
-      const leakageContent = new HBox( {
-        spacing: 10,
-        children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
-      } );
+        const leakageContent = new HBox( {
+          spacing: 10,
+          children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
+        } );
 
-      accordionBoxes.push( new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
+        return new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: true,
           titleNode: new Text( MembraneChannelsStrings.leakageChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'leakageAccordionBox' )
-        }, accordionBoxOptions ) ),
-        new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
+        }, accordionBoxOptions ) );
+      } );
+
+      const createVoltageGatedAccordionBox = ( () => {
+        const sodiumIonLeakageNode = new SodiumVoltageGatedChannelNode();
+        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumVoltageGated', [ sodiumIonLeakageNode, this ] ) ) );
+
+        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
+        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
+
+        const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
+          children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
+        } ) );
+        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumLeakage' ) );
+
+        const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
+          children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
+        } ) );
+        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumLeakage' ) );
+
+        const leakageContent = new HBox( {
+          spacing: 10,
+          children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
+        } );
+
+        return new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: false,
           titleNode: new Text( MembraneChannelsStrings.voltageGatedChannelsStringProperty, { fontSize: fontSize } ),
           tandem: tandem.createTandem( 'voltageAccordionBox' )
-        }, accordionBoxOptions ) ),
+        }, accordionBoxOptions ) );
+      } );
+
+      accordionBoxes.push(
+        createLeakageAccordionBox(),
+        createVoltageGatedAccordionBox(),
         new AccordionBox( contentAlignGroup.createBox( new Text( 'placeholder-text placeholder-text' ) ), combineOptions<AccordionBoxOptions>( {
           expandedDefaultValue: false,
           titleNode: new Text( MembraneChannelsStrings.ligandGatedChannelsStringProperty, { fontSize: fontSize } ),

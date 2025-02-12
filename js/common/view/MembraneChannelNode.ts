@@ -16,6 +16,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import ObservationWindow from './ObservationWindow.js';
+import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
 
 /**
  * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific slots
@@ -130,7 +131,8 @@ export default class MembraneChannelNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    this.addChild( new LeakageChannelNode( type ) );
+    const node = type === 'sodiumVoltageGated' ? new SodiumVoltageGatedChannelNode() : new LeakageChannelNode( type );
+    this.addChild( node );
   }
 
   public press( event: PressListenerEvent ): void {
