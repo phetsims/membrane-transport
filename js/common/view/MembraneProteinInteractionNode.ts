@@ -32,11 +32,13 @@ export default class MembraneProteinInteractionNode extends Rectangle {
 
       // Only focus if it has a membrane channel.
       focusable: false,
+      pickable: false,
       tagName: 'div' // arrow keys move it, escape moves it back to toolbox.
     } );
 
     model.targetChangedEmitter.addListener( () => {
       this.focusable = model.targets.get( modelX ) !== null;
+      this.pickable = this.focusable;
     } );
 
     // pdom - When the "down" arrow is pressed on the group of tabs, move focus to the selected panel
