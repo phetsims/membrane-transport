@@ -173,9 +173,9 @@ export default class MembraneChannelsModel extends PhetioObject {
     }
 
     this.resetEmitter.addListener( () => {
-      this.targets.clear();
       this.solutes.length = 0;
       this.ligands.length = 0;
+      this.targets.forEach( ( value, key ) => this.targets.set( key, null ) );
     } );
   }
 
