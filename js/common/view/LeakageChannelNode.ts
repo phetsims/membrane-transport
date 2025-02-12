@@ -13,7 +13,7 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class LeakageNode extends CanvasNode {
+export default class LeakageChannelNode extends CanvasNode {
   public constructor() {
     super( {
       canvasBounds: new Bounds2( 0, 0, 45, 50 ),
@@ -43,4 +43,4 @@ export default class LeakageNode extends CanvasNode {
   }
 }
 
-membraneChannels.register( 'LeakageNode', LeakageNode );
+membraneChannels.register( 'LeakageChannelNode', LeakageChannelNode );

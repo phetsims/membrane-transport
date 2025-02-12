@@ -19,7 +19,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import LeakageNode from './LeakageNode.js';
+import LeakageChannelNode from './LeakageChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
 /**
@@ -49,10 +49,10 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       fill: 'white'
     };
 
-    const sodiumIonLeakageNode = new LeakageNode();
+    const sodiumIonLeakageNode = new LeakageChannelNode();
     sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
 
-    const potassiumIonLeakageNode = new LeakageNode();
+    const potassiumIonLeakageNode = new LeakageChannelNode();
     potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
 
     const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };

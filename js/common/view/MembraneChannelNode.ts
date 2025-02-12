@@ -14,7 +14,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
-import LeakageNode from './LeakageNode.js';
+import LeakageChannelNode from './LeakageChannelNode.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
@@ -129,7 +129,7 @@ export default class MembraneChannelNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    this.addChild( new LeakageNode() );
+    this.addChild( new LeakageChannelNode() );
   }
 
   public press( event: PressListenerEvent ): void {
