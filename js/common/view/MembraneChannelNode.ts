@@ -97,6 +97,7 @@ export default class MembraneChannelNode extends Node {
 
           // drop into the selected target
           model.targets.set( closest.modelX, this.type );
+          model.targetChangedEmitter.emit();
 
           // Reuse
           this.visible = false;

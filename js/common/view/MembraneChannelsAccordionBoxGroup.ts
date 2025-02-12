@@ -78,6 +78,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         const emptyTarget = model.getLeftmostEmptyTarget();
         if ( emptyTarget !== undefined ) {
           model.targets.set( emptyTarget, 'sodiumLeakage' );
+          model.targetChangedEmitter.emit();
         }
       }
     } );

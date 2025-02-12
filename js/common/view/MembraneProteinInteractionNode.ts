@@ -27,10 +27,14 @@ export default class MembraneProteinInteractionNode extends Rectangle {
       lineDash: [ 4, 4 ],
       cursor: 'pointer',
 
-      // TODO: Only focus if it has a membrane channel.
-      focusable: true,
+      // Only focus if it has a membrane channel.
+      focusable: false,
       tagName: 'div' // arrow keys move it, escape moves it back to toolbox.
     } );
+
+    model.targetChangedEmitter.addListener( () => {
+      this.focusable = model.targets.get( modelX ) !== null;
+    });
 
     // pdom - When the "down" arrow is pressed on the group of tabs, move focus to the selected panel
     this.addInputListener( new KeyboardListener( {
@@ -45,6 +49,8 @@ export default class MembraneProteinInteractionNode extends Rectangle {
         if ( m !== undefined ) {
           model.targets.set( m, model.targets.get( modelX ) || null );
           model.targets.set( modelX, null );
+
+          model.targetChangedEmitter.emit();
         }
       }
     } ) );

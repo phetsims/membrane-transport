@@ -87,6 +87,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   // TODO: Better name for these targets?
   public readonly targets = new Map<number, ChannelType | null>( TARGET_VALUES.map( targetZone => [ targetZone, null ] ) );
+  public readonly targetChangedEmitter = new Emitter();
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -176,6 +177,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.solutes.length = 0;
       this.ligands.length = 0;
       this.targets.forEach( ( value, key ) => this.targets.set( key, null ) );
+      this.targetChangedEmitter.emit();
     } );
   }
 
@@ -368,6 +370,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       for ( const [ key, value ] of state.targets ) {
         model.targets.set( key, value );
       }
+      model.targetChangedEmitter.emit();
 
       model.updateSoluteCounts();
     }
