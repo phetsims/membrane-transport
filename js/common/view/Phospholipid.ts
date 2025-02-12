@@ -113,7 +113,7 @@ export default class Phospholipid {
   public static initHeads( context: CanvasRenderingContext2D ): void {
     context.fillStyle = MembraneChannelsColors.lipidHeadColorProperty.value.toCSS();
     context.strokeStyle = 'black';
-    context.lineWidth = 2;
+    context.lineWidth = 1.3;
   }
 
   /**

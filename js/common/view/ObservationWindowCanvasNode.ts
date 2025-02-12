@@ -9,6 +9,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -38,13 +39,17 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
     } );
 
+    const phospholipids: Phospholipid[] = [];
     // TODO: Make sure not too many tails, you can see they go out of bounds if you remove the clip area
     for ( let i = -40; i <= 40; i++ ) {
 
       const anchorX = i * Phospholipid.headRadius * 2;
-      this.phospholipids.push( new Phospholipid( 'inner', anchorX, modelViewTransform ) );
-      this.phospholipids.push( new Phospholipid( 'outer', anchorX, modelViewTransform ) );
+      phospholipids.push( new Phospholipid( 'inner', anchorX, modelViewTransform ) );
+      phospholipids.push( new Phospholipid( 'outer', anchorX, modelViewTransform ) );
     }
+
+    // Randomize z-ordering
+    this.phospholipids = dotRandom.shuffle( phospholipids );
   }
 
   private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
