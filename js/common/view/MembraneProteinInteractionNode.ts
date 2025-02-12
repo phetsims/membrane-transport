@@ -22,8 +22,11 @@ export default class MembraneProteinInteractionNode extends Rectangle {
   public constructor( model: MembraneChannelsModel, public readonly modelX: number, modelViewTransform: ModelViewTransform2 ) {
     super( 0, 0, 60, 80, 15, 10, {
       center: modelViewTransform.modelToViewXY( modelX, 0 ),
+
+      // TODO: Turn off these debugging display properties
       stroke: 'blue',
       lineWidth: 2,
+      opacity: 0,
       lineDash: [ 4, 4 ],
       cursor: 'pointer',
 
