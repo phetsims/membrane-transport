@@ -149,8 +149,10 @@ export default class Particle<T extends ParticleType> {
       }
     }
     else if ( this.mode === 'passThroughToOutside' ) {
+
       // Mode where solute passes through the membrane to the outside
-      this.position.y += typicalSpeed * dt;
+      this.position.y += typicalSpeed / 4 * dt;
+
       if ( ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
 
         const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
