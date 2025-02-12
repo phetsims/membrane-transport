@@ -34,7 +34,7 @@ export default class MembraneProteinInteractionNode extends Rectangle {
 
     model.targetChangedEmitter.addListener( () => {
       this.focusable = model.targets.get( modelX ) !== null;
-    });
+    } );
 
     // pdom - When the "down" arrow is pressed on the group of tabs, move focus to the selected panel
     this.addInputListener( new KeyboardListener( {
