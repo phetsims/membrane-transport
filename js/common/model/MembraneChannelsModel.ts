@@ -49,6 +49,15 @@ type FluxEntry = {
 const fluxSmoothingTimeConstant = 0.25;
 export type ChannelType = 'sodiumLeakage' | 'potassiumLeakage'; // TODO: Name
 
+// TODO: Naming?
+const TARGET_COUNT = 7;
+const TARGET_MAX_X = 84;
+const TARGET_SPACING = ( TARGET_MAX_X * 2 ) / ( TARGET_COUNT - 1 );
+const TARGET_VALUES: number[] = [];
+for ( let i = 0; i < TARGET_COUNT; i++ ) {
+  TARGET_VALUES.push( i * TARGET_SPACING - TARGET_MAX_X );
+}
+
 export default class MembraneChannelsModel extends PhetioObject {
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -77,7 +86,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   // TODO: Better name for these targets?
-  public readonly targets = new Map<number, ChannelType | null>( [ -80, -40, 0, 40, 80 ].map( targetZone => [ targetZone, null ] ) );
+  public readonly targets = new Map<number, ChannelType | null>( TARGET_VALUES.map( targetZone => [ targetZone, null ] ) );
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -89,8 +98,6 @@ export default class MembraneChannelsModel extends PhetioObject {
     }, providedOptions );
 
     super( options );
-
-    // this.targets.set( -40, 'sodiumLeakage' ); // TODO: For debugging only
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSoluteTypes( this.featureSet ),
