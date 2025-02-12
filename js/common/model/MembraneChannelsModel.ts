@@ -316,6 +316,10 @@ export default class MembraneChannelsModel extends PhetioObject {
     } ).length;
   }
 
+  public removeParticle( particle: Particle<IntentionalAny> ): void {
+    this.solutes.splice( this.solutes.indexOf( particle ), 1 );
+  }
+
   /**
    * Do not passively diffuse if in the presence of a filled target protein.
    */

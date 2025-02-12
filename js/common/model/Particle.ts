@@ -69,6 +69,8 @@ export default class Particle<T extends ParticleType> {
   // Size of the solute in model coordinates.
   public readonly dimension: Dimension2;
 
+  public opacity = 1;
+
   public constructor(
     public readonly position: Vector2,
     public readonly type: T
@@ -105,6 +107,16 @@ export default class Particle<T extends ParticleType> {
   }
 
   public step( dt: number, model: MembraneChannelsModel ): void {
+
+    // When glucose is inside the cell, it is absorbed.
+    if ( this.type === 'glucose' && this.position.y < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+      this.opacity = this.opacity - 0.01;
+      if ( this.opacity <= 0 ) {
+        model.removeParticle( this );
+        return;
+      }
+    }
+
     if ( this.mode === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }

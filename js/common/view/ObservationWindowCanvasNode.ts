@@ -86,6 +86,11 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     // Draw the particles as images
     for ( const solute of this.model.solutes ) {
 
+      // Apply opacity
+      if ( solute.opacity !== 1 ) {
+        context.globalAlpha = solute.opacity;
+      }
+
       // draw image scaled by a factor of 4 in each dimension
       const image = this.soluteTypeToImageMap.get( solute.type )!;
       const x = this.modelViewTransform.modelToViewX( solute.position.x );
@@ -99,6 +104,11 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
       // Draw the image centered at the position.
       context.drawImage( image, x - width / 2, y - height / 2, width, height );
+
+      // Reset globalAlpha to prevent affecting other drawings
+      if ( solute.opacity !== 1 ) {
+        context.globalAlpha = 1.0;
+      }
 
       if ( phet.chipper.queryParameters.dev ) {
 
@@ -115,6 +125,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       }
     }
   }
+
 
   private drawCharges( context: CanvasRenderingContext2D ): void {
     const potentialString = this.model.membraneVoltagePotentialProperty.value;
