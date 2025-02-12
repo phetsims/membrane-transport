@@ -213,7 +213,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     // pdom order
     // TODO (design:a11y) - Identify which components go in each section.
-    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, rightSideVBox ];
+    // TODO: Should we sneak the observation window after the accordion box but before the voltage panel?
+    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, rightSideVBox, this.observationWindow ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 
     if ( phet.chipper.queryParameters.dev ) {
@@ -228,6 +229,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * Called when the user presses a membrane protein in the accordion box to create one.
    *
    * @param event
+   * @param type
    * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
    */
   public createLeakageNode( event: PressListenerEvent, type: ChannelType, homes: Node[] ): void {

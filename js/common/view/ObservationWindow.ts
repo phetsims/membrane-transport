@@ -15,6 +15,7 @@ import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
+import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import LigandANode from './solutes/LigandANode.js';
 import LigandBNode from './solutes/LigandBNode.js';
@@ -32,6 +33,7 @@ export default class ObservationWindow extends Node {
 
   private readonly ligandNodes: LigandNode[] = [];
   public readonly targetZoneNodes: TargetZoneNode[];
+  public readonly membraneProteinInteractionNodes: MembraneProteinInteractionNode[];
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
@@ -81,6 +83,9 @@ export default class ObservationWindow extends Node {
 
     this.addChild( outsideText );
     this.addChild( insideText );
+
+    this.membraneProteinInteractionNodes = Array.from( model.targets.keys() ).map( targetZone => new MembraneProteinInteractionNode( model, targetZone, modelViewTransform ) );
+    this.membraneProteinInteractionNodes.forEach( membraneProteinInteractionNode => this.addChild( membraneProteinInteractionNode ) );
 
     this.targetZoneNodes = Array.from( model.targets.keys() ).map( targetZone => new TargetZoneNode( targetZone, modelViewTransform ) );
     this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );

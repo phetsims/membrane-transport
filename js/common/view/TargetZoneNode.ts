@@ -11,11 +11,15 @@ import membraneChannels from '../../membraneChannels.js';
  */
 export default class TargetZoneNode extends Rectangle {
   public constructor( public readonly modelX: number, modelViewTransform: ModelViewTransform2 ) {
+
+    // TODO: Model bounds? Do proteins have different sizes?
     super( 0, 0, 60, 80, 15, 10, {
       center: modelViewTransform.modelToViewXY( modelX, 0 ),
       stroke: 'blue',
       lineWidth: 2,
       lineDash: [ 4, 4 ],
+
+      // Only shown when the user is dragging a membrane toward it
       visible: false
     } );
   }
