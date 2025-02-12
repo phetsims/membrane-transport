@@ -2,8 +2,9 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CanvasNode from '../../../../scenery/js/nodes/CanvasNode.js';
+import CanvasNode, { CanvasNodeOptions } from '../../../../scenery/js/nodes/CanvasNode.js';
 import membraneChannels from '../../membraneChannels.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 
@@ -14,11 +15,12 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class LeakageChannelNode extends CanvasNode {
-  public constructor() {
-    super( {
+  public constructor( providedOptions?: CanvasNodeOptions ) {
+
+    super( combineOptions<CanvasNodeOptions>( {
       canvasBounds: new Bounds2( 0, 0, 45, 50 ),
       cursor: 'pointer'
-    } );
+    }, providedOptions ) );
 
     this.invalidatePaint();
   }

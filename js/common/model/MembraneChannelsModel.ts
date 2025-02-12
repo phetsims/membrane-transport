@@ -331,6 +331,10 @@ export default class MembraneChannelsModel extends PhetioObject {
     return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( a - x ) - Math.abs( b - x ) )[ 0 ];
   }
 
+  public getLeftmostEmptyTarget(): number | undefined {
+    return [ ...this.targets.keys() ].find( target => !this.targets.get( target ) );
+  }
+
   /**
    * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.

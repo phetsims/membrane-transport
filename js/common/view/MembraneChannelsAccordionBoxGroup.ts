@@ -56,12 +56,41 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createLeakageNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
 
     const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
+
+    // TODO: Perhaps add ToolIconNode, which renders with a LeakageChannelNode (maybe with Text)?
+    const sodiumLeakageToolNode = new VBox( {
+      spacing: 3,
+      children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ],
+      tagName: 'button',
+      descriptionTagName: 'p',
+      descriptionContent: 'Press enter to add a sodium ion leakage channel to the membrane' // TODO i18n
+    } );
+    sodiumLeakageToolNode.addInputListener( {
+      click: () => {
+        // Removing and Repositioning Proteins (on membrane)
+        // Alternative Input for inside Accordion Boxes:
+        //   Toolbox Pattern can be used for inside the expanded accordion https://phetsims.github.io/binder/#sun-ToolboxPattern
+        //   Grabbing a Channel
+        // Following the toolbox pattern, Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
+
+        const emptyTarget = model.getLeftmostEmptyTarget();
+        if ( emptyTarget !== undefined ) {
+          model.targets.set( emptyTarget, 'sodiumLeakage' );
+
+          // TODO: Move focus over there
+        }
+      }
+    } );
+    const potassiumLeakageToolNode = new VBox( {
+      spacing: 3,
+      children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ],
+      tagName: 'button',
+      descriptionTagName: 'p',
+      descriptionContent: 'Press enter to add a sodium ion leakage channel to the membrane' // TODO i18n
+    } );
     const leakageContent = new HBox( {
       spacing: 10,
-      children: [
-        new VBox( { spacing: 3, children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ] } ),
-        new VBox( { spacing: 3, children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ] } )
-      ]
+      children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
     } );
 
     const contentAlignGroup = new AlignGroup();
