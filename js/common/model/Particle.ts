@@ -135,27 +135,20 @@ export default class Particle<T extends ParticleType> {
         this.mode = 'randomWalk';
       }
     }
-    else if ( this.mode === 'passThroughToInside' ) {
+    else if ( this.mode === 'passThroughToInside' || this.mode === 'passThroughToOutside' ) {
+
+      const sign = this.mode === 'passThroughToInside' ? -1 : 1;
 
       // Mode where solute passes through the membrane to the inside
-      this.position.y -= typicalSpeed / 4 * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+      this.position.y = this.position.y + sign * typicalSpeed / 4 * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
       this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * typicalSpeed / 2 * dt;
 
-      if ( ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
-
-        // The next direction should mostly point down so that the solute doesn't go right back out
+      // The next direction should mostly point down so that the solute doesn't go right back out
+      if ( this.mode === 'passThroughToInside' && ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
         const downwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( -1, 0 ) ).normalize();
         this.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
       }
-    }
-    else if ( this.mode === 'passThroughToOutside' ) {
-
-      // Mode where solute passes through the membrane to the outside
-      this.position.y += typicalSpeed / 4 * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
-      this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * typicalSpeed / 2 * dt;
-
-      if ( ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
-
+      if ( this.mode === 'passThroughToOutside' && ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
         const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
         this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
       }
