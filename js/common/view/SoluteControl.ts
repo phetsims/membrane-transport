@@ -61,6 +61,7 @@ export default class SoluteControl extends Panel {
 
     // When the actual count changes, adjust the range to enable/disable the buttons.
     // The range should center on the current value, and allow the user to go to 0 or up to MAX_SOLUTE_COUNT.
+    // TODO: This sometimes errors out
     Multilink.multilink( [ userControlledCountProperty, actualCountPerSideProperty, totalCountProperty ],
       ( userValue, countOnThisSide, totalCount ) => {
 
