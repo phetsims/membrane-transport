@@ -1,9 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
+import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
@@ -11,12 +14,16 @@ import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
+import { MAX_SOLUTE_COUNT } from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import getParticleNode from './solutes/getParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & NodeOptions;
+
+const fineDelta = 2;
+const coarseDelta = 10;
 
 /**
  * Shows the panel and spinner that allows the user to add and remove a particular type of Solute.
@@ -37,10 +44,41 @@ export default class SoluteControl extends Panel {
 
     // Create a proxy property for the FineCoarseSpinner
     // When the proxy Property changes, create new solutes based on that value
-    const userControlledCountProperty = new NumberProperty( 0 );
+    const allowedRangeProperty = new Property( new Range( 0, MAX_SOLUTE_COUNT ) );
 
-    const actualCountProperty = side === 'inside' ? model.insideSoluteCountProperties[ soluteType ] :
-                                model.outsideSoluteCountProperties[ soluteType ];
+    // Amount the user has added or removed. Can go negative if solutes diffuse across to this side, then are removed.
+    const userControlledCountProperty = new NumberProperty( 0, {
+      range: allowedRangeProperty
+    } );
+
+    const actualCountPerSideProperty = side === 'inside' ?
+                                       model.insideSoluteCountProperties[ soluteType ] :
+                                       model.outsideSoluteCountProperties[ soluteType ];
+
+    const totalCountProperty = new DerivedProperty( [ model.insideSoluteCountProperties[ soluteType ], model.outsideSoluteCountProperties[ soluteType ] ], ( insideCount, outsideCount ) => {
+      return insideCount + outsideCount;
+    } );
+
+    // When the actual count changes, adjust the range to enable/disable the buttons.
+    // The range should center on the current value, and allow the user to go to 0 or up to MAX_SOLUTE_COUNT.
+    Multilink.multilink( [ userControlledCountProperty, actualCountPerSideProperty, totalCountProperty ],
+      ( userValue, countOnThisSide, totalCount ) => {
+
+        let amountTheUserCouldRemove = countOnThisSide;
+        let amountTheUserCouldAdd = MAX_SOLUTE_COUNT - totalCount;
+
+        // For the enabled range only, don't disable just some of the buttons
+        if ( amountTheUserCouldAdd > 0 ) {
+          amountTheUserCouldAdd = coarseDelta;
+        }
+        if ( amountTheUserCouldRemove > 0 ) {
+          amountTheUserCouldRemove = coarseDelta;
+        }
+        allowedRangeProperty.value = new Range(
+          userValue - amountTheUserCouldRemove,
+          userValue + amountTheUserCouldAdd
+        );
+      } );
 
     userControlledCountProperty.lazyLink( ( value, oldValue ) => {
       const difference = value - oldValue;
@@ -56,7 +94,7 @@ export default class SoluteControl extends Panel {
       }
     } );
 
-    const qualitativeCountProperty = new DerivedProperty( [ actualCountProperty ], actualCount => {
+    const qualitativeCountProperty = new DerivedProperty( [ actualCountPerSideProperty ], actualCount => {
       return actualCount === 0 ? 'none' :
              actualCount === 1 ? 'one' :
              actualCount < 10 ? 'few' :
@@ -69,8 +107,6 @@ export default class SoluteControl extends Panel {
       soluteType: model.selectedSoluteProperty
     } );
 
-    const fineDelta = 2;
-    const coarseDelta = 10;
     const spinner = new FineCoarseSpinner( userControlledCountProperty, {
       deltaFine: fineDelta,
       deltaCoarse: coarseDelta,
