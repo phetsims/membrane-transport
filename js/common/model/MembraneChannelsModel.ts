@@ -38,6 +38,8 @@ import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
 
+const CHANNEL_WIDTH = 10;
+
 type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 type FluxEntry = {
@@ -328,16 +330,15 @@ export default class MembraneChannelsModel extends PhetioObject {
   public canDiffuseThroughMembrane( solute: Particle<IntentionalAny> ): boolean {
     const x = solute.position.x;
 
-    // it can cross if it isn't within 10 model units of any filled target
-    // TODO: Will this width be protein-dependent?
-    return ![ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) );
+    // it can cross if it isn't within the channel width of any filled target
+    return ![ ...this.targets.keys() ].some( target => Math.abs( x - target ) < CHANNEL_WIDTH && this.targets.get( target ) );
   }
 
   public isCloseToChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): boolean {
 
-    // check if within 10 units of any filled target. TODO: grab radius?
+    // check if within the channel width of any filled target. TODO: grab radius?
     const x = solute.position.x;
-    return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < 10 && this.targets.get( target ) === type );
+    return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < CHANNEL_WIDTH && this.targets.get( target ) === type );
   }
 
   public getNearestChannelPosition( x: number ): number | undefined {
