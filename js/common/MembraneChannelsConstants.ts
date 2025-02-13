@@ -8,7 +8,7 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import { ParticleType, ParticleTypes } from '../common/model/SoluteType.js';
+import { ParticleType, ParticleTypes } from './model/SoluteType.js';
 import membraneChannels from '../membraneChannels.js';
 import getParticleNode from './view/solutes/getParticleNode.js';
 
@@ -64,7 +64,7 @@ const MembraneChannelsConstants = {
 
   OBSERVATION_WINDOW_BOUNDS: OBSERVATION_WINDOW_BOUNDS,
 
-  PANEL_TITLE_FONT_SIZE: 18,
+  PANEL_TITLE_FONT_SIZE: 18
 };
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
