@@ -23,7 +23,7 @@ import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import Phospholipid from './Phospholipid.js';
-import { getInterpolatedPathSodiumVoltageGatedChannelNode } from './SodiumVoltageGatedChannelNode.js';
+import { getInterpolatedPathSodiumVoltageGatedChannelBounds, getInterpolatedPathSodiumVoltageGatedChannelNode } from './SodiumVoltageGatedChannelNode.js';
 import getParticleNode from './solutes/getParticleNode.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
@@ -227,14 +227,18 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         const path = new Path2D( getInterpolatedPathSodiumVoltageGatedChannelNode( t ) );
         path.closePath();
 
+        const myBounds = getInterpolatedPathSodiumVoltageGatedChannelBounds();
+
         context.save();
 
-        context.translate( 100, 100 );
+        context.translate( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( 0 ) );
         context.scale( 4, 4 );
-        context.lineWidth = 0.2;
+        context.translate( -myBounds.width / 2 - 8, -myBounds.height / 2 - 1 ); // TODO: What's up with these offsets?
+
+        context.lineWidth = 1.5;
         context.strokeStyle = 'black';
         context.stroke( path );
-        context.fillStyle = 'blue';
+        context.fillStyle = 'white';
         context.fill( path );
 
         context.restore();

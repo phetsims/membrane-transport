@@ -1,5 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Shape from '../../../../kite/js/Shape.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { CanvasNodeOptions } from '../../../../scenery/js/nodes/CanvasNode.js';
 import Path, { PathOptions } from '../../../../scenery/js/nodes/Path.js';
@@ -38,6 +40,10 @@ export default class SodiumVoltageGatedChannelNode extends Path {
     }, providedOptions ) );
   }
 }
+
+const shape = new Shape( interpolate( 0.5 ) ); // To get the bounds
+
+export const getInterpolatedPathSodiumVoltageGatedChannelBounds = (): Bounds2 => shape.getBounds();
 
 export const getInterpolatedPathSodiumVoltageGatedChannelNode = ( amount: number ): string => interpolate( amount );
 
