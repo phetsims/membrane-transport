@@ -74,7 +74,7 @@ export default class SolutesPanel extends Node {
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
       accessibleName: MembraneChannelsStrings.solutesStringProperty,
-      helpText: MembraneChannelsMessages.soluteRadioButtonGroupHelpTextMessageProperty
+      accessibleHelpText: MembraneChannelsMessages.soluteRadioButtonGroupHelpTextMessageProperty
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally

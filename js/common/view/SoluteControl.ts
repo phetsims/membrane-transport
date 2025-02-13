@@ -119,7 +119,7 @@ export default class SoluteControl extends Panel {
       accessibleName: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
                       MembraneChannelsMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
 
-      helpText: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerHelpTextMessageProperty :
+      accessibleHelpText: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerHelpTextMessageProperty :
                 MembraneChannelsMessages.outsideMembraneSpinnerHelpTextMessageProperty,
 
       accessibleRoleDescription: MembraneChannelsMessages.soluteSpinnerRoleDescriptionMessageProperty,
