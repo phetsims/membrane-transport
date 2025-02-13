@@ -59,6 +59,9 @@
           "MEMBRANE_CHANNELS/screen.facilitatedDiffusion",
           "MEMBRANE_CHANNELS/screen.activeTransport",
           "MEMBRANE_CHANNELS/screen.playground"
+        ],
+        "preload": [
+          "../sherpa/lib/d3-interpolate-path-2.3.0.js"
         ]
       }
     };
@@ -110,7 +113,8 @@
     '../chipper/js/browser/initialize-globals.js',
     '../sherpa/lib/seedrandom-2.4.2.js',
     '../sherpa/lib/base64-js-1.2.0.js',
-    '../sherpa/lib/TextEncoderLite-3c9f6f0.js'
+    '../sherpa/lib/TextEncoderLite-3c9f6f0.js',
+    '../sherpa/lib/d3-interpolate-path-2.3.0.js'
   ];
 
   const query = new URLSearchParams( window.location.search );

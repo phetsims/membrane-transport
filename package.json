@@ -36,6 +36,9 @@
       "MEMBRANE_CHANNELS/screen.facilitatedDiffusion",
       "MEMBRANE_CHANNELS/screen.activeTransport",
       "MEMBRANE_CHANNELS/screen.playground"
+    ],
+    "preload": [
+      "../sherpa/lib/d3-interpolate-path-2.3.0.js"
     ]
   }
 }
