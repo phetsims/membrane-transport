@@ -223,6 +223,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
         const t = Math.sin( Date.now() / 1000 * 3 ) * 0.5 + 0.5;
 
+        // TODO: Check performance on iPad and chromebook
         const path = new Path2D( getInterpolatedPathSodiumVoltageGatedChannelNode( t ) );
         path.closePath();
 
