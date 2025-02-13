@@ -14,7 +14,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import SoluteType, { getSoluteModelWidth, ParticleType } from './SoluteType.js';
@@ -77,7 +77,7 @@ export default class Particle<T extends ParticleType> {
   ) {
     this.dimension = new Dimension2(
       getSoluteModelWidth( type ),
-      getSoluteModelWidth( type ) / MembraneChannelsConstants.SOLUTE_ASPECT_RATIO_MAP[ type ]
+      getSoluteModelWidth( type ) / PARTICLE_ASPECT_RATIO_MAP[ type ]
     );
 
     // For smooth turning, initialize both directions to something random.

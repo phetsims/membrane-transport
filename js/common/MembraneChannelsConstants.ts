@@ -22,12 +22,11 @@ const MODEL_HEIGHT = MODEL_WIDTH * OBSERVATION_WINDOW_HEIGHT / OBSERVATION_WINDO
 
 // A map of solute type to the aspect ratio of its artwork so that we can create bounds
 // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
-// TODO: Rename to PARTICLE_ASPECT_RATIO_MAP
-const SOLUTE_ASPECT_RATIO_MAP = {} as Record<ParticleType, number>;
+export const PARTICLE_ASPECT_RATIO_MAP = {} as Record<ParticleType, number>;
 
 ParticleTypes.forEach( soluteType => {
   const soluteNode = getParticleNode( soluteType ).bounds;
-  SOLUTE_ASPECT_RATIO_MAP[ soluteType ] = soluteNode.width / soluteNode.height;
+  PARTICLE_ASPECT_RATIO_MAP[ soluteType ] = soluteNode.width / soluteNode.height;
 } );
 
 // Bounds of the membrane for collision detection and rendering.
@@ -66,8 +65,6 @@ const MembraneChannelsConstants = {
   OBSERVATION_WINDOW_BOUNDS: OBSERVATION_WINDOW_BOUNDS,
 
   PANEL_TITLE_FONT_SIZE: 18,
-
-  SOLUTE_ASPECT_RATIO_MAP: SOLUTE_ASPECT_RATIO_MAP
 };
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
