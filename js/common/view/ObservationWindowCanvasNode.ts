@@ -183,13 +183,13 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   // Static so it can be reused to create a scenery node for the toolbox
   public static drawLeakageChannel( context: CanvasRenderingContext2D,
-                                    type: 'sodiumLeakage' | 'potassiumLeakage', modelViewTransform: ModelViewTransform2, x: number ): void {
+                                    type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', modelViewTransform: ModelViewTransform2, x: number ): void {
 
     const modelWidth = 20;
     const modelHeight = 25;
 
     // For the leakage channels, the sodium pore should be smaller than the potassium pore
-    const poreSize = type === 'sodiumLeakage' ? 4 : 6;
+    const poreSize = type === 'sodiumIonLeakageChannel' ? 4 : 6;
 
     // add a rounded rectangle
     context.strokeStyle = 'black';
@@ -215,10 +215,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
     this.model.targets.forEach( ( isTargeted, x ) => {
       const target = this.model.targets.get( x );
-      if ( target === 'sodiumLeakage' || target === 'potassiumLeakage' ) {
+      if ( target === 'sodiumIonLeakageChannel' || target === 'potassiumIonLeakageChannel' ) {
         ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, x );
       }
-      else if ( target === 'sodiumVoltageGated' ) {
+      else if ( target === 'sodiumIonVoltageGatedChannel' ) {
         // TODO: Bounds and fix positioning, use the modelViewTransform, draw more parts of the shape
 
         const t = Math.sin( Date.now() / 1000 * 3 ) * 0.5 + 0.5;

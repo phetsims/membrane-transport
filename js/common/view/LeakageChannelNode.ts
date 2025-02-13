@@ -15,7 +15,7 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class LeakageChannelNode extends CanvasNode {
-  public constructor( public readonly type: 'sodiumLeakage' | 'potassiumLeakage', providedOptions?: CanvasNodeOptions ) {
+  public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', providedOptions?: CanvasNodeOptions ) {
 
     super( combineOptions<CanvasNodeOptions>( {
       canvasBounds: new Bounds2( 0, 0, 45, 50 ),

@@ -80,21 +80,21 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
 
       const createLeakageAccordionBox = ( () => {
-        const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumLeakage' );
-        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumLeakage', [ sodiumIonLeakageNode, this ] ) ) );
+        const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumIonLeakageChannel' );
+        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumIonLeakageChannel', [ sodiumIonLeakageNode, this ] ) ) );
 
-        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
-        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
+        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumIonLeakageChannel' );
+        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumIonLeakageChannel', [ potassiumIonLeakageNode, this ] ) ) );
 
         const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
           children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
         } ) );
-        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumLeakage' ) );
+        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumIonLeakageChannel' ) );
 
         const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
           children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
         } ) );
-        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumLeakage' ) );
+        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumIonLeakageChannel' ) );
 
         const leakageContent = new HBox( {
           spacing: 10,
@@ -110,20 +110,20 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
 
       const createVoltageGatedAccordionBox = ( () => {
         const sodiumIonLeakageNode = new SodiumVoltageGatedChannelNode();
-        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumVoltageGated', [ sodiumIonLeakageNode, this ] ) ) );
+        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumIonVoltageGatedChannel', [ sodiumIonLeakageNode, this ] ) ) );
 
-        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumLeakage' );
-        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumLeakage', [ potassiumIonLeakageNode, this ] ) ) );
+        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumIonLeakageChannel' );
+        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumIonLeakageChannel', [ potassiumIonLeakageNode, this ] ) ) );
 
         const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
           children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
         } ) );
-        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumLeakage' ) );
+        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumIonLeakageChannel' ) );
 
         const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
           children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
         } ) );
-        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumLeakage' ) );
+        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumIonLeakageChannel' ) );
 
         const leakageContent = new HBox( {
           spacing: 10,

@@ -131,7 +131,7 @@ export default class MembraneChannelNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    const node = type === 'sodiumVoltageGated' ? new SodiumVoltageGatedChannelNode() : new LeakageChannelNode( type );
+    const node = type === 'sodiumIonVoltageGatedChannel' ? new SodiumVoltageGatedChannelNode() : new LeakageChannelNode( type );
     this.addChild( node );
   }
 
