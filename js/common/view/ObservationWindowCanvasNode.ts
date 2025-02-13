@@ -23,6 +23,7 @@ import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import Phospholipid from './Phospholipid.js';
+import { getInterpolatedPathSodiumVoltageGatedChannelNode } from './SodiumVoltageGatedChannelNode.js';
 import getParticleNode from './solutes/getParticleNode.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
@@ -217,9 +218,25 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       if ( target === 'sodiumLeakage' || target === 'potassiumLeakage' ) {
         ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, x );
       }
-      else {
-        // TODO: Draw sodium voltage channel
-        // ObservationWindowCanvasNode.drawSodiumVoltageChannel( context, target, this.modelViewTransform, x );
+      else if ( target === 'sodiumVoltageGated' ) {
+        // TODO: Bounds and fix positioning, use the modelViewTransform, draw more parts of the shape
+
+        const t = Math.sin( Date.now() / 1000 * 3 ) * 0.5 + 0.5;
+
+        const path = new Path2D( getInterpolatedPathSodiumVoltageGatedChannelNode( t ) );
+        path.closePath();
+
+        context.save();
+
+        context.translate( 100, 100 );
+        context.scale( 4, 4 );
+        context.lineWidth = 0.2;
+        context.strokeStyle = 'black';
+        context.stroke( path );
+        context.fillStyle = 'blue';
+        context.fill( path );
+
+        context.restore();
       }
     } );
   }
