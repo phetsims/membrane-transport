@@ -40,8 +40,7 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
   MembraneChannelsColors.glucoseColorProperty;
 
 // TODO: Oxygen in o2 should be same size as oxygen in co2.
-// TODO: Rename to getParticleModelWidth
-export const getSoluteModelWidth = ( particleType: ParticleType ): number =>
+export const getParticleModelWidth = ( particleType: ParticleType ): number =>
   particleType === 'oxygen' ? 3 :
   particleType === 'carbonDioxide' ? 5 :
   particleType === 'sodiumIon' ? 4 :

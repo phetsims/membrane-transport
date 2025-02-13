@@ -17,7 +17,7 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
-import SoluteType, { getSoluteModelWidth, ParticleType } from './SoluteType.js';
+import SoluteType, { getParticleModelWidth, ParticleType } from './SoluteType.js';
 
 // Typical speed for movement
 const typicalSpeed = 30;
@@ -76,8 +76,8 @@ export default class Particle<T extends ParticleType> {
     public readonly type: T
   ) {
     this.dimension = new Dimension2(
-      getSoluteModelWidth( type ),
-      getSoluteModelWidth( type ) / PARTICLE_ASPECT_RATIO_MAP[ type ]
+      getParticleModelWidth( type ),
+      getParticleModelWidth( type ) / PARTICLE_ASPECT_RATIO_MAP[ type ]
     );
 
     // For smooth turning, initialize both directions to something random.
