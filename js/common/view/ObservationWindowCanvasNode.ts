@@ -224,22 +224,35 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         const t = Math.sin( Date.now() / 1000 * 3 ) * 0.5 + 0.5;
 
         // TODO: Check performance on iPad and chromebook
-        const path = new Path2D( getInterpolatedPathSodiumVoltageGatedChannelNode( t ) );
-        path.closePath();
+        const m = getInterpolatedPathSodiumVoltageGatedChannelNode( t );
 
         const myBounds = getInterpolatedPathSodiumVoltageGatedChannelBounds();
 
         context.save();
 
         context.translate( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( 0 ) );
-        context.scale( 4, 4 );
-        context.translate( -myBounds.width / 2 - 8, -myBounds.height / 2 - 1 ); // TODO: What's up with these offsets?
+        context.scale( 5, 5 );
+        context.translate( -myBounds.width / 2 - 5, -myBounds.height / 2 - 2 ); // TODO: What's up with these offsets?
 
-        context.lineWidth = 1.5;
+        context.lineWidth = 0.7;
         context.strokeStyle = 'black';
-        context.stroke( path );
         context.fillStyle = 'white';
-        context.fill( path );
+
+        for ( let i = 0; i < m.length; i++ ) {
+          const path = new Path2D( m[ i ] );
+
+          if ( i === 4 ) {
+            context.lineWidth = 0.5;
+          }
+          context.stroke( path );
+          if ( i !== 4 ) {
+            context.fill( path );
+          }
+
+          if ( i === 4 ) {
+            context.lineWidth = 1;
+          }
+        }
 
         context.restore();
       }
