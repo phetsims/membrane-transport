@@ -117,8 +117,6 @@ export default class MembraneChannelsModel extends PhetioObject {
     } );
     this.resetEmitter.addListener( () => this.timeSpeedProperty.reset() );
 
-    // TODO (design): I set this true for development, but should it also be true for production?
-    // TODO (design): if the sim is paused, and the user adds solute, it is barely visible! that is a confusing UX
     this.isPlayingProperty = new BooleanProperty( true, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true
