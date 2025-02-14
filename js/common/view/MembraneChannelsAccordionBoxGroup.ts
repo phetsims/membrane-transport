@@ -71,7 +71,6 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
           // TODO: response if there is no available spot?
           if ( emptyTarget !== null ) {
             model.setTarget( emptyTarget, channelType );
-            model.targetChangedEmitter.emit();
           }
         }
       };

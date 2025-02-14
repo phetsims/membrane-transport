@@ -392,6 +392,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   public setTarget( targetKey: TargetKey, type: ChannelType | null ): void {
     this.targets.set( targetKey, type );
+    this.targetChangedEmitter.emit();
   }
 
   public getTarget( targetKey: TargetKey ): ChannelType | null {

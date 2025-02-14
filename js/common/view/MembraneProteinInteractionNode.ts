@@ -52,8 +52,6 @@ export default class MembraneProteinInteractionNode extends Rectangle {
         if ( m !== null ) {
           model.setTarget( m, model.getTarget( targetKey ) );
           model.setTarget( targetKey, null );
-
-          model.targetChangedEmitter.emit();
         }
       }
     } ) );

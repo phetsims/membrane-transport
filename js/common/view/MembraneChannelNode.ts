@@ -28,7 +28,7 @@ import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
 export default class MembraneChannelNode extends Node {
   private readonly dragListener: DragListener;
 
-  // TODO: Preallocate to make phet-io state trivial?
+  // TODO: Preallocate to make phet-io state trivial? Do we really want to instrument these drag listeners or emitters? Why not a broad channel emitter when something is dropped?
   public constructor(
     model: MembraneChannelsModel,
     observationWindow: ObservationWindow,
@@ -40,7 +40,7 @@ export default class MembraneChannelNode extends Node {
   ) {
     super();
 
-    // TODO: Keyboard support
+    // TODO: Keyboard support, probably GroupSortInteraction
     const positionProperty = new Vector2Property( modelPosition );
     positionProperty.link( position => {
       this.center = screenViewModelViewTransform.modelToViewPosition( position );
@@ -105,9 +105,7 @@ export default class MembraneChannelNode extends Node {
         if ( closest ) {
 
           // drop into the selected target
-          // TODO: Auto-emit
           model.setTarget( closest.targetKey, this.type );
-          model.targetChangedEmitter.emit();
 
           // Reuse
           this.visible = false;
