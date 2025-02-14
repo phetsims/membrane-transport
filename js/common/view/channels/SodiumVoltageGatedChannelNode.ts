@@ -48,8 +48,6 @@ export default class SodiumVoltageGatedChannelNode extends Node {
     super();
 
     closedNegative70Segments.forEach( ( segment, index ) => {
-      console.log( index );
-      console.log( segment );
       this.addChild( new Path( new Shape( segment ), {
         stroke: 'black',
         lineWidth: 0.4,
