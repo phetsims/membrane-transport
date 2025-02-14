@@ -12,6 +12,8 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
  * in the membrane.
  *
+ * // TODO: The slack channel document has recommendations about how to render in scenery and canvas.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class LeakageChannelNode extends CanvasNode {
@@ -32,8 +34,6 @@ export default class LeakageChannelNode extends CanvasNode {
     // context.fillRect( 0, 0, 45, 50 );
 
     // Draw the membrane channel
-    // TODO: Do we like this pattern? If so, how can we get the geometry to be explicit and accurate?
-    // TODO: The stroke line width doesn't match up exactly
     ObservationWindowCanvasNode.drawLeakageChannel( context, this.type, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
   }
 

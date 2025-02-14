@@ -37,7 +37,6 @@ function getInterpolatedDirection( solute: Particle<ParticleType> ): Vector2 {
  */
 export default class Particle<T extends ParticleType> {
 
-  // TODO: Do we need a subclass for Particles that can be userControlled (like ligands)?
   public mode:
     'randomWalk' |
     'bound' |

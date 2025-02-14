@@ -29,8 +29,15 @@ export default class MembraneChannelNode extends Node {
   private readonly dragListener: DragListener;
 
   // TODO: Preallocate to make phet-io state trivial?
-  public constructor( model: MembraneChannelsModel, observationWindow: ObservationWindow, screenViewModelViewTransform: ModelViewTransform2, modelPosition: Vector2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, homes: Node[],
-                      public readonly type: ChannelType ) {
+  public constructor(
+    model: MembraneChannelsModel,
+    observationWindow: ObservationWindow,
+    screenViewModelViewTransform: ModelViewTransform2,
+    modelPosition: Vector2,
+    visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
+    homes: Node[],
+    public readonly type: ChannelType
+  ) {
     super();
 
     // TODO: Keyboard support
