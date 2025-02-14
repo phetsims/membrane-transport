@@ -69,7 +69,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         click: () => {
           const emptyTarget = model.getLeftmostEmptyTarget();
           // TODO: response if there is no available spot?
-          if ( emptyTarget !== undefined ) {
+          if ( emptyTarget !== null ) {
             model.setTarget( emptyTarget, channelType );
             model.targetChangedEmitter.emit();
           }

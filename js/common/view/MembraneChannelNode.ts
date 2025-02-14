@@ -56,7 +56,7 @@ export default class MembraneChannelNode extends Node {
       // Check the observation window to find the closest available target we overlap
       // If any rectangle overlaps, change its stroke color to red, Change all others back to black
       const overlappingTargets = observationWindow.targetZoneNodes.filter( targetZoneNode => {
-        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isTargetFilled( targetZoneNode.modelX );
+        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isTargetFilled( targetZoneNode.targetKey );
       } );
 
       const closest = _.sortBy( overlappingTargets, targetZoneNode => {
@@ -80,7 +80,7 @@ export default class MembraneChannelNode extends Node {
 
         observationWindow.targetZoneNodes.forEach( targetZoneNode => {
           targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
-          targetZoneNode.visible = !model.isTargetFilled( targetZoneNode.modelX );
+          targetZoneNode.visible = !model.isTargetFilled( targetZoneNode.targetKey );
         } );
       },
       drag: () => {
@@ -90,7 +90,7 @@ export default class MembraneChannelNode extends Node {
 
         observationWindow.targetZoneNodes.forEach( targetZoneNode => {
           targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
-          targetZoneNode.visible = !model.isTargetFilled( targetZoneNode.modelX );
+          targetZoneNode.visible = !model.isTargetFilled( targetZoneNode.targetKey );
         } );
       },
       end: () => {
@@ -105,7 +105,8 @@ export default class MembraneChannelNode extends Node {
         if ( closest ) {
 
           // drop into the selected target
-          model.setTarget( closest.modelX, this.type );
+          // TODO: Auto-emit
+          model.setTarget( closest.targetKey, this.type );
           model.targetChangedEmitter.emit();
 
           // Reuse

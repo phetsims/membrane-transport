@@ -84,10 +84,10 @@ export default class ObservationWindow extends Node {
     this.addChild( outsideText );
     this.addChild( insideText );
 
-    this.membraneProteinInteractionNodes = Array.from( model.getTargetKeys() ).map( targetZone => new MembraneProteinInteractionNode( model, targetZone, modelViewTransform ) );
+    this.membraneProteinInteractionNodes = Array.from( model.getTargetKeys() ).map( targetKey => new MembraneProteinInteractionNode( model, targetKey, modelViewTransform ) );
     this.membraneProteinInteractionNodes.forEach( membraneProteinInteractionNode => this.addChild( membraneProteinInteractionNode ) );
 
-    this.targetZoneNodes = Array.from( model.getTargetKeys() ).map( targetZone => new TargetZoneNode( targetZone, modelViewTransform ) );
+    this.targetZoneNodes = Array.from( model.getTargetKeys() ).map( targetKey => new TargetZoneNode( targetKey, modelViewTransform ) );
     this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );
   }
 

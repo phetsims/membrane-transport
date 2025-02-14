@@ -213,10 +213,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   }
 
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
-    Array.from( this.model.getTargetKeys() ).forEach( x => {
-      const target = this.model.getTarget( x );
+    Array.from( this.model.getTargetKeys() ).forEach( targetKey => {
+      const target = this.model.getTarget( targetKey );
       if ( target === 'sodiumIonLeakageChannel' || target === 'potassiumIonLeakageChannel' ) {
-        ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, x );
+        ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, MembraneChannelsModel.getPositionForTargetKey( targetKey ) );
       }
       else if ( target === 'sodiumIonVoltageGatedChannel' ) {
         // TODO: Bounds and fix positioning, use the modelViewTransform, draw more parts of the shape
@@ -230,7 +230,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
         context.save();
 
-        context.translate( this.modelViewTransform.modelToViewX( x ), this.modelViewTransform.modelToViewY( 0 ) );
+        context.translate( this.modelViewTransform.modelToViewX( MembraneChannelsModel.getPositionForTargetKey( targetKey ) ), this.modelViewTransform.modelToViewY( 0 ) );
         context.scale( 5, 5 );
         context.translate( -myBounds.width / 2 - 5, -myBounds.height / 2 - 2 ); // TODO: What's up with these offsets?
 

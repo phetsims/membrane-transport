@@ -64,7 +64,12 @@ for ( let i = 0; i < TARGET_COUNT; i++ ) {
   TARGET_VALUES.push( i * TARGET_SPACING - TARGET_MAX_X );
 }
 
+export type TargetKey = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
 export default class MembraneChannelsModel extends PhetioObject {
+  public static getPositionForTargetKey( targetKey: TargetKey ): number {
+    return TARGET_VALUES[ targetKey ];
+  }
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
@@ -92,8 +97,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   // TODO: Better name for these targets?
-  // TODO: Better named keys, don't use floating point
-  private readonly targets = new Map<number, ChannelType | null>( TARGET_VALUES.map( targetZone => [ targetZone, null ] ) );
+  private readonly targets = new Map<TargetKey, ChannelType | null>( TARGET_VALUES.map( ( targetZone, index ) => [ index as TargetKey, null ] ) );
   public readonly targetChangedEmitter = new Emitter();
 
   public constructor(
@@ -332,24 +336,22 @@ export default class MembraneChannelsModel extends PhetioObject {
     const x = solute.position.x;
 
     // it can cross if it isn't within the channel width of any filled target
-    return ![ ...this.targets.keys() ].some( target => Math.abs( x - target ) < CHANNEL_WIDTH && this.targets.get( target ) );
+    return ![ ...this.targets.keys() ].some( target => Math.abs( x - MembraneChannelsModel.getPositionForTargetKey( target ) ) < CHANNEL_WIDTH && this.targets.get( target ) );
   }
 
   public isCloseToChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): boolean {
 
     // check if within the channel width of any filled target. TODO: grab radius?
     const x = solute.position.x;
-    return [ ...this.targets.keys() ].some( target => Math.abs( x - target ) < CHANNEL_WIDTH && this.targets.get( target ) === type );
+    return [ ...this.targets.keys() ].some( targetKey => Math.abs( x - MembraneChannelsModel.getPositionForTargetKey( targetKey ) ) < CHANNEL_WIDTH && this.targets.get( targetKey ) === type );
   }
 
-  public getNearestChannelPosition( x: number ): number | undefined {
-    // find the nearest target that has a filled target
-    // use _.sortBy to sort by distance from x
-    return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( a - x ) - Math.abs( b - x ) )[ 0 ];
+  public getNearestChannelPosition( x: number ): TargetKey | null {
+    return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( MembraneChannelsModel.getPositionForTargetKey( a ) - x ) - Math.abs( MembraneChannelsModel.getPositionForTargetKey( b ) - x ) )[ 0 ];
   }
 
-  public getLeftmostEmptyTarget(): number | undefined {
-    return [ ...this.targets.keys() ].find( target => !this.targets.get( target ) );
+  public getLeftmostEmptyTarget(): TargetKey | null {
+    return [ ...this.targets.keys() ].find( target => !this.targets.get( target ) ) || null;
   }
 
   /**
@@ -384,19 +386,19 @@ export default class MembraneChannelsModel extends PhetioObject {
     }
   } );
 
-  public isTargetFilled( modelX: number ): boolean {
-    return this.targets.get( modelX ) !== null;
+  public isTargetFilled( targetKey: TargetKey ): boolean {
+    return this.targets.get( targetKey ) !== null;
   }
 
-  public setTarget( modelX: number, type: ChannelType | null ): void {
-    this.targets.set( modelX, type );
+  public setTarget( targetKey: TargetKey, type: ChannelType | null ): void {
+    this.targets.set( targetKey, type );
   }
 
-  public getTarget( modelX: number ): ChannelType | null {
-    return this.targets.get( modelX ) || null;
+  public getTarget( targetKey: TargetKey ): ChannelType | null {
+    return this.targets.get( targetKey ) || null;
   }
 
-  public getTargetKeys(): Iterable<number> {
+  public getTargetKeys(): Iterable<TargetKey> {
     return this.targets.keys();
   }
 }

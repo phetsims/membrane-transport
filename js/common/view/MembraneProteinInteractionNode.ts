@@ -4,7 +4,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { TargetKey } from '../model/MembraneChannelsModel.js';
 
 /**
  * Provides scenery interoperability for membrane channels on the membrane, even though they are rendered in the canvas.
@@ -19,9 +19,9 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class MembraneProteinInteractionNode extends Rectangle {
-  public constructor( model: MembraneChannelsModel, public readonly modelX: number, modelViewTransform: ModelViewTransform2 ) {
+  public constructor( model: MembraneChannelsModel, public readonly targetKey: TargetKey, modelViewTransform: ModelViewTransform2 ) {
     super( 0, 0, 60, 80, 15, 10, {
-      center: modelViewTransform.modelToViewXY( modelX, 0 ),
+      center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getPositionForTargetKey( targetKey ), 0 ),
 
       // TODO: Turn off these debugging display properties
       stroke: 'blue',
@@ -37,7 +37,7 @@ export default class MembraneProteinInteractionNode extends Rectangle {
     } );
 
     model.targetChangedEmitter.addListener( () => {
-      this.focusable = model.isTargetFilled( modelX );
+      this.focusable = model.isTargetFilled( targetKey );
       this.pickable = this.focusable;
     } );
 
@@ -49,9 +49,9 @@ export default class MembraneProteinInteractionNode extends Rectangle {
       fire: () => {
 
         const m = model.getLeftmostEmptyTarget();
-        if ( m !== undefined ) {
-          model.setTarget( m, model.getTarget( modelX ) );
-          model.setTarget( modelX, null );
+        if ( m !== null ) {
+          model.setTarget( m, model.getTarget( targetKey ) );
+          model.setTarget( targetKey, null );
 
           model.targetChangedEmitter.emit();
         }
