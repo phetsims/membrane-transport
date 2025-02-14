@@ -18,7 +18,7 @@ import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
-import getParticleNode from './solutes/getParticleNode.js';
+import getParticleNode from './particles/getParticleNode.js';
 
 /**
  * In the top left, show radio buttons to select a Solute which can be added to the simulation.

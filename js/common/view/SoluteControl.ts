@@ -17,7 +17,7 @@ import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js'
 import { MAX_SOLUTE_COUNT } from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
-import getParticleNode from './solutes/getParticleNode.js';
+import getParticleNode from './particles/getParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & NodeOptions;

@@ -24,7 +24,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
-import getParticleNode from './solutes/getParticleNode.js';
+import getParticleNode from './particles/getParticleNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 100;

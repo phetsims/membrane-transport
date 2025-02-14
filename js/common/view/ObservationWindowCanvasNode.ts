@@ -24,7 +24,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import Phospholipid from './Phospholipid.js';
 import { getInterpolatedPathSodiumVoltageGatedChannelBounds, getInterpolatedPathSodiumVoltageGatedChannelNode } from './channels/SodiumVoltageGatedChannelNode.js';
-import getParticleNode from './solutes/getParticleNode.js';
+import getParticleNode from './particles/getParticleNode.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
 

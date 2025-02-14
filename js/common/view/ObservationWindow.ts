@@ -17,8 +17,8 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
-import LigandANode from './solutes/LigandANode.js';
-import LigandBNode from './solutes/LigandBNode.js';
+import LigandANode from './particles/LigandANode.js';
+import LigandBNode from './particles/LigandBNode.js';
 import TargetZoneNode from './TargetZoneNode.js';
 
 /**
