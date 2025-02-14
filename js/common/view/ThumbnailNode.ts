@@ -7,7 +7,8 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../membraneChannels.js';
 
 /**
- *
+ * ThumbnailNode shows a small rectangular view on macroscopic cell shape, showing that the ObservationWindow is a zoomed-
+ * in view of the cell.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -30,12 +31,6 @@ export default class ThumbnailNode extends Node {
     const lineOptions = {
       stroke: 'black',
       lineWidth: 1
-
-      // TODO: Fade the line at all?
-      // stroke: new LinearGradient( rectangle.left, rectangle.top, observationWindowBounds.left, observationWindowBounds.top ).addColorStop( 0, 'black' ).addColorStop( 1, new Color( 0, 0, 0, 0.2 ) )
-
-      // TODO: Dash at all? It looks like a strikethrough on the Add solute outer button
-      // lineDash: [ 10,10 ]
     };
     this.addChild( new Line( rectangle.left, rectangle.top, observationWindowBounds.left, observationWindowBounds.top, lineOptions ) );
     this.addChild( new Line( rectangle.right, rectangle.top, observationWindowBounds.right, observationWindowBounds.top, lineOptions ) );

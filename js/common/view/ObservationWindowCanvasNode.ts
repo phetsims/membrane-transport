@@ -224,11 +224,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, MembraneChannelsModel.getPositionForTargetKey( targetKey ) );
       }
       else if ( target === 'sodiumIonVoltageGatedChannel' ) {
-        // TODO: Bounds and fix positioning, use the modelViewTransform, draw more parts of the shape
-
+        // TODO: Bounds and fix positioning, use the modelViewTransform, draw more parts of the shape. See the slack channel for recommendations how to render in scenery and canvas.
+        // TODO: Check performance on iPad and chromebook
         const t = Math.sin( Date.now() / 1000 * 3 ) * 0.5 + 0.5;
 
-        // TODO: Check performance on iPad and chromebook
         const m = getInterpolatedPathSodiumVoltageGatedChannelNode( t );
 
         const myBounds = getInterpolatedPathSodiumVoltageGatedChannelBounds();

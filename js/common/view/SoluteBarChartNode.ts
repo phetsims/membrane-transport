@@ -44,8 +44,7 @@ export default class SoluteBarChartNode extends Node {
     const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
 
     // If time passes, the flux will change.
-    // TODO: This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive
-    //    the description?
+    // TODO: This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive the description?
     // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
 
     // TODO: Consider creating a utility function for thresholding.

@@ -13,7 +13,7 @@ import MembraneChannelsModel, { TargetKey } from '../model/MembraneChannelsModel
 export default class TargetZoneNode extends Rectangle {
   public constructor( public readonly targetKey: TargetKey, modelViewTransform: ModelViewTransform2 ) {
 
-    // TODO: Model bounds? Do proteins have different sizes?
+    // TODO: Model bounds? We decided proteins will have the same model width footprint, but that should be factored out.
     super( 0, 0, 60, 80, 15, 10, {
       center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getPositionForTargetKey( targetKey ), 0 ),
       stroke: 'blue',
