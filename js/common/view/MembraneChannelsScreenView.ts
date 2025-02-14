@@ -28,7 +28,7 @@ import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsMod
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
-import DraggableChannelNode from './DraggableChannelNode.js';
+import ChannelDragNode from './ChannelDragNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -235,7 +235,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const viewPoint = this.globalToLocalPoint( event.pointer.point );
 
-    const membraneChannelNode = new DraggableChannelNode(
+    const membraneChannelNode = new ChannelDragNode(
       this.model, this.observationWindow, this.screenViewModelViewTransform,
       this.screenViewModelViewTransform.viewToModelPosition( viewPoint ), this.visibleBoundsProperty, homes,
       type

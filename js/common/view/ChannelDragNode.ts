@@ -26,7 +26,7 @@ import ObservationWindow from './ObservationWindow.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export default class DraggableChannelNode extends Node {
+export default class ChannelDragNode extends Node {
   private readonly dragListener: DragListener;
 
   public constructor(
@@ -146,4 +146,4 @@ export default class DraggableChannelNode extends Node {
   }
 }
 
-membraneChannels.register( 'DraggableChannelNode', DraggableChannelNode );
+membraneChannels.register( 'ChannelDragNode', ChannelDragNode );
