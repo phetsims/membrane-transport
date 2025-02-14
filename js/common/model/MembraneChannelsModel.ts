@@ -254,46 +254,49 @@ export default class MembraneChannelsModel extends PhetioObject {
 
       this.time += dt;
 
-      // capture the initial y value of each solute. This is the preferable alternative to having to remember to check
-      // in each place a solute's y value is changed.
-      const soluteInitialYValues = new Map<Particle<SoluteType>, number>();
-      this.solutes.forEach( solute => soluteInitialYValues.set( solute, solute.position.y ) );
+      // capture the initial y value of each solute (instead of tracking each time a solute's y value is changed.)
+      const soluteInitialYValues = new Map( this.solutes.map( solute => [ solute, solute.position.y ] ) );
 
       this.solutes.forEach( solute => solute.step( dt, this ) );
       this.ligands.forEach( ligand => ligand.step( dt, this ) );
 
-      // Prune any recentSoluteFlux that is more than 1000ms old.
-      this.fluxEntries.slice().forEach( fluxEntry => {
-        if ( this.time - fluxEntry.time > 1 ) {
-          this.fluxEntries.splice( this.fluxEntries.indexOf( fluxEntry ), 1 );
-        }
-      } );
-
-      // track which solutes changed sign of y value. Do this after pruning, to speed up the pruning slightly
-      this.solutes.forEach( solute => {
-        if ( soluteInitialYValues.has( solute ) &&
-             soluteInitialYValues.get( solute )! * solute.position.y < 0 ) {
-          this.fluxEntries.push( {
-            soluteType: solute.type,
-            time: this.time,
-            direction: solute.position.y < 0 ? 'inward' : 'outward'
-          } );
-        }
-      } );
-
-      const fluxSmoothingAlpha = dt / ( fluxSmoothingTimeConstant + dt );
-
-      getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
-
-        const recentFlux = this.fluxEntries.filter( fluxEntry => fluxEntry.soluteType === soluteType ).reduce( ( sum, fluxEntry ) => {
-          return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
-        }, 0 );
-
-        this.soluteTypeFlux[ soluteType ] = fluxSmoothingAlpha * recentFlux + ( 1 - fluxSmoothingAlpha ) * this.soluteTypeFlux[ soluteType ];
-      } );
+      this.stepFlux( dt, soluteInitialYValues );
     }
 
     this.updateSoluteCounts();
+  }
+
+  private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {
+
+    // Prune any recentSoluteFlux that is more than 1000ms old.
+    this.fluxEntries.slice().forEach( fluxEntry => {
+      if ( this.time - fluxEntry.time > 1 ) {
+        this.fluxEntries.splice( this.fluxEntries.indexOf( fluxEntry ), 1 );
+      }
+    } );
+
+    // track which solutes changed sign of y value. Do this after pruning, to speed up the pruning slightly
+    this.solutes.forEach( solute => {
+      if ( soluteInitialYValues.has( solute ) &&
+           soluteInitialYValues.get( solute )! * solute.position.y < 0 ) {
+        this.fluxEntries.push( {
+          soluteType: solute.type,
+          time: this.time,
+          direction: solute.position.y < 0 ? 'inward' : 'outward'
+        } );
+      }
+    } );
+
+    const fluxSmoothingAlpha = dt / ( fluxSmoothingTimeConstant + dt );
+
+    getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
+
+      const recentFlux = this.fluxEntries.filter( fluxEntry => fluxEntry.soluteType === soluteType ).reduce( ( sum, fluxEntry ) => {
+        return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
+      }, 0 );
+
+      this.soluteTypeFlux[ soluteType ] = fluxSmoothingAlpha * recentFlux + ( 1 - fluxSmoothingAlpha ) * this.soluteTypeFlux[ soluteType ];
+    } );
   }
 
   /**
