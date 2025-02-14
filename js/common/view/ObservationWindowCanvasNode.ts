@@ -213,8 +213,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   }
 
   private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
-    this.model.targets.forEach( ( isTargeted, x ) => {
-      const target = this.model.targets.get( x );
+    Array.from( this.model.getTargetKeys() ).forEach( x => {
+      const target = this.model.getTarget( x );
       if ( target === 'sodiumIonLeakageChannel' || target === 'potassiumIonLeakageChannel' ) {
         ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, x );
       }

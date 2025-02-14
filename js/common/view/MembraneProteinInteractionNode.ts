@@ -37,7 +37,7 @@ export default class MembraneProteinInteractionNode extends Rectangle {
     } );
 
     model.targetChangedEmitter.addListener( () => {
-      this.focusable = model.targets.get( modelX ) !== null;
+      this.focusable = model.isTargetFilled( modelX );
       this.pickable = this.focusable;
     } );
 
@@ -50,8 +50,8 @@ export default class MembraneProteinInteractionNode extends Rectangle {
 
         const m = model.getLeftmostEmptyTarget();
         if ( m !== undefined ) {
-          model.targets.set( m, model.targets.get( modelX ) || null );
-          model.targets.set( modelX, null );
+          model.setTarget( m, model.getTarget( modelX ) );
+          model.setTarget( modelX, null );
 
           model.targetChangedEmitter.emit();
         }

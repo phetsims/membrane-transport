@@ -92,7 +92,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   // TODO: Better name for these targets?
-  public readonly targets = new Map<number, ChannelType | null>( TARGET_VALUES.map( targetZone => [ targetZone, null ] ) );
+  // TODO: Better named keys, don't use floating point
+  private readonly targets = new Map<number, ChannelType | null>( TARGET_VALUES.map( targetZone => [ targetZone, null ] ) );
   public readonly targetChangedEmitter = new Emitter();
 
   public constructor(
@@ -382,6 +383,22 @@ export default class MembraneChannelsModel extends PhetioObject {
       model.updateSoluteCounts();
     }
   } );
+
+  public isTargetFilled( modelX: number ): boolean {
+    return this.targets.get( modelX ) !== null;
+  }
+
+  public setTarget( modelX: number, type: ChannelType | null ): void {
+    this.targets.set( modelX, type );
+  }
+
+  public getTarget( modelX: number ): ChannelType | null {
+    return this.targets.get( modelX ) || null;
+  }
+
+  public getTargetKeys(): Iterable<number> {
+    return this.targets.keys();
+  }
 }
 
 membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );
