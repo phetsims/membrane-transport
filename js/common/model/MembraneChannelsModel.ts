@@ -349,7 +349,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     return [ ...this.targets.keys() ].some( targetKey => Math.abs( x - MembraneChannelsModel.getPositionForTargetKey( targetKey ) ) < CHANNEL_WIDTH && this.targets.get( targetKey ) === type );
   }
 
-  public getNearestChannelPosition( x: number ): TargetKey | null {
+  public getNearestChannel( x: number ): TargetKey | null {
     return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( MembraneChannelsModel.getPositionForTargetKey( a ) - x ) - Math.abs( MembraneChannelsModel.getPositionForTargetKey( b ) - x ) )[ 0 ];
   }
 

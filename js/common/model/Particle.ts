@@ -123,11 +123,12 @@ export default class Particle<T extends ParticleType> {
       // Mode where solute doesn’t move, or does something special
     }
     else if ( this.mode === 'moveToCenterOfNearestChannel' ) {
+
       // Mode where solute moves toward the center of the nearest channel
-      const nearestChannelPosition = model.getNearestChannelPosition( this.position.x );
-      if ( typeof nearestChannelPosition === 'number' ) {
+      const nearestTargetKey = model.getNearestChannel( this.position.x );
+      if ( nearestTargetKey !== null ) {
         const currentPositionX = this.position.x;
-        const targetPositionX = nearestChannelPosition;
+        const targetPositionX = MembraneChannelsModel.getPositionForTargetKey( nearestTargetKey );
 
         // move in the x direction toward the target
         const maxStepSize = typicalSpeed * dt;
