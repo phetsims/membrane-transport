@@ -19,9 +19,9 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
-import LeakageChannelNode from './LeakageChannelNode.js';
+import LeakageChannelNode from './channels/LeakageChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
-import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
+import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelNode.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -79,6 +79,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
 
       const createLeakageAccordionBox = ( () => {
+
+        // TODO: Factor out the tool node
         const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumIonLeakageChannel' );
         sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumIonLeakageChannel', [ sodiumIonLeakageNode, this ] ) ) );
 

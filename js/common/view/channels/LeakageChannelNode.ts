@@ -1,12 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CanvasNode, { CanvasNodeOptions } from '../../../../scenery/js/nodes/CanvasNode.js';
-import membraneChannels from '../../membraneChannels.js';
-import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
+import Bounds2 from '../../../../../dot/js/Bounds2.js';
+import Vector2 from '../../../../../dot/js/Vector2.js';
+import { combineOptions } from '../../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../../phetcommon/js/view/ModelViewTransform2.js';
+import CanvasNode, { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js';
+import membraneChannels from '../../../membraneChannels.js';
+import ObservationWindowCanvasNode from '../ObservationWindowCanvasNode.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots

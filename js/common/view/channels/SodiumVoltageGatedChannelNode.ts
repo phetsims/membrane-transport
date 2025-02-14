@@ -1,11 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Shape from '../../../../kite/js/Shape.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Path from '../../../../scenery/js/nodes/Path.js';
-import membraneChannels from '../../membraneChannels.js';
+import Bounds2 from '../../../../../dot/js/Bounds2.js';
+import Shape from '../../../../../kite/js/Shape.js';
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../../scenery/js/nodes/Path.js';
+import membraneChannels from '../../../membraneChannels.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots

@@ -14,9 +14,9 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
-import LeakageChannelNode from './LeakageChannelNode.js';
+import LeakageChannelNode from './channels/LeakageChannelNode.js';
 import ObservationWindow from './ObservationWindow.js';
-import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
+import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelNode.js';
 
 /**
  * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific slots
