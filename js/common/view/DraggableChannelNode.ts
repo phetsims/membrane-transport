@@ -14,21 +14,21 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
-import LeakageChannelNode from './channels/LeakageChannelNode.js';
+import getChannelNode from './channels/getChannelNode.js';
 import ObservationWindow from './ObservationWindow.js';
-import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelNode.js';
 
 /**
- * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific slots
+ * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific targets
  * in the membrane.
+ *
+ * This Node is transient and only displayed while dragging. Therefore, it does not need to be phet-io instrumented.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export default class MembraneChannelNode extends Node {
+export default class DraggableChannelNode extends Node {
   private readonly dragListener: DragListener;
 
-  // TODO: Preallocate to make phet-io state trivial? Do we really want to instrument these drag listeners or emitters? Why not a broad channel emitter when something is dropped?
   public constructor(
     model: MembraneChannelsModel,
     observationWindow: ObservationWindow,
@@ -138,8 +138,7 @@ export default class MembraneChannelNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    const node = type === 'sodiumIonVoltageGatedChannel' ? new SodiumVoltageGatedChannelNode() : new LeakageChannelNode( type );
-    this.addChild( node );
+    this.addChild( getChannelNode( type ) );
   }
 
   public press( event: PressListenerEvent ): void {
@@ -147,4 +146,4 @@ export default class MembraneChannelNode extends Node {
   }
 }
 
-membraneChannels.register( 'MembraneChannelNode', MembraneChannelNode );
+membraneChannels.register( 'DraggableChannelNode', DraggableChannelNode );
