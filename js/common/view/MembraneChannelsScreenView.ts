@@ -213,7 +213,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     // pdom order
     // TODO (design:a11y) - Identify which components go in each section.
-    // TODO: Should we sneak the observation window after the accordion box but before the voltage panel?
     this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, rightSideVBox, this.observationWindow ];
     this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
 

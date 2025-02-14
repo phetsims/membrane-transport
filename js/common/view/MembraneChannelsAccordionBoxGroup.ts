@@ -68,7 +68,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       return {
         click: () => {
           const emptyTarget = model.getLeftmostEmptyTarget();
-          // TODO: response if there is no available spot?
+          // TODO: description response if there is no available spot?
           if ( emptyTarget !== null ) {
             model.setTarget( emptyTarget, channelType );
           }

@@ -40,11 +40,16 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
     } );
 
-    const phospholipids: Phospholipid[] = [];
-    // TODO: Make sure not too many tails, you can see they go out of bounds if you remove the clip area
-    for ( let i = -40; i <= 40; i++ ) {
+    // Compute the exact number of phospholipids needed to fill the screen
+    const A = Phospholipid.headRadius * 2;
+    const left = -MembraneChannelsConstants.MODEL_WIDTH / 2 / A;
+    const right = MembraneChannelsConstants.MODEL_WIDTH / 2 / A;
+    const iMin = Number.isInteger( left ) ? left - 1 : Math.floor( left );
+    const iMax = Number.isInteger( right ) ? right + 1 : Math.ceil( right );
 
-      const anchorX = i * Phospholipid.headRadius * 2;
+    const phospholipids: Phospholipid[] = [];
+    for ( let i = iMin; i <= iMax; i++ ) {
+      const anchorX = i * A;
       phospholipids.push( new Phospholipid( 'inner', anchorX, modelViewTransform ) );
       phospholipids.push( new Phospholipid( 'outer', anchorX, modelViewTransform ) );
     }
