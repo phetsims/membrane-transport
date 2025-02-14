@@ -52,10 +52,11 @@ export default class MembraneChannelNode extends Node {
     } );
 
     const getClosestOverlappingTarget = () => {
-      // Check the observation window to find the closest rectangle we overlap
+
+      // Check the observation window to find the closest available target we overlap
       // If any rectangle overlaps, change its stroke color to red, Change all others back to black
       const overlappingTargets = observationWindow.targetZoneNodes.filter( targetZoneNode => {
-        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds );
+        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds ) && model.targets.get( targetZoneNode.modelX ) === null;
       } );
 
       const closest = _.sortBy( overlappingTargets, targetZoneNode => {

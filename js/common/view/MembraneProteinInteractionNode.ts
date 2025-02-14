@@ -42,13 +42,11 @@ export default class MembraneProteinInteractionNode extends Rectangle {
     } );
 
     // pdom - When the "down" arrow is pressed on the group of tabs, move focus to the selected panel
+    // TODO: Move this node or focus a different node? Does it matter?
+    // TODO: There is discussion about switching to the GroupSortInteraction
     this.addInputListener( new KeyboardListener( {
       keys: [ 'arrowRight' ],
       fire: () => {
-
-        // TODO: Move this node or focus a different node? Does it matter?
-        console.log( 'right' );
-
 
         const m = model.getLeftmostEmptyTarget();
         if ( m !== undefined ) {
