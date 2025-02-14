@@ -3,14 +3,11 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
-import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
-import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -18,10 +15,9 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
-import LeakageChannelNode from './channels/LeakageChannelNode.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
-import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelNode.js';
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -39,7 +35,7 @@ import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelN
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, membraneChannelsScreenView: MembraneChannelsScreenView ) {
+  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, view: MembraneChannelsScreenView ) {
 
     const fontSize = 16;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -50,56 +46,19 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       fill: 'white'
     };
 
-    const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
-    const vboxOptions: VBoxOptions = {
-      spacing: 3,
-      tagName: 'button',
-      descriptionTagName: 'p',
-      descriptionContent: 'Press enter to add the protein to the membrane' // TODO: i18n
-    };
-
     const contentAlignGroup = new AlignGroup();
     const accordionBoxes: AccordionBox[] = [];
-
-    // Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
-    // However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
-    // user can add several channels. BF 2025/02/12
-    const clickToAdd = ( channelType: ChannelType ) => {
-      return {
-        click: () => {
-          const emptyTarget = model.getLeftmostEmptyTarget();
-          // TODO: description response if there is no available spot?
-          if ( emptyTarget !== null ) {
-            model.setTarget( emptyTarget, channelType );
-          }
-        }
-      };
-    };
 
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
 
       const createLeakageAccordionBox = ( () => {
 
-        // TODO: Factor out the tool node
-        const sodiumIonLeakageNode = new LeakageChannelNode( 'sodiumIonLeakageChannel' );
-        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumIonLeakageChannel', [ sodiumIonLeakageNode, this ] ) ) );
-
-        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumIonLeakageChannel' );
-        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumIonLeakageChannel', [ potassiumIonLeakageNode, this ] ) ) );
-
-        const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
-          children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
-        } ) );
-        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumIonLeakageChannel' ) );
-
-        const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
-          children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
-        } ) );
-        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumIonLeakageChannel' ) );
-
         const leakageContent = new HBox( {
           spacing: 10,
-          children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
+          children: [
+            new ChannelToolNode( 'sodiumIonLeakageChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, model, view ),
+            new ChannelToolNode( 'potassiumIonLeakageChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, model, view )
+          ]
         } );
 
         return new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
@@ -110,25 +69,11 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       } );
 
       const createVoltageGatedAccordionBox = ( () => {
-        const sodiumIonLeakageNode = new SodiumVoltageGatedChannelNode();
-        sodiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'sodiumIonVoltageGatedChannel', [ sodiumIonLeakageNode, this ] ) ) );
-
-        const potassiumIonLeakageNode = new LeakageChannelNode( 'potassiumIonLeakageChannel' );
-        potassiumIonLeakageNode.addInputListener( DragListener.createForwardingListener( event => membraneChannelsScreenView.createMembraneChannelNode( event, 'potassiumIonLeakageChannel', [ potassiumIonLeakageNode, this ] ) ) );
-
-        const sodiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
-          children: [ sodiumIonLeakageNode, new RichText( MembraneChannelsStrings.sodiumIonNaPlusStringProperty, richTextOptions ) ]
-        } ) );
-        sodiumLeakageToolNode.addInputListener( clickToAdd( 'sodiumIonLeakageChannel' ) );
-
-        const potassiumLeakageToolNode = new VBox( combineOptions<VBoxOptions>( {}, vboxOptions, {
-          children: [ potassiumIonLeakageNode, new RichText( MembraneChannelsStrings.potassiumIonKPlusStringProperty, richTextOptions ) ]
-        } ) );
-        potassiumLeakageToolNode.addInputListener( clickToAdd( 'potassiumIonLeakageChannel' ) );
-
         const leakageContent = new HBox( {
           spacing: 10,
-          children: [ sodiumLeakageToolNode, potassiumLeakageToolNode ]
+          children: [
+            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, model, view ),
+            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, model, view ) ]
         } );
 
         return new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
