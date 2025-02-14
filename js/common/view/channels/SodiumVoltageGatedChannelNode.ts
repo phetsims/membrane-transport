@@ -1,6 +1,5 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import Shape from '../../../../../kite/js/Shape.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
@@ -59,12 +58,12 @@ export default class SodiumVoltageGatedChannelNode extends Node {
       } ) );
     } );
   }
+
+  public setInterpolation( amount: number ): void {
+    this.children.forEach( ( child, index ) => {
+      ( child as Path ).shape = new Shape( interpolates[ index ]( amount ) );
+    } );
+  }
 }
-
-const shape = new Shape().moveTo( 0, 0 ).lineTo( 10, 10 ); // To get the bounds
-
-export const getInterpolatedPathSodiumVoltageGatedChannelBounds = (): Bounds2 => shape.getBounds();
-
-export const getInterpolatedPathSodiumVoltageGatedChannelNode = ( amount: number ): string[] => interpolates.map( interp => interp( amount ) );
 
 membraneChannels.register( 'SodiumVoltageGatedChannelNode', SodiumVoltageGatedChannelNode );

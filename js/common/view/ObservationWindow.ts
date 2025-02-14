@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -17,6 +18,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
+import ObservationWindowChannelLayer from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
 import LigandBNode from './particles/LigandBNode.js';
 import TargetZoneNode from './TargetZoneNode.js';
@@ -29,11 +31,14 @@ import TargetZoneNode from './TargetZoneNode.js';
  */
 
 export default class ObservationWindow extends Node {
-  private readonly observationWindowCanvasNode: ObservationWindowCanvasNode;
 
   private readonly ligandNodes: LigandNode[] = [];
   public readonly targetZoneNodes: TargetZoneNode[];
   public readonly membraneProteinInteractionNodes: MembraneProteinInteractionNode[];
+
+  private readonly stepEmitter = new Emitter<[ number ]>( {
+    parameters: [ { valueType: 'number' } ]
+  } );
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
@@ -53,8 +58,13 @@ export default class ObservationWindow extends Node {
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
-    this.observationWindowCanvasNode = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds );
-    clipNode.addChild( this.observationWindowCanvasNode );
+    const backCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'back' );
+    clipNode.addChild( backCanvas );
+    this.stepEmitter.addListener( dt => backCanvas.step( dt ) );
+
+    const channelLayer = new ObservationWindowChannelLayer( model, modelViewTransform );
+    this.stepEmitter.addListener( dt => channelLayer.step( dt ) );
+    clipNode.addChild( channelLayer );
 
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
@@ -89,11 +99,15 @@ export default class ObservationWindow extends Node {
 
     this.targetZoneNodes = Array.from( model.getTargetKeys() ).map( targetKey => new TargetZoneNode( targetKey, modelViewTransform ) );
     this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );
+
+    // Draw the particles in front
+    const frontCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'front' );
+    clipNode.addChild( frontCanvas );
+    this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
   }
 
   public step( dt: number ): void {
-    this.observationWindowCanvasNode.step( dt );
-    this.observationWindowCanvasNode.invalidatePaint();
+    this.stepEmitter.emit( dt );
 
     this.ligandNodes.forEach( ligandNode => ligandNode.step() );
   }

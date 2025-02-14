@@ -22,16 +22,17 @@ import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
-import Phospholipid from './Phospholipid.js';
-import { getInterpolatedPathSodiumVoltageGatedChannelBounds, getInterpolatedPathSodiumVoltageGatedChannelNode } from './channels/SodiumVoltageGatedChannelNode.js';
 import getParticleNode from './particles/getParticleNode.js';
+import Phospholipid from './Phospholipid.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement | HTMLCanvasElement>();
   private readonly phospholipids: Phospholipid[] = [];
 
-  public constructor( private readonly model: MembraneChannelsModel, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor( private readonly model: MembraneChannelsModel, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2,
+                      // TODO: We haven't decided on the layering for this sim, so keep the code in this file until we know if performance considerations dictate a certain strategy
+                      private readonly layer: 'back' | 'front' ) {
     super( {
       canvasBounds: canvasBounds
     } );
@@ -78,13 +79,14 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   public step( dt: number ): void {
 
-    if ( this.model.isPlayingProperty.value && animateLipidsProperty.value ) {
+    if ( this.model.isPlayingProperty.value && animateLipidsProperty.value && this.layer === 'back' ) {
 
       // Update the phospholipids
       for ( let i = 0; i < this.phospholipids.length; i++ ) {
         this.phospholipids[ i ].step( dt );
       }
     }
+    this.invalidatePaint();
   }
 
   private drawSolutes( context: CanvasRenderingContext2D ): void {
@@ -217,91 +219,49 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.stroke();
   }
 
-  private drawMembraneChannels( context: CanvasRenderingContext2D ): void {
-    Array.from( this.model.getTargetKeys() ).forEach( targetKey => {
-      const target = this.model.getTarget( targetKey );
-      if ( target === 'sodiumIonLeakageChannel' || target === 'potassiumIonLeakageChannel' ) {
-        ObservationWindowCanvasNode.drawLeakageChannel( context, target, this.modelViewTransform, MembraneChannelsModel.getPositionForTargetKey( targetKey ) );
-      }
-      else if ( target === 'sodiumIonVoltageGatedChannel' ) {
-        // TODO: Bounds and fix positioning, use the modelViewTransform, draw more parts of the shape. See the slack channel for recommendations how to render in scenery and canvas.
-        // TODO: Check performance on iPad and chromebook
-        const t = Math.sin( Date.now() / 1000 * 3 ) * 0.5 + 0.5;
-
-        const m = getInterpolatedPathSodiumVoltageGatedChannelNode( t );
-
-        const myBounds = getInterpolatedPathSodiumVoltageGatedChannelBounds();
-
-        context.save();
-
-        context.translate( this.modelViewTransform.modelToViewX( MembraneChannelsModel.getPositionForTargetKey( targetKey ) ), this.modelViewTransform.modelToViewY( 0 ) );
-        context.scale( 5, 5 );
-        context.translate( -myBounds.width / 2 - 5, -myBounds.height / 2 - 2 ); // TODO: What's up with these offsets?
-
-        context.lineWidth = 0.7;
-        context.strokeStyle = 'black';
-        context.fillStyle = 'white';
-
-        for ( let i = 0; i < m.length; i++ ) {
-          const path = new Path2D( m[ i ] );
-
-          if ( i === 4 ) {
-            context.lineWidth = 0.5;
-          }
-          context.stroke( path );
-          if ( i !== 4 ) {
-            context.fill( path );
-          }
-
-          if ( i === 4 ) {
-            context.lineWidth = 1;
-          }
-        }
-
-        context.restore();
-      }
-    } );
-  }
-
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
-    // Draw the background: upper half for outside cell, lower half for inside cell.
-    context.fillStyle = MembraneChannelsColors.outsideCellColorProperty.value.toCSS();
-    context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
-    context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
-    context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+    if ( this.layer === 'back' ) {
+      // Draw the background: upper half for outside cell, lower half for inside cell.
+      context.fillStyle = MembraneChannelsColors.outsideCellColorProperty.value.toCSS();
+      context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+      context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
+      context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
-    if ( this.model.isShowingMembranePotentialLabelsProperty.value ) {
-      this.drawCharges( context );
+      if ( this.model.isShowingMembranePotentialLabelsProperty.value ) {
+        this.drawCharges( context );
+      }
+
+      Phospholipid.initTails( context );
+      for ( let i = 0; i < this.phospholipids.length; i++ ) {
+        this.phospholipids[ i ].drawTails( context );
+      }
+
+      Phospholipid.initHeads( context );
+      for ( let i = 0; i < this.phospholipids.length; i++ ) {
+        this.phospholipids[ i ].drawHead( context );
+      }
     }
 
-    Phospholipid.initTails( context );
-    for ( let i = 0; i < this.phospholipids.length; i++ ) {
-      this.phospholipids[ i ].drawTails( context );
-    }
+    if ( this.layer === 'front' ) {
 
-    Phospholipid.initHeads( context );
-    for ( let i = 0; i < this.phospholipids.length; i++ ) {
-      this.phospholipids[ i ].drawHead( context );
-    }
 
-    this.drawMembraneChannels( context );
+      this.drawSolutes( context );
 
-    this.drawSolutes( context );
+      // --- Debugging code to check transforms and bounds ---
+      if ( phet.chipper.queryParameters.dev ) {
+        this.drawCrosshairsAt( context, new Vector2( 0, 0 ) );
+        this.drawCrosshairsAt( context, new Vector2( 0, 10 ) );
 
-    // --- Debugging code to check transforms and bounds ---
-    if ( phet.chipper.queryParameters.dev ) {
-      this.drawCrosshairsAt( context, new Vector2( 0, 0 ) );
-      this.drawCrosshairsAt( context, new Vector2( 0, 10 ) );
+        context.strokeStyle = 'red';
+        context.lineWidth = 5;
 
-      context.strokeStyle = 'red';
-      context.lineWidth = 5;
+        const outsideBounds = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
+        this.strokeRect( context, outsideBounds.minX, outsideBounds.minY, outsideBounds.width, outsideBounds.height );
 
-      const outsideBounds = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
-      this.strokeRect( context, outsideBounds.minX, outsideBounds.minY, outsideBounds.width, outsideBounds.height );
-
-      const insideBounds = MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
-      this.strokeRect( context, insideBounds.minX, insideBounds.minY, insideBounds.width, insideBounds.height );
+        const insideBounds = MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+        this.strokeRect( context, insideBounds.minX, insideBounds.minY, insideBounds.width, insideBounds.height );
+      }
     }
   }
 
