@@ -147,6 +147,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       tandem: providedOptions.tandem.createTandem( 'areLigandsAddedProperty' ),
       phetioFeatured: true
     } );
+    this.resetEmitter.addListener( () => this.areLigandsAddedProperty.reset() );
 
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
@@ -156,7 +157,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     // Ligands are added and removed in response to the areLigandsAddedProperty so that clients can add/remove them
     // by controlling the Property.
-    this.areLigandsAddedProperty.lazyLink( areLigandsAdded => {
+    this.areLigandsAddedProperty.link( areLigandsAdded => {
       if ( areLigandsAdded ) {
         this.addLigands();
       }
