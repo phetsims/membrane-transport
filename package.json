@@ -14,7 +14,8 @@
   "scripts": {
     "transpile": "grunt output-js-project --live",
     "serve-dev": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=80",
-    "dev": "concurrently \"npm run transpile\" \"npm run serve-dev\""
+    "dev": "concurrently \"npm run transpile\" \"npm run serve-dev\"",
+    "dev-8081": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081"
   },
   "phet": {
     "requirejsNamespace": "MEMBRANE_CHANNELS",
