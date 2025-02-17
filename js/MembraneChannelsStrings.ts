@@ -21,6 +21,7 @@ type StringsType = {
     'activeTransportStringProperty': LocalizedStringProperty;
     'playgroundStringProperty': LocalizedStringProperty;
   };
+  'solutesStringProperty': LocalizedStringProperty;
   'oxygenStringProperty': LocalizedStringProperty;
   'carbonDioxideStringProperty': LocalizedStringProperty;
   'sodiumIonStringProperty': LocalizedStringProperty;
@@ -29,20 +30,19 @@ type StringsType = {
   'atpStringProperty': LocalizedStringProperty;
   'outsideStringProperty': LocalizedStringProperty;
   'insideStringProperty': LocalizedStringProperty;
-  'solutesStringProperty': LocalizedStringProperty;
   'membraneProteinsStringProperty': LocalizedStringProperty;
   'membranePotentialLabelsStringProperty': LocalizedStringProperty;
-  'membraneVoltagePotentialmVStringProperty': LocalizedStringProperty;
-  'animateLipidsStringProperty': LocalizedStringProperty;
-  'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
-  'addLigandsStringProperty': LocalizedStringProperty;
-  'removeLigandsStringProperty': LocalizedStringProperty;
-  'leakageChannelsStringProperty': LocalizedStringProperty;
   'voltageGatedChannelsStringProperty': LocalizedStringProperty;
   'ligandGatedChannelsStringProperty': LocalizedStringProperty;
   'activeTransportersStringProperty': LocalizedStringProperty;
+  'leakageChannelsStringProperty': LocalizedStringProperty;
   'sodiumIonNaPlusStringProperty': LocalizedStringProperty;
   'potassiumIonKPlusStringProperty': LocalizedStringProperty;
+  'membraneVoltagePotentialmVStringProperty': LocalizedStringProperty;
+  'addLigandsStringProperty': LocalizedStringProperty;
+  'removeLigandsStringProperty': LocalizedStringProperty;
+  'animateLipidsStringProperty': LocalizedStringProperty;
+  'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;
