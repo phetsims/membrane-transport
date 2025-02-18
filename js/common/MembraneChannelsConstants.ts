@@ -18,7 +18,7 @@ const OBSERVATION_WINDOW_BOUNDS = new Bounds2( 0, 0, OBSERVATION_WINDOW_WIDTH, O
 
 // The full dimensions in model coordinates for the area that you can see in the observation window.
 const MODEL_WIDTH = 200;
-const MODEL_HEIGHT = MODEL_WIDTH * OBSERVATION_WINDOW_HEIGHT / OBSERVATION_WINDOW_WIDTH;
+export const MODEL_HEIGHT = MODEL_WIDTH * OBSERVATION_WINDOW_HEIGHT / OBSERVATION_WINDOW_WIDTH;
 
 // A map of solute type to the aspect ratio of its artwork so that we can create bounds
 // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.

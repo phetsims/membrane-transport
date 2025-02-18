@@ -1,20 +1,26 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Range from '../../../../dot/js/Range.js';
 import Shape from '../../../../kite/js/Shape.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
+import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
+import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants, { LIGAND_COUNT, MODEL_HEIGHT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { TargetKey } from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -30,7 +36,7 @@ import TargetZoneNode from './TargetZoneNode.js';
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-export default class ObservationWindow extends Node {
+export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly ligandNodes: LigandNode[] = [];
   public readonly targetZoneNodes: TargetZoneNode[];
@@ -39,6 +45,7 @@ export default class ObservationWindow extends Node {
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
+  private readonly groupSortInteractionView: GroupSortInteractionView<IntentionalAny, Node>;
 
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
@@ -54,7 +61,10 @@ export default class ObservationWindow extends Node {
     } );
 
     super( {
-      children: [ clipNode, frameNode ]
+      children: [ clipNode, frameNode ],
+
+      // innerContent: 'div',
+      accessibleName: 'hello'
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
@@ -104,6 +114,58 @@ export default class ObservationWindow extends Node {
     const frontCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'front' );
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
+
+    const groupSelectModel = new GroupSelectModel<TargetKey>( {
+      getGroupItemValue: targetKey => targetKey
+    } );
+
+    this.groupSortInteractionView = new GroupSortInteractionView<TargetKey, Node>( groupSelectModel, this, {
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      getNextSelectedGroupItem: ( delta, selectedModel ) => {
+        console.log( 'getNextSelectedGroupItem' );
+        console.log( delta, selectedModel );
+        return model.getNextFilledTarget( delta, selectedModel );
+      },
+      onGrab: groupItem => {
+        console.log( `onGrab: ${groupItem}` );
+        // groupItem.isDraggingProperty.value = true;
+      },
+      onRelease: groupItem => {
+        console.log( `onRelease: ${groupItem}` );
+        // groupItem.isDraggingProperty.value = false;
+      },
+      sortGroupItem: ( selectedCardModel, newValue ) => {
+        console.log( 'sortGroupItem' );
+        // assert && assert( selectedCardModel.indexProperty.value !== null, 'need an index to be sorted' );
+        // const delta = newValue - selectedCardModel.indexProperty.value!;
+        // swapCards( this.getActiveCardNodesInOrder(), this.cardMap.get( selectedCardModel )!, delta );
+
+        // Move the selectedCard to the newValue
+        model.swapTargets( selectedCardModel, newValue as TargetKey );
+      },
+      onSort: () => {
+        console.log( 'onSort' );
+
+        // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
+        // if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
+        //   this.isSortingDataProperty.value = false;
+        // }
+      },
+      getGroupItemToSelect: () => {
+        return model.getLeftmostFilledTarget();
+      },
+      getNodeFromModelItem: model => {
+        console.log( 'getNodeFromModelItem' );
+        return this.targetZoneNodes[ model ];
+      },
+      // getHighlightNodeFromModelItem: cardModel => getNodeFromModelItem( cardModel )?.cardNode || null,
+      grabReleaseCueOptions: {
+        center: this.bounds.center.plusXY( 0, modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
+      },
+      sortingRangeProperty: new Property( new Range( 0, 10 ) )
+    } );
   }
 
   public step( dt: number ): void {

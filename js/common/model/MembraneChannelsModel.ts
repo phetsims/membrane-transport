@@ -406,6 +406,30 @@ export default class MembraneChannelsModel extends PhetioObject {
   public getTargetKeys(): Iterable<TargetKey> {
     return this.targets.keys();
   }
+
+  public getLeftmostFilledTarget(): TargetKey | null {
+    return [ ...this.targets.keys() ].find( target => this.targets.get( target ) ) || null;
+  }
+
+  public swapTargets( targetKey: TargetKey, newValue: TargetKey ): void {
+    const temp = this.targets.get( targetKey )!;
+    this.targets.set( targetKey, this.targets.get( newValue )! );
+    this.targets.set( newValue, temp );
+    this.targetChangedEmitter.emit();
+  }
+
+  public getNextFilledTarget( delta: number, selectedModel: TargetKey ): TargetKey | null {
+
+    // Find the next filled target, wrapping around
+    let nextKey = selectedModel;
+    for ( let i = 0; i < TARGET_COUNT; i++ ) {
+      nextKey = ( nextKey + delta + TARGET_COUNT ) % TARGET_COUNT as TargetKey;
+      if ( this.targets.get( nextKey ) ) {
+        return nextKey;
+      }
+    }
+    return null;
+  }
 }
 
 membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );
