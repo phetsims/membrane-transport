@@ -146,9 +146,6 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
       getNextSelectedGroupItem: ( delta, selectedModel ) => {
 
-        console.log( 'getNextSelectedGroupItem' );
-        console.log( delta, selectedModel );
-
         // look through the currentOrdering. For each item, ask the model if that slot is filled.
         // TODO: initially make it possible to select empty zones, then rewrite to skip to filled zones.
 
@@ -157,15 +154,14 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
         // get the next element out of the array, but without wrapping (clamp to start and end indices)
         const clampedProposedIndex = Math.max( 0, Math.min( currentOrdering.length - 1, proposedIndex ) );
-        console.log( 'clampedProposedIndex = ' + clampedProposedIndex );
         return currentOrdering[ clampedProposedIndex ];
       },
       onGrab: groupItem => {
-        console.log( `onGrab: ${groupItem.name}` );
+        // console.log( `onGrab: ${groupItem.name}` );
         // groupItem.isDraggingProperty.value = true;
       },
       onRelease: groupItem => {
-        console.log( `onRelease: ${groupItem.name}` );
+        // console.log( `onRelease: ${groupItem.name}` );
         // groupItem.isDraggingProperty.value = false;
       },
       sortGroupItem: ( selectedModel, newValue ) => {
@@ -177,8 +173,6 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
           newValue = currentOrdering.length - 1;
         }
 
-        console.log( 'sortGroupItem, newValue = ' + newValue );
-
         // change the order of currentOrdering so that the selectedModel is at the new index, swapping elements
         const index = currentOrdering.indexOf( selectedModel );
         const newIndex = newValue;
@@ -186,9 +180,14 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         currentOrdering[ index ] = currentOrdering[ newIndex ];
         currentOrdering[ newIndex ] = temp;
 
+        // Also, in the model, swap the contents of the corresponding slots by index
+        const a = model.getSlotContents( model.slots[ index ] );
+        const b = model.getSlotContents( model.slots[ newIndex ] );
+
+        model.setSlotContents( model.slots[ index ], b );
+        model.setSlotContents( model.slots[ newIndex ], a );
       },
       onSort: () => {
-        console.log( 'onSort' );
 
         // Adjust the positions to match the array
         currentOrdering.forEach( ( modelItem, index ) => {
