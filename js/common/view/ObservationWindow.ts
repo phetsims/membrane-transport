@@ -21,7 +21,7 @@ import MembraneChannelsConstants, { LIGAND_COUNT, MODEL_HEIGHT } from '../../com
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType, Slot } from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -140,6 +140,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     const currentOrdering = [ ...itemsToSort ];
 
+    let grabbedItem: ChannelType | null = null;
+    let grabbedFromSlot: Slot | null = null;
+
     const groupSelectModel = new GroupSelectModel<SortItem>( {
       getGroupItemValue: slot => currentOrdering.indexOf( slot )
     } );
@@ -161,12 +164,32 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         return currentOrdering[ clampedProposedIndex ];
       },
       onGrab: groupItem => {
-        // console.log( `onGrab: ${groupItem.name}` );
-        // groupItem.isDraggingProperty.value = true;
+
+        // Remove the item from the model
+        const index = currentOrdering.indexOf( groupItem );
+        const slot = model.slots[ index ];
+
+        grabbedItem = model.getSlotContents( slot );
+        grabbedFromSlot = slot;
+
+        model.setSlotContents( slot, null );
       },
       onRelease: groupItem => {
-        // console.log( `onRelease: ${groupItem.name}` );
-        // groupItem.isDraggingProperty.value = false;
+
+        // Add the item back to the model
+        const index = currentOrdering.indexOf( groupItem );
+
+        // Also, in the model, swap the contents of the corresponding slots by index
+        const destinationSlot = model.slots[ index ];
+        const sourceSlot = grabbedFromSlot!;
+
+        const swapWith = model.getSlotContents( destinationSlot );
+
+        model.setSlotContents( sourceSlot, swapWith );
+        model.setSlotContents( destinationSlot, grabbedItem );
+
+        grabbedItem = null;
+        grabbedFromSlot = null;
       },
       sortGroupItem: ( selectedModel, newValue ) => {
 
@@ -183,13 +206,6 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         const temp = currentOrdering[ index ];
         currentOrdering[ index ] = currentOrdering[ newIndex ];
         currentOrdering[ newIndex ] = temp;
-
-        // Also, in the model, swap the contents of the corresponding slots by index
-        const a = model.getSlotContents( model.slots[ index ] );
-        const b = model.getSlotContents( model.slots[ newIndex ] );
-
-        model.setSlotContents( model.slots[ index ], b );
-        model.setSlotContents( model.slots[ newIndex ], a );
       },
       onSort: () => {
 
