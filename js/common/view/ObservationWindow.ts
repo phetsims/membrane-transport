@@ -127,8 +127,10 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     class MySortableNode extends Path {
       public constructor( shape: Shape, public readonly slot: SortItem ) {
         super( shape, {
+
+          // TODO: eliminate debugging facets
           fill: 'blue',
-          opacity: 0.2
+          opacity: 0
         } );
       }
     }
@@ -142,6 +144,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       getGroupItemValue: slot => currentOrdering.indexOf( slot )
     } );
 
+    // TODO: A grabbed channel should not participate in the model, it should be offsetted.
+    // TODO: Do not focus on empty slots.
     this.groupSortInteractionView = new GroupSortInteractionView<SortItem, Node>( groupSelectModel, this, {
 
       getNextSelectedGroupItem: ( delta, selectedModel ) => {

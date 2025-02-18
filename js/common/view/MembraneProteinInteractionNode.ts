@@ -1,7 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
@@ -15,6 +14,8 @@ import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
  * 2. Provides keyboard focus and navigability.
  *
  * TODO: Combine with TargetZoneNode or explain why separate
+ * TODO: Also see the MySortableNode in ObservationWindow
+ * TODO: Make it so the user can drag the membrane channel off of the membrane, like a toolbox interaction
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -32,29 +33,29 @@ export default class MembraneProteinInteractionNode extends Rectangle {
 
       // Only focus if it has a membrane channel.
       focusable: false,
-      pickable: false,
-      tagName: 'div' // arrow keys move it, escape moves it back to toolbox.
+      pickable: false
+      // tagName: 'div' // arrow keys move it, escape moves it back to toolbox.
     } );
 
-    model.slotContentsChangedEmitter.addListener( () => {
-      this.focusable = model.isSlotFilled( slot );
-      this.pickable = this.focusable;
-    } );
+    // model.slotContentsChangedEmitter.addListener( () => {
+    //   this.focusable = model.isSlotFilled( slot );
+    //   this.pickable = this.focusable;
+    // } );
 
     // pdom - When the "down" arrow is pressed on the group of tabs, move focus to the selected panel
     // TODO: Move this node or focus a different node? Does it matter?
     // TODO: There is discussion about switching to the GroupSortInteraction
-    this.addInputListener( new KeyboardListener( {
-      keys: [ 'arrowRight' ],
-      fire: () => {
-
-        const m = model.getLeftmostEmptySlot();
-        if ( m !== null ) {
-          model.setSlotContents( m, model.getSlotContents( slot ) );
-          model.setSlotContents( slot, null );
-        }
-      }
-    } ) );
+    // this.addInputListener( new KeyboardListener( {
+    //   keys: [ 'arrowRight' ],
+    //   fire: () => {
+    //
+    //     const m = model.getLeftmostEmptySlot();
+    //     if ( m !== null ) {
+    //       model.setSlotContents( m, model.getSlotContents( slot ) );
+    //       model.setSlotContents( slot, null );
+    //     }
+    //   }
+    // } ) );
   }
 }
 
