@@ -13,6 +13,7 @@ import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-so
 import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
 import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -20,7 +21,7 @@ import MembraneChannelsConstants, { LIGAND_COUNT, MODEL_HEIGHT } from '../../com
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -107,7 +108,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.membraneProteinInteractionNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new MembraneProteinInteractionNode( model, slot, modelViewTransform ) );
     this.membraneProteinInteractionNodes.forEach( membraneProteinInteractionNode => this.addChild( membraneProteinInteractionNode ) );
 
-    this.targetZoneNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new TargetZoneNode( slot, modelViewTransform ) );
+    this.targetZoneNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new TargetZoneNode( slot, model, modelViewTransform ) );
     this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );
 
     // Draw the particles in front
@@ -115,54 +116,94 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
-    const groupSelectModel = new GroupSelectModel<Slot>( {
-      getGroupItemValue: slot => model.getSlotIndex( slot )
+    const itemsToSort = model.slots.map( slot => {
+      return {
+        name: 'originally' + slot
+      };
     } );
 
-    this.groupSortInteractionView = new GroupSortInteractionView<Slot, Node>( groupSelectModel, this, {
+    type SortItem = { name: string };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
+    class MySortableNode extends Path {
+      public constructor( shape: Shape, public readonly slot: SortItem ) {
+        super( shape, {
+          fill: 'blue',
+          opacity: 0.2
+        } );
+      }
+    }
+
+    const movableNodes = this.targetZoneNodes.map( ( targetZoneNode, index ) => new MySortableNode( Shape.bounds( targetZoneNode.bounds ), itemsToSort[ index ] ) );
+    movableNodes.forEach( movableNode => this.addChild( movableNode ) );
+
+    const currentOrdering = [ ...itemsToSort ];
+
+    const groupSelectModel = new GroupSelectModel<SortItem>( {
+      getGroupItemValue: slot => currentOrdering.indexOf( slot )
+    } );
+
+    this.groupSortInteractionView = new GroupSortInteractionView<SortItem, Node>( groupSelectModel, this, {
+
       getNextSelectedGroupItem: ( delta, selectedModel ) => {
+
         console.log( 'getNextSelectedGroupItem' );
         console.log( delta, selectedModel );
-        return model.getNextFilledSlot( delta, selectedModel );
+
+        // look through the currentOrdering. For each item, ask the model if that slot is filled.
+        // TODO: initially make it possible to select empty zones, then rewrite to skip to filled zones.
+
+        const index = currentOrdering.indexOf( selectedModel );
+        const proposedIndex = index + delta;
+
+        // get the next element out of the array, but without wrapping (clamp to start and end indices)
+        const clampedProposedIndex = Math.max( 0, Math.min( currentOrdering.length - 1, proposedIndex ) );
+        console.log( 'clampedProposedIndex = ' + clampedProposedIndex );
+        return currentOrdering[ clampedProposedIndex ];
       },
       onGrab: groupItem => {
-        console.log( `onGrab: ${groupItem}` );
+        console.log( `onGrab: ${groupItem.name}` );
         // groupItem.isDraggingProperty.value = true;
       },
       onRelease: groupItem => {
-        console.log( `onRelease: ${groupItem}` );
+        console.log( `onRelease: ${groupItem.name}` );
         // groupItem.isDraggingProperty.value = false;
       },
-      sortGroupItem: ( selectedCardModel, newValue ) => {
-        console.log( 'sortGroupItem' );
-        // assert && assert( selectedCardModel.indexProperty.value !== null, 'need an index to be sorted' );
-        // const delta = newValue - selectedCardModel.indexProperty.value!;
-        // swapCards( this.getActiveCardNodesInOrder(), this.cardMap.get( selectedCardModel )!, delta );
+      sortGroupItem: ( selectedModel, newValue ) => {
 
-        // Move the selectedCard to the newValue
-        model.swapSlotContents( selectedCardModel, model.getSlotForIndex( newValue ) );
+        if ( newValue <= 0 ) {
+          newValue = 0;
+        }
+        if ( newValue >= currentOrdering.length - 1 ) { // TODO: Why is this necessary, but the <0 is not?
+          newValue = currentOrdering.length - 1;
+        }
 
-        this.targetZoneNodes[ selectedCardModel ].focus();
+        console.log( 'sortGroupItem, newValue = ' + newValue );
+
+        // change the order of currentOrdering so that the selectedModel is at the new index, swapping elements
+        const index = currentOrdering.indexOf( selectedModel );
+        const newIndex = newValue;
+        const temp = currentOrdering[ index ];
+        currentOrdering[ index ] = currentOrdering[ newIndex ];
+        currentOrdering[ newIndex ] = temp;
+
       },
       onSort: () => {
         console.log( 'onSort' );
 
-        // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
-        // if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
-        //   this.isSortingDataProperty.value = false;
-        // }
+        // Adjust the positions to match the array
+        currentOrdering.forEach( ( modelItem, index ) => {
+          const node = movableNodes.find( movableNode => movableNode.slot === modelItem )!;
+          node.center = modelViewTransform.modelToViewXY( model.getSlotPosition( model.slots[ index ] ), 0 );
+        } );
       },
       getGroupItemToSelect: () => {
-        return model.getLeftmostFilledSlot();
+        return currentOrdering[ 0 ]; // TODO: only return a filled slot.
+        // return model.getLeftmostFilledSlot();
       },
       getNodeFromModelItem: model => {
-        console.log( 'getNodeFromModelItem' );
-        return this.targetZoneNodes[ model ];
+
+        return movableNodes.find( movableNode => movableNode.slot === model )!;
       },
-      // getHighlightNodeFromModelItem: cardModel => getNodeFromModelItem( cardModel )?.cardNode || null,
       grabReleaseCueOptions: {
         center: this.bounds.center.plusXY( 0, modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
       },

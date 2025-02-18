@@ -68,9 +68,10 @@ const slots = [ '0', '1', '2', '3', '4', '5', '6' ] as const;
 export type Slot = ( typeof slots )[number];
 
 export default class MembraneChannelsModel extends PhetioObject {
-  public static getSlotPosition( slot: Slot ): number {
+  public getSlotPosition( slot: Slot ): number {
     return SLOT_POSITIONS[ slots.indexOf( slot ) ];
   }
+  public readonly slots = slots;
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
@@ -341,18 +342,18 @@ export default class MembraneChannelsModel extends PhetioObject {
     const x = solute.position.x;
 
     // it can cross if it isn't within the channel width of any filled slot
-    return !slots.some( slot => Math.abs( x - MembraneChannelsModel.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) );
+    return !slots.some( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) );
   }
 
   public isCloseToChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): boolean {
 
     // check if within the channel width of any filled slot. TODO: grab radius?
     const x = solute.position.x;
-    return slots.some( slot => Math.abs( x - MembraneChannelsModel.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type );
+    return slots.some( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type );
   }
 
   public getNearestSlot( x: number ): Slot | null {
-    return slots.filter( slot => this.slotContents.get( slot ) ).sort( ( a, b ) => Math.abs( MembraneChannelsModel.getSlotPosition( a ) - x ) - Math.abs( MembraneChannelsModel.getSlotPosition( b ) - x ) )[ 0 ];
+    return slots.filter( slot => this.slotContents.get( slot ) ).sort( ( a, b ) => Math.abs( this.getSlotPosition( a ) - x ) - Math.abs( this.getSlotPosition( b ) - x ) )[ 0 ];
   }
 
   public getLeftmostEmptySlot(): Slot | null {

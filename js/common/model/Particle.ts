@@ -128,7 +128,7 @@ export default class Particle<T extends ParticleType> {
       const nearestSlotContents = model.getNearestSlot( this.position.x );
       if ( nearestSlotContents !== null ) {
         const currentPositionX = this.position.x;
-        const targetPositionX = MembraneChannelsModel.getSlotPosition( nearestSlotContents );
+        const targetPositionX = model.getSlotPosition( nearestSlotContents );
 
         // move in the x direction toward the target
         const maxStepSize = typicalSpeed * dt;

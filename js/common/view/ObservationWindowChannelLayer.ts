@@ -25,7 +25,7 @@ export default class ObservationWindowChannelLayer extends Node {
         if ( slotContents !== null ) {
           const channelNode = getChannelNode( slotContents );
           channelNode.mutate( {
-            center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getSlotPosition( slot ), 0 ),
+            center: modelViewTransform.modelToViewXY( model.getSlotPosition( slot ), 0 ),
             scale: 1.2
           } );
           this.addChild( channelNode );

@@ -13,6 +13,12 @@ It does not include:
 * voicing
 * region and culture
 
+### Special Considerations
+
+We have taken efforts to keep the model and view lightweight. This has the following consequences:
+1. When dragging a channel, a transient non-PhET-iO instrumented Node is temporarily created.
+2. For the GrabSortInteraction, it operates on transient nodes as well.
+
 ### Model
 
 The model is purposefully simple, with flat data structures to facilitate phet-io serialization.

@@ -21,7 +21,7 @@ import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
 export default class MembraneProteinInteractionNode extends Rectangle {
   public constructor( model: MembraneChannelsModel, public readonly slot: Slot, modelViewTransform: ModelViewTransform2 ) {
     super( 0, 0, 60, 80, 15, 10, {
-      center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getSlotPosition( slot ), 0 ),
+      center: modelViewTransform.modelToViewXY( model.getSlotPosition( slot ), 0 ),
 
       // TODO: Turn off these debugging display properties
       stroke: 'blue',
