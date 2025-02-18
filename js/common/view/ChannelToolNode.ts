@@ -33,10 +33,10 @@ export default class ChannelToolNode extends VBox {
     const clickToAdd = ( channelType: ChannelType ) => {
       return {
         click: () => {
-          const emptyTarget = model.getLeftmostEmptyTarget();
+          const emptySlot = model.getLeftmostEmptySlot();
           // TODO: description response if there is no available spot?
-          if ( emptyTarget !== null ) {
-            model.setTarget( emptyTarget, channelType );
+          if ( emptySlot !== null ) {
+            model.setSlotContents( emptySlot, channelType );
           }
         }
       };

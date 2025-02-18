@@ -4,7 +4,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel, { TargetKey } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
 
 /**
  * Provides scenery interoperability for membrane channels on the membrane, even though they are rendered in the canvas.
@@ -19,9 +19,9 @@ import MembraneChannelsModel, { TargetKey } from '../model/MembraneChannelsModel
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class MembraneProteinInteractionNode extends Rectangle {
-  public constructor( model: MembraneChannelsModel, public readonly targetKey: TargetKey, modelViewTransform: ModelViewTransform2 ) {
+  public constructor( model: MembraneChannelsModel, public readonly slot: Slot, modelViewTransform: ModelViewTransform2 ) {
     super( 0, 0, 60, 80, 15, 10, {
-      center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getPositionForTargetKey( targetKey ), 0 ),
+      center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getSlotPosition( slot ), 0 ),
 
       // TODO: Turn off these debugging display properties
       stroke: 'blue',
@@ -36,8 +36,8 @@ export default class MembraneProteinInteractionNode extends Rectangle {
       tagName: 'div' // arrow keys move it, escape moves it back to toolbox.
     } );
 
-    model.targetChangedEmitter.addListener( () => {
-      this.focusable = model.isTargetFilled( targetKey );
+    model.slotContentsChangedEmitter.addListener( () => {
+      this.focusable = model.isSlotFilled( slot );
       this.pickable = this.focusable;
     } );
 
@@ -48,10 +48,10 @@ export default class MembraneProteinInteractionNode extends Rectangle {
       keys: [ 'arrowRight' ],
       fire: () => {
 
-        const m = model.getLeftmostEmptyTarget();
+        const m = model.getLeftmostEmptySlot();
         if ( m !== null ) {
-          model.setTarget( m, model.getTarget( targetKey ) );
-          model.setTarget( targetKey, null );
+          model.setSlotContents( m, model.getSlotContents( slot ) );
+          model.setSlotContents( slot, null );
         }
       }
     } ) );

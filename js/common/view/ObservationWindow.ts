@@ -20,7 +20,7 @@ import MembraneChannelsConstants, { LIGAND_COUNT, MODEL_HEIGHT } from '../../com
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel, { TargetKey } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -39,7 +39,7 @@ import TargetZoneNode from './TargetZoneNode.js';
 export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly ligandNodes: LigandNode[] = [];
-  public readonly targetZoneNodes: TargetZoneNode[];
+  public readonly targetZoneNodes: TargetZoneNode[]; // TODO: Rename
   public readonly membraneProteinInteractionNodes: MembraneProteinInteractionNode[];
 
   private readonly stepEmitter = new Emitter<[ number ]>( {
@@ -104,10 +104,10 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.addChild( outsideText );
     this.addChild( insideText );
 
-    this.membraneProteinInteractionNodes = Array.from( model.getTargetKeys() ).map( targetKey => new MembraneProteinInteractionNode( model, targetKey, modelViewTransform ) );
+    this.membraneProteinInteractionNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new MembraneProteinInteractionNode( model, slot, modelViewTransform ) );
     this.membraneProteinInteractionNodes.forEach( membraneProteinInteractionNode => this.addChild( membraneProteinInteractionNode ) );
 
-    this.targetZoneNodes = Array.from( model.getTargetKeys() ).map( targetKey => new TargetZoneNode( targetKey, modelViewTransform ) );
+    this.targetZoneNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new TargetZoneNode( slot, modelViewTransform ) );
     this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );
 
     // Draw the particles in front
@@ -115,18 +115,18 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
-    const groupSelectModel = new GroupSelectModel<TargetKey>( {
-      getGroupItemValue: targetKey => targetKey
+    const groupSelectModel = new GroupSelectModel<Slot>( {
+      getGroupItemValue: slot => model.getSlotIndex( slot )
     } );
 
-    this.groupSortInteractionView = new GroupSortInteractionView<TargetKey, Node>( groupSelectModel, this, {
+    this.groupSortInteractionView = new GroupSortInteractionView<Slot, Node>( groupSelectModel, this, {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       getNextSelectedGroupItem: ( delta, selectedModel ) => {
         console.log( 'getNextSelectedGroupItem' );
         console.log( delta, selectedModel );
-        return model.getNextFilledTarget( delta, selectedModel );
+        return model.getNextFilledSlot( delta, selectedModel );
       },
       onGrab: groupItem => {
         console.log( `onGrab: ${groupItem}` );
@@ -143,7 +143,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         // swapCards( this.getActiveCardNodesInOrder(), this.cardMap.get( selectedCardModel )!, delta );
 
         // Move the selectedCard to the newValue
-        model.swapTargets( selectedCardModel, newValue as TargetKey );
+        model.swapSlotContents( selectedCardModel, model.getSlotForIndex( newValue ) );
+
+        this.targetZoneNodes[ selectedCardModel ].focus();
       },
       onSort: () => {
         console.log( 'onSort' );
@@ -154,7 +156,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         // }
       },
       getGroupItemToSelect: () => {
-        return model.getLeftmostFilledTarget();
+        return model.getLeftmostFilledSlot();
       },
       getNodeFromModelItem: model => {
         console.log( 'getNodeFromModelItem' );

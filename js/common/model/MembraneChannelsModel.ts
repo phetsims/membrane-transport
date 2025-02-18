@@ -56,19 +56,20 @@ export type ChannelType =
   'sodiumIonVoltageGatedChannel';
 
 // TODO: Naming?
-const TARGET_COUNT = 7;
-const TARGET_MAX_X = 84;
-const TARGET_SPACING = ( TARGET_MAX_X * 2 ) / ( TARGET_COUNT - 1 );
-const TARGET_VALUES: number[] = [];
-for ( let i = 0; i < TARGET_COUNT; i++ ) {
-  TARGET_VALUES.push( i * TARGET_SPACING - TARGET_MAX_X );
+const SLOT_COUNT = 7;
+const SLOT_MAX_X = 84;
+const SLOT_SPACING = ( SLOT_MAX_X * 2 ) / ( SLOT_COUNT - 1 );
+const SLOT_POSITIONS: number[] = [];
+for ( let i = 0; i < SLOT_COUNT; i++ ) {
+  SLOT_POSITIONS.push( i * SLOT_SPACING - SLOT_MAX_X );
 }
 
-export type TargetKey = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+const slots = [ '0', '1', '2', '3', '4', '5', '6' ] as const;
+export type Slot = ( typeof slots )[number];
 
 export default class MembraneChannelsModel extends PhetioObject {
-  public static getPositionForTargetKey( targetKey: TargetKey ): number {
-    return TARGET_VALUES[ targetKey ];
+  public static getSlotPosition( slot: Slot ): number {
+    return SLOT_POSITIONS[ slots.indexOf( slot ) ];
   }
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -96,9 +97,9 @@ export default class MembraneChannelsModel extends PhetioObject {
   private soluteTypeFlux = {} as Record<SoluteType, number>;
   public readonly areLigandsAddedProperty: BooleanProperty;
 
-  // TODO: Better name for these targets?
-  private readonly targets = new Map<TargetKey, ChannelType | null>( TARGET_VALUES.map( ( targetZone, index ) => [ index as TargetKey, null ] ) );
-  public readonly targetChangedEmitter = new Emitter();
+  // TODO: Convert to class Slot{} probably, as long as it is straightforward for phet-io state
+  private readonly slotContents = new Map<Slot, ChannelType | null>( slots.map( slot => [ slot, null ] ) );
+  public readonly slotContentsChangedEmitter = new Emitter();
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -186,8 +187,8 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.resetEmitter.addListener( () => {
       this.solutes.length = 0;
       this.ligands.length = 0;
-      this.targets.forEach( ( value, key ) => this.targets.set( key, null ) );
-      this.targetChangedEmitter.emit();
+      this.slotContents.forEach( ( value, key ) => this.slotContents.set( key, null ) );
+      this.slotContentsChangedEmitter.emit();
     } );
   }
 
@@ -203,11 +204,11 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.addParticles( 'ligandB', 'outside', LIGAND_COUNT, this.ligands );
   }
 
-  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, targetArray: Particle<SoluteType | LigandType>[] ): void {
+  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle<SoluteType | LigandType>[] ): void {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minX, MembraneChannelsConstants.INSIDE_CELL_BOUNDS.maxX );
       const y = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minY : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.maxY;
-      targetArray.push( new Particle( new Vector2( x, y ), soluteType ) );
+      soluteArray.push( new Particle( new Vector2( x, y ), soluteType ) );
     }
   }
 
@@ -339,23 +340,23 @@ export default class MembraneChannelsModel extends PhetioObject {
   public canDiffuseThroughMembrane( solute: Particle<IntentionalAny> ): boolean {
     const x = solute.position.x;
 
-    // it can cross if it isn't within the channel width of any filled target
-    return ![ ...this.targets.keys() ].some( target => Math.abs( x - MembraneChannelsModel.getPositionForTargetKey( target ) ) < CHANNEL_WIDTH && this.targets.get( target ) );
+    // it can cross if it isn't within the channel width of any filled slot
+    return !slots.some( slot => Math.abs( x - MembraneChannelsModel.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) );
   }
 
   public isCloseToChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): boolean {
 
-    // check if within the channel width of any filled target. TODO: grab radius?
+    // check if within the channel width of any filled slot. TODO: grab radius?
     const x = solute.position.x;
-    return [ ...this.targets.keys() ].some( targetKey => Math.abs( x - MembraneChannelsModel.getPositionForTargetKey( targetKey ) ) < CHANNEL_WIDTH && this.targets.get( targetKey ) === type );
+    return slots.some( slot => Math.abs( x - MembraneChannelsModel.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type );
   }
 
-  public getNearestChannel( x: number ): TargetKey | null {
-    return [ ...this.targets.keys() ].filter( target => this.targets.get( target ) ).sort( ( a, b ) => Math.abs( MembraneChannelsModel.getPositionForTargetKey( a ) - x ) - Math.abs( MembraneChannelsModel.getPositionForTargetKey( b ) - x ) )[ 0 ];
+  public getNearestSlot( x: number ): Slot | null {
+    return slots.filter( slot => this.slotContents.get( slot ) ).sort( ( a, b ) => Math.abs( MembraneChannelsModel.getSlotPosition( a ) - x ) - Math.abs( MembraneChannelsModel.getSlotPosition( b ) - x ) )[ 0 ];
   }
 
-  public getLeftmostEmptyTarget(): TargetKey | null {
-    return [ ...this.targets.keys() ].find( target => !this.targets.get( target ) ) || null;
+  public getLeftmostEmptySlot(): Slot | null {
+    return slots.find( slot => !this.slotContents.get( slot ) ) || null;
   }
 
   /**
@@ -370,7 +371,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
       soluteTypeFlux: ObjectLiteralIO,
-      targets: MapIO( NumberIO, NullableIO( StringIO ) )
+      slotContents: MapIO( StringIO, NullableIO( StringIO ) )
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
@@ -380,55 +381,64 @@ export default class MembraneChannelsModel extends PhetioObject {
       model.soluteTypeFlux = state.soluteTypeFlux;
 
       // MapIO is data type serialization, so we need to manually update the model's targets Map
-      model.targets.clear();
-      for ( const [ key, value ] of state.targets ) {
-        model.targets.set( key, value );
+      model.slotContents.clear();
+      for ( const [ key, value ] of state.slotContents ) {
+        model.slotContents.set( key, value );
       }
-      model.targetChangedEmitter.emit();
+      model.slotContentsChangedEmitter.emit();
 
       model.updateSoluteCounts();
     }
   } );
 
-  public isTargetFilled( targetKey: TargetKey ): boolean {
-    return this.targets.get( targetKey ) !== null;
+  public isSlotFilled( slot: Slot ): boolean {
+    return this.slotContents.get( slot ) !== null;
   }
 
-  public setTarget( targetKey: TargetKey, type: ChannelType | null ): void {
-    this.targets.set( targetKey, type );
-    this.targetChangedEmitter.emit();
+  public setSlotContents( slot: Slot, type: ChannelType | null ): void {
+    this.slotContents.set( slot, type );
+    this.slotContentsChangedEmitter.emit();
   }
 
-  public getTarget( targetKey: TargetKey ): ChannelType | null {
-    return this.targets.get( targetKey ) || null;
+  public getSlotContents( slot: Slot ): ChannelType | null {
+    return this.slotContents.get( slot ) || null;
   }
 
-  public getTargetKeys(): Iterable<TargetKey> {
-    return this.targets.keys();
+  public getSlotContentsKeys(): Iterable<Slot> {
+    return this.slotContents.keys();
   }
 
-  public getLeftmostFilledTarget(): TargetKey | null {
-    return [ ...this.targets.keys() ].find( target => this.targets.get( target ) ) || null;
+  public getLeftmostFilledSlot(): Slot | null {
+    return slots.find( slot => this.slotContents.get( slot ) ) || null;
   }
 
-  public swapTargets( targetKey: TargetKey, newValue: TargetKey ): void {
-    const temp = this.targets.get( targetKey )!;
-    this.targets.set( targetKey, this.targets.get( newValue )! );
-    this.targets.set( newValue, temp );
-    this.targetChangedEmitter.emit();
+  public swapSlotContents( slotA: Slot, slotB: Slot ): void {
+    const temp = this.slotContents.get( slotA )!;
+    this.slotContents.set( slotA, this.slotContents.get( slotB )! );
+    this.slotContents.set( slotB, temp );
+    this.slotContentsChangedEmitter.emit();
   }
 
-  public getNextFilledTarget( delta: number, selectedModel: TargetKey ): TargetKey | null {
+  public getNextFilledSlot( delta: number, selectedModel: Slot ): Slot | null {
 
     // Find the next filled target, wrapping around
-    let nextKey = selectedModel;
-    for ( let i = 0; i < TARGET_COUNT; i++ ) {
-      nextKey = ( nextKey + delta + TARGET_COUNT ) % TARGET_COUNT as TargetKey;
-      if ( this.targets.get( nextKey ) ) {
-        return nextKey;
+    let index = slots.indexOf( selectedModel );
+    for ( let i = 0; i < slots.length; i++ ) {
+      index = ( index + delta + slots.length ) % slots.length;
+      if ( this.slotContents.get( slots[ index ] ) ) {
+        return slots[ index ];
       }
     }
+
     return null;
+  }
+
+  public getSlotIndex( slot: Slot ): number {
+    return slots.indexOf( slot );
+  }
+
+  public getSlotForIndex( index: number ): Slot {
+    return slots[ index ];
   }
 }
 

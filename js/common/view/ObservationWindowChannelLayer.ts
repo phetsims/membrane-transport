@@ -17,15 +17,15 @@ export default class ObservationWindowChannelLayer extends Node {
   public constructor( model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2 ) {
     super();
 
-    model.targetChangedEmitter.addListener( () => {
+    model.slotContentsChangedEmitter.addListener( () => {
       this.removeAllChildren();
 
-      Array.from( model.getTargetKeys() ).forEach( targetKey => {
-        const target = model.getTarget( targetKey );
-        if ( target !== null ) {
-          const channelNode = getChannelNode( target );
+      Array.from( model.getSlotContentsKeys() ).forEach( slot => {
+        const slotContents = model.getSlotContents( slot );
+        if ( slotContents !== null ) {
+          const channelNode = getChannelNode( slotContents );
           channelNode.mutate( {
-            center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getPositionForTargetKey( targetKey ), 0 ),
+            center: modelViewTransform.modelToViewXY( MembraneChannelsModel.getSlotPosition( slot ), 0 ),
             scale: 1.2
           } );
           this.addChild( channelNode );

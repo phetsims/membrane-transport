@@ -21,6 +21,9 @@ Solutes can be added via the spinners, and flow in from the top or bottom of the
 Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive, and can be dragged around the canvas.
 Solutes and Ligands are referred to more generally as Particles.
 
+**Slots** are the 7 positions on the membrane where a protein/channel can be added.
+**Slot Contents** refers to what a Slot may contain, which may be null or a protein/channel.
+
 ### View
 
 Much of the simulation is shown in the central ObservationWindow, which has most of its contents rendered in canvas.

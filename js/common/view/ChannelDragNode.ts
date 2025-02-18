@@ -51,15 +51,16 @@ export default class ChannelDragNode extends Node {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
-    const getClosestOverlappingTarget = () => {
+    const getClosestOverlappingTargetZoneNode = () => {
 
       // Check the observation window to find the closest available target we overlap
       // If any rectangle overlaps, change its stroke color to red, Change all others back to black
-      const overlappingTargets = observationWindow.targetZoneNodes.filter( targetZoneNode => {
-        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isTargetFilled( targetZoneNode.targetKey );
+      const overlappingTargetZoneNodes = observationWindow.targetZoneNodes.filter( targetZoneNode => {
+        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isSlotFilled( targetZoneNode.slot );
       } );
 
-      const closest = _.sortBy( overlappingTargets, targetZoneNode => {
+      // TODO: Rename targetZoneNode
+      const closest = _.sortBy( overlappingTargetZoneNodes, targetZoneNode => {
         return targetZoneNode.globalBounds.center.distance( this.globalBounds.center );
       } )[ 0 ];
       return closest;
@@ -76,21 +77,21 @@ export default class ChannelDragNode extends Node {
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT,
       start: () => {
-        const closest = getClosestOverlappingTarget();
+        const closest = getClosestOverlappingTargetZoneNode();
 
         observationWindow.targetZoneNodes.forEach( targetZoneNode => {
           targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
-          targetZoneNode.visible = !model.isTargetFilled( targetZoneNode.targetKey );
+          targetZoneNode.visible = !model.isSlotFilled( targetZoneNode.slot );
         } );
       },
       drag: () => {
 
         // TODO: Duplicated with above
-        const closest = getClosestOverlappingTarget();
+        const closest = getClosestOverlappingTargetZoneNode();
 
         observationWindow.targetZoneNodes.forEach( targetZoneNode => {
           targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
-          targetZoneNode.visible = !model.isTargetFilled( targetZoneNode.targetKey );
+          targetZoneNode.visible = !model.isSlotFilled( targetZoneNode.slot );
         } );
       },
       end: () => {
@@ -100,12 +101,12 @@ export default class ChannelDragNode extends Node {
         } );
 
         // drop into the selected target, or move back to the toolbox
-        const closest = getClosestOverlappingTarget();
+        const closest = getClosestOverlappingTargetZoneNode();
 
         if ( closest ) {
 
           // drop into the selected target
-          model.setTarget( closest.targetKey, this.type );
+          model.setSlotContents( closest.slot, this.type );
 
           // Reuse
           this.visible = false;
