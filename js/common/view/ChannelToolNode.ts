@@ -3,7 +3,6 @@
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import SceneryEvent from '../../../../scenery/js/input/SceneryEvent.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
@@ -29,24 +28,24 @@ export default class ChannelToolNode extends VBox {
   public constructor( type: ChannelType, label: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
 
     // Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
-// However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
-// user can add several channels. BF 2025/02/12
-    const clickToAdd = ( channelType: ChannelType ) => {
+    // However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
+    // user can add several channels. BF 2025/02/12
+    const clickToAdd = () => {
       return {
-        click: ( a: SceneryEvent ) => {
+        click: () => {
 
-          view.createFromKeyboard( channelType, [ this, channelNode ] ); // TODO: swapped with the mouse one, watch out!!!!
+          view.createFromKeyboard( type, [ this, channelNode ] ); // TODO: swapped with the mouse one, watch out!!!!
         }
       };
     };
 
     const channelNode = getChannelNode( type );
-    channelNode.addInputListener( DragListener.createForwardingListener( event => view.createMembraneChannelNode( event, type, [ channelNode, this ] ) ) );
+    channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, [ channelNode, this ] ) ) );
 
     super( combineOptions<VBoxOptions>( {}, vboxOptions, {
       children: [ channelNode, new RichText( label, richTextOptions ) ]
     } ) );
-    this.addInputListener( clickToAdd( 'sodiumIonLeakageChannel' ) );
+    this.addInputListener( clickToAdd() );
   }
 }
 

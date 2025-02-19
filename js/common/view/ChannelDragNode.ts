@@ -150,6 +150,8 @@ export default class ChannelDragNode extends Node {
 
     // TODO: Move on hold
     const keyboardInputListener = new KeyboardListener( {
+
+      // TODO: esc goes back to the toolbox
       keys: [ 'arrowRight', 'arrowLeft', 'home', 'end', 'space', 'enter' ],
       fire: ( event, keysPressed ) => {
 
@@ -158,12 +160,14 @@ export default class ChannelDragNode extends Node {
 
           // move to the next slot in the model.
           currentSlotIndex++;
-          currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length - 1 );
-
-          const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
-          const y = positionProperty.value.y;
-
-          positionProperty.value = new Vector2( x, y );
+          currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length );
+          if ( currentSlotIndex >= model.slots.length ) {
+            positionProperty.value = new Vector2( 100, 50 );
+          }
+          else {
+            const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
+            positionProperty.value = new Vector2( x, 10 );
+          }
         }
         if ( keysPressed.includes( 'arrowLeft' ) ) {
           // move to the next slot in the model.
@@ -176,7 +180,6 @@ export default class ChannelDragNode extends Node {
           positionProperty.value = new Vector2( x, y );
         }
 
-
         if ( keysPressed.includes( 'home' ) ) {
           //TODO:
         }
@@ -184,13 +187,20 @@ export default class ChannelDragNode extends Node {
           //TODO:
         }
         if ( keysPressed.includes( 'space' ) || keysPressed.includes( 'enter' ) ) {
-          // if over an empty slot, fill it and delete the node
-          const contents = model.getSlotContents( model.getSlotForIndex( currentSlotIndex ) );
-          if ( contents === null ) {
-            model.setSlotContents( model.getSlotForIndex( currentSlotIndex ), this.type );
-            this.dispose();
 
+          if ( currentSlotIndex >= model.slots.length ) {
+            this.dispose();
             homes[ 0 ].focus();
+          }
+          else {
+            // if over an empty slot, fill it and delete the node
+            const contents = model.getSlotContents( model.getSlotForIndex( currentSlotIndex ) );
+            if ( contents === null ) {
+              model.setSlotContents( model.getSlotForIndex( currentSlotIndex ), this.type );
+              this.dispose();
+
+              homes[ 0 ].focus();
+            }
           }
 
           // if over a filled slot, swap places
