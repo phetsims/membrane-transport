@@ -175,9 +175,7 @@ export default class ChannelDragNode extends Node {
           currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length - 1 );
 
           const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
-          const y = positionProperty.value.y;
-
-          positionProperty.value = new Vector2( x, y );
+          positionProperty.value = new Vector2( x, 10 );
         }
 
         if ( keysPressed.includes( 'home' ) ) {
