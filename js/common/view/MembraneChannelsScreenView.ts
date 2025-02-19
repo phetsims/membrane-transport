@@ -260,12 +260,10 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const y = 10;
     const modelPoint = new Vector2( slotX, y );
 
-    console.log( modelPoint );
-
     const channelDragNode = new ChannelDragNode(
       this.model, this.observationWindow, this.screenViewModelViewTransform,
       modelPoint, this.visibleBoundsProperty, homes,
-      type
+      type, slot
     );
     this.addChild( channelDragNode );
 

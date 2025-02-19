@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType, Slot } from '../model/MembraneChannelsModel.js';
 import getChannelNode from './channels/getChannelNode.js';
 import ObservationWindow from './ObservationWindow.js';
 
@@ -38,7 +38,8 @@ export default class ChannelDragNode extends Node {
     modelPosition: Vector2,
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     homes: Node[],
-    public readonly type: ChannelType
+    public readonly type: ChannelType,
+    initSlot: Slot | null = null
   ) {
     super( {
       tagName: 'p',
@@ -147,7 +148,7 @@ export default class ChannelDragNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    let currentSlotIndex = 0;
+    let currentSlotIndex = initSlot === null ? 0 : model.getSlotIndex( initSlot );
 
     // TODO: Move on hold
     const keyboardInputListener = new KeyboardListener( {
