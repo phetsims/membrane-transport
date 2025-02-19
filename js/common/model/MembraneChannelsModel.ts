@@ -441,6 +441,10 @@ export default class MembraneChannelsModel extends PhetioObject {
   public getSlotForIndex( index: number ): Slot {
     return slots[ index ];
   }
+
+  public getMiddleSlot(): Slot {
+    return slots[ Math.floor( slots.length / 2 ) ];
+  }
 }
 
 membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );

@@ -3,6 +3,7 @@
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import SceneryEvent from '../../../../scenery/js/input/SceneryEvent.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
@@ -32,12 +33,9 @@ export default class ChannelToolNode extends VBox {
 // user can add several channels. BF 2025/02/12
     const clickToAdd = ( channelType: ChannelType ) => {
       return {
-        click: () => {
-          const emptySlot = model.getLeftmostEmptySlot();
-          // TODO: description response if there is no available spot?
-          if ( emptySlot !== null ) {
-            model.setSlotContents( emptySlot, channelType );
-          }
+        click: ( a: SceneryEvent ) => {
+
+          view.createFromKeyboard( channelType, [ channelNode, this ] );
         }
       };
     };

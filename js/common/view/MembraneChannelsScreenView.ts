@@ -26,9 +26,9 @@ import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
+import ChannelDragNode from './ChannelDragNode.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
-import ChannelDragNode from './ChannelDragNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -54,7 +54,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.center,
     MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
   );
-  private readonly screenViewModelViewTransform: ModelViewTransform2;
+  public readonly screenViewModelViewTransform: ModelViewTransform2;
 
   public constructor(
     public readonly model: MembraneChannelsModel,
@@ -243,6 +243,37 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( membraneChannelNode );
 
     membraneChannelNode.press( event );
+  }
+
+  /**
+   * Called when the user presses a membrane protein in the accordion box to create one.
+   *
+   * @param type
+   * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
+   */
+  public createFromKeyboard( type: ChannelType, homes: Node[] ): void {
+
+    // TODO: duplicated with create from mouse
+    // Move over the first available slot
+    const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
+    const slotX = this.model.getSlotPosition( slot );
+    const y = 10;
+    const modelPoint = new Vector2( slotX, y );
+
+    console.log( modelPoint );
+
+    const channelDragNode = new ChannelDragNode(
+      this.model, this.observationWindow, this.screenViewModelViewTransform,
+      modelPoint, this.visibleBoundsProperty, homes,
+      type
+    );
+    this.addChild( channelDragNode );
+
+    // membraneChannelNode.press( event );
+    channelDragNode.focus();
+
+    // TODO: once keyboarded, prevent mouse+touch, or do this on init
+    // channelDragNode.pickable = false; // keyboard only
   }
 
   /**
