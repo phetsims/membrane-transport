@@ -77,6 +77,7 @@ export default class ChannelDragNode extends Node {
     const myself = this;
 
     // TODO: Use SoundRichDragListener?
+    // TODO: MK suggested RichDragListener which also has keyboard support
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
@@ -193,16 +194,16 @@ export default class ChannelDragNode extends Node {
           }
           else {
             // if over an empty slot, fill it and delete the node
-            const contents = model.getSlotContents( model.getSlotForIndex( currentSlotIndex ) );
-            if ( contents === null ) {
+            // const contents = model.getSlotContents( model.getSlotForIndex( currentSlotIndex ) );
+
+            // TODO: When dropping with mouse, it should also replace.
               model.setSlotContents( model.getSlotForIndex( currentSlotIndex ), this.type );
               this.dispose();
 
               homes[ 0 ].focus();
-            }
-          }
 
-          // TODO: if over a filled slot, swap places
+            //   // TODO: Same as above, but we may want to animate the old one back to the toolbox. Is animation valuable here, or would be a distraction?
+          }
         }
       }
     } );

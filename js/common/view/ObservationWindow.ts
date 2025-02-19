@@ -144,7 +144,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     let grabbedFromSlot: Slot | null = null;
 
     const groupSelectModel = new GroupSelectModel<SortItem>( {
-      getGroupItemValue: slot => currentOrdering.indexOf( slot )
+      getGroupItemValue: slot => currentOrdering.indexOf( slot ),
+      tandem: tandem.createTandem( 'groupSelectModel' )
     } );
 
     // TODO: A grabbed channel should not participate in the model, it should be offsetted.
