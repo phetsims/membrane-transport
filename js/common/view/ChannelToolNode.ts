@@ -35,7 +35,7 @@ export default class ChannelToolNode extends VBox {
       return {
         click: ( a: SceneryEvent ) => {
 
-          view.createFromKeyboard( channelType, [ channelNode, this ] );
+          view.createFromKeyboard( channelType, [ this, channelNode ] ); // TODO: swapped with the mouse one, watch out!!!!
         }
       };
     };

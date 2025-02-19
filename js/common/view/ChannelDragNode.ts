@@ -189,6 +189,8 @@ export default class ChannelDragNode extends Node {
           if ( contents === null ) {
             model.setSlotContents( model.getSlotForIndex( currentSlotIndex ), this.type );
             this.dispose();
+
+            homes[ 0 ].focus();
           }
 
           // if over a filled slot, swap places
