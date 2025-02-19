@@ -152,6 +152,7 @@ export default class ChannelDragNode extends Node {
     const keyboardInputListener = new KeyboardListener( {
 
       // TODO: esc goes back to the toolbox
+      // TODO: on blur also go back to the toolbox
       keys: [ 'arrowRight', 'arrowLeft', 'home', 'end', 'space', 'enter' ],
       fire: ( event, keysPressed ) => {
 
@@ -201,7 +202,7 @@ export default class ChannelDragNode extends Node {
             }
           }
 
-          // if over a filled slot, swap places
+          // TODO: if over a filled slot, swap places
         }
       }
     } );
