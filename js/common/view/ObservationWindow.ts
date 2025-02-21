@@ -21,7 +21,6 @@ import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
-import MembraneProteinInteractionNode from './MembraneProteinInteractionNode.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
@@ -39,7 +38,6 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly ligandNodes: LigandNode[] = [];
   public readonly slotDragIndicatorNodes: SlotDragIndicatorNode[];
-  public readonly membraneProteinInteractionNodes: MembraneProteinInteractionNode[];
 
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
@@ -71,9 +69,6 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     const backCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'back' );
     clipNode.addChild( backCanvas );
     this.stepEmitter.addListener( dt => backCanvas.step( dt ) );
-
-    this.membraneProteinInteractionNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new MembraneProteinInteractionNode( model, slot, modelViewTransform ) );
-    this.membraneProteinInteractionNodes.forEach( membraneProteinInteractionNode => this.addChild( membraneProteinInteractionNode ) );
 
     this.slotDragIndicatorNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new SlotDragIndicatorNode( slot, model, modelViewTransform ) );
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
