@@ -30,6 +30,7 @@ import ChannelDragNode from './ChannelDragNode.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
+import MembraneChannelsScreenSummaryContent from './MembraneChannelsScreenSummaryContent.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
@@ -60,7 +61,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
     public readonly model: MembraneChannelsModel,
     providedOptions: MembraneChannelsScreenViewOptions ) {
 
-    const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+      screenSummaryContent: new MembraneChannelsScreenSummaryContent( model.featureSet )
+    }, providedOptions );
     super( options );
 
     // A model to view transform that maps a model point to a position in the screen view. This transform includes the translation
