@@ -6,11 +6,12 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
 
 /**
- * A target zone where a membrane channel can be dropped.
+ * A target zone where a membrane channel can be dropped. When the user drags a membrane channel toward this slot, it
+ * shows a different highlight to indicate it will be dropped into.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class TargetZoneNode extends Rectangle {
+export default class SlotDragIndicatorNode extends Rectangle {
   public constructor( public readonly slot: Slot, model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2 ) {
 
     // TODO: Model bounds? We decided proteins will have the same model width footprint, but that should be factored out.
@@ -26,4 +27,4 @@ export default class TargetZoneNode extends Rectangle {
   }
 }
 
-membraneChannels.register( 'TargetZoneNode', TargetZoneNode );
+membraneChannels.register( 'SlotDragIndicatorNode', SlotDragIndicatorNode );

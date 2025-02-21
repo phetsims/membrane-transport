@@ -26,7 +26,7 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
 import LigandBNode from './particles/LigandBNode.js';
-import TargetZoneNode from './TargetZoneNode.js';
+import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
 /**
  * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, membrane channels are.
@@ -38,7 +38,7 @@ import TargetZoneNode from './TargetZoneNode.js';
 export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly ligandNodes: LigandNode[] = [];
-  public readonly targetZoneNodes: TargetZoneNode[]; // TODO: Rename
+  public readonly slotDragIndicatorNodes: SlotDragIndicatorNode[];
   public readonly membraneProteinInteractionNodes: MembraneProteinInteractionNode[];
 
   private readonly stepEmitter = new Emitter<[ number ]>( {
@@ -75,8 +75,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.membraneProteinInteractionNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new MembraneProteinInteractionNode( model, slot, modelViewTransform ) );
     this.membraneProteinInteractionNodes.forEach( membraneProteinInteractionNode => this.addChild( membraneProteinInteractionNode ) );
 
-    this.targetZoneNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new TargetZoneNode( slot, model, modelViewTransform ) );
-    this.targetZoneNodes.forEach( targetZoneNode => this.addChild( targetZoneNode ) );
+    this.slotDragIndicatorNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new SlotDragIndicatorNode( slot, model, modelViewTransform ) );
+    this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
 
     const channelLayer = new ObservationWindowChannelLayer( model, view, modelViewTransform );
     this.stepEmitter.addListener( dt => channelLayer.step( dt ) );
@@ -127,7 +127,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         return 0;
       },
       getNodeFromModelItem: model => {
-        return this.targetZoneNodes[ model ];
+        return this.slotDragIndicatorNodes[ model ];
         // return new MySortableNode( Shape.bounds( new Bounds2( 0, 0, 100, 100 ) ), model );
       },
       grabReleaseCueOptions: {

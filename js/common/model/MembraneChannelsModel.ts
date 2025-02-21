@@ -55,7 +55,6 @@ export type ChannelType =
   'potassiumIonLeakageChannel' |
   'sodiumIonVoltageGatedChannel';
 
-// TODO: Naming?
 const SLOT_COUNT = 7;
 const SLOT_MAX_X = 84;
 const SLOT_SPACING = ( SLOT_MAX_X * 2 ) / ( SLOT_COUNT - 1 );

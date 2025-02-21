@@ -48,7 +48,6 @@ export default class ChannelDragNode extends Node {
 
     this.addChild( getChannelNode( type ) );
 
-    // TODO: Keyboard support, probably GroupSortInteraction
     const positionProperty = new Vector2Property( modelPosition );
     positionProperty.link( position => {
       this.center = screenViewModelViewTransform.modelToViewPosition( position );
@@ -59,17 +58,16 @@ export default class ChannelDragNode extends Node {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
-    const getClosestOverlappingTargetZoneNode = () => {
+    const getClosestSlotDragIndicatorNode = () => {
 
       // Check the observation window to find the closest available target we overlap
       // If any rectangle overlaps, change its stroke color to red, Change all others back to black
-      const overlappingTargetZoneNodes = observationWindow.targetZoneNodes.filter( targetZoneNode => {
-        return targetZoneNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isSlotFilled( targetZoneNode.slot );
+      const overlappingSlotDragIndicatorNodes = observationWindow.slotDragIndicatorNodes.filter( slotDragIndicatorNode => {
+        return slotDragIndicatorNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isSlotFilled( slotDragIndicatorNode.slot );
       } );
 
-      // TODO: Rename targetZoneNode
-      const closest = _.sortBy( overlappingTargetZoneNodes, targetZoneNode => {
-        return targetZoneNode.globalBounds.center.distance( this.globalBounds.center );
+      const closest = _.sortBy( overlappingSlotDragIndicatorNodes, slotDragIndicatorNode => {
+        return slotDragIndicatorNode.globalBounds.center.distance( this.globalBounds.center );
       } )[ 0 ];
       return closest;
     };
@@ -86,31 +84,31 @@ export default class ChannelDragNode extends Node {
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT,
       start: () => {
-        const closest = getClosestOverlappingTargetZoneNode();
+        const closest = getClosestSlotDragIndicatorNode();
 
-        observationWindow.targetZoneNodes.forEach( targetZoneNode => {
-          targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
-          targetZoneNode.visible = !model.isSlotFilled( targetZoneNode.slot );
+        observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
+          slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
+          slotDragIndicatorNode.visible = !model.isSlotFilled( slotDragIndicatorNode.slot );
         } );
       },
       drag: () => {
 
         // TODO: Duplicated with above
-        const closest = getClosestOverlappingTargetZoneNode();
+        const closest = getClosestSlotDragIndicatorNode();
 
-        observationWindow.targetZoneNodes.forEach( targetZoneNode => {
-          targetZoneNode.stroke = targetZoneNode === closest ? 'red' : 'black';
-          targetZoneNode.visible = !model.isSlotFilled( targetZoneNode.slot );
+        observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
+          slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
+          slotDragIndicatorNode.visible = !model.isSlotFilled( slotDragIndicatorNode.slot );
         } );
       },
       end: () => {
 
-        observationWindow.targetZoneNodes.forEach( targetZoneNode => {
-          targetZoneNode.visible = false;
+        observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
+          slotDragIndicatorNode.visible = false;
         } );
 
         // drop into the selected target, or move back to the toolbox
-        const closest = getClosestOverlappingTargetZoneNode();
+        const closest = getClosestSlotDragIndicatorNode();
 
         if ( closest ) {
 

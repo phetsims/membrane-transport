@@ -13,7 +13,7 @@ import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
  *    the forwarded drag node.
  * 2. Provides keyboard focus and navigability.
  *
- * TODO: Combine with TargetZoneNode or explain why separate
+ * TODO: Combine with SlotDragIndicatorNode or explain why separate
  * TODO: Also see the MySortableNode in ObservationWindow
  * TODO: Make it so the user can drag the membrane channel off of the membrane, like a toolbox interaction
  *
