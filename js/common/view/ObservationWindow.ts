@@ -112,8 +112,18 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     type SortItem = number;
 
+    const sampleRectangle = new Rectangle( 100, 100, 10, 10, {
+      fill: 'blue'
+    } );
+    this.addChild( sampleRectangle );
+
+    const sampleRectangle2 = new Rectangle( 100, 150, 10, 10, {
+      fill: 'red'
+    } );
+    this.addChild( sampleRectangle2 );
+
     const groupSelectModel = new GroupSelectModel<SortItem>( {
-      getGroupItemValue: slot => slot,
+      getGroupItemValue: slot => 0,
       tandem: Tandem.OPT_OUT // TODO?
     } );
 
@@ -122,13 +132,15 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         return 0;
       },
       getNodeFromModelItem: model => {
-        return this.slotDragIndicatorNodes[ model ];
-        // return new MySortableNode( Shape.bounds( new Bounds2( 0, 0, 100, 100 ) ), model );
+        return sampleRectangle;
       },
       grabReleaseCueOptions: {
         center: this.bounds.center.plusXY( 0, modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
       }
     } );
+
+    // TODO: Specify shape around the membrane
+    this.groupSelectView.groupSortGroupFocusHighlightPath.shape = Shape.rect( 10, 10, 400, 400 );
   }
 
   public step( dt: number ): void {
