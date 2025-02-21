@@ -43,7 +43,8 @@ export default class ChannelToolNode extends VBox {
     channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, [ channelNode, this ] ) ) );
 
     super( combineOptions<VBoxOptions>( {}, vboxOptions, {
-      children: [ channelNode, new RichText( label, richTextOptions ) ]
+      children: [ channelNode, new RichText( label, richTextOptions ) ],
+      cursor: 'pointer'
     } ) );
     this.addInputListener( clickToAdd() );
   }

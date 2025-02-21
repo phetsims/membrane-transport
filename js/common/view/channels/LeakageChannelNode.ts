@@ -20,8 +20,7 @@ export default class LeakageChannelNode extends CanvasNode {
   public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', providedOptions?: CanvasNodeOptions ) {
 
     super( combineOptions<CanvasNodeOptions>( {
-      canvasBounds: new Bounds2( 0, 0, 45, 50 ),
-      cursor: 'pointer'
+      canvasBounds: new Bounds2( 0, 0, 45, 50 )
     }, providedOptions ) );
 
     this.invalidatePaint();
