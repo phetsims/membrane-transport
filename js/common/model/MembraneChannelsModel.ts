@@ -400,6 +400,8 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.slotContentsChangedEmitter.emit();
   }
 
+  // TODO: Consider a better name? Maybe something with "channel" in it?
+  //   Maybe something with "protein" in it?
   public getSlotContents( slot: Slot ): ChannelType | null {
     return this.slotContents.get( slot ) || null;
   }

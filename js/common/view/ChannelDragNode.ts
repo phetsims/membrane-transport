@@ -90,6 +90,8 @@ export default class ChannelDragNode extends Node {
           slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
           slotDragIndicatorNode.visible = !model.isSlotFilled( slotDragIndicatorNode.slot );
         } );
+
+        observationWindow.setSlotIndicatorsVisible( true );
       },
       drag: () => {
 
@@ -98,14 +100,11 @@ export default class ChannelDragNode extends Node {
 
         observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
           slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
-          slotDragIndicatorNode.visible = !model.isSlotFilled( slotDragIndicatorNode.slot );
         } );
       },
       end: () => {
 
-        observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-          slotDragIndicatorNode.visible = false;
-        } );
+        observationWindow.setSlotIndicatorsVisible( false );
 
         // drop into the selected target, or move back to the toolbox
         const closest = getClosestSlotDragIndicatorNode();

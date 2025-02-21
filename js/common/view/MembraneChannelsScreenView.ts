@@ -271,6 +271,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( channelDragNode );
 
     // membraneChannelNode.press( event );
+
+    // TODO: Problem! This does not work with GroupSortInteraction because it manages focus on its target Node.
     channelDragNode.focus();
 
     // TODO: once keyboarded, prevent mouse+touch, or do this on init
