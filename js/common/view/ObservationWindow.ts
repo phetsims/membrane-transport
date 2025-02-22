@@ -166,6 +166,12 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         grabbedSlot = slot;
         grabbedType = channelType;
 
+        // TODO: duplicated below
+        const newPosition = model.getSlotPosition( slot );
+        grabbedNode.setModelPosition( new Vector2( newPosition, 10 ) );
+
+        groupSelectModel.selectedGroupItemProperty.value = groupItem;
+
         // somehow, getNodeFromModelItem will need to work with this new ChannelDragNode instead of the TODO: finish this sentence
       },
       onRelease: ( groupItem: SortItem ) => {
@@ -198,6 +204,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         grabbedSlot = newSlot;
 
         grabbedNode!.setModelPosition( new Vector2( newPosition, 10 ) );
+
+        groupSelectModel.selectedGroupItemProperty.value = newSlotIndex;
       },
       getGroupItemToSelect: () => {
         const leftMostFilledSlot = model.getLeftmostFilledSlot();
