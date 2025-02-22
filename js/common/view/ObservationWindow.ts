@@ -4,7 +4,9 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Range from '../../../../dot/js/Range.js';
 import Shape from '../../../../kite/js/Shape.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -28,8 +30,6 @@ import ObservationWindowChannelLayer from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
 import LigandBNode from './particles/LigandBNode.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
-import Range from '../../../../dot/js/Range.js';
-import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 
 /**
  * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, membrane channels are.
@@ -198,9 +198,12 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       }
     } );
 
-
-    // TODO: Specify shape around the membrane
-    this.groupSelectView.groupSortGroupFocusHighlightPath.shape = Shape.rect( 10, 10, 400, 400 );
+    // Specify shape around the membrane
+    const verticalFractionalHeight = 0.3;
+    const horizontalMargin = 5;
+    this.groupSelectView.groupSortGroupFocusHighlightPath.shape = Shape.rect(
+      -horizontalMargin, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
+      horizontalMargin * 2 + MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight );
   }
 
   /**
