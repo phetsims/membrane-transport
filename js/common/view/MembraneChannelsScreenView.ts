@@ -254,7 +254,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param type
    * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
    */
-  public createFromKeyboard( type: ChannelType, homes: Node[] ): void {
+  public createFromKeyboard( type: ChannelType, homes: Node[], focus: boolean ): ChannelDragNode {
 
     // TODO: duplicated with create from mouse
     // Move over the first available slot
@@ -270,13 +270,14 @@ export default class MembraneChannelsScreenView extends ScreenView {
     );
     this.addChild( channelDragNode );
 
-    // membraneChannelNode.press( event );
-
-    // TODO: Problem! This does not work with GroupSortInteraction because it manages focus on its target Node.
-    channelDragNode.focus();
+    if ( focus ) {
+      channelDragNode.focus();
+    }
 
     // TODO: once keyboarded, prevent mouse+touch, or do this on init
     // channelDragNode.pickable = false; // keyboard only
+
+    return channelDragNode;
   }
 
   /**

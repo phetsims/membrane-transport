@@ -5,6 +5,7 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
@@ -22,7 +23,8 @@ import MembraneChannelsConstants, { LIGAND_COUNT, MODEL_HEIGHT } from '../../com
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType, Slot } from '../model/MembraneChannelsModel.js';
+import ChannelDragNode from './ChannelDragNode.js';
 import LigandNode from './LigandNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -126,6 +128,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       tandem: Tandem.OPT_OUT // TODO?
     } );
 
+    let grabbedNode: ChannelDragNode | null = null;
+    let grabbedSlot: Slot | null = null;
+    let grabbedType: ChannelType | null = null;
 
     // TODO: This is in progress. We hope to use GroupSortInteractionView to drive the drag and drop behavior
     //   with a keyboard.
@@ -149,30 +154,50 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         // Make all the slots visible?
         this.setSlotIndicatorsVisible( true );
 
-        const index = model.getSlotForIndex( groupItem );
-        const channelType = model.getSlotContents( index );
+        const slot = model.getSlotForIndex( groupItem );
+        const channelType = model.getSlotContents( slot );
         affirm( channelType, 'The grabbed item should have a channel type' );
 
         // Remove the channel from the model
         model.setSlotContents( model.getSlotForIndex( groupItem ), null );
 
         // Create a ChannelDragNode at the location of the selected item, in an offset position.
-        view.createFromKeyboard( channelType, [ this ] ); // TODO: swapped with the mouse one, watch out!!!!
+        grabbedNode = view.createFromKeyboard( channelType, [ this ], false ); // TODO: swapped with the mouse one, watch out!!!!
+        grabbedSlot = slot;
+        grabbedType = channelType;
 
-        // somehow, getNodeFromModelItem will need to work with this new ChannelDragNode instead of the
-
+        // somehow, getNodeFromModelItem will need to work with this new ChannelDragNode instead of the TODO: finish this sentence
+      },
+      onRelease: ( groupItem: SortItem ) => {
+        model.setSlotContents( grabbedSlot!, grabbedType );
+        grabbedNode!.dispose();
+        grabbedNode = null;
+        grabbedSlot = null;
+        grabbedType = null;
       },
 
       // Note that this range is not used by the implementation, but the min
       // must be negative so that we get a delta at the start.
       sortingRangeProperty: new Property( new Range( -10, 10 ) ),
       sortGroupItem: ( groupItem: SortItem, newValue: number ) => {
-        console.log( 'sortGroupItem' );
+        console.log( 'sortGroupItem', groupItem, newValue );
 
-        // Create a ChannelDragNode
-        // view.createFromKeyboard( type, [ this, channelNode ] ); // TODO: swapped with the mouse one, watch out!!!!
+        const oldSlotIndex = model.getSlotIndex( grabbedSlot! );
+        let newSlotIndex = oldSlotIndex + newValue;
 
+        if ( newSlotIndex < 0 ) {
+          newSlotIndex = 0;
+        }
+        if ( newSlotIndex >= 6 ) {
+          newSlotIndex = 6;
+        }
 
+        const newSlot = model.getSlotForIndex( newSlotIndex );
+        const newPosition = model.getSlotPosition( newSlot );
+
+        grabbedSlot = newSlot;
+
+        grabbedNode!.setModelPosition( new Vector2( newPosition, 10 ) );
       },
       getGroupItemToSelect: () => {
         const leftMostFilledSlot = model.getLeftmostFilledSlot();
@@ -184,6 +209,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         }
       },
       getNodeFromModelItem: model => {
+
         const indicatorNode = this.slotDragIndicatorNodes[ model ];
 
         if ( indicatorNode ) {

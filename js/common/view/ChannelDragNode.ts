@@ -30,6 +30,7 @@ import ObservationWindow from './ObservationWindow.js';
 
 export default class ChannelDragNode extends Node {
   private readonly dragListener: DragListener;
+  private readonly positionProperty: Vector2Property;
 
   public constructor(
     model: MembraneChannelsModel,
@@ -48,10 +49,12 @@ export default class ChannelDragNode extends Node {
 
     this.addChild( getChannelNode( type ) );
 
-    const positionProperty = new Vector2Property( modelPosition );
-    positionProperty.link( position => {
+    this.positionProperty = new Vector2Property( modelPosition );
+    this.positionProperty.link( position => {
       this.center = screenViewModelViewTransform.modelToViewPosition( position );
     } );
+
+    const positionProperty = this.positionProperty;
 
     // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
     const modelBoundsProperty = new DerivedProperty( [ visibleBoundsProperty ], visibleBounds => {
@@ -80,7 +83,7 @@ export default class ChannelDragNode extends Node {
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
-      positionProperty: positionProperty,
+      positionProperty: this.positionProperty,
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT,
       start: () => {
@@ -162,11 +165,11 @@ export default class ChannelDragNode extends Node {
           currentSlotIndex++;
           currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length );
           if ( currentSlotIndex >= model.slots.length ) {
-            positionProperty.value = new Vector2( 100, 50 );
+            this.positionProperty.value = new Vector2( 100, 50 );
           }
           else {
             const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
-            positionProperty.value = new Vector2( x, 10 );
+            this.positionProperty.value = new Vector2( x, 10 );
           }
         }
         if ( keysPressed.includes( 'arrowLeft' ) ) {
@@ -175,7 +178,7 @@ export default class ChannelDragNode extends Node {
           currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length - 1 );
 
           const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
-          positionProperty.value = new Vector2( x, 10 );
+          this.positionProperty.value = new Vector2( x, 10 );
         }
 
         if ( keysPressed.includes( 'home' ) ) {
@@ -213,6 +216,10 @@ export default class ChannelDragNode extends Node {
 
   public press( event: PressListenerEvent ): void {
     this.dragListener.press( event );
+  }
+
+  public setModelPosition( modelPosition: Vector2 ): void {
+    this.positionProperty.value = modelPosition;
   }
 }
 
