@@ -16,6 +16,7 @@ import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -396,6 +397,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   public setSlotContents( slot: Slot, type: ChannelType | null ): void {
+    affirm( slot !== null, 'slot is null' );
     this.slotContents.set( slot, type );
     this.slotContentsChangedEmitter.emit();
   }

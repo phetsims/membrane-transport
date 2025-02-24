@@ -7,6 +7,7 @@ import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
 import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
+import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -17,6 +18,7 @@ import ChannelDragNode from './ChannelDragNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
+// This is the index of the slot in the model
 type SortItem = number;
 
 /**
@@ -87,11 +89,16 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         // somehow, getNodeFromModelItem will need to work with this new ChannelDragNode instead of the TODO: finish this sentence
       },
       onRelease: ( groupItem: SortItem ) => {
-        model.setSlotContents( grabbedSlot!, grabbedType );
-        grabbedNode!.dispose();
-        grabbedNode = null;
-        grabbedSlot = null;
-        grabbedType = null;
+
+        // Triggered automatically on backspace/delete, so be graceful
+        // TODO: Hey Michael, why is this getting triggered from the delete/backspace key?
+        if ( grabbedSlot ) {
+          model.setSlotContents( grabbedSlot, grabbedType );
+          grabbedNode!.dispose();
+          grabbedNode = null;
+          grabbedSlot = null;
+          grabbedType = null;
+        }
       },
 
       // Note that this range is not used by the implementation, but the min
@@ -151,6 +158,38 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
     this.groupSortGroupFocusHighlightPath.shape = Shape.rect(
       -horizontalMargin, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
       horizontalMargin * 2 + MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight );
+
+    // add a keyboard listener to delete the currently grabbed item
+    const keyboardListener = new KeyboardListener( {
+      keys: [ 'escape', 'backspace', 'delete' ],
+      fire: ( event, keysPressed ) => {
+        console.log( 'keyboardListener', event, keysPressed );
+
+        if ( grabbedSlot ) {
+          if ( keysPressed === 'backspace' || keysPressed === 'delete' ) {
+
+            model.setSlotContents( grabbedSlot, null );
+            grabbedNode!.dispose();
+            grabbedNode = null;
+            grabbedSlot = null;
+
+            // next, tell the group sort interaction that nothing is grabbed.
+            const leftmostFilledSlot = model.getLeftmostFilledSlot();
+            if ( leftmostFilledSlot ) {
+              groupSelectModel.selectedGroupItemProperty.value = model.getSlotIndex( leftmostFilledSlot );
+            }
+            else {
+              groupSelectModel.selectedGroupItemProperty.value = null;
+            }
+
+            // TODO: Is there a better way to trigger this? We can ask Michael
+            observationWindow.blur();
+            observationWindow.focus();
+          }
+        }
+      }
+    } );
+    observationWindow.addInputListener( keyboardListener );
   }
 }
 
