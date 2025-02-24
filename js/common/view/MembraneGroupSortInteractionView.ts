@@ -75,7 +75,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         model.setSlotContents( model.getSlotForIndex( groupItem ), null );
 
         // Create a ChannelDragNode at the location of the selected item, in an offset position.
-        grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ], false ); // TODO: swapped with the mouse one, watch out!!!!
+        grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ] ); // TODO: swapped with the mouse one, watch out!!!!
         initialSlot = slot;
 
         // TODO: duplicated below
