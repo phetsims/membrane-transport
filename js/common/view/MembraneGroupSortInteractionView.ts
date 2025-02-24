@@ -36,7 +36,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
 
 
     const groupSelectModel = new GroupSelectModel<SortItem>( {
-      getGroupItemValue: slot => 0,
+      getGroupItemValue: slot => 0, // TODO
       tandem: Tandem.OPT_OUT // TODO?
     } );
 
@@ -130,6 +130,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
       },
       getNodeFromModelItem: model => {
 
+        // TODO: We probably don't want to use the slotDragIndicatorNodes for this.
         const indicatorNode = observationWindow.slotDragIndicatorNodes[ model ];
 
         if ( indicatorNode ) {
