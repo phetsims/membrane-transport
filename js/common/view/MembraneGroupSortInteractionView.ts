@@ -45,6 +45,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
     let grabbedNode: ChannelDragNode | null = null;
     let grabbedSlot: Slot | null = null;
     let grabbedType: ChannelType | null = null;
+    // let initialSlot: Slot | null = null; // TODO: Delete this if we don't need to return it to the original slot
 
     // TODO: This is in progress. We hope to use GroupSortInteractionView to drive the drag and drop behavior
     //   with a keyboard.
@@ -79,6 +80,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ], false ); // TODO: swapped with the mouse one, watch out!!!!
         grabbedSlot = slot;
         grabbedType = channelType;
+        // initialSlot = slot;
 
         // TODO: duplicated below
         const newPosition = model.getSlotPosition( slot );
@@ -97,6 +99,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
           grabbedNode!.dispose();
           grabbedNode = null;
           grabbedSlot = null;
+          // initialSlot = null;
           grabbedType = null;
         }
       },
@@ -159,9 +162,18 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
       -horizontalMargin, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
       horizontalMargin * 2 + MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight );
 
+    // Resets fields tracking what is grabbed, where it was grabbed from, etc that are saved at the beginning
+    // of an interaction.
+    const resetState = () => {
+      grabbedNode = null;
+      grabbedSlot = null;
+      // initialSlot = null;
+      grabbedType = null;
+    };
+
     // add a keyboard listener to delete the currently grabbed item
     const keyboardListener = new KeyboardListener( {
-      keys: [ 'escape', 'backspace', 'delete' ],
+      keys: [ 'backspace', 'delete' ],
       fire: ( event, keysPressed ) => {
         console.log( 'keyboardListener', event, keysPressed );
 
@@ -170,8 +182,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
 
             model.setSlotContents( grabbedSlot, null );
             grabbedNode!.dispose();
-            grabbedNode = null;
-            grabbedSlot = null;
+            resetState();
 
             // next, tell the group sort interaction that nothing is grabbed.
             const leftmostFilledSlot = model.getLeftmostFilledSlot();
@@ -186,6 +197,20 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
             observationWindow.blur();
             observationWindow.focus();
           }
+          // else {
+          //   TODO: The escape key behavior is built into GroupSortInteractionView and places the item
+          //     in the selected slot. Is that OK?
+          //   affirm( initialSlot, 'initialSlot should be set' );
+          //   model.setSlotContents( initialSlot, grabbedType );
+          //
+          //   grabbedNode!.dispose();
+          //
+          //   resetState();
+          //
+          //   groupSelectModel.selectedGroupItemProperty.value = null;
+          //   observationWindow.blur();
+          //   observationWindow.focus();
+          // }
         }
       }
     } );
