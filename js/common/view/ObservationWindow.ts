@@ -1,32 +1,24 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Emitter from '../../../../axon/js/Emitter.js';
-import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import Range from '../../../../dot/js/Range.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
-import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
-import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSelectView.js';
-import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
 import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsConstants, { LIGAND_COUNT, MODEL_HEIGHT } from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel, { ChannelType, Slot } from '../model/MembraneChannelsModel.js';
-import ChannelDragNode from './ChannelDragNode.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneGroupSortInteractionView from './MembraneGroupSortInteractionView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
@@ -48,9 +40,10 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
-  private readonly groupSelectView: GroupSelectView<IntentionalAny, Node>;
+  private readonly membraneGroupSortInteractionView: MembraneGroupSortInteractionView;
 
-  public constructor( private readonly model: MembraneChannelsModel, view: MembraneChannelsScreenView, modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
+  public constructor( private readonly model: MembraneChannelsModel, view: MembraneChannelsScreenView,
+                      public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
     const frameNode = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
@@ -116,128 +109,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
-    type SortItem = number;
-
-    const sampleRectangle = new Rectangle( 100, 100, 10, 10, {
-      fill: 'blue'
-    } );
-    this.addChild( sampleRectangle );
-
-    const groupSelectModel = new GroupSelectModel<SortItem>( {
-      getGroupItemValue: slot => 0,
-      tandem: Tandem.OPT_OUT // TODO?
-    } );
-
-    let grabbedNode: ChannelDragNode | null = null;
-    let grabbedSlot: Slot | null = null;
-    let grabbedType: ChannelType | null = null;
-
-    // TODO: This is in progress. We hope to use GroupSortInteractionView to drive the drag and drop behavior
-    //   with a keyboard.
-    this.groupSelectView = new GroupSortInteractionView<SortItem, Node>( groupSelectModel, this, {
-      getNextSelectedGroupItem: ( delta: number, currentlySelectedGroupItem: SortItem ) => {
-        const slot = model.getNextFilledSlot( delta, currentlySelectedGroupItem.toString() as Slot );
-
-        if ( slot === null ) {
-          return currentlySelectedGroupItem;
-        }
-        else {
-          return model.getSlotIndex( slot );
-        }
-
-        // return clamp( currentlySelectedGroupItem + delta, 0, 7 );
-      },
-
-      // Called when a selected item becomes "grabbed" for sorting
-      onGrab: ( groupItem: SortItem ) => {
-
-        // Make all the slots visible?
-        this.setSlotIndicatorsVisible( true );
-
-        const slot = model.getSlotForIndex( groupItem );
-        const channelType = model.getSlotContents( slot );
-        affirm( channelType, 'The grabbed item should have a channel type' );
-
-        // Remove the channel from the model
-        model.setSlotContents( model.getSlotForIndex( groupItem ), null );
-
-        // Create a ChannelDragNode at the location of the selected item, in an offset position.
-        grabbedNode = view.createFromKeyboard( channelType, [ this ], false ); // TODO: swapped with the mouse one, watch out!!!!
-        grabbedSlot = slot;
-        grabbedType = channelType;
-
-        // TODO: duplicated below
-        const newPosition = model.getSlotPosition( slot );
-        grabbedNode.setModelPosition( new Vector2( newPosition, 10 ) );
-
-        groupSelectModel.selectedGroupItemProperty.value = groupItem;
-
-        // somehow, getNodeFromModelItem will need to work with this new ChannelDragNode instead of the TODO: finish this sentence
-      },
-      onRelease: ( groupItem: SortItem ) => {
-        model.setSlotContents( grabbedSlot!, grabbedType );
-        grabbedNode!.dispose();
-        grabbedNode = null;
-        grabbedSlot = null;
-        grabbedType = null;
-      },
-
-      // Note that this range is not used by the implementation, but the min
-      // must be negative so that we get a delta at the start.
-      sortingRangeProperty: new Property( new Range( -10, 10 ) ),
-      sortGroupItem: ( groupItem: SortItem, newValue: number ) => {
-        console.log( 'sortGroupItem', groupItem, newValue );
-
-        const oldSlotIndex = model.getSlotIndex( grabbedSlot! );
-        let newSlotIndex = oldSlotIndex + newValue;
-
-        if ( newSlotIndex < 0 ) {
-          newSlotIndex = 0;
-        }
-        if ( newSlotIndex >= 6 ) {
-          newSlotIndex = 6;
-        }
-
-        const newSlot = model.getSlotForIndex( newSlotIndex );
-        const newPosition = model.getSlotPosition( newSlot );
-
-        grabbedSlot = newSlot;
-
-        grabbedNode!.setModelPosition( new Vector2( newPosition, 10 ) );
-
-        groupSelectModel.selectedGroupItemProperty.value = newSlotIndex;
-      },
-      getGroupItemToSelect: () => {
-        const leftMostFilledSlot = model.getLeftmostFilledSlot();
-        if ( leftMostFilledSlot ) {
-          return model.getSlotIndex( leftMostFilledSlot );
-        }
-        else {
-          return null;
-        }
-      },
-      getNodeFromModelItem: model => {
-
-        const indicatorNode = this.slotDragIndicatorNodes[ model ];
-
-        if ( indicatorNode ) {
-          return this.slotDragIndicatorNodes[ model ];
-        }
-        else {
-          return sampleRectangle;
-        }
-      },
-      grabReleaseCueOptions: {
-        center: this.bounds.center.plusXY( 0, modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
-      }
-    } );
-
-    // Specify shape around the membrane
-    const verticalFractionalHeight = 0.3;
-    const horizontalMargin = 5;
-    this.groupSelectView.groupSortGroupFocusHighlightPath.shape = Shape.rect(
-      -horizontalMargin, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
-      horizontalMargin * 2 + MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight );
+    this.membraneGroupSortInteractionView = new MembraneGroupSortInteractionView( model, view, this );
   }
 
   /**
