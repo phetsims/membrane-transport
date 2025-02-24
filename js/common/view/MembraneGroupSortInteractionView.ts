@@ -181,7 +181,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
             }
           }
           else {
-            // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key.
+            // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
             affirm( initialSlot, 'initialSlot should be set' );
             affirm( grabbedNode, 'grabbedNode should be set' );
             model.setSlotContents( initialSlot, grabbedNode.type );
@@ -190,7 +190,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
             grabbedNode.dispose();
             resetState();
 
-            // TODO: these come back in if we have to turn off the supertype escape listener.
+            // TODO: these come back in if we have to turn off the supertype escape listener. https://github.com/phetsims/scenery/issues/1692
             // isGroupItemKeyboardGrabbedProperty.value = false;
             // isKeyboardFocusedProperty.value = true;
 
