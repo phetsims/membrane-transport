@@ -22,6 +22,8 @@ const vboxOptions: VBoxOptions = {
 /**
  * In the "Membrane Channels" accordion box, show a tool icon that can be dragged to create a new channel.
  *
+ * TODO: When creating an item from the toolbox with the keyboard, try to forward, trigger and activate the MembraneGroupSortInteractionView
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class ChannelToolNode extends VBox {
