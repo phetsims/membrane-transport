@@ -36,7 +36,7 @@ export default class ChannelToolNode extends VBox {
       return {
         click: () => {
 
-          view.createFromKeyboard( type, [ this, channelNode ], true ); // TODO: swapped with the mouse one, watch out!!!!
+          view.forwardFromKeyboard( type );
         }
       };
     };

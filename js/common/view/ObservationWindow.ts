@@ -40,7 +40,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
-  private readonly membraneGroupSortInteractionView: MembraneGroupSortInteractionView;
+  public readonly membraneGroupSortInteractionView: MembraneGroupSortInteractionView;
 
   public constructor( private readonly model: MembraneChannelsModel, view: MembraneChannelsScreenView,
                       public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {

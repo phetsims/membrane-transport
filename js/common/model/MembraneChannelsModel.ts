@@ -71,6 +71,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   public getSlotPosition( slot: Slot ): number {
     return SLOT_POSITIONS[ slots.indexOf( slot ) ];
   }
+
   public readonly slots = slots;
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;

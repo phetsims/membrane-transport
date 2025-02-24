@@ -248,13 +248,26 @@ export default class MembraneChannelsScreenView extends ScreenView {
     membraneChannelNode.press( event );
   }
 
+  public forwardFromKeyboard( type: ChannelType ): void {
+    const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
+
+    this.model.setSlotContents( slot, type );
+
+    // TODO: There must be a better way to do this internally, https://github.com/phetsims/membrane-channels/issues/20
+    this.observationWindow.focus();
+    this.observationWindow.membraneGroupSortInteractionView.model.selectedGroupItemProperty.value = this.model.getSlotIndex( slot );
+    this.observationWindow.membraneGroupSortInteractionView.model.isGroupItemKeyboardGrabbedProperty.value = true;
+    this.observationWindow.membraneGroupSortInteractionView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
+    this.observationWindow.membraneGroupSortInteractionView.model.isKeyboardFocusedProperty.value = true;
+  }
+
   /**
    * Called when the user presses a membrane protein in the accordion box to create one.
    *
    * @param type
    * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
    */
-  public createFromKeyboard( type: ChannelType, homes: Node[], focus: boolean ): ChannelDragNode {
+  public createFromKeyboard( type: ChannelType, homes: Node[] ): ChannelDragNode {
 
     // TODO: duplicated with create from mouse
     // Move over the first available slot
@@ -269,10 +282,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
       type, slot
     );
     this.addChild( channelDragNode );
-
-    if ( focus ) {
-      channelDragNode.focus();
-    }
 
     // TODO: once keyboarded, prevent mouse+touch, or do this on init
     // channelDragNode.pickable = false; // keyboard only

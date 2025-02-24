@@ -3,12 +3,10 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
-import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -69,10 +67,9 @@ export default class ChannelDragNode extends Node {
         return slotDragIndicatorNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isSlotFilled( slotDragIndicatorNode.slot );
       } );
 
-      const closest = _.sortBy( overlappingSlotDragIndicatorNodes, slotDragIndicatorNode => {
+      return _.sortBy( overlappingSlotDragIndicatorNodes, slotDragIndicatorNode => {
         return slotDragIndicatorNode.globalBounds.center.distance( this.globalBounds.center );
       } )[ 0 ];
-      return closest;
     };
 
     // eslint-disable-next-line consistent-this,@typescript-eslint/no-this-alias
@@ -147,68 +144,6 @@ export default class ChannelDragNode extends Node {
       }
     } );
     this.addInputListener( this.dragListener );
-
-    let currentSlotIndex = initSlot === null ? 0 : model.getSlotIndex( initSlot );
-
-    // TODO: Move on hold
-    const keyboardInputListener = new KeyboardListener( {
-
-      // TODO: esc goes back to the toolbox
-      // TODO: on blur also go back to the toolbox
-      keys: [ 'arrowRight', 'arrowLeft', 'home', 'end', 'space', 'enter' ],
-      fire: ( event, keysPressed ) => {
-
-        if ( keysPressed.includes( 'arrowRight' ) ) {
-          console.log( 'right' );
-
-          // move to the next slot in the model.
-          currentSlotIndex++;
-          currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length );
-          if ( currentSlotIndex >= model.slots.length ) {
-            this.positionProperty.value = new Vector2( 100, 50 );
-          }
-          else {
-            const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
-            this.positionProperty.value = new Vector2( x, 10 );
-          }
-        }
-        if ( keysPressed.includes( 'arrowLeft' ) ) {
-          // move to the next slot in the model.
-          currentSlotIndex--;
-          currentSlotIndex = Utils.clamp( currentSlotIndex, 0, model.slots.length - 1 );
-
-          const x = model.getSlotPosition( model.getSlotForIndex( currentSlotIndex ) );
-          this.positionProperty.value = new Vector2( x, 10 );
-        }
-
-        if ( keysPressed.includes( 'home' ) ) {
-          //TODO:
-        }
-        if ( keysPressed.includes( 'end' ) ) {
-          //TODO:
-        }
-        if ( keysPressed.includes( 'space' ) || keysPressed.includes( 'enter' ) ) {
-
-          if ( currentSlotIndex >= model.slots.length ) {
-            this.dispose();
-            homes[ 0 ].focus();
-          }
-          else {
-            // if over an empty slot, fill it and delete the node
-            // const contents = model.getSlotContents( model.getSlotForIndex( currentSlotIndex ) );
-
-            // TODO: When dropping with mouse, it should also replace.
-              model.setSlotContents( model.getSlotForIndex( currentSlotIndex ), this.type );
-              this.dispose();
-
-              homes[ 0 ].focus();
-
-            //   // TODO: Same as above, but we may want to animate the old one back to the toolbox. Is animation valuable here, or would be a distraction?
-          }
-        }
-      }
-    } );
-    this.addInputListener( keyboardInputListener );
 
     // TODO: Interactive highlight?
     // this.setInteractiveHighlight( new HighlightFromNode( this ) );
