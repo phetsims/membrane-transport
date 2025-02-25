@@ -143,10 +143,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       },
       onRelease: ( groupItem: ItemModel ) => {
 
-        if ( groupItem === 'grabbedItem' ) {
+        // Guard against calls during delete
+        const currentSelection = this.currentSelection;
+        if ( groupItem === 'grabbedItem' && currentSelection ) {
 
-          const currentIndex = this.currentSelection!.currentIndex;
-          const grabbedNode = this.currentSelection!.grabbedNode;
+          const currentIndex = currentSelection.currentIndex;
+          const grabbedNode = currentSelection.grabbedNode;
 
           // Triggered automatically on backspace/delete, so be graceful
           if ( currentIndex >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
@@ -179,7 +181,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
             }
 
-            this.currentSelection!.grabbedNode.dispose();
+            currentSelection.grabbedNode.dispose();
             this.currentSelection = null;
           }
         }
@@ -200,11 +202,24 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       getNodeFromModelItem: model => {
 
         if ( model === 'grabbedItem' ) {
-          return this.currentSelection!.grabbedNode;
+
+          // Guard against calls during delete
+          if ( this.currentSelection ) {
+            return this.currentSelection.grabbedNode;
+          }
+          else {
+            return null;
+          }
         }
         else {
           const channelNodes = observationWindow.getChannelNodes();
-          return channelNodes[ model ].node;
+          const slottedNode = channelNodes[ model ];
+          if ( slottedNode ) {
+            return slottedNode.node;
+          }
+          else {
+            return null;
+          }
         }
       },
       grabReleaseCueOptions: {
@@ -227,53 +242,50 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     };
 
     // add a keyboard listener to delete the currently grabbed item
-    const keyboardListener = new KeyboardListener( {
-      keys: [ 'backspace', 'delete', 'escape' ],
-      fire: ( event, keysPressed ) => {
+    const deleteKeyboardListener = new KeyboardListener( {
+      keys: [ 'backspace', 'delete' ],
+      fire: () => {
 
         if ( groupSelectModel.isGroupItemKeyboardGrabbedProperty.value ) {
-          if ( keysPressed === 'backspace' || keysPressed === 'delete' ) {
 
-            resetState();
+          resetState();
 
-            groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
+          groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
 
-            // next, tell the group select interaction that nothing is grabbed.
-            const leftmostFilledSlot = membraneChannelsModel.getLeftmostFilledSlot();
-            if ( leftmostFilledSlot ) {
-              groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( leftmostFilledSlot );
-            }
-            else {
-              groupSelectModel.selectedGroupItemProperty.value = null;
-            }
+          // next, tell the group select interaction that nothing is grabbed.
+          groupSelectModel.selectedGroupItemProperty.value = this.observationWindow.getChannelNodes().length > 0 ? 0 : null;
 
-            // TODO: If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
-            // See how this is done via keyboardDroppedMembraneChannel when something is dropped in the membrane
-          }
-          else {
-            // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
-            // TODO: JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
-
-            const initialSlot = this.currentSelection!.initialSlot;
-            const grabbedNode = this.currentSelection!.grabbedNode;
-
-            affirm( initialSlot, 'initialSlot should be set' );
-            affirm( grabbedNode, 'grabbedNode should be set' );
-            membraneChannelsModel.setSlotContents( initialSlot, grabbedNode.type );
-
-            const tempInitialSlot = initialSlot;
-            resetState();
-
-            // TODO: these come back in if we have to turn off the supertype escape listener. https://github.com/phetsims/scenery/issues/1692
-            // isGroupItemKeyboardGrabbedProperty.value = false;
-            // isKeyboardFocusedProperty.value = true;
-
-            groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( tempInitialSlot );
-          }
+          // TODO: If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
+          // See how this is done via keyboardDroppedMembraneChannel when something is dropped in the membrane
         }
       }
     } );
-    observationWindow.addInputListener( keyboardListener );
+    observationWindow.addInputListener( deleteKeyboardListener );
+
+    const escKeyboardListener = new KeyboardListener( {
+      keys: [ 'escape' ],
+      fire: () => {
+        // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
+        // TODO: JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
+
+        const initialSlot = this.currentSelection!.initialSlot;
+        const grabbedNode = this.currentSelection!.grabbedNode;
+
+        affirm( initialSlot, 'initialSlot should be set' );
+        affirm( grabbedNode, 'grabbedNode should be set' );
+        membraneChannelsModel.setSlotContents( initialSlot, grabbedNode.type );
+
+        const tempInitialSlot = initialSlot;
+        resetState();
+
+        // TODO: these come back in if we have to turn off the supertype escape listener. https://github.com/phetsims/scenery/issues/1692
+        // isGroupItemKeyboardGrabbedProperty.value = false;
+        // isKeyboardFocusedProperty.value = true;
+
+        groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( tempInitialSlot );
+      }
+    } );
+    observationWindow.addInputListener( escKeyboardListener );
   }
 
   private initialDragWork( slot: Slot, channelType: ChannelType ): void {
