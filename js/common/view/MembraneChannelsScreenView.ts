@@ -43,6 +43,7 @@ type SelfOptions = EmptySelfOptions;
 type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class MembraneChannelsScreenView extends ScreenView {
+
   private readonly observationWindow: ObservationWindow;
 
   private readonly resetEmitter = new Emitter();
@@ -56,6 +57,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
   );
   public readonly screenViewModelViewTransform: ModelViewTransform2;
+  private afterRelease: ( () => void ) | null = null;
 
   public constructor(
     public readonly model: MembraneChannelsModel,
@@ -248,7 +250,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     membraneChannelNode.press( event );
   }
 
-  public forwardFromKeyboard( type: ChannelType ): void {
+  public forwardFromKeyboard( type: ChannelType, returnFocusNode: Node ): void {
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
 
     this.model.setSlotContents( slot, type );
@@ -259,6 +261,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.observationWindow.membraneGroupSortInteractionView.model.isGroupItemKeyboardGrabbedProperty.value = true;
     this.observationWindow.membraneGroupSortInteractionView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
     this.observationWindow.membraneGroupSortInteractionView.model.isKeyboardFocusedProperty.value = true;
+
+    this.afterRelease = () => returnFocusNode.focus();
   }
 
   /**
@@ -302,6 +306,11 @@ export default class MembraneChannelsScreenView extends ScreenView {
    */
   public override step( dt: number ): void {
     this.stepEmitter.emit( dt );
+  }
+
+  public keyboardDroppedMembraneChannelInTheMembrane(): void {
+    this.afterRelease && this.afterRelease();
+    this.afterRelease = null;
   }
 }
 

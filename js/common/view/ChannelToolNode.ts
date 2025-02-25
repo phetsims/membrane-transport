@@ -36,7 +36,7 @@ export default class ChannelToolNode extends VBox {
       return {
         click: () => {
 
-          view.forwardFromKeyboard( type );
+          view.forwardFromKeyboard( type, this );
         }
       };
     };

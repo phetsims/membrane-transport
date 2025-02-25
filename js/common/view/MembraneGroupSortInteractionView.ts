@@ -94,6 +94,8 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
           grabbedNode.dispose();
           grabbedNode = null;
           initialSlot = null;
+
+          view.keyboardDroppedMembraneChannelInTheMembrane();
         }
       },
 
