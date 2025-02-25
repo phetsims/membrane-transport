@@ -12,13 +12,19 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
-import MembraneChannelsModel, { Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType, Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 // This is the index of the slot in the model, or if an item has been grabbed.
 type SortItem = number | 'grabbedItem';
+
+type Selection = {
+  grabbedNode: ChannelDragNode;
+  initialSlot: Slot;
+  currentIndex: number;
+};
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
@@ -28,8 +34,12 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10;
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class MembraneGroupSelectView extends GroupSelectView<SortItem, Node> {
-  public constructor( model: MembraneChannelsModel, view: MembraneChannelsScreenView, observationWindow: ObservationWindow ) {
 
+  private currentSelection: Selection | null = null;
+
+  public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
+
+    // TODO: Delete this! We don't need it any more.
     const returnToToolboxRectangle = new Rectangle( 0, 0, 50, 50, {
       fill: 'blue',
       centerX: observationWindow.bounds.width - 30,
@@ -42,10 +52,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
       getGroupItemValue: slotIndex => 0, // TODO
       tandem: Tandem.OPT_OUT // TODO?
     } );
-
-    let grabbedNode: ChannelDragNode | null = null;
-    let initialSlot: Slot | null = null;
-    let currentIndex: number | null = null;
 
     // A list of all keys that are listened to, except those covered by the numberKeyMapper
     // TODO: Copied from GroupSortInteraction
@@ -98,18 +104,21 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
               const delta = getDeltaForKey( keysPressed )!;
               assert && assert( delta !== null, 'should be a supported key' );
 
-              const newIndex = clamp( currentIndex! + delta, 0, SLOT_COUNT );
+              const grabbedNode = this.currentSelection!.grabbedNode;
+              const currentIndex = this.currentSelection!.currentIndex;
+
+              const newIndex = clamp( currentIndex + delta, 0, SLOT_COUNT );
 
               if ( newIndex === SLOT_COUNT ) {
-                grabbedNode!.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
+                grabbedNode.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
               }
               else {
-                const newSlot = model.getSlotForIndex( newIndex );
-                const newPosition = model.getSlotPosition( newSlot );
-                grabbedNode!.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
+                const newSlot = membraneChannelsModel.getSlotForIndex( newIndex );
+                const newPosition = membraneChannelsModel.getSlotPosition( newSlot );
+                grabbedNode.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
               }
 
-              currentIndex = newIndex;
+              this.currentSelection!.currentIndex = newIndex;
             }
           }
           else {
@@ -145,22 +154,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
         else {
           const slot = observationWindow.getChannelNodes()[ groupItem ].slot;
 
-          // Make all the slots visible?
-          observationWindow.setSlotIndicatorsVisible( true );
-
-          const channelType = model.getSlotContents( slot );
+          const channelType = membraneChannelsModel.getSlotContents( slot );
           affirm( channelType, 'The grabbed item should have a channel type' );
 
           // Remove the channel from the model
-          model.setSlotContents( slot, null );
+          membraneChannelsModel.setSlotContents( slot, null );
 
-          // Create a ChannelDragNode at the location of the selected item, in an offset position.
-          grabbedNode = view.createFromKeyboard( channelType );
-          initialSlot = slot;
-          currentIndex = model.getSlotIndex( slot );
+          this.initialDragWork( slot, channelType );
 
-          // Offset above the membrane so it is clear it isn't in the model
-          grabbedNode.setModelPosition( new Vector2( model.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
       },
@@ -168,13 +169,16 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
 
         if ( groupItem === 'grabbedItem' ) {
 
+          const currentIndex = this.currentSelection!.currentIndex;
+          const grabbedNode = this.currentSelection!.grabbedNode;
+
           // Triggered automatically on backspace/delete, so be graceful
-          if ( currentIndex! >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
+          if ( currentIndex >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
 
             // when returning focus here
-            const droppedIntoSlot = model.getSlotForIndex( currentIndex! );
-            if ( currentIndex! < SLOT_COUNT ) {
-              model.setSlotContents( droppedIntoSlot, grabbedNode.type );
+            const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentIndex );
+            if ( currentIndex < SLOT_COUNT ) {
+              membraneChannelsModel.setSlotContents( droppedIntoSlot, grabbedNode.type );
             }
 
             // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
@@ -190,7 +194,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
             } );
 
             // Dropped into membrane
-            if ( currentIndex! < SLOT_COUNT ) {
+            if ( currentIndex < SLOT_COUNT ) {
               groupSelectModel.selectedGroupItemProperty.value = selectedIndex;
             }
             else {
@@ -199,10 +203,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
               groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
             }
 
-            grabbedNode.dispose();
-            grabbedNode = null;
-            initialSlot = null;
-            currentIndex = null;
+            this.currentSelection.grabbedNode.dispose();
+            this.currentSelection = null;
           }
         }
         else {
@@ -222,7 +224,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
       getNodeFromModelItem: model => {
 
         if ( model === 'grabbedItem' ) {
-          return grabbedNode;
+          return this.currentSelection!.grabbedNode;
         }
         else {
           const channelNodes = observationWindow.getChannelNodes();
@@ -244,8 +246,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
     // Resets fields tracking what is grabbed, where it was grabbed from, etc that are saved at the beginning
     // of an interaction.
     const resetState = () => {
-      grabbedNode = null;
-      initialSlot = null;
+      this.currentSelection?.grabbedNode.dispose();
+      this.currentSelection = null;
     };
 
     // add a keyboard listener to delete the currently grabbed item
@@ -256,15 +258,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
         if ( groupSelectModel.isGroupItemKeyboardGrabbedProperty.value ) {
           if ( keysPressed === 'backspace' || keysPressed === 'delete' ) {
 
-            grabbedNode!.dispose();
             resetState();
 
             groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
 
             // next, tell the group sort interaction that nothing is grabbed.
-            const leftmostFilledSlot = model.getLeftmostFilledSlot();
+            const leftmostFilledSlot = membraneChannelsModel.getLeftmostFilledSlot();
             if ( leftmostFilledSlot ) {
-              groupSelectModel.selectedGroupItemProperty.value = model.getSlotIndex( leftmostFilledSlot );
+              groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( leftmostFilledSlot );
             }
             else {
               groupSelectModel.selectedGroupItemProperty.value = null;
@@ -276,24 +277,53 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
           else {
             // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
             // TODO: JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
+
+            const initialSlot = this.currentSelection!.initialSlot;
+            const grabbedNode = this.currentSelection!.grabbedNode;
+
             affirm( initialSlot, 'initialSlot should be set' );
             affirm( grabbedNode, 'grabbedNode should be set' );
-            model.setSlotContents( initialSlot, grabbedNode.type );
+            membraneChannelsModel.setSlotContents( initialSlot, grabbedNode.type );
 
             const tempInitialSlot = initialSlot;
-            grabbedNode.dispose();
             resetState();
 
             // TODO: these come back in if we have to turn off the supertype escape listener. https://github.com/phetsims/scenery/issues/1692
             // isGroupItemKeyboardGrabbedProperty.value = false;
             // isKeyboardFocusedProperty.value = true;
 
-            groupSelectModel.selectedGroupItemProperty.value = model.getSlotIndex( tempInitialSlot );
+            groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( tempInitialSlot );
           }
         }
       }
     } );
     observationWindow.addInputListener( keyboardListener );
+  }
+
+  private initialDragWork( slot: Slot, channelType: ChannelType ): void {
+
+    // Create a ChannelDragNode at the location of the selected item, in an offset position.
+    this.currentSelection = {
+      grabbedNode: this.view.createFromKeyboard( channelType ),
+      initialSlot: slot,
+      currentIndex: this.membraneChannelsModel.getSlotIndex( slot )
+    };
+
+    // Offset above the membrane so it is clear it isn't in the model
+    this.currentSelection.grabbedNode.setModelPosition( new Vector2( this.membraneChannelsModel.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
+  }
+
+  public forwardFromKeyboard( slot: Slot, channelType: ChannelType ): void {
+    this.observationWindow.focus();
+
+    // TODO: There must be a better way to do this internally, https://github.com/phetsims/membrane-channels/issues/20
+    this.observationWindow.membraneGroupSelectView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
+    this.observationWindow.membraneGroupSelectView.model.isKeyboardFocusedProperty.value = true;
+
+    this.initialDragWork( slot, channelType );
+
+    this.observationWindow.membraneGroupSelectView.model.selectedGroupItemProperty.value = 'grabbedItem';
+    this.observationWindow.membraneGroupSelectView.model.isGroupItemKeyboardGrabbedProperty.value = true;
   }
 }
 

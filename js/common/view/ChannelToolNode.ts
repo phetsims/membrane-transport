@@ -22,16 +22,12 @@ const vboxOptions: VBoxOptions = {
 /**
  * In the "Membrane Channels" accordion box, show a tool icon that can be dragged to create a new channel.
  *
- * TODO: When creating an item from the toolbox with the keyboard, try to forward, trigger and activate the MembraneGroupSortInteractionView
- *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class ChannelToolNode extends VBox {
   public constructor( type: ChannelType, label: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
 
     // Space/Enter activates and adds to Membrane (LEFTMOST, first available spot).
-    // However, do not move the focus to the newly created item. Keyboard focus should remain in the toolbox so the
-    // user can add several channels. BF 2025/02/12
     const clickToAdd = () => {
       return {
         click: () => {
