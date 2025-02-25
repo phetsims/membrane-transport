@@ -190,11 +190,13 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( insideSoluteControlNode );
 
     const rightSideVBoxChildren: Node[] = [];
+    const accordionBoxGroupElements: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
       const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, this.observationWindowModelViewTransform, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), this );
       this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
       rightSideVBoxChildren.push( membraneChannelsAccordionBoxGroup );
+      accordionBoxGroupElements.push( membraneChannelsAccordionBoxGroup );
     }
 
     if ( getFeatureSetHasVoltages( model.featureSet ) ) {
@@ -216,10 +218,20 @@ export default class MembraneChannelsScreenView extends ScreenView {
     } );
     this.addChild( rightSideVBox );
 
-    // pdom order
-    // TODO (design:a11y) - Identify which components go in each section.
-    this.pdomPlayAreaNode.pdomOrder = [ solutesPanel, ...soluteControls, rightSideVBox, this.observationWindow ];
-    this.pdomControlAreaNode.pdomOrder = [ soluteBarChartsAccordionBox, timeControlNode, resetAllButton ];
+    this.pdomPlayAreaNode.pdomOrder = [
+      solutesPanel,
+      ...soluteControls,
+      soluteBarChartsAccordionBox,
+      this.observationWindow,
+      rightSideVBox,
+      ...this.observationWindow.ligandNodes
+    ];
+
+    this.pdomControlAreaNode.pdomOrder = [
+      trashButton,
+      timeControlNode,
+      resetAllButton
+    ];
 
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );

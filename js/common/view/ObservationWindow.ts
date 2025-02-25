@@ -34,7 +34,7 @@ import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
 export default class ObservationWindow extends InteractiveHighlightingNode {
 
-  private readonly ligandNodes: LigandNode[] = [];
+  public readonly ligandNodes: LigandNode[] = [];
   public readonly slotDragIndicatorNodes: SlotDragIndicatorNode[];
 
   private readonly stepEmitter = new Emitter<[ number ]>( {
