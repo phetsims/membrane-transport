@@ -223,6 +223,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       },
       grabReleaseCueOptions: {
         center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
+      },
+      grabReleaseKeyboardListenerOptions: {
+        fireOnDown: false
       }
     } );
 
