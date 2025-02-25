@@ -8,7 +8,6 @@ import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-so
 import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSelectView.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
@@ -38,15 +37,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
   private currentSelection: Selection | null = null;
 
   public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
-
-    // TODO: Delete this! We don't need it any more.
-    const returnToToolboxRectangle = new Rectangle( 0, 0, 50, 50, {
-      fill: 'blue',
-      centerX: observationWindow.bounds.width - 30,
-      centerY: observationWindow.bounds.height / 4 - 23,
-      opacity: 0
-    } );
-    observationWindow.addChild( returnToToolboxRectangle );
 
     const groupSelectModel = new GroupSelectModel<SortItem>( {
       getGroupItemValue: slotIndex => 0, // TODO
