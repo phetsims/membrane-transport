@@ -31,6 +31,7 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10;
  * Keyboard interaction for channels on the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 export default class MembraneGroupSelectView extends GroupSelectView<SortItem, Node> {
 
