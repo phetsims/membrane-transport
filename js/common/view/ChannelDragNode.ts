@@ -120,7 +120,7 @@ export default class ChannelDragNode extends Node {
         else {
 
           // Animate back to the closest home
-          if ( homes[ 0 ].isVisible() ) {
+          if ( homes.length > 0 && homes[ 0 ].isVisible() ) {
 
             myself.pickable = false; // Prevent being grabbed on the way home
 

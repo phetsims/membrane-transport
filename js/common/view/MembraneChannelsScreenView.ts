@@ -281,9 +281,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * Called when the user presses a membrane protein in the accordion box to create one.
    *
    * @param type
-   * @param homes - the nodes that the membrane protein can be returned to, in sequential order (1st visible one takes precedence)
    */
-  public createFromKeyboard( type: ChannelType, homes: Node[] ): ChannelDragNode {
+  public createFromKeyboard( type: ChannelType ): ChannelDragNode {
 
     // TODO: duplicated with create from mouse
     // Move over the first available slot
@@ -294,7 +293,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const channelDragNode = new ChannelDragNode(
       this.model, this.observationWindow, this.screenViewModelViewTransform,
-      modelPoint, this.visibleBoundsProperty, homes,
+      modelPoint, this.visibleBoundsProperty, [],
       type, slot
     );
     this.addChild( channelDragNode );
