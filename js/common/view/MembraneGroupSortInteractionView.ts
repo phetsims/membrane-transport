@@ -114,7 +114,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         const newSlotIndex = clamp( oldSlotIndex + newValue, 0, SLOT_COUNT );
 
         if ( newSlotIndex === SLOT_COUNT ) {
-          grabbedNode!.setModelPosition( new Vector2( 90, 50 ) );
+          grabbedNode!.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
         }
         else {
           const newSlot = model.getSlotForIndex( newSlotIndex );
