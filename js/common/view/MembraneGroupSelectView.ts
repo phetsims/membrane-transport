@@ -56,13 +56,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
      * Get the delta to change the value given what key was pressed. The returned delta may not result in a value in range,
      * please constrain value from range or provide your own defensive measures to this delta.
      */
-    const getDeltaForKey = ( key: string ): number | null => {
+    const getDeltaForKey = ( key: string ): number => {
       const fullRange = SLOT_COUNT + 1;
       return key === 'home' ? -fullRange :
              key === 'end' ? fullRange :
              [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key ) ? -1 :
              [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( key ) ? 1 :
-             null;
+             0;
     };
 
     // // TODO: Mostly Copied from GroupSortInteraction
@@ -82,8 +82,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             // Don't do any movement when disabled
             // For these keys, the item will move by a particular delta
             if ( this.model.enabled && movementKeys.includes( keysPressed ) ) {
-              const delta = getDeltaForKey( keysPressed )!;
-              assert && assert( delta !== null, 'should be a supported key' );
+              const delta = getDeltaForKey( keysPressed );
 
               const grabbedNode = this.currentSelection!.grabbedNode;
               const currentIndex = this.currentSelection!.currentIndex;
@@ -105,17 +104,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           else {
 
             // Selecting an item
-            const unclampedDelta = getDeltaForKey( keysPressed );
-            if ( unclampedDelta !== null ) {
-              this.model.hasKeyboardSelectedGroupItemProperty.value = true;
+            const delta = getDeltaForKey( keysPressed );
+            this.model.hasKeyboardSelectedGroupItemProperty.value = true;
 
-              const channelNodes = observationWindow.getChannelNodes();
+            const channelNodes = observationWindow.getChannelNodes();
 
-              const selectMax = channelNodes.length - 1;
-              const clampedDelta = clamp( oldValue + unclampedDelta, 0, selectMax );
-
-              groupSelectModel.selectedGroupItemProperty.value = clampedDelta;
-            }
+            const selectMax = channelNodes.length - 1;
+            groupSelectModel.selectedGroupItemProperty.value = clamp( oldValue + delta, 0, selectMax );
           }
           this.onGroupItemChange( groupItem );
         }
