@@ -22,7 +22,7 @@ import ObservationWindow from './ObservationWindow.js';
 type SortItem = number;
 
 /**
- *
+ * Keyboard interaction for channels on the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
