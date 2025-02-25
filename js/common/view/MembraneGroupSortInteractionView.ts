@@ -103,6 +103,8 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
           grabbedNode = null;
           initialSlot = null;
 
+          // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
+          // TODO: However, when dropping an item with enter, focus incorrectly stays on the group and creates another channel on the left.
           view.keyboardDroppedMembraneChannel();
         }
       },
@@ -185,6 +187,9 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
             else {
               groupSelectModel.selectedGroupItemProperty.value = null;
             }
+
+            // TODO: If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
+            // See how this is done via keyboardDroppedMembraneChannel when something is dropped in the membrane
           }
           else {
             // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
