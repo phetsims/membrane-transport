@@ -47,13 +47,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
     // TODO: Copied from GroupSortInteraction
     const sortingKeys = [
       'd', 'arrowRight', 'a', 'arrowLeft', 'arrowUp', 'arrowDown', 'w', 's', // default-step sort
-      'shift+d', 'shift+arrowRight', 'shift+a', 'shift+arrowLeft', 'shift+arrowUp', 'shift+arrowDown', 'shift+w', 'shift+s', // shift-step sort
-      'pageUp', 'pageDown', // page-step sort
       'home', 'end' // min/max
     ] as const;
-
-
-    const sortStep = 1;
 
     // TODO: Copied from GroupSortInteraction
     /**
@@ -61,15 +56,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
      * please constrain value from range or provide your own defensive measures to this delta.
      */
     const getDeltaForKey = ( key: string ): number | null => {
-      const fullRange = 7;
+      const fullRange = SLOT_COUNT + 1;
       return key === 'home' ? -fullRange :
              key === 'end' ? fullRange :
-               // key === 'pageDown' ? -this.pageSortStep :
-               // key === 'pageUp' ? this.pageSortStep :
-             [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key ) ? -sortStep :
-             [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( key ) ? sortStep :
-               // [ 'shift+arrowLeft', 'shift+a', 'shift+arrowDown', 'shift+s' ].includes( key ) ? -this.shiftSortStep :
-               // [ 'shift+arrowRight', 'shift+d', 'shift+arrowUp', 'shift+w' ].includes( key ) ? this.shiftSortStep :
+             [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key ) ? -1 :
+             [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( key ) ? 1 :
              null;
     };
 
