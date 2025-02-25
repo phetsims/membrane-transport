@@ -192,6 +192,10 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.slotContents.forEach( ( value, key ) => this.slotContents.set( key, null ) );
       this.slotContentsChangedEmitter.emit();
     } );
+
+    // TODO: For testing
+    this.setSlotContents( '3', 'sodiumIonVoltageGatedChannel' );
+    this.setSlotContents( '5', 'sodiumIonLeakageChannel' );
   }
 
   /**

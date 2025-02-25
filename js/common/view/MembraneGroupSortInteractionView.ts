@@ -169,24 +169,40 @@ export default class MembraneGroupSortInteractionView extends GroupSelectView<So
         if ( groupItem === 'grabbedItem' ) {
 
           // Triggered automatically on backspace/delete, so be graceful
-          if ( currentIndex! > 0 && grabbedNode && !grabbedNode.isDisposed ) {
+          if ( currentIndex! >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
 
-            // TODO: After dropping back in the membrane, clear the selected index so the empty spot by the toolbox is no longer selected
             // when returning focus here
-
+            const droppedIntoSlot = model.getSlotForIndex( currentIndex! );
             if ( currentIndex! < SLOT_COUNT ) {
-              model.setSlotContents( model.getSlotForIndex( currentIndex! ), grabbedNode.type );
+              model.setSlotContents( droppedIntoSlot, grabbedNode.type );
             }
-
-            grabbedNode.dispose();
-            grabbedNode = null;
-            initialSlot = null;
 
             // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
             // TODO: However, when dropping an item with enter, focus incorrectly stays on the group and creates another channel on the left.
             view.keyboardDroppedMembraneChannel();
 
-            groupSelectModel.selectedGroupItemProperty.value = 0;
+            // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
+            let selectedIndex = null;
+            observationWindow.getChannelNodes().forEach( ( node, index ) => {
+              if ( node.slot === droppedIntoSlot ) {
+                selectedIndex = index;
+              }
+            } );
+
+            // Dropped into membrane
+            if ( currentIndex! < SLOT_COUNT ) {
+              groupSelectModel.selectedGroupItemProperty.value = selectedIndex;
+            }
+            else {
+
+              // dropped into toolbox
+              groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
+            }
+
+            grabbedNode.dispose();
+            grabbedNode = null;
+            initialSlot = null;
+            currentIndex = null;
           }
         }
         else {
