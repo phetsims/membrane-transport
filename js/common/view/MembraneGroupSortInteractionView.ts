@@ -22,6 +22,7 @@ import ObservationWindow from './ObservationWindow.js';
 // This is the index of the slot in the model
 type SortItem = number;
 
+const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
 /**
  * Keyboard interaction for channels on the membrane.
@@ -47,8 +48,6 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
     let grabbedNode: ChannelDragNode | null = null;
     let initialSlot: Slot | null = null;
 
-    // TODO: This is in progress. We hope to use GroupSortInteractionView to drive the drag and drop behavior
-    //   with a keyboard.
     super( groupSelectModel, observationWindow, {
       getNextSelectedGroupItem: ( delta: number, currentlySelectedGroupItem: SortItem ) => {
 
@@ -79,13 +78,9 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ] ); // TODO: swapped with the mouse one, watch out!!!!
         initialSlot = slot;
 
-        // TODO: duplicated below
-        const newPosition = model.getSlotPosition( slot );
-        grabbedNode.setModelPosition( new Vector2( newPosition, 10 ) );
-
+        // Offset above the membrane so it is clear it isn't in the model
+        grabbedNode.setModelPosition( new Vector2( model.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
         groupSelectModel.selectedGroupItemProperty.value = groupItem;
-
-        // somehow, getNodeFromModelItem will need to work with this new ChannelDragNode instead of the TODO: finish this sentence
       },
       onRelease: ( groupItem: SortItem ) => {
 
@@ -121,7 +116,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         else {
           const newSlot = model.getSlotForIndex( newSlotIndex );
           const newPosition = model.getSlotPosition( newSlot );
-          grabbedNode!.setModelPosition( new Vector2( newPosition, 10 ) );
+          grabbedNode!.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
         }
 
         groupSelectModel.selectedGroupItemProperty.value = newSlotIndex;
