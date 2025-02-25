@@ -2,6 +2,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
+import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -13,13 +14,14 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
-import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 // This is the index of the slot in the model
 type SortItem = number;
+
 
 /**
  * Keyboard interaction for channels on the membrane.
@@ -29,13 +31,13 @@ type SortItem = number;
 export default class MembraneGroupSortInteractionView extends GroupSortInteractionView<SortItem, Node> {
   public constructor( model: MembraneChannelsModel, view: MembraneChannelsScreenView, observationWindow: ObservationWindow ) {
 
-    const sampleRectangle = new Rectangle( 100, 100, 10, 10, {
-      fill: 'blue'
+    const returnToToolboxRectangle = new Rectangle( 0, 0, 50, 50, {
+      fill: 'blue',
+      centerX: observationWindow.bounds.width - 30,
+      centerY: observationWindow.bounds.height / 4 - 23,
+      opacity: 0
     } );
-    // this.addChild( sampleRectangle );
-
-    // super( );
-
+    observationWindow.addChild( returnToToolboxRectangle );
 
     const groupSelectModel = new GroupSelectModel<SortItem>( {
       getGroupItemValue: slot => 0, // TODO
@@ -49,7 +51,8 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
     //   with a keyboard.
     super( groupSelectModel, observationWindow, {
       getNextSelectedGroupItem: ( delta: number, currentlySelectedGroupItem: SortItem ) => {
-        const slot = model.getNextFilledSlot( delta, currentlySelectedGroupItem.toString() as Slot );
+
+        const slot = model.getNextFilledSlot( delta, currentlySelectedGroupItem );
 
         if ( slot === null ) {
           return currentlySelectedGroupItem;
@@ -57,8 +60,6 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         else {
           return model.getSlotIndex( slot );
         }
-
-        // return clamp( currentlySelectedGroupItem + delta, 0, 7 );
       },
 
       // Called when a selected item becomes "grabbed" for sorting
@@ -72,7 +73,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
         affirm( channelType, 'The grabbed item should have a channel type' );
 
         // Remove the channel from the model
-        model.setSlotContents( model.getSlotForIndex( groupItem ), null );
+        model.setSlotContents( slot, null );
 
         // Create a ChannelDragNode at the location of the selected item, in an offset position.
         grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ] ); // TODO: swapped with the mouse one, watch out!!!!
@@ -90,33 +91,36 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
 
         // Triggered automatically on backspace/delete, so be graceful
         if ( grabbedNode && !grabbedNode.isDisposed ) {
-          model.setSlotContents( model.getSlotForIndex( groupItem ), grabbedNode.type );
+
+          // TODO: After dropping back in the membrane, clear the selected index so the empty spot by the toolbox is no longer selected
+          // when returning focus here
+
+          if ( groupItem < SLOT_COUNT ) {
+            model.setSlotContents( model.getSlotForIndex( groupItem ), grabbedNode.type );
+          }
+
           grabbedNode.dispose();
           grabbedNode = null;
           initialSlot = null;
 
-          view.keyboardDroppedMembraneChannelInTheMembrane();
+          view.keyboardDroppedMembraneChannel();
         }
       },
 
-      // Note that this range is not used by the implementation, but the min
-      // must be negative so that we get a delta at the start.
+      // Note that this range is not used by the implementation, but the min must be negative so that we get a delta at the start.
       sortingRangeProperty: new Property( new Range( -10, 10 ) ),
       sortGroupItem: ( oldSlotIndex: SortItem, newValue: number ) => {
 
-        let newSlotIndex = oldSlotIndex + newValue;
+        const newSlotIndex = clamp( oldSlotIndex + newValue, 0, SLOT_COUNT );
 
-        if ( newSlotIndex < 0 ) {
-          newSlotIndex = 0;
+        if ( newSlotIndex === SLOT_COUNT ) {
+          grabbedNode!.setModelPosition( new Vector2( 90, 50 ) );
         }
-        if ( newSlotIndex >= 6 ) {
-          newSlotIndex = 6;
+        else {
+          const newSlot = model.getSlotForIndex( newSlotIndex );
+          const newPosition = model.getSlotPosition( newSlot );
+          grabbedNode!.setModelPosition( new Vector2( newPosition, 10 ) );
         }
-
-        const newSlot = model.getSlotForIndex( newSlotIndex );
-        const newPosition = model.getSlotPosition( newSlot );
-
-        grabbedNode!.setModelPosition( new Vector2( newPosition, 10 ) );
 
         groupSelectModel.selectedGroupItemProperty.value = newSlotIndex;
       },
@@ -138,7 +142,7 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
           return observationWindow.slotDragIndicatorNodes[ model ];
         }
         else {
-          return sampleRectangle;
+          return returnToToolboxRectangle;
         }
       },
       grabReleaseCueOptions: {

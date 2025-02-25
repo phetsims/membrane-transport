@@ -56,7 +56,7 @@ export type ChannelType =
   'potassiumIonLeakageChannel' |
   'sodiumIonVoltageGatedChannel';
 
-const SLOT_COUNT = 7;
+export const SLOT_COUNT = 7;
 const SLOT_MAX_X = 84;
 const SLOT_SPACING = ( SLOT_MAX_X * 2 ) / ( SLOT_COUNT - 1 );
 const SLOT_POSITIONS: number[] = [];
@@ -361,38 +361,6 @@ export default class MembraneChannelsModel extends PhetioObject {
     return slots.find( slot => !this.slotContents.get( slot ) ) || null;
   }
 
-  /**
-   * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
-   * Please see that documentation for more information.
-   */
-  public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
-    valueType: MembraneChannelsModel,
-    stateSchema: {
-      solutes: ReferenceArrayIO( Particle.ParticleIO ),
-      ligands: ReferenceArrayIO( Particle.ParticleIO ),
-      fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
-      time: NumberIO,
-      soluteTypeFlux: ObjectLiteralIO,
-      slotContents: MapIO( StringIO, NullableIO( StringIO ) )
-    },
-    applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
-      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
-      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.ligands, state.ligands );
-      ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
-      model.time = state.time;
-      model.soluteTypeFlux = state.soluteTypeFlux;
-
-      // MapIO is data type serialization, so we need to manually update the model's targets Map
-      model.slotContents.clear();
-      for ( const [ key, value ] of state.slotContents ) {
-        model.slotContents.set( key, value );
-      }
-      model.slotContentsChangedEmitter.emit();
-
-      model.updateSoluteCounts();
-    }
-  } );
-
   public isSlotFilled( slot: Slot ): boolean {
     return this.slotContents.get( slot ) !== null;
   }
@@ -424,10 +392,9 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.slotContentsChangedEmitter.emit();
   }
 
-  public getNextFilledSlot( delta: number, selectedModel: Slot ): Slot | null {
+  public getNextFilledSlot( delta: number, index: number ): Slot | null {
 
     // Find the next filled target, wrapping around
-    let index = slots.indexOf( selectedModel );
     for ( let i = 0; i < slots.length; i++ ) {
       index = ( index + delta + slots.length ) % slots.length;
       if ( this.slotContents.get( slots[ index ] ) ) {
@@ -449,6 +416,38 @@ export default class MembraneChannelsModel extends PhetioObject {
   public getMiddleSlot(): Slot {
     return slots[ Math.floor( slots.length / 2 ) ];
   }
+
+  /**
+   * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
+   * Please see that documentation for more information.
+   */
+  public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
+    valueType: MembraneChannelsModel,
+    stateSchema: {
+      solutes: ReferenceArrayIO( Particle.ParticleIO ),
+      ligands: ReferenceArrayIO( Particle.ParticleIO ),
+      fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
+      time: NumberIO,
+      soluteTypeFlux: ObjectLiteralIO,
+      slotContents: MapIO( StringIO, NullableIO( StringIO ) )
+    },
+    applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
+      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
+      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.ligands, state.ligands );
+      ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
+      model.time = state.time;
+      model.soluteTypeFlux = state.soluteTypeFlux;
+
+      // MapIO is data type serialization, so we need to manually update the model's targets Map
+      model.slotContents.clear();
+      for ( const [ key, value ] of state.slotContents ) {
+        model.slotContents.set( key, value );
+      }
+      model.slotContentsChangedEmitter.emit();
+
+      model.updateSoluteCounts();
+    }
+  } );
 }
 
 membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );

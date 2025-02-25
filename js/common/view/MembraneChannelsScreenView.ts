@@ -320,7 +320,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.stepEmitter.emit( dt );
   }
 
-  public keyboardDroppedMembraneChannelInTheMembrane(): void {
+  public keyboardDroppedMembraneChannel(): void {
     this.afterRelease && this.afterRelease();
     this.afterRelease = null;
   }
