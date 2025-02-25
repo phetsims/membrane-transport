@@ -1,13 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Property from '../../../../axon/js/Property.js';
-import Range from '../../../../dot/js/Range.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
-import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
+import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSelectView.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -19,8 +17,8 @@ import ChannelDragNode from './ChannelDragNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
-// This is the index of the slot in the model
-type SortItem = number;
+// This is the index of the slot in the model, or if an item has been grabbed.
+type SortItem = number | 'grabbedItem';
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
@@ -29,7 +27,7 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10;
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class MembraneGroupSortInteractionView extends GroupSortInteractionView<SortItem, Node> {
+export default class MembraneGroupSortInteractionView extends GroupSelectView<SortItem, Node> {
   public constructor( model: MembraneChannelsModel, view: MembraneChannelsScreenView, observationWindow: ObservationWindow ) {
 
     const returnToToolboxRectangle = new Rectangle( 0, 0, 50, 50, {
@@ -41,90 +39,165 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
     observationWindow.addChild( returnToToolboxRectangle );
 
     const groupSelectModel = new GroupSelectModel<SortItem>( {
-      getGroupItemValue: slot => 0, // TODO
+      getGroupItemValue: slotIndex => 0, // TODO
       tandem: Tandem.OPT_OUT // TODO?
     } );
 
     let grabbedNode: ChannelDragNode | null = null;
     let initialSlot: Slot | null = null;
+    let currentIndex: number | null = null;
+
+    // A list of all keys that are listened to, except those covered by the numberKeyMapper
+    // TODO: Copied from GroupSortInteraction
+    const sortingKeys = [
+      'd', 'arrowRight', 'a', 'arrowLeft', 'arrowUp', 'arrowDown', 'w', 's', // default-step sort
+      'shift+d', 'shift+arrowRight', 'shift+a', 'shift+arrowLeft', 'shift+arrowUp', 'shift+arrowDown', 'shift+w', 'shift+s', // shift-step sort
+      'pageUp', 'pageDown', // page-step sort
+      'home', 'end' // min/max
+    ] as const;
+
+
+    const sortStep = 1;
+
+    // TODO: Copied from GroupSortInteraction
+    /**
+     * Get the delta to change the value given what key was pressed. The returned delta may not result in a value in range,
+     * please constrain value from range or provide your own defensive measures to this delta.
+     */
+    const getDeltaForKey = ( key: string ): number | null => {
+      const fullRange = 7;
+      return key === 'home' ? -fullRange :
+             key === 'end' ? fullRange :
+               // key === 'pageDown' ? -this.pageSortStep :
+               // key === 'pageUp' ? this.pageSortStep :
+             [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key ) ? -sortStep :
+             [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( key ) ? sortStep :
+               // [ 'shift+arrowLeft', 'shift+a', 'shift+arrowDown', 'shift+s' ].includes( key ) ? -this.shiftSortStep :
+               // [ 'shift+arrowRight', 'shift+d', 'shift+arrowUp', 'shift+w' ].includes( key ) ? this.shiftSortStep :
+             null;
+    };
+
+    // // TODO: Mostly Copied from GroupSortInteraction
+    const deltaKeyboardListener = new KeyboardListener( {
+      fireOnHold: true,
+      keys: sortingKeys,
+      fire: ( event, keysPressed ) => {
+
+        if ( groupSelectModel.selectedGroupItemProperty.value !== null ) {
+
+          const groupItem = groupSelectModel.selectedGroupItemProperty.value;
+          const oldValue = this.model.getGroupItemValue( groupItem )!;
+          // assert && assert( oldValue !== null, 'We should have a group item when responding to input?' );
+
+          // Sorting an item
+          if ( groupSelectModel.isGroupItemKeyboardGrabbedProperty.value ) {
+
+            // Don't do any sorting when disabled
+            // For these keys, the item will move by a particular delta
+            if ( this.model.enabled && sortingKeys.includes( keysPressed ) ) {
+              const delta = getDeltaForKey( keysPressed )!;
+              assert && assert( delta !== null, 'should be a supported key' );
+
+              const newIndex = clamp( currentIndex! + delta, 0, SLOT_COUNT );
+
+              if ( newIndex === SLOT_COUNT ) {
+                grabbedNode!.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
+              }
+              else {
+                const newSlot = model.getSlotForIndex( newIndex );
+                const newPosition = model.getSlotPosition( newSlot );
+                grabbedNode!.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
+              }
+
+              currentIndex = newIndex;
+            }
+          }
+          else {
+
+            // Selecting an item
+            const unclampedDelta = getDeltaForKey( keysPressed );
+            if ( unclampedDelta !== null ) {
+              this.model.hasKeyboardSelectedGroupItemProperty.value = true;
+
+              const channelNodes = observationWindow.getChannelNodes();
+
+              const selectMax = channelNodes.length - 1;
+              const clampedDelta = clamp( oldValue + unclampedDelta, 0, selectMax );
+
+              groupSelectModel.selectedGroupItemProperty.value = clampedDelta;
+            }
+          }
+          this.onGroupItemChange( groupItem );
+        }
+      }
+    } );
+
+    observationWindow.addInputListener( deltaKeyboardListener );
 
     super( groupSelectModel, observationWindow, {
-      getNextSelectedGroupItem: ( delta: number, currentlySelectedGroupItem: SortItem ) => {
-
-        const slot = model.getNextFilledSlot( delta, currentlySelectedGroupItem );
-
-        if ( slot === null ) {
-          return currentlySelectedGroupItem;
-        }
-        else {
-          return model.getSlotIndex( slot );
-        }
-      },
 
       // Called when a selected item becomes "grabbed" for sorting
       onGrab: ( groupItem: SortItem ) => {
 
-        // Make all the slots visible?
-        observationWindow.setSlotIndicatorsVisible( true );
+        if ( groupItem === 'grabbedItem' ) {
+          console.log( 'hello grabbed item' );
+        }
+        else {
+          const slot = observationWindow.getChannelNodes()[ groupItem ].slot;
 
-        const slot = model.getSlotForIndex( groupItem );
-        const channelType = model.getSlotContents( slot );
-        affirm( channelType, 'The grabbed item should have a channel type' );
+          // Make all the slots visible?
+          observationWindow.setSlotIndicatorsVisible( true );
 
-        // Remove the channel from the model
-        model.setSlotContents( slot, null );
+          const channelType = model.getSlotContents( slot );
+          affirm( channelType, 'The grabbed item should have a channel type' );
 
-        // Create a ChannelDragNode at the location of the selected item, in an offset position.
-        grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ] ); // TODO: swapped with the mouse one, watch out!!!!
-        initialSlot = slot;
+          // Remove the channel from the model
+          model.setSlotContents( slot, null );
 
-        // Offset above the membrane so it is clear it isn't in the model
-        grabbedNode.setModelPosition( new Vector2( model.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
-        groupSelectModel.selectedGroupItemProperty.value = groupItem;
+          // Create a ChannelDragNode at the location of the selected item, in an offset position.
+          grabbedNode = view.createFromKeyboard( channelType, [ observationWindow ] ); // TODO: swapped with the mouse one, watch out!!!!
+          initialSlot = slot;
+          currentIndex = model.getSlotIndex( slot );
+
+          // Offset above the membrane so it is clear it isn't in the model
+          grabbedNode.setModelPosition( new Vector2( model.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
+          groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
+        }
       },
       onRelease: ( groupItem: SortItem ) => {
 
-        // Triggered automatically on backspace/delete, so be graceful
-        if ( grabbedNode && !grabbedNode.isDisposed ) {
+        if ( groupItem === 'grabbedItem' ) {
 
-          // TODO: After dropping back in the membrane, clear the selected index so the empty spot by the toolbox is no longer selected
-          // when returning focus here
+          // Triggered automatically on backspace/delete, so be graceful
+          if ( currentIndex! > 0 && grabbedNode && !grabbedNode.isDisposed ) {
 
-          if ( groupItem < SLOT_COUNT ) {
-            model.setSlotContents( model.getSlotForIndex( groupItem ), grabbedNode.type );
+            // TODO: After dropping back in the membrane, clear the selected index so the empty spot by the toolbox is no longer selected
+            // when returning focus here
+
+            if ( currentIndex! < SLOT_COUNT ) {
+              model.setSlotContents( model.getSlotForIndex( currentIndex! ), grabbedNode.type );
+            }
+
+            grabbedNode.dispose();
+            grabbedNode = null;
+            initialSlot = null;
+
+            // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
+            // TODO: However, when dropping an item with enter, focus incorrectly stays on the group and creates another channel on the left.
+            view.keyboardDroppedMembraneChannel();
+
+            groupSelectModel.selectedGroupItemProperty.value = 0;
           }
-
-          grabbedNode.dispose();
-          grabbedNode = null;
-          initialSlot = null;
-
-          // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
-          // TODO: However, when dropping an item with enter, focus incorrectly stays on the group and creates another channel on the left.
-          view.keyboardDroppedMembraneChannel();
-        }
-      },
-
-      // Note that this range is not used by the implementation, but the min must be negative so that we get a delta at the start.
-      sortingRangeProperty: new Property( new Range( -10, 10 ) ),
-      sortGroupItem: ( oldSlotIndex: SortItem, newValue: number ) => {
-
-        const newSlotIndex = clamp( oldSlotIndex + newValue, 0, SLOT_COUNT );
-
-        if ( newSlotIndex === SLOT_COUNT ) {
-          grabbedNode!.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
         }
         else {
-          const newSlot = model.getSlotForIndex( newSlotIndex );
-          const newPosition = model.getSlotPosition( newSlot );
-          grabbedNode!.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
+          console.log( 'was not dragged item, but why' );
         }
-
-        groupSelectModel.selectedGroupItemProperty.value = newSlotIndex;
       },
       getGroupItemToSelect: () => {
-        const leftMostFilledSlot = model.getLeftmostFilledSlot();
-        if ( leftMostFilledSlot ) {
-          return model.getSlotIndex( leftMostFilledSlot );
+
+        const channelNodes = observationWindow.getChannelNodes();
+        if ( channelNodes.length > 0 ) {
+          return 0; // the left most Node
         }
         else {
           return null;
@@ -132,14 +205,12 @@ export default class MembraneGroupSortInteractionView extends GroupSortInteracti
       },
       getNodeFromModelItem: model => {
 
-        // TODO: We probably don't want to use the slotDragIndicatorNodes for this.
-        const indicatorNode = observationWindow.slotDragIndicatorNodes[ model ];
-
-        if ( indicatorNode ) {
-          return observationWindow.slotDragIndicatorNodes[ model ];
+        if ( model === 'grabbedItem' ) {
+          return grabbedNode;
         }
         else {
-          return returnToToolboxRectangle;
+          const channelNodes = observationWindow.getChannelNodes();
+          return channelNodes[ model ].node;
         }
       },
       grabReleaseCueOptions: {

@@ -20,7 +20,7 @@ import LigandNode from './LigandNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import MembraneGroupSortInteractionView from './MembraneGroupSortInteractionView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
-import ObservationWindowChannelLayer from './ObservationWindowChannelLayer.js';
+import ObservationWindowChannelLayer, { SlottedNode } from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
 import LigandBNode from './particles/LigandBNode.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
@@ -41,6 +41,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     parameters: [ { valueType: 'number' } ]
   } );
   public readonly membraneGroupSortInteractionView: MembraneGroupSortInteractionView;
+
+  private readonly channelLayer: ObservationWindowChannelLayer;
 
   public constructor( private readonly model: MembraneChannelsModel, view: MembraneChannelsScreenView,
                       public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
@@ -72,9 +74,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.slotDragIndicatorNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new SlotDragIndicatorNode( slot, model, modelViewTransform ) );
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
 
-    const channelLayer = new ObservationWindowChannelLayer( model, view, modelViewTransform );
-    this.stepEmitter.addListener( dt => channelLayer.step( dt ) );
-    clipNode.addChild( channelLayer );
+    this.channelLayer = new ObservationWindowChannelLayer( model, view, modelViewTransform );
+    this.stepEmitter.addListener( dt => this.channelLayer.step( dt ) );
+    clipNode.addChild( this.channelLayer );
 
     // ligand and membrane channel layer
     // On top, we will have a layer for the interactive parts of the simulation
@@ -110,6 +112,10 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
     this.membraneGroupSortInteractionView = new MembraneGroupSortInteractionView( model, view, this );
+  }
+
+  public getChannelNodes(): SlottedNode[] {
+    return this.channelLayer.getChannelNodes();
   }
 
   /**
