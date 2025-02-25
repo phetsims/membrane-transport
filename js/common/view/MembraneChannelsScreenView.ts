@@ -8,6 +8,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import animationFrameTimer from '../../../../axon/js/animationFrameTimer.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
@@ -265,7 +266,12 @@ export default class MembraneChannelsScreenView extends ScreenView {
   public forwardFromKeyboard( type: ChannelType, returnFocusNode: Node ): void {
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
     this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot, type );
-    this.afterRelease = () => returnFocusNode.focus();
+    this.afterRelease = () => {
+
+      // TODO: runOnNextTick seems to help with the spacebar vs enter problem, but there is a flicker as the node goes onto the membrane
+      // returnFocusNode.focus();
+      animationFrameTimer.runOnNextTick( () => returnFocusNode.focus() );
+    };
   }
 
   /**

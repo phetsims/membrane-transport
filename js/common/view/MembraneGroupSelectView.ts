@@ -181,8 +181,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
             }
 
-            currentSelection.grabbedNode.dispose();
-            this.currentSelection = null;
+            resetState();
           }
         }
         else {
