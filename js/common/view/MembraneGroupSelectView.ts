@@ -17,7 +17,7 @@ import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 // This is the index of the slot in the model, or if an item has been grabbed.
-type SortItem = number | 'grabbedItem';
+type ItemModel = number | 'grabbedItem';
 
 type Selection = {
   grabbedNode: ChannelDragNode;
@@ -33,21 +33,21 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10;
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default class MembraneGroupSelectView extends GroupSelectView<SortItem, Node> {
+export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, Node> {
 
   private currentSelection: Selection | null = null;
 
   public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
 
-    const groupSelectModel = new GroupSelectModel<SortItem>( {
+    const groupSelectModel = new GroupSelectModel<ItemModel>( {
       getGroupItemValue: slotIndex => 0, // TODO
       tandem: Tandem.OPT_OUT // TODO?
     } );
 
     // A list of all keys that are listened to, except those covered by the numberKeyMapper
     // TODO: Copied from GroupSortInteraction
-    const sortingKeys = [
-      'd', 'arrowRight', 'a', 'arrowLeft', 'arrowUp', 'arrowDown', 'w', 's', // default-step sort
+    const movementKeys = [
+      'd', 'arrowRight', 'a', 'arrowLeft', 'arrowUp', 'arrowDown', 'w', 's',
       'home', 'end' // min/max
     ] as const;
 
@@ -68,21 +68,20 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
     // // TODO: Mostly Copied from GroupSortInteraction
     const deltaKeyboardListener = new KeyboardListener( {
       fireOnHold: true,
-      keys: sortingKeys,
+      keys: movementKeys,
       fire: ( event, keysPressed ) => {
 
         if ( groupSelectModel.selectedGroupItemProperty.value !== null ) {
 
           const groupItem = groupSelectModel.selectedGroupItemProperty.value;
           const oldValue = this.model.getGroupItemValue( groupItem )!;
-          // assert && assert( oldValue !== null, 'We should have a group item when responding to input?' );
 
-          // Sorting an item
+          // Moving an item
           if ( groupSelectModel.isGroupItemKeyboardGrabbedProperty.value ) {
 
-            // Don't do any sorting when disabled
+            // Don't do any movement when disabled
             // For these keys, the item will move by a particular delta
-            if ( this.model.enabled && sortingKeys.includes( keysPressed ) ) {
+            if ( this.model.enabled && movementKeys.includes( keysPressed ) ) {
               const delta = getDeltaForKey( keysPressed )!;
               assert && assert( delta !== null, 'should be a supported key' );
 
@@ -127,8 +126,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
 
     super( groupSelectModel, observationWindow, {
 
-      // Called when a selected item becomes "grabbed" for sorting
-      onGrab: ( groupItem: SortItem ) => {
+      // Called when a selected item becomes "grabbed" for movement
+      onGrab: ( groupItem: ItemModel ) => {
 
         if ( groupItem === 'grabbedItem' ) {
           console.log( 'hello grabbed item' );
@@ -147,7 +146,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
       },
-      onRelease: ( groupItem: SortItem ) => {
+      onRelease: ( groupItem: ItemModel ) => {
 
         if ( groupItem === 'grabbedItem' ) {
 
@@ -244,7 +243,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<SortItem, N
 
             groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
 
-            // next, tell the group sort interaction that nothing is grabbed.
+            // next, tell the group select interaction that nothing is grabbed.
             const leftmostFilledSlot = membraneChannelsModel.getLeftmostFilledSlot();
             if ( leftmostFilledSlot ) {
               groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( leftmostFilledSlot );
