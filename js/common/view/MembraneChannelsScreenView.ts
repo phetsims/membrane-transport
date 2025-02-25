@@ -265,14 +265,14 @@ export default class MembraneChannelsScreenView extends ScreenView {
   public forwardFromKeyboard( type: ChannelType, returnFocusNode: Node ): void {
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
 
-    this.model.setSlotContents( slot, type );
+    // this.model.setSlotContents( slot, type );
 
     // TODO: There must be a better way to do this internally, https://github.com/phetsims/membrane-channels/issues/20
     this.observationWindow.focus();
-    this.observationWindow.membraneGroupSortInteractionView.model.selectedGroupItemProperty.value = this.model.getSlotIndex( slot );
-    this.observationWindow.membraneGroupSortInteractionView.model.isGroupItemKeyboardGrabbedProperty.value = true;
-    this.observationWindow.membraneGroupSortInteractionView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
-    this.observationWindow.membraneGroupSortInteractionView.model.isKeyboardFocusedProperty.value = true;
+    this.observationWindow.membraneGroupSelectView.model.selectedGroupItemProperty.value = this.model.getSlotIndex( slot );
+    this.observationWindow.membraneGroupSelectView.model.isGroupItemKeyboardGrabbedProperty.value = true;
+    this.observationWindow.membraneGroupSelectView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
+    this.observationWindow.membraneGroupSelectView.model.isKeyboardFocusedProperty.value = true;
 
     this.afterRelease = () => returnFocusNode.focus();
   }

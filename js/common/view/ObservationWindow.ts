@@ -18,7 +18,7 @@ import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
-import MembraneGroupSortInteractionView from './MembraneGroupSortInteractionView.js';
+import MembraneGroupSelectView from './MembraneGroupSelectView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer, { SlottedNode } from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
@@ -40,7 +40,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
-  public readonly membraneGroupSortInteractionView: MembraneGroupSortInteractionView;
+  public readonly membraneGroupSelectView: MembraneGroupSelectView;
 
   private readonly channelLayer: ObservationWindowChannelLayer;
 
@@ -111,7 +111,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
-    this.membraneGroupSortInteractionView = new MembraneGroupSortInteractionView( model, view, this );
+    this.membraneGroupSelectView = new MembraneGroupSelectView( model, view, this );
   }
 
   public getChannelNodes(): SlottedNode[] {

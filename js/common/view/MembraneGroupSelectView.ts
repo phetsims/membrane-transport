@@ -27,7 +27,7 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10;
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class MembraneGroupSortInteractionView extends GroupSelectView<SortItem, Node> {
+export default class MembraneGroupSelectView extends GroupSelectView<SortItem, Node> {
   public constructor( model: MembraneChannelsModel, view: MembraneChannelsScreenView, observationWindow: ObservationWindow ) {
 
     const returnToToolboxRectangle = new Rectangle( 0, 0, 50, 50, {
@@ -297,4 +297,4 @@ export default class MembraneGroupSortInteractionView extends GroupSelectView<So
   }
 }
 
-membraneChannels.register( 'MembraneGroupSortInteractionView', MembraneGroupSortInteractionView );
+membraneChannels.register( 'MembraneGroupSelectView', MembraneGroupSelectView );
