@@ -264,7 +264,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
   public forwardFromKeyboard( type: ChannelType, returnFocusNode: Node ): void {
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
-    this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot );
+    this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot, type );
     this.afterRelease = () => returnFocusNode.focus();
   }
 
