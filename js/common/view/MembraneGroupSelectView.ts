@@ -172,16 +172,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             view.keyboardDroppedMembraneChannel();
 
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
-            let selectedIndex = null;
-            observationWindow.getChannelNodes().forEach( ( node, index ) => {
-              if ( node.slot === droppedIntoSlot ) {
-                selectedIndex = index;
-              }
-            } );
+            const selectedIndex = observationWindow.getChannelNodes().findIndex( node => node.slot === droppedIntoSlot );
 
             // Dropped into membrane
             if ( currentIndex < SLOT_COUNT ) {
-              groupSelectModel.selectedGroupItemProperty.value = selectedIndex;
+              groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
             }
             else {
 
@@ -293,15 +288,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Select the index corresponding to the item just dropped
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
-            let selectedIndex = null;
-            observationWindow.getChannelNodes().forEach( ( node, index ) => {
-              if ( node.slot === grabbedNode.origin ) {
-                selectedIndex = index;
-              }
-            } );
+            const selectedIndex = observationWindow.getChannelNodes().findIndex( node => node.slot === grabbedNode.origin );
 
             // Dropped into membrane
-            groupSelectModel.selectedGroupItemProperty.value = selectedIndex;
+            groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
           }
           else {
             // Dropped into toolbox
