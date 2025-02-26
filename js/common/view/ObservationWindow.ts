@@ -63,7 +63,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       children: [ clipNode, frameNode ],
 
       // innerContent: 'div',
-      accessibleName: 'hello'
+      accessibleName: 'hello' // TODO
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts

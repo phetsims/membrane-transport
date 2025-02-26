@@ -6,9 +6,10 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import StringProperty from '../../../../axon/js/StringProperty.js';
+import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsFeatureSet from '../MembraneChannelsFeatureSet.js';
 
 export default class MembraneChannelsScreenSummaryContent extends ScreenSummaryContent {
@@ -16,20 +17,13 @@ export default class MembraneChannelsScreenSummaryContent extends ScreenSummaryC
 
     super( {
 
-      // TODO: Why can't I pass in a fluent message property to the content?
-      playAreaContent: new StringProperty( 'hello' )
-      // featureSet === 'simpleDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen1MessageProperty :
-      // featureSet === 'facilitatedDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty :
-      // featureSet === 'activeTransport' ? MembraneChannelsMessages.playAreaSummaryScreen3MessageProperty :
-      // MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty
-
-      // controlAreaContent: TrigTourStrings.a11y.translatable.screenSummary.controlAreaStringProperty,
-      // currentDetailsContent: [
-      //   trigInfoStringProperty,
-      //   quadrantInfoStringProperty,
-      //   rotationDirectionStringProperty
-      // ],
-      // interactionHintContent: TrigTourStrings.a11y.translatable.screenSummary.interactionHintStringProperty
+      playAreaContent:
+        new PatternMessageProperty( featureSet === 'simpleDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen1MessageProperty :
+                                    featureSet === 'facilitatedDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty :
+                                    featureSet === 'activeTransport' ? MembraneChannelsMessages.playAreaSummaryScreen3MessageProperty :
+                                    MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty, {}
+        ),
+      controlAreaContent: MembraneChannelsMessages.controlAreaSummaryMessageProperty
     } );
   }
 }
