@@ -1,42 +1,44 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
-import Vector2 from '../../../../../dot/js/Vector2.js';
 import { combineOptions } from '../../../../../phet-core/js/optionize.js';
-import ModelViewTransform2 from '../../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CanvasNode, { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js';
+import { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js';
+import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
-import ObservationWindowCanvasNode from '../ObservationWindowCanvasNode.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
  * in the membrane.
  *
- * // TODO: The slack channel document has recommendations about how to render in scenery and canvas.
- *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class LeakageChannelNode extends CanvasNode {
-  public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', providedOptions?: CanvasNodeOptions ) {
+export default class LeakageChannelNode extends Node {
+  public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', providedOptions?: NodeOptions ) {
 
     super( combineOptions<CanvasNodeOptions>( {
       canvasBounds: new Bounds2( 0, 0, 45, 50 )
     }, providedOptions ) );
 
-    this.invalidatePaint();
-  }
+    // ObservationWindowCanvasNode.drawLeakageChannel( context, this.type, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
 
-  public override paintCanvas( context: CanvasRenderingContext2D ): void {
+    const modelWidth = 40;
+    const modelHeight = 60;
 
-    // Draw the membrane channel
-    ObservationWindowCanvasNode.drawLeakageChannel( context, this.type, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
-  }
+    const cornerRound = 4;
 
-  /**
-   * Allow to be dragged
-   */
-  public override containsPointSelf( point: Vector2 ): boolean {
-    return true;
+    // For the leakage channels, the sodium pore should be smaller than the potassium pore
+    const poreSize = type === 'sodiumIonLeakageChannel' ? 8 : 12;
+    const sideWidth = modelWidth / 2 - poreSize / 2;
+
+    const backgroundRectangle = new Rectangle( 0, 0, modelWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(191,191,191)', stroke: 'black', lineWidth: 2 } );
+    const leftPore = new Rectangle( 0, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(254,254,254)', stroke: 'black', lineWidth: 2 } );
+    const rightPore = new Rectangle( modelWidth - sideWidth, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(254,254,254)', stroke: 'black', lineWidth: 2 } );
+
+    this.addChild( backgroundRectangle );
+    this.addChild( leftPore );
+    this.addChild( rightPore );
+
   }
 }
 

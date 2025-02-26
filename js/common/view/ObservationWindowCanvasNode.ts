@@ -188,37 +188,6 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radiusView );
   }
 
-  // Static so it can be reused to create a scenery node for the toolbox
-  public static drawLeakageChannel( context: CanvasRenderingContext2D,
-                                    type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', modelViewTransform: ModelViewTransform2, x: number ): void {
-
-    const modelWidth = 20;
-    const modelHeight = 25;
-
-    // For the leakage channels, the sodium pore should be smaller than the potassium pore
-    const poreSize = type === 'sodiumIonLeakageChannel' ? 4 : 6;
-
-    // add a rounded rectangle
-    context.strokeStyle = 'black';
-    context.lineWidth = 2;
-    context.fillStyle = 'rgb(191,191,191)';
-    ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x - modelWidth / 2, 0, 20, modelHeight, 2 );
-    context.fill();
-    context.stroke();
-
-    const semiWidth = 10 - poreSize / 2;
-
-    ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x - modelWidth / 2, 0, semiWidth, modelHeight, 2 );
-    context.fillStyle = 'rgb(254,254,254)';
-    context.fill();
-    context.stroke();
-
-    ObservationWindowCanvasNode.drawRoundedRectangle( context, modelViewTransform, x + modelWidth / 2 - semiWidth, 0, semiWidth, modelHeight, 2 );
-    context.fillStyle = 'rgb(254,254,254)';
-    context.fill();
-    context.stroke();
-  }
-
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
     if ( this.layer === 'back' ) {
