@@ -32,7 +32,7 @@ export default class ObservationWindowChannelLayer extends Node {
       this.removeAllChildren();
       this.slottedNodes.length = 0;
 
-      Array.from( model.getSlotContentsKeys() ).forEach( slot => {
+      model.slots.forEach( slot => {
         const type = model.getSlotContents( slot );
         if ( type !== null ) {
 

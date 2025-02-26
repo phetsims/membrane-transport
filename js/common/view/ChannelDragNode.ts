@@ -64,7 +64,7 @@ export default class ChannelDragNode extends Node {
       // Check the observation window to find the closest available target we overlap
       // If any rectangle overlaps, change its stroke color to red, Change all others back to black
       const overlappingSlotDragIndicatorNodes = observationWindow.slotDragIndicatorNodes.filter( slotDragIndicatorNode => {
-        return slotDragIndicatorNode.globalBounds.intersectsBounds( this.globalBounds ) && !model.isSlotFilled( slotDragIndicatorNode.slot );
+        return slotDragIndicatorNode.globalBounds.intersectsBounds( this.globalBounds );
       } );
 
       return _.sortBy( overlappingSlotDragIndicatorNodes, slotDragIndicatorNode => {
@@ -88,10 +88,9 @@ export default class ChannelDragNode extends Node {
 
         observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
           slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
-          slotDragIndicatorNode.visible = !model.isSlotFilled( slotDragIndicatorNode.slot );
         } );
 
-        observationWindow.setSlotIndicatorsVisible( true );
+        observationWindow.setSlotDragIndicatorsVisible( true );
       },
       drag: () => {
 
@@ -104,7 +103,7 @@ export default class ChannelDragNode extends Node {
       },
       end: () => {
 
-        observationWindow.setSlotIndicatorsVisible( false );
+        observationWindow.setSlotDragIndicatorsVisible( false );
 
         // drop into the selected target, or move back to the toolbox
         const closest = getClosestSlotDragIndicatorNode();

@@ -381,10 +381,6 @@ export default class MembraneChannelsModel extends PhetioObject {
     return this.slotContents.get( slot ) || null;
   }
 
-  public getSlotContentsKeys(): Iterable<Slot> {
-    return this.slotContents.keys();
-  }
-
   public getLeftmostFilledSlot(): Slot | null {
     return slots.find( slot => this.slotContents.get( slot ) ) || null;
   }

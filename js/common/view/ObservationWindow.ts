@@ -71,7 +71,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( backCanvas );
     this.stepEmitter.addListener( dt => backCanvas.step( dt ) );
 
-    this.slotDragIndicatorNodes = Array.from( model.getSlotContentsKeys() ).map( slot => new SlotDragIndicatorNode( slot, model, modelViewTransform ) );
+    this.slotDragIndicatorNodes = model.slots.map( slot => new SlotDragIndicatorNode( slot, model, modelViewTransform ) );
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
 
     this.channelLayer = new ObservationWindowChannelLayer( model, view, modelViewTransform );
@@ -122,9 +122,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
    * Sets slot indicators to be visible or invisible. Filled slots will always have
    * invisible indicators.
    */
-  public setSlotIndicatorsVisible( visible: boolean ): void {
+  public setSlotDragIndicatorsVisible( visible: boolean ): void {
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-      slotDragIndicatorNode.visible = visible && !this.model.isSlotFilled( slotDragIndicatorNode.slot );
+      slotDragIndicatorNode.visible = visible;
     } );
   }
 
