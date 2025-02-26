@@ -227,12 +227,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       },
       grabReleaseCueOptions: {
         center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
-      },
-      grabReleaseKeyboardListenerOptions: {
-
-        // Without this, enter and spacebar have different behavior (enter being broken)
-        // TODO: JG says the default is already false, we should double check it!!!!!!!!!!!!!!!!!
-        fireOnDown: false
       }
     } );
 

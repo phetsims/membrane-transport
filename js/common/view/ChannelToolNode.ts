@@ -27,7 +27,7 @@ export default class ChannelToolNode extends VBox {
 
     super( combineOptions<VBoxOptions>( {}, {
       spacing: 3,
-      tagName: 'button', // TODO: Make sure we see the accessibleHelpText on the ChannelToolNode
+      tagName: 'button',
       children: [ channelNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: type === 'sodiumIonLeakageChannel' ? MembraneChannelsStrings.sodiumIonNaPlusLeakageStringProperty :
