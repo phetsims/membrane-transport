@@ -43,10 +43,28 @@ type StringsType = {
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
-  'sodiumIonNaPlusLeakageStringProperty': LocalizedStringProperty;
-  'potassiumIonKPlusLeakageStringProperty': LocalizedStringProperty;
-  'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
-  'grabToPullProteinToTheMembraneStringProperty': LocalizedStringProperty;
+  'a11y': {
+    'accordionBoxGroup': {
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'ligandGatedAccordionBox': {
+        'sodiumIonNaPlusLigandGatedStringProperty': LocalizedStringProperty;
+        'potassiumIonKPlusLigandGatedStringProperty': LocalizedStringProperty;
+      };
+      'leakageChannelsAccordionBox': {
+        'sodiumIonNaPlusLeakageStringProperty': LocalizedStringProperty;
+        'potassiumIonKPlusLeakageStringProperty': LocalizedStringProperty;
+      };
+      'voltageGatedChannelsAccordionBox': {
+        'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
+        'potassiumIonKPlusVoltageGatedStringProperty': LocalizedStringProperty;
+      };
+      'activeTransportersAccordionBox': {
+        'sodiumPotassiumPumpStringProperty': LocalizedStringProperty;
+        'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
+      };
+      'toolAccessibleHelpTextStringProperty': LocalizedStringProperty;
+    }
+  }
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;

@@ -20,7 +20,7 @@ const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class ChannelToolNode extends VBox {
-  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
+  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
 
     const channelNode = getChannelNode( type );
     channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
@@ -30,11 +30,8 @@ export default class ChannelToolNode extends VBox {
       tagName: 'button',
       children: [ channelNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
-      accessibleName: type === 'sodiumIonLeakageChannel' ? MembraneChannelsStrings.sodiumIonNaPlusLeakageStringProperty :
-                      type === 'potassiumIonLeakageChannel' ? MembraneChannelsStrings.potassiumIonKPlusLeakageStringProperty :
-                      MembraneChannelsStrings.sodiumIonNaPlusVoltageGatedStringProperty,
-
-      accessibleHelpText: MembraneChannelsStrings.grabToPullProteinToTheMembraneStringProperty
+      accessibleName: accessibleName,
+      accessibleHelpText: MembraneChannelsStrings.a11y.accordionBoxGroup.toolAccessibleHelpTextStringProperty
     } ) );
 
     this.addInputListener( {

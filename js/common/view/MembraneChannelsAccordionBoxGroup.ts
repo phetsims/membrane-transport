@@ -3,6 +3,7 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
@@ -14,7 +15,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
@@ -42,7 +42,9 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       cornerRadius: 0,
       lineWidth: 0,
       titleAlignX: 'left',
-      fill: 'white'
+      fill: 'white',
+
+      headingTagName: 'h4'
     };
 
     const contentAlignGroup = new AlignGroup();
@@ -58,8 +60,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         const leakageContent = new HBox( {
           spacing: 10,
           children: [
-            new ChannelToolNode( 'sodiumIonLeakageChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, model, view ),
-            new ChannelToolNode( 'potassiumIonLeakageChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, model, view )
+            new ChannelToolNode( 'sodiumIonLeakageChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty, model, view ),
+            new ChannelToolNode( 'potassiumIonLeakageChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty, model, view )
           ]
         } );
 
@@ -74,8 +76,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         const hbox = new HBox( {
           spacing: 10,
           children: [
-            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, model, view ),
-            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, model, view ) ]
+            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty, model, view ),
+            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty, model, view ) ]
         } );
 
         return new AccordionBox( contentAlignGroup.createBox( hbox ), combineOptions<AccordionBoxOptions>( {
@@ -90,8 +92,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         const hbox = new HBox( {
           spacing: 10,
           children: [
-            new ChannelToolNode( 'sodiumIonLigandGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, model, view ),
-            new ChannelToolNode( 'potassiumIonLigandGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, model, view ) ]
+            new ChannelToolNode( 'sodiumIonLigandGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty, model, view ),
+            new ChannelToolNode( 'potassiumIonLigandGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty, model, view ) ]
         } );
 
         return new AccordionBox( contentAlignGroup.createBox( hbox ), combineOptions<AccordionBoxOptions>( {
@@ -115,8 +117,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         const hbox = new HBox( {
           spacing: 10,
           children: [
-            new ChannelToolNode( 'sodiumIonActiveGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, model, view ),
-            new ChannelToolNode( 'potassiumIonActiveGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, model, view ) ]
+            new ChannelToolNode( 'sodiumIonActiveGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty, model, view ),
+            new ChannelToolNode( 'potassiumIonActiveGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty, model, view ) ]
         } );
 
         return new AccordionBox( contentAlignGroup.createBox( hbox ), combineOptions<AccordionBoxOptions>( {
@@ -155,7 +157,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const vbox = new VBox( {
       spacing: 0,
       children: [
-        new Text( membraneChannelsStrings.membraneProteinsStringProperty, {
+        new Text( MembraneChannelsStrings.membraneProteinsStringProperty, {
           fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE
         } ),
 
@@ -163,7 +165,14 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       ]
     } );
     super( {
-      children: [ vbox ]
+      children: [ vbox ],
+
+      // pdom
+      tagName: 'div',
+      labelTagName: 'h3',
+      accessibleName: MembraneChannelsStrings.membraneProteinsStringProperty,
+      accessibleHelpText: MembraneChannelsStrings.a11y.accordionBoxGroup.accessibleHelpTextStringProperty,
+      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
 
     this.resetEmitter.addListener( () => accordionBoxes.forEach( box => box.reset() ) );

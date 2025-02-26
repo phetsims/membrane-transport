@@ -80,16 +80,46 @@
   "animateLipidsDescription": {
     "value": "Whether the phospholipids forming the cell membrane should be animated"
   },
-  "sodiumIonNaPlusLeakage": {
-    "value": "Sodium Ion NA plus, Leakage"
-  },
-  "potassiumIonKPlusLeakage": {
-    "value": "Potassium Ion K plus, Leakage"
-  },
-  "sodiumIonNaPlusVoltageGated": {
-    "value": "Sodium Ion NA plus, Voltage Gated"
-  },
-  "grabToPullProteinToTheMembrane": {
-    "value": "Grab to pull protein to the membrane"
+  "a11y": {
+    "accordionBoxGroup": {
+      "accessibleHelpText": {
+        "value": "Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane."
+      },
+      "ligandGatedAccordionBox": {
+        "sodiumIonNaPlusLigandGated": {
+          "value": "Sodium Ion NA plus, Ligand-gated"
+        },
+        "potassiumIonKPlusLigandGated": {
+          "value": "Potassium Ion K plus, Ligand-gated"
+        }
+      },
+      "leakageChannelsAccordionBox": {
+        "sodiumIonNaPlusLeakage": {
+          "value": "Sodium Ion NA plus, Leakage"
+        },
+        "potassiumIonKPlusLeakage": {
+          "value": "Potassium Ion K plus, Leakage"
+        }
+      },
+      "voltageGatedChannelsAccordionBox": {
+        "sodiumIonNaPlusVoltageGated": {
+          "value": "Sodium Ion NA plus, Voltage-gated"
+        },
+        "potassiumIonKPlusVoltageGated": {
+          "value": "Potassium Ion K plus, Voltage-gated"
+        }
+      },
+      "activeTransportersAccordionBox": {
+        "sodiumPotassiumPump": {
+          "value": "Sodium-Potassium Pump"
+        },
+        "sodiumGlucoseCotransporter": {
+          "value": "Sodium-Glucose Cotransporter"
+        }
+      },
+      "toolAccessibleHelpText": {
+        "value": "Grab to pull protein to the membrane."
+      }
+    }
   }
 }

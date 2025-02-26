@@ -42,8 +42,35 @@
   animateLipids: 'Animate Lipids',
   animateLipidsDescription: 'Whether the phospholipids forming the cell membrane should be animated',
 
-  sodiumIonNaPlusLeakage: 'Sodium Ion NA plus, Leakage',
-  potassiumIonKPlusLeakage: 'Potassium Ion K plus, Leakage',
-  sodiumIonNaPlusVoltageGated: 'Sodium Ion NA plus, Voltage Gated',
-  grabToPullProteinToTheMembrane: 'Grab to pull protein to the membrane',
+  a11y: {
+
+    accordionBoxGroup: {
+      accessibleHelpText: 'Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane.',
+
+      ligandGatedAccordionBox: {
+        sodiumIonNaPlusLigandGated: 'Sodium Ion NA plus, Ligand-gated',
+        potassiumIonKPlusLigandGated: 'Potassium Ion K plus, Ligand-gated'
+      },
+
+      leakageChannelsAccordionBox: {
+        sodiumIonNaPlusLeakage: 'Sodium Ion NA plus, Leakage',
+        potassiumIonKPlusLeakage: 'Potassium Ion K plus, Leakage',
+      },
+
+      voltageGatedChannelsAccordionBox: {
+        sodiumIonNaPlusVoltageGated: 'Sodium Ion NA plus, Voltage-gated',
+        potassiumIonKPlusVoltageGated: 'Potassium Ion K plus, Voltage-gated',
+      },
+
+      activeTransportersAccordionBox: {
+        sodiumPotassiumPump: 'Sodium-Potassium Pump',
+        sodiumGlucoseCotransporter: 'Sodium-Glucose Cotransporter'
+      },
+
+      toolAccessibleHelpText: 'Grab to pull protein to the membrane.'
+    },
+
+    // Channels in the toolbox
+
+  }
 }
