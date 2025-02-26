@@ -273,26 +273,47 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     observationWindow.addInputListener( deleteKeyboardListener );
 
     const escKeyboardListener = new KeyboardListener( {
-      keys: [ 'escape' ],
+
+      // TODO: Remove 'm' after 'escape' is working. I used 'm' since it is the same on qwerty and dvorak.
+      keys: [ 'm', 'escape' ],
       fire: () => {
-        // TODO: Why is this not running? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
+        // TODO: Why is this not running for 'escape'? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
         // TODO: JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
 
-        const initialSlot = this.currentSelection!.initialSlot;
-        const grabbedNode = this.currentSelection!.grabbedNode;
-
-        affirm( initialSlot, 'initialSlot should be set' );
-        affirm( grabbedNode, 'grabbedNode should be set' );
-        membraneChannelsModel.setSlotContents( initialSlot, grabbedNode.type );
-
-        const tempInitialSlot = initialSlot;
+        const currentSelection = this.currentSelection;
         resetState();
+        if ( currentSelection ) {
+          // const initialSlot = currentSelection.initialSlot;
+          const grabbedNode = currentSelection.grabbedNode;
+
+          if ( typeof grabbedNode.origin === 'string' ) {
+
+            // TODO: What if something else moved there in the meantime?
+            membraneChannelsModel.setSlotContents( grabbedNode.origin, grabbedNode.type );
+
+            // Select the index corresponding to the item just dropped
+            // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
+            let selectedIndex = null;
+            observationWindow.getChannelNodes().forEach( ( node, index ) => {
+              if ( node.slot === grabbedNode.origin ) {
+                selectedIndex = index;
+              }
+            } );
+
+            // Dropped into membrane
+            groupSelectModel.selectedGroupItemProperty.value = selectedIndex;
+          }
+          else {
+            // Dropped into toolbox
+            groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
+          }
+        }
 
         // TODO: these come back in if we have to turn off the supertype escape listener. https://github.com/phetsims/scenery/issues/1692
-        // isGroupItemKeyboardGrabbedProperty.value = false;
-        // isKeyboardFocusedProperty.value = true;
+        groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
+        groupSelectModel.isKeyboardFocusedProperty.value = true;
 
-        groupSelectModel.selectedGroupItemProperty.value = membraneChannelsModel.getSlotIndex( tempInitialSlot );
+        view.keyboardDroppedMembraneChannel();
       }
     } );
     observationWindow.addInputListener( escKeyboardListener );
