@@ -56,11 +56,13 @@ export default class ChannelDragNode extends Node {
 
     const positionProperty = this.positionProperty;
 
-    // TODO: If the model Bounds changes and leaves the object offscreen, move the object onscreen.
+    // Convert view bounds to model bounds for dragging constraints
+    // If the view bounds change while dragging, it's OK to not keep the node in bounds, because the ChannelDragNode is
+    // transient and will return to the toolbox when it is dropped anyways.
     const modelBoundsProperty = new DerivedProperty( [ visibleBoundsProperty ], visibleBounds => {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
-
+    
     const getClosestSlotDragIndicatorNode = () => {
 
       // Check the observation window to find the closest available target we overlap
