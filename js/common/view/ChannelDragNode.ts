@@ -15,6 +15,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { ChannelType, Slot } from '../model/MembraneChannelsModel.js';
 import getChannelNode from './channels/getChannelNode.js';
+import ChannelToolNode from './ChannelToolNode.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
@@ -36,9 +37,9 @@ export default class ChannelDragNode extends Node {
     screenViewModelViewTransform: ModelViewTransform2,
     modelPosition: Vector2,
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
-    homes: Node[],
     public readonly type: ChannelType,
-    initSlot: Slot | null = null
+    // Where this came from, so that during a swap, the other one knows where to go
+    public readonly origin: Slot | ChannelToolNode
   ) {
     super( {
       tagName: 'p',
@@ -107,16 +108,23 @@ export default class ChannelDragNode extends Node {
 
         if ( closest ) {
 
+
+          const otherContents = model.getSlotContents( closest.slot );
+
           // drop into the selected target
           model.setSlotContents( closest.slot, this.type );
+
+          if ( otherContents && typeof this.origin === 'string' ) {
+            model.setSlotContents( this.origin, otherContents );
+          }
 
           // Reuse
           this.visible = false;
         }
         else {
 
-          // Animate back to the closest home
-          if ( homes.length > 0 && homes[ 0 ].isVisible() ) {
+          // Animate back to the toolbox. TODO: method and type guard to check if origin is a Slot?
+          if ( typeof this.origin !== 'string' ) {
 
             myself.pickable = false; // Prevent being grabbed on the way home
 
@@ -126,7 +134,9 @@ export default class ChannelDragNode extends Node {
                 positionProperty.value = screenViewModelViewTransform.viewToModelPosition( screenViewPoint );
               },
               from: this.globalBounds.center,
-              to: homes[ 0 ].globalBounds.center,
+
+              // TODO: Something is off about the vertical target position
+              to: this.origin.globalBounds.center,
               duration: 0.4,
               easing: Easing.CUBIC_IN_OUT
             } );

@@ -23,7 +23,7 @@ export default class ChannelToolNode extends VBox {
   public constructor( type: ChannelType, label: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
 
     const channelNode = getChannelNode( type );
-    channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, [ channelNode, this ] ) ) );
+    channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
     super( combineOptions<VBoxOptions>( {}, {
       spacing: 3,

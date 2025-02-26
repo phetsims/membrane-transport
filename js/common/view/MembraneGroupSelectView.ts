@@ -13,6 +13,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel, { ChannelType, Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import ChannelDragNode from './ChannelDragNode.js';
+import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
@@ -136,7 +137,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           // Remove the channel from the model
           membraneChannelsModel.setSlotContents( slot, null );
 
-          this.initialDragWork( slot, channelType );
+          this.initialDragWork( slot, channelType, slot );
 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
@@ -156,7 +157,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             // when returning focus here
             const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentIndex );
             if ( currentIndex < SLOT_COUNT ) {
+
+              const oldContents = membraneChannelsModel.getSlotContents( droppedIntoSlot );
+
               membraneChannelsModel.setSlotContents( droppedIntoSlot, grabbedNode.type );
+
+              if ( oldContents && typeof grabbedNode.origin === 'string' ) {
+                membraneChannelsModel.setSlotContents( grabbedNode.origin, oldContents );
+              }
             }
 
             // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
@@ -290,11 +298,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     observationWindow.addInputListener( escKeyboardListener );
   }
 
-  private initialDragWork( slot: Slot, channelType: ChannelType ): void {
+  private initialDragWork( slot: Slot, channelType: ChannelType, origin: Slot | ChannelToolNode ): void {
 
     // Create a ChannelDragNode at the location of the selected item, in an offset position.
     this.currentSelection = {
-      grabbedNode: this.view.createFromKeyboard( channelType ),
+      grabbedNode: this.view.createFromKeyboard( channelType, origin ),
       initialSlot: slot,
       currentIndex: this.membraneChannelsModel.getSlotIndex( slot )
     };
@@ -303,14 +311,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection.grabbedNode.setModelPosition( new Vector2( this.membraneChannelsModel.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
   }
 
-  public forwardFromKeyboard( slot: Slot, channelType: ChannelType ): void {
+  public forwardFromKeyboard( slot: Slot, channelType: ChannelType, channelToolNode: ChannelToolNode ): void {
     this.observationWindow.focus();
 
     // TODO: There must be a better way to do this internally, https://github.com/phetsims/membrane-channels/issues/20
     this.observationWindow.membraneGroupSelectView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
     this.observationWindow.membraneGroupSelectView.model.isKeyboardFocusedProperty.value = true;
 
-    this.initialDragWork( slot, channelType );
+    this.initialDragWork( slot, channelType, channelToolNode );
 
     this.observationWindow.membraneGroupSelectView.model.selectedGroupItemProperty.value = 'grabbedItem';
     this.observationWindow.membraneGroupSelectView.model.isGroupItemKeyboardGrabbedProperty.value = true;
