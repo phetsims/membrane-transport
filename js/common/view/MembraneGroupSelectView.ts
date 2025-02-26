@@ -278,7 +278,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         const currentSelection = this.currentSelection;
         resetState();
         if ( currentSelection ) {
-          // const initialSlot = currentSelection.initialSlot;
           const grabbedNode = currentSelection.grabbedNode;
 
           if ( typeof grabbedNode.origin === 'string' ) {
