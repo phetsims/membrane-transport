@@ -20,10 +20,8 @@ export default class LeakageChannelNode extends Node {
       canvasBounds: new Bounds2( 0, 0, 45, 50 )
     }, providedOptions ) );
 
-    // ObservationWindowCanvasNode.drawLeakageChannel( context, this.type, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
-
     const modelWidth = 40;
-    const modelHeight = 60;
+    const modelHeight = 52;
 
     const cornerRound = 4;
 
@@ -38,7 +36,6 @@ export default class LeakageChannelNode extends Node {
     this.addChild( backgroundRectangle );
     this.addChild( leftPore );
     this.addChild( rightPore );
-
   }
 }
 
