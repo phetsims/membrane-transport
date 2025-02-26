@@ -361,7 +361,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     return slots.some( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type );
   }
 
-  public getNearestSlot( x: number ): Slot | null {
+  public getNearestFilledSlot( x: number ): Slot | null {
     return slots.filter( slot => this.slotContents.get( slot ) ).sort( ( a, b ) => Math.abs( this.getSlotPosition( a ) - x ) - Math.abs( this.getSlotPosition( b ) - x ) )[ 0 ];
   }
 

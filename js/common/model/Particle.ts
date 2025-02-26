@@ -3,8 +3,8 @@
 /**
  * The model for a particle in membrane channels.
  *
- * @author Jesse Greenberg (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -16,54 +16,69 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType, Slot } from './MembraneChannelsModel.js';
 import SoluteType, { getParticleModelWidth, ParticleType } from './SoluteType.js';
 
 // Typical speed for movement
 const typicalSpeed = 30;
 
+type RandomWalkMode = {
+  type: 'randomWalk';
+  currentDirection: Vector2;
+  targetDirection: Vector2;
+  turnDuration: number;
+  turnElapsed: number;
+  timeUntilNextDirection: number;
+};
+
+type BoundMode = {
+  type: 'bound';
+};
+
+type MoveToCenterMode = {
+  type: 'moveToCenterOfNearestChannel';
+};
+
+type PassiveDiffusionMode = {
+  type: 'passiveDiffusion';
+  direction: 'inward' | 'outward';
+};
+
+type MovingThroughChannelMode = {
+  type: 'movingThroughChannel';
+  slot: Slot;
+  channelType: ChannelType;
+  direction: 'inward' | 'outward';
+};
+
+type UserControlledMode = {
+  type: 'userControlled';
+};
+
+type UserOverMode = {
+  type: 'userOver';
+};
+
+type ParticleMode =
+  | RandomWalkMode
+  | BoundMode
+  | MoveToCenterMode
+  | PassiveDiffusionMode
+  | MovingThroughChannelMode
+  | UserControlledMode
+  | UserOverMode;
+
 /**
- * Helper function: gets the "current" interpolated direction based on how
- * far we've turned so far, so we can store or use it if we choose a new target.
+ * Gets the current interpolated direction from a random walk mode, based on how far the particle has turned.
  */
-function getInterpolatedDirection( solute: Particle<ParticleType> ): Vector2 {
-  const alpha = Utils.clamp( solute.turnElapsed / solute.turnDuration, 0, 1 );
-  return solute.currentDirection.blend( solute.targetDirection, alpha ).normalized();
+function getInterpolatedDirection( mode: RandomWalkMode ): Vector2 {
+  const alpha = Utils.clamp( mode.turnElapsed / mode.turnDuration, 0, 1 );
+  return mode.currentDirection.blend( mode.targetDirection, alpha ).normalized();
 }
 
-/**
- * Solute class for Membrane Channels sim, supporting multiple modes of motion,
- * including a smooth "curved" random walk.
- */
 export default class Particle<T extends ParticleType> {
 
-  public mode:
-    'randomWalk' |
-    'bound' |
-    'passThroughToInside' |
-    'passThroughToOutside' |
-    'moveToCenterOfNearestChannel' |
-    'userControlled' |
-    'userOver' = 'randomWalk';
-
-  // =============================================================
-  // FIELDS FOR SMOOTH, DELAYED RANDOM WALK
-  // =============================================================
-
-  // Current direction of travel. This vector is usually normalized (length 1).
-  public currentDirection: Vector2;
-
-  // The new direction we will gradually turn toward.
-  public targetDirection: Vector2;
-
-  // How long (in seconds) it takes to fully rotate from currentDirection to targetDirection.
-  public turnDuration: number;
-
-  // How much time (in seconds) has elapsed in the current "turn" from currentDirection to targetDirection.
-  public turnElapsed: number;
-
-  // How long (in seconds) we continue traveling before choosing a new targetDirection.
-  public timeUntilNextDirection: number;
+  public mode: ParticleMode;
 
   // Size of the solute in model coordinates.
   public readonly dimension: Dimension2;
@@ -79,152 +94,176 @@ export default class Particle<T extends ParticleType> {
       getParticleModelWidth( type ) / PARTICLE_ASPECT_RATIO_MAP[ type ]
     );
 
-    // For smooth turning, initialize both directions to something random.
-    this.currentDirection = Particle.createRandomUnitVector();
-    this.targetDirection = Particle.createRandomUnitVector();
+    // Start in random walk mode with random directions.
+    this.mode = this.createRandomWalkMode();
+  }
 
-    // Initialize how long it takes to turn (e.g., 0.5 to 1.5 seconds).
-    this.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
-    this.turnElapsed = 0;
-
-    // After 1–4 seconds, we’ll pick a new direction and smoothly turn to it.
-    this.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+  public createRandomWalkMode(): RandomWalkMode {
+    return {
+      type: 'randomWalk',
+      currentDirection: Particle.createRandomUnitVector(),
+      targetDirection: Particle.createRandomUnitVector(),
+      turnDuration: dotRandom.nextDoubleBetween( 0.5, 1.5 ),
+      turnElapsed: 0,
+      timeUntilNextDirection: dotRandom.nextDoubleBetween( 1, 4 )
+    };
   }
 
   /**
-   * Make the solute move toward a target location right away. It will continue to move in that direction for the
-   * specified duration.
-   *
-   * While moving toward the destination, the solute will be in 'randomWalk' mode.
+   * Make the solute move toward a target location immediately.
+   * The particle remains in random walk mode while moving toward the target.
    */
   public moveToward( target: Vector2, duration: number ): void {
-    this.mode = 'randomWalk';
-
-    this.currentDirection = target;
-    this.targetDirection = target;
-    this.timeUntilNextDirection = duration;
+    this.mode = {
+      type: 'randomWalk',
+      currentDirection: target,
+      targetDirection: target,
+      turnDuration: dotRandom.nextDoubleBetween( 0.5, 1.5 ),
+      turnElapsed: 0,
+      timeUntilNextDirection: duration
+    };
   }
 
   public step( dt: number, model: MembraneChannelsModel ): void {
 
     // When glucose is inside the cell, it is absorbed.
     if ( this.type === 'glucose' && this.position.y < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
-      this.opacity = this.opacity - 0.01;
+      this.opacity -= 0.01;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
         return;
       }
     }
 
-    if ( this.mode === 'randomWalk' ) {
+    if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
-    else if ( this.mode === 'bound' ) {
-      // Mode where solute doesn’t move, or does something special
+    else if ( this.mode.type === 'bound' ) {
+      // Bound mode: particle does not move or has special behavior.
     }
-    else if ( this.mode === 'moveToCenterOfNearestChannel' ) {
+    else if ( this.mode.type === 'moveToCenterOfNearestChannel' ) {
 
-      // Mode where solute moves toward the center of the nearest channel
-      const nearestSlotContents = model.getNearestSlot( this.position.x );
-      if ( nearestSlotContents !== null ) {
+      // Mode where the particle moves toward the center of the nearest channel.
+      const nearestSlot = model.getNearestFilledSlot( this.position.x );
+
+      if ( nearestSlot ) {
         const currentPositionX = this.position.x;
-        const targetPositionX = model.getSlotPosition( nearestSlotContents );
+        const targetPositionX = model.getSlotPosition( nearestSlot );
 
-        // move in the x direction toward the target
+        // Move in the x direction toward the target.
         const maxStepSize = typicalSpeed * dt;
         this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
-        // If we're close enough to the target, switch to random walk mode
+        // When close enough, transition to a membrane-crossing mode.
         if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
 
-          // Are we above (y>0) or below (y<0) the membrane region?
+          // Determine whether the particle is above or below the membrane.
           const outsideOfCell = this.position.y > 0;
 
-          this.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
+          this.mode = {
+            type: 'movingThroughChannel',
+            slot: nearestSlot,
+            channelType: model.getSlotContents( nearestSlot )!,
+            direction: outsideOfCell ? 'inward' : 'outward'
+          };
         }
       }
       else {
-        this.mode = 'randomWalk';
+        // If no channel is found, revert to random walk.
+        this.mode = {
+          type: 'randomWalk',
+          currentDirection: Particle.createRandomUnitVector(),
+          targetDirection: Particle.createRandomUnitVector(),
+          turnDuration: dotRandom.nextDoubleBetween( 0.5, 1.5 ),
+          turnElapsed: 0,
+          timeUntilNextDirection: dotRandom.nextDoubleBetween( 1, 4 )
+        };
       }
     }
-    else if ( this.mode === 'passThroughToInside' || this.mode === 'passThroughToOutside' ) {
+    else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) {
 
-      const sign = this.mode === 'passThroughToInside' ? -1 : 1;
+      // For both passive diffusion and moving through channel, use similar movement logic.
+      const sign = this.mode.direction === 'inward' ? -1 : 1;
 
-      // Mode where solute passes through the membrane to the inside
-      this.position.y = this.position.y + sign * typicalSpeed / 4 * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
-      this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * typicalSpeed / 2 * dt;
+      this.position.y += sign * ( typicalSpeed / 4 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+      this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * ( typicalSpeed / 2 ) * dt;
 
-      // The next direction should mostly point down so that the solute doesn't go right back out
-      if ( this.mode === 'passThroughToInside' && ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
-        const downwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( -1, 0 ) ).normalize();
+      // Once the particle has moved sufficiently far from the membrane, resume random walk.
+      if ( this.mode.direction === 'inward' && ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+        const downwardDirection = new Vector2(
+          dotRandom.nextDoubleBetween( -1, 1 ),
+          dotRandom.nextDoubleBetween( -1, 0 )
+        ).normalize();
         this.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
       }
-      if ( this.mode === 'passThroughToOutside' && ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
-        const upwardDirection = new Vector2( dotRandom.nextDoubleBetween( -1, 1 ), dotRandom.nextDoubleBetween( 0, 1 ) ).normalize();
+      if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
+        const upwardDirection = new Vector2(
+          dotRandom.nextDoubleBetween( -1, 1 ),
+          dotRandom.nextDoubleBetween( 0, 1 )
+        ).normalize();
         this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
       }
     }
   }
 
   /**
-   * Step the solute along a random walk path, causing it to bounce off the
-   * membrane (central horizontal band) AND also bounce off the bounding walls.
+   * Step the particle along a random walk path, including bouncing off the membrane
+   * (central horizontal band) and the bounding walls.
    */
-  public stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
+  private stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
+    const randomWalk = this.mode as RandomWalkMode;
 
-    // 1) Possibly update direction choices
-    this.timeUntilNextDirection -= dt;
-    if ( this.timeUntilNextDirection <= 0 ) {
+    // 1) Possibly update direction choices.
+    randomWalk.timeUntilNextDirection -= dt;
+    if ( randomWalk.timeUntilNextDirection <= 0 ) {
 
-      // finalize "currentDirection" from the previous interpolation
-      this.currentDirection = getInterpolatedDirection( this );
+      // Finalize currentDirection using interpolation.
+      randomWalk.currentDirection = getInterpolatedDirection( randomWalk );
 
-      // choose a new target direction randomly
-      this.targetDirection = Particle.createRandomUnitVector();
+      // Choose a new random target direction.
+      randomWalk.targetDirection = Particle.createRandomUnitVector();
 
-      // decide how long to turn to this target
-      this.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
-      this.turnElapsed = 0;
+      // Decide on a new turn duration.
+      randomWalk.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+      randomWalk.turnElapsed = 0;
 
-      // reset the time until next direction change
-      this.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+      // Reset the time until the next direction change.
+      randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
     }
 
-    // 2) Accumulate turn time and compute interpolated direction
-    this.turnElapsed += dt;
-    const alpha = Utils.clamp( this.turnElapsed / this.turnDuration, 0, 1 );
-    const direction = this.currentDirection.blend( this.targetDirection, alpha );
+    // 2) Accumulate turn time and compute the interpolated direction.
+    randomWalk.turnElapsed += dt;
+    const alpha = Utils.clamp( randomWalk.turnElapsed / randomWalk.turnDuration, 0, 1 );
+    const direction = randomWalk.currentDirection.blend( randomWalk.targetDirection, alpha );
 
-    // 3) If the this is overlapping the membrane, bounce off of it
-    //    (this is the original membrane-bounce logic).
+    // 3) Check for collisions with the membrane.
     const thisBounds = this.getBounds();
 
     // Are we above (y>0) or below (y<0) the membrane region?
     const outsideOfCell = this.position.y > 0;
 
-    // Check overlap with membrane bounds
     if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
-      // Oxygen and carbon dioxide this can pass through the membrane
       if ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) {
-
         if ( model.canDiffuseThroughMembrane( this ) && dotRandom.nextDouble() < 0.90 ) {
-          this.mode = outsideOfCell ? 'passThroughToInside' : 'passThroughToOutside';
-
+          this.mode = {
+            type: 'passiveDiffusion',
+            direction: outsideOfCell ? 'inward' : 'outward'
+          };
           return;
         }
       }
 
       if ( this.type === 'sodiumIon' && model.isCloseToChannelType( this, 'sodiumIonLeakageChannel' ) ) {
-        this.mode = 'moveToCenterOfNearestChannel';
+        this.mode = { type: 'moveToCenterOfNearestChannel' };
         return;
       }
       else if ( this.type === 'potassiumIon' && model.isCloseToChannelType( this, 'potassiumIonLeakageChannel' ) ) {
-        this.mode = 'moveToCenterOfNearestChannel';
+        this.mode = { type: 'moveToCenterOfNearestChannel' };
         return;
       }
 
+      // Handle membrane collision by reflecting vertical motion.
       if ( outsideOfCell ) {
 
         // Overlap with the membrane from above
@@ -235,8 +274,8 @@ export default class Particle<T extends ParticleType> {
 
         // Reflect the motion upward
         direction.y = Math.abs( direction.y );
-        this.currentDirection.y = Math.abs( this.currentDirection.y );
-        this.targetDirection.y = Math.abs( this.targetDirection.y );
+        randomWalk.currentDirection.y = Math.abs( randomWalk.currentDirection.y );
+        randomWalk.targetDirection.y = Math.abs( randomWalk.targetDirection.y );
       }
       else {
 
@@ -248,8 +287,8 @@ export default class Particle<T extends ParticleType> {
 
         // Reflect the motion downward
         direction.y = -Math.abs( direction.y );
-        this.currentDirection.y = -Math.abs( this.currentDirection.y );
-        this.targetDirection.y = -Math.abs( this.targetDirection.y );
+        randomWalk.currentDirection.y = -Math.abs( randomWalk.currentDirection.y );
+        randomWalk.targetDirection.y = -Math.abs( randomWalk.targetDirection.y );
       }
     }
 
@@ -271,32 +310,32 @@ export default class Particle<T extends ParticleType> {
     if ( updatedBounds.minX < boundingRegion.minX ) {
       this.position.x += boundingRegion.minX - updatedBounds.minX;
       direction.x = Math.abs( direction.x );
-      this.currentDirection.x = Math.abs( this.currentDirection.x );
-      this.targetDirection.x = Math.abs( this.targetDirection.x );
+      randomWalk.currentDirection.x = Math.abs( randomWalk.currentDirection.x );
+      randomWalk.targetDirection.x = Math.abs( randomWalk.targetDirection.x );
     }
 
     // Collide with right wall
     if ( updatedBounds.maxX > boundingRegion.maxX ) {
       this.position.x -= updatedBounds.maxX - boundingRegion.maxX;
       direction.x = -Math.abs( direction.x );
-      this.currentDirection.x = -Math.abs( this.currentDirection.x );
-      this.targetDirection.x = -Math.abs( this.targetDirection.x );
+      randomWalk.currentDirection.x = -Math.abs( randomWalk.currentDirection.x );
+      randomWalk.targetDirection.x = -Math.abs( randomWalk.targetDirection.x );
     }
 
     // Collide with bottom wall
     if ( updatedBounds.minY < boundingRegion.minY ) {
       this.position.y += boundingRegion.minY - updatedBounds.minY;
       direction.y = Math.abs( direction.y );
-      this.currentDirection.y = Math.abs( this.currentDirection.y );
-      this.targetDirection.y = Math.abs( this.targetDirection.y );
+      randomWalk.currentDirection.y = Math.abs( randomWalk.currentDirection.y );
+      randomWalk.targetDirection.y = Math.abs( randomWalk.targetDirection.y );
     }
 
     // Collide with top wall
     if ( updatedBounds.maxY > boundingRegion.maxY ) {
       this.position.y -= updatedBounds.maxY - boundingRegion.maxY;
       direction.y = -Math.abs( direction.y );
-      this.currentDirection.y = -Math.abs( this.currentDirection.y );
-      this.targetDirection.y = -Math.abs( this.targetDirection.y );
+      randomWalk.currentDirection.y = -Math.abs( randomWalk.currentDirection.y );
+      randomWalk.targetDirection.y = -Math.abs( randomWalk.targetDirection.y );
     }
   }
 
@@ -308,7 +347,7 @@ export default class Particle<T extends ParticleType> {
   }
 
   public static createRandomUnitVector(): Vector2 {
-    // Create a random direction by picking a random angle between 0 and 2π.
+    // Create a random unit vector by picking an angle between 0 and 2π.
     const angle = dotRandom.nextDouble() * 2 * Math.PI;
     return new Vector2( Math.cos( angle ), Math.sin( angle ) );
   }
