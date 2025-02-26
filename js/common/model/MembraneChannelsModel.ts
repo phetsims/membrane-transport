@@ -390,11 +390,6 @@ export default class MembraneChannelsModel extends PhetioObject {
     return slots.find( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type ) || null;
   }
 
-  // TODO: unused?
-  public getNearestFilledSlot( x: number ): Slot | null {
-    return slots.filter( slot => this.slotContents.get( slot ) ).sort( ( a, b ) => Math.abs( this.getSlotPosition( a ) - x ) - Math.abs( this.getSlotPosition( b ) - x ) )[ 0 ];
-  }
-
   public getLeftmostEmptySlot(): Slot | null {
     return slots.find( slot => !this.slotContents.get( slot ) ) || null;
   }
