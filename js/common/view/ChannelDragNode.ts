@@ -38,7 +38,8 @@ export default class ChannelDragNode extends Node {
     modelPosition: Vector2,
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     public readonly type: ChannelType,
-    // Where this came from, so that during a swap, the other one knows where to go
+
+    // Where this came from, so that during a swap, the other one knows where to go. Or when pressing 'escape', it knows where to return
     public readonly origin: Slot | ChannelToolNode
   ) {
     super( {

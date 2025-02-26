@@ -27,15 +27,9 @@ export default class ChannelToolNode extends VBox {
 
     super( combineOptions<VBoxOptions>( {}, {
       spacing: 3,
-      tagName: 'button',
-      descriptionTagName: 'p',
-
-      // TODO: Do we use descriptionContent with accessibleHelpText?
-      // descriptionContent: 'Press enter to add the protein to the membrane', // TODO: i18n
-
+      tagName: 'button', // TODO: Make sure we see the accessibleHelpText on the ChannelToolNode
       children: [ channelNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
-
       accessibleName: type === 'sodiumIonLeakageChannel' ? MembraneChannelsStrings.sodiumIonNaPlusLeakageStringProperty :
                       type === 'potassiumIonLeakageChannel' ? MembraneChannelsStrings.potassiumIonKPlusLeakageStringProperty :
                       MembraneChannelsStrings.sodiumIonNaPlusVoltageGatedStringProperty,

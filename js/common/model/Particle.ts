@@ -145,9 +145,6 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode.type === 'moveToCenterOfNearestChannel' ) {
 
-      // Mode where the particle moves toward the center of the nearest channel.
-      // const nearestSlot = model.getNearestFilledSlot( this.position.x );
-
       const currentPositionX = this.position.x;
       const targetPositionX = model.getSlotPosition( this.mode.slot );
 

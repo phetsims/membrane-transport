@@ -162,6 +162,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
               membraneChannelsModel.setSlotContents( droppedIntoSlot, grabbedNode.type );
 
+              // TODO: Better way to ask if the origin is a Slot
               if ( oldContents && typeof grabbedNode.origin === 'string' ) {
                 membraneChannelsModel.setSlotContents( grabbedNode.origin, oldContents );
               }
@@ -228,6 +229,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
       },
       grabReleaseKeyboardListenerOptions: {
+
+        // Without this, enter and spacebar have different behavior (enter being broken)
+        // TODO: JG says the default is already false, we should double check it!!!!!!!!!!!!!!!!!
         fireOnDown: false
       }
     } );
@@ -298,7 +302,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           }
         }
 
-        // TODO: these come back in if we have to turn off the supertype escape listener. https://github.com/phetsims/scenery/issues/1692
+        // TODO: comment these back out if the parent does part of the work. https://github.com/phetsims/scenery/issues/1692
         groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
         groupSelectModel.isKeyboardFocusedProperty.value = true;
 
