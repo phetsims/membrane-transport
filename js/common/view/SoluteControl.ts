@@ -68,6 +68,11 @@ export default class SoluteControl extends Panel {
         let amountTheUserCouldRemove = countOnThisSide;
         let amountTheUserCouldAdd = MAX_SOLUTE_COUNT - totalCount;
 
+        // TODO: Is the total exceeding the MAX indicative of an inconsistent transient value?
+        if ( amountTheUserCouldAdd < 0 ) {
+          amountTheUserCouldAdd = 0;
+        }
+
         // For the enabled range only, don't disable just some of the buttons
         if ( amountTheUserCouldAdd > 0 ) {
           amountTheUserCouldAdd = coarseDelta;
