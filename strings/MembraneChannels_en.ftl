@@ -125,3 +125,10 @@ barChartPattern = { $amount ->
   [upward] upward from outside to inside
   *[downward] downward from inside to outside
 }.
+
+# Show a sentence like Right now, membrane has
+#                        {1-6} solute types outside;
+#                        E.g., if Na+ is 0, do not count it
+#                        {1-6} solute types inside;
+#                        {1-7} transport channels
+currentDetails = Right now, membrane has { $outsideSoluteCount } solute types outside; { $insideSoluteCount } solute types inside; { $channelCount } transport channels.

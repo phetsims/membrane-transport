@@ -65,7 +65,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     providedOptions: MembraneChannelsScreenViewOptions ) {
 
     const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-      screenSummaryContent: new MembraneChannelsScreenSummaryContent( model.featureSet )
+      screenSummaryContent: new MembraneChannelsScreenSummaryContent( model.featureSet, model )
     }, providedOptions );
     super( options );
 

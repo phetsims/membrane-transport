@@ -81,10 +81,15 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
 
+  // For Description, keep track of important quantities.
+
   // One NumberProperty for the count of each type of solute, populated in the constructor
   // Note that not all screens have all solute types. Use getFeatureSetSoluteTypes to get the list of solute types
   public readonly outsideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
   public readonly insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
+  public readonly insideSoluteTypesCountProperty = new NumberProperty( 0 );
+  public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
+  public readonly channelCountProperty = new NumberProperty( 0 );
 
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
@@ -245,7 +250,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   public clear(): void {
     this.solutes.length = 0;
-    this.updateSoluteCounts();
+    this.updateCounts();
   }
 
   /**
@@ -253,7 +258,7 @@ export default class MembraneChannelsModel extends PhetioObject {
    */
   public reset(): void {
     this.resetEmitter.emit();
-    this.updateSoluteCounts();
+    this.updateCounts();
   }
 
   /**
@@ -275,7 +280,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.stepFlux( dt, soluteInitialYValues );
     }
 
-    this.updateSoluteCounts();
+    this.updateCounts();
   }
 
   private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {
@@ -319,13 +324,37 @@ export default class MembraneChannelsModel extends PhetioObject {
     return this.soluteTypeFlux[ soluteType ];
   }
 
-  private updateSoluteCounts(): void {
+  private updateCounts(): void {
+
 
     // Update the solute counts after the solutes have moved
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'outside' );
       this.insideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'inside' );
     } );
+
+    // Count the number of different types of solute outside:
+    let outsideNumberOfTypes = 0;
+    getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
+      if ( this.outsideSoluteCountProperties[ soluteType ].value > 0 ) {
+        outsideNumberOfTypes++;
+      }
+    } );
+
+    this.outsideSoluteTypesCountProperty.value = outsideNumberOfTypes;
+
+    // Count the number of different types of solute inside:
+    let insideNumberOfTypes = 0;
+    getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
+      if ( this.insideSoluteCountProperties[ soluteType ].value > 0 ) {
+        insideNumberOfTypes++;
+      }
+    } );
+
+    this.insideSoluteTypesCountProperty.value = insideNumberOfTypes;
+
+    // Count the number of channels
+    this.channelCountProperty.value = slots.filter( slot => this.slotContents.get( slot ) ).length;
   }
 
   /**
@@ -468,7 +497,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       }
       model.slotContentsChangedEmitter.emit();
 
-      model.updateSoluteCounts();
+      model.updateCounts();
     }
   } );
 }
