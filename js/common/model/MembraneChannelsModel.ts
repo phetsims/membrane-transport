@@ -354,13 +354,14 @@ export default class MembraneChannelsModel extends PhetioObject {
     return !slots.some( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) );
   }
 
-  public isCloseToChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): boolean {
+  public getNearbySlotForChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): Slot | null {
 
     // check if within the channel width of any filled slot. TODO: grab radius?
     const x = solute.position.x;
-    return slots.some( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type );
+    return slots.find( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type ) || null;
   }
 
+  // TODO: unused?
   public getNearestFilledSlot( x: number ): Slot | null {
     return slots.filter( slot => this.slotContents.get( slot ) ).sort( ( a, b ) => Math.abs( this.getSlotPosition( a ) - x ) - Math.abs( this.getSlotPosition( b ) - x ) )[ 0 ];
   }
@@ -419,6 +420,24 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   public getMiddleSlot(): Slot {
     return slots[ Math.floor( slots.length / 2 ) ];
+  }
+
+  /**
+   * If a slot already has a solute traversing it, or moving to it, then it is "reserved" and cannot accommodate a second solute.
+   */
+  public isChannelFree( slot: Slot ): boolean {
+    const isChannelReserved = this.solutes.some( solute => {
+
+      // TODO: would be nice to check if any mode has slot, without having to list the mode types.
+      if ( solute.mode.type === 'moveToCenterOfNearestChannel' && solute.mode.slot === slot ) {
+        return true;
+      }
+      else if ( solute.mode.type === 'movingThroughChannel' && solute.mode.slot === slot ) {
+        return true;
+      }
+      return false;
+    } );
+    return !isChannelReserved;
   }
 
   /**

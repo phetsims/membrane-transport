@@ -35,8 +35,10 @@ type BoundMode = {
   type: 'bound';
 };
 
+// TODO: Match up type and type name
 type MoveToCenterMode = {
   type: 'moveToCenterOfNearestChannel';
+  slot: Slot;
 };
 
 type PassiveDiffusionMode = {
@@ -144,39 +146,26 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'moveToCenterOfNearestChannel' ) {
 
       // Mode where the particle moves toward the center of the nearest channel.
-      const nearestSlot = model.getNearestFilledSlot( this.position.x );
+      // const nearestSlot = model.getNearestFilledSlot( this.position.x );
 
-      if ( nearestSlot ) {
-        const currentPositionX = this.position.x;
-        const targetPositionX = model.getSlotPosition( nearestSlot );
+      const currentPositionX = this.position.x;
+      const targetPositionX = model.getSlotPosition( this.mode.slot );
 
-        // Move in the x direction toward the target.
-        const maxStepSize = typicalSpeed * dt;
-        this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
+      // Move in the x direction toward the target.
+      const maxStepSize = typicalSpeed * dt;
+      this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
-        // When close enough, transition to a membrane-crossing mode.
-        if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
+      // When close enough, transition to a membrane-crossing mode.
+      if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
 
-          // Determine whether the particle is above or below the membrane.
-          const outsideOfCell = this.position.y > 0;
+        // Determine whether the particle is above or below the membrane.
+        const outsideOfCell = this.position.y > 0;
 
-          this.mode = {
-            type: 'movingThroughChannel',
-            slot: nearestSlot,
-            channelType: model.getSlotContents( nearestSlot )!,
-            direction: outsideOfCell ? 'inward' : 'outward'
-          };
-        }
-      }
-      else {
-        // If no channel is found, revert to random walk.
         this.mode = {
-          type: 'randomWalk',
-          currentDirection: Particle.createRandomUnitVector(),
-          targetDirection: Particle.createRandomUnitVector(),
-          turnDuration: dotRandom.nextDoubleBetween( 0.5, 1.5 ),
-          turnElapsed: 0,
-          timeUntilNextDirection: dotRandom.nextDoubleBetween( 1, 4 )
+          type: 'movingThroughChannel',
+          slot: this.mode.slot,
+          channelType: model.getSlotContents( this.mode.slot )!,
+          direction: outsideOfCell ? 'inward' : 'outward'
         };
       }
     }
@@ -254,12 +243,21 @@ export default class Particle<T extends ParticleType> {
         }
       }
 
-      if ( this.type === 'sodiumIon' && model.isCloseToChannelType( this, 'sodiumIonLeakageChannel' ) ) {
-        this.mode = { type: 'moveToCenterOfNearestChannel' };
+      const nearbySodiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLeakageChannel' );
+      const nearbyPotassiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'potassiumIonLeakageChannel' );
+
+      if ( this.type === 'sodiumIon' && nearbySodiumLeakageChannelSlot && model.isChannelFree( nearbySodiumLeakageChannelSlot ) ) {
+        this.mode = {
+          type: 'moveToCenterOfNearestChannel',
+          slot: nearbySodiumLeakageChannelSlot
+        };
         return;
       }
-      else if ( this.type === 'potassiumIon' && model.isCloseToChannelType( this, 'potassiumIonLeakageChannel' ) ) {
-        this.mode = { type: 'moveToCenterOfNearestChannel' };
+      if ( this.type === 'potassiumIon' && nearbyPotassiumLeakageChannelSlot && model.isChannelFree( nearbyPotassiumLeakageChannelSlot ) ) {
+        this.mode = {
+          type: 'moveToCenterOfNearestChannel',
+          slot: nearbyPotassiumLeakageChannelSlot
+        };
         return;
       }
 
