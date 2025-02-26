@@ -38,7 +38,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
       titleAlignX: 'left',
       fill: 'white',
-      expandedDefaultValue: true // TODO: This is just for development
+      expandedDefaultValue: true
     }, providedOptions );
 
     const contentWidth = 720;

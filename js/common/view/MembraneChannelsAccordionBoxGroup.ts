@@ -26,7 +26,6 @@ import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
  * - maxWidth
  * - dynamic layout
  * - PhET-iO
- * - keyboard
  * - description
  *
  * @author Sam Reid (PhET Interactive Simulations)

@@ -28,10 +28,6 @@ export default class LeakageChannelNode extends CanvasNode {
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
-    // Draw a red rectangle for debugging
-    // context.fillStyle = 'rgba(255,0,0,0.5)';
-    // context.fillRect( 0, 0, 45, 50 );
-
     // Draw the membrane channel
     ObservationWindowCanvasNode.drawLeakageChannel( context, this.type, ModelViewTransform2.createOffsetXYScaleMapping( new Vector2( 5, 25 ), 1.75, 1.75 ), 10 );
   }
