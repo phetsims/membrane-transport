@@ -35,9 +35,8 @@ type BoundMode = {
   type: 'bound';
 };
 
-// TODO: Match up type and type name
-type MoveToCenterMode = {
-  type: 'moveToCenterOfNearestChannel';
+type MoveToCenterOfChannelMode = {
+  type: 'moveToCenterOfChannel';
   slot: Slot;
 };
 
@@ -64,7 +63,7 @@ type UserOverMode = {
 type ParticleMode =
   | RandomWalkMode
   | BoundMode
-  | MoveToCenterMode
+  | MoveToCenterOfChannelMode
   | PassiveDiffusionMode
   | MovingThroughChannelMode
   | UserControlledMode
@@ -143,7 +142,7 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'bound' ) {
       // Bound mode: particle does not move or has special behavior.
     }
-    else if ( this.mode.type === 'moveToCenterOfNearestChannel' ) {
+    else if ( this.mode.type === 'moveToCenterOfChannel' ) {
 
       const currentPositionX = this.position.x;
       const targetPositionX = model.getSlotPosition( this.mode.slot );
@@ -245,14 +244,14 @@ export default class Particle<T extends ParticleType> {
 
       if ( this.type === 'sodiumIon' && nearbySodiumLeakageChannelSlot && model.isChannelFree( nearbySodiumLeakageChannelSlot ) ) {
         this.mode = {
-          type: 'moveToCenterOfNearestChannel',
+          type: 'moveToCenterOfChannel',
           slot: nearbySodiumLeakageChannelSlot
         };
         return;
       }
       if ( this.type === 'potassiumIon' && nearbyPotassiumLeakageChannelSlot && model.isChannelFree( nearbyPotassiumLeakageChannelSlot ) ) {
         this.mode = {
-          type: 'moveToCenterOfNearestChannel',
+          type: 'moveToCenterOfChannel',
           slot: nearbyPotassiumLeakageChannelSlot
         };
         return;

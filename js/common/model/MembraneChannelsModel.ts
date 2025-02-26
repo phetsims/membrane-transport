@@ -452,8 +452,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   public isChannelFree( slot: Slot ): boolean {
     const isChannelReserved = this.solutes.some( solute => {
 
-      // TODO: would be nice to check if any mode has slot, without having to list the mode types.
-      if ( solute.mode.type === 'moveToCenterOfNearestChannel' && solute.mode.slot === slot ) {
+      // Check if any mode has this slot
+      if ( solute.mode.type === 'moveToCenterOfChannel' && solute.mode.slot === slot ) {
         return true;
       }
       else if ( solute.mode.type === 'movingThroughChannel' && solute.mode.slot === slot ) {
