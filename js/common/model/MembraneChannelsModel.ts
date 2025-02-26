@@ -54,7 +54,11 @@ const fluxSmoothingTimeConstant = 0.25;
 export type ChannelType =
   'sodiumIonLeakageChannel' |
   'potassiumIonLeakageChannel' |
-  'sodiumIonVoltageGatedChannel';
+  'sodiumIonVoltageGatedChannel' |
+  'sodiumIonLigandGatedChannel' |
+  'potassiumIonLigandGatedChannel' |
+  'sodiumIonActiveGatedChannel' |
+  'potassiumIonActiveGatedChannel';
 
 export const SLOT_COUNT = 7;
 const SLOT_MAX_X = 84;
