@@ -55,6 +55,9 @@ export default class SodiumVoltageGatedChannelNode extends Node {
         scale: 4
       } ) );
     } );
+
+    this.touchArea = this.localBounds.dilatedXY( 10, 10 );
+    this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
   }
 
   public setInterpolation( amount: number ): void {
