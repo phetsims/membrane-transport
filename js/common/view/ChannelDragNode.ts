@@ -75,6 +75,14 @@ export default class ChannelDragNode extends Node {
     // eslint-disable-next-line consistent-this,@typescript-eslint/no-this-alias
     const myself = this;
 
+    const updateHighlight = () => {
+      const closest = getClosestSlotDragIndicatorNode();
+
+      observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
+        slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
+      } );
+    };
+
     // TODO: Use SoundRichDragListener?
     // TODO: MK suggested RichDragListener which also has keyboard support
     this.dragListener = new DragListener( {
@@ -84,22 +92,11 @@ export default class ChannelDragNode extends Node {
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT,
       start: () => {
-        const closest = getClosestSlotDragIndicatorNode();
-
-        observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-          slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
-        } );
-
+        updateHighlight();
         observationWindow.setSlotDragIndicatorsVisible( true );
       },
       drag: () => {
-
-        // TODO: Duplicated with above
-        const closest = getClosestSlotDragIndicatorNode();
-
-        observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-          slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
-        } );
+        updateHighlight();
       },
       end: () => {
 

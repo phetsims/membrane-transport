@@ -36,8 +36,6 @@ export default class ChannelToolNode extends VBox {
     } ) );
     this.addInputListener( {
       click: () => {
-
-        // TODO: If the membrane is full, this incorrectly pulls one off the membrane
         view.forwardFromKeyboard( type, this );
       }
     } );
