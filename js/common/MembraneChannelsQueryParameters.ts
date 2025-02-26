@@ -22,6 +22,12 @@ const SCHEMA_MAP = {
     type: 'boolean',
     defaultValue: true,
     public: true
+  },
+
+  // Max solutes per solute type
+  maxSolutes: {
+    type: 'number',
+    defaultValue: 50
   }
 } as const;
 

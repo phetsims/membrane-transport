@@ -8,6 +8,7 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
+import MembraneChannelsQueryParameters from './MembraneChannelsQueryParameters.js';
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
 import membraneChannels from '../membraneChannels.js';
 import getParticleNode from './view/particles/getParticleNode.js';
@@ -33,7 +34,7 @@ ParticleTypes.forEach( soluteType => {
 const MEMBRANE_BOUNDS = new Bounds2( -MODEL_WIDTH / 2, -10, MODEL_WIDTH / 2, 10 );
 
 export const LIGAND_COUNT = 10; // Per ligand type
-export const MAX_SOLUTE_COUNT = 200; // Per solute type
+export const MAX_SOLUTE_COUNT = MembraneChannelsQueryParameters.maxSolutes; // Per solute type
 
 const MembraneChannelsConstants = {
   SCREEN_VIEW_X_MARGIN: 8,
