@@ -40,5 +40,10 @@
 
   // In the preferences
   animateLipids: 'Animate Lipids',
-  animateLipidsDescription: 'Whether the phospholipids forming the cell membrane should be animated'
+  animateLipidsDescription: 'Whether the phospholipids forming the cell membrane should be animated',
+
+  sodiumIonNaPlusLeakage: 'Sodium Ion NA plus, Leakage',
+  potassiumIonKPlusLeakage: 'Potassium Ion K plus, Leakage',
+  sodiumIonNaPlusVoltageGated: 'Sodium Ion NA plus, Voltage Gated',
+  grabToPullProteinToTheMembrane: 'Grab to pull protein to the membrane',
 }

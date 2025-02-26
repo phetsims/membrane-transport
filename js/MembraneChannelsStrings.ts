@@ -43,6 +43,10 @@ type StringsType = {
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
+  'sodiumIonNaPlusLeakageStringProperty': LocalizedStringProperty;
+  'potassiumIonKPlusLeakageStringProperty': LocalizedStringProperty;
+  'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
+  'grabToPullProteinToTheMembraneStringProperty': LocalizedStringProperty;
 };
 
 const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;
