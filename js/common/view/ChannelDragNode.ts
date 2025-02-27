@@ -19,6 +19,20 @@ import ChannelToolNode from './ChannelToolNode.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
+ * Type guard that checks if a value is a Slot
+ */
+export function isOriginSlot( origin: Slot | ChannelToolNode ): origin is Slot {
+  return typeof origin === 'string';
+}
+
+/**
+ * Type guard that checks if a origin is a ChannelToolNode
+ */
+export function isOriginChannelToolNode( origin: Slot | ChannelToolNode ): origin is ChannelToolNode {
+  return !isOriginSlot( origin );
+}
+
+/**
  * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific targets
  * in the membrane.
  *
@@ -117,7 +131,7 @@ export default class ChannelDragNode extends Node {
           // drop into the selected target
           model.setSlotContents( closest.slot, this.type );
 
-          if ( otherContents && typeof this.origin === 'string' ) {
+          if ( otherContents && isOriginSlot( this.origin ) ) {
             model.setSlotContents( this.origin, otherContents );
           }
 
@@ -126,8 +140,8 @@ export default class ChannelDragNode extends Node {
         }
         else {
 
-          // Animate back to the toolbox. TODO: method and type guard to check if origin is a Slot?
-          if ( typeof this.origin !== 'string' ) {
+          // Animate back to the toolbox
+          if ( isOriginChannelToolNode( this.origin ) ) {
 
             myself.pickable = false; // Prevent being grabbed on the way home
 
