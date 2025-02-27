@@ -1,6 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
@@ -15,9 +16,24 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+
+// Type definition for channel configuration
+type ChannelConfig = {
+  channelType: ChannelType;
+  labelProperty: TReadOnlyProperty<string>;
+  accessibleNameProperty: TReadOnlyProperty<string>;
+};
+
+// Type definition for accordion box configuration
+type AccordionBoxConfig = {
+  titleProperty: TReadOnlyProperty<string>;
+  tandemName: string;
+  expanded: boolean;
+  channels: ChannelConfig[];
+};
 
 /**
  * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
@@ -43,7 +59,6 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       lineWidth: 0,
       titleAlignX: 'left',
       fill: 'white',
-
       headingTagName: 'h4'
     };
 
@@ -53,82 +68,116 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     // put all titles in an align box so they take up the same amount of space
     const titleAlignGroup = new AlignGroup();
 
+    /**
+     * Creates an accordion box based on the provided configuration
+     */
+    const createAccordionBox = ( config: AccordionBoxConfig ): AccordionBox => {
+      const content = new HBox( {
+        spacing: 10,
+        children: config.channels.map( channel =>
+          new ChannelToolNode(
+            channel.channelType,
+            channel.labelProperty,
+            channel.accessibleNameProperty,
+            model,
+            view
+          )
+        )
+      } );
+
+      return new AccordionBox( contentAlignGroup.createBox( content ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: config.expanded,
+        titleNode: titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize } ), { xAlign: 'left' } ),
+        tandem: tandem.createTandem( config.tandemName )
+      }, accordionBoxOptions ) );
+    };
+
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
-
-      const createLeakageAccordionBox = ( () => {
-
-        const leakageContent = new HBox( {
-          spacing: 10,
-          children: [
-            new ChannelToolNode( 'sodiumIonLeakageChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty, model, view ),
-            new ChannelToolNode( 'potassiumIonLeakageChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty, model, view )
-          ]
-        } );
-
-        return new AccordionBox( contentAlignGroup.createBox( leakageContent ), combineOptions<AccordionBoxOptions>( {
-          expandedDefaultValue: true,
-          titleNode: titleAlignGroup.createBox( new Text( MembraneChannelsStrings.leakageChannelsStringProperty, { fontSize: fontSize } ), { xAlign: 'left' } ),
-          tandem: tandem.createTandem( 'leakageAccordionBox' )
-        }, accordionBoxOptions ) );
+      // Leakage channels
+      const leakageAccordionBox = createAccordionBox( {
+        titleProperty: MembraneChannelsStrings.leakageChannelsStringProperty,
+        tandemName: 'leakageAccordionBox',
+        expanded: true,
+        channels: [
+          {
+            channelType: 'sodiumIonLeakageChannel',
+            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty
+          },
+          {
+            channelType: 'potassiumIonLeakageChannel',
+            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty
+          }
+        ]
       } );
 
-      const createVoltageGatedAccordionBox = ( () => {
-        const hbox = new HBox( {
-          spacing: 10,
-          children: [
-            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty, model, view ),
-            new ChannelToolNode( 'sodiumIonVoltageGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty, model, view ) ]
-        } );
-
-        return new AccordionBox( contentAlignGroup.createBox( hbox ), combineOptions<AccordionBoxOptions>( {
-          expandedDefaultValue: false,
-          titleNode: titleAlignGroup.createBox( new Text( MembraneChannelsStrings.voltageGatedChannelsStringProperty, { fontSize: fontSize } ), { xAlign: 'left' } ),
-          tandem: tandem.createTandem( 'voltageGatedAccordionBox' )
-        }, accordionBoxOptions ) );
+      // Voltage-gated channels
+      const voltageGatedAccordionBox = createAccordionBox( {
+        titleProperty: MembraneChannelsStrings.voltageGatedChannelsStringProperty,
+        tandemName: 'voltageGatedAccordionBox',
+        expanded: false,
+        channels: [
+          {
+            channelType: 'sodiumIonVoltageGatedChannel',
+            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
+          },
+          {
+            channelType: 'sodiumIonVoltageGatedChannel',
+            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
+          }
+        ]
       } );
 
-      // TODO: Duplicated code in the createLeakageAccordionBox and createVoltageGatedAccordionBox
-      const createLigandGatedAccordionBox = ( () => {
-        const hbox = new HBox( {
-          spacing: 10,
-          children: [
-            new ChannelToolNode( 'sodiumIonLigandGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty, model, view ),
-            new ChannelToolNode( 'potassiumIonLigandGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty, model, view ) ]
-        } );
-
-        return new AccordionBox( contentAlignGroup.createBox( hbox ), combineOptions<AccordionBoxOptions>( {
-          expandedDefaultValue: false,
-          titleNode: titleAlignGroup.createBox( new Text( MembraneChannelsStrings.ligandGatedChannelsStringProperty, { fontSize: fontSize } ), { xAlign: 'left' } ),
-          tandem: tandem.createTandem( 'ligandGatedAccordionBox' )
-        }, accordionBoxOptions ) );
+      // Ligand-gated channels
+      const ligandGatedAccordionBox = createAccordionBox( {
+        titleProperty: MembraneChannelsStrings.ligandGatedChannelsStringProperty,
+        tandemName: 'ligandGatedAccordionBox',
+        expanded: false,
+        channels: [
+          {
+            channelType: 'sodiumIonLigandGatedChannel',
+            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty
+          },
+          {
+            channelType: 'potassiumIonLigandGatedChannel',
+            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty
+          }
+        ]
       } );
 
       accordionBoxes.push(
-        createLeakageAccordionBox(),
-        createVoltageGatedAccordionBox(),
-        createLigandGatedAccordionBox()
+        leakageAccordionBox,
+        voltageGatedAccordionBox,
+        ligandGatedAccordionBox
       );
     }
 
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
-
-      // TODO: Duplicated code in the createLeakageAccordionBox and createVoltageGatedAccordionBox
-      const createActiveTransportAccordionBox = ( () => {
-        const hbox = new HBox( {
-          spacing: 10,
-          children: [
-            new ChannelToolNode( 'sodiumIonActiveGatedChannel', MembraneChannelsStrings.sodiumIonNaPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty, model, view ),
-            new ChannelToolNode( 'potassiumIonActiveGatedChannel', MembraneChannelsStrings.potassiumIonKPlusStringProperty, MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty, model, view ) ]
-        } );
-
-        return new AccordionBox( contentAlignGroup.createBox( hbox ), combineOptions<AccordionBoxOptions>( {
-          expandedDefaultValue: false,
-          titleNode: titleAlignGroup.createBox( new Text( MembraneChannelsStrings.activeTransportersStringProperty, { fontSize: fontSize } ), { xAlign: 'left' } ),
-          tandem: tandem.createTandem( 'activeTransportAccordionBox' )
-        }, accordionBoxOptions ) );
+      // Active transport channels
+      const activeTransportAccordionBox = createAccordionBox( {
+        titleProperty: MembraneChannelsStrings.activeTransportersStringProperty,
+        tandemName: 'activeTransportAccordionBox',
+        expanded: false,
+        channels: [
+          {
+            channelType: 'sodiumIonActiveGatedChannel',
+            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
+          },
+          {
+            channelType: 'potassiumIonActiveGatedChannel',
+            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty
+          }
+        ]
       } );
 
-      accordionBoxes.push( createActiveTransportAccordionBox() );
+      accordionBoxes.push( activeTransportAccordionBox );
     }
 
     accordionBoxes.forEach( box => {
