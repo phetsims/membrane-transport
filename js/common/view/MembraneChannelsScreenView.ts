@@ -59,6 +59,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
   );
   public readonly screenViewModelViewTransform: ModelViewTransform2;
   private afterRelease: ( () => void ) | null = null;
+  private readonly membraneChannelsAccordionBoxGroup?: MembraneChannelsAccordionBoxGroup;
 
   public constructor(
     public readonly model: MembraneChannelsModel,
@@ -128,7 +129,6 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( trashButton );
 
     // Solute bar charts
-
     const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( model, {
       tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
     } );
@@ -191,13 +191,13 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( insideSoluteControlNode );
 
     const rightSideVBoxChildren: Node[] = [];
-    const accordionBoxGroupElements: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, this.observationWindowModelViewTransform, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), this );
+      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), this );
       this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
       rightSideVBoxChildren.push( membraneChannelsAccordionBoxGroup );
-      accordionBoxGroupElements.push( membraneChannelsAccordionBoxGroup );
+
+      this.membraneChannelsAccordionBoxGroup = membraneChannelsAccordionBoxGroup;
     }
 
     if ( getFeatureSetHasVoltages( model.featureSet ) ) {
@@ -247,11 +247,13 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param modelPosition - The model position to place the drag node
    * @param type - The type of channel to create
    * @param origin - Where the channel came from
+   * @param channelToolNode - The channel tool node that the channel will animate to if dropped in the empty area
    * @returns The created channel drag node
    */
   private createChannelDragNode( modelPosition: Vector2, type: ChannelType, origin: Slot | ChannelToolNode ): ChannelDragNode {
     const channelDragNode = new ChannelDragNode(
       this.model,
+      this,
       this.observationWindow,
       this.screenViewModelViewTransform,
       modelPosition,
@@ -270,7 +272,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
   public createFromMouseDrag( event: PressListenerEvent, type: ChannelType, origin: Slot | ChannelToolNode ): void {
     const viewPoint = this.globalToLocalPoint( event.pointer.point );
     const modelPosition = this.screenViewModelViewTransform.viewToModelPosition( viewPoint );
-    
+
     const channelDragNode = this.createChannelDragNode( modelPosition, type, origin );
     channelDragNode.press( event );
   }
@@ -317,6 +319,10 @@ export default class MembraneChannelsScreenView extends ScreenView {
   public keyboardDroppedMembraneChannel(): void {
     this.afterRelease && this.afterRelease();
     this.afterRelease = null;
+  }
+
+  public getChannelToolNode( type: ChannelType ): ChannelToolNode {
+    return this.membraneChannelsAccordionBoxGroup!.getChannelToolNode( type );
   }
 }
 

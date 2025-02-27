@@ -5,6 +5,7 @@ import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
@@ -20,6 +21,10 @@ const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class ChannelToolNode extends VBox {
+
+  // So we can return ChannelDragNodes to its exact location
+  public readonly channelNode: Node;
+
   public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
 
     const channelNode = getChannelNode( type );
@@ -39,6 +44,8 @@ export default class ChannelToolNode extends VBox {
         view.forwardFromKeyboard( type, this );
       }
     } );
+
+    this.channelNode = channelNode;
   }
 }
 

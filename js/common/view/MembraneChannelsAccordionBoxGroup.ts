@@ -3,7 +3,6 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -50,7 +49,10 @@ type AccordionBoxConfig = {
 export default class MembraneChannelsAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
-  public constructor( model: MembraneChannelsModel, transform: ModelViewTransform2, tandem: Tandem, view: MembraneChannelsScreenView ) {
+  // So we can return ChannelDragNode instances to their corresponding ChannelToolNode icons
+  private readonly channelToolNodes: Map<ChannelType, ChannelToolNode>;
+
+  public constructor( model: MembraneChannelsModel, tandem: Tandem, view: MembraneChannelsScreenView ) {
 
     const fontSize = 16;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -68,20 +70,25 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     // put all titles in an align box so they take up the same amount of space
     const titleAlignGroup = new AlignGroup();
 
+    const channelToolNodes = new Map<ChannelType, ChannelToolNode>();
+
     /**
      * Creates an accordion box based on the provided configuration
      */
     const createAccordionBox = ( config: AccordionBoxConfig ): AccordionBox => {
       const content = new HBox( {
         spacing: 10,
-        children: config.channels.map( channel =>
-          new ChannelToolNode(
-            channel.channelType,
-            channel.labelProperty,
-            channel.accessibleNameProperty,
-            model,
-            view
-          )
+        children: config.channels.map( channel => {
+            const channelToolNode = new ChannelToolNode(
+              channel.channelType,
+              channel.labelProperty,
+              channel.accessibleNameProperty,
+              model,
+              view
+            );
+            channelToolNodes.set( channel.channelType, channelToolNode );
+            return channelToolNode;
+          }
         )
       } );
 
@@ -227,10 +234,15 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     this.resetEmitter.addListener( () => accordionBoxes.forEach( box => box.reset() ) );
 
     this.mutate( { left: 20, top: 20 } );
+    this.channelToolNodes = channelToolNodes;
   }
 
   public reset(): void {
     this.resetEmitter.emit();
+  }
+
+  public getChannelToolNode( channelType: ChannelType ): ChannelToolNode {
+    return this.channelToolNodes.get( channelType )!;
   }
 }
 

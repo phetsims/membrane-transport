@@ -16,6 +16,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsModel, { ChannelType, Slot } from '../model/MembraneChannelsModel.js';
 import getChannelNode from './channels/getChannelNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
+import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
@@ -47,6 +48,7 @@ export default class ChannelDragNode extends Node {
 
   public constructor(
     model: MembraneChannelsModel,
+    view: MembraneChannelsScreenView,
     observationWindow: ObservationWindow,
     screenViewModelViewTransform: ModelViewTransform2,
     modelPosition: Vector2,
@@ -141,19 +143,19 @@ export default class ChannelDragNode extends Node {
         else {
 
           // Animate back to the toolbox
-          if ( isOriginChannelToolNode( this.origin ) ) {
 
             myself.pickable = false; // Prevent being grabbed on the way home
 
+          const toolNode = view.getChannelToolNode( this.type );
+          const viewPoint = view.globalToLocalPoint( toolNode.channelNode.globalBounds.center );
+          const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
+
             const animation = new Animation( {
               setValue: function( value ) {
-                const screenViewPoint = myself.globalToParentPoint( value );
-                positionProperty.value = screenViewModelViewTransform.viewToModelPosition( screenViewPoint );
+                positionProperty.value = value;
               },
-              from: this.globalBounds.center,
-
-              // TODO: Something is off about the vertical target position
-              to: this.origin.globalBounds.center,
+              from: positionProperty.value.copy(),
+              to: modelPoint,
               duration: 0.4,
               easing: Easing.CUBIC_IN_OUT
             } );
@@ -162,7 +164,6 @@ export default class ChannelDragNode extends Node {
             } );
 
             animation.start();
-          }
         }
       }
     } );
