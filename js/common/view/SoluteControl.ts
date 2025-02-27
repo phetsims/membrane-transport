@@ -125,7 +125,7 @@ export default class SoluteControl extends Panel {
                       MembraneChannelsMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
 
       accessibleHelpText: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerHelpTextMessageProperty :
-                MembraneChannelsMessages.outsideMembraneSpinnerHelpTextMessageProperty,
+                          MembraneChannelsMessages.outsideMembraneSpinnerHelpTextMessageProperty,
 
       accessibleRoleDescription: MembraneChannelsMessages.soluteSpinnerRoleDescriptionMessageProperty,
 
@@ -149,7 +149,8 @@ export default class SoluteControl extends Panel {
         const directionality = side === 'inside' ? 'insideThanOutside' : 'outsideThanInside';
 
         // Describe relative to the spinner that is being controlled
-        const moreOrLess = side === 'inside' ?
+        const moreOrLessOrSame = ( differenceInsideMinusOutside === 0 ) ? 'same' :
+                           side === 'inside' ?
                            ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
                            ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
@@ -160,7 +161,7 @@ export default class SoluteControl extends Panel {
             amount: amount,                // aLittle / aLot
             addedOrRemoved: addedOrRemoved, // added / removed
             differenceSize: differenceSize, // aLittle / aLot
-            moreOrLess: moreOrLess, // more / less
+            moreOrLessOrSame: moreOrLessOrSame, // more / less
             soluteType: soluteType,       // e.g. 'Na⁺'
             directionality: directionality  // insideThanOutside / outsideThanInside
           }

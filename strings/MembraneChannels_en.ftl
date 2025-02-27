@@ -95,19 +95,22 @@ soluteSpinnerContextResponsePattern =
         [added] added
        *[removed] removed
     }. Now
-    { $differenceSize ->
+    { $moreOrLessOrSame ->
+      [same] same amount of solute inside and outside.
+      *[other] { $differenceSize ->
         [aLittle] a little
        *[aLot] a lot
+      }
+      { $moreOrLessOrSame ->
+          [more] more
+         *[less] less
+      }
+      { solute }
+      { $directionality ->
+          [insideThanOutside] inside than outside
+         *[outsideThanInside] outside than inside
+      }.
     }
-    { $moreOrLess ->
-        [more] more
-       *[less] less
-    }
-    { solute }
-    { $directionality ->
-        [insideThanOutside] inside than outside
-       *[outsideThanInside] outside than inside
-    }.
 
 soluteBarChartsDescriptionParagraph = A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
 
