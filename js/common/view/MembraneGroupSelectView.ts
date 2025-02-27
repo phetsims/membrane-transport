@@ -12,7 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel, { ChannelType, Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
-import ChannelDragNode from './ChannelDragNode.js';
+import ChannelDragNode, { isOriginSlot } from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -162,8 +162,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
               membraneChannelsModel.setSlotContents( droppedIntoSlot, grabbedNode.type );
 
-              // TODO: Better way to ask if the origin is a Slot
-              if ( oldContents && typeof grabbedNode.origin === 'string' ) {
+              if ( oldContents && isOriginSlot( grabbedNode.origin ) ) {
                 membraneChannelsModel.setSlotContents( grabbedNode.origin, oldContents );
               }
             }
@@ -278,7 +277,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         if ( currentSelection ) {
           const grabbedNode = currentSelection.grabbedNode;
 
-          if ( typeof grabbedNode.origin === 'string' ) {
+          if ( isOriginSlot( grabbedNode.origin ) ) {
 
             // TODO: What if something else moved there in the meantime?
             membraneChannelsModel.setSlotContents( grabbedNode.origin, grabbedNode.type );
