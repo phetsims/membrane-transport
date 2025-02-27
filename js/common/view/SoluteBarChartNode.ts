@@ -11,7 +11,9 @@
 // import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
+import { clamp } from '../../../../dot/js/util/clamp.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -33,6 +35,8 @@ const BOX_HEIGHT = 100;
 // When there are this many solutes of one type in an area of the cell, the bar will take up the full BOX_HEIGHT.
 const MAX_SOLUTES = 200;
 
+const MAX_ARROW_HEIGHT = 13 * 20;
+
 export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
@@ -49,6 +53,15 @@ export default class SoluteBarChartNode extends Node {
 
     // TODO: Consider creating a utility function for thresholding.
     // TODO: Consider building that into Fluent directly???
+
+
+    // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference.
+    //   What if the description simply described the mmagnitude of the outside bar and the inside bar?
+    //   "A lot of CO2 outside, a little inside"
+    //   "A little CO2 outside, a lot inside"
+    //   "A little CO2 outside, a little inside"
+    //   In the original design, we need special cases for when there is no solute on one side. If the descriptions always directly described that,
+
     const soluteDifferenceProperty = new DerivedProperty( [ outsideAmountProperty, insideAmountProperty ], ( outsideAmount, insideAmount ) => {
       const difference = outsideAmount - insideAmount;
       return difference > 10 ? 'aLotMore' :
@@ -57,9 +70,12 @@ export default class SoluteBarChartNode extends Node {
              'aLotLess';
     } );
 
+    const sizeDescriptionProperty = new StringProperty( 'small' );
+    const directionDescriptionProperty = new StringProperty( 'upward' );
+
     const descriptionProperty = new PatternMessageProperty( MembraneChannelsMessages.barChartPatternMessageProperty, {
       amount: soluteDifferenceProperty,
-      size: 'small', // TODO: This is a placeholder
+      size: sizeDescriptionProperty,
       direction: 'upward' // TODO: This is a placeholder
     } );
 
@@ -126,12 +142,19 @@ export default class SoluteBarChartNode extends Node {
 
       // Net positive is into the cell
       // TODO: Should this be smoothed out?
-      // TODO: How to normalize?
+      // TODO: How to normalize? When done, replace MAX_ARROW_HEIGHT with the normalized value.
       const smoothedNet = model.getRecentSoluteFluxWithSmoothing( soluteType );
       if ( Math.abs( smoothedNet ) > 0.01 ) {
         arrow.visible = true;
-        arrow.setTailAndTip( 80, 0, 80, smoothedNet * 20 );
+        const constrainedArrowHeight = clamp( smoothedNet * 20, -MAX_ARROW_HEIGHT, MAX_ARROW_HEIGHT );
+        arrow.setTailAndTip( 80, 0, 80, constrainedArrowHeight );
         arrow.centerY = BOX_HEIGHT / 2;
+
+        sizeDescriptionProperty.value = Math.abs( constrainedArrowHeight ) > MAX_ARROW_HEIGHT / 2 ? 'large' :
+                                        Math.abs( constrainedArrowHeight ) > MAX_ARROW_HEIGHT / 4 ? 'medium' :
+                                        'small';
+
+        directionDescriptionProperty.value = constrainedArrowHeight > 0 ? 'upward' : 'downward';
       }
       else {
         arrow.visible = false;

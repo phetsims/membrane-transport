@@ -114,20 +114,26 @@ soluteSpinnerContextResponsePattern =
 
 soluteBarChartsDescriptionParagraph = A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
 
-# {{a lot more outside than inside}}; {{large}} {{downward}} arrow indicates passage {{from outside to inside}}.
-barChartPattern = { $amount ->
+arrowSizeDescription = { $size ->
+  [small] small
+  [medium] medium
+  *[large] large
+}
+
+arrowDirectionDescription = { $direction ->
+  [upward] upward arrow indicates passage from outside to inside
+  *[downward] downward arrow indicates passage from inside to outside
+}
+
+barSizeDescription = { $amount ->
   [aLittleMore] A little more
   [aLotMore] A lot more
   [aLittleLess] A little less
   *[aLotLess] A lot less
-} outside than inside; { $size ->
-  [small] small
-  [medium] medium
-  *[large] large
-} { $direction ->
-  [upward] upward from outside to inside
-  *[downward] downward from inside to outside
-}.
+} outside than inside
+
+
+barChartPattern = { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }.
 
 # Show a sentence like Right now, membrane has
 #                        {1-6} solute types outside;
