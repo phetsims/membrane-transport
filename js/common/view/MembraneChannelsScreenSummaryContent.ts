@@ -34,7 +34,10 @@ export default class MembraneChannelsScreenSummaryContent extends ScreenSummaryC
         outsideSoluteCount: model.outsideSoluteTypesCountProperty,
         insideSoluteCount: model.insideSoluteTypesCountProperty,
         channelCount: model.channelCountProperty
-      } )
+      } ),
+
+      interactionHintContent: featureSet === 'simpleDiffusion' ? MembraneChannelsMessages.interactionHintMessageProperty :
+                              MembraneChannelsMessages.interactionHintWithChannelsMessageProperty
     } );
   }
 }

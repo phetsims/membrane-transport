@@ -46,7 +46,7 @@ controlAreaSummary = There are options for how fast the action happens in the ob
 # ..........
 # Interaction Hint
 interactionHint = Add or remove solute to inside or outside of membrane.
-interactionHintScreens234 = Add or remove solutes to inside or outside of membrane, and play with transport channels.
+interactionHintWithChannels = Add or remove solutes to inside or outside of membrane, and play with transport channels.
 
 # ..........
 # Current Details
