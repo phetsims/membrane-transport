@@ -6,6 +6,10 @@
 - `grunt lint`: Run ESLint
 - `grunt type-check`: Run TypeScript type checking
 
+## Environment
+- This is developed as part of a monorepo. If you need details of any of the dependencies, you can follow the import paths, but search for the *.ts first.
+- When getting the contents of a file, it probably has a *.ts suffix even though it is imported as *.js.
+
 ## Code Style
 - TypeScript with strict typing
 - Follows PhET MVC (Model-View-Controller) pattern
@@ -16,7 +20,7 @@
 - Follow PhET naming conventions: PascalCase for classes, camelCase for variables
 - JS/TS files do not end with newlines
 - Line comments are preceded by a blank line
-- No newline at end of file
+- Import *.ts files as *.js in the import statements
 
 ## Performance
 - Use flat data structures for serialization
