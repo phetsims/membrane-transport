@@ -89,8 +89,8 @@ soluteSpinnerObjectResponsePattern = { $amount ->
 
 soluteSpinnerContextResponsePattern =
     { $amount ->
-        [aLittle] a little
-       *[aLot] a lot
+        [aLittle] A little
+       *[aLot] A lot
     } { $addedOrRemoved ->
         [added] added
        *[removed] removed
