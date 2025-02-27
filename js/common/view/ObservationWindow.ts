@@ -63,7 +63,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       children: [ clipNode, frameNode ],
 
       // innerContent: 'div',
-      accessibleName: 'hello' // TODO
+      accessibleName: 'Grab a protein to re-order along zoomed-in view of membrane.' // TODO
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts

@@ -4,6 +4,7 @@ import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
 import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSelectView.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
@@ -23,7 +24,7 @@ type ItemModel = number | 'grabbedItem';
 type Selection = {
   grabbedNode: ChannelDragNode;
   initialSlot: Slot;
-  currentIndex: number;
+  currentSlotIndex: number;
 };
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
@@ -39,6 +40,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   private currentSelection: Selection | null = null;
 
   public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
+
+    const alerter = new Alerter( {
+      descriptionAlertNode: observationWindow,
+      alertToVoicing: false
+    } );
 
     const groupSelectModel = new GroupSelectModel<ItemModel>( {
       getGroupItemValue: slotIndex => 0, // TODO
@@ -86,9 +92,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               const delta = getDeltaForKey( keysPressed );
 
               const grabbedNode = this.currentSelection!.grabbedNode;
-              const currentIndex = this.currentSelection!.currentIndex;
+              const currentSlotIndex = this.currentSelection!.currentSlotIndex;
 
-              const newIndex = clamp( currentIndex + delta, 0, SLOT_COUNT );
+              const newIndex = clamp( currentSlotIndex + delta, 0, SLOT_COUNT );
 
               if ( newIndex === SLOT_COUNT ) {
                 grabbedNode.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
@@ -99,7 +105,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 grabbedNode.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
               }
 
-              this.currentSelection!.currentIndex = newIndex;
+              this.currentSelection!.currentSlotIndex = newIndex;
             }
           }
           else {
@@ -120,6 +126,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
     observationWindow.addInputListener( deltaKeyboardListener );
 
+    // TODO: Reset on reset, so the "has it grabbed something" property gets reset.
     super( groupSelectModel, observationWindow, {
 
       // Called when a selected item becomes "grabbed" for movement
@@ -141,6 +148,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
+
+        // TODO: i18n and there are other things in the design doc.
+        alerter.alert( `Grabbed. Above membrane. Slot ${this.currentSelection!.currentSlotIndex + 1} of ${SLOT_COUNT}. 
+          Move protein with W, A, S, or D key. Space to release.` );
       },
       onRelease: ( groupItem: ItemModel ) => {
 
@@ -148,15 +159,15 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         const currentSelection = this.currentSelection;
         if ( groupItem === 'grabbedItem' && currentSelection ) {
 
-          const currentIndex = currentSelection.currentIndex;
+          const currentSlotIndex = currentSelection.currentSlotIndex;
           const grabbedNode = currentSelection.grabbedNode;
 
           // Triggered automatically on backspace/delete, so be graceful
-          if ( currentIndex >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
+          if ( currentSlotIndex >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
 
             // when returning focus here
-            const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentIndex );
-            if ( currentIndex < SLOT_COUNT ) {
+            const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentSlotIndex );
+            if ( currentSlotIndex < SLOT_COUNT ) {
 
               const oldContents = membraneChannelsModel.getSlotContents( droppedIntoSlot );
 
@@ -173,7 +184,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             const selectedIndex = observationWindow.getChannelNodes().findIndex( node => node.slot === droppedIntoSlot );
 
             // Dropped into membrane
-            if ( currentIndex < SLOT_COUNT ) {
+            if ( currentSlotIndex < SLOT_COUNT ) {
               groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
             }
             else {
@@ -310,7 +321,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection = {
       grabbedNode: this.view.createFromKeyboard( channelType, origin ),
       initialSlot: slot,
-      currentIndex: this.membraneChannelsModel.getSlotIndex( slot )
+      currentSlotIndex: this.membraneChannelsModel.getSlotIndex( slot )
     };
 
     // Offset above the membrane so it is clear it isn't in the model
