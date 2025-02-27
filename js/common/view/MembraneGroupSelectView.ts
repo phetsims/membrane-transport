@@ -305,6 +305,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     observationWindow.addInputListener( escKeyboardListener );
   }
 
+  // TODO: Should this have the word "keyboard" in it? https://github.com/phetsims/membrane-channels/issues/20
   private initialDragWork( slot: Slot, channelType: ChannelType, origin: Slot | ChannelToolNode ): void {
 
     // Create a ChannelDragNode at the location of the selected item, in an offset position.
@@ -319,16 +320,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   }
 
   public forwardFromKeyboard( slot: Slot, channelType: ChannelType, channelToolNode: ChannelToolNode ): void {
-    this.observationWindow.focus();
-
-    // TODO: There must be a better way to do this internally, https://github.com/phetsims/membrane-channels/issues/20
-    this.observationWindow.membraneGroupSelectView.model.hasKeyboardGrabbedGroupItemProperty.value = true;
-    this.observationWindow.membraneGroupSelectView.model.isKeyboardFocusedProperty.value = true;
-
     this.initialDragWork( slot, channelType, channelToolNode );
 
-    this.observationWindow.membraneGroupSelectView.model.selectedGroupItemProperty.value = 'grabbedItem';
-    this.observationWindow.membraneGroupSelectView.model.isGroupItemKeyboardGrabbedProperty.value = true;
+    this.keyboardGrab( 'grabbedItem' );
   }
 }
 
