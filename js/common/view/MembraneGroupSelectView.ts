@@ -167,8 +167,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               }
             }
 
-            // TODO: When dropping an item with spacebar, focus correctly goes back to the toolbox.
-            // TODO: However, when dropping an item with enter, focus incorrectly stays on the group and creates another channel on the left.
             view.keyboardDroppedMembraneChannel();
 
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
