@@ -136,9 +136,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             const selectMax = channelNodes.length - 1;
             groupSelectModel.selectedGroupItemProperty.value = clamp( oldValue + delta, 0, selectMax );
-
-            // Alert the user of the type of protein that has been selected, and which slot it is in.
-            // TODO
           }
           this.onGroupItemChange( groupItem );
         }
@@ -146,6 +143,27 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     } );
 
     observationWindow.addInputListener( deltaKeyboardListener );
+
+    // Alert the user of the type of protein that has been selected, and which slot it is in.
+    // This handles both initial selection and subsequent changes
+    groupSelectModel.selectedGroupItemProperty.lazyLink( selectedItem => {
+
+      // Only alert for numeric indices (not for 'grabbedItem' state)
+      if ( typeof selectedItem === 'number' ) {
+        const channelNodes = observationWindow.getChannelNodes();
+        const selectedNode = channelNodes[ selectedItem ];
+
+        if ( selectedNode ) {
+          const slot = selectedNode.slot;
+          const channelType = membraneChannelsModel.getSlotContents( slot );
+          const slotIndex = membraneChannelsModel.getSlotIndex( slot );
+          const channelName = channelType ? getBriefProteinName( channelType ) : 'empty';
+
+          // TODO: i18n after design finalized
+          alerter.alert( `Selected ${channelName} in slot ${slotIndex + 1} of ${SLOT_COUNT}` );
+        }
+      }
+    } );
 
     super( groupSelectModel, observationWindow, {
 
