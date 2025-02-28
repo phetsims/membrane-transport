@@ -11,13 +11,13 @@ import ChannelType from '../../model/ChannelType.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default function( type: ChannelType ): string {
-  return type === 'sodiumIonVoltageGatedChannel' ? 'Sodium Ion, Voltage Gated' :
+  return type === 'sodiumIonVoltageGatedChannel' ? 'Sodium Ion, Voltage-Gated' : // TODO: Where is the potassium voltage gated?
          type === 'potassiumIonLeakageChannel' ? 'Potassium Ion, Leakage' :
          type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
-         type === 'sodiumIonLigandGatedChannel' ? 'Sodium Ion, Ligand Gated' :
-         type === 'potassiumIonLigandGatedChannel' ? 'Potassium Ion, Ligand Gated' :
+         type === 'sodiumIonLigandGatedChannel' ? 'Sodium Ion, Ligand-Gated' :
+         type === 'potassiumIonLigandGatedChannel' ? 'Potassium Ion, Ligand-Gated' :
          type === 'sodiumPotassiumPump' ? 'Sodium Potassium Pump' :
-         type === 'glucoseSodiumCoTransporter' ? 'Glucose Sodium CoTransporter, Active Gated' :
+         type === 'glucoseSodiumCoTransporter' ? 'Glucose Sodium CoTransporter' :
            // final fallback -> throw
          ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
 }
