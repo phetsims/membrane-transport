@@ -159,8 +159,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           const slotIndex = membraneChannelsModel.getSlotIndex( slot );
           const channelName = channelType ? getBriefProteinName( channelType ) : 'empty';
 
-          // TODO: i18n after design finalized
-          alerter.alert( `Selected ${channelName} in slot ${slotIndex + 1} of ${SLOT_COUNT}` );
+          // prevent saying what is selected in the group when focus immediately goes back to the toolbox
+          if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
+
+            // TODO: i18n after design finalized
+            alerter.alert( `Selected ${channelName} in slot ${slotIndex + 1} of ${SLOT_COUNT}` );
+          }
         }
       }
     } );
@@ -214,7 +218,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
               const oldContents = membraneChannelsModel.getSlotContents( droppedIntoSlot );
 
+              // Drop the item into the membrane
               membraneChannelsModel.setSlotContents( droppedIntoSlot, grabbedNode.type );
+
+              const contentsString = getBriefProteinName( grabbedNode.type );
+              alerter.alert( `Released ${contentsString} into membrane` );
 
               if ( oldContents && isOriginSlot( grabbedNode.origin ) ) {
                 membraneChannelsModel.setSlotContents( grabbedNode.origin, oldContents );
