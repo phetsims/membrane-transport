@@ -83,6 +83,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     this.observationWindow = new ObservationWindow( model, this, this.observationWindowModelViewTransform, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
     this.stepEmitter.addListener( dt => this.observationWindow.step( dt ) );
+    this.resetEmitter.addListener( () => this.observationWindow.reset() );
 
     // Note: x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
     // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width

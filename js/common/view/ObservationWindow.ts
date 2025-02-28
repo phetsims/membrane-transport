@@ -134,5 +134,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.ligandNodes.forEach( ligandNode => ligandNode.step() );
   }
 
+  public reset(): void {
+    this.membraneGroupSelectView.reset();
+  }
+
 }
 membraneChannels.register( 'ObservationWindow', ObservationWindow );

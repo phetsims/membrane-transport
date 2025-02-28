@@ -39,6 +39,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
   private currentSelection: Selection | null = null;
 
+  // Manage this separately from the groupSelectModel so we don't need to be concerned about the GroupSelectModel
+  // signifies hasKeyboardGrabbedGroupItemProperty before or after the onGrab is called.
+  private isFirstGrab = true;
+
+  private readonly groupSelectModel: GroupSelectModel<ItemModel>;
+
   public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
 
     const alerter = new Alerter( {
@@ -47,7 +53,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     } );
 
     const groupSelectModel = new GroupSelectModel<ItemModel>( {
-      getGroupItemValue: slotIndex => 0, // TODO
+
+      // This is only used in assertions, so it is ok to return a constant.
+      getGroupItemValue: () => 0,
+
       tandem: Tandem.OPT_OUT // TODO?
     } );
 
@@ -149,9 +158,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
 
-        // TODO: i18n and there are other things in the design doc.
-        alerter.alert( `Grabbed. Above membrane. Slot ${this.currentSelection!.currentSlotIndex + 1} of ${SLOT_COUNT}. 
-          Move protein with W, A, S, or D key. Space to release.` );
+        // TODO: i18n after the design is finalized
+        const phrase1 = `Grabbed. Above membrane. Slot ${this.currentSelection!.currentSlotIndex + 1} of ${SLOT_COUNT}.`;
+        const phrase2 = 'Move protein with W, A, S, or D key. Space to release.';
+
+        const phrase = this.isFirstGrab ? `${phrase1} ${phrase2}` : phrase1;
+        alerter.alert( phrase );
+
+        this.isFirstGrab = false;
       },
       onRelease: ( groupItem: ItemModel ) => {
 
@@ -312,6 +326,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       }
     } );
     observationWindow.addInputListener( escKeyboardListener );
+    this.groupSelectModel = groupSelectModel;
   }
 
   // TODO: Should this have the word "keyboard" in it? https://github.com/phetsims/membrane-channels/issues/20
@@ -332,6 +347,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.initialDragWork( slot, channelType, channelToolNode );
 
     this.keyboardGrab( 'grabbedItem' );
+  }
+
+  public reset(): void {
+    this.isFirstGrab = true;
+    this.groupSelectModel.reset();
   }
 }
 
