@@ -14,6 +14,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel, { ChannelType, Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import ChannelDragNode, { isOriginSlot } from './ChannelDragNode.js';
+import getBriefProteinName from './channels/getBriefProteinName.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -117,6 +118,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               }
 
               this.currentSelection!.currentSlotIndex = newIndex;
+
+              // alert the user of the new position
+              const contents = membraneChannelsModel.getSlotContents( this.membraneChannelsModel.getSlotForIndex( newIndex ) );
+              const contentsString = contents === null ? 'empty' : getBriefProteinName( contents );
+              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${contentsString}`;
+              alerter.alert( message );
             }
           }
           else {
@@ -129,6 +136,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             const selectMax = channelNodes.length - 1;
             groupSelectModel.selectedGroupItemProperty.value = clamp( oldValue + delta, 0, selectMax );
+
+            // Alert the user of the type of protein that has been selected, and which slot it is in.
+            // TODO
           }
           this.onGroupItemChange( groupItem );
         }
