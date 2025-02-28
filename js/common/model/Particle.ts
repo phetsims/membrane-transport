@@ -105,9 +105,9 @@ export default class Particle<T extends ParticleType> {
       type: 'randomWalk',
       currentDirection: Particle.createRandomUnitVector(),
       targetDirection: Particle.createRandomUnitVector(),
-      turnDuration: dotRandom.nextDoubleBetween( 0.5, 1.5 ),
+      turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
-      timeUntilNextDirection: dotRandom.nextDoubleBetween( 1, 4 )
+      timeUntilNextDirection: dotRandom.nextDoubleBetween( 0.1, 0.3 )
     };
   }
 
@@ -120,7 +120,7 @@ export default class Particle<T extends ParticleType> {
       type: 'randomWalk',
       currentDirection: target,
       targetDirection: target,
-      turnDuration: dotRandom.nextDoubleBetween( 0.5, 1.5 ),
+      turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
       timeUntilNextDirection: duration
     };
@@ -210,11 +210,11 @@ export default class Particle<T extends ParticleType> {
       randomWalk.targetDirection = Particle.createRandomUnitVector();
 
       // Decide on a new turn duration.
-      randomWalk.turnDuration = dotRandom.nextDoubleBetween( 0.5, 1.5 );
+      randomWalk.turnDuration = dotRandom.nextDoubleBetween( 0.05, 0.1 );
       randomWalk.turnElapsed = 0;
 
       // Reset the time until the next direction change.
-      randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( 1, 4 );
+      randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( 0.5, 1 );
     }
 
     // 2) Accumulate turn time and compute the interpolated direction.
