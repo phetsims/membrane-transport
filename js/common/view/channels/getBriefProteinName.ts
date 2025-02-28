@@ -16,7 +16,7 @@ export default function( type: ChannelType ): string {
          type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
          type === 'sodiumIonLigandGatedChannel' ? 'Sodium Ion, Ligand Gated' :
          type === 'potassiumIonLigandGatedChannel' ? 'Potassium Ion, Ligand Gated' :
-         type === 'sodiumIonActiveGatedChannel' ? 'Sodium Potassium Pump' :
+         type === 'sodiumPotassiumPump' ? 'Sodium Potassium Pump' :
 
            // TODO: This should be glucoseSodiumCoTransporter
          type === 'potassiumIonActiveGatedChannel' ? 'Potassium Ion, Active Gated' :

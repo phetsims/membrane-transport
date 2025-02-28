@@ -65,6 +65,9 @@
   "potassiumIonKPlus": {
     "value": "Potassium Ion<br>(K<sup>+</sup>)"
   },
+  "NaPlusKPlusPump": {
+    "value": "Na<sup>+</sup>-K<sup>+</sup><br>Pump"
+  },
   "membraneVoltagePotentialmV": {
     "value": "Membrane Voltage Potential (mV)"
   },

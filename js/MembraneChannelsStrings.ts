@@ -38,6 +38,7 @@ type StringsType = {
   'leakageChannelsStringProperty': LocalizedStringProperty;
   'sodiumIonNaPlusStringProperty': LocalizedStringProperty;
   'potassiumIonKPlusStringProperty': LocalizedStringProperty;
+  'NaPlusKPlusPumpStringProperty': LocalizedStringProperty;
   'membraneVoltagePotentialmVStringProperty': LocalizedStringProperty;
   'addLigandsStringProperty': LocalizedStringProperty;
   'removeLigandsStringProperty': LocalizedStringProperty;

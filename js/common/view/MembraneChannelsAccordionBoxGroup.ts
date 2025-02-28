@@ -173,8 +173,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
         expanded: false,
         channels: [
           {
-            channelType: 'sodiumIonActiveGatedChannel',
-            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
+            channelType: 'sodiumPotassiumPump',
+            labelProperty: MembraneChannelsStrings.NaPlusKPlusPumpStringProperty,
             accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
           },
           {

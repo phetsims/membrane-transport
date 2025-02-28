@@ -32,6 +32,7 @@
   // Transported targets
   sodiumIonNaPlus: 'Sodium Ion<br>(Na<sup>+</sup>)',
   potassiumIonKPlus: 'Potassium Ion<br>(K<sup>+</sup>)',
+  NaPlusKPlusPump: 'Na<sup>+</sup>-K<sup>+</sup><br>Pump',
 
   // Additional Controls
   membraneVoltagePotentialmV: 'Membrane Voltage Potential (mV)',

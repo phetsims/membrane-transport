@@ -12,7 +12,7 @@ type ChannelType =
   'sodiumIonVoltageGatedChannel' |
   'sodiumIonLigandGatedChannel' |
   'potassiumIonLigandGatedChannel' |
-  'sodiumIonActiveGatedChannel' |
+  'sodiumPotassiumPump' |
   'potassiumIonActiveGatedChannel';
 
 export default ChannelType;
