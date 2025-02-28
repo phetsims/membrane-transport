@@ -17,9 +17,7 @@ export default function( type: ChannelType ): string {
          type === 'sodiumIonLigandGatedChannel' ? 'Sodium Ion, Ligand Gated' :
          type === 'potassiumIonLigandGatedChannel' ? 'Potassium Ion, Ligand Gated' :
          type === 'sodiumPotassiumPump' ? 'Sodium Potassium Pump' :
-
-           // TODO: This should be glucoseSodiumCoTransporter
-         type === 'potassiumIonActiveGatedChannel' ? 'Potassium Ion, Active Gated' :
+         type === 'glucoseSodiumCoTransporter' ? 'Glucose Sodium CoTransporter, Active Gated' :
            // final fallback -> throw
          ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
 }

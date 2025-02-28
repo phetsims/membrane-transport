@@ -32,7 +32,10 @@
   // Transported targets
   sodiumIonNaPlus: 'Sodium Ion<br>(Na<sup>+</sup>)',
   potassiumIonKPlus: 'Potassium Ion<br>(K<sup>+</sup>)',
+
+  // Active pumps
   NaPlusKPlusPump: 'Na<sup>+</sup>-K<sup>+</sup><br>Pump',
+  glucoseSodiumCoTransporter: 'Glucose-Sodium<br>Cotransporter', // TODO: Should sodium be Na<sup>+</sup>?
 
   // Additional Controls
   membraneVoltagePotentialmV: 'Membrane Voltage Potential (mV)',

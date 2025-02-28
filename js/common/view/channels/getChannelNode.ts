@@ -18,7 +18,7 @@ export default function( type: ChannelType ): Node {
          type === 'sodiumIonLigandGatedChannel' ? new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,0,255,0.2)', stroke: 'black', lineWidth: 1 } ) :
          type === 'potassiumIonLigandGatedChannel' ? new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,255,0,0.2)', stroke: 'black', lineWidth: 1 } ) :
          type === 'sodiumPotassiumPump' ? new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,0,255,0.2)', stroke: 'black', lineWidth: 1 } ) :
-         type === 'potassiumIonActiveGatedChannel' ? new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,255,0,0.2)', stroke: 'black', lineWidth: 1 } ) :
+         type === 'glucoseSodiumCoTransporter' ? new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,255,0,0.2)', stroke: 'black', lineWidth: 1 } ) :
            // final fallback -> throw
          ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
 }

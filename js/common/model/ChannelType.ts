@@ -13,6 +13,6 @@ type ChannelType =
   'sodiumIonLigandGatedChannel' |
   'potassiumIonLigandGatedChannel' |
   'sodiumPotassiumPump' |
-  'potassiumIonActiveGatedChannel';
+  'glucoseSodiumCoTransporter';
 
 export default ChannelType;
