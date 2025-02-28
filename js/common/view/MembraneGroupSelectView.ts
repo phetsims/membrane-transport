@@ -228,6 +228,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 membraneChannelsModel.setSlotContents( grabbedNode.origin, oldContents );
               }
             }
+            else {
+
+              // Drop the item back into the toolbox
+              // TODO: i18n after design finalized
+              alerter.alert( 'Released. Back in toolbox.' );
+            }
 
             view.keyboardDroppedMembraneChannel();
 
@@ -348,10 +354,18 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
+
+            // TODO: i18n after design finalized
+            alerter.alert( 'Cancelled. Back in membrane.' );
           }
           else {
             // Dropped into toolbox
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
+
+            // Drop the item back into the toolbox
+            // TODO: i18n after design finalized
+            // TODO: Duplicated above
+            alerter.alert( 'Released. Back in toolbox.' );
           }
         }
 
