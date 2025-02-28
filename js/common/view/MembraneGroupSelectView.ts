@@ -187,7 +187,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           // Remove the channel from the model
           membraneChannelsModel.setSlotContents( slot, null );
 
-          this.initialDragWork( slot, channelType, slot );
+          this.initializeKeyboardDrag( slot, channelType, slot );
 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
@@ -381,8 +381,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.groupSelectModel = groupSelectModel;
   }
 
-  // TODO: Should this have the word "keyboard" in it? https://github.com/phetsims/membrane-channels/issues/20
-  private initialDragWork( slot: Slot, channelType: ChannelType, origin: Slot | ChannelToolNode ): void {
+  private initializeKeyboardDrag( slot: Slot, channelType: ChannelType, origin: Slot | ChannelToolNode ): void {
 
     // Create a ChannelDragNode at the location of the selected item, in an offset position.
     this.currentSelection = {
@@ -396,7 +395,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   }
 
   public forwardFromKeyboard( slot: Slot, channelType: ChannelType, channelToolNode: ChannelToolNode ): void {
-    this.initialDragWork( slot, channelType, channelToolNode );
+    this.initializeKeyboardDrag( slot, channelType, channelToolNode );
 
     this.keyboardGrab( 'grabbedItem' );
   }
