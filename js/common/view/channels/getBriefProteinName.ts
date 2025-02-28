@@ -3,8 +3,9 @@
 import { ChannelType } from '../../model/MembraneChannelsModel.js';
 
 /**
- * Returns the Node for the given ChannelType
- *
+ * Get the brief name for a ChannelType
+ * TODO: This may move into fluent during i18n.
+ * TODO: Should this be called getBriefChannelName?
  * TODO: i18n once design is finalized.
  *
  * @author Sam Reid (PhET Interactive Simulations)
