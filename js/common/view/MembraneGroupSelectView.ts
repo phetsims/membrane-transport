@@ -137,7 +137,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
     observationWindow.addInputListener( deltaKeyboardListener );
 
-    // TODO: Reset on reset, so the "has it grabbed something" property gets reset.
     super( groupSelectModel, observationWindow, {
 
       // Called when a selected item becomes "grabbed" for movement
