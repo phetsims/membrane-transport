@@ -106,7 +106,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               const newIndex = clamp( currentSlotIndex + delta, 0, SLOT_COUNT );
 
               if ( newIndex === SLOT_COUNT ) {
-                grabbedNode.setModelPosition( new Vector2( 90, 50 ) ); // TODO: Coordinate bounds with the returnToToolboxRectangle
+
+                // Model coordinates up by the toolbox
+                grabbedNode.setModelPosition( new Vector2( 90, 50 ) );
               }
               else {
                 const newSlot = membraneChannelsModel.getSlotForIndex( newIndex );
