@@ -16,7 +16,8 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel, { ChannelType, Slot } from './MembraneChannelsModel.js';
+import ChannelType from './ChannelType.js';
+import MembraneChannelsModel, { Slot } from './MembraneChannelsModel.js';
 import SoluteType, { getParticleModelWidth, ParticleType } from './SoluteType.js';
 
 // Typical speed for movement

@@ -1,6 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
-import { ChannelType } from '../../model/MembraneChannelsModel.js';
+import ChannelType from '../../model/ChannelType.js';
 
 /**
  * Get the brief name for a ChannelType

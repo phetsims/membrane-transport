@@ -15,7 +15,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsModel, { ChannelType } from '../model/MembraneChannelsModel.js';
+import ChannelType from '../model/ChannelType.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 

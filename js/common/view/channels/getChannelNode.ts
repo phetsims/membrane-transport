@@ -2,7 +2,7 @@
 
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import { ChannelType } from '../../model/MembraneChannelsModel.js';
+import ChannelType from '../../model/ChannelType.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
 

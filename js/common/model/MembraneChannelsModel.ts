@@ -34,6 +34,7 @@ import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneCh
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
+import ChannelType from './ChannelType.js';
 import Particle from './Particle.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
@@ -50,15 +51,6 @@ type FluxEntry = {
 };
 
 const fluxSmoothingTimeConstant = 0.25;
-
-export type ChannelType =
-  'sodiumIonLeakageChannel' |
-  'potassiumIonLeakageChannel' |
-  'sodiumIonVoltageGatedChannel' |
-  'sodiumIonLigandGatedChannel' |
-  'potassiumIonLigandGatedChannel' |
-  'sodiumIonActiveGatedChannel' |
-  'potassiumIonActiveGatedChannel';
 
 export const SLOT_COUNT = 7;
 const SLOT_MAX_X = 84;
