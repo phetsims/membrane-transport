@@ -94,6 +94,12 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     // Draw the particles as images
     for ( const solute of this.model.solutes ) {
 
+      // Skip oxygen and carbon dioxide in the front layer, or skip everything else in the back layer
+      const isGasParticle = solute.type === 'oxygen' || solute.type === 'carbonDioxide';
+      if ( ( this.layer === 'front' && isGasParticle ) || ( this.layer === 'back' && !isGasParticle ) ) {
+        continue;
+      }
+
       // Apply opacity
       if ( solute.opacity !== 1 ) {
         context.globalAlpha = solute.opacity;
@@ -210,11 +216,14 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       for ( let i = 0; i < this.phospholipids.length; i++ ) {
         this.phospholipids[ i ].drawHead( context );
       }
+
+      // Draw oxygen and carbon dioxide in the back layer, but in front of the phospholipids.
+      this.drawSolutes( context );
     }
 
     if ( this.layer === 'front' ) {
 
-
+      // Draw all solutes except oxygen and carbon dioxide
       this.drawSolutes( context );
 
       // --- Debugging code to check transforms and bounds ---
