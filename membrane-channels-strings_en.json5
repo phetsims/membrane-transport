@@ -35,7 +35,7 @@
 
   // Active pumps
   NaPlusKPlusPump: 'Na<sup>+</sup>-K<sup>+</sup><br>Pump',
-  glucoseSodiumCoTransporter: 'Glucose-Sodium<br>Cotransporter', // TODO: Should sodium be Na<sup>+</sup>?
+  sodiumGlucoseCotransporter: 'Sodium-Glucose<br>Cotransporter',
 
   // Additional Controls
   membraneVoltagePotentialmV: 'Membrane Voltage Potential (mV)',

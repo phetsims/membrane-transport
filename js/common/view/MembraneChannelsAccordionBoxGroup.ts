@@ -178,8 +178,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
             accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
           },
           {
-            channelType: 'glucoseSodiumCoTransporter',
-            labelProperty: MembraneChannelsStrings.glucoseSodiumCoTransporterStringProperty,
+            channelType: 'sodiumGlucoseCotransporter',
+            labelProperty: MembraneChannelsStrings.sodiumGlucoseCotransporterStringProperty,
             accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty
           }
         ]
