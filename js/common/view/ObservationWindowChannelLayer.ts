@@ -25,7 +25,11 @@ export default class ObservationWindowChannelLayer extends Node {
 
   private readonly slottedNodes: SlottedNode[] = [];
 
-  public constructor( model: MembraneChannelsModel, view: MembraneChannelsScreenView, modelViewTransform: ModelViewTransform2 ) {
+  public constructor(
+    public readonly model: MembraneChannelsModel,
+    view: MembraneChannelsScreenView,
+    modelViewTransform: ModelViewTransform2
+  ) {
     super();
 
     const updateChannels = () => {
@@ -68,7 +72,8 @@ export default class ObservationWindowChannelLayer extends Node {
   public step( dt: number ): void {
     this.children.forEach( child => {
       if ( child instanceof SodiumVoltageGatedChannelNode ) {
-        child.setInterpolation( Math.sin( Date.now() / 1000 ) / 2 + 0.5 );
+        child.setVoltage( this.model.membraneVoltagePotentialProperty.value );
+        child.step( dt );
       }
     } );
   }
