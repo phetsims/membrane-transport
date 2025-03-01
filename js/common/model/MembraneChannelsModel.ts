@@ -365,16 +365,6 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.solutes.splice( this.solutes.indexOf( particle ), 1 );
   }
 
-  /**
-   * Do not passively diffuse if in the presence of a filled target protein.
-   */
-  public canDiffuseThroughMembrane( solute: Particle<IntentionalAny> ): boolean {
-    const x = solute.position.x;
-
-    // it can cross if it isn't within the channel width of any filled slot
-    return !slots.some( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) );
-  }
-
   public getNearbySlotForChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): Slot | null {
 
     // check if within the channel width of any filled slot. TODO: grab radius?

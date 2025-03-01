@@ -231,7 +231,7 @@ export default class Particle<T extends ParticleType> {
     if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       if ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) {
-        if ( model.canDiffuseThroughMembrane( this ) && dotRandom.nextDouble() < 0.90 ) {
+        if ( dotRandom.nextDouble() < 0.90 ) {
           this.mode = {
             type: 'passiveDiffusion',
             direction: outsideOfCell ? 'inward' : 'outward'
