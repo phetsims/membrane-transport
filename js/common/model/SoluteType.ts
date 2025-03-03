@@ -3,6 +3,7 @@ import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStr
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import { carbonDioxideNodeWidth, oxygenNodeWidth } from '../MembraneChannelsConstants.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
@@ -39,10 +40,14 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
   soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonColorProperty :
   MembraneChannelsColors.glucoseColorProperty;
 
-// TODO: Oxygen in o2 should be same size as oxygen in co2.
+const oxygenModelSize = 3;
+
 export const getParticleModelWidth = ( particleType: ParticleType ): number =>
-  particleType === 'oxygen' ? 3 :
-  particleType === 'carbonDioxide' ? 5 :
+
+  // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
+  particleType === 'oxygen' ? oxygenModelSize :
+  particleType === 'carbonDioxide' ? oxygenModelSize * carbonDioxideNodeWidth / oxygenNodeWidth :
+
   particleType === 'sodiumIon' ? 4 :
   particleType === 'potassiumIon' ? 6 :
   particleType === 'glucose' ? 10 :

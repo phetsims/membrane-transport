@@ -8,9 +8,9 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
+import membraneChannels from '../membraneChannels.js';
 import MembraneChannelsQueryParameters from './MembraneChannelsQueryParameters.js';
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
-import membraneChannels from '../membraneChannels.js';
 import getParticleNode from './view/particles/getParticleNode.js';
 
 const OBSERVATION_WINDOW_WIDTH = 534;
@@ -29,6 +29,10 @@ ParticleTypes.forEach( soluteType => {
   const soluteNode = getParticleNode( soluteType ).bounds;
   PARTICLE_ASPECT_RATIO_MAP[ soluteType ] = soluteNode.width / soluteNode.height;
 } );
+
+// compute width of O2 and CO2
+export const oxygenNodeWidth = getParticleNode( 'oxygen' ).bounds.width;
+export const carbonDioxideNodeWidth = getParticleNode( 'carbonDioxide' ).bounds.width;
 
 // Bounds of the membrane for collision detection and rendering.
 const MEMBRANE_BOUNDS = new Bounds2( -MODEL_WIDTH / 2, -10, MODEL_WIDTH / 2, 10 );
