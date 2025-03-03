@@ -140,4 +140,7 @@ barChartPattern = { barSizeDescription }; { arrowSizeDescription } { arrowDirect
 #                        E.g., if Na+ is 0, do not count it
 #                        {1-6} solute types inside;
 #                        {1-7} transport channels
-currentDetails = Right now, membrane has { $outsideSoluteCount } solute types outside; { $insideSoluteCount } solute types inside; { $channelCount } transport channels.
+currentDetailsRightNow = Right now,
+currentDetailsOutsideSoluteCount = membrane has { $outsideSoluteCount } solute types outside;
+currentDetailsInsideSoluteCount = { $insideSoluteCount } solute types inside;
+currentDetailsChannelCount = { $channelCount } transport channels;

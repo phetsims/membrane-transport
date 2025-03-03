@@ -8,6 +8,7 @@
 
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsFeatureSet from '../MembraneChannelsFeatureSet.js';
@@ -17,6 +18,25 @@ export default class MembraneChannelsScreenSummaryContent extends ScreenSummaryC
   public constructor( featureSet: MembraneChannelsFeatureSet,
                       model: MembraneChannelsModel ) {
 
+    const stringProperties = [
+      new PatternMessageProperty( MembraneChannelsMessages.currentDetailsOutsideSoluteCountMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
+      new PatternMessageProperty( MembraneChannelsMessages.currentDetailsInsideSoluteCountMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ),
+      new PatternMessageProperty( MembraneChannelsMessages.currentDetailsChannelCountMessageProperty, { channelCount: model.channelCountProperty } )
+    ];
+
+    const currentDetailsNode = new Node( {
+      children: [
+        new Node( {
+          tagName: 'p',
+          accessibleName: MembraneChannelsMessages.currentDetailsRightNowMessageProperty
+        } ),
+        new Node( {
+          tagName: 'ul',
+          children: stringProperties.map( string => new Node( { tagName: 'li', accessibleName: string } ) )
+        } )
+      ]
+    } );
+
     super( {
 
       playAreaContent:
@@ -24,17 +44,13 @@ export default class MembraneChannelsScreenSummaryContent extends ScreenSummaryC
                                     featureSet === 'facilitatedDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty :
                                     featureSet === 'activeTransport' ? MembraneChannelsMessages.playAreaSummaryScreen3MessageProperty :
 
-                                    // TODO: Am I forgetting a variable passed in to the options here?
+                                      // TODO: Am I forgetting a variable passed in to the options here?
                                     MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty, {}
         ),
       controlAreaContent: MembraneChannelsMessages.controlAreaSummaryMessageProperty,
-
-      // TODO (design): Is it ok that we didn't use a bullet list here, like the design doc told us to? This was way easier and has approximately the same info.
-      currentDetailsContent: new PatternMessageProperty( MembraneChannelsMessages.currentDetailsMessageProperty, {
-        outsideSoluteCount: model.outsideSoluteTypesCountProperty,
-        insideSoluteCount: model.insideSoluteTypesCountProperty,
-        channelCount: model.channelCountProperty
-      } ),
+      currentDetailsContent: {
+        node: currentDetailsNode
+      },
 
       interactionHintContent: featureSet === 'simpleDiffusion' ? MembraneChannelsMessages.interactionHintMessageProperty :
                               MembraneChannelsMessages.interactionHintWithChannelsMessageProperty
