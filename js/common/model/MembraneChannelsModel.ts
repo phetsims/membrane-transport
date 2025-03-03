@@ -263,6 +263,8 @@ export default class MembraneChannelsModel extends PhetioObject {
 
       this.time += dt;
 
+      dt *= this.getTimeSpeedFactor();
+
       // capture the initial y value of each solute (instead of tracking each time a solute's y value is changed.)
       const soluteInitialYValues = new Map( this.solutes.map( solute => [ solute, solute.position.y ] ) );
 
@@ -444,6 +446,10 @@ export default class MembraneChannelsModel extends PhetioObject {
       return false;
     } );
     return !isChannelReserved;
+  }
+
+  public getTimeSpeedFactor(): number {
+    return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
   /**

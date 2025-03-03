@@ -315,6 +315,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
+    dt *= this.model.getTimeSpeedFactor();
     this.stepEmitter.emit( dt );
   }
 
