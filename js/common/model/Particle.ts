@@ -17,7 +17,8 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import ChannelType from './ChannelType.js';
-import MembraneChannelsModel, { Slot } from './MembraneChannelsModel.js';
+import MembraneChannelsModel from './MembraneChannelsModel.js';
+import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, ParticleType } from './SoluteType.js';
 
 // Typical speed for movement
@@ -146,7 +147,7 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'moveToCenterOfChannel' ) {
 
       const currentPositionX = this.position.x;
-      const targetPositionX = model.getSlotPosition( this.mode.slot );
+      const targetPositionX = this.mode.slot.position;
 
       // Move in the x direction toward the target.
       const maxStepSize = typicalSpeed * dt;
@@ -161,7 +162,7 @@ export default class Particle<T extends ParticleType> {
         this.mode = {
           type: 'movingThroughChannel',
           slot: this.mode.slot,
-          channelType: model.getSlotContents( this.mode.slot )!,
+          channelType: this.mode.slot.channelTypeProperty.value!,
           direction: outsideOfCell ? 'inward' : 'outward'
         };
       }

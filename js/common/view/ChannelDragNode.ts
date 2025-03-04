@@ -14,7 +14,8 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
 import ChannelType from '../model/ChannelType.js';
-import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import Slot from '../model/Slot.js';
 import getChannelNode from './channels/getChannelNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
@@ -22,16 +23,11 @@ import ObservationWindow from './ObservationWindow.js';
 
 /**
  * Type guard that checks if a value is a Slot
+ *
+ * TODO: Now that Slot is a class, this should not be necessary.
  */
 export function isOriginSlot( origin: Slot | ChannelToolNode ): origin is Slot {
-  return typeof origin === 'string';
-}
-
-/**
- * Type guard that checks if a origin is a ChannelToolNode
- */
-export function isOriginChannelToolNode( origin: Slot | ChannelToolNode ): origin is ChannelToolNode {
-  return !isOriginSlot( origin );
+  return origin instanceof Slot;
 }
 
 /**
@@ -128,14 +124,13 @@ export default class ChannelDragNode extends Node {
 
         if ( closest ) {
 
-
-          const otherContents = model.getSlotContents( closest.slot );
+          const otherContents = closest.slot.channelTypeProperty.value;
 
           // drop into the selected target
-          model.setSlotContents( closest.slot, this.type );
+          closest.slot.channelTypeProperty.value = this.type;
 
           if ( otherContents && isOriginSlot( this.origin ) ) {
-            model.setSlotContents( this.origin, otherContents );
+            this.origin.channelTypeProperty.value = otherContents;
           }
 
           // Reuse

@@ -16,7 +16,6 @@ import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -26,7 +25,6 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import Tandem from '../../../../tandem/js/Tandem.js';
 import GetSetButtonsIO from '../../../../tandem/js/types/GetSetButtonsIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
-import MapIO from '../../../../tandem/js/types/MapIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
@@ -39,6 +37,7 @@ import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSolu
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
 import ChannelType from './ChannelType.js';
 import Particle from './Particle.js';
+import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -63,15 +62,7 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
   SLOT_POSITIONS.push( i * SLOT_SPACING - SLOT_MAX_X );
 }
 
-const slots = [ '0', '1', '2', '3', '4', '5', '6' ] as const;
-export type Slot = ( typeof slots )[number];
-
 export default class MembraneChannelsModel extends PhetioObject {
-  public getSlotPosition( slot: Slot ): number {
-    return SLOT_POSITIONS[ slots.indexOf( slot ) ];
-  }
-
-  public readonly slots = slots;
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
@@ -103,9 +94,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   private soluteTypeFlux = {} as Record<SoluteType, number>;
   public readonly areLigandsAddedProperty: BooleanProperty;
 
-  // TODO: Convert to class Slot{} probably, as long as it is straightforward for phet-io state
-  private readonly slotContents = new Map<Slot, ChannelType | null>( slots.map( slot => [ slot, null ] ) );
-  public readonly slotContentsChangedEmitter = new Emitter();
+  public readonly slots: Slot[];
 
   public constructor(
     public readonly featureSet: MembraneChannelsFeatureSet,
@@ -117,6 +106,11 @@ export default class MembraneChannelsModel extends PhetioObject {
     }, providedOptions );
 
     super( options );
+
+    const parentTandem = options.tandem.createTandem( 'slots' );
+    const slotsTandem = parentTandem.createGroupTandem( 'slot' );
+    slotsTandem.createNextTandem(); // TODO: Is there a better way to start at 1?
+    this.slots = SLOT_POSITIONS.map( position => new Slot( position, slotsTandem.createNextTandem() ) );
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSoluteTypes( this.featureSet ),
@@ -193,13 +187,21 @@ export default class MembraneChannelsModel extends PhetioObject {
     this.resetEmitter.addListener( () => {
       this.solutes.length = 0;
       this.ligands.length = 0;
-      this.slotContents.forEach( ( value, key ) => this.slotContents.set( key, null ) );
-      this.slotContentsChangedEmitter.emit();
+
+      this.slots.forEach( slot => {
+        slot.reset();
+      } );
     } );
 
     // TODO: For testing
-    this.setSlotContents( '3', 'sodiumIonVoltageGatedChannel' );
-    this.setSlotContents( '5', 'sodiumIonLeakageChannel' );
+    this.slots[ 3 ].channelTypeProperty.value = 'sodiumIonVoltageGatedChannel';
+    this.slots[ 5 ].channelTypeProperty.value = 'sodiumIonLeakageChannel';
+
+    this.slots.forEach( slot => {
+      slot.channelTypeProperty.link( () => {
+        this.updateChannelCounts();
+      } );
+    } );
   }
 
   /**
@@ -321,6 +323,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     return this.soluteTypeFlux[ soluteType ];
   }
 
+  // TODO: Rename to updateSoluteCounts?
   private updateCounts(): void {
 
 
@@ -349,9 +352,13 @@ export default class MembraneChannelsModel extends PhetioObject {
     } );
 
     this.insideSoluteTypesCountProperty.value = insideNumberOfTypes;
+  }
 
-    // Count the number of channels
-    this.channelCountProperty.value = slots.filter( slot => this.slotContents.get( slot ) ).length;
+  /**
+   * Update the channel count based on the number of filled slots.
+   */
+  private updateChannelCounts(): void {
+    this.channelCountProperty.value = this.slots.filter( slot => slot.isFilled() ).length;
   }
 
   /**
@@ -374,63 +381,23 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     // check if within the channel width of any filled slot. TODO: grab radius?
     const x = solute.position.x;
-    return slots.find( slot => Math.abs( x - this.getSlotPosition( slot ) ) < CHANNEL_WIDTH && this.slotContents.get( slot ) === type ) || null;
+    return this.slots.find( slot => Math.abs( x - slot.position ) < CHANNEL_WIDTH && slot.channelTypeProperty.value === type ) || null;
   }
 
   public getLeftmostEmptySlot(): Slot | null {
-    return slots.find( slot => !this.slotContents.get( slot ) ) || null;
-  }
-
-  public isSlotFilled( slot: Slot ): boolean {
-    return this.slotContents.get( slot ) !== null;
-  }
-
-  public setSlotContents( slot: Slot, type: ChannelType | null ): void {
-    affirm( slot !== null, 'slot is null' );
-    this.slotContents.set( slot, type );
-    this.slotContentsChangedEmitter.emit();
-  }
-
-  // TODO: Consider a better name? Maybe something with "channel" in it?
-  //   Maybe something with "protein" in it?
-  public getSlotContents( slot: Slot ): ChannelType | null {
-    return this.slotContents.get( slot ) || null;
-  }
-
-  public getLeftmostFilledSlot(): Slot | null {
-    return slots.find( slot => this.slotContents.get( slot ) ) || null;
-  }
-
-  public swapSlotContents( slotA: Slot, slotB: Slot ): void {
-    const temp = this.slotContents.get( slotA )!;
-    this.slotContents.set( slotA, this.slotContents.get( slotB )! );
-    this.slotContents.set( slotB, temp );
-    this.slotContentsChangedEmitter.emit();
-  }
-
-  public getNextFilledSlot( delta: number, index: number ): Slot | null {
-
-    // Find the next filled target, wrapping around
-    for ( let i = 0; i < slots.length; i++ ) {
-      index = ( index + delta + slots.length ) % slots.length;
-      if ( this.slotContents.get( slots[ index ] ) ) {
-        return slots[ index ];
-      }
-    }
-
-    return null;
+    return this.slots.find( slot => !slot.isFilled() ) || null;
   }
 
   public getSlotIndex( slot: Slot ): number {
-    return slots.indexOf( slot );
+    return this.slots.indexOf( slot );
   }
 
   public getSlotForIndex( index: number ): Slot {
-    return slots[ index ];
+    return this.slots[ index ];
   }
 
   public getMiddleSlot(): Slot {
-    return slots[ Math.floor( slots.length / 2 ) ];
+    return this.slots[ Math.floor( this.slots.length / 2 ) ];
   }
 
   /**
@@ -467,8 +434,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       ligands: ReferenceArrayIO( Particle.ParticleIO ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
-      soluteTypeFlux: ObjectLiteralIO,
-      slotContents: MapIO( StringIO, NullableIO( StringIO ) )
+      soluteTypeFlux: ObjectLiteralIO
     },
     applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
@@ -476,13 +442,6 @@ export default class MembraneChannelsModel extends PhetioObject {
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
       model.soluteTypeFlux = state.soluteTypeFlux;
-
-      // MapIO is data type serialization, so we need to manually update the model's targets Map
-      model.slotContents.clear();
-      for ( const [ key, value ] of state.slotContents ) {
-        model.slotContents.set( key, value );
-      }
-      model.slotContentsChangedEmitter.emit();
 
       model.updateCounts();
     },

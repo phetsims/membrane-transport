@@ -13,7 +13,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
 import ChannelType from '../model/ChannelType.js';
-import MembraneChannelsModel, { Slot, SLOT_COUNT } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
+import Slot from '../model/Slot.js';
 import ChannelDragNode, { isOriginSlot } from './ChannelDragNode.js';
 import getBriefProteinName from './channels/getBriefProteinName.js';
 import ChannelToolNode from './ChannelToolNode.js';
@@ -114,14 +115,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               }
               else {
                 const newSlot = membraneChannelsModel.getSlotForIndex( newIndex );
-                const newPosition = membraneChannelsModel.getSlotPosition( newSlot );
-                grabbedNode.setModelPosition( new Vector2( newPosition, MODEL_DRAG_VERTICAL_OFFSET ) );
+                grabbedNode.setModelPosition( new Vector2( newSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
               }
 
               this.currentSelection!.currentSlotIndex = newIndex;
 
               // alert the user of the new position
-              const contents = membraneChannelsModel.getSlotContents( this.membraneChannelsModel.getSlotForIndex( newIndex ) );
+              const contents = this.membraneChannelsModel.getSlotForIndex( newIndex ).channelTypeProperty.value;
               const contentsString = contents === null ? 'empty' : getBriefProteinName( contents );
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${contentsString}`;
               alerter.alert( message );
@@ -156,7 +156,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
-          const channelType = membraneChannelsModel.getSlotContents( slot );
+          const channelType = slot.channelTypeProperty.value;
           const slotIndex = membraneChannelsModel.getSlotIndex( slot );
           const channelName = channelType ? getBriefProteinName( channelType ) : 'empty';
 
@@ -181,11 +181,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         else {
           const slot = observationWindow.getChannelNodes()[ groupItem ].slot;
 
-          const channelType = membraneChannelsModel.getSlotContents( slot );
+          const channelType = slot.channelTypeProperty.value;
           affirm( channelType, 'The grabbed item should have a channel type' );
 
           // Remove the channel from the model
-          membraneChannelsModel.setSlotContents( slot, null );
+          slot.channelTypeProperty.value = null;
 
           this.initializeKeyboardDrag( slot, channelType, slot );
 
@@ -217,16 +217,16 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentSlotIndex );
             if ( currentSlotIndex < SLOT_COUNT ) {
 
-              const oldContents = membraneChannelsModel.getSlotContents( droppedIntoSlot );
+              const oldContents = droppedIntoSlot.channelTypeProperty.value;
 
               // Drop the item into the membrane
-              membraneChannelsModel.setSlotContents( droppedIntoSlot, grabbedNode.type );
+              droppedIntoSlot.channelTypeProperty.value = grabbedNode.type;
 
               const contentsString = getBriefProteinName( grabbedNode.type );
               alerter.alert( `Released ${contentsString} into membrane` );
 
               if ( oldContents && isOriginSlot( grabbedNode.origin ) ) {
-                membraneChannelsModel.setSlotContents( grabbedNode.origin, oldContents );
+                grabbedNode.origin.channelTypeProperty.value = oldContents;
               }
             }
             else {
@@ -347,7 +347,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           if ( isOriginSlot( grabbedNode.origin ) ) {
 
             // TODO: What if something else moved there in the meantime?
-            membraneChannelsModel.setSlotContents( grabbedNode.origin, grabbedNode.type );
+            grabbedNode.origin.channelTypeProperty.value = grabbedNode.type;
 
             // Select the index corresponding to the item just dropped
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
@@ -391,7 +391,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     };
 
     // Offset above the membrane so it is clear it isn't in the model
-    this.currentSelection.grabbedNode.setModelPosition( new Vector2( this.membraneChannelsModel.getSlotPosition( slot ), MODEL_DRAG_VERTICAL_OFFSET ) );
+    this.currentSelection.grabbedNode.setModelPosition( new Vector2( slot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
   }
 
   public forwardFromKeyboard( slot: Slot, channelType: ChannelType, channelToolNode: ChannelToolNode ): void {

@@ -25,7 +25,8 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import ChannelType from '../model/ChannelType.js';
-import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
@@ -291,7 +292,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
   public createFromKeyboard( type: ChannelType, origin: Slot | ChannelToolNode ): ChannelDragNode {
     // Move over the first available slot
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
-    const slotX = this.model.getSlotPosition( slot );
+    const slotX = slot.position;
     const y = 10;
     const modelPoint = new Vector2( slotX, y );
 

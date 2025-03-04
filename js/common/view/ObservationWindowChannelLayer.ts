@@ -4,7 +4,8 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel, { Slot } from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import Slot from '../model/Slot.js';
 import getChannelNode from './channels/getChannelNode.js';
 import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
@@ -37,19 +38,19 @@ export default class ObservationWindowChannelLayer extends Node {
       this.slottedNodes.length = 0;
 
       model.slots.forEach( slot => {
-        const type = model.getSlotContents( slot );
+        const type = slot.channelTypeProperty.value;
         if ( type !== null ) {
 
           // TODO: Borrowed from ChannelToolNode
           const channelNode = getChannelNode( type );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
 
-            model.setSlotContents( slot, null );
+            slot.channelTypeProperty.value = null;
             view.createFromMouseDrag( event, type, slot );
           } ) );
 
           channelNode.mutate( {
-            center: modelViewTransform.modelToViewXY( model.getSlotPosition( slot ), 0 ),
+            center: modelViewTransform.modelToViewXY( slot.position, 0 ),
             scale: 1.2,
             cursor: 'pointer'
           } );
@@ -60,7 +61,11 @@ export default class ObservationWindowChannelLayer extends Node {
         }
       } );
     };
-    model.slotContentsChangedEmitter.addListener( updateChannels );
+
+    // TODO: Each view observes one slot instead of all slots
+    model.slots.forEach( slot => {
+      slot.channelTypeProperty.link( updateChannels );
+    } );
     updateChannels();
   }
 
