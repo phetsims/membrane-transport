@@ -12,7 +12,9 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
+import { ChannelIO } from './ChannelIO.js';
 import ChannelType from './ChannelType.js';
+import getChannel from './getChannel.js';
 
 export default class Slot {
 
@@ -24,7 +26,7 @@ export default class Slot {
       tandem: tandem.createTandem( 'channelProperty' ),
 
       // TODO: If Channel becomes a dedicated class this will be challenging.
-      phetioValueType: NullableIO( Channel.ChannelIO ),
+      phetioValueType: NullableIO( ChannelIO ),
       phetioFeatured: true
     } );
   }
@@ -38,7 +40,7 @@ export default class Slot {
   }
 
   public set channelType( channelType: ChannelType | null ) {
-    this.channelProperty.value = channelType ? new Channel( channelType ) : null;
+    this.channelProperty.value = channelType ? getChannel( channelType ) : null;
   }
 
   public isFilled(): boolean {
