@@ -121,8 +121,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               this.currentSelection!.currentSlotIndex = newIndex;
 
               // alert the user of the new position
-              const contents = this.membraneChannelsModel.getSlotForIndex( newIndex ).channelTypeProperty.value;
-              const contentsString = contents === null ? 'empty' : getBriefProteinName( contents );
+              const channelType = this.membraneChannelsModel.getSlotForIndex( newIndex ).channelType;
+              const contentsString = channelType === null ? 'empty' : getBriefProteinName( channelType );
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${contentsString}`;
               alerter.alert( message );
             }
@@ -156,7 +156,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
-          const channelType = slot.channelTypeProperty.value;
+          const channelType = slot.channelType;
           const slotIndex = membraneChannelsModel.getSlotIndex( slot );
           const channelName = channelType ? getBriefProteinName( channelType ) : 'empty';
 
@@ -181,11 +181,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         else {
           const slot = observationWindow.getChannelNodes()[ groupItem ].slot;
 
-          const channelType = slot.channelTypeProperty.value;
+          const channelType = slot.channelType;
           affirm( channelType, 'The grabbed item should have a channel type' );
 
           // Remove the channel from the model
-          slot.channelTypeProperty.value = null;
+          slot.clear();
 
           this.initializeKeyboardDrag( slot, channelType, slot );
 
@@ -217,16 +217,16 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentSlotIndex );
             if ( currentSlotIndex < SLOT_COUNT ) {
 
-              const oldContents = droppedIntoSlot.channelTypeProperty.value;
+              const oldContents = droppedIntoSlot.channelType;
 
               // Drop the item into the membrane
-              droppedIntoSlot.channelTypeProperty.value = grabbedNode.type;
+              droppedIntoSlot.channelType = grabbedNode.type;
 
               const contentsString = getBriefProteinName( grabbedNode.type );
               alerter.alert( `Released ${contentsString} into membrane` );
 
               if ( oldContents && isOriginSlot( grabbedNode.origin ) ) {
-                grabbedNode.origin.channelTypeProperty.value = oldContents;
+                grabbedNode.origin.channelType = oldContents;
               }
             }
             else {
@@ -347,7 +347,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           if ( isOriginSlot( grabbedNode.origin ) ) {
 
             // TODO: What if something else moved there in the meantime?
-            grabbedNode.origin.channelTypeProperty.value = grabbedNode.type;
+            grabbedNode.origin.channelType = grabbedNode.type;
 
             // Select the index corresponding to the item just dropped
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.

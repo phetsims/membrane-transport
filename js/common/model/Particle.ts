@@ -162,7 +162,7 @@ export default class Particle<T extends ParticleType> {
         this.mode = {
           type: 'movingThroughChannel',
           slot: this.mode.slot,
-          channelType: this.mode.slot.channelTypeProperty.value!,
+          channelType: this.mode.slot.channelType!,
           direction: outsideOfCell ? 'inward' : 'outward'
         };
       }

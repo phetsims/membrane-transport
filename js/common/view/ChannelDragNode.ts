@@ -124,13 +124,13 @@ export default class ChannelDragNode extends Node {
 
         if ( closest ) {
 
-          const otherContents = closest.slot.channelTypeProperty.value;
+          const otherContents = closest.slot.channelType;
 
           // drop into the selected target
-          closest.slot.channelTypeProperty.value = this.type;
+          closest.slot.channelType = this.type;
 
           if ( otherContents && isOriginSlot( this.origin ) ) {
-            this.origin.channelTypeProperty.value = otherContents;
+            this.origin.channelType = otherContents;
           }
 
           // Reuse

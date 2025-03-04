@@ -10,30 +10,43 @@
 import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
 import membraneChannels from '../../membraneChannels.js';
+import Channel from './Channel.js';
 import ChannelType from './ChannelType.js';
 
 export default class Slot {
 
   // The type of channel that is currently in this slot.
-  public channelTypeProperty: Property<null | ChannelType>;
+  public readonly channelProperty: Property<null | Channel>;
 
   public constructor( public readonly position: number, tandem: Tandem ) {
-    this.channelTypeProperty = new Property<null | ChannelType>( null, {
-      tandem: tandem.createTandem( 'channelTypeProperty' ),
+    this.channelProperty = new Property<null | Channel>( null, {
+      tandem: tandem.createTandem( 'channelProperty' ),
 
       // TODO: If Channel becomes a dedicated class this will be challenging.
-      phetioValueType: NullableIO( StringIO )
+      phetioValueType: NullableIO( Channel.ChannelIO ),
+      phetioFeatured: true
     } );
   }
 
   public reset(): void {
-    this.channelTypeProperty.reset();
+    this.channelProperty.reset();
+  }
+
+  public get channelType(): ChannelType | null {
+    return this.channelProperty.value ? this.channelProperty.value.type : null;
+  }
+
+  public set channelType( channelType: ChannelType | null ) {
+    this.channelProperty.value = channelType ? new Channel( channelType ) : null;
   }
 
   public isFilled(): boolean {
-    return this.channelTypeProperty.value !== null;
+    return this.channelProperty.value !== null;
+  }
+
+  public clear(): void {
+    this.channelProperty.value = null;
   }
 }
 

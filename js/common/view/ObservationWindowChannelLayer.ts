@@ -38,14 +38,14 @@ export default class ObservationWindowChannelLayer extends Node {
       this.slottedNodes.length = 0;
 
       model.slots.forEach( slot => {
-        const type = slot.channelTypeProperty.value;
+        const type = slot.channelType;
         if ( type !== null ) {
 
           // TODO: Borrowed from ChannelToolNode
           const channelNode = getChannelNode( type );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
 
-            slot.channelTypeProperty.value = null;
+            slot.clear();
             view.createFromMouseDrag( event, type, slot );
           } ) );
 
@@ -64,7 +64,7 @@ export default class ObservationWindowChannelLayer extends Node {
 
     // TODO: Each view observes one slot instead of all slots
     model.slots.forEach( slot => {
-      slot.channelTypeProperty.link( updateChannels );
+      slot.channelProperty.link( updateChannels );
     } );
     updateChannels();
   }

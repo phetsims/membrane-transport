@@ -102,7 +102,8 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     const options = optionize<MembraneChannelsModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: MembraneChannelsModel.MembraneChannelsModelIO,
-      phetioState: true
+      phetioState: true,
+      phetioFeatured: true
     }, providedOptions );
 
     super( options );
@@ -194,14 +195,10 @@ export default class MembraneChannelsModel extends PhetioObject {
     } );
 
     // TODO: For testing
-    this.slots[ 3 ].channelTypeProperty.value = 'sodiumIonVoltageGatedChannel';
-    this.slots[ 5 ].channelTypeProperty.value = 'sodiumIonLeakageChannel';
+    this.slots[ 3 ].channelType = 'sodiumIonVoltageGatedChannel';
+    this.slots[ 5 ].channelType = 'sodiumIonLeakageChannel';
 
-    this.slots.forEach( slot => {
-      slot.channelTypeProperty.link( () => {
-        this.updateChannelCounts();
-      } );
-    } );
+    this.slots.forEach( slot => slot.channelProperty.link( () => this.updateChannelCounts() ) );
   }
 
   /**
@@ -381,7 +378,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     // check if within the channel width of any filled slot. TODO: grab radius?
     const x = solute.position.x;
-    return this.slots.find( slot => Math.abs( x - slot.position ) < CHANNEL_WIDTH && slot.channelTypeProperty.value === type ) || null;
+    return this.slots.find( slot => Math.abs( x - slot.position ) < CHANNEL_WIDTH && slot.channelType === type ) || null;
   }
 
   public getLeftmostEmptySlot(): Slot | null {
