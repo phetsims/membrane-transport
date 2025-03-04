@@ -21,8 +21,10 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import type { PhetioState } from '../../../../tandem/js/phet-io-types.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import GetSetButtonsIO from '../../../../tandem/js/types/GetSetButtonsIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import MapIO from '../../../../tandem/js/types/MapIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
@@ -30,6 +32,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
+import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
@@ -457,6 +460,7 @@ export default class MembraneChannelsModel extends PhetioObject {
    * Please see that documentation for more information.
    */
   public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
+    supertype: GetSetButtonsIO,
     valueType: MembraneChannelsModel,
     stateSchema: {
       solutes: ReferenceArrayIO( Particle.ParticleIO ),
@@ -481,6 +485,42 @@ export default class MembraneChannelsModel extends PhetioObject {
       model.slotContentsChangedEmitter.emit();
 
       model.updateCounts();
+    },
+    methods: {
+      getValue: {
+        returnType: ObjectLiteralIO,
+        parameterTypes: [],
+        implementation: function( this: MembraneChannelsModel ) {
+          return phet.phetio.phetioEngine.phetioStateEngine.getState( this );
+        },
+        documentation: 'Gets the current value of the MembraneChannelsModel on this screen.'
+      },
+      getValidationError: {
+        returnType: NullableIO( StringIO ),
+        parameterTypes: [ ObjectLiteralIO ],
+        implementation: function( this: MembraneChannelsModel, value ) {
+
+          // check if the specified data corresponds to this.tandemID. To avoid pasting from one screen to another
+          const keys = Array.from( Object.keys( value ) );
+
+          for ( let i = 0; i < keys.length; i++ ) {
+            const key = keys[ i ];
+            if ( !key.startsWith( this.phetioID ) ) {
+              return 'key had incorrect prefix. Expected: ' + this.phetioID + ' but got: ' + key;
+            }
+          }
+          return null;
+        },
+        documentation: 'Checks to see if a proposed value is valid. Returns the first validation error, or null if the value is valid.'
+      },
+      setValue: {
+        returnType: VoidIO,
+        parameterTypes: [ ObjectLiteralIO ],
+        documentation: 'Sets the model state that was created on this screen. Trying to set state from another screen results in an error.',
+        implementation: function( this: MembraneChannelsModel, state: PhetioState ) {
+          phet.phetio.phetioEngine.phetioStateEngine.setState( state, this.tandem );
+        }
+      }
     }
   } );
 }
