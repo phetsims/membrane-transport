@@ -16,9 +16,6 @@ import membraneChannels from '../../../membraneChannels.js';
  */
 import { sodiumVoltageGatedShapeClosedNegative70, sodiumVoltageGatedShapeClosedPositive30, sodiumVoltageGatedShapeOpenNegative50 } from './SodiumVoltageGatedChannelShapes.js';
 
-// So the import does not get stripped on reformat
-console.log( sodiumVoltageGatedShapeClosedPositive30.length );
-
 const closedNegative70Segments = sodiumVoltageGatedShapeClosedNegative70.split( ' M ' ).map( segment => {
   return segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
 } );
