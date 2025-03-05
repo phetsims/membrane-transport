@@ -24,6 +24,7 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
+import { MAX_SOLUTE_COUNT } from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
@@ -31,9 +32,6 @@ import getParticleNode from './particles/getParticleNode.js';
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 100;
 const BOX_HEIGHT = 100;
-
-// When there are this many solutes of one type in an area of the cell, the bar will take up the full BOX_HEIGHT.
-const MAX_SOLUTES = 200;
 
 const MAX_ARROW_HEIGHT = 13 * 20;
 
@@ -161,13 +159,14 @@ export default class SoluteBarChartNode extends Node {
       }
     } );
 
+    const PADDING_FACTOR = 0.95;
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      outsideBar.setRectHeight( soluteCount / MAX_SOLUTES * BOX_HEIGHT / 2 );
+      outsideBar.setRectHeight( soluteCount / MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       outsideBar.bottom = BOX_HEIGHT / 2 + barLineWidth;
     } );
 
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      insideBar.setRectHeight( soluteCount / MAX_SOLUTES * BOX_HEIGHT / 2 );
+      insideBar.setRectHeight( soluteCount / MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       insideBar.top = BOX_HEIGHT / 2 - barLineWidth;
     } );
 
