@@ -3,6 +3,8 @@
 /**
  * Constants used throughout this simulation.
  *
+ * TODO: Move into one constants object.
+ *
  * @author Sam Reid (PhET Interactive Simulations
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -70,7 +72,7 @@ const MembraneChannelsConstants = {
   OBSERVATION_WINDOW_BOUNDS: OBSERVATION_WINDOW_BOUNDS,
 
   PANEL_TITLE_FONT_SIZE: 18
-};
+} as const;
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
 export default MembraneChannelsConstants;
