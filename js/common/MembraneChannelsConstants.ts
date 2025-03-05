@@ -3,7 +3,10 @@
 /**
  * Constants used throughout this simulation.
  *
- * TODO: Move into one constants object.
+ * TODO: Move into one constants object or make it consistent.
+ * TODO: We like that individual exports can refer to each other
+ * TODO: But the const MembraneChannelsConstants is clear to read at usage sites, and is conventional for our project.
+ * TODO: Why do we never do class MembraneChannelsConstants { static readonly ... }?
  *
  * @author Sam Reid (PhET Interactive Simulations
  * @author Jesse Greenberg (PhET Interactive Simulations)
