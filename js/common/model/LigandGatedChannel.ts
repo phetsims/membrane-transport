@@ -12,6 +12,9 @@ import Channel from './Channel.js';
 import { LigandType } from './SoluteType.js';
 import Particle from './Particle.js';
 
+// Time in seconds that must elapse after a ligand unbinds before another can bind
+const REBINDING_DELAY = 5;
+
 export default class LigandGatedChannel extends Channel {
   public readonly isLigandBoundProperty = new BooleanProperty( false );
 
@@ -23,6 +26,9 @@ export default class LigandGatedChannel extends Channel {
   
   // Tracks how long the current ligand has been bound
   private timeSinceLigandBound = 0;
+  
+  // Tracks time since a ligand was unbound, used for rebinding delay
+  private timeSinceUnbound = REBINDING_DELAY; // Start ready to bind
 
   public constructor( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' ) {
     super( type );
@@ -39,14 +45,25 @@ export default class LigandGatedChannel extends Channel {
         this.releaseLigand();
       }
     }
+    else {
+      // If no ligand is bound, increment the unbinding timer
+      this.timeSinceUnbound += dt;
+    }
+  }
+  
+  /**
+   * Returns whether the channel is available for binding (not currently bound and past the rebinding delay)
+   */
+  public isAvailableForBinding(): boolean {
+    return !this.isLigandBoundProperty.value && this.timeSinceUnbound >= REBINDING_DELAY;
   }
   
   /**
    * Called when a ligand hits the membrane near this channel
    */
   public bindLigand( ligand: Particle<LigandType> ): void {
-    // Only bind if not already bound
-    if ( !this.isLigandBoundProperty.value ) {
+    // Only bind if not already bound and past the rebinding delay
+    if ( this.isAvailableForBinding() ) {
       this.isLigandBoundProperty.value = true;
       this.boundLigand = ligand;
       this.timeSinceLigandBound = 0;
@@ -68,6 +85,7 @@ export default class LigandGatedChannel extends Channel {
       this.isLigandBoundProperty.value = false;
       this.boundLigand = null;
       this.timeSinceLigandBound = 0;
+      this.timeSinceUnbound = 0; // Reset the unbinding timer
     }
   }
 }

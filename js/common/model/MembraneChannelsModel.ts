@@ -422,9 +422,10 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
   
   /**
-   * Finds a nearby ligand-gated channel for a ligand particle
+   * Finds a nearby ligand-gated channel that is available for binding
+   * Available means: not currently bound AND it has been at least 5 seconds since a ligand unbinding
    */
-  public getNearbyUnboundLigandGatedChannel( ligand: Particle<ParticleType>, ligandType: LigandType ): { slot: Slot; channel: LigandGatedChannel } | null {
+  public getNearbyAvailableLigandGatedChannel( ligand: Particle<ParticleType>, ligandType: LigandType ): { slot: Slot; channel: LigandGatedChannel } | null {
 
     // Match ligandA with sodium channels and ligandB with potassium channels
     const channelType = ligandType === 'ligandA' ?
@@ -442,8 +443,8 @@ export default class MembraneChannelsModel extends PhetioObject {
         // Get the channel from the slot
         const channel = slot.channelProperty.value;
         
-        // Check that it's actually a LigandGatedChannel
-        if ( channel && channel instanceof LigandGatedChannel && !channel.isLigandBoundProperty.value ) {
+        // Check that it's actually a LigandGatedChannel and is available for binding
+        if ( channel && channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
           return { slot: slot, channel: channel };
         }
       }
