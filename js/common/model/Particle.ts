@@ -19,7 +19,7 @@ import membraneChannels from '../../membraneChannels.js';
 import ChannelType from './ChannelType.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import Slot from './Slot.js';
-import SoluteType, { getParticleModelWidth, ParticleType } from './SoluteType.js';
+import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
 
 // Typical speed for movement
 const typicalSpeed = 30;
@@ -237,6 +237,16 @@ export default class Particle<T extends ParticleType> {
             type: 'passiveDiffusion',
             direction: outsideOfCell ? 'inward' : 'outward'
           };
+          return;
+        }
+      }
+      
+      // Check for ligand interaction with ligand-gated channels
+      if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
+        const nearbyLigandGatedChannelInfo = model.getNearbyLigandGatedChannel( this );
+        if ( nearbyLigandGatedChannelInfo ) {
+          const { channel } = nearbyLigandGatedChannelInfo;
+          channel.bindLigand( this as Particle<LigandType> );
           return;
         }
       }

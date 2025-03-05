@@ -9,24 +9,65 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
+import { LigandType } from './SoluteType.js';
+import Particle from './Particle.js';
 
 export default class LigandGatedChannel extends Channel {
   public readonly isLigandBoundProperty = new BooleanProperty( false );
 
-  // TODO: Just to test changes to binding.
-  private readonly bindingInterval = 1;
-  private timeSinceBindingChanged = 0;
+  // When a ligand is bound, keep track of it
+  private boundLigand: Particle<LigandType> | null = null;
+  
+  // Time in seconds that a ligand remains bound before detaching
+  private readonly bindingDuration = 10;
+  
+  // Tracks how long the current ligand has been bound
+  private timeSinceLigandBound = 0;
 
   public constructor( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' ) {
     super( type );
   }
 
   public override step( dt: number ): void {
-    this.timeSinceBindingChanged += dt;
 
-    if ( this.timeSinceBindingChanged > this.bindingInterval ) {
-      this.isLigandBoundProperty.value = !this.isLigandBoundProperty.value;
-      this.timeSinceBindingChanged = 0;
+    // If a ligand is bound, increment the timer
+    if ( this.isLigandBoundProperty.value ) {
+      this.timeSinceLigandBound += dt;
+      
+      // After the binding duration, release the ligand
+      if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand ) {
+        this.releaseLigand();
+      }
+    }
+  }
+  
+  /**
+   * Called when a ligand hits the membrane near this channel
+   */
+  public bindLigand( ligand: Particle<LigandType> ): void {
+    // Only bind if not already bound
+    if ( !this.isLigandBoundProperty.value ) {
+      this.isLigandBoundProperty.value = true;
+      this.boundLigand = ligand;
+      this.timeSinceLigandBound = 0;
+      
+      // Set the ligand to 'bound' mode to pause its motion
+      ligand.mode = { type: 'bound' };
+    }
+  }
+  
+  /**
+   * Release the bound ligand if any
+   */
+  private releaseLigand(): void {
+    if ( this.boundLigand ) {
+      // Reset the ligand to random walk mode
+      this.boundLigand.mode = this.boundLigand.createRandomWalkMode();
+      
+      // Clear the bound state
+      this.isLigandBoundProperty.value = false;
+      this.boundLigand = null;
+      this.timeSinceLigandBound = 0;
     }
   }
 }

@@ -36,6 +36,7 @@ import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
 import ChannelType from './ChannelType.js';
+import LigandGatedChannel from './LigandGatedChannel.js';
 import Particle from './Particle.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
@@ -418,6 +419,37 @@ export default class MembraneChannelsModel extends PhetioObject {
       return false;
     } );
     return !isChannelReserved;
+  }
+  
+  /**
+   * Finds a nearby ligand-gated channel for a ligand particle
+   */
+  public getNearbyLigandGatedChannel( ligand: Particle<IntentionalAny> ): { slot: Slot; channel: LigandGatedChannel } | null {
+    // Check which type of ligand this is
+    const ligandType = ligand.type as LigandType;
+    
+    // Match ligandA with sodium channels and ligandB with potassium channels
+    const channelType = ligandType === 'ligandA' ?
+      'sodiumIonLigandGatedChannel' :
+      'potassiumIonLigandGatedChannel';
+    
+    // Find a nearby slot with a ligand-gated channel
+    const x = ligand.position.x;
+    
+    for ( const slot of this.slots ) {
+      // Check if this slot has the correct type of ligand-gated channel
+      if ( slot.channelType === channelType && Math.abs( x - slot.position ) < CHANNEL_WIDTH ) {
+        // Get the channel from the slot
+        const channel = slot.channelProperty.value;
+        
+        // Check that it's actually a LigandGatedChannel
+        if ( channel && channel instanceof LigandGatedChannel ) {
+          return { slot: slot, channel: channel };
+        }
+      }
+    }
+    
+    return null;
   }
 
   public getTimeSpeedFactor(): number {
