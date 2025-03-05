@@ -42,7 +42,7 @@ export default class ObservationWindowChannelLayer extends Node {
         if ( type !== null ) {
 
           // TODO: Borrowed from ChannelToolNode
-          const channelNode = getChannelNode( type );
+          const channelNode = getChannelNode( type, slot.channelProperty.value );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
 
             slot.clear();

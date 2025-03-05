@@ -60,7 +60,7 @@ export default class ChannelDragNode extends Node {
       focusable: true
     } );
 
-    this.addChild( getChannelNode( type ) );
+    this.addChild( getChannelNode( type, null ) );
 
     this.positionProperty = new Vector2Property( modelPosition );
     this.positionProperty.link( position => {
