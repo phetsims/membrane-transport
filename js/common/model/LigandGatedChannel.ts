@@ -75,6 +75,7 @@ export default class LigandGatedChannel extends Channel {
   
   /**
    * Release the bound ligand if any
+   * TODO: Release after a particle passes through.
    */
   private releaseLigand(): void {
     if ( this.boundLigand ) {

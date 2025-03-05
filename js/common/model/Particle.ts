@@ -253,6 +253,8 @@ export default class Particle<T extends ParticleType> {
 
       const nearbySodiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLeakageChannel' );
       const nearbyPotassiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'potassiumIonLeakageChannel' );
+      const nearbySodiumLigandGatedChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLigandGatedChannel' );
+      const nearbyPotassiumLigandGatedChannelSlot = model.getNearbySlotForChannelType( this, 'potassiumIonLigandGatedChannel' );
 
       if ( this.type === 'sodiumIon' && nearbySodiumLeakageChannelSlot && model.isChannelFree( nearbySodiumLeakageChannelSlot ) ) {
         this.mode = {
@@ -265,6 +267,20 @@ export default class Particle<T extends ParticleType> {
         this.mode = {
           type: 'moveToCenterOfChannel',
           slot: nearbyPotassiumLeakageChannelSlot
+        };
+        return;
+      }
+      if ( this.type === 'sodiumIon' && nearbySodiumLigandGatedChannelSlot && model.isChannelFree( nearbySodiumLigandGatedChannelSlot ) ) {
+        this.mode = {
+          type: 'moveToCenterOfChannel',
+          slot: nearbySodiumLigandGatedChannelSlot
+        };
+        return;
+      }
+      if ( this.type === 'potassiumIon' && nearbyPotassiumLigandGatedChannelSlot && model.isChannelFree( nearbyPotassiumLigandGatedChannelSlot ) ) {
+        this.mode = {
+          type: 'moveToCenterOfChannel',
+          slot: nearbyPotassiumLigandGatedChannelSlot
         };
         return;
       }
