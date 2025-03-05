@@ -424,10 +424,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   /**
    * Finds a nearby ligand-gated channel for a ligand particle
    */
-  public getNearbyLigandGatedChannel( ligand: Particle<IntentionalAny> ): { slot: Slot; channel: LigandGatedChannel } | null {
-    // Check which type of ligand this is
-    const ligandType = ligand.type as LigandType;
-    
+  public getNearbyUnboundLigandGatedChannel( ligand: Particle<ParticleType>, ligandType: LigandType ): { slot: Slot; channel: LigandGatedChannel } | null {
+
     // Match ligandA with sodium channels and ligandB with potassium channels
     const channelType = ligandType === 'ligandA' ?
       'sodiumIonLigandGatedChannel' :
@@ -437,13 +435,15 @@ export default class MembraneChannelsModel extends PhetioObject {
     const x = ligand.position.x;
     
     for ( const slot of this.slots ) {
+
       // Check if this slot has the correct type of ligand-gated channel
       if ( slot.channelType === channelType && Math.abs( x - slot.position ) < CHANNEL_WIDTH ) {
+
         // Get the channel from the slot
         const channel = slot.channelProperty.value;
         
         // Check that it's actually a LigandGatedChannel
-        if ( channel && channel instanceof LigandGatedChannel ) {
+        if ( channel && channel instanceof LigandGatedChannel && !channel.isLigandBoundProperty.value ) {
           return { slot: slot, channel: channel };
         }
       }

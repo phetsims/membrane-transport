@@ -1,10 +1,7 @@
 # Membrane Channels Development Guidelines
 
 ## Build Commands
-- `npm run dev`: Bundle and serve with live reload on port 80, probably don't use this one
-- `grunt`: Run build tasks, takes about 2 minutes, probably don't use this one.
-- `grunt lint`: Run ESLint
-- `grunt lint --fix`: Run ESLint with automatic fixes
+- `grunt lint --fix`: Run ESLint, automatically addressing formatting issues
 - `grunt type-check`: Run TypeScript type checking
 
 ## Environment
@@ -14,8 +11,8 @@
 ## Code Style
 - TypeScript with strict typing
 - Follows PhET MVC (Model-View-Controller) pattern
-- Organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport
-- Common code in js/common/
+- Organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport, Playground
+- Common code in js/common/, divided into model/ and view/
 - Use MembraneChannelsConstants for shared values
 - Prefer composition over inheritance
 - Follow PhET naming conventions: PascalCase for classes, camelCase for variables
@@ -27,9 +24,6 @@
 - Use `TReadOnlyProperty<T>` from axon for read-only observables used in constructors
 - Use `Property<T>` from axon when you need to mutate the property
 - String properties from translations are `LocalizedStringProperty` type, not directly assignable to `Property<string>`
-- Use type imports for specialized types (e.g., `import { ChannelType } from '../model/MembraneChannelsModel.js'`)
-- Create TypeScript types/interfaces for configuration objects when multiple similar objects are created
-- When refactoring duplicated code, ensure type annotations are consistent with the actual usage
 
 ## Component Patterns
 - Use configuration objects with standardized patterns for creating similar components
@@ -40,7 +34,6 @@
 ## Performance
 - Use flat data structures for serialization
 - Design for lightweight models and views
-- Reserve particle slots for efficiency
 
 ## Error Handling
 - Validate inputs with assert statements

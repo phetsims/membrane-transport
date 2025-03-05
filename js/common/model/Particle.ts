@@ -243,7 +243,7 @@ export default class Particle<T extends ParticleType> {
       
       // Check for ligand interaction with ligand-gated channels
       if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
-        const nearbyLigandGatedChannelInfo = model.getNearbyLigandGatedChannel( this );
+        const nearbyLigandGatedChannelInfo = model.getNearbyUnboundLigandGatedChannel( this, this.type );
         if ( nearbyLigandGatedChannelInfo ) {
           const { channel } = nearbyLigandGatedChannelInfo;
           channel.bindLigand( this as Particle<LigandType> );
