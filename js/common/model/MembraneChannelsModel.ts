@@ -272,6 +272,11 @@ export default class MembraneChannelsModel extends PhetioObject {
 
       this.solutes.forEach( solute => solute.step( dt, this ) );
       this.ligands.forEach( ligand => ligand.step( dt, this ) );
+      this.slots.forEach( slot => {
+        if ( slot.channelProperty.value ) {
+          slot.channelProperty.value.step( dt );
+        }
+      } );
 
       this.stepFlux( dt, soluteInitialYValues );
     }

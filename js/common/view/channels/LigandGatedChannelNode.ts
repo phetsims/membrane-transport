@@ -35,15 +35,26 @@ export default class LigandGatedChannelNode extends Node {
     const poreSize = type === 'sodiumIonLigandGatedChannel' ? 8 : 12;
     const sideWidth = modelWidth / 2 - poreSize / 2;
 
+    const poreColor = 'rgb(254,254,254)';
+    const boundPoreColor = 'rgb(254,0,0)';
+
     const backgroundRectangle = new Rectangle( 0, 0, modelWidth, modelHeight, cornerRound, cornerRound, { fill: type === 'sodiumIonLigandGatedChannel' ? 'green' : 'yellow', stroke: 'black', lineWidth: 2 } );
-    const leftPore = new Rectangle( 0, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(254,254,254)', stroke: 'black', lineWidth: 2 } );
-    const rightPore = new Rectangle( modelWidth - sideWidth, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(254,254,254)', stroke: 'black', lineWidth: 2 } );
+    const leftPore = new Rectangle( 0, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: poreColor, stroke: 'black', lineWidth: 2 } );
+    const rightPore = new Rectangle( modelWidth - sideWidth, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: poreColor, stroke: 'black', lineWidth: 2 } );
 
     this.addChild( backgroundRectangle );
     this.addChild( leftPore );
     this.addChild( rightPore );
 
-    console.log( 'LigandGatedChannelNode created, model = ', model );
+    if ( model ) {
+
+      // Disposal is not necessary because the model is also transient and
+      // will be garbage collected.
+      model.isLigandBoundProperty.link( bound => {
+        leftPore.fill = bound ? boundPoreColor : poreColor;
+        rightPore.fill = bound ? boundPoreColor : poreColor;
+      } );
+    }
   }
 }
 

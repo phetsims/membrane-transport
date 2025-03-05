@@ -14,6 +14,14 @@ import ChannelType from './ChannelType.js';
 export default class Channel {
   public constructor( public readonly type: ChannelType ) {
   }
+
+  /**
+   * Implement in subclasses.
+   * @param dt - time step in seconds
+   */
+  public step( dt: number ): void {
+    // implement in a subclass
+  }
 }
 
 membraneChannels.register( 'Channel', Channel );
