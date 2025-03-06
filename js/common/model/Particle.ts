@@ -79,6 +79,10 @@ function getInterpolatedDirection( mode: RandomWalkMode ): Vector2 {
   return mode.currentDirection.blend( mode.targetDirection, alpha ).normalized();
 }
 
+// TODO: refine these values
+const MIN_RANDOM_WALK_TIME = 0.01;
+const MAX_RANDOM_WALK_TIME = 0.05;
+
 export default class Particle<T extends ParticleType> {
 
   public mode: ParticleMode;
@@ -108,7 +112,7 @@ export default class Particle<T extends ParticleType> {
       targetDirection: Particle.createRandomUnitVector(),
       turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
-      timeUntilNextDirection: dotRandom.nextDoubleBetween( 0.1, 0.3 )
+      timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME )
     };
   }
 
@@ -181,14 +185,14 @@ export default class Particle<T extends ParticleType> {
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( -1, 0 )
         ).normalize();
-        this.moveToward( downwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
+        this.moveToward( downwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
       }
       if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
         const upwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( 0, 1 )
         ).normalize();
-        this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( 1, 2 ) );
+        this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
       }
     }
   }
@@ -215,7 +219,7 @@ export default class Particle<T extends ParticleType> {
       randomWalk.turnElapsed = 0;
 
       // Reset the time until the next direction change.
-      randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( 0.5, 1 );
+      randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME );
     }
 
     // 2) Accumulate turn time and compute the interpolated direction.
