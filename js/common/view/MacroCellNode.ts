@@ -43,7 +43,7 @@ export default class MacroCellNode extends Node {
     // Second cubicCurveTo control points and endpoint
     const cubic2Control1Property = new Vector2Property( new Vector2( 686, 377 ) );
     const cubic2Control2Property = new Vector2Property( new Vector2( 509, 493 ) );
-    const cubic2EndProperty = new Vector2Property( new Vector2( 1104, 555 ) );
+    const cubic2EndProperty = new Vector2Property( new Vector2( 2175, 706 ) );
 
     // LineTo endpoints
     const line1EndProperty = new Vector2Property( new Vector2( 1500, 2000 ) );
