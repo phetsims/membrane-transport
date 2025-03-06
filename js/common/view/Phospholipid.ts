@@ -71,7 +71,7 @@ export default class Phospholipid {
     // Random vertical staggering
     const minStaggerY = 0.9;
     const maxStaggerY = 1.1;
-    const spacing = anchorY / 6.3;
+    const spacing = anchorY / 6.6;
 
     // Create two tails, each with several control points
     this.tailStates.push( {
@@ -137,6 +137,7 @@ export default class Phospholipid {
   public static initTails( context: CanvasRenderingContext2D ): void {
     context.strokeStyle = MembraneChannelsColors.lipidTailColorProperty.value.toCSS();
     context.lineWidth = 1.3;
+    context.lineCap = 'round';
   }
 
   /**
