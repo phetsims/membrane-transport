@@ -83,17 +83,25 @@ export default class SodiumVoltageGatedChannelNode extends Node {
   public step( dt: number ): void {
     const targetValue = voltageValues[ this.targetVoltage ];
 
-    // If already at target, don't regenerate the shape
     if ( this.currentVoltageValue === targetValue ) {
       return;
     }
 
-    // step toward the targetValue by 1
-    if ( this.currentVoltageValue < targetValue ) {
-      this.currentVoltageValue += dt * 60;
+    const delta = dt * 60;
+
+    // If already at target, don't regenerate the shape
+    if ( Math.abs( this.currentVoltageValue - targetValue ) < delta ) {
+      this.currentVoltageValue = targetValue;
     }
     else {
-      this.currentVoltageValue -= dt * 60;
+
+      // step toward the targetValue by 1
+      if ( this.currentVoltageValue < targetValue ) {
+        this.currentVoltageValue += delta;
+      }
+      else {
+        this.currentVoltageValue -= delta;
+      }
     }
 
     // Update the shapes based on the current voltage
