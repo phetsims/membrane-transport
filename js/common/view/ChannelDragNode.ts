@@ -51,7 +51,6 @@ export default class ChannelDragNode extends Node {
     modelPosition: Vector2,
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     public readonly type: ChannelType,
-
     // Where this came from, so that during a swap, the other one knows where to go. Or when pressing 'escape', it knows where to return
     public readonly origin: Slot | ChannelToolNode
   ) {
@@ -75,7 +74,7 @@ export default class ChannelDragNode extends Node {
     const modelBoundsProperty = new DerivedProperty( [ visibleBoundsProperty ], visibleBounds => {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
-    
+
     const getClosestSlotDragIndicatorNode = () => {
 
       // Check the observation window to find the closest available target we overlap
@@ -140,26 +139,26 @@ export default class ChannelDragNode extends Node {
 
           // Animate back to the toolbox
 
-            myself.pickable = false; // Prevent being grabbed on the way home
+          myself.pickable = false; // Prevent being grabbed on the way home
 
           const toolNode = view.getChannelToolNode( this.type );
           const viewPoint = view.globalToLocalPoint( toolNode.channelNode.globalBounds.center );
           const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-            const animation = new Animation( {
-              setValue: function( value ) {
-                positionProperty.value = value;
-              },
-              from: positionProperty.value.copy(),
-              to: modelPoint,
-              duration: 0.4,
-              easing: Easing.CUBIC_IN_OUT
-            } );
-            animation.endedEmitter.addListener( () => {
-              this.visible = false;
-            } );
+          const animation = new Animation( {
+            setValue: function( value ) {
+              positionProperty.value = value;
+            },
+            from: positionProperty.value.copy(),
+            to: modelPoint,
+            duration: 0.4,
+            easing: Easing.CUBIC_IN_OUT
+          } );
+          animation.endedEmitter.addListener( () => {
+            this.visible = false;
+          } );
 
-            animation.start();
+          animation.start();
         }
       }
     } );
