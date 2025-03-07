@@ -142,6 +142,7 @@ export default class ChannelDragNode extends Node {
           myself.pickable = false; // Prevent being grabbed on the way home
 
           const toolNode = view.getChannelToolNode( this.type );
+          assert && assert( toolNode, `toolNode should be defined, type = ${this.type}` ); // This was failing on CT
           const viewPoint = view.globalToLocalPoint( toolNode.channelNode.globalBounds.center );
           const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
