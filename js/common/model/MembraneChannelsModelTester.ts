@@ -22,7 +22,7 @@ export default class MembraneChannelsModelTester {
    * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a channel
    * to test functionality.
    */
-  public testSodiumLigandChannel(): void {
+  public testSodiumLigandChannel( withLigand: boolean ): void {
 
     // Put a sodium in the first slot
     this.model.slots[ 0 ].channelType = 'sodiumIonLigandGatedChannel';
@@ -43,7 +43,9 @@ export default class MembraneChannelsModelTester {
     firstLigandA.position.set( new Vector2( 0, 50 ) );
 
     sodiumIon.moveToPosition( slotPosition );
-    firstLigandA.moveToPosition( slotPosition );
+    if ( withLigand ) {
+      firstLigandA.moveToPosition( slotPosition );
+    }
   }
 }
 

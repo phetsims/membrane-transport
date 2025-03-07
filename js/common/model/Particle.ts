@@ -12,6 +12,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
@@ -287,6 +288,7 @@ export default class Particle<T extends ParticleType> {
         }
       }
 
+      // TODO: Can we factor out duplicated code here, or iterate over these?
       const nearbySodiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLeakageChannel' );
       const nearbyPotassiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'potassiumIonLeakageChannel' );
       const nearbySodiumLigandGatedChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLigandGatedChannel' );
@@ -307,11 +309,16 @@ export default class Particle<T extends ParticleType> {
         return;
       }
       if ( this.type === 'sodiumIon' && nearbySodiumLigandGatedChannelSlot && model.isChannelFree( nearbySodiumLigandGatedChannelSlot ) ) {
-        this.mode = {
-          type: 'moveToCenterOfChannel',
-          slot: nearbySodiumLigandGatedChannelSlot
-        };
-        return;
+
+        affirm( nearbySodiumLigandGatedChannelSlot.channelProperty.value instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
+
+        if ( nearbySodiumLigandGatedChannelSlot.channelProperty.value.isLigandBoundProperty.value ) {
+          this.mode = {
+            type: 'moveToCenterOfChannel',
+            slot: nearbySodiumLigandGatedChannelSlot
+          };
+          return;
+        }
       }
       if ( this.type === 'potassiumIon' && nearbyPotassiumLigandGatedChannelSlot && model.isChannelFree( nearbyPotassiumLigandGatedChannelSlot ) ) {
         this.mode = {
