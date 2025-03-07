@@ -17,6 +17,7 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import ChannelType from './ChannelType.js';
+import LigandGatedChannel from './LigandGatedChannel.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
@@ -196,6 +197,17 @@ export default class Particle<T extends ParticleType> {
         const maxDistanceFromCenter = 0.5;
         if ( Math.abs( this.position.x - center ) > maxDistanceFromCenter ) {
           this.position.x = center + maxDistanceFromCenter * Math.sign( this.position.x - center );
+        }
+
+        const crossedOver = this.mode.direction === 'inward' && this.position.y < 0 ||
+                            this.mode.direction === 'outward' && this.position.y > 0;
+
+        // If the particle has moved through the channel, unbind from the ligand
+        if ( crossedOver && Math.abs( this.position.y ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 ) {
+          const channel = this.mode.slot.channelProperty.value;
+          if ( channel instanceof LigandGatedChannel ) {
+            channel.unbindLigand();
+          }
         }
       }
 

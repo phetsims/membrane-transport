@@ -42,7 +42,7 @@ export default class LigandGatedChannel extends Channel {
       
       // After the binding duration, release the ligand
       if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand ) {
-        this.releaseLigand();
+        this.unbindLigand();
       }
     }
     else {
@@ -77,7 +77,7 @@ export default class LigandGatedChannel extends Channel {
    * Release the bound ligand if any
    * TODO: Release after a particle passes through.
    */
-  private releaseLigand(): void {
+  public unbindLigand(): void {
     if ( this.boundLigand ) {
       // Reset the ligand to random walk mode
       this.boundLigand.mode = this.boundLigand.createRandomWalkMode();

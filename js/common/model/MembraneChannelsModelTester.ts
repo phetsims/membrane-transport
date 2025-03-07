@@ -29,7 +29,7 @@ export default class MembraneChannelsModelTester {
 
     this.model.areLigandsAddedProperty.value = true;
 
-    const slotPosition = new Vector2( this.model.slots[ 0 ].position, MembraneChannelsConstants.MEMBRANE_BOUNDS.bottom );
+    const slotPosition = new Vector2( this.model.slots[ 0 ].position, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY );
 
     // Create a ligand
     const firstLigandA = this.model.ligands.find( ligand => ligand.type === 'ligandA' )!;
