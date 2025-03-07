@@ -189,6 +189,16 @@ export default class Particle<T extends ParticleType> {
       this.position.y += sign * ( typicalSpeed / 4 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
       this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * ( typicalSpeed / 2 ) * dt;
 
+      // If moving through a channel, don't let the position get very far from the center. Allow a little movement
+      // so that it looks like it "struggles" to get through.
+      if ( this.mode.type === 'movingThroughChannel' ) {
+        const center = this.mode.slot.position;
+        const maxDistanceFromCenter = 0.5;
+        if ( Math.abs( this.position.x - center ) > maxDistanceFromCenter ) {
+          this.position.x = center + maxDistanceFromCenter * Math.sign( this.position.x - center );
+        }
+      }
+
       // Once the particle has moved sufficiently far from the membrane, resume random walk.
       if ( this.mode.direction === 'inward' && ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
         const downwardDirection = new Vector2(
