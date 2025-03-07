@@ -21,10 +21,13 @@ We have taken efforts to keep the model and view lightweight. This has the follo
 
 ### Model
 
-The model is purposefully simple, with flat data structures to facilitate phet-io serialization.
+The model is purposefully simple, with flat data structures to facilitate phet-io serialization. For instance,
+Several model Properties for particlar channel state are not phet-io instrumented; instead they appear in the state via 
+serialization of the container.
 
 Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are non-interactive
-Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive, and can be dragged around the canvas.
+Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive, 
+and can be dragged around the canvas.
 Solutes and Ligands are referred to more generally as Particles.
 
 **Slots** are the 7 positions on the membrane where a protein/channel can be added.
