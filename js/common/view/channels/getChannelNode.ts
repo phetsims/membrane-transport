@@ -16,14 +16,17 @@ import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default function( type: ChannelType, model: Channel | null ): Node {
-  if ( type === 'sodiumIonVoltageGatedChannel' ) {
-    return new SodiumVoltageGatedChannelNode();
+  if ( type === 'sodiumIonLeakageChannel' ) {
+    return new LeakageChannelNode( type );
   }
   else if ( type === 'potassiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );
   }
-  else if ( type === 'sodiumIonLeakageChannel' ) {
-    return new LeakageChannelNode( type );
+  else if ( type === 'sodiumIonVoltageGatedChannel' ) {
+    return new SodiumVoltageGatedChannelNode();
+  }
+  else if ( type === 'potassiumIonVoltageGatedChannel' ) {
+    return new SodiumVoltageGatedChannelNode();
   }
   else if ( type === 'sodiumIonLigandGatedChannel' ) {
     if ( model !== null ) {

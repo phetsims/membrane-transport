@@ -132,7 +132,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
             accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
           },
           {
-            channelType: 'sodiumIonVoltageGatedChannel',
+            channelType: 'potassiumIonVoltageGatedChannel',
             labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
             accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
           }

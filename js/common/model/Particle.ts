@@ -298,6 +298,7 @@ export default class Particle<T extends ParticleType> {
     // Are we above (y>0) or below (y<0) the membrane region?
     const outsideOfCell = this.position.y > 0;
 
+    // Check each channel to for interaction
     for ( let i = 0; i < model.slots.length; i++ ) {
       const slot = model.slots[ i ];
 
@@ -335,6 +336,16 @@ export default class Particle<T extends ParticleType> {
             return;
           }
           if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLeakageChannel' ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+            return;
+          }
+
+          // Check for sodium and potassium ions interacting with voltage-gated channels.
+          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonVoltageGatedChannel' && model.membraneVoltagePotentialProperty.value === '-50' ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+            return;
+          }
+          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonVoltageGatedChannel' && model.membraneVoltagePotentialProperty.value === '-50' ) {
             this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
           }

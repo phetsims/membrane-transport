@@ -9,9 +9,13 @@
 type ChannelType =
   'sodiumIonLeakageChannel' |
   'potassiumIonLeakageChannel' |
+
   'sodiumIonVoltageGatedChannel' |
+  'potassiumIonVoltageGatedChannel' |
+
   'sodiumIonLigandGatedChannel' |
   'potassiumIonLigandGatedChannel' |
+
   'sodiumPotassiumPump' |
   'sodiumGlucoseCotransporter';
 

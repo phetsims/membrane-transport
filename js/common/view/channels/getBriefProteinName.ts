@@ -11,11 +11,15 @@ import ChannelType from '../../model/ChannelType.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default function( type: ChannelType ): string {
-  return type === 'sodiumIonVoltageGatedChannel' ? 'Sodium Ion, Voltage-Gated' : // TODO: Where is the potassium voltage gated?
+  return type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
          type === 'potassiumIonLeakageChannel' ? 'Potassium Ion, Leakage' :
-         type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
+
+         type === 'sodiumIonVoltageGatedChannel' ? 'Sodium Ion, Voltage-Gated' :
+         type === 'potassiumIonVoltageGatedChannel' ? 'Potassium Ion, Ligand-Gated' :
+
          type === 'sodiumIonLigandGatedChannel' ? 'Sodium Ion, Ligand-Gated' :
          type === 'potassiumIonLigandGatedChannel' ? 'Potassium Ion, Ligand-Gated' :
+
          type === 'sodiumPotassiumPump' ? 'Sodium Potassium Pump' :
          type === 'sodiumGlucoseCotransporter' ? 'Sodium-Glucose Cotransporter' :
            // final fallback -> throw
