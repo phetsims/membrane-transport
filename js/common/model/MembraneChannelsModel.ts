@@ -420,7 +420,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     } );
     return !isChannelReserved;
   }
-  
+
   /**
    * Finds a nearby ligand-gated channel that is available for binding
    * Available means: not currently bound AND it has been at least 5 seconds since a ligand unbinding
@@ -429,12 +429,12 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     // Match ligandA with sodium channels and ligandB with potassium channels
     const channelType = ligandType === 'ligandA' ?
-      'sodiumIonLigandGatedChannel' :
-      'potassiumIonLigandGatedChannel';
-    
+                        'sodiumIonLigandGatedChannel' :
+                        'potassiumIonLigandGatedChannel';
+
     // Find a nearby slot with a ligand-gated channel
     const x = ligand.position.x;
-    
+
     for ( const slot of this.slots ) {
 
       // Check if this slot has the correct type of ligand-gated channel
@@ -442,14 +442,14 @@ export default class MembraneChannelsModel extends PhetioObject {
 
         // Get the channel from the slot
         const channel = slot.channelProperty.value;
-        
+
         // Check that it's actually a LigandGatedChannel and is available for binding
         if ( channel && channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
           return { slot: slot, channel: channel };
         }
       }
     }
-    
+
     return null;
   }
 

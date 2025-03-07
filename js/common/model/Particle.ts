@@ -117,18 +117,26 @@ export default class Particle<T extends ParticleType> {
   }
 
   /**
-   * Make the solute move toward a target location immediately.
+   * Make the solute move in a direction immediately.
    * The particle remains in random walk mode while moving toward the target.
    */
-  public moveToward( target: Vector2, duration: number ): void {
+  public moveInDirection( direction: Vector2, duration: number ): void {
     this.mode = {
       type: 'randomWalk',
-      currentDirection: target,
-      targetDirection: target,
+      currentDirection: direction,
+      targetDirection: direction,
       turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
       timeUntilNextDirection: duration
     };
+  }
+
+  /**
+   * Move directly to a position without any brownian motion.
+   */
+  public moveToPosition( targetPosition: Vector2 ): void {
+    const direction = targetPosition.minus( this.position ).normalized();
+    this.moveInDirection( direction, Number.POSITIVE_INFINITY );
   }
 
   public step( dt: number, model: MembraneChannelsModel ): void {
@@ -142,6 +150,8 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
+    // TODO: Consider a strategy where the mode implements the motion so that you are force to implement it for each
+    //   mode type.
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
@@ -185,14 +195,14 @@ export default class Particle<T extends ParticleType> {
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( -1, 0 )
         ).normalize();
-        this.moveToward( downwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
+        this.moveInDirection( downwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
       }
       if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
         const upwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( 0, 1 )
         ).normalize();
-        this.moveToward( upwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
+        this.moveInDirection( upwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
       }
     }
   }
@@ -244,7 +254,7 @@ export default class Particle<T extends ParticleType> {
           return;
         }
       }
-      
+
       // Check for ligand interaction with ligand-gated channels
       if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
         const nearbyLigandGatedChannelInfo = model.getNearbyAvailableLigandGatedChannel( this, this.type );

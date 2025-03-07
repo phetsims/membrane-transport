@@ -18,6 +18,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -26,6 +27,7 @@ import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import ChannelType from '../model/ChannelType.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneChannelsModelTester from '../model/MembraneChannelsModelTester.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import ChannelDragNode from './ChannelDragNode.js';
@@ -242,6 +244,16 @@ export default class MembraneChannelsScreenView extends ScreenView {
       macroCellNode.moveToFront();
     }
 
+    // TODO: These are just for debugging, remove before publication.
+    // Add hotkeys that let us easily test model behavior.
+    const tester = new MembraneChannelsModelTester( model );
+    KeyboardListener.createGlobal( this, {
+      keys: [ 'q' ],
+      fire: () => {
+        tester.testSodiumLigandChannel();
+      }
+    } );
+
     this.screenViewModelViewTransform = screenViewModelViewTransform;
   }
 
@@ -265,7 +277,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       origin
     );
     this.addChild( channelDragNode );
-    
+
     return channelDragNode;
   }
 
