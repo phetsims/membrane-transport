@@ -7,6 +7,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
 import { LigandType } from './SoluteType.js';
@@ -30,8 +31,8 @@ export default class LigandGatedChannel extends Channel {
   // Tracks time since a ligand was unbound, used for rebinding delay
   private timeSinceUnbound = REBINDING_DELAY; // Start ready to bind
 
-  public constructor( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' ) {
-    super( type );
+  public constructor( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
+    super( type, position );
   }
 
   public override step( dt: number ): void {
@@ -88,6 +89,15 @@ export default class LigandGatedChannel extends Channel {
       this.timeSinceLigandBound = 0;
       this.timeSinceUnbound = 0; // Reset the unbinding timer
     }
+  }
+
+  /**
+   * Returns the position of the binding site for the ligand.
+   */
+  public getBindingPosition(): Vector2 {
+
+    // For now, just return the top right of the bounds
+    return new Vector2( this.bounds.maxX, this.bounds.maxY );
   }
 }
 

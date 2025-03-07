@@ -194,13 +194,13 @@ export default class Particle<T extends ParticleType> {
       }
     }
     else if ( this.mode.type === 'moveToLigandBindingLocation' ) {
-      const slot = this.mode.slot;
-      const channel = this.mode.slot.channelProperty.value;
+
+      // TODO: Implement binding for other types of channels
+      const channel = this.mode.slot.channelProperty.value as LigandGatedChannel;
 
       const currentPosition = this.position;
 
-      // TODO: Get this position from the channel.
-      const targetPosition = new Vector2( slot.position + 5, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY + 5 );
+      const targetPosition = channel.getBindingPosition();
       const maxStepSize = typicalSpeed * dt;
 
       // Move toward the binding position
@@ -209,7 +209,6 @@ export default class Particle<T extends ParticleType> {
 
       // When close enough, transition to a bound mode.
       if ( targetPosition.distance( currentPosition ) <= maxStepSize ) {
-        affirm( channel instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
         affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
         channel.bindLigand( this as Particle<LigandType> );
       }

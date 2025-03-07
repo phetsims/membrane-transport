@@ -40,7 +40,7 @@ export default class Slot {
   }
 
   public set channelType( channelType: ChannelType | null ) {
-    this.channelProperty.value = channelType ? getChannel( channelType ) : null;
+    this.channelProperty.value = channelType ? getChannel( channelType, this.position ) : null;
   }
 
   public isFilled(): boolean {

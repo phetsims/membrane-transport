@@ -1,6 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsConstants, { CHANNEL_WIDTH } from '../MembraneChannelsConstants.js';
 import ChannelType from './ChannelType.js';
 
 /**
@@ -12,7 +14,21 @@ import ChannelType from './ChannelType.js';
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 export default class Channel {
-  public constructor( public readonly type: ChannelType ) {
+
+  // Bounds of the channel in model coordinates.
+  public readonly bounds: Bounds2;
+
+  /**
+   * @param type - the type of channel
+   * @param position - the horizontal position of the channel in the membrane
+   */
+  public constructor( public readonly type: ChannelType, public readonly position: number ) {
+    this.bounds = new Bounds2(
+      position - CHANNEL_WIDTH / 2,
+      MembraneChannelsConstants.MEMBRANE_BOUNDS.minY,
+      position + CHANNEL_WIDTH / 2,
+      MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
+    );
   }
 
   /**
