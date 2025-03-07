@@ -208,7 +208,7 @@ export default class Particle<T extends ParticleType> {
       this.position.y += Math.sign( targetPosition.y - currentPosition.y ) * maxStepSize;
 
       // When close enough, transition to a bound mode.
-      if ( targetPosition.distance( currentPosition ) <= maxStepSize ) {
+      if ( targetPosition.distance( currentPosition ) <= maxStepSize && channel.isAvailableForBinding() ) {
         affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
         channel.bindLigand( this as Particle<LigandType> );
       }
@@ -321,6 +321,7 @@ export default class Particle<T extends ParticleType> {
             if ( slot.channelType === channelType ) {
 
               // Check that it's actually a LigandGatedChannel and is available for binding
+              // TODO: Should we also check to see if another ligand is already moving to this slot?
               if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
                 this.mode = {
                   type: 'moveToLigandBindingLocation',
