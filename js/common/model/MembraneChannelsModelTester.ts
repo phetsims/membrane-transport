@@ -22,29 +22,31 @@ export default class MembraneChannelsModelTester {
    * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a channel
    * to test functionality.
    */
-  public testSodiumLigandChannel( withLigand: boolean ): void {
+  public testSodiumLigandChannel( type: 'sodium' | 'potassium', withLigand: boolean ): void {
 
     // Put a sodium in the first slot
-    this.model.slots[ 0 ].channelType = 'sodiumIonLigandGatedChannel';
+    this.model.slots[ 0 ].channelType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
 
     this.model.areLigandsAddedProperty.value = true;
 
     const slotPosition = new Vector2( this.model.slots[ 0 ].position, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY );
 
     // Create a ligand
-    const firstLigandA = this.model.ligands.find( ligand => ligand.type === 'ligandA' )!;
+    const ligandType = type === 'sodium' ? 'ligandA' : 'ligandB';
+    const firstLigand = this.model.ligands.find( ligand => ligand.type === ligandType )!;
 
     // Create a sodium ion
-    this.model.addSolutes( 'sodiumIon', 'outside', 1 );
-    const sodiumIon = this.model.solutes.find( solute => solute.type === 'sodiumIon' )!;
+    const soluteType = type === 'sodium' ? 'sodiumIon' : 'potassiumIon';
+    this.model.addSolutes( soluteType, 'outside', 1 );
+    const sodiumIon = this.model.solutes.find( solute => solute.type === soluteType )!;
 
     // Farther away from the slot so that the ligand can get there first.
-    sodiumIon.position.set( new Vector2( 50, 50 ) );
-    firstLigandA.position.set( new Vector2( 0, 50 ) );
+    sodiumIon.position.set( new Vector2( -30, 50 ) );
+    firstLigand.position.set( new Vector2( -40, 50 ) );
 
     sodiumIon.moveToPosition( slotPosition );
     if ( withLigand ) {
-      firstLigandA.moveToPosition( slotPosition );
+      firstLigand.moveToPosition( slotPosition );
     }
   }
 }

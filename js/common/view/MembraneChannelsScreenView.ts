@@ -247,8 +247,10 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // TODO: These are just for debugging, remove before publication.
     // Add hotkeys that let us easily test model behavior.
     const tester = new MembraneChannelsModelTester( model );
-    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => tester.testSodiumLigandChannel( true ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => tester.testSodiumLigandChannel( false ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => tester.testSodiumLigandChannel( 'sodium', true ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => tester.testSodiumLigandChannel( 'sodium', false ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => tester.testSodiumLigandChannel( 'potassium', true ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => tester.testSodiumLigandChannel( 'potassium', false ) } );
 
     this.screenViewModelViewTransform = screenViewModelViewTransform;
   }

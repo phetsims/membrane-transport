@@ -233,6 +233,8 @@ export default class Particle<T extends ParticleType> {
   /**
    * Step the particle along a random walk path, including bouncing off the membrane
    * (central horizontal band) and the bounding walls.
+   *
+   * TODO: Can this method be modularized/broken into smaller methods?
    */
   private stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
     const randomWalk = this.mode as RandomWalkMode;
@@ -308,23 +310,26 @@ export default class Particle<T extends ParticleType> {
         };
         return;
       }
-      if ( this.type === 'sodiumIon' && nearbySodiumLigandGatedChannelSlot && model.isChannelFree( nearbySodiumLigandGatedChannelSlot ) ) {
 
-        affirm( nearbySodiumLigandGatedChannelSlot.channelProperty.value instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
+      const checkAndMoveToChannel = ( ionType: 'sodiumIon' | 'potassiumIon', slot: Slot | null ) => {
+        if ( this.type === ionType && slot && model.isChannelFree( slot ) ) {
+          affirm( slot.channelProperty.value instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
 
-        if ( nearbySodiumLigandGatedChannelSlot.channelProperty.value.isLigandBoundProperty.value ) {
-          this.mode = {
-            type: 'moveToCenterOfChannel',
-            slot: nearbySodiumLigandGatedChannelSlot
-          };
-          return;
+          if ( slot.channelProperty.value.isLigandBoundProperty.value ) {
+            this.mode = {
+              type: 'moveToCenterOfChannel',
+              slot: slot
+            };
+            return true;
+          }
         }
+        return false;
+      };
+
+      if ( checkAndMoveToChannel( 'sodiumIon', nearbySodiumLigandGatedChannelSlot ) ) {
+        return;
       }
-      if ( this.type === 'potassiumIon' && nearbyPotassiumLigandGatedChannelSlot && model.isChannelFree( nearbyPotassiumLigandGatedChannelSlot ) ) {
-        this.mode = {
-          type: 'moveToCenterOfChannel',
-          slot: nearbyPotassiumLigandGatedChannelSlot
-        };
+      if ( checkAndMoveToChannel( 'potassiumIon', nearbyPotassiumLigandGatedChannelSlot ) ) {
         return;
       }
 
