@@ -195,9 +195,11 @@ export default class MembraneChannelsModel extends PhetioObject {
       } );
     } );
 
-    // TODO: For testing
-    this.slots[ 3 ].channelType = 'sodiumIonVoltageGatedChannel';
-    this.slots[ 5 ].channelType = 'sodiumIonLeakageChannel';
+    // TODO: For testing - only for models that support channels
+    if ( this.featureSet !== 'simpleDiffusion' ) {
+      this.slots[ 3 ].channelType = 'sodiumIonVoltageGatedChannel';
+      this.slots[ 5 ].channelType = 'sodiumIonLeakageChannel';
+    }
 
     this.slots.forEach( slot => slot.channelProperty.link( () => this.updateChannelCounts() ) );
   }
