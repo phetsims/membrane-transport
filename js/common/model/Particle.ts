@@ -331,6 +331,44 @@ export default class Particle<T extends ParticleType> {
               }
             }
           }
+
+          // Check for sodium and potassium ions interacting with leakage channels.
+          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonLeakageChannel' && model.isChannelFree( slot ) ) {
+            this.mode = {
+              type: 'moveToCenterOfChannel',
+              slot: slot
+            };
+            return;
+          }
+          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLeakageChannel' && model.isChannelFree( slot ) ) {
+            this.mode = {
+              type: 'moveToCenterOfChannel',
+              slot: slot
+            };
+            return;
+          }
+
+          const checkAndMoveToChannel = ( ionType: 'sodiumIon' | 'potassiumIon', slot: Slot | null ) => {
+            if ( this.type === ionType && slot && model.isChannelFree( slot ) ) {
+              affirm( slot.channelProperty.value instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
+
+              if ( slot.channelProperty.value.isLigandBoundProperty.value ) {
+                this.mode = {
+                  type: 'moveToCenterOfChannel',
+                  slot: slot
+                };
+                return true;
+              }
+            }
+            return false;
+          };
+
+          if ( checkAndMoveToChannel( 'sodiumIon', slot ) ) {
+            return;
+          }
+          if ( checkAndMoveToChannel( 'potassiumIon', slot ) ) {
+            return;
+          }
         }
       }
     }
@@ -345,49 +383,6 @@ export default class Particle<T extends ParticleType> {
           };
           return;
         }
-      }
-
-      // TODO: Can we factor out duplicated code here, or iterate over these?
-      const nearbySodiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLeakageChannel' );
-      const nearbyPotassiumLeakageChannelSlot = model.getNearbySlotForChannelType( this, 'potassiumIonLeakageChannel' );
-      const nearbySodiumLigandGatedChannelSlot = model.getNearbySlotForChannelType( this, 'sodiumIonLigandGatedChannel' );
-      const nearbyPotassiumLigandGatedChannelSlot = model.getNearbySlotForChannelType( this, 'potassiumIonLigandGatedChannel' );
-
-      if ( this.type === 'sodiumIon' && nearbySodiumLeakageChannelSlot && model.isChannelFree( nearbySodiumLeakageChannelSlot ) ) {
-        this.mode = {
-          type: 'moveToCenterOfChannel',
-          slot: nearbySodiumLeakageChannelSlot
-        };
-        return;
-      }
-      if ( this.type === 'potassiumIon' && nearbyPotassiumLeakageChannelSlot && model.isChannelFree( nearbyPotassiumLeakageChannelSlot ) ) {
-        this.mode = {
-          type: 'moveToCenterOfChannel',
-          slot: nearbyPotassiumLeakageChannelSlot
-        };
-        return;
-      }
-
-      const checkAndMoveToChannel = ( ionType: 'sodiumIon' | 'potassiumIon', slot: Slot | null ) => {
-        if ( this.type === ionType && slot && model.isChannelFree( slot ) ) {
-          affirm( slot.channelProperty.value instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
-
-          if ( slot.channelProperty.value.isLigandBoundProperty.value ) {
-            this.mode = {
-              type: 'moveToCenterOfChannel',
-              slot: slot
-            };
-            return true;
-          }
-        }
-        return false;
-      };
-
-      if ( checkAndMoveToChannel( 'sodiumIon', nearbySodiumLigandGatedChannelSlot ) ) {
-        return;
-      }
-      if ( checkAndMoveToChannel( 'potassiumIon', nearbyPotassiumLigandGatedChannelSlot ) ) {
-        return;
       }
 
       // Handle membrane collision by reflecting vertical motion.
