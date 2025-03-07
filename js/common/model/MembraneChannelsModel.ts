@@ -31,19 +31,16 @@ import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
-import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants, { CHANNEL_WIDTH, LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
 import ChannelType from './ChannelType.js';
-import LigandGatedChannel from './LigandGatedChannel.js';
 import Particle from './Particle.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
-
-const CHANNEL_WIDTH = 10;
 
 type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
@@ -421,38 +418,6 @@ export default class MembraneChannelsModel extends PhetioObject {
       return false;
     } );
     return !isChannelReserved;
-  }
-
-  /**
-   * Finds a nearby ligand-gated channel that is available for binding
-   * Available means: not currently bound AND it has been at least 5 seconds since a ligand unbinding
-   */
-  public getNearbyAvailableLigandGatedChannel( ligand: Particle<ParticleType>, ligandType: LigandType ): { slot: Slot; channel: LigandGatedChannel } | null {
-
-    // Match ligandA with sodium channels and ligandB with potassium channels
-    const channelType = ligandType === 'ligandA' ?
-                        'sodiumIonLigandGatedChannel' :
-                        'potassiumIonLigandGatedChannel';
-
-    // Find a nearby slot with a ligand-gated channel
-    const x = ligand.position.x;
-
-    for ( const slot of this.slots ) {
-
-      // Check if this slot has the correct type of ligand-gated channel
-      if ( slot.channelType === channelType && Math.abs( x - slot.position ) < CHANNEL_WIDTH ) {
-
-        // Get the channel from the slot
-        const channel = slot.channelProperty.value;
-
-        // Check that it's actually a LigandGatedChannel and is available for binding
-        if ( channel && channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
-          return { slot: slot, channel: channel };
-        }
-      }
-    }
-
-    return null;
   }
 
   public getTimeSpeedFactor(): number {

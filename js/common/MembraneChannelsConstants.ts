@@ -44,6 +44,7 @@ const MEMBRANE_BOUNDS = new Bounds2( -MODEL_WIDTH / 2, -10, MODEL_WIDTH / 2, 10 
 
 export const LIGAND_COUNT = 10; // Per ligand type
 export const MAX_SOLUTE_COUNT = MembraneChannelsQueryParameters.maxSolutes; // Per solute type
+export const CHANNEL_WIDTH = 10; // Width of the channel in model coordinates
 
 const MembraneChannelsConstants = {
   SCREEN_VIEW_X_MARGIN: 8,

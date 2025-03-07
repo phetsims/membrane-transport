@@ -26,6 +26,10 @@ import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './S
 // Typical speed for movement
 const typicalSpeed = 30;
 
+// The radius of the circle around the center of a channel where a particle will be captured so
+// we can decide how it should interact with the channel.
+const CAPTURE_RADIUS = MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8;
+
 type RandomWalkMode = {
   type: 'randomWalk';
   currentDirection: Vector2;
@@ -41,6 +45,11 @@ type BoundMode = {
 
 type MoveToCenterOfChannelMode = {
   type: 'moveToCenterOfChannel';
+  slot: Slot;
+};
+
+type MoveToLigandBindingLocationMode = {
+  type: 'moveToLigandBindingLocation';
   slot: Slot;
 };
 
@@ -68,6 +77,7 @@ type ParticleMode =
   | RandomWalkMode
   | BoundMode
   | MoveToCenterOfChannelMode
+  | MoveToLigandBindingLocationMode
   | PassiveDiffusionMode
   | MovingThroughChannelMode
   | UserControlledMode
@@ -183,6 +193,27 @@ export default class Particle<T extends ParticleType> {
         };
       }
     }
+    else if ( this.mode.type === 'moveToLigandBindingLocation' ) {
+      const slot = this.mode.slot;
+      const channel = this.mode.slot.channelProperty.value;
+
+      const currentPosition = this.position;
+
+      // TODO: Get this position from the channel.
+      const targetPosition = new Vector2( slot.position + 5, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY + 5 );
+      const maxStepSize = typicalSpeed * dt;
+
+      // Move toward the binding position
+      this.position.x += Math.sign( targetPosition.x - currentPosition.x ) * maxStepSize;
+      this.position.y += Math.sign( targetPosition.y - currentPosition.y ) * maxStepSize;
+
+      // When close enough, transition to a bound mode.
+      if ( targetPosition.distance( currentPosition ) <= maxStepSize ) {
+        affirm( channel instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
+        affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
+        channel.bindLigand( this as Particle<LigandType> );
+      }
+    }
     else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) {
 
       // For both passive diffusion and moving through channel, use similar movement logic.
@@ -268,6 +299,42 @@ export default class Particle<T extends ParticleType> {
     // Are we above (y>0) or below (y<0) the membrane region?
     const outsideOfCell = this.position.y > 0;
 
+    for ( let i = 0; i < model.slots.length; i++ ) {
+      const slot = model.slots[ i ];
+
+      const channel = slot.channelProperty.value;
+      if ( channel ) {
+
+        // If the particle is within a certain radial distance from the center of the channel, move it to the center.
+        const distance = this.position.distance( new Vector2( slot.position, 0 ) );
+
+        if ( distance < CAPTURE_RADIUS ) {
+
+          // Check for ligand interaction with ligand-gated channels
+          if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
+
+            // Match ligandA with sodium channels and ligandB with potassium channels
+            const channelType = this.type === 'ligandA' ?
+                                'sodiumIonLigandGatedChannel' :
+                                'potassiumIonLigandGatedChannel';
+
+            // Check if this slot has the correct type of ligand-gated channel
+            if ( slot.channelType === channelType ) {
+
+              // Check that it's actually a LigandGatedChannel and is available for binding
+              if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
+                this.mode = {
+                  type: 'moveToLigandBindingLocation',
+                  slot: slot
+                };
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
+
     if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       if ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) {
@@ -276,16 +343,6 @@ export default class Particle<T extends ParticleType> {
             type: 'passiveDiffusion',
             direction: outsideOfCell ? 'inward' : 'outward'
           };
-          return;
-        }
-      }
-
-      // Check for ligand interaction with ligand-gated channels
-      if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
-        const nearbyLigandGatedChannelInfo = model.getNearbyAvailableLigandGatedChannel( this, this.type );
-        if ( nearbyLigandGatedChannelInfo ) {
-          const { channel } = nearbyLigandGatedChannelInfo;
-          channel.bindLigand( this as Particle<LigandType> );
           return;
         }
       }
