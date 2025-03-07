@@ -302,7 +302,7 @@ export default class Particle<T extends ParticleType> {
       const slot = model.slots[ i ];
 
       const channel = slot.channelProperty.value;
-      if ( channel ) {
+      if ( channel && model.isChannelFree( slot ) ) {
 
         // If the particle is within a certain radial distance from the center of the channel, move it to the center.
         const distance = this.position.distance( new Vector2( slot.position, 0 ) );
@@ -323,50 +323,33 @@ export default class Particle<T extends ParticleType> {
               // Check that it's actually a LigandGatedChannel and is available for binding
               // TODO: Should we also check to see if another ligand is already moving to this slot?
               if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
-                this.mode = {
-                  type: 'moveToLigandBindingLocation',
-                  slot: slot
-                };
+                this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
                 return;
               }
             }
           }
 
           // Check for sodium and potassium ions interacting with leakage channels.
-          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonLeakageChannel' && model.isChannelFree( slot ) ) {
-            this.mode = {
-              type: 'moveToCenterOfChannel',
-              slot: slot
-            };
+          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonLeakageChannel' ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
           }
-          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLeakageChannel' && model.isChannelFree( slot ) ) {
-            this.mode = {
-              type: 'moveToCenterOfChannel',
-              slot: slot
-            };
+          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLeakageChannel' ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
           }
 
-          const checkAndMoveToChannel = ( ionType: 'sodiumIon' | 'potassiumIon', slot: Slot | null ) => {
-            if ( this.type === ionType && slot && model.isChannelFree( slot ) ) {
-              affirm( slot.channelProperty.value instanceof LigandGatedChannel, 'channel should be a LigandGatedChannel' );
+          // Check for sodium and potassium ions interacting with ligand-gated channels.
+          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonLigandGatedChannel' &&
+               slot.channelProperty.value instanceof LigandGatedChannel && slot.channelProperty.value.isLigandBoundProperty.value ) {
 
-              if ( slot.channelProperty.value.isLigandBoundProperty.value ) {
-                this.mode = {
-                  type: 'moveToCenterOfChannel',
-                  slot: slot
-                };
-                return true;
-              }
-            }
-            return false;
-          };
-
-          if ( checkAndMoveToChannel( 'sodiumIon', slot ) ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
           }
-          if ( checkAndMoveToChannel( 'potassiumIon', slot ) ) {
+          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLigandGatedChannel' &&
+               slot.channelProperty.value instanceof LigandGatedChannel && slot.channelProperty.value.isLigandBoundProperty.value ) {
+
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
           }
         }
