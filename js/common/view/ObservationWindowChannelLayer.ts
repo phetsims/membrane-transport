@@ -4,6 +4,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneChannels from '../../membraneChannels.js';
+import Channel from '../model/Channel.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './channels/getChannelNode.js';
@@ -24,7 +25,7 @@ export type SlottedNode = {
 
 export default class ObservationWindowChannelLayer extends Node {
 
-  private readonly slottedNodes: SlottedNode[] = [];
+  private readonly record = new Map<Channel, SlottedNode>();
 
   public constructor(
     public readonly model: MembraneChannelsModel,
@@ -33,11 +34,17 @@ export default class ObservationWindowChannelLayer extends Node {
   ) {
     super();
 
-    const updateChannels = () => {
-      this.removeAllChildren();
-      this.slottedNodes.length = 0;
+    model.slots.forEach( slot => {
+      slot.channelProperty.link( ( channel, oldChannel ) => {
 
-      model.slots.forEach( slot => {
+        if ( oldChannel ) {
+          const node = this.record.get( oldChannel );
+          if ( node ) {
+            this.removeChild( node.node );
+            this.record.delete( oldChannel );
+          }
+        }
+
         const type = slot.channelType;
         if ( type !== null ) {
 
@@ -55,23 +62,20 @@ export default class ObservationWindowChannelLayer extends Node {
             cursor: 'pointer'
           } );
 
-          this.slottedNodes.push( { slot: slot, node: channelNode } );
-
           this.addChild( channelNode );
+          this.record.set( slot.channelProperty.value!, { slot: slot, node: channelNode } );
         }
       } );
-    };
-
-    // TODO: Each view observes one slot instead of all slots
-    model.slots.forEach( slot => {
-      slot.channelProperty.link( updateChannels );
     } );
-    updateChannels();
   }
 
   // TODO: IS this brittle? At least we need a way to update it when the array changes.
   public getChannelNodes(): SlottedNode[] {
-    return this.slottedNodes;
+
+    // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
+    return Array.from( this.record.values() ).sort( ( a, b ) => {
+      return this.model.slots.indexOf( a.slot ) - this.model.slots.indexOf( b.slot );
+    } );
   }
 
   public step( dt: number ): void {
