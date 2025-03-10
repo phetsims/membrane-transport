@@ -25,9 +25,6 @@ export default class MembraneChannelsModelTester {
 
     model.areLigandsAddedProperty.value = true;
 
-    const slotPosition = new Vector2( model.slots[ 0 ].position, side === 'outside' ? MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
-                                                                                    : MembraneChannelsConstants.MEMBRANE_BOUNDS.minY );
-
     // Create a ligand
     const ligandType = type === 'sodium' ? 'ligandA' : 'ligandB';
     const firstLigand = model.ligands.find( ligand => ligand.type === ligandType )!;
@@ -39,11 +36,12 @@ export default class MembraneChannelsModelTester {
 
     // Farther away from the slot so that the ligand can get there first.
     sodiumIon.position.set( new Vector2( -30, side === 'outside' ? 50 : -50 ) );
-    firstLigand.position.set( new Vector2( -40, side === 'outside' ? 50 : -50 ) );
+    firstLigand.position.set( new Vector2( -40, 50 ) ); // ligands are always outside
 
-    sodiumIon.moveToPosition( slotPosition );
+    sodiumIon.moveToPosition( new Vector2( model.slots[ 0 ].position, side === 'outside' ? MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
+                                                                                         : MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) );
     if ( withLigand ) {
-      firstLigand.moveToPosition( slotPosition );
+      firstLigand.moveToPosition( new Vector2( model.slots[ 0 ].position, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) );
     }
   }
 }
