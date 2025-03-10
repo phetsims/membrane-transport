@@ -14,35 +14,32 @@ import MembraneChannelsModel from './MembraneChannelsModel.js';
 
 export default class MembraneChannelsModelTester {
 
-  public constructor( private readonly model: MembraneChannelsModel ) {
-
-  }
-
   /**
    * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a channel
    * to test functionality.
    */
-  public testSodiumLigandChannel( type: 'sodium' | 'potassium', withLigand: boolean ): void {
+  public static testLigandChannel( model: MembraneChannelsModel, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
 
     // Put a sodium in the first slot
-    this.model.slots[ 0 ].channelType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
+    model.slots[ 0 ].channelType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
 
-    this.model.areLigandsAddedProperty.value = true;
+    model.areLigandsAddedProperty.value = true;
 
-    const slotPosition = new Vector2( this.model.slots[ 0 ].position, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY );
+    const slotPosition = new Vector2( model.slots[ 0 ].position, side === 'outside' ? MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
+                                                                                    : MembraneChannelsConstants.MEMBRANE_BOUNDS.minY );
 
     // Create a ligand
     const ligandType = type === 'sodium' ? 'ligandA' : 'ligandB';
-    const firstLigand = this.model.ligands.find( ligand => ligand.type === ligandType )!;
+    const firstLigand = model.ligands.find( ligand => ligand.type === ligandType )!;
 
     // Create a sodium ion
     const soluteType = type === 'sodium' ? 'sodiumIon' : 'potassiumIon';
-    this.model.addSolutes( soluteType, 'outside', 1 );
-    const sodiumIon = this.model.solutes.find( solute => solute.type === soluteType )!;
+    model.addSolutes( soluteType, 'outside', 1 );
+    const sodiumIon = model.solutes.find( solute => solute.type === soluteType )!;
 
     // Farther away from the slot so that the ligand can get there first.
-    sodiumIon.position.set( new Vector2( -30, 50 ) );
-    firstLigand.position.set( new Vector2( -40, 50 ) );
+    sodiumIon.position.set( new Vector2( -30, side === 'outside' ? 50 : -50 ) );
+    firstLigand.position.set( new Vector2( -40, side === 'outside' ? 50 : -50 ) );
 
     sodiumIon.moveToPosition( slotPosition );
     if ( withLigand ) {

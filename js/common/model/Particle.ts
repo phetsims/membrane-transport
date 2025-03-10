@@ -53,6 +53,17 @@ type MoveToLigandBindingLocationMode = {
   slot: Slot;
 };
 
+type EnteringChannelMode = {
+  type: 'enteringChannel';
+  slot: Slot;
+};
+
+type SheddingCagedWaterMoleculesMode = {
+  type: 'sheddingCagedWaterMolecules';
+  slot: Slot;
+  sheddingElapsed?: number;
+};
+
 type PassiveDiffusionMode = {
   type: 'passiveDiffusion';
   direction: 'inward' | 'outward';
@@ -77,6 +88,8 @@ type ParticleMode =
   | RandomWalkMode
   | BoundMode
   | MoveToCenterOfChannelMode
+  | EnteringChannelMode
+  | SheddingCagedWaterMoleculesMode
   | MoveToLigandBindingLocationMode
   | PassiveDiffusionMode
   | MovingThroughChannelMode
@@ -179,12 +192,34 @@ export default class Particle<T extends ParticleType> {
       const maxStepSize = typicalSpeed * dt;
       this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
-      // When close enough, transition to a membrane-crossing mode.
+      // When close enough, transition to enteringChannel mode.
       if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
+        this.mode = {
+          type: 'enteringChannel',
+          slot: this.mode.slot
+        };
+      }
+    }
+    else if ( this.mode.type === 'enteringChannel' ) {
+      const maxStepSize = typicalSpeed * dt;
+      const direction = this.position.y > 0 ? -1 : 1;
+      this.position.y += direction * maxStepSize;
 
-        // Determine whether the particle is above or below the membrane.
+      // TODO: Should work for entering + exiting the membrane
+      const thresholdY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2;
+      if ( Math.abs( this.position.y ) <= thresholdY ) {
+        this.mode = {
+          type: 'sheddingCagedWaterMolecules',
+          slot: this.mode.slot
+        };
+      }
+    }
+    else if ( this.mode.type === 'sheddingCagedWaterMolecules' ) {
+      const sheddingDuration = 0.5; // adjust as needed
+      this.mode.sheddingElapsed = ( this.mode.sheddingElapsed || 0 ) + dt;
+
+      if ( this.mode.sheddingElapsed >= sheddingDuration ) {
         const outsideOfCell = this.position.y > 0;
-
         this.mode = {
           type: 'movingThroughChannel',
           slot: this.mode.slot,

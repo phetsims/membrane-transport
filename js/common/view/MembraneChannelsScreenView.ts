@@ -246,11 +246,15 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     // TODO: These are just for debugging, remove before publication.
     // Add hotkeys that let us easily test model behavior.
-    const tester = new MembraneChannelsModelTester( model );
-    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => tester.testSodiumLigandChannel( 'sodium', true ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => tester.testSodiumLigandChannel( 'sodium', false ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => tester.testSodiumLigandChannel( 'potassium', true ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => tester.testSodiumLigandChannel( 'potassium', false ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', false, 'outside' ) } );
+
+    KeyboardListener.createGlobal( this, { keys: [ 'a' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', true, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 's' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'd' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'f' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', false, 'inside' ) } );
 
     this.screenViewModelViewTransform = screenViewModelViewTransform;
   }
