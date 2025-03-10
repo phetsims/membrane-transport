@@ -9,7 +9,9 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Color from '../../../../scenery/js/util/Color.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
@@ -99,9 +101,12 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     // NOTE: Duplication with SoluteBarChartsAccordionBox
     const TEXT_MARGIN = 3;
-    const textOptions = { fontSize: 13, right: MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN, maxWidth: 200 };
-    const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: TEXT_MARGIN }, textOptions ) );
-    const insideText = new Text( membraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN }, textOptions ) );
+    const textOptions = { fontSize: 13, maxWidth: 200 };
+    const panelOptions = { right: MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN, stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
+    const outsideText = new Panel( new Text( membraneChannelsStrings.outsideStringProperty, textOptions ), combineOptions<PanelOptions>( {}, panelOptions, { top: TEXT_MARGIN } ) );
+    const insideText = new Panel( new Text( membraneChannelsStrings.insideStringProperty, textOptions ), combineOptions<PanelOptions>( {}, panelOptions, { bottom: MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN } ) );
+
+    // TODO: Manual Constraint to keep text aligned when it changes length
 
     this.addChild( outsideText );
     this.addChild( insideText );
