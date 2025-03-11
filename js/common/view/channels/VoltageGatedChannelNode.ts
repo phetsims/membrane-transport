@@ -1,9 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Matrix3 from '../../../../../dot/js/Matrix3.js';
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import Shape from '../../../../../kite/js/Shape.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
+import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
 import VoltageGatedChannel from '../../model/VoltageGatedChannel.js';
 
@@ -70,17 +73,25 @@ export default class VoltageGatedChannelNode extends Node {
   private targetVoltage: '-70' | '-50' | '30' = '-70';
   private currentVoltageValue = -70;
 
+  private readonly segments: Path[] = [];
+
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
     super();
 
+    // TODO: This is a workaround to center the channel in the view, because the entire Node is centered
+    this.addChild( new Rectangle( 115, 385, 50, 85, { fill: 'white', opacity: 0 } ) );
+
     // TODO: Explain this part
     sodiumClosedNegative70Segments.forEach( ( segment, index ) => {
-      this.addChild( new Path( new Shape( segment ), {
+      const segmentPath = new Path( new Shape( segment ).transformed( Matrix3.translation( 0, 100 ) ), {
         stroke: 'black',
         lineWidth: 0.4,
         fill: index === 4 ? null : 'white',
-        scale: 4
-      } ) );
+        scale: 4,
+        translation: new Vector2( 100, 0 )
+      } );
+      this.addChild( segmentPath );
+      this.segments.push( segmentPath );
     } );
 
     this.touchArea = this.localBounds.dilatedXY( 10, 10 );
@@ -144,9 +155,9 @@ export default class VoltageGatedChannelNode extends Node {
     interpolationValue = Math.max( 0, Math.min( 1, interpolationValue ) );
 
     // Update all path shapes
-    this.children.forEach( ( child, index ) => {
+    this.segments.forEach( ( child, index ) => {
       if ( interpolationFunction[ index ] ) {
-        ( child as Path ).shape = new Shape( interpolationFunction[ index ]( interpolationValue ) );
+        child.shape = new Shape( interpolationFunction[ index ]( interpolationValue ) ).transformed( Matrix3.translation( 0, 100 ) );
       }
     } );
   }
