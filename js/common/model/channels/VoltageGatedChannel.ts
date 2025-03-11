@@ -6,11 +6,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import membraneChannels from '../../membraneChannels.js';
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import membraneChannels from '../../../membraneChannels.js';
 import Channel from './Channel.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import MembraneChannelsModel from '../MembraneChannelsModel.js';
 
 export default class VoltageGatedChannel extends Channel {
 

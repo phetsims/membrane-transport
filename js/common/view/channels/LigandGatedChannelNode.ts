@@ -6,7 +6,7 @@ import { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
-import LigandGatedChannel from '../../model/LigandGatedChannel.js';
+import LigandGatedChannel from '../../model/channels/LigandGatedChannel.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots

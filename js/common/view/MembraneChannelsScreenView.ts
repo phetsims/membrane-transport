@@ -25,7 +25,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
-import ChannelType from '../model/ChannelType.js';
+import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import MembraneChannelsModelTester from '../model/MembraneChannelsModelTester.js';
 import Slot from '../model/Slot.js';

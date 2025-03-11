@@ -4,7 +4,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneChannels from '../../membraneChannels.js';
-import Channel from '../model/Channel.js';
+import Channel from '../model/channels/Channel.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './channels/getChannelNode.js';

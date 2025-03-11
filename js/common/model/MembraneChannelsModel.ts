@@ -36,9 +36,9 @@ import MembraneChannelsConstants, { CHANNEL_WIDTH, LIGAND_COUNT } from '../../co
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
-import Channel from './Channel.js';
-import ChannelType from './ChannelType.js';
-import getChannel from './getChannel.js';
+import Channel from './channels/Channel.js';
+import ChannelType from './channels/ChannelType.js';
+import getChannel from './channels/getChannel.js';
 import Particle from './Particle.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';

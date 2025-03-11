@@ -12,7 +12,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
-import ChannelType from '../model/ChannelType.js';
+import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import ChannelDragNode, { isOriginSlot } from './ChannelDragNode.js';

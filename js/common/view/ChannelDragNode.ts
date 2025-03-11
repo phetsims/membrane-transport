@@ -13,7 +13,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneChannels from '../../membraneChannels.js';
-import ChannelType from '../model/ChannelType.js';
+import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './channels/getChannelNode.js';

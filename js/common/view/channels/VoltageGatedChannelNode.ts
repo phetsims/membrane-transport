@@ -8,7 +8,7 @@ import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
-import VoltageGatedChannel from '../../model/VoltageGatedChannel.js';
+import VoltageGatedChannel from '../../model/channels/VoltageGatedChannel.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots

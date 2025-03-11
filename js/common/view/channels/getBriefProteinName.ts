@@ -1,6 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
-import ChannelType from '../../model/ChannelType.js';
+import ChannelType from '../../model/channels/ChannelType.js';
 
 /**
  * Get the brief name for a ChannelType

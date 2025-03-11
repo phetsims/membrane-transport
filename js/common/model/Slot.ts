@@ -11,9 +11,9 @@ import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneChannels from '../../membraneChannels.js';
-import Channel from './Channel.js';
-import ChannelType from './ChannelType.js';
-import getChannel from './getChannel.js';
+import Channel from './channels/Channel.js';
+import ChannelType from './channels/ChannelType.js';
+import getChannel from './channels/getChannel.js';
 import MembraneChannelsModel, { ChannelIO } from './MembraneChannelsModel.js';
 
 export default class Slot {

@@ -4,7 +4,7 @@ import Channel from './Channel.js';
 import ChannelType from './ChannelType.js';
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import MembraneChannelsModel from '../MembraneChannelsModel.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
 
 /**

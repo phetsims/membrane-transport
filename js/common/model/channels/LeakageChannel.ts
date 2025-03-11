@@ -1,8 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import membraneChannels from '../../membraneChannels.js';
+import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import membraneChannels from '../../../membraneChannels.js';
 import Channel from './Channel.js';
 
 /**

@@ -9,7 +9,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import ChannelType from '../model/ChannelType.js';
+import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import getChannelNode from './channels/getChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';

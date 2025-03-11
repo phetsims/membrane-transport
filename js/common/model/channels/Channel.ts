@@ -1,11 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsConstants, { CHANNEL_WIDTH } from '../MembraneChannelsConstants.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../../dot/js/Bounds2.js';
+import membraneChannels from '../../../membraneChannels.js';
+import MembraneChannelsConstants, { CHANNEL_WIDTH } from '../../MembraneChannelsConstants.js';
 import ChannelType from './ChannelType.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import MembraneChannelsModel from '../MembraneChannelsModel.js';
 
 /**
  * Channel keeps track of stateful model information for a channel (protein) that is actively in a slot.
