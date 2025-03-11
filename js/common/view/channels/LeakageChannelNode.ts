@@ -5,7 +5,7 @@ import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
 
 /**
- * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
+ * Scenery Node for a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
  * in the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)

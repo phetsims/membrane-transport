@@ -7,8 +7,7 @@ import membraneChannels from '../../../membraneChannels.js';
 import SodiumGlucoseCotransporter from '../../model/channels/SodiumGlucoseCotransporter.js';
 
 /**
- * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
- * in the membrane.
+ * Scenery Node for a SodiumGlucoseCotransporter, used to represent the channel in the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
