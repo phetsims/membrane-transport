@@ -5,7 +5,7 @@ import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js'
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import membraneChannels from '../../../membraneChannels.js';
-import Channel from '../../model/Channel.js';
+import VoltageGatedChannel from '../../model/VoltageGatedChannel.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
@@ -18,23 +18,37 @@ import Channel from '../../model/Channel.js';
 import { sodiumVoltageGatedShapeClosedNegative70, sodiumVoltageGatedShapeClosedPositive30, sodiumVoltageGatedShapeOpenNegative50 } from './SodiumVoltageGatedChannelShapes.js';
 
 const parse = ( segment: string ) => segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
-const closedNegative70Segments = sodiumVoltageGatedShapeClosedNegative70.split( ' M ' ).map( parse );
-const openSegments = sodiumVoltageGatedShapeOpenNegative50.split( ' M ' ).map( parse );
-const closedPositive30Segments = sodiumVoltageGatedShapeClosedPositive30.split( ' M ' ).map( parse );
+const sodiumClosedNegative70Segments = sodiumVoltageGatedShapeClosedNegative70.split( ' M ' ).map( parse );
+const sodiumOpenSegments = sodiumVoltageGatedShapeOpenNegative50.split( ' M ' ).map( parse );
+const sodiumClosedPositive30Segments = sodiumVoltageGatedShapeClosedPositive30.split( ' M ' ).map( parse );
+
+const potassiumClosedNegative70Segments = sodiumClosedNegative70Segments;
+const potassiumOpenSegments = sodiumOpenSegments;
+const potassiumClosedPositive30Segments = sodiumClosedPositive30Segments;
 
 // Create interpolation functions between different voltage states
-const interpolateNegative70ToNegative50: IntentionalAny[] = [];
-const interpolateNegative50ToPositive30: IntentionalAny[] = [];
+const sodiumInterpolateNegative70ToNegative50: IntentionalAny[] = [];
+const sodiumInterpolateNegative50ToPositive30: IntentionalAny[] = [];
+const potassiumInterpolateNegative70ToNegative50: IntentionalAny[] = [];
+const potassiumInterpolateNegative50ToPositive30: IntentionalAny[] = [];
 
-for ( let i = 0; i < closedNegative70Segments.length; i++ ) {
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  interpolateNegative70ToNegative50[ i ] = window.interpolatePath( closedNegative70Segments[ i ], openSegments[ i ] );
+for ( let i = 0; i < sodiumClosedNegative70Segments.length; i++ ) {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  interpolateNegative50ToPositive30[ i ] = window.interpolatePath( openSegments[ i ], closedPositive30Segments[ i ] );
+  sodiumInterpolateNegative70ToNegative50[ i ] = window.interpolatePath( sodiumClosedNegative70Segments[ i ], sodiumOpenSegments[ i ] );
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  sodiumInterpolateNegative50ToPositive30[ i ] = window.interpolatePath( sodiumOpenSegments[ i ], sodiumClosedPositive30Segments[ i ] );
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  potassiumInterpolateNegative70ToNegative50[ i ] = window.interpolatePath( potassiumClosedNegative70Segments[ i ], potassiumClosedPositive30Segments[ i ] );
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  potassiumInterpolateNegative50ToPositive30[ i ] = window.interpolatePath( potassiumClosedPositive30Segments[ i ], potassiumOpenSegments[ i ] );
 }
 
 // Map string voltage values to numerical values for interpolation
@@ -56,10 +70,11 @@ export default class VoltageGatedChannelNode extends Node {
   private targetVoltage: '-70' | '-50' | '30' = '-70';
   private currentVoltageValue = -70;
 
-  public constructor( type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: Channel | null ) {
+  public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
     super();
 
-    closedNegative70Segments.forEach( ( segment, index ) => {
+    // TODO: Explain this part
+    sodiumClosedNegative70Segments.forEach( ( segment, index ) => {
       this.addChild( new Path( new Shape( segment ), {
         stroke: 'black',
         lineWidth: 0.4,
@@ -116,13 +131,13 @@ export default class VoltageGatedChannelNode extends Node {
 
       // Interpolate between -70 and -50
       interpolationValue = ( this.currentVoltageValue - ( -70 ) ) / RANGE_NEGATIVE_70_TO_NEGATIVE_50;
-      interpolationFunction = interpolateNegative70ToNegative50;
+      interpolationFunction = this.type === 'sodiumIonVoltageGatedChannel' ? sodiumInterpolateNegative70ToNegative50 : potassiumInterpolateNegative70ToNegative50;
     }
     else {
 
       // Interpolate between -50 and 30
       interpolationValue = ( this.currentVoltageValue - ( -50 ) ) / RANGE_NEGATIVE_50_TO_POSITIVE_30;
-      interpolationFunction = interpolateNegative50ToPositive30;
+      interpolationFunction = this.type === 'sodiumIonVoltageGatedChannel' ? sodiumInterpolateNegative50ToPositive30 : potassiumInterpolateNegative50ToPositive30;
     }
 
     // Clamp interpolation value between 0 and 1

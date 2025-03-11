@@ -6,6 +6,7 @@ import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Channel from '../../model/Channel.js';
 import ChannelType from '../../model/ChannelType.js';
 import LigandGatedChannel from '../../model/LigandGatedChannel.js';
+import VoltageGatedChannel from '../../model/VoltageGatedChannel.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import LigandGatedChannelNode from './LigandGatedChannelNode.js';
 import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
@@ -23,9 +24,15 @@ export default function( type: ChannelType, channel: Channel | null ): Node {
     return new LeakageChannelNode( type );
   }
   else if ( type === 'sodiumIonVoltageGatedChannel' ) {
+    if ( channel !== null ) {
+      affirm( channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
+    }
     return new VoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'potassiumIonVoltageGatedChannel' ) {
+    if ( channel !== null ) {
+      affirm( channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
+    }
     return new VoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'sodiumIonLigandGatedChannel' ) {
