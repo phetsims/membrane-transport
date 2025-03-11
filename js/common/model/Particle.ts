@@ -28,7 +28,7 @@ const typicalSpeed = 30;
 
 // The radius of the circle around the center of a channel where a particle will be captured so
 // we can decide how it should interact with the channel.
-const CAPTURE_RADIUS = MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 * 1000;
+const CAPTURE_RADIUS = MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8;
 
 type RandomWalkMode = {
   type: 'randomWalk';

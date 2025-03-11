@@ -412,13 +412,9 @@ export default class MembraneChannelsModel extends PhetioObject {
     const isChannelReserved = this.solutes.some( solute => {
 
       // Check if any mode has this slot
-      if ( solute.mode.type === 'moveToCenterOfChannel' && solute.mode.slot === slot ) {
-        return true;
-      }
-      else if ( solute.mode.type === 'movingThroughChannel' && solute.mode.slot === slot ) {
-        return true;
-      }
-      return false;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error TODO: How to fix types here?
+      return solute.mode.slot === slot;
     } );
     return !isChannelReserved;
   }
