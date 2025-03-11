@@ -7,6 +7,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
@@ -21,6 +22,8 @@ export default class LigandGatedChannel extends Channel {
 
   // TODO: Should Channel have an isOpenProperty?
   public readonly isLigandBoundProperty = new BooleanProperty( false );
+
+  public readonly isOpenProperty: TReadOnlyProperty<boolean> = this.isLigandBoundProperty;
 
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;

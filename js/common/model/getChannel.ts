@@ -2,6 +2,7 @@
 
 import Channel from './Channel.js';
 import ChannelType from './ChannelType.js';
+import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
@@ -13,8 +14,8 @@ import VoltageGatedChannel from './VoltageGatedChannel.js';
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 export default function( model: MembraneChannelsModel, type: ChannelType, position: number ): Channel {
-  return type === 'sodiumIonLeakageChannel' ? new Channel( model, type, position ) :
-         type === 'potassiumIonLeakageChannel' ? new Channel( model, type, position ) :
+  return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
+         type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 
            // TODO: Should it get a reference to Slot instead of position?
          type === 'sodiumIonVoltageGatedChannel' ? new VoltageGatedChannel( model, type, position ) :
@@ -23,8 +24,9 @@ export default function( model: MembraneChannelsModel, type: ChannelType, positi
          type === 'sodiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
          type === 'potassiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
 
-         type === 'sodiumPotassiumPump' ? new Channel( model, type, position ) :
-         type === 'sodiumGlucoseCotransporter' ? new Channel( model, type, position ) :
+         // TODO: Specific model types here
+         type === 'sodiumPotassiumPump' ? new LeakageChannel( model, type, position ) :
+         type === 'sodiumGlucoseCotransporter' ? new LeakageChannel( model, type, position ) :
            // final fallback -> throw
          ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
 }

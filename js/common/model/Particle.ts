@@ -28,7 +28,7 @@ const typicalSpeed = 30;
 
 // The radius of the circle around the center of a channel where a particle will be captured so
 // we can decide how it should interact with the channel.
-const CAPTURE_RADIUS = MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8;
+const CAPTURE_RADIUS = MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 * 1000;
 
 type RandomWalkMode = {
   type: 'randomWalk';
@@ -366,37 +366,19 @@ export default class Particle<T extends ParticleType> {
           }
 
           // Check for sodium and potassium ions interacting with leakage channels.
-          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonLeakageChannel' ) {
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
-          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLeakageChannel' ) {
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
+          const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
+          const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-          // Check for sodium and potassium ions interacting with voltage-gated channels.
-          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonVoltageGatedChannel' && model.membraneVoltagePotentialProperty.value === '-50' ) {
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
-          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonVoltageGatedChannel' && model.membraneVoltagePotentialProperty.value === '-50' ) {
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
+          if ( channel.isOpenProperty.value ) {
+            if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
+              this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+              return;
+            }
 
-          // Check for sodium and potassium ions interacting with ligand-gated channels.
-          if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumIonLigandGatedChannel' &&
-               slot.channelProperty.value instanceof LigandGatedChannel && slot.channelProperty.value.isLigandBoundProperty.value ) {
-
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
-          if ( this.type === 'potassiumIon' && slot.channelType === 'potassiumIonLigandGatedChannel' &&
-               slot.channelProperty.value instanceof LigandGatedChannel && slot.channelProperty.value.isLigandBoundProperty.value ) {
-
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
+            if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.channelType! ) ) {
+              this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+              return;
+            }
           }
         }
       }

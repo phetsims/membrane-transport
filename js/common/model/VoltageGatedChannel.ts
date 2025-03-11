@@ -7,14 +7,14 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 
 export default class VoltageGatedChannel extends Channel {
 
-  // TODO: Should Channel have an isOpenProperty?
-  public readonly isOpenProperty;
+  public readonly isOpenProperty: TReadOnlyProperty<boolean>;
 
   public constructor( model: MembraneChannelsModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
     super( model, type, position );

@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { CHANNEL_WIDTH } from '../MembraneChannelsConstants.js';
@@ -14,10 +15,12 @@ import MembraneChannelsModel from './MembraneChannelsModel.js';
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default class Channel {
+export default abstract class Channel {
 
   // Bounds of the channel in model coordinates.
   public readonly bounds: Bounds2;
+
+  public abstract readonly isOpenProperty: TReadOnlyProperty<boolean>;
 
   /**
    * @param model - reference to the containing model, so we can access information like the membrane voltage
