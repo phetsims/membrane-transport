@@ -1,17 +1,24 @@
-Membrane Channels began development in 2025. 
-It includes features like:
-* phet-io
-* description tier 1
-* description tier 2
-* sonification
-* keyboard support
-* interactive highlights
-* dynamic locales
-* sim-specific preferences
+# Membrane Channels Simulation – Technical Implementation Overview
 
-It does not include:
-* voicing
-* region and culture
+This document summarizes the technical implementation and key features of the **Membrane Channels** PhET simulation. The
+simulation models particle diffusion through cell membrane channels and pumps, including ligand-gated channels,
+voltage-gated channels, a sodium-potassium pump, glucose transporters, and passive diffusion of O₂ and CO₂ molecules
+directly across the membrane (without requiring a channel protein). It is a port of the Java-based simulation to HTML5,
+incorporating modern PhET frameworks and updated pedagogical features.
+
+## Features Overview
+
+- **Included:**
+  - phet-io instrumentation
+  - description tiers (1 and 2)
+  - sonification
+  - keyboard support and interactive highlights
+  - dynamic locales
+  - sim-specific preferences
+
+- Excluded features:
+  - voicing
+  - region and culture customization
 
 ### Special Considerations
 
@@ -22,11 +29,11 @@ We have taken efforts to keep the model and view lightweight. This has the follo
 ### Model
 
 The model is purposefully simple, with flat data structures to facilitate phet-io serialization. For instance,
-Several model Properties for particlar channel state are not phet-io instrumented; instead they appear in the state via 
+Several model Properties for particlar channel state are not phet-io instrumented; instead they appear in the state via
 serialization of the container.
 
 Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are non-interactive
-Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive, 
+Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive,
 and can be dragged around the canvas.
 Solutes and Ligands are referred to more generally as Particles.
 
@@ -36,3 +43,70 @@ Solutes and Ligands are referred to more generally as Particles.
 ### View
 
 Much of the simulation is shown in the central ObservationWindow, which has most of its contents rendered in canvas.
+
+### Ligand-Gated Channels
+
+- Channels switch between closed and open states based on ligand presence.
+- **Binding Sites** detect ligands, changing the state to open.
+- Open channels allow diffusion of specific particle types (e.g., sodium ions) driven by concentration gradients (no
+  active pulling).
+- Visual feedback indicates channel states clearly; channels are either open or closed (binary state).
+
+## Voltage-Gated Channels
+
+Channels respond to membrane voltage, modeled as the net charge difference between membrane sides:
+
+- Channels open when ion imbalance crosses a preset threshold.
+- Diffusion is passive; ions flow down gradients, potentially altering voltage and causing channels to close
+  dynamically.
+
+## Sodium-Potassium Pump (Active Transport)
+
+The simulation includes a Na⁺/K⁺ pump actively transporting ions against their gradients:
+
+* 3 x Sodium bind
+* ATP binds and release PO4, ADP drifts, PO4 stays attached
+* Conformation change
+* 3 x Sodium released
+* 2 x K bind
+* Conformation change
+* PO4 release
+* 2 x K release
+
+## Glucose Transporters (Facilitated Diffusion)
+
+Glucose transporters model passive transport of glucose molecules:
+
+- Only transport glucose, distinguished visually.
+- Simulate a simplified carrier mechanism with cooldown between transports, preventing instantaneous saturation.
+- Bidirectional, always down concentration gradients, with simple visual feedback during transport.
+
+## Passive Diffusion of Gases
+
+The simulation supports passive diffusion of O₂ and CO₂ molecules directly across the membrane without the presence of
+channel proteins. Their movement across the membrane occurs spontaneously, driven by concentration gradients alone.
+
+## Accessibility and Alternative Input
+
+The simulation supports keyboard navigation and assistive technologies:
+
+- Keyboard controls for adding and repositioning channels, toggling ligands, and more.
+- Dynamic accessible descriptions (PDOM) clearly communicate membrane state and particle concentration.
+- Visual/auditory cues enhance feedback, thoroughly tested with common screen readers (NVDA, VoiceOver).
+
+## PhET-iO Integration
+
+Fully instrumented for interactive activities and data collection:
+
+- Instrumentation includes stable identifiers for all key model elements and controls.
+- State snapshots capture essential model details, supporting session replay and synchronization.
+- Events emitted for significant particle-channel interactions, useful for data analysis or assessment.
+- Extensive testing ensures PhET-iO integration reliability.
+
+## Performance and Optimization
+
+Performance considerations include:
+
+- Canvas-based sprite rendering for particles, avoiding excessive DOM elements.
+- Particle counts capped to maintain smooth animation.
+- Simplified physics (minimal particle-particle collision checks) to reduce computation.
