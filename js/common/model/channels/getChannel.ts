@@ -1,10 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+import MembraneChannelsModel from '../MembraneChannelsModel.js';
 import Channel from './Channel.js';
 import ChannelType from './ChannelType.js';
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
-import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import SodiumGlucoseCotransporter from './SodiumGlucoseCotransporter.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
 
 /**
@@ -26,7 +27,7 @@ export default function( model: MembraneChannelsModel, type: ChannelType, positi
 
          // TODO: Specific model types here
          type === 'sodiumPotassiumPump' ? new LeakageChannel( model, type, position ) :
-         type === 'sodiumGlucoseCotransporter' ? new LeakageChannel( model, type, position ) :
+         type === 'sodiumGlucoseCotransporter' ? new SodiumGlucoseCotransporter( model, type, position ) :
            // final fallback -> throw
          ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
 }
