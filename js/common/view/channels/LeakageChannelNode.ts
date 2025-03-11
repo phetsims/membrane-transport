@@ -1,9 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Bounds2 from '../../../../../dot/js/Bounds2.js';
-import { combineOptions } from '../../../../../phet-core/js/optionize.js';
-import { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js';
-import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
 
@@ -14,11 +11,9 @@ import membraneChannels from '../../../membraneChannels.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class LeakageChannelNode extends Node {
-  public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', providedOptions?: NodeOptions ) {
+  public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' ) {
 
-    super( combineOptions<CanvasNodeOptions>( {
-      canvasBounds: new Bounds2( 0, 0, 45, 50 )
-    }, providedOptions ) );
+    super();
 
     const modelWidth = 40;
     const modelHeight = 52;

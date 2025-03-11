@@ -11,7 +11,6 @@ import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import membraneChannels from '../../../membraneChannels.js';
 import Channel from './Channel.js';
 
-
 export default class SodiumGlucoseCotransporter extends Channel {
 
   private readonly _isOpenProperty = new BooleanProperty( false );
