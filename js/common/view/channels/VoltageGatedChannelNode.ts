@@ -17,15 +17,10 @@ import Channel from '../../model/Channel.js';
  */
 import { sodiumVoltageGatedShapeClosedNegative70, sodiumVoltageGatedShapeClosedPositive30, sodiumVoltageGatedShapeOpenNegative50 } from './SodiumVoltageGatedChannelShapes.js';
 
-const closedNegative70Segments = sodiumVoltageGatedShapeClosedNegative70.split( ' M ' ).map( segment => {
-  return segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
-} );
-const openSegments = sodiumVoltageGatedShapeOpenNegative50.split( ' M ' ).map( segment => {
-  return segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
-} );
-const closedPositive30Segments = sodiumVoltageGatedShapeClosedPositive30.split( ' M ' ).map( segment => {
-  return segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
-} );
+const parse = ( segment: string ) => segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
+const closedNegative70Segments = sodiumVoltageGatedShapeClosedNegative70.split( ' M ' ).map( parse );
+const openSegments = sodiumVoltageGatedShapeOpenNegative50.split( ' M ' ).map( parse );
+const closedPositive30Segments = sodiumVoltageGatedShapeClosedPositive30.split( ' M ' ).map( parse );
 
 // Create interpolation functions between different voltage states
 const interpolateNegative70ToNegative50: IntentionalAny[] = [];
@@ -54,7 +49,7 @@ const voltageValues: Record<string, number> = {
 const RANGE_NEGATIVE_70_TO_NEGATIVE_50 = 20; // -50 - (-70) = 20
 const RANGE_NEGATIVE_50_TO_POSITIVE_30 = 80; // 30 - (-50) = 80
 
-export default class SodiumVoltageGatedChannelNode extends Node {
+export default class VoltageGatedChannelNode extends Node {
 
   // TODO: Factor out types. Do we like strings? Do we want -70mV string?
   // TODO: Or a type like 'name: string; value: number'? But we want it to work well for PhET-iO
@@ -75,10 +70,12 @@ export default class SodiumVoltageGatedChannelNode extends Node {
 
     this.touchArea = this.localBounds.dilatedXY( 10, 10 );
     this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
-  }
 
-  public setVoltage( voltage: '-70' | '-50' | '30' ): void {
-    this.targetVoltage = voltage;
+    if ( channel ) {
+      channel.model.membraneVoltagePotentialProperty.link( voltage => {
+        this.targetVoltage = voltage;
+      } );
+    }
   }
 
   public step( dt: number ): void {
@@ -140,4 +137,4 @@ export default class SodiumVoltageGatedChannelNode extends Node {
   }
 }
 
-membraneChannels.register( 'SodiumVoltageGatedChannelNode', SodiumVoltageGatedChannelNode );
+membraneChannels.register( 'VoltageGatedChannelNode', VoltageGatedChannelNode );

@@ -8,7 +8,7 @@ import Channel from '../model/Channel.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './channels/getChannelNode.js';
-import SodiumVoltageGatedChannelNode from './channels/SodiumVoltageGatedChannelNode.js';
+import VoltageGatedChannelNode from './channels/VoltageGatedChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
 /**
@@ -80,8 +80,7 @@ export default class ObservationWindowChannelLayer extends Node {
 
   public step( dt: number ): void {
     this.children.forEach( child => {
-      if ( child instanceof SodiumVoltageGatedChannelNode ) {
-        child.setVoltage( this.model.membraneVoltagePotentialProperty.value );
+      if ( child instanceof VoltageGatedChannelNode ) {
         child.step( dt );
       }
     } );

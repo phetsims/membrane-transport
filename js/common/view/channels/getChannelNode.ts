@@ -8,7 +8,7 @@ import ChannelType from '../../model/ChannelType.js';
 import LigandGatedChannel from '../../model/LigandGatedChannel.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import LigandGatedChannelNode from './LigandGatedChannelNode.js';
-import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
+import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
 
 /**
  * Returns the Node for the given ChannelType
@@ -23,10 +23,10 @@ export default function( type: ChannelType, channel: Channel | null ): Node {
     return new LeakageChannelNode( type );
   }
   else if ( type === 'sodiumIonVoltageGatedChannel' ) {
-    return new SodiumVoltageGatedChannelNode( type, channel );
+    return new VoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'potassiumIonVoltageGatedChannel' ) {
-    return new SodiumVoltageGatedChannelNode( type, channel );
+    return new VoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'sodiumIonLigandGatedChannel' ) {
     if ( channel !== null ) {
