@@ -12,16 +12,16 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
-import { ChannelIO } from './ChannelIO.js';
 import ChannelType from './ChannelType.js';
 import getChannel from './getChannel.js';
+import MembraneChannelsModel, { ChannelIO } from './MembraneChannelsModel.js';
 
 export default class Slot {
 
   // The type of channel that is currently in this slot.
   public readonly channelProperty: Property<null | Channel>;
 
-  public constructor( public readonly position: number, tandem: Tandem ) {
+  public constructor( private readonly model: MembraneChannelsModel, public readonly position: number, tandem: Tandem ) {
     this.channelProperty = new Property<null | Channel>( null, {
       tandem: tandem.createTandem( 'channelProperty' ),
 
@@ -40,7 +40,7 @@ export default class Slot {
   }
 
   public set channelType( channelType: ChannelType | null ) {
-    this.channelProperty.value = channelType ? getChannel( channelType, this.position ) : null;
+    this.channelProperty.value = channelType ? getChannel( this.model, channelType, this.position ) : null;
   }
 
   public isFilled(): boolean {

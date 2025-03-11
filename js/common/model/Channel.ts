@@ -4,6 +4,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsConstants, { CHANNEL_WIDTH } from '../MembraneChannelsConstants.js';
 import ChannelType from './ChannelType.js';
+import MembraneChannelsModel from './MembraneChannelsModel.js';
 
 /**
  * Channel keeps track of stateful model information for a channel (protein) that is actively in a slot.
@@ -19,10 +20,14 @@ export default class Channel {
   public readonly bounds: Bounds2;
 
   /**
+   * @param model - reference to the containing model, so we can access information like the membrane voltage
    * @param type - the type of channel
    * @param position - the horizontal position of the channel in the membrane
    */
-  public constructor( public readonly type: ChannelType, public readonly position: number ) {
+  public constructor(
+    public readonly model: MembraneChannelsModel,
+    public readonly type: ChannelType,
+    public readonly position: number ) {
     this.bounds = new Bounds2(
       position - CHANNEL_WIDTH / 2,
       MembraneChannelsConstants.MEMBRANE_BOUNDS.minY,

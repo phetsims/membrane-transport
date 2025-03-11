@@ -10,13 +10,16 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import membraneChannels from '../../membraneChannels.js';
 import Channel from './Channel.js';
-import { LigandType } from './SoluteType.js';
+import MembraneChannelsModel from './MembraneChannelsModel.js';
 import Particle from './Particle.js';
+import { LigandType } from './SoluteType.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind
 const REBINDING_DELAY = 5;
 
 export default class LigandGatedChannel extends Channel {
+
+  // TODO: Should Channel have an isOpenProperty?
   public readonly isLigandBoundProperty = new BooleanProperty( false );
 
   // When a ligand is bound, keep track of it
@@ -31,8 +34,8 @@ export default class LigandGatedChannel extends Channel {
   // Tracks time since a ligand was unbound, used for rebinding delay
   private timeSinceUnbound = REBINDING_DELAY; // Start ready to bind
 
-  public constructor( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
-    super( type, position );
+  public constructor( model: MembraneChannelsModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
+    super( model, type, position );
   }
 
   public override step( dt: number ): void {

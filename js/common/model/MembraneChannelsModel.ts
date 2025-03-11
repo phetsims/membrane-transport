@@ -29,13 +29,16 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneChannelsConstants, { CHANNEL_WIDTH, LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
+import Channel from './Channel.js';
 import ChannelType from './ChannelType.js';
+import getChannel from './getChannel.js';
 import Particle from './Particle.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
@@ -109,7 +112,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     const parentTandem = options.tandem.createTandem( 'slots' );
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
     slotsTandem.createNextTandem(); // TODO: Is there a better way to start at 1?
-    this.slots = SLOT_POSITIONS.map( position => new Slot( position, slotsTandem.createNextTandem() ) );
+    this.slots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSoluteTypes( this.featureSet ),
@@ -485,5 +488,37 @@ export default class MembraneChannelsModel extends PhetioObject {
     }
   } );
 }
+
+type ChannelStateObject = {
+  type: ChannelType;
+  position: number;
+  model: string;
+};
+
+/**
+ * Ideally this would be declared in Channel.ts. However, since this creates subtypes like LigandGatedChannel, that
+ * would create a circular dependency. So we declare it here.
+ *
+ */
+export const ChannelIO = new IOType( 'ChannelIO', {
+  valueType: Channel,
+  stateSchema: {
+    type: StringIO,
+    position: NumberIO,
+
+    // Necessary in order to get information from the model to the Channel, such as the membrane potential
+    model: ReferenceIO( MembraneChannelsModel.MembraneChannelsModelIO )
+  },
+  toStateObject: ( channel: Channel ): ChannelStateObject => {
+    return {
+      type: channel.type,
+      position: channel.position,
+      model: ReferenceIO( MembraneChannelsModel.MembraneChannelsModelIO ).toStateObject( channel.model )
+    };
+  },
+  fromStateObject: ( stateObject: ChannelStateObject ) => {
+    return getChannel( ReferenceIO( MembraneChannelsModel.MembraneChannelsModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
+  }
+} );
 
 membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );

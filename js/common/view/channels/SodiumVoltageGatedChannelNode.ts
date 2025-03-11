@@ -5,6 +5,7 @@ import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js'
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import membraneChannels from '../../../membraneChannels.js';
+import Channel from '../../model/Channel.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
@@ -60,7 +61,7 @@ export default class SodiumVoltageGatedChannelNode extends Node {
   private targetVoltage: '-70' | '-50' | '30' = '-70';
   private currentVoltageValue = -70;
 
-  public constructor() {
+  public constructor( type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: Channel | null ) {
     super();
 
     closedNegative70Segments.forEach( ( segment, index ) => {

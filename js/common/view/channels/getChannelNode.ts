@@ -15,7 +15,7 @@ import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default function( type: ChannelType, model: Channel | null ): Node {
+export default function( type: ChannelType, channel: Channel | null ): Node {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );
   }
@@ -23,22 +23,24 @@ export default function( type: ChannelType, model: Channel | null ): Node {
     return new LeakageChannelNode( type );
   }
   else if ( type === 'sodiumIonVoltageGatedChannel' ) {
-    return new SodiumVoltageGatedChannelNode();
+    return new SodiumVoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'potassiumIonVoltageGatedChannel' ) {
-    return new SodiumVoltageGatedChannelNode();
+    return new SodiumVoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'sodiumIonLigandGatedChannel' ) {
-    if ( model !== null ) {
-      affirm( model instanceof LigandGatedChannel, 'model for sodiumIonLigandGatedChannel must be LigandGatedChannel' );
+    if ( channel !== null ) {
+
+      // TODO: These affirms likely belong in the model
+      affirm( channel instanceof LigandGatedChannel, 'model for sodiumIonLigandGatedChannel must be LigandGatedChannel' );
     }
-    return new LigandGatedChannelNode( type, model );
+    return new LigandGatedChannelNode( type, channel );
   }
   else if ( type === 'potassiumIonLigandGatedChannel' ) {
-    if ( model !== null ) {
-      affirm( model instanceof LigandGatedChannel, 'model for potassiumIonLigandGatedChannel must be LigandGatedChannel' );
+    if ( channel !== null ) {
+      affirm( channel instanceof LigandGatedChannel, 'model for potassiumIonLigandGatedChannel must be LigandGatedChannel' );
     }
-    return new LigandGatedChannelNode( type, model );
+    return new LigandGatedChannelNode( type, channel );
   }
   else if ( type === 'sodiumPotassiumPump' ) {
     return new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,0,255,0.2)', stroke: 'black', lineWidth: 1 } );
