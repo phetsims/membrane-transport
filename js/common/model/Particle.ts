@@ -164,6 +164,11 @@ export default class Particle<T extends ParticleType> {
     this.moveInDirection( direction, Number.POSITIVE_INFINITY );
   }
 
+  /**
+   * This is a finite-state-machinelike implementation of the particle's behavior. We use a lightweight approach,
+   * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
+   * in Projectile Data Lab's SamplingModel.launchButtonPressed
+   */
   public step( dt: number, model: MembraneChannelsModel ): void {
 
     // When glucose is inside the cell, it is absorbed.
