@@ -36,9 +36,8 @@ export default class LigandGatedChannelNode extends Node {
     const sideWidth = modelWidth / 2 - poreSize / 2;
 
     const poreColor = 'rgb(254,254,254)';
-    const boundPoreColor = 'rgb(254,0,0)';
 
-    const backgroundRectangle = new Rectangle( 0, 0, modelWidth, modelHeight, cornerRound, cornerRound, { fill: type === 'sodiumIonLigandGatedChannel' ? 'green' : 'yellow', stroke: 'black', lineWidth: 2 } );
+    const backgroundRectangle = new Rectangle( 10, 0, modelWidth - 10 * 2, modelHeight, cornerRound, cornerRound, { fill: type === 'sodiumIonLigandGatedChannel' ? 'green' : 'yellow', stroke: 'black', lineWidth: 2 } );
     const leftPore = new Rectangle( 0, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: poreColor, stroke: 'black', lineWidth: 2 } );
     const rightPore = new Rectangle( modelWidth - sideWidth, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: poreColor, stroke: 'black', lineWidth: 2 } );
 
@@ -48,12 +47,26 @@ export default class LigandGatedChannelNode extends Node {
 
     if ( model ) {
 
-      // Disposal is not necessary because the model is also transient and
-      // will be garbage collected.
-      model.isLigandBoundProperty.link( bound => {
-        leftPore.fill = bound ? boundPoreColor : poreColor;
-        rightPore.fill = bound ? boundPoreColor : poreColor;
-      } );
+      // Update pore positions based on whether the ligand is bound.
+      const updatePores = ( bound: boolean ) => {
+        if ( bound ) {
+          // Open state: pores are at their original positions.
+          leftPore.setRect( 0, 0, sideWidth, modelHeight );
+          rightPore.setRect( modelWidth - sideWidth, 0, sideWidth, modelHeight );
+        }
+        else {
+          // Closed state: pores move together to close the gap.
+          const closedX = ( modelWidth - 2 * sideWidth ) / 2;
+          leftPore.setRect( closedX, 0, sideWidth, modelHeight );
+          rightPore.setRect( closedX + sideWidth, 0, sideWidth, modelHeight );
+        }
+      };
+
+      // Set initial positions based on the current ligand state.
+      updatePores( model.isLigandBoundProperty.value );
+
+      // Link the update function to ligand state changes.
+      model.isLigandBoundProperty.link( updatePores );
     }
   }
 }
