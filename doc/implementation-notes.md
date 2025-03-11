@@ -35,7 +35,9 @@ serialization of the container.
 Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are non-interactive
 Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive,
 and can be dragged around the canvas.
-Solutes and Ligands are referred to more generally as Particles.
+Solutes and Ligands are referred to more generally as Particles. They are represented by a finite state machine which indicates
+their current mode and during step() can transition to a new mode based on the current mode and the current state of the
+simulation.
 
 **Slots** are the 7 positions on the membrane where a protein/channel can be added.
 **Slot Contents** refers to what a Slot may contain, which may be null or a protein/channel.
