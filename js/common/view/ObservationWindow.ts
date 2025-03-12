@@ -84,7 +84,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     // On top, we will have a layer for the interactive parts of the simulation
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const groupTandem = tandem.createGroupTandem( 'ligandNodes' );
+      const groupTandem = tandem.createTandem( 'ligandNodes' ).createGroupTandem( 'ligandNode' );
 
       const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
       ligandViewNodes.forEach( ( ligandViewNode, j ) => {

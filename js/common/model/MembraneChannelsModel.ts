@@ -111,7 +111,6 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     const parentTandem = options.tandem.createTandem( 'slots' );
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
-    slotsTandem.createNextTandem(); // TODO: Is there a better way to start at 1?
     this.slots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
