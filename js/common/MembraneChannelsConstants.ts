@@ -8,6 +8,7 @@
  *
  * NOTE: This simulation uses a class with static attributes, so the values can refer to each other in the declaration.
  * This is unlike other simulations that export const and use file-specific local variables for cross-references.
+ * This also helps with searchability, since values are referred to the same way everywhere (including in this file).
  *
  * @author Sam Reid (PhET Interactive Simulations
  * @author Jesse Greenberg (PhET Interactive Simulations)
