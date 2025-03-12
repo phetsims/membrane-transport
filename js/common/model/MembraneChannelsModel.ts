@@ -240,7 +240,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   public clear(): void {
     this.solutes.length = 0;
-    this.updateCounts();
+    this.updateSoluteCounts();
   }
 
   /**
@@ -248,7 +248,7 @@ export default class MembraneChannelsModel extends PhetioObject {
    */
   public reset(): void {
     this.resetEmitter.emit();
-    this.updateCounts();
+    this.updateSoluteCounts();
   }
 
   /**
@@ -277,7 +277,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       this.stepFlux( dt, soluteInitialYValues );
     }
 
-    this.updateCounts();
+    this.updateSoluteCounts();
   }
 
   private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {
@@ -321,9 +321,7 @@ export default class MembraneChannelsModel extends PhetioObject {
     return this.soluteTypeFlux[ soluteType ];
   }
 
-  // TODO: Rename to updateSoluteCounts?
-  private updateCounts(): void {
-
+  private updateSoluteCounts(): void {
 
     // Update the solute counts after the solutes have moved
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
@@ -373,13 +371,6 @@ export default class MembraneChannelsModel extends PhetioObject {
 
   public removeParticle( particle: Particle<IntentionalAny> ): void {
     this.solutes.splice( this.solutes.indexOf( particle ), 1 );
-  }
-
-  public getNearbySlotForChannelType( solute: Particle<IntentionalAny>, type: ChannelType ): Slot | null {
-
-    // check if within the channel width of any filled slot. TODO: grab radius?
-    const x = solute.position.x;
-    return this.slots.find( slot => Math.abs( x - slot.position ) < MembraneChannelsConstants.CHANNEL_WIDTH && slot.channelType === type ) || null;
   }
 
   public getLeftmostEmptySlot(): Slot | null {
@@ -437,7 +428,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       model.time = state.time;
       model.soluteTypeFlux = state.soluteTypeFlux;
 
-      model.updateCounts();
+      model.updateSoluteCounts();
     },
     methods: {
       getValue: {
