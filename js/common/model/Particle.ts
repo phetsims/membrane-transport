@@ -125,7 +125,7 @@ function getInterpolatedDirection( mode: RandomWalkMode ): Vector2 {
   return mode.currentDirection.blend( mode.targetDirection, alpha ).normalized();
 }
 
-// TODO: refine these values
+// TODO (design): refine these values
 const MIN_RANDOM_WALK_TIME = 0.01;
 const MAX_RANDOM_WALK_TIME = 0.05;
 
@@ -203,8 +203,7 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
-    // TODO: Consider a strategy where the mode implements the motion so that you are force to implement it for each
-    //   mode type.
+    // TODO: Consider a strategy where the mode implements the motion so that you are force to implement it for each mode?
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
@@ -255,7 +254,7 @@ export default class Particle<T extends ParticleType> {
       const direction = this.position.y > 0 ? -1 : 1;
       this.position.y += direction * maxStepSize;
 
-      // TODO: Should work for entering + exiting the membrane
+      // TODO: Add support for approaching from inside/outside membrane
       const thresholdY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2;
       if ( Math.abs( this.position.y ) <= thresholdY ) {
         this.mode = {
@@ -280,11 +279,8 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode.type === 'moveToLigandBindingLocation' ) {
 
-      // TODO: Implement binding for other types of channels
       const channel = this.mode.slot.channelProperty.value as LigandGatedChannel;
-
       const currentPosition = this.position;
-
       const targetPosition = channel.getBindingPosition();
       const maxStepSize = typicalSpeed * dt;
 
