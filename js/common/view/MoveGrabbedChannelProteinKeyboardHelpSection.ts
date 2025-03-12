@@ -12,7 +12,6 @@ import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/K
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
-import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import membraneChannels from '../../membraneChannels.js';
 
@@ -33,12 +32,8 @@ export default class MoveGrabbedChannelProteinKeyboardHelpSection extends Keyboa
         KeyboardHelpIconFactory.iconOrIcon(
           KeyboardHelpIconFactory.upDownArrowKeysRowIcon(),
           KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.w(), LetterKeyNode.s() ], { spacing: 1.3 } ) ) ] ),
-      KeyboardHelpSectionRow.labelWithIcon( 'move in larger steps', KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
       KeyboardHelpSectionRow.labelWithIcon( jumpStartMessage, TextKeyNode.home(), SECTION_LABEL_OPTIONS ),
-      KeyboardHelpSectionRow.labelWithIcon( jumpEndMessage, TextKeyNode.end(), SECTION_LABEL_OPTIONS ),
-      KeyboardHelpSectionRow.labelWithIcon( 'CenterAndVariabilityStrings.keyboardHelpDialog.jumpBallToTickMarkStringProperty',
-        KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 9 ) )
-      ) ] );
+      KeyboardHelpSectionRow.labelWithIcon( jumpEndMessage, TextKeyNode.end(), SECTION_LABEL_OPTIONS ) ] );
   }
 }
 
