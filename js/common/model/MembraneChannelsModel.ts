@@ -392,14 +392,10 @@ export default class MembraneChannelsModel extends PhetioObject {
   /**
    * If a slot already has a solute traversing it, or moving to it, then it is "reserved" and cannot accommodate a second solute.
    */
-  public isChannelFree( slot: Slot ): boolean {
-    const isChannelReserved = this.solutes.some( solute => {
+  public isChannelSoluteFree( slot: Slot ): boolean {
 
-      // Check if any mode has this slot
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error TODO: How to fix types here?
-      return solute.mode.slot === slot;
-    } );
+    // Check if any Particle mode has this slot
+    const isChannelReserved = this.solutes.some( solute => solute.mode.slot === slot );
     return !isChannelReserved;
   }
 

@@ -10,10 +10,10 @@ import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneChannels from '../../../membraneChannels.js';
-import Channel from './Channel.js';
 import MembraneChannelsModel from '../MembraneChannelsModel.js';
 import Particle from '../Particle.js';
 import { LigandType } from '../SoluteType.js';
+import Channel from './Channel.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind
 const REBINDING_DELAY = 5;
@@ -74,9 +74,9 @@ export default class LigandGatedChannel extends Channel {
       this.isLigandBoundProperty.value = true;
       this.boundLigand = ligand;
       this.timeSinceLigandBound = 0;
-      
-      // Set the ligand to 'bound' mode to pause its motion
-      ligand.mode = { type: 'bound' };
+
+      // Set the ligand to 'bound' mode to pause its motion. The slot is null because a solute has not reserved it.
+      ligand.mode = { type: 'bound', slot: null };
     }
   }
   

@@ -39,10 +39,13 @@ type RandomWalkMode = {
   turnDuration: number;
   turnElapsed: number;
   timeUntilNextDirection: number;
+  slot: null;
 };
 
+// TODO: Delete?
 type BoundMode = {
   type: 'bound';
+  slot: null;
 };
 
 type MoveToCenterOfChannelMode = {
@@ -81,6 +84,7 @@ type SheddingCagedWaterMoleculesMode = {
 type PassiveDiffusionMode = {
   type: 'passiveDiffusion';
   direction: 'inward' | 'outward';
+  slot: null;
 };
 
 type MovingThroughChannelMode = {
@@ -92,10 +96,12 @@ type MovingThroughChannelMode = {
 
 type UserControlledMode = {
   type: 'userControlled';
+  slot: null;
 };
 
 type UserOverMode = {
   type: 'userOver';
+  slot: null;
 };
 
 type ParticleMode =
@@ -153,7 +159,8 @@ export default class Particle<T extends ParticleType> {
       targetDirection: Particle.createRandomUnitVector(),
       turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
-      timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME )
+      timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ),
+      slot: null
     };
   }
 
@@ -168,7 +175,8 @@ export default class Particle<T extends ParticleType> {
       targetDirection: direction,
       turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
-      timeUntilNextDirection: duration
+      timeUntilNextDirection: duration,
+      slot: null
     };
   }
 
@@ -411,7 +419,7 @@ export default class Particle<T extends ParticleType> {
         const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
         const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-        if ( channel.isOpenProperty.value && model.isChannelFree( slot ) ) {
+        if ( channel.isOpenProperty.value && model.isChannelSoluteFree( slot ) ) {
           if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
             this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
@@ -456,7 +464,8 @@ export default class Particle<T extends ParticleType> {
         if ( dotRandom.nextDouble() < 0.90 ) {
           this.mode = {
             type: 'passiveDiffusion',
-            direction: outsideOfCell ? 'inward' : 'outward'
+            direction: outsideOfCell ? 'inward' : 'outward',
+            slot: null
           };
           return;
         }

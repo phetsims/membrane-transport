@@ -50,7 +50,7 @@ export default class LigandNode extends Node {
     const soundRichDragListener = new SoundRichDragListener( {
       start: event => {
         this.operateOnLigand( ligand => {
-          ligand.mode = { type: 'userControlled' };
+          ligand.mode = { type: 'userControlled', slot: null };
 
           // Store initial offset from pointer to ligand position
           const localPoint = this.globalToParentPoint( event.pointer.point );
@@ -81,7 +81,7 @@ export default class LigandNode extends Node {
       },
       end: () => {
         this.operateOnLigand( ligand => {
-          ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? { type: 'userOver' } : ligand.createRandomWalkMode();
+          ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? { type: 'userOver', slot: null } : ligand.createRandomWalkMode();
         } );
         pressOffset = null;
       },
@@ -103,7 +103,7 @@ export default class LigandNode extends Node {
 
         // If the ligand is already controlled, don't start walking when the pointer goes out
         if ( ligand.mode.type !== 'userControlled' ) {
-          ligand.mode = isOver ? { type: 'userOver' } : ligand.createRandomWalkMode();
+          ligand.mode = isOver ? { type: 'userOver', slot: null } : ligand.createRandomWalkMode();
         }
       } );
     } );
