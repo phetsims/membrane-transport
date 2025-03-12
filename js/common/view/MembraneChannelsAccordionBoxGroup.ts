@@ -104,7 +104,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       // Leakage channels
       const leakageAccordionBox = createAccordionBox( {
         titleProperty: MembraneChannelsStrings.leakageChannelsStringProperty,
-        tandemName: 'leakageAccordionBox',
+        tandemName: 'leakageChannelsAccordionBox',
         expanded: true,
         channels: [
           {
@@ -123,7 +123,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       // Voltage-gated channels
       const voltageGatedAccordionBox = createAccordionBox( {
         titleProperty: MembraneChannelsStrings.voltageGatedChannelsStringProperty,
-        tandemName: 'voltageGatedAccordionBox',
+        tandemName: 'voltageGatedChannelsAccordionBox',
         expanded: false,
         channels: [
           {
@@ -142,7 +142,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       // Ligand-gated channels
       const ligandGatedAccordionBox = createAccordionBox( {
         titleProperty: MembraneChannelsStrings.ligandGatedChannelsStringProperty,
-        tandemName: 'ligandGatedAccordionBox',
+        tandemName: 'ligandGatedChannelsAccordionBox',
         expanded: false,
         channels: [
           {
@@ -169,7 +169,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       // Active transport channels
       const activeTransportAccordionBox = createAccordionBox( {
         titleProperty: MembraneChannelsStrings.activeTransportersStringProperty,
-        tandemName: 'activeTransportAccordionBox',
+        tandemName: 'activeTransportersAccordionBox',
         expanded: false,
         channels: [
           {

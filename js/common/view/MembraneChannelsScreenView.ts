@@ -147,8 +147,10 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( soluteBarChartsAccordionBox );
     this.stepEmitter.addListener( dt => soluteBarChartsAccordionBox.stepEmitter.emit( dt ) );
 
+    const soluteControlsTandem = options.tandem.createTandem( 'soluteControls' );
+
     const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, {
-      tandem: options.tandem.createTandem( 'solutesPanel' ),
+      tandem: soluteControlsTandem.createTandem( 'solutesPanel' ),
       left: this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
       top: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
     } );
@@ -158,8 +160,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // For keyboard focus order
     const soluteControls: SoluteControl[] = [];
 
-    const outsideSoluteControlsTandem = options.tandem.createTandem( 'outsideSoluteControls' );
-    const insideSoluteControlsTandem = options.tandem.createTandem( 'insideSoluteControls' );
+    const outsideSoluteControlsTandem = soluteControlsTandem.createTandem( 'outsideSoluteControls' );
+    const insideSoluteControlsTandem = soluteControlsTandem.createTandem( 'insideSoluteControls' );
 
     // Make it possible to hide or show the entire outside or inside solute control panel
     const outsideSoluteControlNode = new Node( {
@@ -198,7 +200,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneChannelsAccordionBoxGroup' ), this );
+      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneProteinsAccordionBoxGroup' ), this );
       this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
 
       rightSideVBoxChildren.push( membraneChannelsAccordionBoxGroup );
