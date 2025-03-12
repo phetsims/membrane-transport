@@ -22,7 +22,7 @@ import getParticleNode from './view/particles/getParticleNode.js';
 
 export default class MembraneChannelsConstants {
 
-  // Size of the observation window
+  // Size of the observation window in view coordinates
   public static readonly OBSERVATION_WINDOW_WIDTH = 534;
   public static readonly OBSERVATION_WINDOW_HEIGHT = 448;
 
