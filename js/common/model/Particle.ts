@@ -59,6 +59,7 @@ type MoveToSodiumGlucoseTransporterMode = {
 type WaitingInSodiumGlucoseTransporterMode = {
   type: 'waitingInSodiumGlucoseTransporter';
   slot: Slot;
+  site: 'left' | 'right';
 };
 
 type MoveToLigandBindingLocationMode = {
@@ -237,7 +238,8 @@ export default class Particle<T extends ParticleType> {
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
         this.mode = {
           type: 'waitingInSodiumGlucoseTransporter',
-          slot: this.mode.slot
+          slot: this.mode.slot,
+          site: this.mode.site
         };
       }
     }
@@ -419,11 +421,31 @@ export default class Particle<T extends ParticleType> {
             this.mode = { type: 'moveToCenterOfChannel', slot: slot };
             return;
           }
+        }
 
-          if ( this.type === 'sodiumIon' && channel instanceof SodiumGlucoseCotransporter ) {
-            this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: 'left' };
-            return;
+        if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumGlucoseCotransporter' ) {
+
+          // pick an open site on the channel.
+          const isLeftOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' || solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) && solute.mode.slot === slot && solute.mode.site === 'left' ) === undefined;
+          const isRightOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' || solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) && solute.mode.slot === slot && solute.mode.site === 'right' ) === undefined;
+
+          const availableSites: Array<'left' | 'right'> = [];
+          if ( isLeftOpen ) {
+            availableSites.push( 'left' );
           }
+          if ( isRightOpen ) {
+            availableSites.push( 'right' );
+          }
+
+          if ( availableSites.length > 0 ) {
+            const site = dotRandom.sample( availableSites );
+
+            if ( this.type === 'sodiumIon' && channel instanceof SodiumGlucoseCotransporter ) {
+              this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: site };
+              return;
+            }
+          }
+
         }
       }
     }
