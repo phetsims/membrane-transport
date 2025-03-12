@@ -3,7 +3,7 @@ import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStr
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import { carbonDioxideNodeWidth, oxygenNodeWidth } from '../MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
@@ -46,7 +46,7 @@ export const getParticleModelWidth = ( particleType: ParticleType ): number =>
 
   // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
   particleType === 'oxygen' ? oxygenModelSize :
-  particleType === 'carbonDioxide' ? oxygenModelSize * carbonDioxideNodeWidth / oxygenNodeWidth :
+  particleType === 'carbonDioxide' ? oxygenModelSize * MembraneChannelsConstants.CARBON_DIOXIDE_NODE_HEIGHT / MembraneChannelsConstants.OXYGEN_NODE_WIDTH :
 
   particleType === 'sodiumIon' ? 4 :
   particleType === 'potassiumIon' ? 6 :

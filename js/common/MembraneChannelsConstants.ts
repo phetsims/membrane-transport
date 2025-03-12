@@ -1,12 +1,13 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
- * Constants used throughout this simulation.
+ * Constants used throughout this simulation. Note that some constants may alternatively be defined in the file where
+ * they are used. The criteria for a constant being defined here is either or both of:
+ * 1. The constant is used in multiple files.
+ * 2. The constant is a critical part of the simulation and good to have defined here with other constants.
  *
- * TODO: Move into one constants object or make it consistent.
- * TODO: We like that individual exports can refer to each other
- * TODO: But the const MembraneChannelsConstants is clear to read at usage sites, and is conventional for our project.
- * TODO: Why do we never do class MembraneChannelsConstants { static readonly ... }?
+ * NOTE: This simulation uses a class with static attributes, so the values can refer to each other in the declaration.
+ * This is unlike other simulations that export const and use file-specific local variables for cross-references.
  *
  * @author Sam Reid (PhET Interactive Simulations
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -18,65 +19,62 @@ import MembraneChannelsQueryParameters from './MembraneChannelsQueryParameters.j
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
 import getParticleNode from './view/particles/getParticleNode.js';
 
-const OBSERVATION_WINDOW_WIDTH = 534;
-const OBSERVATION_WINDOW_HEIGHT = 448;
-const OBSERVATION_WINDOW_BOUNDS = new Bounds2( 0, 0, OBSERVATION_WINDOW_WIDTH, OBSERVATION_WINDOW_HEIGHT );
-
-// The full dimensions in model coordinates for the area that you can see in the observation window.
-const MODEL_WIDTH = 200;
-export const MODEL_HEIGHT = MODEL_WIDTH * OBSERVATION_WINDOW_HEIGHT / OBSERVATION_WINDOW_WIDTH;
-
-// A map of solute type to the aspect ratio of its artwork so that we can create bounds
-// in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
-export const PARTICLE_ASPECT_RATIO_MAP = {} as Record<ParticleType, number>;
-
-ParticleTypes.forEach( soluteType => {
-  const soluteNode = getParticleNode( soluteType ).bounds;
-  PARTICLE_ASPECT_RATIO_MAP[ soluteType ] = soluteNode.width / soluteNode.height;
-} );
-
-// compute width of O2 and CO2
-export const oxygenNodeWidth = getParticleNode( 'oxygen' ).bounds.width;
-export const carbonDioxideNodeWidth = getParticleNode( 'carbonDioxide' ).bounds.width;
-
-// Bounds of the membrane for collision detection and rendering.
-const MEMBRANE_BOUNDS = new Bounds2( -MODEL_WIDTH / 2, -10, MODEL_WIDTH / 2, 10 );
-
-export const LIGAND_COUNT = 10; // Per ligand type
-export const MAX_SOLUTE_COUNT = MembraneChannelsQueryParameters.maxSolutes; // Per solute type
-export const CHANNEL_WIDTH = 10; // Width of the channel in model coordinates
-
-const MembraneChannelsConstants = {
-  SCREEN_VIEW_X_MARGIN: 8,
-  SCREEN_VIEW_Y_MARGIN: 8,
+export default class MembraneChannelsConstants {
 
   // Size of the observation window
-  OBSERVATION_WINDOW_WIDTH: OBSERVATION_WINDOW_WIDTH,
-  OBSERVATION_WINDOW_HEIGHT: OBSERVATION_WINDOW_HEIGHT,
+  public static readonly OBSERVATION_WINDOW_WIDTH = 534;
+  public static readonly OBSERVATION_WINDOW_HEIGHT = 448;
 
-  MODEL_WIDTH: MODEL_WIDTH,
-  MODEL_HEIGHT: MODEL_HEIGHT,
+  public static readonly OBSERVATION_WINDOW_BOUNDS = new Bounds2(
+    0, 0,
+    MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT
+  );
 
-  MEMBRANE_BOUNDS: MEMBRANE_BOUNDS,
+  // The full dimensions in model coordinates for the area that you can see in the observation window.
+  public static readonly MODEL_WIDTH = 200;
+  public static readonly MODEL_HEIGHT = MembraneChannelsConstants.MODEL_WIDTH *
+                                        MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT /
+                                        MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH;
 
-  INSIDE_CELL_BOUNDS: new Bounds2(
-    MEMBRANE_BOUNDS.minX,
-    -MODEL_HEIGHT / 2,
-    MEMBRANE_BOUNDS.maxX,
-    MEMBRANE_BOUNDS.minY
-  ),
+  // A map of solute type to the aspect ratio of its artwork so that we can create bounds
+  // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
+  public static readonly PARTICLE_ASPECT_RATIO_MAP = ( () => {
+    const record = {} as Record<ParticleType, number>;
+    ParticleTypes.forEach( soluteType => {
+      const soluteNode = getParticleNode( soluteType ).bounds;
+      record[ soluteType ] = soluteNode.width / soluteNode.height;
+    } );
+    return record;
+  } )();
 
-  OUTSIDE_CELL_BOUNDS: new Bounds2(
-    MEMBRANE_BOUNDS.minX,
-    MEMBRANE_BOUNDS.maxY,
-    MEMBRANE_BOUNDS.maxX,
-    MODEL_HEIGHT / 2
-  ),
+  // compute width of O2 and CO2
+  public static readonly OXYGEN_NODE_WIDTH = getParticleNode( 'oxygen' ).bounds.width;
+  public static readonly CARBON_DIOXIDE_NODE_HEIGHT = getParticleNode( 'carbonDioxide' ).bounds.width;
 
-  OBSERVATION_WINDOW_BOUNDS: OBSERVATION_WINDOW_BOUNDS,
+  public static readonly LIGAND_COUNT = 10; // Per ligand type
+  public static readonly MAX_SOLUTE_COUNT = MembraneChannelsQueryParameters.maxSolutes; // Per solute type
+  public static readonly CHANNEL_WIDTH = 10; // Width of the channel in model coordinates
 
-  PANEL_TITLE_FONT_SIZE: 18
-} as const;
+  public static readonly SCREEN_VIEW_X_MARGIN = 8;
+  public static readonly SCREEN_VIEW_Y_MARGIN = 8;
+
+  // Bounds of the membrane for collision detection and rendering.
+  public static readonly MEMBRANE_BOUNDS = new Bounds2(
+    -MembraneChannelsConstants.MODEL_WIDTH / 2, -10,
+    MembraneChannelsConstants.MODEL_WIDTH / 2, 10
+  );
+
+  public static readonly INSIDE_CELL_BOUNDS = new Bounds2(
+    MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, -MembraneChannelsConstants.MODEL_HEIGHT / 2,
+    MembraneChannelsConstants.MEMBRANE_BOUNDS.maxX, MembraneChannelsConstants.MEMBRANE_BOUNDS.minY
+  );
+
+  public static readonly OUTSIDE_CELL_BOUNDS = new Bounds2(
+    MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY,
+    MembraneChannelsConstants.MEMBRANE_BOUNDS.maxX, MembraneChannelsConstants.MODEL_HEIGHT / 2
+  );
+
+  public static readonly PANEL_TITLE_FONT_SIZE = 18;
+}
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
-export default MembraneChannelsConstants;

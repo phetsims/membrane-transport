@@ -14,7 +14,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import { MAX_SOLUTE_COUNT } from '../MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import SoluteType from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
@@ -44,7 +44,7 @@ export default class SoluteControl extends Panel {
 
     // Create a proxy property for the FineCoarseSpinner
     // When the proxy Property changes, create new solutes based on that value
-    const allowedRangeProperty = new Property( new Range( 0, MAX_SOLUTE_COUNT ) );
+    const allowedRangeProperty = new Property( new Range( 0, MembraneChannelsConstants.MAX_SOLUTE_COUNT ) );
 
     // Amount the user has added or removed. Can go negative if solutes diffuse across to this side, then are removed.
     const userControlledCountProperty = new NumberProperty( 0, {
@@ -65,7 +65,7 @@ export default class SoluteControl extends Panel {
       ( userValue, countOnThisSide, totalCount ) => {
 
         let amountTheUserCouldRemove = countOnThisSide;
-        let amountTheUserCouldAdd = MAX_SOLUTE_COUNT - totalCount;
+        let amountTheUserCouldAdd = MembraneChannelsConstants.MAX_SOLUTE_COUNT - totalCount;
 
         // TODO: Is the total exceeding the MAX indicative of an inconsistent transient value?
         if ( amountTheUserCouldAdd < 0 ) {

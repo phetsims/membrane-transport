@@ -3,7 +3,7 @@
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import membraneChannels from '../../../membraneChannels.js';
-import MembraneChannelsConstants, { CHANNEL_WIDTH } from '../../MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../../MembraneChannelsConstants.js';
 import ChannelType from './ChannelType.js';
 import MembraneChannelsModel from '../MembraneChannelsModel.js';
 
@@ -32,9 +32,9 @@ export default abstract class Channel {
     public readonly type: ChannelType,
     public readonly position: number ) {
     this.bounds = new Bounds2(
-      position - CHANNEL_WIDTH / 2,
+      position - MembraneChannelsConstants.CHANNEL_WIDTH / 2,
       MembraneChannelsConstants.MEMBRANE_BOUNDS.minY,
-      position + CHANNEL_WIDTH / 2,
+      position + MembraneChannelsConstants.CHANNEL_WIDTH / 2,
       MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
     );
   }

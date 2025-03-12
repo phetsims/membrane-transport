@@ -13,7 +13,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsConstants, { LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
@@ -88,8 +88,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
       const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
       ligandViewNodes.forEach( ( ligandViewNode, j ) => {
-        for ( let i = 0; i < LIGAND_COUNT; i++ ) {
-          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem(), i === 0 );
+        for ( let i = 0; i < MembraneChannelsConstants.LIGAND_COUNT; i++ ) {
+          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * MembraneChannelsConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem(), i === 0 );
           this.ligandNodes.push( ligandNode );
         }
       } );

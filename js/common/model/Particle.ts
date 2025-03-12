@@ -16,7 +16,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
-import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import ChannelType from './channels/ChannelType.js';
 import LigandGatedChannel from './channels/LigandGatedChannel.js';
@@ -139,7 +139,7 @@ export default class Particle<T extends ParticleType> {
   ) {
     this.dimension = new Dimension2(
       getParticleModelWidth( type ),
-      getParticleModelWidth( type ) / PARTICLE_ASPECT_RATIO_MAP[ type ]
+      getParticleModelWidth( type ) / MembraneChannelsConstants.PARTICLE_ASPECT_RATIO_MAP[ type ]
     );
 
     // Start in random walk mode with random directions.

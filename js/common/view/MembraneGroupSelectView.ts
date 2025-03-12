@@ -11,7 +11,7 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsConstants, { MODEL_HEIGHT } from '../MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
@@ -292,7 +292,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
       },
       grabReleaseCueOptions: {
-        center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MODEL_HEIGHT * 0.25 ) )
+        center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MembraneChannelsConstants.MODEL_HEIGHT * 0.25 ) )
       }
     } );
 

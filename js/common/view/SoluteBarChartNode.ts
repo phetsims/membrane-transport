@@ -24,7 +24,7 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import { MAX_SOLUTE_COUNT } from '../MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
@@ -161,12 +161,12 @@ export default class SoluteBarChartNode extends Node {
 
     const PADDING_FACTOR = 0.95;
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      outsideBar.setRectHeight( soluteCount / MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      outsideBar.setRectHeight( soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       outsideBar.bottom = BOX_HEIGHT / 2 + barLineWidth;
     } );
 
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      insideBar.setRectHeight( soluteCount / MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      insideBar.setRectHeight( soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       insideBar.top = BOX_HEIGHT / 2 - barLineWidth;
     } );
 

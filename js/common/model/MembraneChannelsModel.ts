@@ -32,7 +32,7 @@ import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
-import MembraneChannelsConstants, { CHANNEL_WIDTH, LIGAND_COUNT } from '../../common/MembraneChannelsConstants.js';
+import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
@@ -211,8 +211,8 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   public addLigands(): void {
-    this.addParticles( 'ligandA', 'outside', LIGAND_COUNT, this.ligands );
-    this.addParticles( 'ligandB', 'outside', LIGAND_COUNT, this.ligands );
+    this.addParticles( 'ligandA', 'outside', MembraneChannelsConstants.LIGAND_COUNT, this.ligands );
+    this.addParticles( 'ligandB', 'outside', MembraneChannelsConstants.LIGAND_COUNT, this.ligands );
   }
 
   public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle<SoluteType | LigandType>[] ): void {
@@ -385,7 +385,7 @@ export default class MembraneChannelsModel extends PhetioObject {
 
     // check if within the channel width of any filled slot. TODO: grab radius?
     const x = solute.position.x;
-    return this.slots.find( slot => Math.abs( x - slot.position ) < CHANNEL_WIDTH && slot.channelType === type ) || null;
+    return this.slots.find( slot => Math.abs( x - slot.position ) < MembraneChannelsConstants.CHANNEL_WIDTH && slot.channelType === type ) || null;
   }
 
   public getLeftmostEmptySlot(): Slot | null {
