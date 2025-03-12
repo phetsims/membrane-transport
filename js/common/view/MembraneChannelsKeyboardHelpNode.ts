@@ -7,27 +7,35 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import BasicActionsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/BasicActionsKeyboardHelpSection.js';
+import GrabReleaseKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/GrabReleaseKeyboardHelpSection.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
+import MoveDraggableItemsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/MoveDraggableItemsKeyboardHelpSection.js';
+import TimeControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/TimeControlsKeyboardHelpSection.js';
 import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet from '../MembraneChannelsFeatureSet.js';
+import MoveGrabbedChannelProteinKeyboardHelpSection from './MoveGrabbedChannelProteinKeyboardHelpSection.js';
 
 export default class MembraneChannelsKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
   public constructor( featureSet: MembraneChannelsFeatureSet ) {
 
-    // TODO: Add sections like:
-    // MoveDraggableItemsKeyboardHelpSection for ligands
-    // TimeControlsKeyboardHelpSection for time controls
-    // GrabReleaseKeyboardHelpSection for select
-    // CAVKeyboardHelpMoveGrabbedBallAndOrCardSection to move grabbed channel protein
-
     const leftColumn = [
-      new FromAnywhereInSimHelpSection()
+      new FromAnywhereInSimHelpSection(),
+      new GrabReleaseKeyboardHelpSection( new StringProperty( 'thing as title' ), new StringProperty( 'thing as content' ) ),
+      new MoveGrabbedChannelProteinKeyboardHelpSection(
+        new StringProperty( 'title' ),
+        new StringProperty( 'move' ),
+        new StringProperty( 'jump start' ),
+        new StringProperty( 'jump end' )
+      )
     ];
 
     const rightColumn = [
+      new TimeControlsKeyboardHelpSection(),
+      new MoveDraggableItemsKeyboardHelpSection(),
       new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } )
     ];
 
@@ -39,7 +47,7 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
   public constructor() {
 
-    super( 'To Do: implement me', [], {
+    super( 'From anywhere in the sim', [], { // TODO: i18n
       textMaxWidth: 250,
       isDisposable: false
     } );
