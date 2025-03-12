@@ -26,6 +26,13 @@ We have taken efforts to keep the model and view lightweight. This has the follo
 1. When dragging a channel, a transient non-PhET-iO instrumented Node is temporarily created.
 2. For the GrabSortInteraction, it operates on transient nodes as well.
 
+### Novel Approaches
+
+* **MembraneChannelsFeatureSet**: This is a feature set that is used to enable/disable features in the simulation. It is used to
+  enable/disable the different types of channels and pumps in the simulation. Note that the features are not mutually exclusive, 
+  and hence not amenable to subclassing. We also chose to avoid mixins since they introduce other difficulties. Instead,
+  we use MembraneChannelsFeatureSet to identify which features apply to which screens.
+
 ### Model
 
 The model is purposefully simple, with flat data structures to facilitate phet-io serialization. For instance,

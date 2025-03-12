@@ -12,6 +12,7 @@ import MembraneChannelsColors from '../common/MembraneChannelsColors.js';
 import membraneChannels from '../membraneChannels.js';
 import MembraneChannelsFeatureSet from './MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from './model/MembraneChannelsModel.js';
+import MembraneChannelsKeyboardHelpNode from './view/MembraneChannelsKeyboardHelpNode.js';
 import MembraneChannelsScreenView from './view/MembraneChannelsScreenView.js';
 
 export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel, MembraneChannelsScreenView> {
@@ -23,7 +24,8 @@ export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel
       model => new MembraneChannelsScreenView( model, { tandem: tandem.createTandem( 'view' ) } ), {
         name: nameProperty,
         backgroundColorProperty: MembraneChannelsColors.outsideCellColorProperty,
-        tandem: tandem
+        tandem: tandem,
+        createKeyboardHelpNode: () => new MembraneChannelsKeyboardHelpNode( featureSet )
       }
     );
   }
