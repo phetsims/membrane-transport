@@ -18,7 +18,7 @@ export default class SodiumGlucoseCotransporter extends Channel {
 
   public override step( dt: number ): void {
 
-    // TODO: What if paused, then the user adds Na+ outside?
+    // TODO (design): What if paused, then the user adds Na+ outside?
     const sodiumOutside = this.model.outsideSoluteCountProperties.sodiumIon.value;
     const sodiumInside = this.model.insideSoluteCountProperties.sodiumIon.value;
 

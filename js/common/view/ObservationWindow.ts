@@ -56,16 +56,13 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     } );
 
     // Clipping region that contains the background canvas and the ligand node
-    // TODO: The canvas node doesn't actually need to be clipped since it can only draw within its bounds. UPDATE: Removing the clip shows a lot of drawing out of the bounds.
     const clipNode = new Node( {
       clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
 
     super( {
       children: [ clipNode, frameNode ],
-
-      // innerContent: 'div',
-      accessibleName: 'Grab a protein to re-order along zoomed-in view of membrane.' // TODO
+      accessibleName: 'Grab a protein to re-order along zoomed-in view of membrane.' // TODO: i18n
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
@@ -73,7 +70,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( backCanvas );
     this.stepEmitter.addListener( dt => backCanvas.step( dt ) );
 
-    this.slotDragIndicatorNodes = model.slots.map( slot => new SlotDragIndicatorNode( slot, model, modelViewTransform ) );
+    this.slotDragIndicatorNodes = model.slots.map( slot => new SlotDragIndicatorNode( slot, modelViewTransform ) );
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
 
     this.channelLayer = new ObservationWindowChannelLayer( model, view, modelViewTransform );

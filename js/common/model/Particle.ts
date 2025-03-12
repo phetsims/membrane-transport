@@ -404,7 +404,7 @@ export default class Particle<T extends ParticleType> {
           if ( slot.channelType === channelType ) {
 
             // Check that it's actually a LigandGatedChannel and is available for binding
-            // TODO: Should we also check to see if another ligand is already moving to this slot?
+            // TODO (design): Should we also check to see if another ligand is already moving to this slot?
             if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
               this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
               return;

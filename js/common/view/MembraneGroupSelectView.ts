@@ -15,7 +15,7 @@ import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
-import ChannelDragNode, { isOriginSlot } from './ChannelDragNode.js';
+import ChannelDragNode from './ChannelDragNode.js';
 import getBriefProteinName from './channels/getBriefProteinName.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
@@ -31,6 +31,9 @@ type Selection = {
 };
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
+
+// TODO: i18n after design finalized
+const releasedBackInToolbox = 'Released. Back in toolbox.';
 
 /**
  * Keyboard interaction for channels on the membrane.
@@ -60,23 +63,18 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       // This is only used in assertions, so it is ok to return a constant.
       getGroupItemValue: () => 0,
 
-      tandem: Tandem.OPT_OUT // TODO?
+      tandem: Tandem.OPT_OUT // TODO (phet-io): Hopefully this doesn't need to be instrumented, can we confirm?
     } );
 
     // A list of all keys that are listened to, except those covered by the numberKeyMapper
-    // TODO: Copied from GroupSortInteraction
     const movementKeys = [
       'd', 'arrowRight', 'a', 'arrowLeft', 'arrowUp', 'arrowDown', 'w', 's',
       'home', 'end' // min/max
     ] as const;
 
-    // TODO: Copied from GroupSortInteraction
-    /**
-     * Get the delta to change the value given what key was pressed. The returned delta may not result in a value in range,
-     * please constrain value from range or provide your own defensive measures to this delta.
-     */
+    // Get the delta to change the value given what key was pressed.
     const getDeltaForKey = ( key: string ): number => {
-      const fullRange = SLOT_COUNT + 1;
+      const fullRange = SLOT_COUNT + 1; // the extra space is by the toolbox, to put the channel away
       return key === 'home' ? -fullRange :
              key === 'end' ? fullRange :
              [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key ) ? -1 :
@@ -84,7 +82,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
              0;
     };
 
-    // // TODO: Mostly Copied from GroupSortInteraction
     const deltaKeyboardListener = new KeyboardListener( {
       fireOnHold: true,
       keys: movementKeys,
@@ -225,15 +222,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               const contentsString = getBriefProteinName( grabbedNode.type );
               alerter.alert( `Released ${contentsString} into membrane` );
 
-              if ( oldContents && isOriginSlot( grabbedNode.origin ) ) {
+              if ( oldContents && grabbedNode.origin instanceof Slot ) {
                 grabbedNode.origin.channelType = oldContents;
               }
             }
             else {
 
               // Drop the item back into the toolbox
-              // TODO: i18n after design finalized
-              alerter.alert( 'Released. Back in toolbox.' );
+              alerter.alert( releasedBackInToolbox );
             }
 
             view.keyboardDroppedMembraneChannel();
@@ -331,20 +327,21 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     } );
     observationWindow.addInputListener( deleteKeyboardListener );
 
+    /**
+     * TODO (JG):
+     * - Remove 'm' after 'escape' is working. I used 'm' since it is the same on qwerty and dvorak.
+     * - Why is this not running for 'escape'? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
+     * - JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
+     */
     const escKeyboardListener = new KeyboardListener( {
-
-      // TODO: Remove 'm' after 'escape' is working. I used 'm' since it is the same on qwerty and dvorak.
       keys: [ 'm', 'escape' ],
       fire: () => {
-        // TODO: Why is this not running for 'escape'? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
-        // TODO: JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
-
         const currentSelection = this.currentSelection;
         resetState();
         if ( currentSelection ) {
           const grabbedNode = currentSelection.grabbedNode;
 
-          if ( isOriginSlot( grabbedNode.origin ) ) {
+          if ( grabbedNode.origin instanceof Slot ) {
 
             // TODO: What if something else moved there in the meantime?
             grabbedNode.origin.channelType = grabbedNode.type;
@@ -364,9 +361,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
 
             // Drop the item back into the toolbox
-            // TODO: i18n after design finalized
-            // TODO: Duplicated above
-            alerter.alert( 'Released. Back in toolbox.' );
+            alerter.alert( releasedBackInToolbox );
           }
         }
 

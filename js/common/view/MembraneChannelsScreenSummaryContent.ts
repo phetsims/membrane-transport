@@ -39,12 +39,10 @@ export default class MembraneChannelsScreenSummaryContent extends ScreenSummaryC
 
     super( {
 
-      playAreaContent:
-        new PatternMessageProperty( featureSet === 'simpleDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen1MessageProperty :
+      // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in.
+      playAreaContent: new PatternMessageProperty( featureSet === 'simpleDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen1MessageProperty :
                                     featureSet === 'facilitatedDiffusion' ? MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty :
                                     featureSet === 'activeTransport' ? MembraneChannelsMessages.playAreaSummaryScreen3MessageProperty :
-
-                                      // TODO: Am I forgetting a variable passed in to the options here?
                                     MembraneChannelsMessages.playAreaSummaryScreen2and4MessageProperty, {}
         ),
       controlAreaContent: MembraneChannelsMessages.controlAreaSummaryMessageProperty,

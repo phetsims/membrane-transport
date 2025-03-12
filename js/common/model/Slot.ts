@@ -24,8 +24,6 @@ export default class Slot {
   public constructor( private readonly model: MembraneChannelsModel, public readonly position: number, tandem: Tandem ) {
     this.channelProperty = new Property<null | Channel>( null, {
       tandem: tandem.createTandem( 'channelProperty' ),
-
-      // TODO: If Channel becomes a dedicated class this will be challenging.
       phetioValueType: NullableIO( ChannelIO ),
       phetioFeatured: true
     } );

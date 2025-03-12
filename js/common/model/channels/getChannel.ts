@@ -18,14 +18,13 @@ export default function( model: MembraneChannelsModel, type: ChannelType, positi
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 
-           // TODO: Should it get a reference to Slot instead of position?
          type === 'sodiumIonVoltageGatedChannel' ? new VoltageGatedChannel( model, type, position ) :
          type === 'potassiumIonVoltageGatedChannel' ? new VoltageGatedChannel( model, type, position ) :
 
          type === 'sodiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
          type === 'potassiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
 
-         // TODO: Specific model types here
+         // TODO: Add SodiumPotassiumPump
          type === 'sodiumPotassiumPump' ? new LeakageChannel( model, type, position ) :
          type === 'sodiumGlucoseCotransporter' ? new SodiumGlucoseCotransporter( model, type, position ) :
            // final fallback -> throw

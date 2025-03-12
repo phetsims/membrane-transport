@@ -4,7 +4,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../membraneChannels.js';
 import Slot from '../model/Slot.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 
 /**
  * A target zone where a membrane channel can be dropped. When the user drags a membrane channel toward this slot, it
@@ -14,8 +13,7 @@ import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
  */
 export default class SlotDragIndicatorNode extends Rectangle {
 
-  // TODO: Can we remove the model argument? There may be several unused model arguments now that Slot is a dedicated class.
-  public constructor( public readonly slot: Slot, model: MembraneChannelsModel, modelViewTransform: ModelViewTransform2 ) {
+  public constructor( public readonly slot: Slot, modelViewTransform: ModelViewTransform2 ) {
 
     // TODO: Model bounds? We decided proteins will have the same model width footprint, but that should be factored out.
     super( 0, 0, 65, 90, 15, 10, {

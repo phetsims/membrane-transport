@@ -3,8 +3,6 @@
 /**
  * In the SoluteBarChartsAccordionBox, the node that shows an icon, bar chart and arrow for one solute.
  *
- * TODO: Description, keyboard, sonification
- *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
@@ -51,7 +49,6 @@ export default class SoluteBarChartNode extends Node {
 
     // TODO: Consider creating a utility function for thresholding.
     // TODO: Consider building that into Fluent directly???
-
 
     // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference.
     //   What if the description simply described the mmagnitude of the outside bar and the inside bar?

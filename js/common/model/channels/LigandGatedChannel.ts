@@ -20,7 +20,6 @@ const REBINDING_DELAY = 5;
 
 export default class LigandGatedChannel extends Channel {
 
-  // TODO: Should Channel have an isOpenProperty?
   public readonly isLigandBoundProperty = new BooleanProperty( false );
 
   public readonly isOpenProperty: TReadOnlyProperty<boolean> = this.isLigandBoundProperty;
@@ -83,7 +82,6 @@ export default class LigandGatedChannel extends Channel {
   
   /**
    * Release the bound ligand if any
-   * TODO: Release after a particle passes through.
    */
   public unbindLigand(): void {
     if ( this.boundLigand ) {

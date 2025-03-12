@@ -22,15 +22,6 @@ import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
- * Type guard that checks if a value is a Slot
- *
- * TODO: Now that Slot is a class, this should not be necessary.
- */
-export function isOriginSlot( origin: Slot | ChannelToolNode ): origin is Slot {
-  return origin instanceof Slot;
-}
-
-/**
  * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific targets
  * in the membrane.
  *
@@ -99,8 +90,7 @@ export default class ChannelDragNode extends Node {
       } );
     };
 
-    // TODO: Use SoundRichDragListener?
-    // TODO: MK suggested RichDragListener which also has keyboard support
+    // TODO: MK suggested RichDragListener which also has keyboard support, or use SoundRichDragListener?
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
@@ -128,7 +118,7 @@ export default class ChannelDragNode extends Node {
           // drop into the selected target
           closest.slot.channelType = this.type;
 
-          if ( otherContents && isOriginSlot( this.origin ) ) {
+          if ( otherContents && this.origin instanceof Slot ) {
             this.origin.channelType = otherContents;
           }
 

@@ -9,8 +9,8 @@
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import membraneChannels from '../../../membraneChannels.js';
-import Channel from './Channel.js';
 import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import Channel from './Channel.js';
 
 export default class VoltageGatedChannel extends Channel {
 
@@ -23,7 +23,6 @@ export default class VoltageGatedChannel extends Channel {
     // * -70: resting, both closed
     // * -50: Na open, K closed
     // * +30: Na closed, K open
-
     this.isOpenProperty = new DerivedProperty( [ model.membraneVoltagePotentialProperty ], voltage => {
       return voltage === '-70' ? false :
              voltage === '-50' ? ( type === 'sodiumIonVoltageGatedChannel' ) :
@@ -32,11 +31,6 @@ export default class VoltageGatedChannel extends Channel {
                // final fallback -> throw
              ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
     } );
-
-  }
-
-  public override step( dt: number ): void {
-    // TODO: anything here?
   }
 }
 
