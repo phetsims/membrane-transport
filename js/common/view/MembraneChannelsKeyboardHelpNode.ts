@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2025, University of Colorado Boulder
 
 /**
  * MembraneChannelsKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.
