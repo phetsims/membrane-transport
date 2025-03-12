@@ -42,9 +42,8 @@ type RandomWalkMode = {
   slot: null;
 };
 
-// TODO: Delete?
 type BoundMode = {
-  type: 'bound';
+  type: 'ligandBound';
   slot: null;
 };
 
@@ -209,7 +208,7 @@ export default class Particle<T extends ParticleType> {
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
-    else if ( this.mode.type === 'bound' ) {
+    else if ( this.mode.type === 'ligandBound' ) {
       // Bound mode: particle does not move or has special behavior.
     }
     else if ( this.mode.type === 'moveToCenterOfChannel' ) {

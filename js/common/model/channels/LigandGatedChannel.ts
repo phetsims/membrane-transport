@@ -69,6 +69,7 @@ export default class LigandGatedChannel extends Channel {
    * Called when a ligand hits the membrane near this channel
    */
   public bindLigand( ligand: Particle<LigandType> ): void {
+
     // Only bind if not already bound and past the rebinding delay
     if ( this.isAvailableForBinding() ) {
       this.isLigandBoundProperty.value = true;
@@ -76,7 +77,7 @@ export default class LigandGatedChannel extends Channel {
       this.timeSinceLigandBound = 0;
 
       // Set the ligand to 'bound' mode to pause its motion. The slot is null because a solute has not reserved it.
-      ligand.mode = { type: 'bound', slot: null };
+      ligand.mode = { type: 'ligandBound', slot: null };
     }
   }
   
