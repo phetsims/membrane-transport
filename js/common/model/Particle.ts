@@ -280,18 +280,20 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'moveToLigandBindingLocation' ) {
 
       const channel = this.mode.slot.channelProperty.value as LigandGatedChannel;
-      const currentPosition = this.position;
-      const targetPosition = channel.getBindingPosition();
-      const maxStepSize = typicalSpeed * dt;
+      if ( channel ) {
+        const currentPosition = this.position;
+        const targetPosition = channel.getBindingPosition();
+        const maxStepSize = typicalSpeed * dt;
 
-      // Move toward the binding position
-      this.position.x += Math.sign( targetPosition.x - currentPosition.x ) * maxStepSize;
-      this.position.y += Math.sign( targetPosition.y - currentPosition.y ) * maxStepSize;
+        // Move toward the binding position
+        this.position.x += Math.sign( targetPosition.x - currentPosition.x ) * maxStepSize;
+        this.position.y += Math.sign( targetPosition.y - currentPosition.y ) * maxStepSize;
 
-      // When close enough, transition to a bound mode.
-      if ( targetPosition.distance( currentPosition ) <= maxStepSize && channel.isAvailableForBinding() ) {
-        affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
-        channel.bindLigand( this as Particle<LigandType> );
+        // When close enough, transition to a bound mode.
+        if ( targetPosition.distance( currentPosition ) <= maxStepSize && channel.isAvailableForBinding() ) {
+          affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
+          channel.bindLigand( this as Particle<LigandType> );
+        }
       }
     }
     else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) {
