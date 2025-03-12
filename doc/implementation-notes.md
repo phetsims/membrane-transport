@@ -22,16 +22,19 @@ incorporating modern PhET frameworks and updated pedagogical features.
 
 ### Special Considerations
 
-We have taken efforts to keep the model and view lightweight. This has the following consequences:
-1. When dragging a channel, a transient non-PhET-iO instrumented Node is temporarily created.
-2. For the GrabSortInteraction, it operates on transient nodes as well.
+
 
 ### Novel Approaches
 
 * **MembraneChannelsFeatureSet**: This is a feature set that is used to enable/disable features in the simulation. It is used to
-  enable/disable the different types of channels and pumps in the simulation. Note that the features are not mutually exclusive, 
+  enable/disable the different types of channels and controls are available on each screen. Note that the features are not mutually exclusive, 
   and hence not amenable to subclassing. We also chose to avoid mixins since they introduce other difficulties. Instead,
   we use MembraneChannelsFeatureSet to identify which features apply to which screens.
+* **Transient Short-Lived Nodes**: We have taken efforts to keep the model and view lightweight. For example, when 
+  dragging a channel, a transient non-PhET-iO instrumented Node is temporarily created. When dropping the channel, the 
+  transient node is removed and the channel is added to the model. For the GrabSortInteraction, it operates on transient 
+  nodes as well. Preferring transient, short-lived Nodes helps us keep each individual node simpler and more manageable,
+  as opposed to if we had a single Node that had to handle all modalities.
 
 ### Model
 
