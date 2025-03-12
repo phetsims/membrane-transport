@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
@@ -19,6 +20,7 @@ import MembraneChannelsConstants, { PARTICLE_ASPECT_RATIO_MAP } from '../../comm
 import membraneChannels from '../../membraneChannels.js';
 import ChannelType from './channels/ChannelType.js';
 import LigandGatedChannel from './channels/LigandGatedChannel.js';
+import SodiumGlucoseCotransporter from './channels/SodiumGlucoseCotransporter.js';
 import MembraneChannelsModel from './MembraneChannelsModel.js';
 import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
@@ -28,7 +30,7 @@ const typicalSpeed = 30;
 
 // The radius of the circle around the center of a channel where a particle will be captured so
 // we can decide how it should interact with the channel.
-const CAPTURE_RADIUS = MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8;
+export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
 
 type RandomWalkMode = {
   type: 'randomWalk';
@@ -45,6 +47,17 @@ type BoundMode = {
 
 type MoveToCenterOfChannelMode = {
   type: 'moveToCenterOfChannel';
+  slot: Slot;
+};
+
+type MoveToSodiumGlucoseTransporterMode = {
+  type: 'moveToSodiumGlucoseTransporter';
+  slot: Slot;
+  site: 'left' | 'right';
+};
+
+type WaitingInSodiumGlucoseTransporterMode = {
+  type: 'waitingInSodiumGlucoseTransporter';
   slot: Slot;
 };
 
@@ -94,7 +107,9 @@ type ParticleMode =
   | PassiveDiffusionMode
   | MovingThroughChannelMode
   | UserControlledMode
-  | UserOverMode;
+  | UserOverMode
+  | MoveToSodiumGlucoseTransporterMode
+  | WaitingInSodiumGlucoseTransporterMode;
 
 /**
  * Gets the current interpolated direction from a random walk mode, based on how far the particle has turned.
@@ -201,6 +216,27 @@ export default class Particle<T extends ParticleType> {
       if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
         this.mode = {
           type: 'enteringChannel',
+          slot: this.mode.slot
+        };
+      }
+    }
+    else if ( this.mode.type === 'moveToSodiumGlucoseTransporter' ) {
+
+      const currentPosition = this.position.copy();
+      const targetPosition = new Vector2( this.mode.slot.position + 4 * ( this.mode.site === 'left' ? -1 : 1 ), 0 );
+
+      const vector = targetPosition.minus( currentPosition );
+      const direction = vector.normalized();
+
+      // Move toward the target position at the typicalSpeed
+      const maxStepSize = typicalSpeed * dt;
+      this.position.x += direction.x * maxStepSize;
+      this.position.y += direction.y * maxStepSize;
+
+      // When close enough, transition to enteringChannel mode.
+      if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
+        this.mode = {
+          type: 'waitingInSodiumGlucoseTransporter',
           slot: this.mode.slot
         };
       }
@@ -343,47 +379,50 @@ export default class Particle<T extends ParticleType> {
       const slot = model.slots[ i ];
 
       const channel = slot.channelProperty.value;
-      if ( channel && model.isChannelFree( slot ) ) {
 
-        // If the particle is within a certain radial distance from the center of the channel, move it to the center.
-        const distance = this.position.distance( new Vector2( slot.position, 0 ) );
+      // If the particle is within a certain radial distance from the center of the channel, move it to the center.
+      const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
-        if ( distance < CAPTURE_RADIUS ) {
+      if ( channel && distance < CAPTURE_RADIUS_PROPERTY.value ) {
 
-          // Check for ligand interaction with ligand-gated channels
-          if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
+        // Check for ligand interaction with ligand-gated channels
+        if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
 
-            // Match ligandA with sodium channels and ligandB with potassium channels
-            const channelType = this.type === 'ligandA' ?
-                                'sodiumIonLigandGatedChannel' :
-                                'potassiumIonLigandGatedChannel';
+          // Match ligandA with sodium channels and ligandB with potassium channels
+          const channelType = this.type === 'ligandA' ?
+                              'sodiumIonLigandGatedChannel' :
+                              'potassiumIonLigandGatedChannel';
 
-            // Check if this slot has the correct type of ligand-gated channel
-            if ( slot.channelType === channelType ) {
+          // Check if this slot has the correct type of ligand-gated channel
+          if ( slot.channelType === channelType ) {
 
-              // Check that it's actually a LigandGatedChannel and is available for binding
-              // TODO: Should we also check to see if another ligand is already moving to this slot?
-              if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
-                this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
-                return;
-              }
+            // Check that it's actually a LigandGatedChannel and is available for binding
+            // TODO: Should we also check to see if another ligand is already moving to this slot?
+            if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
+              this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
+              return;
             }
           }
+        }
 
-          // Check for sodium and potassium ions interacting with leakage channels.
-          const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
-          const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
+        // Check for sodium and potassium ions interacting with leakage channels.
+        const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
+        const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-          if ( channel.isOpenProperty.value ) {
-            if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
-              this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-              return;
-            }
+        if ( channel.isOpenProperty.value && model.isChannelFree( slot ) ) {
+          if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+            return;
+          }
 
-            if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.channelType! ) ) {
-              this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-              return;
-            }
+          if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.channelType! ) ) {
+            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+            return;
+          }
+
+          if ( this.type === 'sodiumIon' && channel instanceof SodiumGlucoseCotransporter ) {
+            this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: 'left' };
+            return;
           }
         }
       }

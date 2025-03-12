@@ -28,6 +28,7 @@ import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteT
 import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import MembraneChannelsModelTester from '../model/MembraneChannelsModelTester.js';
+import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import ChannelDragNode from './ChannelDragNode.js';
@@ -256,6 +257,14 @@ export default class MembraneChannelsScreenView extends ScreenView {
     KeyboardListener.createGlobal( this, { keys: [ 's' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'inside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'd' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'inside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'f' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', false, 'inside' ) } );
+
+    // Toggle the capture radius
+    KeyboardListener.createGlobal( this, {
+      keys: [ 'm' ], fire: () => {
+        const initialValue = CAPTURE_RADIUS_PROPERTY.initialValue;
+        CAPTURE_RADIUS_PROPERTY.value = CAPTURE_RADIUS_PROPERTY.value === initialValue ? initialValue * 100 : initialValue;
+      }
+    } );
 
     this.screenViewModelViewTransform = screenViewModelViewTransform;
   }
