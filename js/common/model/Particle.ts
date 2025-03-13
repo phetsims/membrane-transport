@@ -203,12 +203,12 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
-    // TODO: Consider a strategy where the mode implements the motion so that you are force to implement it for each mode?
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
     else if ( this.mode.type === 'ligandBound' ) {
-      // Bound mode: particle does not move or has special behavior.
+
+      // TODO: Accumulate elapsed time for a bound ligand, so it can detach after a certain amount of time. This code is already elsewhere, but it seems like it should be here.
     }
     else if ( this.mode.type === 'moveToCenterOfChannel' ) {
 
