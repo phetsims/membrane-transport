@@ -35,7 +35,6 @@
         "chokidar-cli": "^3.0.0"
       },
       "scripts": {
-        "dev": "npx esbuild ./js/membrane-channels-main.ts --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=80",
         "watch-strings": "chokidar \"membrane-channels-strings_en.json5\" -c \"grunt modulify\"",
         "transpileWithoutGrunt": "../perennial/bin/sage run ../chipper/js/grunt/tasks/transpile.ts --live",
         "serve-8081": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081",
