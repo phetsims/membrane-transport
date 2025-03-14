@@ -327,7 +327,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           // next, tell the group select interaction that nothing is grabbed.
           groupSelectModel.selectedGroupItemProperty.value = this.observationWindow.getChannelNodes().length > 0 ? 0 : null;
 
-          // TODO: If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
+          // TODO (JG/SR): If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
           // See how this is done via keyboardDroppedMembraneChannel when something is dropped in the membrane
         }
       }

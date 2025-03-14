@@ -1,8 +1,9 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * The canvas renderer for background content in the observation window. This is for rendering
- * many particles that are not interactive.
+ * The canvas renderer for background content in the observation window. This is for rendering many particles that are
+ * not interactive. NOTE: For flexibility, the front layer and back layer are coded here. This makes it easy to
+ * adjust layering during maintenance.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -30,9 +31,12 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement | HTMLCanvasElement>();
   private readonly phospholipids: Phospholipid[] = [];
 
-  public constructor( private readonly model: MembraneChannelsModel, private readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2,
-                      // TODO: We haven't decided on the layering for this sim, so keep the code in this file until we know if performance considerations dictate a certain strategy
-                      private readonly layer: 'back' | 'front' ) {
+  public constructor(
+    private readonly model: MembraneChannelsModel,
+    private readonly modelViewTransform: ModelViewTransform2,
+    canvasBounds: Bounds2,
+    private readonly layer: 'back' | 'front'
+  ) {
     super( {
       canvasBounds: canvasBounds
     } );
