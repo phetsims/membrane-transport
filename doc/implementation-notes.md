@@ -16,13 +16,9 @@ incorporating modern PhET frameworks and updated pedagogical features.
   - dynamic locales
   - sim-specific preferences
 
-- Excluded features:
+- **Excluded**
   - voicing
   - region and culture customization
-
-### Special Considerations
-
-
 
 ### Novel Approaches
 
@@ -42,10 +38,10 @@ The model is purposefully simple, with flat data structures to facilitate phet-i
 Several model Properties for particlar channel state are not phet-io instrumented; instead they appear in the state via
 serialization of the container.
 
-Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are non-interactive
+Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are non-interactive.
 Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive,
-and can be dragged around the canvas.
-Solutes and Ligands are referred to more generally as Particles. They are represented by a finite state machine which indicates
+and can be dragged around the canvas with mouse or keyboard.
+Solutes and Ligands subclasses of `class Particle`. They are represented by a finite state machine which indicates
 their current mode and during step() can transition to a new mode based on the current mode and the current state of the
 simulation.
 
@@ -108,8 +104,6 @@ The simulation supports keyboard navigation and assistive technologies:
 
 ## PhET-iO Integration
 
-Fully instrumented for interactive activities and data collection:
-
 - Instrumentation includes stable identifiers for all key model elements and controls.
 - State snapshots capture essential model details, supporting session replay and synchronization.
 - Events emitted for significant particle-channel interactions, useful for data analysis or assessment.
@@ -117,8 +111,4 @@ Fully instrumented for interactive activities and data collection:
 
 ## Performance and Optimization
 
-Performance considerations include:
-
-- Canvas-based sprite rendering for particles, avoiding excessive DOM elements.
-- Particle counts capped to maintain smooth animation.
-- Simplified physics (minimal particle-particle collision checks) to reduce computation.
+- Canvas-based sprite rendering for non-interactive particles and phospholipids
