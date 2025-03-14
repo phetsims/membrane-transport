@@ -48,6 +48,12 @@
 
   a11y: {
 
+    observationWindow: {
+
+      // TODO (JG): Is this in the right place?
+      accessibleName: 'Grab a protein to re-order along zoomed-in view of membrane.'
+    },
+
     accordionBoxGroup: {
       accessibleHelpText: 'Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane.',
 
@@ -58,12 +64,12 @@
 
       leakageChannelsAccordionBox: {
         sodiumIonNaPlusLeakage: 'Sodium Ion NA plus, Leakage',
-        potassiumIonKPlusLeakage: 'Potassium Ion K plus, Leakage',
+        potassiumIonKPlusLeakage: 'Potassium Ion K plus, Leakage'
       },
 
       voltageGatedChannelsAccordionBox: {
         sodiumIonNaPlusVoltageGated: 'Sodium Ion NA plus, Voltage-gated',
-        potassiumIonKPlusVoltageGated: 'Potassium Ion K plus, Voltage-gated',
+        potassiumIonKPlusVoltageGated: 'Potassium Ion K plus, Voltage-gated'
       },
 
       activeTransportersAccordionBox: {
@@ -72,7 +78,7 @@
       },
 
       toolAccessibleHelpText: 'Grab to pull protein to the membrane.'
-    },
+    }
 
     // Channels in the toolbox
 

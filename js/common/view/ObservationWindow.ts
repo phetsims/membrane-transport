@@ -4,17 +4,18 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
+import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
@@ -62,7 +63,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     super( {
       children: [ clipNode, frameNode ],
-      accessibleName: 'Grab a protein to re-order along zoomed-in view of membrane.' // TODO: i18n
+      accessibleName: MembraneChannelsStrings.a11y.observationWindow.accessibleNameStringProperty
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
@@ -99,11 +100,18 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     // NOTE: Duplication with SoluteBarChartsAccordionBox
     const TEXT_MARGIN = 3;
     const textOptions = { fontSize: 13, maxWidth: 200 };
-    const panelOptions = { right: MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN, stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
-    const outsideText = new Panel( new Text( membraneChannelsStrings.outsideStringProperty, textOptions ), combineOptions<PanelOptions>( {}, panelOptions, { top: TEXT_MARGIN } ) );
-    const insideText = new Panel( new Text( membraneChannelsStrings.insideStringProperty, textOptions ), combineOptions<PanelOptions>( {}, panelOptions, { bottom: MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN } ) );
+    const panelOptions = { stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
+    const outsideText = new Panel( new Text( membraneChannelsStrings.outsideStringProperty, textOptions ), panelOptions );
+    const insideText = new Panel( new Text( membraneChannelsStrings.insideStringProperty, textOptions ), panelOptions );
 
-    // TODO: Manual Constraint to keep text aligned when it changes length
+    ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
+      outsideTextProxy.top = TEXT_MARGIN;
+      outsideTextProxy.right = MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
+    } );
+    ManualConstraint.create( this, [ insideText ], insideTextProxy => {
+      insideTextProxy.bottom = MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN;
+      insideTextProxy.right = MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
+    } );
 
     this.addChild( outsideText );
     this.addChild( insideText );

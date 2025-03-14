@@ -196,7 +196,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
 
-        // TODO: i18n after the design is finalized
+        // TODO (JG): i18n after the design is finalized. How would you modularize this in the fluent file?
         const phrase1 = `Grabbed. Above membrane. Slot ${this.currentSelection!.currentSlotIndex + 1} of ${SLOT_COUNT}.`;
         const phrase2 = 'Move protein with W, A, S, or D key. Space to release.';
 
@@ -368,7 +368,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           }
         }
 
-        // TODO: comment these back out if the parent does part of the work. https://github.com/phetsims/scenery/issues/1692
         groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
         groupSelectModel.isKeyboardFocusedProperty.value = true;
 
