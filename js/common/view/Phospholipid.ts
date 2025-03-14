@@ -99,12 +99,6 @@ export default class Phospholipid {
         { x: anchorXRight, y: anchorY - spacing * 6 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
       ]
     } );
-
-    // Initialize at correct positions, takes around 2.5% startup time on macbook air m1 + chrome
-    // TODO: randomize on init to make this unnecessary
-    for ( let i = 0; i < 60; i++ ) {
-      this.step( 1 / 60 );
-    }
   }
 
   /**
