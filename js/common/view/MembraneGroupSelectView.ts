@@ -118,9 +118,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               this.currentSelection!.currentSlotIndex = newIndex;
 
               // alert the user of the new position
-              const channelType = this.membraneChannelsModel.getSlotForIndex( newIndex ).channelType;
-              const contentsString = channelType === null ? 'empty' : getBriefProteinName( channelType );
-              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${contentsString}`;
+              // Only call this method if there is a channel
+              const getContentsString = () => {
+                const channelType = this.membraneChannelsModel.getSlotForIndex( newIndex ).channelType;
+                const contentsString = channelType === null ? 'empty' : getBriefProteinName( channelType );
+                return contentsString;
+              };
+              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
               alerter.alert( message );
             }
           }
