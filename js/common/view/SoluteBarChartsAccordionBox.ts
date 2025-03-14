@@ -8,7 +8,7 @@ import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../membraneChannels.js';
-import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
@@ -64,8 +64,8 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     // NOTE: Duplication with ObservationWindow
     const TEXT_MARGIN = 3;
     const textOptions = { fontSize: 13, left: TEXT_MARGIN, maxWidth: 200 };
-    const outsideText = new Text( membraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
-    const insideText = new Text( membraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
+    const outsideText = new Text( MembraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
+    const insideText = new Text( MembraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
 
     contentNode.addChild( outsideText );
     contentNode.addChild( insideText );

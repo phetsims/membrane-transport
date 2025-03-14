@@ -14,7 +14,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
@@ -29,7 +28,7 @@ export default class SolutesPanel extends Node {
   public constructor( featureSet: MembraneChannelsFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();
 
-    const title = new Text( membraneChannelsStrings.solutesStringProperty, {
+    const title = new Text( MembraneChannelsStrings.solutesStringProperty, {
       fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE,
       maxWidth: 200
     } );

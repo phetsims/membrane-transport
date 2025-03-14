@@ -16,7 +16,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import membraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import LigandNode from './LigandNode.js';
@@ -101,8 +100,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     const TEXT_MARGIN = 3;
     const textOptions = { fontSize: 13, maxWidth: 200 };
     const panelOptions = { stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
-    const outsideText = new Panel( new Text( membraneChannelsStrings.outsideStringProperty, textOptions ), panelOptions );
-    const insideText = new Panel( new Text( membraneChannelsStrings.insideStringProperty, textOptions ), panelOptions );
+    const outsideText = new Panel( new Text( MembraneChannelsStrings.outsideStringProperty, textOptions ), panelOptions );
+    const insideText = new Panel( new Text( MembraneChannelsStrings.insideStringProperty, textOptions ), panelOptions );
 
     ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
       outsideTextProxy.top = TEXT_MARGIN;
