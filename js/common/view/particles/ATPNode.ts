@@ -4,7 +4,7 @@ import Shape from '../../../../../kite/js/Shape.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import RadialGradient from '../../../../../scenery/js/util/RadialGradient.js';
-import membraneChannelsColors from '../../../common/MembraneChannelsColors.js';
+import MembraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 
 
@@ -24,8 +24,8 @@ export default class ATPNode extends Node {
     const gradient = new RadialGradient(
       20, 15, 2,
       20, 15, 24 )
-      .addColorStop( 0, membraneChannelsColors.atpColorProperty.value.colorUtilsDarker( 0 ).toCSS() )
-      .addColorStop( 0.7, membraneChannelsColors.atpColorProperty.value.colorUtilsBrighter( 0.9 ).toCSS() );
+      .addColorStop( 0, MembraneChannelsColors.atpColorProperty.value.colorUtilsDarker( 0 ).toCSS() )
+      .addColorStop( 0.7, MembraneChannelsColors.atpColorProperty.value.colorUtilsBrighter( 0.9 ).toCSS() );
     super( {
       children: [
         new Path( shape, {

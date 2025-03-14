@@ -11,7 +11,7 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannelsColors from '../../common/MembraneChannelsColors.js';
+import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../membraneChannels.js';
 
 /**
@@ -110,20 +110,20 @@ const line3EndProperty = new Vector2Property( new Vector2( ${Utils.roundSymmetri
 
     // Solid blue shape at the bottom
     this.addChild( new Path( shapeProperty, {
-      fill: membraneChannelsColors.insideCellColorProperty,
+      fill: MembraneChannelsColors.insideCellColorProperty,
       stroke: null
     } ) );
 
     // Orange outer heads
     this.addChild( new Path( shapeProperty, {
       lineWidth: 13,
-      stroke: membraneChannelsColors.phospholipidHeadColorProperty
+      stroke: MembraneChannelsColors.phospholipidHeadColorProperty
     } ) );
 
     // Pink inner tails
     this.addChild( new Path( shapeProperty, {
       lineWidth: 4,
-      stroke: membraneChannelsColors.phospholipidTailColorProperty
+      stroke: MembraneChannelsColors.phospholipidTailColorProperty
     } ) );
 
     if ( phet.chipper.queryParameters.dev ) {

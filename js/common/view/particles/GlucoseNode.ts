@@ -4,7 +4,7 @@ import Shape from '../../../../../kite/js/Shape.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import RadialGradient from '../../../../../scenery/js/util/RadialGradient.js';
-import membraneChannelsColors from '../../../common/MembraneChannelsColors.js';
+import MembraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 
 /**
@@ -52,8 +52,8 @@ export default class GlucoseNode extends Node {
       .close();
 
     const gradient = new RadialGradient( 0, 0, 2, 0, 0, radiusX )
-      .addColorStop( 0, membraneChannelsColors.glucoseColorProperty.value.colorUtilsDarker( 0.3 ).toCSS() )
-      .addColorStop( 0.7, membraneChannelsColors.glucoseColorProperty.value.colorUtilsBrighter( 0.8 ).toCSS() );
+      .addColorStop( 0, MembraneChannelsColors.glucoseColorProperty.value.colorUtilsDarker( 0.3 ).toCSS() )
+      .addColorStop( 0.7, MembraneChannelsColors.glucoseColorProperty.value.colorUtilsBrighter( 0.8 ).toCSS() );
     super( {
       children: [
         new Path( shape, {
