@@ -72,6 +72,7 @@ type MoveToLigandBindingLocationMode = {
 type EnteringChannelMode = {
   type: 'enteringChannel';
   slot: Slot;
+  direction: 'inward' | 'outward';
 };
 
 type SheddingCagedWaterMoleculesMode = {
@@ -224,7 +225,8 @@ export default class Particle<T extends ParticleType> {
       if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
         this.mode = {
           type: 'enteringChannel',
-          slot: this.mode.slot
+          slot: this.mode.slot,
+          direction: this.position.y > 0 ? 'inward' : 'outward'
         };
       }
     }
@@ -251,13 +253,15 @@ export default class Particle<T extends ParticleType> {
       }
     }
     else if ( this.mode.type === 'enteringChannel' ) {
-      const maxStepSize = typicalSpeed * dt;
       const direction = this.position.y > 0 ? -1 : 1;
-      this.position.y += direction * maxStepSize;
+      const thresholdY = direction === -1
+                         ? MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2
+                         : MembraneChannelsConstants.MEMBRANE_BOUNDS.minY + this.dimension.height / 2;
 
-      // TODO: Add support for approaching from inside/outside membrane
-      const thresholdY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2;
-      if ( Math.abs( this.position.y ) <= thresholdY ) {
+      this.position.y += direction * typicalSpeed * dt;
+
+      if ( ( direction === -1 && this.position.y <= thresholdY ) ||
+           ( direction === 1 && this.position.y >= thresholdY ) ) {
         this.mode = {
           type: 'sheddingCagedWaterMolecules',
           slot: this.mode.slot
