@@ -112,9 +112,15 @@ export default class MembraneChannelsScreenView extends ScreenView {
     this.addChild( resetAllButton );
 
     const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+      flowBoxSpacing: 12,
       timeSpeedProperty: model.timeSpeedProperty,
       playPauseStepButtonOptions: {
         includeStepForwardButton: false
+      },
+      speedRadioButtonGroupOptions: {
+        labelOptions: {
+          maxWidth: 90
+        }
       },
       tandem: options.tandem.createTandem( 'timeControlNode' )
     } );
