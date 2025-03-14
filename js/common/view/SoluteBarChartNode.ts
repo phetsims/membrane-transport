@@ -133,7 +133,7 @@ export default class SoluteBarChartNode extends Node {
     this.stepEmitter.addListener( dt => {
 
       // Net positive is into the cell
-      // TODO: How to normalize? When done, replace MAX_ARROW_HEIGHT with the normalized value.
+      // TODO (design): How to normalize? When done, replace MAX_ARROW_HEIGHT with the normalized value.
       const smoothedNet = model.getRecentSoluteFluxWithSmoothing( soluteType );
       if ( Math.abs( smoothedNet ) > 0.01 ) {
         arrow.visible = true;
