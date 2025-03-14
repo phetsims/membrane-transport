@@ -7,7 +7,6 @@ import RadialGradient from '../../../../../scenery/js/util/RadialGradient.js';
 import membraneChannelsColors from '../../../common/MembraneChannelsColors.js';
 import membraneChannels from '../../../membraneChannels.js';
 
-
 /**
  * The Glucose molecule. Does not rotate. A hexagon drawn with a spherical gradient radiating out from the center.
  * The radius is defined as the distance from the center to the left or right edge of the hexagon.
