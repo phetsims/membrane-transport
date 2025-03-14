@@ -48,7 +48,6 @@ export default class SoluteBarChartNode extends Node {
     // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
 
     // TODO: Consider creating a utility function for thresholding.
-    // TODO: Consider building that into Fluent directly???
 
     // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference.
     //   What if the description simply described the mmagnitude of the outside bar and the inside bar?
@@ -76,7 +75,7 @@ export default class SoluteBarChartNode extends Node {
 
     super( {
 
-      // TODO: Eliminate the clip area once we are sure everything remains in bounds?
+      // Gracefully prevent anything from being drawn outside of the box
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
 
       // TODO: Pass through options?
@@ -91,7 +90,7 @@ export default class SoluteBarChartNode extends Node {
     const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, { fill: 'red', opacity: 0 } );
 
     const icon = getParticleNode( soluteType );
-    icon.setScaleMagnitude( 0.65 ); // TODO: Same scale used in SolutesPanel (duplication)?
+    icon.setScaleMagnitude( MembraneChannelsConstants.PARTICLE_NODE_ICON_SCALE );
     icon.left = 8;
     icon.bottom = BOX_HEIGHT / 2 - 3;
 

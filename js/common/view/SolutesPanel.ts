@@ -49,7 +49,7 @@ export default class SolutesPanel extends Node {
         createNode: () => {
 
           const icon = getParticleNode( soluteType );
-          icon.setScaleMagnitude( 0.65 ); // TODO: Match with SoluteBarChartNode?
+          icon.setScaleMagnitude( MembraneChannelsConstants.PARTICLE_NODE_ICON_SCALE );
 
           return alignGroup.createBox( new VBox( {
             spacing: 3,

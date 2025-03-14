@@ -69,10 +69,8 @@ export default class ObservationWindowChannelLayer extends Node {
     } );
   }
 
-  // TODO: IS this brittle? At least we need a way to update it when the array changes.
+  // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
   public getChannelNodes(): SlottedNode[] {
-
-    // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.slots.indexOf( a.slot ) - this.model.slots.indexOf( b.slot );
     } );

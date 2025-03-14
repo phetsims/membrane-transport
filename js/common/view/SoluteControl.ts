@@ -67,7 +67,7 @@ export default class SoluteControl extends Panel {
         let amountTheUserCouldRemove = countOnThisSide;
         let amountTheUserCouldAdd = MembraneChannelsConstants.MAX_SOLUTE_COUNT - totalCount;
 
-        // TODO: Is the total exceeding the MAX indicative of an inconsistent transient value?
+        // TODO (JG): Is the total exceeding the MAX indicative of an inconsistent transient value?
         if ( amountTheUserCouldAdd < 0 ) {
           amountTheUserCouldAdd = 0;
         }

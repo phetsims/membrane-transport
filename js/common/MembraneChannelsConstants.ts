@@ -76,6 +76,7 @@ export default class MembraneChannelsConstants {
   );
 
   public static readonly PANEL_TITLE_FONT_SIZE = 18;
+  public static readonly PARTICLE_NODE_ICON_SCALE = 0.65;
 }
 
 membraneChannels.register( 'MembraneChannelsConstants', MembraneChannelsConstants );
