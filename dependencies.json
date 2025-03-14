@@ -1,5 +1,5 @@
 {
-  "comment": "# membrane-channels 1.0.0-dev.3 Fri Mar 14 2025 15:51:16 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# membrane-channels 1.0.0-dev.4 Fri Mar 14 2025 16:06:39 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "main"
@@ -29,7 +29,7 @@
     "branch": "main"
   },
   "membrane-channels": {
-    "sha": "42efd6413e4f294ac1795543aa64dbc10d81508c",
+    "sha": "218849fecc610276c211c92320174b4af8b4e323",
     "branch": "main"
   },
   "perennial-alias": {
