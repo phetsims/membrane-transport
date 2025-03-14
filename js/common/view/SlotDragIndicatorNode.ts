@@ -15,7 +15,7 @@ export default class SlotDragIndicatorNode extends Rectangle {
 
   public constructor( public readonly slot: Slot, modelViewTransform: ModelViewTransform2 ) {
 
-    // TODO: Model bounds? We decided proteins will have the same model width footprint, but that should be factored out.
+    // In view coordinates, the area for a slot that can contain a membrane channel
     super( 0, 0, 65, 90, 15, 10, {
       center: modelViewTransform.modelToViewXY( slot.position, 0 ),
       stroke: 'blue',
