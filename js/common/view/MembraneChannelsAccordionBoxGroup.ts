@@ -88,7 +88,7 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
 
       return new AccordionBox( contentAlignGroup.createBox( content ), combineOptions<AccordionBoxOptions>( {
         expandedDefaultValue: config.expanded,
-        titleNode: titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize } ), { xAlign: 'left' } ),
+        titleNode: titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize, maxWidth: 150 } ), { xAlign: 'left' } ),
         tandem: tandem.createTandem( config.tandemName )
       }, accordionBoxOptions ) );
     };
@@ -208,7 +208,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       spacing: 0,
       children: [
         new Text( MembraneChannelsStrings.membraneProteinsStringProperty, {
-          fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE
+          fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE,
+          maxWidth: 150
         } ),
 
         ...interleaveHSeparators( accordionBoxes )

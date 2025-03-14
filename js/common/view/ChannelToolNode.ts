@@ -13,7 +13,7 @@ import ChannelType from '../model/channels/ChannelType.js';
 import getChannelNode from './channels/getChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
-const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ) };
+const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ), maxWidth: 50 };
 
 /**
  * In the "Membrane Channels" accordion box, show a tool icon that can be dragged to create a new channel.

@@ -42,25 +42,18 @@ export default class MembranePotentialPanel extends Panel {
       spacing: 10,
       align: 'left',
       children: [
-        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneChannelsStrings.membranePotentialLabelsStringProperty ), {
+        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneChannelsStrings.membranePotentialLabelsStringProperty, {
+          maxWidth: 140
+        } ), {
           tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' )
         } ),
-        new Text( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty ),
+
+        // TODO (JG): mv casing? CM and AV recently had a GitHub issue about string key casing
+        new Text( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty, {
+          maxWidth: 160
+        } ),
 
         membraneVoltagePotentialRadioButtonGroup
-
-        // new NumberControl( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty, model.membraneVoltagePotentialProperty, new Range( -70, 30 ), {
-        //   delta: 50,
-        //   sliderOptions: {
-        //
-        //     majorTicks: [
-        //       { value: -70, label: new Text( '-70' ) },
-        //       { value: -50, label: new Text( '-50' ) },
-        //       { value: +30, label: new Text( '+30' ) }
-        //     ]
-        //   },
-        //   tandem: tandem.createTandem( 'membraneVoltagePotentialNumberControl' )
-        // } )
       ]
     } );
     super( content, {
