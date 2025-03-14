@@ -52,7 +52,6 @@ export default class GlucoseNode extends Node {
 
       .close();
 
-    // TODO: Should we squash the path vertically then add an unsquashed stroke to get the ellipse gradient?
     const gradient = new RadialGradient( 0, 0, 2, 0, 0, radiusX )
       .addColorStop( 0, membraneChannelsColors.glucoseColorProperty.value.colorUtilsDarker( 0.3 ).toCSS() )
       .addColorStop( 0.7, membraneChannelsColors.glucoseColorProperty.value.colorUtilsBrighter( 0.8 ).toCSS() );

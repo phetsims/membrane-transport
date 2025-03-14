@@ -54,8 +54,10 @@ for ( let i = 0; i < sodiumClosedNegative70Segments.length; i++ ) {
   potassiumInterpolateNegative50ToPositive30[ i ] = window.interpolatePath( potassiumClosedPositive30Segments[ i ], potassiumOpenSegments[ i ] );
 }
 
+type TargetVoltage = '-70' | '-50' | '30';
+
 // Map string voltage values to numerical values for interpolation
-const voltageValues: Record<string, number> = {
+const voltageValues: Record<TargetVoltage, number> = {
   '-70': -70,
   '-50': -50,
   30: 30
@@ -67,9 +69,7 @@ const RANGE_NEGATIVE_50_TO_POSITIVE_30 = voltageValues[ '30' ] - voltageValues[ 
 
 export default class VoltageGatedChannelNode extends Node {
 
-  // TODO: Factor out types. Do we like strings? Do we want -70mV string?
-  // TODO: Or a type like 'name: string; value: number'? But we want it to work well for PhET-iO
-  private targetVoltage: '-70' | '-50' | '30' = '-70';
+  private targetVoltage: TargetVoltage = '-70';
   private currentVoltageValue = -70;
 
   private readonly segments: Path[] = [];
@@ -80,7 +80,7 @@ export default class VoltageGatedChannelNode extends Node {
     // TODO: This is a workaround to center the channel in the view, because the entire Node is centered
     this.addChild( new Rectangle( 115, 385, 50, 85, { fill: 'white', opacity: 0 } ) );
 
-    // TODO: Explain this part
+    // Draw a segment for each part of the SVG path
     sodiumClosedNegative70Segments.forEach( ( segment, index ) => {
       const segmentPath = new Path( new Shape( segment ).transformed( Matrix3.translation( 0, 100 ) ), {
         stroke: 'black',
