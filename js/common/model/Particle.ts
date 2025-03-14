@@ -208,7 +208,8 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode.type === 'ligandBound' ) {
 
-      // TODO: Accumulate elapsed time for a bound ligand, so it can detach after a certain amount of time. This code is already elsewhere, but it seems like it should be here.
+      // The LigandGatedChannel is responsible for tracking the time bound, so it can detach after a certain amount of time.
+      // Therefore, nothing to do here (particle remains stationary while bound).
     }
     else if ( this.mode.type === 'moveToCenterOfChannel' ) {
 
@@ -403,11 +404,18 @@ export default class Particle<T extends ParticleType> {
           // Check if this slot has the correct type of ligand-gated channel
           if ( slot.channelType === channelType ) {
 
-            // Check that it's actually a LigandGatedChannel and is available for binding
-            // TODO (design): Should we also check to see if another ligand is already moving to this slot?
+            // Check that it's actually a LigandGatedChannel and is available for binding, and no other ligand is headed that way
             if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
-              this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
-              return;
+
+              // check that no other ligand is already moving to that slot.
+              // TODO (collaboration): This isn't working for unknown reasons.
+              const otherLigand = model.solutes.find( solute => ( solute.mode.type === 'moveToLigandBindingLocation' ) && solute.mode.slot === slot );
+              // console.log( 'other ligand headed that way?', otherLigand );
+
+              if ( !otherLigand ) {
+                this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
+                return;
+              }
             }
           }
         }

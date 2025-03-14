@@ -90,7 +90,8 @@ export default class ChannelDragNode extends Node {
       } );
     };
 
-    // TODO: MK suggested RichDragListener which also has keyboard support, or use SoundRichDragListener?
+    // Mouse drag listener while dragging a channel with mouse/touch.
+    // Do not use RichDragListener or SoundRichDragListener because the keyboard interaction is mediated by the MembraneGroupSelectView
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
@@ -155,7 +156,7 @@ export default class ChannelDragNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    // TODO: Interactive highlight?
+    // TODO (JG): Interactive highlight?
     // this.setInteractiveHighlight( new HighlightFromNode( this ) );
   }
 
