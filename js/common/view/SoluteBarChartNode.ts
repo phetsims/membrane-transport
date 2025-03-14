@@ -123,7 +123,7 @@ export default class SoluteBarChartNode extends Node {
       centerY: BOX_HEIGHT / 2
     } );
 
-    // TODO: (JG/SR) Use or remove this code
+    // TODO (JG/SR): Use or remove this code
     // // Update the arrow when the passage history changes - Discrete version
     // this.stepEmitter.addListener( dt => {
     //   // Net positive is into the cell
