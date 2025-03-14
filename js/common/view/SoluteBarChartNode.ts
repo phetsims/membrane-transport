@@ -95,7 +95,8 @@ export default class SoluteBarChartNode extends Node {
     const text = new RichText( getSoluteTypeString( soluteType ), {
       font: new PhetFont( 10 ),
       centerX: icon.centerX,
-      top: BOX_HEIGHT / 2 + 3
+      top: BOX_HEIGHT / 2 + 3,
+      maxWidth: BOX_WIDTH * 0.8
     } );
     const origin = new Path( Shape.lineSegment( 40, BOX_HEIGHT / 2, BOX_WIDTH, BOX_HEIGHT / 2 ), {
       stroke: 'black', lineWidth: 2
@@ -122,6 +123,7 @@ export default class SoluteBarChartNode extends Node {
       centerY: BOX_HEIGHT / 2
     } );
 
+    // TODO: (JG/SR) Use or remove this code
     // // Update the arrow when the passage history changes - Discrete version
     // this.stepEmitter.addListener( dt => {
     //   // Net positive is into the cell
