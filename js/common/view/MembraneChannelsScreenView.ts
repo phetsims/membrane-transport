@@ -254,7 +254,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'outside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', false, 'outside' ) } );
 
-    // TODO: Some of these inside ones don't work
+    // From inside the cell
     KeyboardListener.createGlobal( this, { keys: [ 'a' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', true, 'inside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 's' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'inside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'd' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'inside' ) } );
