@@ -316,6 +316,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
    * Called when the user presses a membrane protein in the accordion box to create one via keyboard.
    */
   public createFromKeyboard( type: ChannelType, origin: Slot | ChannelToolNode ): ChannelDragNode {
+
     // Move over the first available slot
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
     const slotX = slot.position;
@@ -323,10 +324,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
     const modelPoint = new Vector2( slotX, y );
 
     const channelDragNode = this.createChannelDragNode( modelPoint, type, origin );
-
-    // TODO: once keyboarded, prevent mouse+touch, or do this on init
-    // channelDragNode.pickable = false; // keyboard only
-
+    channelDragNode.pickable = false; // keyboard only
     return channelDragNode;
   }
 
