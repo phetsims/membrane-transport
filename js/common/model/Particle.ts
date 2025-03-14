@@ -11,7 +11,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import Utils from '../../../../dot/js/Utils.js';
+import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
@@ -123,7 +123,7 @@ type ParticleMode =
  * Gets the current interpolated direction from a random walk mode, based on how far the particle has turned.
  */
 function getInterpolatedDirection( mode: RandomWalkMode ): Vector2 {
-  const alpha = Utils.clamp( mode.turnElapsed / mode.turnDuration, 0, 1 );
+  const alpha = clamp( mode.turnElapsed / mode.turnDuration, 0, 1 );
   return mode.currentDirection.blend( mode.targetDirection, alpha ).normalized();
 }
 
@@ -378,7 +378,7 @@ export default class Particle<T extends ParticleType> {
 
     // 2) Accumulate turn time and compute the interpolated direction.
     randomWalk.turnElapsed += dt;
-    const alpha = Utils.clamp( randomWalk.turnElapsed / randomWalk.turnDuration, 0, 1 );
+    const alpha = clamp( randomWalk.turnElapsed / randomWalk.turnDuration, 0, 1 );
     const direction = randomWalk.currentDirection.blend( randomWalk.targetDirection, alpha );
 
     // 3) Check for collisions with the membrane.
