@@ -350,7 +350,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
           if ( grabbedNode.origin instanceof Slot ) {
 
-            // TODO: What if something else moved there in the meantime?
+            // TODO (JG/SR): What if something else moved there in the meantime?
+            // TODO (JG/SR): If you are dragging one with the mouse when you tab to the group, the highlight region is wrong.
             grabbedNode.origin.channelType = grabbedNode.type;
 
             // Select the index corresponding to the item just dropped
@@ -362,6 +363,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             alerter.alert( MembraneChannelsMessages.canceledBackInMembraneMessageProperty );
           }
           else {
+
             // Dropped into toolbox
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
             alerter.alert( MembraneChannelsMessages.releasedBackInToolboxMessageProperty );
