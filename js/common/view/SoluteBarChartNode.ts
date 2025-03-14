@@ -44,10 +44,8 @@ export default class SoluteBarChartNode extends Node {
     const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
 
     // If time passes, the flux will change.
-    // TODO: This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive the description?
+    // TODO (JG): This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive the description?
     // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
-
-    // TODO: Consider creating a utility function for thresholding.
 
     // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference.
     //   What if the description simply described the mmagnitude of the outside bar and the inside bar?
@@ -64,13 +62,14 @@ export default class SoluteBarChartNode extends Node {
              'aLotLess';
     } );
 
+    // TODO (design): i18n
     const sizeDescriptionProperty = new StringProperty( 'small' );
     const directionDescriptionProperty = new StringProperty( 'upward' );
 
     const descriptionProperty = new PatternMessageProperty( MembraneChannelsMessages.barChartPatternMessageProperty, {
       amount: soluteDifferenceProperty,
       size: sizeDescriptionProperty,
-      direction: 'upward' // TODO: This is a placeholder
+      direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up
     } );
 
     super( {
