@@ -27,6 +27,7 @@ export default class ChannelToolNode extends VBox {
 
   public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneChannelsScreenView ) {
 
+    // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const channelNode = getChannelNode( type, null );
     channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
