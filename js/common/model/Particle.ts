@@ -471,7 +471,7 @@ export default class Particle<T extends ParticleType> {
         if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
 
           // check that no other ligand is already moving to that slot.
-          // TODO (collaboration): This isn't working for unknown reasons.
+          // TODO (JG/SR): This isn't working for unknown reasons.
           const otherLigand = model.solutes.find( solute => ( solute.mode.type === 'moveToLigandBindingLocation' ) && solute.mode.slot === slot );
           // console.log( 'other ligand headed that way?', otherLigand );
 
