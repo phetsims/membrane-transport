@@ -16,7 +16,7 @@ export default class ThumbnailNode extends Node {
   public constructor( centerX: number, centerY: number, observationWindowBounds: Bounds2 ) {
     super();
 
-    // TODO: Same aspect ratio as observation window, use to determine the height
+    // Same aspect ratio as observation window, use to determine the height
     const width = 50;
     const height = width * observationWindowBounds.height / observationWindowBounds.width;
     const rectangle = new Rectangle( 0, 0, width, height, {

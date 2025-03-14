@@ -75,11 +75,10 @@ export default class SoluteBarChartNode extends Node {
 
     super( {
 
+      tandem: tandem,
+
       // Gracefully prevent anything from being drawn outside of the box
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
-
-      // TODO: Pass through options?
-      tandem: tandem,
 
       // pdom
       tagName: 'li',

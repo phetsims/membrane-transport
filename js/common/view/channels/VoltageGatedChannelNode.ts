@@ -62,9 +62,8 @@ const voltageValues: Record<string, number> = {
 };
 
 // Voltage range constants for interpolation
-// TODO: Compute from the values above.
-const RANGE_NEGATIVE_70_TO_NEGATIVE_50 = 20; // -50 - (-70) = 20
-const RANGE_NEGATIVE_50_TO_POSITIVE_30 = 80; // 30 - (-50) = 80
+const RANGE_NEGATIVE_70_TO_NEGATIVE_50 = voltageValues[ '-50' ] - voltageValues[ '-70' ];
+const RANGE_NEGATIVE_50_TO_POSITIVE_30 = voltageValues[ '30' ] - voltageValues[ '-50' ];
 
 export default class VoltageGatedChannelNode extends Node {
 

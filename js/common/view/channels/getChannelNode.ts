@@ -26,38 +26,26 @@ export default function( type: ChannelType, channel: Channel | null ): Node {
     return new LeakageChannelNode( type );
   }
   else if ( type === 'sodiumIonVoltageGatedChannel' ) {
-    if ( channel !== null ) {
-      affirm( channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
-    }
+    affirm( channel === null || channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
     return new VoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'potassiumIonVoltageGatedChannel' ) {
-    if ( channel !== null ) {
-      affirm( channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
-    }
+    affirm( channel === null || channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
     return new VoltageGatedChannelNode( type, channel );
   }
   else if ( type === 'sodiumIonLigandGatedChannel' ) {
-    if ( channel !== null ) {
-
-      // TODO: These affirms likely belong in the model
-      affirm( channel instanceof LigandGatedChannel, 'model for sodiumIonLigandGatedChannel must be LigandGatedChannel' );
-    }
+    affirm( channel === null || channel instanceof LigandGatedChannel, 'model for sodiumIonLigandGatedChannel must be LigandGatedChannel' );
     return new LigandGatedChannelNode( type, channel );
   }
   else if ( type === 'potassiumIonLigandGatedChannel' ) {
-    if ( channel !== null ) {
-      affirm( channel instanceof LigandGatedChannel, 'model for potassiumIonLigandGatedChannel must be LigandGatedChannel' );
-    }
+    affirm( channel === null || channel instanceof LigandGatedChannel, 'model for potassiumIonLigandGatedChannel must be LigandGatedChannel' );
     return new LigandGatedChannelNode( type, channel );
   }
   else if ( type === 'sodiumPotassiumPump' ) {
     return new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,0,255,0.2)', stroke: 'black', lineWidth: 1 } );
   }
   else if ( type === 'sodiumGlucoseCotransporter' ) {
-    if ( channel !== null ) {
-      affirm( channel instanceof SodiumGlucoseCotransporter, 'model for sodiumGlucoseCotransporter must be SodiumGlucoseCotransporter' );
-    }
+    affirm( channel === null || channel instanceof SodiumGlucoseCotransporter, 'model for sodiumGlucoseCotransporter must be SodiumGlucoseCotransporter' );
     return new SodiumGlucoseCotransporterNode( channel );
   }
   else {
