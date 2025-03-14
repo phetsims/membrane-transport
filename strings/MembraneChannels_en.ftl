@@ -149,3 +149,5 @@ releasedBackInToolbox = Released. Back in toolbox.
 
 # Indicate the select channel, for alerter
 selectedChannelInSlot = Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
+
+canceledBackInMembrane = Cancelled. Back in membrane.
