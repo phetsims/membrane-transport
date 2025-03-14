@@ -352,8 +352,6 @@ export default class Particle<T extends ParticleType> {
   /**
    * Step the particle along a random walk path, including bouncing off the membrane
    * (central horizontal band) and the bounding walls.
-   *
-   * TODO: Can this method be modularized/broken into smaller methods?
    */
   private stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
     const randomWalk = this.mode as RandomWalkMode;
@@ -420,51 +418,37 @@ export default class Particle<T extends ParticleType> {
       randomWalk.targetDirection.y = sign * Math.abs( randomWalk.targetDirection.y );
     }
 
-    // 4) Move the this according to the direction and speed
-    //    (do this AFTER membrane collisions are handled).
+    // Move the this according to the direction and speed
     this.position.x += direction.x * dt * typicalSpeed;
     this.position.y += direction.y * dt * typicalSpeed;
 
-    // 5) Now bounce off the 3 other walls in whichever bounding region we are in
-    //    (INSIDE_CELL_BOUNDS if y<0, or OUTSIDE_CELL_BOUNDS if y>0).
-    const boundingRegion = outsideOfCell ?
-                           MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS :
-                           MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+    // Now bounce off the 3 other walls in whichever bounding region we are in
+    const boundingRegion = outsideOfCell ? MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS : MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
 
     // Recompute thisBounds after the move
     const updatedBounds = this.getBounds();
 
-    // Collide with left wall
-    if ( updatedBounds.minX < boundingRegion.minX ) {
-      this.position.x += boundingRegion.minX - updatedBounds.minX;
-      direction.x = Math.abs( direction.x );
-      randomWalk.currentDirection.x = Math.abs( randomWalk.currentDirection.x );
-      randomWalk.targetDirection.x = Math.abs( randomWalk.targetDirection.x );
-    }
+    // Helper function to apply the adjustment to the specified axis
+    const applyAxisAdjustment = ( axis: 'x' | 'y', adjustment: { newPos: number; newDir: number } ) => {
+      this.position[ axis ] = adjustment.newPos;
+      direction[ axis ] = adjustment.newDir;
+      randomWalk.currentDirection[ axis ] = adjustment.newDir;
+      randomWalk.targetDirection[ axis ] = adjustment.newDir;
+    };
 
-    // Collide with right wall
-    if ( updatedBounds.maxX > boundingRegion.maxX ) {
-      this.position.x -= updatedBounds.maxX - boundingRegion.maxX;
-      direction.x = -Math.abs( direction.x );
-      randomWalk.currentDirection.x = -Math.abs( randomWalk.currentDirection.x );
-      randomWalk.targetDirection.x = -Math.abs( randomWalk.targetDirection.x );
-    }
+    // Adjust x-axis collision
+    const xAdjustment = Particle.adjustAxis( this.position.x, updatedBounds.minX, updatedBounds.maxX, boundingRegion.minX, boundingRegion.maxX, direction.x );
+    applyAxisAdjustment( 'x', xAdjustment );
 
-    // Collide with bottom wall
-    if ( updatedBounds.minY < boundingRegion.minY ) {
-      this.position.y += boundingRegion.minY - updatedBounds.minY;
-      direction.y = Math.abs( direction.y );
-      randomWalk.currentDirection.y = Math.abs( randomWalk.currentDirection.y );
-      randomWalk.targetDirection.y = Math.abs( randomWalk.targetDirection.y );
-    }
+    // Adjust y-axis collision
+    const yAdjustment = Particle.adjustAxis( this.position.y, updatedBounds.minY, updatedBounds.maxY, boundingRegion.minY, boundingRegion.maxY, direction.y );
+    applyAxisAdjustment( 'y', yAdjustment );
+  }
 
-    // Collide with top wall
-    if ( updatedBounds.maxY > boundingRegion.maxY ) {
-      this.position.y -= updatedBounds.maxY - boundingRegion.maxY;
-      direction.y = -Math.abs( direction.y );
-      randomWalk.currentDirection.y = -Math.abs( randomWalk.currentDirection.y );
-      randomWalk.targetDirection.y = -Math.abs( randomWalk.targetDirection.y );
-    }
+  private static adjustAxis( position: number, particleMin: number, particleMax: number, regionMin: number, regionMax: number, currentDir: number ): { newPos: number; newDir: number } {
+    return particleMin < regionMin ? ( { newPos: position + ( regionMin - particleMin ), newDir: Math.abs( currentDir ) } ) :
+           particleMax > regionMax ? ( { newPos: position - ( particleMax - regionMax ), newDir: -Math.abs( currentDir ) } ) :
+           ( { newPos: position, newDir: currentDir } );
   }
 
   /**
