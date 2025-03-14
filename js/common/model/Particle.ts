@@ -358,42 +358,31 @@ export default class Particle<T extends ParticleType> {
   private stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
     const randomWalk = this.mode as RandomWalkMode;
 
-    // 1) Possibly update direction choices.
     randomWalk.timeUntilNextDirection -= dt;
+
+    // Time for a new direction
     if ( randomWalk.timeUntilNextDirection <= 0 ) {
-
-      // Finalize currentDirection using interpolation.
       randomWalk.currentDirection = getInterpolatedDirection( randomWalk );
-
-      // Choose a new random target direction.
       randomWalk.targetDirection = Particle.createRandomUnitVector();
-
-      // Decide on a new turn duration.
       randomWalk.turnDuration = dotRandom.nextDoubleBetween( 0.05, 0.1 );
       randomWalk.turnElapsed = 0;
-
-      // Reset the time until the next direction change.
       randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME );
     }
 
-    // 2) Accumulate turn time and compute the interpolated direction.
+    // Accumulate turn time and compute the interpolated direction.
     randomWalk.turnElapsed += dt;
     const alpha = clamp( randomWalk.turnElapsed / randomWalk.turnDuration, 0, 1 );
     const direction = randomWalk.currentDirection.blend( randomWalk.targetDirection, alpha );
 
-    // 3) Check for collisions with the membrane.
     const thisBounds = this.getBounds();
-
-    // Are we above (y>0) or below (y<0) the membrane region?
     const outsideOfCell = this.position.y > 0;
 
     // Check each channel to for interaction
     for ( let i = 0; i < model.slots.length; i++ ) {
       const slot = model.slots[ i ];
-
       const channel = slot.channelProperty.value;
 
-      // If the particle is within a certain radial distance from the center of the channel, move it to the center.
+      // If the particle is within a certain radial distance from the center of the channel, it can interact with the channel
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
       if ( channel && distance < CAPTURE_RADIUS_PROPERTY.value ) {
@@ -406,44 +395,29 @@ export default class Particle<T extends ParticleType> {
 
     if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
-      if ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) {
-        if ( dotRandom.nextDouble() < 0.90 ) {
-          this.mode = {
-            type: 'passiveDiffusion',
-            direction: outsideOfCell ? 'inward' : 'outward',
-            slot: null
-          };
-          return;
-        }
+      // Check for passive diffusion for oxygen or carbon dioxide.
+      if ( ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 ) {
+        this.mode = {
+          type: 'passiveDiffusion',
+          direction: outsideOfCell ? 'inward' : 'outward',
+          slot: null
+        };
+        return;
       }
 
-      // Handle membrane collision by reflecting vertical motion.
-      if ( outsideOfCell ) {
+      // Determine the overlap and sign based on whether the entity is outside the cell.
+      const overlap = outsideOfCell ?
+                      MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY :
+                      thisBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
+      const sign = outsideOfCell ? 1 : -1;
 
-        // Overlap with the membrane from above
-        const overlap = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY;
+      // Push the entity back out of the membrane.
+      this.position.y += sign * overlap;
 
-        // push the this back out of the membrane
-        this.position.y += overlap;
-
-        // Reflect the motion upward
-        direction.y = Math.abs( direction.y );
-        randomWalk.currentDirection.y = Math.abs( randomWalk.currentDirection.y );
-        randomWalk.targetDirection.y = Math.abs( randomWalk.targetDirection.y );
-      }
-      else {
-
-        // Overlap with the membrane from below
-        const overlap = thisBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
-
-        // push the this back out of the membrane
-        this.position.y -= overlap;
-
-        // Reflect the motion downward
-        direction.y = -Math.abs( direction.y );
-        randomWalk.currentDirection.y = -Math.abs( randomWalk.currentDirection.y );
-        randomWalk.targetDirection.y = -Math.abs( randomWalk.targetDirection.y );
-      }
+      // Reflect the vertical motion
+      direction.y = sign * Math.abs( direction.y );
+      randomWalk.currentDirection.y = sign * Math.abs( randomWalk.currentDirection.y );
+      randomWalk.targetDirection.y = sign * Math.abs( randomWalk.targetDirection.y );
     }
 
     // 4) Move the this according to the direction and speed
