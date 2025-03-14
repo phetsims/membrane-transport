@@ -33,8 +33,6 @@ type Selection = {
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
-const releasedBackInToolbox = MembraneChannelsMessages.releasedBackInToolboxMessageProperty;
-
 /**
  * Keyboard interaction for channels on the membrane.
  *
@@ -50,6 +48,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   private isFirstGrab = true;
 
   private readonly groupSelectModel: GroupSelectModel<ItemModel>;
+
 
   public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
 
@@ -229,7 +228,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              alerter.alert( releasedBackInToolbox );
+              alerter.alert( MembraneChannelsMessages.releasedBackInToolboxMessageProperty );
             }
 
             view.keyboardDroppedMembraneChannel();
@@ -361,7 +360,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
 
             // Drop the item back into the toolbox
-            alerter.alert( releasedBackInToolbox );
+            alerter.alert( MembraneChannelsMessages.releasedBackInToolboxMessageProperty );
           }
         }
 
