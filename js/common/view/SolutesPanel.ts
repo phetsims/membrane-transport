@@ -56,10 +56,11 @@ export default class SolutesPanel extends Node {
             children: [
               new VStrut( 2 ),
               icon,
-              // TODO: The texts will be different size and different y position. Maybe they should share a maxWidth sort of thing?
               new RichText( getSoluteTypeString( soluteType ), {
                 font: new PhetFont( 14 ),
-                maxWidth: 100
+
+                // Reduced so that at max length, the radio buttons still take 2 rows x 3 columns
+                maxWidth: 53
               } ) ]
           } ) );
         }

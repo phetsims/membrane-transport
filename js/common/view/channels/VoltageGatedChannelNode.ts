@@ -77,7 +77,7 @@ export default class VoltageGatedChannelNode extends Node {
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
     super();
 
-    // TODO: This is a workaround to center the channel in the view, because the entire Node is centered
+    // TODO (JG/SR): This is a workaround to center the channel in the view, because the entire Node is centered
     this.addChild( new Rectangle( 115, 385, 50, 85, { fill: 'white', opacity: 0 } ) );
 
     // Draw a segment for each part of the SVG path
