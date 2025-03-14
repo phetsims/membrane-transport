@@ -122,11 +122,10 @@ export default class MembraneChannelsScreenView extends ScreenView {
           maxWidth: 90
         }
       },
-      tandem: options.tandem.createTandem( 'timeControlNode' )
+      tandem: options.tandem.createTandem( 'timeControlNode' ),
+      left: this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
+      bottom: this.layoutBounds.maxY - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
     } );
-
-    timeControlNode.left = this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
-    timeControlNode.bottom = this.layoutBounds.maxY - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( timeControlNode );
 
