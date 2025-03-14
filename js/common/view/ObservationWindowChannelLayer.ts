@@ -51,7 +51,6 @@ export default class ObservationWindowChannelLayer extends Node {
           // TODO: Borrowed from ChannelToolNode
           const channelNode = getChannelNode( type, slot.channelProperty.value );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
-
             slot.clear();
             view.createFromMouseDrag( event, type, slot );
           } ) );

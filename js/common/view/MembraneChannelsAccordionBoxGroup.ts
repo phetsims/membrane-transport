@@ -78,7 +78,6 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
               channel.channelType,
               channel.labelProperty,
               channel.accessibleNameProperty,
-              model,
               view
             );
             channelToolNodes.set( channel.channelType, channelToolNode );

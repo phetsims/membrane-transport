@@ -10,7 +10,6 @@ import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import ChannelType from '../model/channels/ChannelType.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import getChannelNode from './channels/getChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
@@ -26,7 +25,7 @@ export default class ChannelToolNode extends VBox {
   // So we can return ChannelDragNodes to its exact location
   public readonly channelNode: Node;
 
-  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, model: MembraneChannelsModel, view: MembraneChannelsScreenView ) {
+  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneChannelsScreenView ) {
 
     const channelNode = getChannelNode( type, null );
     channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
@@ -41,9 +40,7 @@ export default class ChannelToolNode extends VBox {
     } ) );
 
     this.addInputListener( {
-      click: () => {
-        view.forwardFromKeyboard( type, this );
-      }
+      click: () => view.forwardFromKeyboard( type, this )
     } );
 
     this.channelNode = channelNode;
