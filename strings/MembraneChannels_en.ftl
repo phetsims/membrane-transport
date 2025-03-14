@@ -146,3 +146,6 @@ currentDetailsInsideSoluteCount = { $insideSoluteCount } solute types inside;
 currentDetailsChannelCount = { $channelCount } transport channels;
 
 releasedBackInToolbox = Released. Back in toolbox.
+
+# Indicate the select channel, for alerter
+selectedChannelInSlot = Selected { $channelName } in slot { $slotIndex } of { $slotCount }.

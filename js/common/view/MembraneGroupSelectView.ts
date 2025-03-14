@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -159,8 +160,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
 
-            // TODO: i18n after design finalized
-            alerter.alert( `Selected ${channelName} in slot ${slotIndex + 1} of ${SLOT_COUNT}` );
+            alerter.alert( new PatternMessageProperty( MembraneChannelsMessages.selectedChannelInSlotMessageProperty, {
+              channelName: channelName,
+              slotIndex: slotIndex + 1,
+              slotCount: SLOT_COUNT
+            } ) );
           }
         }
       }
