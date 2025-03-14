@@ -13,6 +13,7 @@ import ChannelType from '../model/channels/ChannelType.js';
 import getChannelNode from './channels/getChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
+// TODO (JG): How to deal with these text getting too tall from multiline? Or is that only a problem in the stringTest=dynamic?
 const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ), maxWidth: 50 };
 
 /**
