@@ -18,6 +18,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import Channel from './channels/Channel.js';
 import ChannelType from './channels/ChannelType.js';
 import LigandGatedChannel from './channels/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './channels/SodiumGlucoseCotransporter.js';
@@ -396,73 +397,9 @@ export default class Particle<T extends ParticleType> {
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
       if ( channel && distance < CAPTURE_RADIUS_PROPERTY.value ) {
-
-        // Check for ligand interaction with ligand-gated channels
-        if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
-
-          // Match ligandA with sodium channels and ligandB with potassium channels
-          const channelType = this.type === 'ligandA' ?
-                              'sodiumIonLigandGatedChannel' :
-                              'potassiumIonLigandGatedChannel';
-
-          // Check if this slot has the correct type of ligand-gated channel
-          if ( slot.channelType === channelType ) {
-
-            // Check that it's actually a LigandGatedChannel and is available for binding, and no other ligand is headed that way
-            if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
-
-              // check that no other ligand is already moving to that slot.
-              // TODO (collaboration): This isn't working for unknown reasons.
-              const otherLigand = model.solutes.find( solute => ( solute.mode.type === 'moveToLigandBindingLocation' ) && solute.mode.slot === slot );
-              // console.log( 'other ligand headed that way?', otherLigand );
-
-              if ( !otherLigand ) {
-                this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
-                return;
-              }
-            }
-          }
-        }
-
-        // Check for sodium and potassium ions interacting with leakage channels.
-        const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
-        const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
-
-        if ( channel.isOpenProperty.value && model.isChannelSoluteFree( slot ) ) {
-          if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
-
-          if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.channelType! ) ) {
-            this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-            return;
-          }
-        }
-
-        if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumGlucoseCotransporter' ) {
-
-          // pick an open site on the channel.
-          const isLeftOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' || solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) && solute.mode.slot === slot && solute.mode.site === 'left' ) === undefined;
-          const isRightOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' || solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) && solute.mode.slot === slot && solute.mode.site === 'right' ) === undefined;
-
-          const availableSites: Array<'left' | 'right'> = [];
-          if ( isLeftOpen ) {
-            availableSites.push( 'left' );
-          }
-          if ( isRightOpen ) {
-            availableSites.push( 'right' );
-          }
-
-          if ( availableSites.length > 0 ) {
-            const site = dotRandom.sample( availableSites );
-
-            if ( this.type === 'sodiumIon' && channel instanceof SodiumGlucoseCotransporter ) {
-              this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: site };
-              return;
-            }
-          }
-
+        const interactedWithChannel = this.handleChannelInteractionDuringRandomWalk( slot, channel, model, outsideOfCell );
+        if ( interactedWithChannel ) {
+          return;
         }
       }
     }
@@ -554,6 +491,82 @@ export default class Particle<T extends ParticleType> {
       randomWalk.currentDirection.y = -Math.abs( randomWalk.currentDirection.y );
       randomWalk.targetDirection.y = -Math.abs( randomWalk.targetDirection.y );
     }
+  }
+
+  /**
+   * During randomWalk, check for interactions with channels.
+   */
+  private handleChannelInteractionDuringRandomWalk( slot: Slot, channel: Channel, model: MembraneChannelsModel, outsideOfCell: boolean ): boolean {
+
+    // Check for ligand interaction with ligand-gated channels
+    if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
+
+      // Match ligandA with sodium channels and ligandB with potassium channels
+      const channelType = this.type === 'ligandA' ?
+                          'sodiumIonLigandGatedChannel' :
+                          'potassiumIonLigandGatedChannel';
+
+      // Check if this slot has the correct type of ligand-gated channel
+      if ( slot.channelType === channelType ) {
+
+        // Check that it's actually a LigandGatedChannel and is available for binding, and no other ligand is headed that way
+        if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
+
+          // check that no other ligand is already moving to that slot.
+          // TODO (collaboration): This isn't working for unknown reasons.
+          const otherLigand = model.solutes.find( solute => ( solute.mode.type === 'moveToLigandBindingLocation' ) && solute.mode.slot === slot );
+          // console.log( 'other ligand headed that way?', otherLigand );
+
+          if ( !otherLigand ) {
+            this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
+            return true;
+          }
+        }
+      }
+    }
+
+    // Check for sodium and potassium ions interacting with leakage channels.
+    const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
+    const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
+
+    if ( channel.isOpenProperty.value && model.isChannelSoluteFree( slot ) ) {
+      if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
+        this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+        return true;
+      }
+
+      if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.channelType! ) ) {
+        this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+        return true;
+      }
+    }
+
+    if ( this.type === 'sodiumIon' && slot.channelType === 'sodiumGlucoseCotransporter' ) {
+
+      // pick an open site on the channel.
+      const isLeftOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' || solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) && solute.mode.slot === slot && solute.mode.site === 'left' ) === undefined;
+      const isRightOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' || solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) && solute.mode.slot === slot && solute.mode.site === 'right' ) === undefined;
+
+      const availableSites: Array<'left' | 'right'> = [];
+      if ( isLeftOpen ) {
+        availableSites.push( 'left' );
+      }
+      if ( isRightOpen ) {
+        availableSites.push( 'right' );
+      }
+
+      if ( availableSites.length > 0 ) {
+        const site = dotRandom.sample( availableSites );
+
+        if ( this.type === 'sodiumIon' && channel instanceof SodiumGlucoseCotransporter ) {
+          this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: site };
+          return true;
+        }
+      }
+
+    }
+
+    return false;
   }
 
   public getBounds(): Bounds2 {
