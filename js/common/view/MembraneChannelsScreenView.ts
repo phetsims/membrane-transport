@@ -247,7 +247,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       macroCellNode.moveToFront();
     }
 
-    // TODO: These are just for debugging, remove before publication.
+    // TODO (dev): These are just for debugging, remove before publication.
     // Add hotkeys that let us easily test model behavior.
     KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );

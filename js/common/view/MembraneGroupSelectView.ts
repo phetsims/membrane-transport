@@ -11,6 +11,7 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
 import ChannelType from '../model/channels/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
@@ -32,8 +33,7 @@ type Selection = {
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
-// TODO: i18n after design finalized
-const releasedBackInToolbox = 'Released. Back in toolbox.';
+const releasedBackInToolbox = MembraneChannelsMessages.releasedBackInToolboxMessageProperty;
 
 /**
  * Keyboard interaction for channels on the membrane.

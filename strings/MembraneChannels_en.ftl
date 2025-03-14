@@ -144,3 +144,5 @@ currentDetailsRightNow = Right now,
 currentDetailsOutsideSoluteCount = membrane has { $outsideSoluteCount } solute types outside;
 currentDetailsInsideSoluteCount = { $insideSoluteCount } solute types inside;
 currentDetailsChannelCount = { $channelCount } transport channels;
+
+releasedBackInToolbox = Released. Back in toolbox.

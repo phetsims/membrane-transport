@@ -4,6 +4,8 @@
  * MembraneChannelsKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.
  * Elements that are not relevant to all screens may be omitted via the featureSet.
  *
+ * TODO (design): Let's request a design here, and work on that that before spending much time i18n
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
@@ -47,7 +49,7 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
   public constructor() {
 
-    super( 'From anywhere in the sim', [], { // TODO: i18n
+    super( 'From anywhere in the sim', [], {
       textMaxWidth: 250,
       isDisposable: false
     } );
