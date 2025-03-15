@@ -32,9 +32,11 @@
       "devDependencies": {
         "grunt": "~1.5.3",
         "esbuild": "^0.24.2",
-        "chokidar-cli": "^3.0.0"
+        "chokidar-cli": "^3.0.0",
+        "concurrently": "^9.1.2"
       },
       "scripts": {
+        "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"grunt dev-server-runnable --port=8123\"",
         "watch-strings": "chokidar \"membrane-channels-strings_en.json5\" \"./strings/MembraneChannels_en.ftl\" -c \"grunt modulify\"",
         "transpileWithoutGrunt": "../perennial/bin/sage run ../chipper/js/grunt/tasks/transpile.ts --live",
         "serve-8081": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081",
