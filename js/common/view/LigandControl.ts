@@ -53,6 +53,8 @@ export default class LigandControl extends Node {
 
     // Separate buttons to make a11y navigation easier
     // TODO (JG): Confirm we don't want a BooleanRectangleToggleButton here, and document why
+    // TODO (JG): In PhET-iO Studio, we need one control to hide the entire LigandControl, so
+    // we need to either instrument this Node or switch to a BooleanRectangleToggleButton
     const options = combineOptions<NodeOptions>( {
       children: [ addLigandsButton, removeLigandsButton ]
     } );
