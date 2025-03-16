@@ -28,7 +28,6 @@ export default class VoltageGatedChannel extends Channel {
              voltage === '-50' ? ( type === 'sodiumIonVoltageGatedChannel' ) :
              voltage === '30' ? ( type === 'potassiumIonVoltageGatedChannel' ) :
 
-               // final fallback -> throw
              ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
     } );
   }

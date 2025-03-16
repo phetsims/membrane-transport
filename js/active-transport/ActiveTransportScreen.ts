@@ -6,6 +6,8 @@ import membraneChannels from '../membraneChannels.js';
 import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
 
 /**
+ * Screen that shows the active transport of solutes across the membrane.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class ActiveTransportScreen extends MembraneChannelsScreen {

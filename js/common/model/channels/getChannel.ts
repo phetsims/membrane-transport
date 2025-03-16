@@ -24,9 +24,9 @@ export default function( model: MembraneChannelsModel, type: ChannelType, positi
          type === 'sodiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
          type === 'potassiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
 
-         // TODO (design): Add SodiumPotassiumPump
+           // TODO (design): Add SodiumPotassiumPump
          type === 'sodiumPotassiumPump' ? new LeakageChannel( model, type, position ) :
          type === 'sodiumGlucoseCotransporter' ? new SodiumGlucoseCotransporter( model, type, position ) :
-           // final fallback -> throw
+
          ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
 }

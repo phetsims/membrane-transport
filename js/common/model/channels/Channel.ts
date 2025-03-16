@@ -4,8 +4,8 @@ import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import membraneChannels from '../../../membraneChannels.js';
 import MembraneChannelsConstants from '../../MembraneChannelsConstants.js';
-import ChannelType from './ChannelType.js';
 import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import ChannelType from './ChannelType.js';
 
 /**
  * Channel keeps track of stateful model information for a channel (protein) that is actively in a slot.
@@ -44,7 +44,8 @@ export default abstract class Channel {
    * @param dt - time step in seconds
    */
   public step( dt: number ): void {
-    // implement in a subclass
+
+    // implement in a subclass, if necessary
   }
 }
 

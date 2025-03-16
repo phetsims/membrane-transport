@@ -1,7 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * A model component for a ligand-gated channel.
+ * A model component for a ligand-gated channel. When a ligand binds to the channel, it opens and allows ions to pass
+ * through. After a certain time, the ligand unbinds and the channel closes.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -52,6 +53,7 @@ export default class LigandGatedChannel extends Channel {
       }
     }
     else {
+
       // If no ligand is bound, increment the unbinding timer
       this.timeSinceUnbound += dt;
     }
