@@ -81,6 +81,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     // On top, we will have a layer for the interactive parts of the simulation
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
+
+      // TODO (JG/SR): Do we really need to instrument all ligand nodes? I hope not.
       const groupTandem = tandem.createTandem( 'ligandNodes' ).createGroupTandem( 'ligandNode' );
 
       const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
