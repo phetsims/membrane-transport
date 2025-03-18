@@ -18,15 +18,13 @@ export default class SodiumGlucoseCotransporter extends Channel {
 
     const slot = this.model.getSlotForChannel( this )!;
 
-    // TODO: Partially duplicated in Particle.ts
-    const leftIon = this.model.solutes.find( solute => ( solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+    const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'left' );
-
-    const glucose = this.model.solutes.find( solute => ( solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+    const glucose = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'center' );
-    const rightIon = this.model.solutes.find( solute => ( solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+    const rightIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                         solute.mode.slot === slot &&
                                                         solute.mode.site === 'right' );
 
