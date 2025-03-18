@@ -3,10 +3,11 @@
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import { combineOptions } from '../../../../../phet-core/js/optionize.js';
 import { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js';
-import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
+import { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
 import LigandGatedChannel from '../../model/channels/LigandGatedChannel.js';
+import ProteinNode from './ProteinNode.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
@@ -15,7 +16,7 @@ import LigandGatedChannel from '../../model/channels/LigandGatedChannel.js';
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default class LigandGatedChannelNode extends Node {
+export default class LigandGatedChannelNode extends ProteinNode {
   public constructor(
     public readonly type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel',
     public readonly model: LigandGatedChannel | null,

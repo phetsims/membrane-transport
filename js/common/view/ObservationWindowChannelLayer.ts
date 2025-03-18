@@ -56,7 +56,7 @@ export default class ObservationWindowChannelLayer extends Node {
           } ) );
 
           channelNode.mutate( {
-            center: modelViewTransform.modelToViewXY( slot.position, 0 ),
+            center: modelViewTransform.modelToViewXY( slot.position, 0 ).plus( channelNode.viewOffset ),
             scale: 1.2,
             cursor: 'pointer'
           } );

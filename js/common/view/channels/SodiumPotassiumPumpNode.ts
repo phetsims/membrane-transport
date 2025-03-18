@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Scenery Node for a SodiumGlucoseCotransporter, used to represent the channel in the membrane.
+ * Scenery Node for a SodiumPotassiumPump, used to represent the channel in the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -9,15 +9,15 @@
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import membraneChannels from '../../../membraneChannels.js';
-import SodiumGlucoseCotransporter from '../../model/channels/SodiumGlucoseCotransporter.js';
+import SodiumPotassiumPump from '../../model/channels/SodiumPotassiumPump.js';
 import ProteinNode from './ProteinNode.js';
 
-export default class SodiumGlucoseCotransporterNode extends ProteinNode {
-  public constructor( channel: SodiumGlucoseCotransporter | null ) {
+export default class SodiumPotassiumPumpNode extends ProteinNode {
+  public constructor( channel: SodiumPotassiumPump | null ) {
 
     super();
 
-    const rectangle = new Rectangle( 0, 0, 30, 60, { fill: 'rgba(0,255,0,0.2)', stroke: 'black', lineWidth: 1 } );
+    const rectangle = new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,0,255,0.2)', stroke: 'black', lineWidth: 1 } );
     this.addChild( rectangle );
 
     const text = new Text( 'closed', {
@@ -33,4 +33,4 @@ export default class SodiumGlucoseCotransporterNode extends ProteinNode {
   }
 }
 
-membraneChannels.register( 'SodiumGlucoseCotransporterNode', SodiumGlucoseCotransporterNode );
+membraneChannels.register( 'SodiumPotassiumPumpNode', SodiumPotassiumPumpNode );

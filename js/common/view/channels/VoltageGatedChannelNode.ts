@@ -4,11 +4,10 @@ import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import Shape from '../../../../../kite/js/Shape.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import Node from '../../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
 import VoltageGatedChannel from '../../model/channels/VoltageGatedChannel.js';
+import ProteinNode from './ProteinNode.js';
 
 /**
  * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
@@ -67,7 +66,7 @@ const voltageValues: Record<TargetVoltage, number> = {
 const RANGE_NEGATIVE_70_TO_NEGATIVE_50 = voltageValues[ '-50' ] - voltageValues[ '-70' ];
 const RANGE_NEGATIVE_50_TO_POSITIVE_30 = voltageValues[ '30' ] - voltageValues[ '-50' ];
 
-export default class VoltageGatedChannelNode extends Node {
+export default class VoltageGatedChannelNode extends ProteinNode {
 
   private targetVoltage: TargetVoltage = '-70';
   private currentVoltageValue = -70;
@@ -75,10 +74,11 @@ export default class VoltageGatedChannelNode extends Node {
   private readonly segments: Path[] = [];
 
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
-    super();
+    super( {
 
-    // TODO (JG/SR): This is a workaround to center the channel in the view, because the entire Node is centered
-    this.addChild( new Rectangle( 115, 385, 50, 85, { fill: 'white', opacity: 0 } ) );
+      // By inspection, so the protein looks centered.
+      viewOffset: new Vector2( 0, 12 )
+    } );
 
     // Draw a segment for each part of the SVG path
     sodiumClosedNegative70Segments.forEach( ( segment, index ) => {

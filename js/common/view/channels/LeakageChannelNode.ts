@@ -1,8 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Node from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
+import ProteinNode from './ProteinNode.js';
 
 /**
  * Scenery Node for a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
@@ -10,7 +10,7 @@ import membraneChannels from '../../../membraneChannels.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class LeakageChannelNode extends Node {
+export default class LeakageChannelNode extends ProteinNode {
   public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' ) {
 
     super();
