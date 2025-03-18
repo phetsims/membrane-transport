@@ -90,10 +90,15 @@ export default class LigandNode extends Node {
       },
       transform: this.modelViewTransform,
       dragListenerOptions: {
-        tandem: tandem.createTandem( 'soundRichDragListener' )
+
+        // TODO: Improve the API for tandems for rich drag listeners.
+        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO?
+        tandem: Tandem.OPT_OUT
       },
       keyboardDragListenerOptions: {
-        tandem: tandem.createTandem( 'keyboardDragListener' ),
+
+        // TODO: Improve the API for tandems for rich drag listeners.
+        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO?
         dragSpeed: 200,
         shiftDragSpeed: 50
       }
