@@ -82,7 +82,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
 
-      // TODO (JG/SR): Do we really need to instrument all ligand nodes? I hope not.
+      // TODO (phet-io, design): Do we really need to instrument all ligand nodes? I hope not.
+      //   See LigandNode where input listeners opt out of tandems.
       const groupTandem = tandem.createTandem( 'ligandNodes' ).createGroupTandem( 'ligandNode' );
 
       const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
