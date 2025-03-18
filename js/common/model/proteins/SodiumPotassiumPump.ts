@@ -20,23 +20,23 @@ export default class SodiumPotassiumPump extends Channel {
 
     const slot = this.model.getSlotForChannel( this )!;
 
-    const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'left' );
-    const glucose = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'center' );
-    const rightIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                         solute.mode.slot === slot &&
                                                         solute.mode.site === 'right' );
 
-    if ( leftIon && glucose && rightIon ) {
+    if ( sodium1 && sodium2 && sodium3 ) {
       this.isOpenProperty.set( true );
 
       // Move solutes through the open channel
-      leftIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: -5 };
-      glucose.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
-      rightIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
+      sodium1.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: -5 };
+      sodium2.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
+      sodium3.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
     }
   }
 }

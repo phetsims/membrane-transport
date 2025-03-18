@@ -18,11 +18,12 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
 import membraneChannels from '../../membraneChannels.js';
+import MembraneChannelsModel from './MembraneChannelsModel.js';
 import Channel from './proteins/Channel.js';
 import ChannelType from './proteins/ChannelType.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './proteins/SodiumGlucoseCotransporter.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
 import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
 
@@ -59,10 +60,22 @@ type MoveToSodiumGlucoseTransporterMode = {
   site: 'left' | 'center' | 'right';
 };
 
+type MoveToSodiumPotassiumPumpMode = {
+  type: 'moveToSodiumPotassiumPump';
+  slot: Slot;
+  site: 'sodium1' | 'sodium2' | 'sodium3';
+};
+
 type WaitingInSodiumGlucoseTransporterMode = {
   type: 'waitingInSodiumGlucoseTransporter';
   slot: Slot;
   site: 'left' | 'center' | 'right';
+};
+
+type WaitingInSodiumPotassiumPumpMode = {
+  type: 'waitingInSodiumPotassiumPump';
+  slot: Slot;
+  site: 'sodium1' | 'sodium2' | 'sodium3';
 };
 
 type MoveToLigandBindingLocationMode = {
@@ -118,7 +131,9 @@ type ParticleMode =
   | UserControlledMode
   | UserOverMode
   | MoveToSodiumGlucoseTransporterMode
-  | WaitingInSodiumGlucoseTransporterMode;
+  | WaitingInSodiumGlucoseTransporterMode
+  | MoveToSodiumPotassiumPumpMode
+  | WaitingInSodiumPotassiumPumpMode;
 
 /**
  * Gets the current interpolated direction from a random walk mode, based on how far the particle has turned.
@@ -250,6 +265,33 @@ export default class Particle<T extends ParticleType> {
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
         this.mode = {
           type: 'waitingInSodiumGlucoseTransporter',
+          slot: this.mode.slot,
+          site: this.mode.site
+        };
+      }
+    }
+    else if ( this.mode.type === 'moveToSodiumPotassiumPump' ) {
+
+      const currentPosition = this.position.copy();
+
+      const offset = this.mode.site === 'sodium1' ? new Vector2( -5, -10 ) :
+                     this.mode.site === 'sodium2' ? new Vector2( -5, -5 ) :
+                     new Vector2( -5, 0 );
+
+      const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
+
+      const vector = targetPosition.minus( currentPosition );
+      const direction = vector.normalized();
+
+      // Move toward the target position at the typicalSpeed
+      const maxStepSize = typicalSpeed * dt;
+      this.position.x += direction.x * maxStepSize;
+      this.position.y += direction.y * maxStepSize;
+
+      // When close enough, transition to enteringChannel mode.
+      if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
+        this.mode = {
+          type: 'waitingInSodiumPotassiumPump',
           slot: this.mode.slot,
           site: this.mode.site
         };
@@ -552,6 +594,55 @@ export default class Particle<T extends ParticleType> {
         // Glucose can only use center site
         this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: 'center' };
         return true;
+      }
+    }
+
+    // TODO: Some duplicated code above. Can we prune or simplify?
+    if (
+      ( this.type === 'sodiumIon' ) &&
+      slot.channelType === 'sodiumPotassiumPump' &&
+      channel instanceof SodiumPotassiumPump &&
+
+      // Only approach from intracellular side
+      this.position.y < 0 &&
+
+      // Don't approach if other solutes are already passing through
+      !channel.isOpenProperty.value
+    ) {
+
+      // Determine open sites on the channel for sodium ions
+      const sodium1SlotOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
+                                                              solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
+                                                            solute.mode.slot === slot &&
+                                                            solute.mode.site === 'sodium1' ) === undefined;
+      const sodium2SlotOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
+                                                              solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
+                                                            solute.mode.slot === slot &&
+                                                            solute.mode.site === 'sodium2' ) === undefined;
+      const sodiumSlot3Open = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
+                                                              solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
+                                                            solute.mode.slot === slot &&
+                                                            solute.mode.site === 'sodium3' ) === undefined;
+
+      if ( this.type === 'sodiumIon' ) {
+
+        // Sodium ions can use left or right site
+        const availableSites: Array<'sodium1' | 'sodium2' | 'sodium3'> = [];
+        if ( sodium1SlotOpen ) {
+          availableSites.push( 'sodium1' );
+        }
+        if ( sodium2SlotOpen ) {
+          availableSites.push( 'sodium2' );
+        }
+        if ( sodiumSlot3Open ) {
+          availableSites.push( 'sodium3' );
+        }
+
+        if ( availableSites.length > 0 ) {
+          const site = dotRandom.sample( availableSites );
+          this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
+          return true;
+        }
       }
     }
 
