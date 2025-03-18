@@ -131,8 +131,6 @@ export default class Phospholipid {
   public static initTails( context: CanvasRenderingContext2D ): void {
     context.strokeStyle = MembraneChannelsColors.lipidTailColorProperty.value.toCSS();
     context.lineWidth = 1.3;
-
-    // TODO (design) - is this look OK? It fixes a rendering issues at the end of the tail
     context.lineCap = 'round';
   }
 

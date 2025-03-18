@@ -24,7 +24,7 @@ export default function( model: MembraneChannelsModel, type: ChannelType, positi
          type === 'sodiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
          type === 'potassiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
 
-           // TODO (design): Add SodiumPotassiumPump
+         // TODO: Add SodiumPotassiumPump
          type === 'sodiumPotassiumPump' ? new LeakageChannel( model, type, position ) :
          type === 'sodiumGlucoseCotransporter' ? new SodiumGlucoseCotransporter( model, type, position ) :
 

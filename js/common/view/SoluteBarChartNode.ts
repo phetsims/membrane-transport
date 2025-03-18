@@ -48,7 +48,7 @@ export default class SoluteBarChartNode extends Node {
     // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
 
     // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference.
-    //   What if the description simply described the mmagnitude of the outside bar and the inside bar?
+    //   What if the description simply described the magnitude of the outside bar and the inside bar?
     //   "A lot of CO2 outside, a little inside"
     //   "A little CO2 outside, a lot inside"
     //   "A little CO2 outside, a little inside"

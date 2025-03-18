@@ -34,7 +34,10 @@ export default class LigandNode extends Node {
       children: [ ligandView ],
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
-      accessibleName: 'Ligand', // TODO (design): What should this be?
+      accessibleName: 'Ligand', // TODO: Add the type of ligand. Add i18n. * Ligand Accessible Names:
+      // TODO: * Sodium-specific ligand
+      // TODO: * Potassium-specific ligand
+
       focusable: focusable
     }, AccessibleDraggableOptions, {
 
