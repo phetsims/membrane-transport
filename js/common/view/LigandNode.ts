@@ -45,7 +45,6 @@ export default class LigandNode extends Node {
       */
       accessibleName: 'Ligand',
 
-
       focusable: focusable
     }, AccessibleDraggableOptions, {
 

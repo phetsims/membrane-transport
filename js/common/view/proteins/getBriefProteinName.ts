@@ -5,7 +5,6 @@ import ChannelType from '../../model/proteins/ChannelType.js';
 /**
  * Get the brief name for a ChannelType
  * TODO (JG): This may move into fluent during i18n.
- * TODO: Look through the sim and rename "channel" to "protein" when it includes sodium potassium pump or sodium glucose cotransporter.
  * TODO (JG): i18n once design is finalized.
  *
  * @author Sam Reid (PhET Interactive Simulations)
