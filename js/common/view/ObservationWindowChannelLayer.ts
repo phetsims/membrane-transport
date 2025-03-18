@@ -7,8 +7,8 @@ import membraneChannels from '../../membraneChannels.js';
 import Channel from '../model/proteins/Channel.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
-import getChannelNode from './channels/getChannelNode.js';
-import VoltageGatedChannelNode from './channels/VoltageGatedChannelNode.js';
+import getChannelNode from './proteins/getChannelNode.js';
+import VoltageGatedChannelNode from './proteins/VoltageGatedChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
 /**

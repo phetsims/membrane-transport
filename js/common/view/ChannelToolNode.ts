@@ -10,7 +10,7 @@ import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import ChannelType from '../model/proteins/ChannelType.js';
-import getChannelNode from './channels/getChannelNode.js';
+import getChannelNode from './proteins/getChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
 // TODO (JG): How to deal with these text getting too tall from multiline? Or is that only a problem in the stringTest=dynamic?

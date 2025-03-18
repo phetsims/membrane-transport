@@ -16,7 +16,7 @@ import membraneChannels from '../../membraneChannels.js';
 import ChannelType from '../model/proteins/ChannelType.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
-import getChannelNode from './channels/getChannelNode.js';
+import getChannelNode from './proteins/getChannelNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';

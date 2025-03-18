@@ -18,7 +18,7 @@ import ChannelType from '../model/proteins/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import ChannelDragNode from './ChannelDragNode.js';
-import getBriefProteinName from './channels/getBriefProteinName.js';
+import getBriefProteinName from './proteins/getBriefProteinName.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
