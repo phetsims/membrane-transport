@@ -16,7 +16,7 @@ export default class SodiumGlucoseCotransporterNode extends Node {
 
     super();
 
-    const rectangle = new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,255,0,0.2)', stroke: 'black', lineWidth: 1 } );
+    const rectangle = new Rectangle( 0, 0, 30, 60, { fill: 'rgba(0,255,0,0.2)', stroke: 'black', lineWidth: 1 } );
     this.addChild( rectangle );
 
     const text = new Text( 'closed', {

@@ -7,24 +7,38 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import membraneChannels from '../../../membraneChannels.js';
 import Channel from './Channel.js';
 
 export default class SodiumGlucoseCotransporter extends Channel {
 
-  private readonly _isOpenProperty = new BooleanProperty( false );
-  public readonly isOpenProperty: TReadOnlyProperty<boolean> = this._isOpenProperty;
+  public readonly isOpenProperty: BooleanProperty = new BooleanProperty( false );
 
   public override step( dt: number ): void {
 
-    // TODO (design): What if paused, then the user adds Na+ outside?
-    const sodiumOutside = this.model.outsideSoluteCountProperties.sodiumIon.value;
-    const sodiumInside = this.model.insideSoluteCountProperties.sodiumIon.value;
+    const slot = this.model.getSlotForChannel( this )!;
 
-    this._isOpenProperty.value = sodiumOutside > sodiumInside;
+    // TODO: Partially duplicated in Particle.ts
+    const leftIon = this.model.solutes.find( solute => ( solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'left' );
+
+    const glucose = this.model.solutes.find( solute => ( solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'center' );
+    const rightIon = this.model.solutes.find( solute => ( solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+                                                        solute.mode.slot === slot &&
+                                                        solute.mode.site === 'right' );
+
+    if ( leftIon && glucose && rightIon ) {
+      this.isOpenProperty.set( true );
+
+      // Move solutes through the open channel
+      leftIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
+      rightIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
+      glucose.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
+    }
   }
-
 }
 
 membraneChannels.register( 'SodiumGlucoseCotransporter', SodiumGlucoseCotransporter );

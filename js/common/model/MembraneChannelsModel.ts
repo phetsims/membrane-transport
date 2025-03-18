@@ -403,6 +403,10 @@ export default class MembraneChannelsModel extends PhetioObject {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
+  public getSlotForChannel( channel: Channel ): Slot | undefined {
+    return this.slots.find( slot => slot.channelProperty.value === channel );
+  }
+
   /**
    * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
