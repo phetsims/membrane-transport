@@ -32,9 +32,9 @@ export default class SodiumGlucoseCotransporter extends Channel {
       this.isOpenProperty.set( true );
 
       // Move solutes through the open channel
-      leftIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
-      rightIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
+      leftIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: -5 };
       glucose.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
+      rightIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
     }
   }
 }

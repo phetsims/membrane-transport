@@ -93,6 +93,7 @@ type MovingThroughChannelMode = {
   slot: Slot;
   channelType: ChannelType;
   direction: 'inward' | 'outward';
+  offset?: number;
 };
 
 type UserControlledMode = {
@@ -314,7 +315,7 @@ export default class Particle<T extends ParticleType> {
       // If moving through a channel, don't let the position get very far from the center. Allow a little movement
       // so that it looks like it "struggles" to get through.
       if ( this.mode.type === 'movingThroughChannel' ) {
-        const center = this.mode.slot.position;
+        const center = this.mode.slot.position + ( this.mode.offset || 0 );
         const maxDistanceFromCenter = 0.5;
         if ( Math.abs( this.position.x - center ) > maxDistanceFromCenter ) {
           this.position.x = center + maxDistanceFromCenter * Math.sign( this.position.x - center );
