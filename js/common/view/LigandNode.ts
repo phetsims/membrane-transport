@@ -34,9 +34,17 @@ export default class LigandNode extends Node {
       children: [ ligandView ],
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
-      accessibleName: 'Ligand', // TODO: Add the type of ligand. Add i18n. * Ligand Accessible Names:
-      // TODO: * Sodium-specific ligand
-      // TODO: * Potassium-specific ligand
+
+      /* TODO (JG/SR): Add the type of ligand. Add i18n. * Ligand Accessible Names:
+      * Sodium-specific ligand
+      * Potassium-specific ligand
+      *
+      * This is complicated by the operateOnLigand method, and I recommend we design a better way.
+      * - Maybe the model should always allocate the Ligands, but they may or may not participate based on the settings.
+      * - Or we can use the index or other metadata to identify the ligand.
+      */
+      accessibleName: 'Ligand',
+
 
       focusable: focusable
     }, AccessibleDraggableOptions, {
