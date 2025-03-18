@@ -14,7 +14,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
-import ChannelType from '../model/channels/ChannelType.js';
+import ChannelType from '../model/proteins/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
 import Slot from '../model/Slot.js';
 import ChannelDragNode from './ChannelDragNode.js';

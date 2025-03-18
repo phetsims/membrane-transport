@@ -6,7 +6,7 @@ import { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js
 import { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import membraneChannels from '../../../membraneChannels.js';
-import LigandGatedChannel from '../../model/channels/LigandGatedChannel.js';
+import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import ProteinNode from './ProteinNode.js';
 
 /**

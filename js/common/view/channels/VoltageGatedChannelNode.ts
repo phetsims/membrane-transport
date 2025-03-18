@@ -6,7 +6,7 @@ import Shape from '../../../../../kite/js/Shape.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
 import membraneChannels from '../../../membraneChannels.js';
-import VoltageGatedChannel from '../../model/channels/VoltageGatedChannel.js';
+import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
 import ProteinNode from './ProteinNode.js';
 
 /**

@@ -1,12 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
-import Channel from '../../model/channels/Channel.js';
-import ChannelType from '../../model/channels/ChannelType.js';
-import LigandGatedChannel from '../../model/channels/LigandGatedChannel.js';
-import SodiumGlucoseCotransporter from '../../model/channels/SodiumGlucoseCotransporter.js';
-import SodiumPotassiumPump from '../../model/channels/SodiumPotassiumPump.js';
-import VoltageGatedChannel from '../../model/channels/VoltageGatedChannel.js';
+import Channel from '../../model/proteins/Channel.js';
+import ChannelType from '../../model/proteins/ChannelType.js';
+import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
+import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
+import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
+import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import LigandGatedChannelNode from './LigandGatedChannelNode.js';
 import ProteinNode from './ProteinNode.js';

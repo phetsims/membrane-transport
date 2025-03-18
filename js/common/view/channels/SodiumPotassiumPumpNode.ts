@@ -9,7 +9,7 @@
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import membraneChannels from '../../../membraneChannels.js';
-import SodiumPotassiumPump from '../../model/channels/SodiumPotassiumPump.js';
+import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import ProteinNode from './ProteinNode.js';
 
 export default class SodiumPotassiumPumpNode extends ProteinNode {
