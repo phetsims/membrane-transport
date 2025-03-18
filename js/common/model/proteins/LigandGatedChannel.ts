@@ -28,8 +28,8 @@ export default class LigandGatedChannel extends Channel {
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;
   
-  // Time in seconds that a ligand remains bound before detaching
-  private readonly bindingDuration = 10;
+  // Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time.
+  private readonly bindingDuration = 7;
   
   // Tracks how long the current ligand has been bound
   private timeSinceLigandBound = 0;

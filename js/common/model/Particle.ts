@@ -327,9 +327,6 @@ export default class Particle<T extends ParticleType> {
         // If the particle has moved through the channel, unbind from the ligand
         if ( crossedOver && Math.abs( this.position.y ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 ) {
           const channel = this.mode.slot.channelProperty.value;
-          if ( channel instanceof LigandGatedChannel ) {
-            channel.unbindLigand();
-          }
 
           // If fully moved through a SodiumGluoseCotransporter, close the channel
           if ( channel instanceof SodiumGlucoseCotransporter ) {

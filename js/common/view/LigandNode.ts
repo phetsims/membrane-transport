@@ -99,6 +99,7 @@ export default class LigandNode extends Node {
 
         // TODO: Improve the API for tandems for rich drag listeners.
         // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO?
+        tandem: Tandem.OPT_OUT,
         dragSpeed: 200,
         shiftDragSpeed: 50
       }
