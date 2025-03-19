@@ -14,6 +14,28 @@ import Channel from './Channel.js';
 
 export default class SodiumPotassiumPump extends Channel {
 
+  private isSiteOpen( site: 'sodium1' | 'sodium2' | 'sodium3' ): boolean {
+    return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
+                                                solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
+                                              solute.mode.slot === this.slot &&
+                                              solute.mode.site === site ) === undefined;
+  }
+
+  public getOpenSodiumSites(): Array<'sodium1' | 'sodium2' | 'sodium3'> {
+    const availableSites: Array<'sodium1' | 'sodium2' | 'sodium3'> = [];
+    if ( this.isSiteOpen( 'sodium1' ) ) {
+      availableSites.push( 'sodium1' );
+    }
+    if ( this.isSiteOpen( 'sodium2' ) ) {
+      availableSites.push( 'sodium2' );
+    }
+    if ( this.isSiteOpen( 'sodium3' ) ) {
+      availableSites.push( 'sodium3' );
+    }
+
+    return availableSites;
+  }
+
   public readonly isOpenProperty: BooleanProperty = new BooleanProperty( false );
 
   public override step( dt: number ): void {

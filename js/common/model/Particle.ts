@@ -590,40 +590,13 @@ export default class Particle<T extends ParticleType> {
       !channel.isOpenProperty.value
     ) {
 
-      // Determine open sites on the channel for sodium ions
-      const sodium1SlotOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
-                                                              solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
-                                                            solute.mode.slot === slot &&
-                                                            solute.mode.site === 'sodium1' ) === undefined;
-      const sodium2SlotOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
-                                                              solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
-                                                            solute.mode.slot === slot &&
-                                                            solute.mode.site === 'sodium2' ) === undefined;
-      const sodiumSlot3Open = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
-                                                              solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
-                                                            solute.mode.slot === slot &&
-                                                            solute.mode.site === 'sodium3' ) === undefined;
+      const openSodiumSites = channel.getOpenSodiumSites();
 
-      if ( this.type === 'sodiumIon' ) {
-
-        // Sodium ions can use left or right site
-        const availableSites: Array<'sodium1' | 'sodium2' | 'sodium3'> = [];
-        if ( sodium1SlotOpen ) {
-          availableSites.push( 'sodium1' );
-        }
-        if ( sodium2SlotOpen ) {
-          availableSites.push( 'sodium2' );
-        }
-        if ( sodiumSlot3Open ) {
-          availableSites.push( 'sodium3' );
-        }
-
-        if ( availableSites.length > 0 ) {
-          const site = dotRandom.sample( availableSites );
+      if ( openSodiumSites.length > 0 ) {
+        const site = dotRandom.sample( openSodiumSites );
           this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
           return true;
         }
-      }
     }
 
     return false;
