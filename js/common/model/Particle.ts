@@ -63,7 +63,7 @@ type MoveToSodiumGlucoseTransporterMode = {
 type MoveToSodiumPotassiumPumpMode = {
   type: 'moveToSodiumPotassiumPump';
   slot: Slot;
-  site: 'sodium1' | 'sodium2' | 'sodium3';
+  site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp';
 };
 
 type WaitingInSodiumGlucoseTransporterMode = {
@@ -75,7 +75,7 @@ type WaitingInSodiumGlucoseTransporterMode = {
 type WaitingInSodiumPotassiumPumpMode = {
   type: 'waitingInSodiumPotassiumPump';
   slot: Slot;
-  site: 'sodium1' | 'sodium2' | 'sodium3';
+  site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp';
 };
 
 type MoveToLigandBindingLocationMode = {
@@ -276,7 +276,9 @@ export default class Particle<T extends ParticleType> {
 
       const offset = this.mode.site === 'sodium1' ? new Vector2( -5, -10 ) :
                      this.mode.site === 'sodium2' ? new Vector2( -5, -5 ) :
-                     new Vector2( -5, 0 );
+                     this.mode.site === 'sodium3' ? new Vector2( -5, 0 ) :
+                     this.mode.site === 'atp' ? new Vector2( 0, -12 ) :
+                     new Vector2( 0, 0 );
 
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
 
@@ -577,17 +579,13 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
-    // TODO: Some duplicated code above. Can we prune or simplify?
     if (
-      ( this.type === 'sodiumIon' ) &&
+      this.type === 'sodiumIon' &&
       slot.channelType === 'sodiumPotassiumPump' &&
       channel instanceof SodiumPotassiumPump &&
 
       // Only approach from intracellular side
-      this.position.y < 0 &&
-
-      // Don't approach if other solutes are already passing through
-      !channel.isOpenProperty.value
+      this.position.y < 0
     ) {
 
       const openSodiumSites = channel.getOpenSodiumSites();
@@ -597,6 +595,23 @@ export default class Particle<T extends ParticleType> {
           this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
           return true;
         }
+    }
+
+    if (
+      this.type === 'atp' &&
+      slot.channelType === 'sodiumPotassiumPump' &&
+      channel instanceof SodiumPotassiumPump &&
+
+      // Only approach from intracellular side
+      this.position.y < 0 &&
+
+      channel.isSodiumFullyBound() &&
+
+      !channel.isATPEnRoute()
+    ) {
+
+      this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'atp' };
+      return true;
     }
 
     return false;

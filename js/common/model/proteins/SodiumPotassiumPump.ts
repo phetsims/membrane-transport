@@ -61,6 +61,15 @@ export default class SodiumPotassiumPump extends Channel {
       sodium3.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
     }
   }
+
+  public isSodiumFullyBound(): boolean {
+    return this.getOpenSodiumSites().length === 0;
+  }
+
+  // True if an ATP is on the way or waiting in the site
+  public isATPEnRoute(): boolean {
+    return false;
+  }
 }
 
 membraneChannels.register( 'SodiumPotassiumPump', SodiumPotassiumPump );
