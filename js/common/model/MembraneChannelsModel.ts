@@ -35,10 +35,10 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
 import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
+import Particle from './Particle.js';
 import Channel from './proteins/Channel.js';
 import ChannelType from './proteins/ChannelType.js';
 import getChannel from './proteins/getChannel.js';
-import Particle from './Particle.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
@@ -215,6 +215,16 @@ export default class MembraneChannelsModel extends PhetioObject {
       const y = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minY : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.maxY;
       soluteArray.push( new Particle( new Vector2( x, y ), soluteType ) );
     }
+  }
+
+  public addSolute( particle: Particle<IntentionalAny> ): void {
+    this.solutes.push( particle );
+    this.updateSoluteCounts();
+  }
+
+  public removeSolute( particle: Particle<IntentionalAny> ): void {
+    this.solutes.splice( this.solutes.indexOf( particle ), 1 );
+    this.updateSoluteCounts();
   }
 
   /**

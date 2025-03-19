@@ -9,12 +9,14 @@
 
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import { ParticleType } from '../../model/SoluteType.js';
+import ADPNode from './ADPNode.js';
 import ATPNode from './ATPNode.js';
 import CarbonDioxideNode from './CarbonDioxideNode.js';
 import GlucoseNode from './GlucoseNode.js';
 import LigandANode from './LigandANode.js';
 import LigandBNode from './LigandBNode.js';
 import OxygenNode from './OxygenNode.js';
+import PhosphateNode from './PhosphateNode.js';
 import PotassiumIonNode from './PotassiumIonNode.js';
 import SodiumIonNode from './SodiumIonNode.js';
 
@@ -26,7 +28,12 @@ const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): N
                        particleType === 'glucose' ? new GlucoseNode() :
                        particleType === 'ligandA' ? new LigandANode() :
                        particleType === 'ligandB' ? new LigandBNode() :
-                       new ATPNode();
+                       particleType === 'atp' ? new ATPNode() :
+                       particleType === 'adp' ? new ADPNode() :
+                       particleType === 'phosphate' ? new PhosphateNode() :
+
+                         // throw error
+                       ( () => { throw new Error( `Unrecognized particle type: ${particleType}` ); } )();
 
   options && particleNode.mutate( options );
   return particleNode;

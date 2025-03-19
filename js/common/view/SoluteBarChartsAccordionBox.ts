@@ -71,7 +71,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( insideText );
 
     const hbox = new HBox( {
-      children: getFeatureSetSoluteTypes( model.featureSet ).filter( solute => solute !== 'atp' ).map( soluteType => {
+      children: getFeatureSetSoluteTypes( model.featureSet ).filter( solute => solute !== 'atp' && solute !== 'adp' && solute !== 'phosphate' ).map( soluteType => {
         const soluteBarChartNode = new SoluteBarChartNode( model, soluteType, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) );
         stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
         return soluteBarChartNode;

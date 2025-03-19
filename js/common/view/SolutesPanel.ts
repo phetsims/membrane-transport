@@ -15,7 +15,7 @@ import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
+import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypesForSolutesPanel } from '../MembraneChannelsFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 
@@ -35,7 +35,7 @@ export default class SolutesPanel extends Node {
 
     const alignGroup = new AlignGroup();
 
-    const soluteTypes = getFeatureSetSoluteTypes( featureSet );
+    const soluteTypes = getFeatureSetSoluteTypesForSolutesPanel( featureSet );
 
     const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, soluteTypes.map( soluteType => {
       return {

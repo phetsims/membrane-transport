@@ -10,14 +10,14 @@ import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export const SoluteTypes = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp' ] as const;
+export const SoluteTypes = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp', 'adp', 'phosphate' ] as const;
 export const LigandTypes = [ 'ligandA', 'ligandB' ] as const;
 export const ParticleTypes = [ ...SoluteTypes, ...LigandTypes ] as const;
 
-export type PlottableSoluteTypes = Exclude<SoluteType, 'atp'>;
-
 type SoluteType = typeof SoluteTypes[number];
 export default SoluteType;
+
+export type PlottableSoluteTypes = Exclude<SoluteType, 'atp' | 'adp' | 'phosphate'>;
 
 type LigandType = typeof LigandTypes[number];
 type ParticleType = typeof ParticleTypes[number];

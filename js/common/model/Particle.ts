@@ -290,13 +290,27 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
-      // When close enough, transition to enteringChannel mode.
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
-        this.mode = {
-          type: 'waitingInSodiumPotassiumPump',
-          slot: this.mode.slot,
-          site: this.mode.site
-        };
+
+        if ( this.type === 'sodiumIon' ) {
+
+          this.mode = {
+            type: 'waitingInSodiumPotassiumPump',
+            slot: this.mode.slot,
+            site: this.mode.site
+          };
+        }
+        else if ( this.type === 'atp' ) {
+
+          // Bind, split into adp and phosphate, and move through the pump
+          model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
+          model.addSolute( new Particle( currentPosition.copy(), 'phosphate' ) );
+
+          model.removeSolute( this );
+          // returns early to avoid the rest of the step method
+
+          console.log( 'ATP bound, created adp, created phosphate' );
+        }
       }
     }
     else if ( this.mode.type === 'enteringChannel' ) {

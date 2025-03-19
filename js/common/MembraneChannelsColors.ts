@@ -31,6 +31,9 @@ const MembraneChannelsColors = {
   oxygenColorProperty: new ProfileColorProperty( membraneChannels, 'O2Color', {
     default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
   } ),
+  phosphateColorProperty: new ProfileColorProperty( membraneChannels, 'phosphateColor', {
+    default: 'rgb(123,104,238)'
+  } ),
   carbonDioxideColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
     default: 'rgb(95,80,69)'
   } ),
