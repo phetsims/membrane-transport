@@ -37,6 +37,37 @@ export default class SodiumGlucoseCotransporter extends Channel {
       rightIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
     }
   }
+
+  /**
+   * Determine if a site is available. A site may be reserved if a particle is moving toward it, or waiting in it.
+   */
+  private isSiteOpen( site: 'left' | 'center' | 'right' ): boolean {
+    return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' ||
+                                                solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+                                              solute.mode.slot === this.slot &&
+                                              solute.mode.site === site ) === undefined;
+  }
+
+  /**
+   * Determine open sites on the channel for sodium ions
+   */
+  public getOpenSodiumSites(): Array<'left' | 'right'> {
+
+    // Sodium ions can use left or right site
+    const availableSites: Array<'left' | 'right'> = [];
+    if ( this.isSiteOpen( 'left' ) ) {
+      availableSites.push( 'left' );
+    }
+    if ( this.isSiteOpen( 'right' ) ) {
+      availableSites.push( 'right' );
+    }
+
+    return availableSites;
+  }
+
+  public isGlucoseSiteOpen(): boolean {
+    return this.isSiteOpen( 'center' );
+  }
 }
 
 membraneChannels.register( 'SodiumGlucoseCotransporter', SodiumGlucoseCotransporter );

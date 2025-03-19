@@ -5,6 +5,7 @@ import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import membraneChannels from '../../../membraneChannels.js';
 import MembraneChannelsConstants from '../../MembraneChannelsConstants.js';
 import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import Slot from '../Slot.js';
 import ChannelType from './ChannelType.js';
 
 /**
@@ -46,6 +47,10 @@ export default abstract class Channel {
   public step( dt: number ): void {
 
     // implement in a subclass, if necessary
+  }
+
+  public get slot(): Slot {
+    return this.model.getSlotForChannel( this )!;
   }
 }
 

@@ -558,30 +558,10 @@ export default class Particle<T extends ParticleType> {
       !channel.isOpenProperty.value
     ) {
 
-      // Determine open sites on the channel for sodium ions
-      const isLeftOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' ||
-                                                         solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
-                                                       solute.mode.slot === slot &&
-                                                       solute.mode.site === 'left' ) === undefined;
-      const isCenterOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' ||
-                                                           solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
-                                                         solute.mode.slot === slot &&
-                                                         solute.mode.site === 'center' ) === undefined;
-      const isRightOpen = model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' ||
-                                                          solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
-                                                        solute.mode.slot === slot &&
-                                                        solute.mode.site === 'right' ) === undefined;
-
       if ( this.type === 'sodiumIon' ) {
 
         // Sodium ions can use left or right site
-        const availableSites: Array<'left' | 'right'> = [];
-        if ( isLeftOpen ) {
-          availableSites.push( 'left' );
-        }
-        if ( isRightOpen ) {
-          availableSites.push( 'right' );
-        }
+        const availableSites = channel.getOpenSodiumSites();
 
         if ( availableSites.length > 0 ) {
           const site = dotRandom.sample( availableSites );
@@ -589,7 +569,7 @@ export default class Particle<T extends ParticleType> {
           return true;
         }
       }
-      else if ( this.type === 'glucose' && isCenterOpen ) {
+      else if ( this.type === 'glucose' && channel.isGlucoseSiteOpen() ) {
 
         // Glucose can only use center site
         this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: 'center' };
