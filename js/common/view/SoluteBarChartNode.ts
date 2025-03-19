@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
@@ -31,7 +30,7 @@ import getParticleNode from './particles/getParticleNode.js';
 const BOX_WIDTH = 100;
 const BOX_HEIGHT = 100;
 
-const MAX_ARROW_HEIGHT = 13 * 20;
+const MAX_ARROW_HEIGHT = BOX_HEIGHT * 0.9;
 
 export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
@@ -85,37 +84,40 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     // For layout, not just for debugging
-    const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, { fill: 'red', opacity: 0 } );
+    const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, { fill: 'red', opacity: 0.1 } );
 
     const icon = getParticleNode( soluteType );
     icon.setScaleMagnitude( MembraneChannelsConstants.PARTICLE_NODE_ICON_SCALE );
-    icon.left = 8;
-    icon.bottom = BOX_HEIGHT / 2 - 3;
+    icon.centerX = BOX_WIDTH / 2;
+    icon.top = 2;
 
     const text = new RichText( getSoluteTypeString( soluteType ), {
       font: new PhetFont( 10 ),
-      centerX: icon.centerX,
-      top: BOX_HEIGHT / 2 + 3,
+      centerX: BOX_WIDTH / 2,
+      bottom: BOX_HEIGHT - 2,
       maxWidth: BOX_WIDTH * 0.8
     } );
-    const origin = new Path( Shape.lineSegment( 40, BOX_HEIGHT / 2, BOX_WIDTH, BOX_HEIGHT / 2 ), {
+    const originExtent = 50;
+    const origin = new Path( Shape.lineSegment( 20, BOX_HEIGHT / 2 + originExtent / 2, 20, BOX_HEIGHT / 2 - originExtent / 2 ), {
       stroke: 'black', lineWidth: 2
     } );
     const fillColorProperty = getSoluteBarChartColorProperty( soluteType );
 
     const barLineWidth = 1;
     const BAR_WIDTH = 15;
-    const outsideBar = new Rectangle( 50, BOX_HEIGHT / 2, BAR_WIDTH, 25, {
+    const outsideBar = new Rectangle( 0, 0, 1, BAR_WIDTH, {
       fill: fillColorProperty,
       stroke: 'black',
       lineWidth: barLineWidth,
-      bottom: BOX_HEIGHT / 2 + barLineWidth // Adjust for the line width so it doesn't double up with the origin line
+      left: origin.centerX,
+      centerY: BOX_HEIGHT / 2 - BAR_WIDTH / 2 - 5
     } );
-    const insideBar = new Rectangle( 50, BOX_HEIGHT / 2, BAR_WIDTH, 35, {
+    const insideBar = new Rectangle( 0, 0, 1, BAR_WIDTH, {
       fill: fillColorProperty,
       stroke: 'black',
       lineWidth: barLineWidth,
-      top: BOX_HEIGHT / 2 - barLineWidth
+      left: origin.centerX,
+      centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
     } );
     const arrow = new ArrowNode( 80, 0, 80, 0, {
       fill: fillColorProperty,
@@ -140,7 +142,7 @@ export default class SoluteBarChartNode extends Node {
       if ( Math.abs( smoothedNet ) > 0.01 ) {
         arrow.visible = true;
         const constrainedArrowHeight = clamp( smoothedNet * 20, -MAX_ARROW_HEIGHT, MAX_ARROW_HEIGHT );
-        arrow.setTailAndTip( 80, 0, 80, constrainedArrowHeight );
+        arrow.setTailAndTip( 10, 0, 10, constrainedArrowHeight );
         arrow.centerY = BOX_HEIGHT / 2;
 
         sizeDescriptionProperty.value = Math.abs( constrainedArrowHeight ) > MAX_ARROW_HEIGHT / 2 ? 'large' :
@@ -156,13 +158,13 @@ export default class SoluteBarChartNode extends Node {
 
     const PADDING_FACTOR = 0.95;
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      outsideBar.setRectHeight( soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
-      outsideBar.bottom = BOX_HEIGHT / 2 + barLineWidth;
+      outsideBar.setRectWidth( 1.5 * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      outsideBar.left = origin.centerX;
     } );
 
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      insideBar.setRectHeight( soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
-      insideBar.top = BOX_HEIGHT / 2 - barLineWidth;
+      insideBar.setRectWidth( 1.5 * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      insideBar.left = origin.centerX;
     } );
 
     this.children = [ layoutBox, icon, text, outsideBar, insideBar, origin, arrow ];
