@@ -304,7 +304,13 @@ export default class Particle<T extends ParticleType> {
 
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
-          model.addSolute( new Particle( currentPosition.copy(), 'phosphate' ) );
+          const phosphate = new Particle( currentPosition.copy(), 'phosphate' );
+          phosphate.mode = {
+            type: 'waitingInSodiumPotassiumPump',
+            slot: this.mode.slot,
+            site: this.mode.site
+          };
+          model.addSolute( phosphate );
 
           model.removeSolute( this );
           // returns early to avoid the rest of the step method

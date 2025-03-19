@@ -15,7 +15,7 @@ export default class PhosphateNode extends Node {
 
   public constructor() {
 
-    const radius = 18;
+    const radius = 7;
     const options: ShadedSphereNodeOptions = {
       mainColor: MembraneChannelsColors.phosphateColorProperty,
       highlightColor: new Color( 255, 255, 255 ),
