@@ -27,8 +27,8 @@ import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTyp
 import getParticleNode from './particles/getParticleNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
-const BOX_WIDTH = 100;
-const BOX_HEIGHT = 100;
+const BOX_WIDTH = 124;
+const BOX_HEIGHT = 92;
 
 const MAX_ARROW_HEIGHT = BOX_HEIGHT * 0.9;
 
@@ -84,7 +84,7 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     // For layout, not just for debugging
-    const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, { fill: 'red', opacity: 0.1 } );
+    const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, { fill: 'white', opacity: 0.2, stroke: 'black', lineWidth: 1 } );
 
     const icon = getParticleNode( soluteType );
     icon.setScaleMagnitude( MembraneChannelsConstants.PARTICLE_NODE_ICON_SCALE );
@@ -157,13 +157,14 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     const PADDING_FACTOR = 0.95;
+    const BAR_MULTIPLIER = 2;
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      outsideBar.setRectWidth( 1.5 * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      outsideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       outsideBar.left = origin.centerX;
     } );
 
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      insideBar.setRectWidth( 1.5 * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      insideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       insideBar.left = origin.centerX;
     } );
 

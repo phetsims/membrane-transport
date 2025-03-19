@@ -62,7 +62,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     contentNode.addChild( bottomHalf );
 
     // NOTE: Duplication with ObservationWindow
-    const TEXT_MARGIN = 15;
+    const TEXT_MARGIN = 30;
     const textOptions = { fontSize: 13, left: 3, maxWidth: 200 };
     const outsideText = new Text( MembraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
     const insideText = new Text( MembraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
@@ -76,8 +76,9 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
         stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
         return soluteBarChartNode;
       } ),
-      spacing: 30,
+      spacing: 12,
       left: 50,
+      top: 5,
 
       tagName: 'ul',
 
@@ -89,7 +90,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     hbox.boundsProperty.link( () => {
 
       // Don't crash when hbox.width is NaN
-      const rectWidth = hbox.width >= 0 ? hbox.width + 100 : 0;
+      const rectWidth = hbox.width >= 0 ? hbox.width + 75 : 0;
       contentNode.setRectWidth( rectWidth );
       topHalf.setRectWidth( rectWidth );
       bottomHalf.setRectWidth( rectWidth );
