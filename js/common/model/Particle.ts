@@ -30,6 +30,9 @@ import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './S
 // Typical speed for movement
 const typicalSpeed = 30;
 
+// The amount of time that must pass before a particle can cross the membrane again.
+const CROSSING_COOLDOWN = 0.5;
+
 // The radius of the circle around the center of a channel where a particle will be captured so
 // we can decide how it should interact with the channel.
 export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
@@ -42,6 +45,9 @@ type RandomWalkMode = {
   turnElapsed: number;
   timeUntilNextDirection: number;
   slot: null;
+
+  // The time that has elapsed since the particle crossed the membrane for this random walk.
+  timeElapsedSinceMembraneCrossing: number;
 };
 
 type BoundMode = {
@@ -177,7 +183,8 @@ export default class Particle<T extends ParticleType> {
       turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
       timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ),
-      slot: null
+      slot: null,
+      timeElapsedSinceMembraneCrossing: 0
     };
   }
 
@@ -193,7 +200,8 @@ export default class Particle<T extends ParticleType> {
       turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
       turnElapsed: 0,
       timeUntilNextDirection: duration,
-      slot: null
+      slot: null,
+      timeElapsedSinceMembraneCrossing: 0
     };
   }
 
@@ -425,6 +433,7 @@ export default class Particle<T extends ParticleType> {
     const randomWalk = this.mode as RandomWalkMode;
 
     randomWalk.timeUntilNextDirection -= dt;
+    randomWalk.timeElapsedSinceMembraneCrossing += dt;
 
     // Time for a new direction
     if ( randomWalk.timeUntilNextDirection <= 0 ) {
@@ -451,7 +460,7 @@ export default class Particle<T extends ParticleType> {
       // If the particle is within a certain radial distance from the center of the channel, it can interact with the channel
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
-      if ( channel && distance < CAPTURE_RADIUS_PROPERTY.value ) {
+      if ( channel && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
         const interactedWithChannel = this.handleChannelInteractionDuringRandomWalk( slot, channel, model, outsideOfCell );
         if ( interactedWithChannel ) {
           return;
@@ -612,9 +621,9 @@ export default class Particle<T extends ParticleType> {
 
       if ( openSodiumSites.length > 0 ) {
         const site = dotRandom.sample( openSodiumSites );
-          this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
-          return true;
-        }
+        this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
+        return true;
+      }
     }
 
     if (
