@@ -38,7 +38,7 @@
   sodiumGlucoseCotransporter: 'Sodium-Glucose<br>Cotransporter',
 
   // Additional Controls
-  membraneVoltagePotentialmV: 'Membrane Voltage Potential (mV)',
+  membraneVoltagePotential_mV: 'Membrane Voltage Potential (mV)',
   addLigands: 'Add Ligands',
   removeLigands: 'Remove Ligands',
 

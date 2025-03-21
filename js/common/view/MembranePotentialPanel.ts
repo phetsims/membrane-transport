@@ -48,8 +48,7 @@ export default class MembranePotentialPanel extends Panel {
           tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' )
         } ),
 
-        // TODO (JG): mv casing? CM and AV recently had a GitHub issue about string key casing
-        new Text( MembraneChannelsStrings.membraneVoltagePotentialmVStringProperty, {
+        new Text( MembraneChannelsStrings.membraneVoltagePotential_mVStringProperty, {
           maxWidth: 160
         } ),
 
