@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -14,14 +15,14 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
-import ChannelType from '../model/proteins/ChannelType.js';
 import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
+import ChannelType from '../model/proteins/ChannelType.js';
 import Slot from '../model/Slot.js';
 import ChannelDragNode from './ChannelDragNode.js';
-import getBriefProteinName from './proteins/getBriefProteinName.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
+import getBriefProteinName from './proteins/getBriefProteinName.js';
 
 // This is the index of the slot in the model, or if an item has been grabbed.
 type ItemModel = number | 'grabbedItem';
@@ -196,12 +197,15 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
 
-        // TODO (JG): i18n after the design is finalized. How would you modularize this in the fluent file?
-        const phrase1 = `Grabbed. Above membrane. Slot ${this.currentSelection!.currentSlotIndex + 1} of ${SLOT_COUNT}.`;
-        const phrase2 = 'Move protein with W, A, S, or D key. Space to release.';
+        const fluentPatternMessageProperty = this.isFirstGrab ?
+                              MembraneChannelsMessages.grabbedProteinResponseWithHintMessageProperty :
+                              MembraneChannelsMessages.grabbedProteinResponseMessageProperty;
+        const grabbedAlert = FluentUtils.formatMessage( fluentPatternMessageProperty, {
+          slotIndex: this.currentSelection!.currentSlotIndex + 1,
+          slotCount: SLOT_COUNT
+        } );
 
-        const phrase = this.isFirstGrab ? `${phrase1} ${phrase2}` : phrase1;
-        alerter.alert( phrase );
+        alerter.alert( grabbedAlert );
 
         this.isFirstGrab = false;
       },

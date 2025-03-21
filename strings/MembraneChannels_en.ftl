@@ -151,3 +151,10 @@ releasedBackInToolbox = Released. Back in toolbox.
 selectedChannelInSlot = Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
 
 canceledBackInMembrane = Cancelled. Back in membrane.
+
+# Spoken when the protein is grabbed.
+grabbedProteinResponse = Grabbed. Above membrane. Slot {$slotIndex} of { $slotCount }.
+
+# The first time the protein is grabbed, provide a hint about how to use it.
+# TODO: Should this be built into GroupSelectView?
+grabbedProteinResponseWithHint = { grabbedProteinResponse } Move protein with W, A, S, or D key. Space to release.
