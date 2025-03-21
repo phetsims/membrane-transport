@@ -13,8 +13,14 @@ import ChannelType from '../model/proteins/ChannelType.js';
 import getChannelNode from './proteins/getChannelNode.js';
 import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
 
-// TODO (JG): How to deal with these text getting too tall from multiline? Or is that only a problem in the stringTest=dynamic?
-const richTextOptions: RichTextOptions = { align: 'center', font: new PhetFont( 12 ), maxWidth: 50 };
+const richTextOptions: RichTextOptions = {
+  align: 'center',
+  font: new PhetFont( 12 ),
+
+  // Found by inspection. maxHeight required to constrain multi-line text.
+  maxWidth: 100,
+  maxHeight: 40
+};
 
 /**
  * In the "Membrane Channels" accordion box, show a tool icon that can be dragged to create a new channel.
