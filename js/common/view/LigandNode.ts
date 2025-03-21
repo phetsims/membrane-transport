@@ -113,7 +113,6 @@ export default class LigandNode extends Node {
     } );
     this.addInputListener( soundRichDragListener );
 
-    // TODO (JG): Rename looksOverProperty? Or maybe we need a new Property for isOverProperty || focusedProperty
     soundRichDragListener.dragListener.looksOverProperty.link( isOver => {
       this.operateOnLigand( ligand => {
 
