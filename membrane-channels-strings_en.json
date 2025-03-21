@@ -89,7 +89,7 @@
   "a11y": {
     "observationWindow": {
       "accessibleName": {
-        "value": "Grab a protein to re-order along zoomed-in view of membrane."
+        "value": "Observation Window"
       }
     },
     "accordionBoxGroup": {

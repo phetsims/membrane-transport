@@ -49,9 +49,7 @@
   a11y: {
 
     observationWindow: {
-
-      // TODO (JG): Is this in the right place?
-      accessibleName: 'Grab a protein to re-order along zoomed-in view of membrane.'
+      accessibleName: 'Observation Window'
     },
 
     accordionBoxGroup: {
