@@ -47,7 +47,9 @@ type StringsType = {
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
   'a11y': {
     'observationWindow': {
-      'accessibleNameStringProperty': LocalizedStringProperty;
+      'membrane': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      }
     };
     'accordionBoxGroup': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;

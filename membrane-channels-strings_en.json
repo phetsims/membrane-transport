@@ -88,8 +88,10 @@
   },
   "a11y": {
     "observationWindow": {
-      "accessibleName": {
-        "value": "Observation Window"
+      "membrane": {
+        "accessibleName": {
+          "value": "Zoomed-in Membrane"
+        }
       }
     },
     "accordionBoxGroup": {

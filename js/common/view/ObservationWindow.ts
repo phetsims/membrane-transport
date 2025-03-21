@@ -62,7 +62,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     super( {
       children: [ clipNode, frameNode ],
-      accessibleName: MembraneChannelsStrings.a11y.observationWindow.accessibleNameStringProperty
+      accessibleName: MembraneChannelsStrings.a11y.observationWindow.membrane.accessibleNameStringProperty
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts

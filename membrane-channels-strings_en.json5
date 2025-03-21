@@ -49,7 +49,9 @@
   a11y: {
 
     observationWindow: {
-      accessibleName: 'Observation Window'
+      membrane: {
+        accessibleName: 'Zoomed-in Membrane'
+      }
     },
 
     accordionBoxGroup: {
