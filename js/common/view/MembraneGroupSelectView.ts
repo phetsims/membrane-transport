@@ -199,7 +199,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
         const fluentPatternMessageProperty = this.isFirstGrab ?
                               MembraneChannelsMessages.grabbedProteinResponseWithHintPatternMessageProperty :
-                              MembraneChannelsMessages.grabbedProteinResponseMessagePatternProperty;
+                              MembraneChannelsMessages.grabbedProteinResponsePatternMessageProperty;
         const grabbedAlert = FluentUtils.formatMessage( fluentPatternMessageProperty, {
           slotIndex: this.currentSelection!.currentSlotIndex + 1,
           slotCount: SLOT_COUNT
