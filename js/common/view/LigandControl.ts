@@ -33,6 +33,17 @@ export default class LigandControl extends BooleanRectangularToggleButton {
       // pdom
       accessibleHelpText: MembraneChannelsMessages.ligandControlAccessibleHelpTextMessageProperty
     } );
+
+    // TODO: High level API for context responses?
+    // TODO: What if you set areLigandsAddedProperty programmatically?
+    model.areLigandsAddedProperty.link( areLigandsAdded => {
+      if ( areLigandsAdded ) {
+        this.alertDescriptionUtterance( MembraneChannelsMessages.ligandControlAddedContextResponseMessageProperty );
+      }
+      else {
+        this.alertDescriptionUtterance( MembraneChannelsMessages.ligandControlRemovedContextResponseMessageProperty );
+      }
+    } );
   }
 }
 membraneChannels.register( 'LigandControl', LigandControl );
