@@ -6,12 +6,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
-import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import BooleanRectangularToggleButton from '../../../../sun/js/buttons/BooleanRectangularToggleButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
@@ -23,42 +19,16 @@ const TEXT_OPTIONS = {
   maxWidth: 160
 } as const;
 
-export default class LigandControl extends Node {
+export default class LigandControl extends BooleanRectangularToggleButton {
   public constructor( model: MembraneChannelsModel, tandem: Tandem ) {
 
-    // Align so the buttons are the same size.
-    const alignGroup = new AlignGroup();
+    const trueNode = new Text( MembraneChannelsStrings.removeLigandsStringProperty, TEXT_OPTIONS );
+    const falseNode = new Text( MembraneChannelsStrings.addLigandsStringProperty, TEXT_OPTIONS );
 
-    const addLigandsButton = new RectangularPushButton( {
+    super( model.areLigandsAddedProperty, trueNode, falseNode, {
       baseColor: MembraneChannelsColors.ligandButtonColorProperty,
-      content: alignGroup.createBox( new Text( MembraneChannelsStrings.addLigandsStringProperty, TEXT_OPTIONS ) ),
-      tandem: tandem.createTandem( 'addLigandsButton' ),
-      visibleProperty: DerivedProperty.not( model.areLigandsAddedProperty ),
-      listener: () => {
-        model.areLigandsAddedProperty.value = true;
-        removeLigandsButton.focus();
-      }
+      tandem: tandem
     } );
-
-    const removeLigandsButton = new RectangularPushButton( {
-      baseColor: MembraneChannelsColors.ligandButtonColorProperty,
-      content: alignGroup.createBox( new Text( MembraneChannelsStrings.removeLigandsStringProperty, TEXT_OPTIONS ) ),
-      tandem: tandem.createTandem( 'removeLigandsButton' ),
-      visibleProperty: model.areLigandsAddedProperty,
-      listener: () => {
-        model.areLigandsAddedProperty.value = false;
-        addLigandsButton.focus();
-      }
-    } );
-
-    // Separate buttons to make a11y navigation easier
-    // TODO (JG): Confirm we don't want a BooleanRectangleToggleButton here, and document why
-    // TODO (JG): In PhET-iO Studio, we need one control to hide the entire LigandControl, so
-    // we need to either instrument this Node or switch to a BooleanRectangleToggleButton
-    const options = combineOptions<NodeOptions>( {
-      children: [ addLigandsButton, removeLigandsButton ]
-    } );
-    super( options );
   }
 }
 membraneChannels.register( 'LigandControl', LigandControl );
