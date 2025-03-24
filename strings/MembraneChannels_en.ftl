@@ -158,3 +158,6 @@ grabbedProteinResponsePattern = Grabbed. Above membrane. Slot {$slotIndex} of { 
 # The first time the protein is grabbed, provide a hint about how to use it.
 # TODO: Should this be built into GroupSelectView?
 grabbedProteinResponseWithHintPattern = { grabbedProteinResponsePattern } Move protein with W, A, S, or D key. Space to release.
+
+# accessibleHelpText for the ligand control
+ligandControlAccessibleHelpText = Add two types of ligands to outside of membrane.

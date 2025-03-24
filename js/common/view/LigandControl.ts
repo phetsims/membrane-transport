@@ -11,6 +11,7 @@ import BooleanRectangularToggleButton from '../../../../sun/js/buttons/BooleanRe
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneChannels from '../../membraneChannels.js';
 import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
 import MembraneChannelsColors from '../MembraneChannelsColors.js';
 import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
 
@@ -27,7 +28,10 @@ export default class LigandControl extends BooleanRectangularToggleButton {
 
     super( model.areLigandsAddedProperty, trueNode, falseNode, {
       baseColor: MembraneChannelsColors.ligandButtonColorProperty,
-      tandem: tandem
+      tandem: tandem,
+
+      // pdom
+      accessibleHelpText: MembraneChannelsMessages.ligandControlAccessibleHelpTextMessageProperty
     } );
   }
 }
