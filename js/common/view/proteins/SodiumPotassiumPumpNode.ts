@@ -6,8 +6,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
+import Image from '../../../../../scenery/js/nodes/Image.js';
+
+import naKPumpState1_svg from '../../../../images/naKPumpState1_svg.js';
+import naKPumpState2_svg from '../../../../images/naKPumpState2_svg.js';
 import membraneChannels from '../../../membraneChannels.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import ProteinNode from './ProteinNode.js';
@@ -16,18 +18,12 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
   public constructor( channel: SodiumPotassiumPump | null ) {
 
     super();
-
-    const rectangle = new Rectangle( 0, 0, 30, 80, { fill: 'rgba(0,0,255,0.2)', stroke: 'black', lineWidth: 1 } );
-    this.addChild( rectangle );
-
-    const text = new Text( 'closed', {
-      center: rectangle.center
-    } );
-    this.addChild( text );
+    const image = new Image( naKPumpState1_svg );
+    this.addChild( image );
 
     if ( channel ) {
       channel.isOpenProperty.link( open => {
-        text.string = open ? 'open' : 'closed';
+        image.image = open ? naKPumpState1_svg : naKPumpState2_svg;
       } );
     }
   }

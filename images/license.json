@@ -1,3 +1,154 @@
 {
-
+  "adp.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "atp.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "carbonDioxide.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "glucose.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "license.json": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "naKPumpState1.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "naKPumpState2.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "naKPumpState3.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "oxygen.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "phosphate.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "potassiumIon.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "potassiumLigand.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "potassiumVoltageGatedMinus70and50mV.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "potassiumVoltageGatedPlus30mV.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "sodiumIon.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "sodiumLigand.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "sodiumVoltageGatedMinus50mV.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "sodiumVoltageGatedMinus70mV.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "sodiumVoltageGatedPlus30mV.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  }
 }

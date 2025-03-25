@@ -1,11 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Vector2 from '../../../../../dot/js/Vector2.js';
-import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../../../scenery-phet/js/ShadedSphereNode.js';
-import Line from '../../../../../scenery/js/nodes/Line.js';
+import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
-import Color from '../../../../../scenery/js/util/Color.js';
-import MembraneChannelsColors from '../../../common/MembraneChannelsColors.js';
+import potassiumIon_svg from '../../../../images/potassiumIon_svg.js';
 import membraneChannels from '../../../membraneChannels.js';
 
 /**
@@ -17,24 +14,11 @@ export default class PotassiumIonNode extends Node {
 
   public constructor() {
 
-    const radius = 20;
-    const options: ShadedSphereNodeOptions = {
-      mainColor: MembraneChannelsColors.potassiumIonColorProperty,
-      highlightColor: new Color( 255, 255, 255 ),
-      lineWidth: 1,
-      stroke: 'black'
-    };
-    const sodium = new ShadedSphereNode( radius, options );
-    const lineWidth = 11;
-    const plusNode = new Node( {
-      children: [
-        new Line( 0, 0, 0, lineWidth, { stroke: 'black', lineWidth: 2 } ),
-        new Line( -lineWidth / 2, lineWidth / 2, lineWidth / 2, lineWidth / 2, { stroke: 'black', lineWidth: 2 } )
-      ],
-      center: new Vector2( 0, 0 )
+    super( {
+      children: [ new Image( potassiumIon_svg, {
+        scale: 1.25
+      } ) ]
     } );
-
-    super( { children: [ sodium, plusNode ] } );
   }
 }
 
