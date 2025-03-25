@@ -48,6 +48,9 @@ export const getParticleModelWidth = ( particleType: ParticleType ): number =>
 
   // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
   particleType === 'oxygen' ? oxygenModelSize :
+
+  // TODO: Sadly, this creates and disposes a view node every time you create a model particle. This is a performance + garbage issue.
+  // Cache them, but not until the sim has started up and we have good bounds.
   particleType === 'carbonDioxide' ? oxygenModelSize * getParticleNode( 'carbonDioxide' ).bounds.width / getParticleNode( 'oxygen' ).bounds.width :
 
   particleType === 'sodiumIon' ? 4 :

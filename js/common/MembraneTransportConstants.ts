@@ -41,6 +41,7 @@ export default class MembraneTransportConstants {
   // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
   // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
   // get good bounds. Hence this is a method rather than an attribute, and called during screen creation.
+  // TODO: This creates lots of particle nodes every time you create one model instance. This is a performance + garbage issue. Cache, but do not compute until the sim has started up and we have good bounds.
   public static getParticleAspectRatioMap(): Record<ParticleType, number> {
     const record = {} as Record<ParticleType, number>;
     ParticleTypes.forEach( soluteType => {
