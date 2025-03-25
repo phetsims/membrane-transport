@@ -66,6 +66,7 @@ export default class SoluteBarChartNode extends Node {
     const directionDescriptionProperty = new StringProperty( 'upward' );
 
     const descriptionProperty = new PatternMessageProperty( MembraneChannelsMessages.barChartPatternMessageProperty, {
+      soluteType: soluteType,
       amount: soluteDifferenceProperty,
       size: sizeDescriptionProperty,
       direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up

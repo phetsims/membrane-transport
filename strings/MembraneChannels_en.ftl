@@ -132,8 +132,7 @@ barSizeDescription = { $amount ->
   *[aLotLess] A lot less
 } outside than inside
 
-
-barChartPattern = { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }.
+barChartPattern = { solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }.
 
 # Show a sentence like Right now, membrane has
 #                        {1-6} solute types outside;
