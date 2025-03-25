@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import atp_svg from '../../../../images/atp_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * ATP molecule. Does not rotate.
@@ -22,4 +22,4 @@ export default class ATPNode extends Node {
   }
 }
 
-membraneChannels.register( 'ATPNode', ATPNode );
+membraneTransport.register( 'ATPNode', ATPNode );

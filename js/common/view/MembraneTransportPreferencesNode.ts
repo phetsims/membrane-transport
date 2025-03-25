@@ -1,10 +1,10 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * MembraneChannelsPreferencesNode is the user interface for sim-specific preferences, accessed via the Preferences dialog.
+ * MembraneTransportPreferencesNode is the user interface for sim-specific preferences, accessed via the Preferences dialog.
  * These preferences are global, and affect all screens.
  *
- * The Preferences dialog is created on demand by joist, using a PhetioCapsule. So MembraneChannelsPreferencesNode and its
+ * The Preferences dialog is created on demand by joist, using a PhetioCapsule. So MembraneTransportPreferencesNode and its
  * subcomponents must implement dispose.
  *
  * @author Sam Reid (PhET Interactive Simulations)
@@ -19,15 +19,15 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import { animateLipidsProperty } from '../MembraneTransportPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type MembraneChannelsPreferencesNodeOptions = SelfOptions & PickRequired<VBoxOptions, 'tandem'>;
+export type MembraneTransportPreferencesNodeOptions = SelfOptions & PickRequired<VBoxOptions, 'tandem'>;
 
-export default class MembraneChannelsPreferencesNode extends VBox {
+export default class MembraneTransportPreferencesNode extends VBox {
 
   public constructor( tandem: Tandem ) {
 
@@ -35,8 +35,8 @@ export default class MembraneChannelsPreferencesNode extends VBox {
       children: [
         new PreferencesControl( {
           isDisposable: false,
-          labelNode: new Text( MembraneChannelsStrings.animateLipidsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-          descriptionNode: new RichText( MembraneChannelsStrings.animateLipidsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+          labelNode: new Text( MembraneTransportStrings.animateLipidsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          descriptionNode: new RichText( MembraneTransportStrings.animateLipidsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
           controlNode: new ToggleSwitch( animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
           tandem: tandem.createTandem( 'animateLipidsControl' ),
           phetioFeatured: true,
@@ -49,4 +49,4 @@ export default class MembraneChannelsPreferencesNode extends VBox {
   }
 }
 
-membraneChannels.register( 'MembraneChannelsPreferencesNode', MembraneChannelsPreferencesNode );
+membraneTransport.register( 'MembraneTransportPreferencesNode', MembraneTransportPreferencesNode );

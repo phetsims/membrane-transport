@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import phosphate_svg from '../../../../images/phosphate_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * A Phosphate group that detached from ATP. Does not rotate.
@@ -22,4 +22,4 @@ export default class PhosphateNode extends Node {
   }
 }
 
-membraneChannels.register( 'PhosphateNode', PhosphateNode );
+membraneTransport.register( 'PhosphateNode', PhosphateNode );

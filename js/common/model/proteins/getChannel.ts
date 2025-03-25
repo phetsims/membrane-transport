@@ -1,6 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
-import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Channel from './Channel.js';
 import ChannelType from './ChannelType.js';
 import LeakageChannel from './LeakageChannel.js';
@@ -15,7 +15,7 @@ import VoltageGatedChannel from './VoltageGatedChannel.js';
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default function( model: MembraneChannelsModel, type: ChannelType, position: number ): Channel {
+export default function( model: MembraneTransportModel, type: ChannelType, position: number ): Channel {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 

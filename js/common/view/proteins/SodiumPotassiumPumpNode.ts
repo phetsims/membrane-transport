@@ -10,7 +10,7 @@ import Image from '../../../../../scenery/js/nodes/Image.js';
 
 import naKPumpState1_svg from '../../../../images/naKPumpState1_svg.js';
 import naKPumpState2_svg from '../../../../images/naKPumpState2_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import ProteinNode from './ProteinNode.js';
 
@@ -29,4 +29,4 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
   }
 }
 
-membraneChannels.register( 'SodiumPotassiumPumpNode', SodiumPotassiumPumpNode );
+membraneTransport.register( 'SodiumPotassiumPumpNode', SodiumPotassiumPumpNode );

@@ -13,7 +13,7 @@ import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/Keybo
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
-import membraneChannels from '../../membraneChannels.js';
+import membraneTransport from '../../membraneTransport.js';
 
 export const SECTION_LABEL_OPTIONS = { labelOptions: { lineWrap: 200 } };
 
@@ -37,4 +37,4 @@ export default class MoveGrabbedChannelProteinKeyboardHelpSection extends Keyboa
   }
 }
 
-membraneChannels.register( 'MoveGrabbedChannelProteinKeyboardHelpSection', MoveGrabbedChannelProteinKeyboardHelpSection );
+membraneTransport.register( 'MoveGrabbedChannelProteinKeyboardHelpSection', MoveGrabbedChannelProteinKeyboardHelpSection );

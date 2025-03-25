@@ -1,7 +1,7 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
- * ScreenView for the Membrane Channels simulation. Note that this provides the full features of the Playground screen,
+ * ScreenView for the Membrane Transport simulation. Note that this provides the full features of the Playground screen,
  * and the earlier screens opt-out of some of these features.
  *
  * @author Sam Reid (PhET Interactive Simulations)
@@ -22,12 +22,12 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import ChannelType from '../model/proteins/ChannelType.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
-import MembraneChannelsModelTester from '../model/MembraneChannelsModelTester.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import MembraneTransportModelTester from '../model/MembraneTransportModelTester.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
@@ -35,8 +35,8 @@ import ChannelDragNode from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
-import MembraneChannelsAccordionBoxGroup from './MembraneChannelsAccordionBoxGroup.js';
-import MembraneChannelsScreenSummaryContent from './MembraneChannelsScreenSummaryContent.js';
+import MembraneTransportAccordionBoxGroup from './MembraneTransportAccordionBoxGroup.js';
+import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
@@ -46,9 +46,9 @@ import ThumbnailNode from './ThumbnailNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type MembraneChannelsScreenViewOptions = SelfOptions & ScreenViewOptions;
+type MembraneTransportScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class MembraneChannelsScreenView extends ScreenView {
+export default class MembraneTransportScreenView extends ScreenView {
 
   private readonly observationWindow: ObservationWindow;
 
@@ -59,19 +59,19 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
   private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     new Vector2( 0, 0 ),
-    MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.center,
-    MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
+    MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center,
+    MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
   );
   public readonly screenViewModelViewTransform: ModelViewTransform2;
   private afterRelease: ( () => void ) | null = null;
-  private readonly membraneChannelsAccordionBoxGroup?: MembraneChannelsAccordionBoxGroup;
+  private readonly membraneTransportAccordionBoxGroup?: MembraneTransportAccordionBoxGroup;
 
   public constructor(
-    public readonly model: MembraneChannelsModel,
-    providedOptions: MembraneChannelsScreenViewOptions ) {
+    public readonly model: MembraneTransportModel,
+    providedOptions: MembraneTransportScreenViewOptions ) {
 
-    const options = optionize<MembraneChannelsScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-      screenSummaryContent: new MembraneChannelsScreenSummaryContent( model.featureSet, model )
+    const options = optionize<MembraneTransportScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+      screenSummaryContent: new MembraneTransportScreenSummaryContent( model.featureSet, model )
     }, providedOptions );
     super( options );
 
@@ -79,21 +79,21 @@ export default class MembraneChannelsScreenView extends ScreenView {
     // of the observation window so that you can position view components relative to things within the observation window.
     const screenViewModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ),
-      MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN ),
-      MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneChannelsConstants.MODEL_WIDTH
+      MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN ),
+      MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
     );
 
     const macroCellNode = new MacroCellNode();
     this.addChild( macroCellNode );
 
-    this.observationWindow = new ObservationWindow( model, this, this.observationWindowModelViewTransform, MembraneChannelsConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
+    this.observationWindow = new ObservationWindow( model, this, this.observationWindowModelViewTransform, MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
     this.stepEmitter.addListener( dt => this.observationWindow.step( dt ) );
     this.resetEmitter.addListener( () => this.observationWindow.reset() );
 
     // Note: x/y to position to account for the stroke width (when the stroke rectangle moves into ObservationWindow).
     // Alignment can be tested with ?dev and by increasing the line width in the ObservationWindow frame line width
-    this.observationWindow.x = this.layoutBounds.centerX - MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH / 2;
-    this.observationWindow.y = MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    this.observationWindow.x = this.layoutBounds.centerX - MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH / 2;
+    this.observationWindow.y = MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( new ThumbnailNode( macroCellNode.thumbnailCenterX, macroCellNode.thumbnailCenterY, this.observationWindow.bounds ) );
     this.addChild( this.observationWindow );
@@ -104,8 +104,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
         model.reset();
         this.reset();
       },
-      right: this.layoutBounds.maxX - MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
+      right: this.layoutBounds.maxX - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
@@ -123,8 +123,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
         }
       },
       tandem: options.tandem.createTandem( 'timeControlNode' ),
-      left: this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
-      bottom: this.layoutBounds.maxY - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
+      left: this.observationWindow.right + MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
+      bottom: this.layoutBounds.maxY - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     this.addChild( timeControlNode );
@@ -133,7 +133,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       baseColor: 'rgb(220,220,232)',
       arrowColor: PhetColorScheme.RED_COLORBLIND,
       tandem: options.tandem.createTandem( 'trashButton' ),
-      left: this.observationWindow.right + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
+      left: this.observationWindow.right + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.observationWindow.bottom
     } );
     trashButton.addListener( () => model.clear() );
@@ -146,8 +146,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     this.resetEmitter.addListener( () => soluteBarChartsAccordionBox.reset() );
 
-    soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN;
-    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN;
+    soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN;
+    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( soluteBarChartsAccordionBox );
     this.stepEmitter.addListener( dt => soluteBarChartsAccordionBox.stepEmitter.emit( dt ) );
@@ -156,8 +156,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, {
       tandem: soluteControlsTandem.createTandem( 'solutesPanel' ),
-      left: this.layoutBounds.left + MembraneChannelsConstants.SCREEN_VIEW_X_MARGIN,
-      top: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN
+      left: this.layoutBounds.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
+      top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     this.addChild( solutesPanel );
@@ -184,7 +184,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
       if ( soluteType !== 'atp' ) {
         const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {
           centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-          bottom: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ),
+          bottom: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ),
           tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
         } );
         outsideSoluteControlNode.addChild( outsideSoluteControl );
@@ -193,7 +193,7 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
         centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-        top: screenViewModelViewTransform.modelToViewY( MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ),
+        top: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.minY ),
         tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
       } );
       insideSoluteControlNode.addChild( insideSoluteControl );
@@ -205,12 +205,12 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      const membraneChannelsAccordionBoxGroup = new MembraneChannelsAccordionBoxGroup( model, options.tandem.createTandem( 'membraneProteinsAccordionBoxGroup' ), this );
-      this.resetEmitter.addListener( () => membraneChannelsAccordionBoxGroup.reset() );
+      const membraneTransportAccordionBoxGroup = new MembraneTransportAccordionBoxGroup( model, options.tandem.createTandem( 'membraneProteinsAccordionBoxGroup' ), this );
+      this.resetEmitter.addListener( () => membraneTransportAccordionBoxGroup.reset() );
 
-      rightSideVBoxChildren.push( membraneChannelsAccordionBoxGroup );
+      rightSideVBoxChildren.push( membraneTransportAccordionBoxGroup );
 
-      this.membraneChannelsAccordionBoxGroup = membraneChannelsAccordionBoxGroup;
+      this.membraneTransportAccordionBoxGroup = membraneTransportAccordionBoxGroup;
     }
 
     if ( getFeatureSetHasVoltages( model.featureSet ) ) {
@@ -227,9 +227,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
     }
 
     const rightSideVBox = new VBox( {
-      spacing: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
+      spacing: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
       children: rightSideVBoxChildren,
-      top: MembraneChannelsConstants.SCREEN_VIEW_Y_MARGIN,
+      top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
       centerX: ( this.layoutBounds.right + this.observationWindow.right ) / 2
     } );
     this.addChild( rightSideVBox );
@@ -256,16 +256,16 @@ export default class MembraneChannelsScreenView extends ScreenView {
 
     // TODO (dev): These are just for debugging, remove before publication.
     // Add hotkeys that let us easily test model behavior.
-    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'outside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', false, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', true, 'outside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', false, 'outside' ) } );
 
     // From inside the cell
-    KeyboardListener.createGlobal( this, { keys: [ 'a' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', true, 'inside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 's' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'sodium', false, 'inside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'd' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', true, 'inside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'f' ], fire: () => MembraneChannelsModelTester.testLigandChannel( model, 'potassium', false, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'a' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', true, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 's' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', false, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'd' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', true, 'inside' ) } );
+    KeyboardListener.createGlobal( this, { keys: [ 'f' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', false, 'inside' ) } );
 
     // Toggle the capture radius
     KeyboardListener.createGlobal( this, {
@@ -357,8 +357,8 @@ export default class MembraneChannelsScreenView extends ScreenView {
   }
 
   public getChannelToolNode( type: ChannelType ): ChannelToolNode {
-    return this.membraneChannelsAccordionBoxGroup!.getChannelToolNode( type );
+    return this.membraneTransportAccordionBoxGroup!.getChannelToolNode( type );
   }
 }
 
-membraneChannels.register( 'MembraneChannelsScreenView', MembraneChannelsScreenView );
+membraneTransport.register( 'MembraneTransportScreenView', MembraneTransportScreenView );

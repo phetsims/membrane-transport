@@ -5,7 +5,7 @@ import { combineOptions } from '../../../../../phet-core/js/optionize.js';
 import { CanvasNodeOptions } from '../../../../../scenery/js/nodes/CanvasNode.js';
 import { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import ProteinNode from './ProteinNode.js';
 
@@ -72,4 +72,4 @@ export default class LigandGatedChannelNode extends ProteinNode {
   }
 }
 
-membraneChannels.register( 'LigandGatedChannelNode', LigandGatedChannelNode );
+membraneTransport.register( 'LigandGatedChannelNode', LigandGatedChannelNode );

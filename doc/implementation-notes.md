@@ -1,6 +1,6 @@
-# Membrane Channels Simulation – Technical Implementation Overview
+# Membrane Transport Simulation – Technical Implementation Overview
 
-This document summarizes the technical implementation and key features of the **Membrane Channels** PhET simulation. The
+This document summarizes the technical implementation and key features of the **Membrane Transport** PhET simulation. The
 simulation models particle diffusion through cell membrane channels and pumps, including ligand-gated channels,
 voltage-gated channels, a sodium-potassium pump, glucose transporters, and passive diffusion of O₂ and CO₂ molecules
 directly across the membrane (without requiring a channel protein). It is a port of the Java-based simulation to HTML5,
@@ -22,10 +22,10 @@ incorporating modern PhET frameworks and updated pedagogical features.
 
 ### Novel Approaches
 
-* **MembraneChannelsFeatureSet**: This is a feature set that is used to enable/disable features in the simulation. It is used to
+* **MembraneTransportFeatureSet**: This is a feature set that is used to enable/disable features in the simulation. It is used to
   enable/disable the different types of channels and controls are available on each screen. Note that the features are not mutually exclusive, 
   and hence not amenable to subclassing. We also chose to avoid mixins since they introduce other difficulties. Instead,
-  we use MembraneChannelsFeatureSet to identify which features apply to which screens.
+  we use MembraneTransportFeatureSet to identify which features apply to which screens.
 * **Transient Short-Lived Nodes**: We have taken efforts to keep the model and view lightweight. For example, when 
   dragging a channel, a transient non-PhET-iO instrumented Node is temporarily created. When dropping the channel, the 
   transient node is removed and the channel is added to the model. For the GrabSortInteraction, it operates on transient 

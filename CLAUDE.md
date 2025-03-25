@@ -1,4 +1,4 @@
-# Membrane Channels Development Guidelines
+# Membrane Transport Development Guidelines
 
 ## Build Commands
 - `grunt lint --fix`: Run ESLint, automatically addressing formatting issues
@@ -13,7 +13,7 @@
 - Follows PhET MVC (Model-View-Controller) pattern
 - Organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport, Playground
 - Common code in js/common/, divided into model/ and view/
-- Use MembraneChannelsConstants for shared values
+- Use MembraneTransportConstants for shared values
 - Prefer composition over inheritance
 - Follow PhET naming conventions: PascalCase for classes, camelCase for variables
 - JS/TS files do not end with newlines

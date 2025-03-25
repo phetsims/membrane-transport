@@ -6,18 +6,18 @@ import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularR
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 /**
- * Membrane potential panel for the membrane channels simulation, shown in the bottom right, only in certain screens.
+ * Membrane potential panel for the membrane transport simulation, shown in the bottom right, only in certain screens.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 export default class MembranePotentialPanel extends Panel {
-  public constructor( model: MembraneChannelsModel, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, tandem: Tandem ) {
 
     const membraneVoltagePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
       value: '-70',
@@ -42,13 +42,13 @@ export default class MembranePotentialPanel extends Panel {
       spacing: 10,
       align: 'left',
       children: [
-        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneChannelsStrings.membranePotentialLabelsStringProperty, {
+        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneTransportStrings.membranePotentialLabelsStringProperty, {
           maxWidth: 140
         } ), {
           tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' )
         } ),
 
-        new Text( MembraneChannelsStrings.membraneVoltagePotential_mVStringProperty, {
+        new Text( MembraneTransportStrings.membraneVoltagePotential_mVStringProperty, {
           maxWidth: 160
         } ),
 
@@ -61,4 +61,4 @@ export default class MembranePotentialPanel extends Panel {
   }
 }
 
-membraneChannels.register( 'MembranePotentialPanel', MembranePotentialPanel );
+membraneTransport.register( 'MembranePotentialPanel', MembranePotentialPanel );

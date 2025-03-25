@@ -4,7 +4,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import membraneChannels from '../../membraneChannels.js';
+import membraneTransport from '../../membraneTransport.js';
 
 /**
  * ThumbnailNode shows a small rectangular view on macroscopic cell shape, showing that the ObservationWindow is a zoomed-
@@ -39,4 +39,4 @@ export default class ThumbnailNode extends Node {
   }
 }
 
-membraneChannels.register( 'ThumbnailNode', ThumbnailNode );
+membraneTransport.register( 'ThumbnailNode', ThumbnailNode );

@@ -12,13 +12,13 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import ChannelType from '../model/proteins/ChannelType.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import ChannelToolNode from './ChannelToolNode.js';
-import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 // Type definition for channel configuration
 type ChannelConfig = {
@@ -41,13 +41,13 @@ type AccordionBoxConfig = {
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export default class MembraneChannelsAccordionBoxGroup extends Node {
+export default class MembraneTransportAccordionBoxGroup extends Node {
   public readonly resetEmitter = new Emitter();
 
   // So we can return ChannelDragNode instances to their corresponding ChannelToolNode icons
   private readonly channelToolNodes: Map<ChannelType, ChannelToolNode>;
 
-  public constructor( model: MembraneChannelsModel, tandem: Tandem, view: MembraneChannelsScreenView ) {
+  public constructor( model: MembraneTransportModel, tandem: Tandem, view: MembraneTransportScreenView ) {
 
     const fontSize = 16;
     const accordionBoxOptions: AccordionBoxOptions = {
@@ -96,57 +96,57 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
       // Leakage channels
       const leakageAccordionBox = createAccordionBox( {
-        titleProperty: MembraneChannelsStrings.leakageChannelsStringProperty,
+        titleProperty: MembraneTransportStrings.leakageChannelsStringProperty,
         tandemName: 'leakageChannelsAccordionBox',
         expanded: true,
         channels: [
           {
             channelType: 'sodiumIonLeakageChannel',
-            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty
+            labelProperty: MembraneTransportStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty
           },
           {
             channelType: 'potassiumIonLeakageChannel',
-            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty
+            labelProperty: MembraneTransportStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty
           }
         ]
       } );
 
       // Voltage-gated channels
       const voltageGatedAccordionBox = createAccordionBox( {
-        titleProperty: MembraneChannelsStrings.voltageGatedChannelsStringProperty,
+        titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
         tandemName: 'voltageGatedChannelsAccordionBox',
         expanded: false,
         channels: [
           {
             channelType: 'sodiumIonVoltageGatedChannel',
-            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
+            labelProperty: MembraneTransportStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
           },
           {
             channelType: 'potassiumIonVoltageGatedChannel',
-            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
+            labelProperty: MembraneTransportStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
           }
         ]
       } );
 
       // Ligand-gated channels
       const ligandGatedAccordionBox = createAccordionBox( {
-        titleProperty: MembraneChannelsStrings.ligandGatedChannelsStringProperty,
+        titleProperty: MembraneTransportStrings.ligandGatedChannelsStringProperty,
         tandemName: 'ligandGatedChannelsAccordionBox',
         expanded: false,
         channels: [
           {
             channelType: 'sodiumIonLigandGatedChannel',
-            labelProperty: MembraneChannelsStrings.sodiumIonNaPlusStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty
+            labelProperty: MembraneTransportStrings.sodiumIonNaPlusStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty
           },
           {
             channelType: 'potassiumIonLigandGatedChannel',
-            labelProperty: MembraneChannelsStrings.potassiumIonKPlusStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty
+            labelProperty: MembraneTransportStrings.potassiumIonKPlusStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty
           }
         ]
       } );
@@ -161,19 +161,19 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
       // Active transport channels
       const activeTransportAccordionBox = createAccordionBox( {
-        titleProperty: MembraneChannelsStrings.activeTransportersStringProperty,
+        titleProperty: MembraneTransportStrings.activeTransportersStringProperty,
         tandemName: 'activeTransportersAccordionBox',
         expanded: false,
         channels: [
           {
             channelType: 'sodiumPotassiumPump',
-            labelProperty: MembraneChannelsStrings.NaPlusKPlusPumpStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
+            labelProperty: MembraneTransportStrings.NaPlusKPlusPumpStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
           },
           {
             channelType: 'sodiumGlucoseCotransporter',
-            labelProperty: MembraneChannelsStrings.sodiumGlucoseCotransporterStringProperty,
-            accessibleNameProperty: MembraneChannelsStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty
+            labelProperty: MembraneTransportStrings.sodiumGlucoseCotransporterStringProperty,
+            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty
           }
         ]
       } );
@@ -207,8 +207,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
     const vbox = new VBox( {
       spacing: 0,
       children: [
-        new Text( MembraneChannelsStrings.membraneProteinsStringProperty, {
-          fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE,
+        new Text( MembraneTransportStrings.membraneProteinsStringProperty, {
+          fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
           maxWidth: 150
         } ),
 
@@ -221,8 +221,8 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
       // pdom
       tagName: 'div',
       labelTagName: 'h3',
-      accessibleName: MembraneChannelsStrings.membraneProteinsStringProperty,
-      accessibleHelpText: MembraneChannelsStrings.a11y.accordionBoxGroup.accessibleHelpTextStringProperty,
+      accessibleName: MembraneTransportStrings.membraneProteinsStringProperty,
+      accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
 
@@ -241,4 +241,4 @@ export default class MembraneChannelsAccordionBoxGroup extends Node {
   }
 }
 
-membraneChannels.register( 'MembraneChannelsAccordionBoxGroup', MembraneChannelsAccordionBoxGroup );
+membraneTransport.register( 'MembraneTransportAccordionBoxGroup', MembraneTransportAccordionBoxGroup );

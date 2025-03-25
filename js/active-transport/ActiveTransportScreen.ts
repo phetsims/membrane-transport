@@ -1,20 +1,20 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Tandem from '../../../tandem/js/Tandem.js';
-import MembraneChannelsScreen from '../common/MembraneChannelsScreen.js';
-import membraneChannels from '../membraneChannels.js';
-import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
+import MembraneTransportScreen from '../common/MembraneTransportScreen.js';
+import membraneTransport from '../membraneTransport.js';
+import MembraneTransportStrings from '../MembraneTransportStrings.js';
 
 /**
  * Screen that shows the active transport of solutes across the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class ActiveTransportScreen extends MembraneChannelsScreen {
+export default class ActiveTransportScreen extends MembraneTransportScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneChannelsStrings.screen.activeTransportStringProperty, tandem, 'activeTransport' );
+    super( MembraneTransportStrings.screen.activeTransportStringProperty, tandem, 'activeTransport' );
   }
 }
 
-membraneChannels.register( 'ActiveTransportScreen', ActiveTransportScreen );
+membraneTransport.register( 'ActiveTransportScreen', ActiveTransportScreen );

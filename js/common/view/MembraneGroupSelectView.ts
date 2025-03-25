@@ -12,15 +12,15 @@ import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sor
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
-import MembraneChannelsModel, { SLOT_COUNT } from '../model/MembraneChannelsModel.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportModel, { SLOT_COUNT } from '../model/MembraneTransportModel.js';
 import ChannelType from '../model/proteins/ChannelType.js';
 import Slot from '../model/Slot.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
-import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
 
@@ -52,7 +52,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   private readonly groupSelectModel: GroupSelectModel<ItemModel>;
 
 
-  public constructor( private readonly membraneChannelsModel: MembraneChannelsModel, private readonly view: MembraneChannelsScreenView, private readonly observationWindow: ObservationWindow ) {
+  public constructor( private readonly membraneTransportModel: MembraneTransportModel, private readonly view: MembraneTransportScreenView, private readonly observationWindow: ObservationWindow ) {
 
     const alerter = new Alerter( {
       descriptionAlertNode: observationWindow,
@@ -112,7 +112,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 grabbedNode.setModelPosition( new Vector2( 90, 50 ) );
               }
               else {
-                const newSlot = membraneChannelsModel.getSlotForIndex( newIndex );
+                const newSlot = membraneTransportModel.getSlotForIndex( newIndex );
                 grabbedNode.setModelPosition( new Vector2( newSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
               }
 
@@ -121,7 +121,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // alert the user of the new position
               // Only call this method if there is a channel
               const getContentsString = () => {
-                const channelType = this.membraneChannelsModel.getSlotForIndex( newIndex ).channelType;
+                const channelType = this.membraneTransportModel.getSlotForIndex( newIndex ).channelType;
                 const contentsString = channelType === null ? 'empty' : getBriefProteinName( channelType );
                 return contentsString;
               };
@@ -159,13 +159,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
           const channelType = slot.channelType;
-          const slotIndex = membraneChannelsModel.getSlotIndex( slot );
+          const slotIndex = membraneTransportModel.getSlotIndex( slot );
           const channelName = channelType ? getBriefProteinName( channelType ) : 'empty';
 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
 
-            alerter.alert( new PatternMessageProperty( MembraneChannelsMessages.selectedChannelInSlotMessageProperty, {
+            alerter.alert( new PatternMessageProperty( MembraneTransportMessages.selectedChannelInSlotMessageProperty, {
               channelName: channelName,
               slotIndex: slotIndex + 1,
               slotCount: SLOT_COUNT
@@ -198,8 +198,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
 
         const fluentPatternMessageProperty = this.isFirstGrab ?
-                              MembraneChannelsMessages.grabbedProteinResponseWithHintPatternMessageProperty :
-                              MembraneChannelsMessages.grabbedProteinResponsePatternMessageProperty;
+                              MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
+                              MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
         const grabbedAlert = FluentUtils.formatMessage( fluentPatternMessageProperty, {
           slotIndex: this.currentSelection!.currentSlotIndex + 1,
           slotCount: SLOT_COUNT
@@ -222,7 +222,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           if ( currentSlotIndex >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
 
             // when returning focus here
-            const droppedIntoSlot = membraneChannelsModel.getSlotForIndex( currentSlotIndex );
+            const droppedIntoSlot = membraneTransportModel.getSlotForIndex( currentSlotIndex );
             if ( currentSlotIndex < SLOT_COUNT ) {
 
               const oldContents = droppedIntoSlot.channelType;
@@ -240,7 +240,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              alerter.alert( MembraneChannelsMessages.releasedBackInToolboxMessageProperty );
+              alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
             }
 
             view.keyboardDroppedMembraneChannel();
@@ -299,7 +299,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
       },
       grabReleaseCueOptions: {
-        center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MembraneChannelsConstants.MODEL_HEIGHT * 0.25 ) )
+        center: observationWindow.bounds.center.plusXY( 0, observationWindow.modelViewTransform.modelToViewDeltaY( MembraneTransportConstants.MODEL_HEIGHT * 0.25 ) )
       }
     } );
 
@@ -307,8 +307,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     const verticalFractionalHeight = 0.3;
     const horizontalMargin = 5;
     this.groupSortGroupFocusHighlightPath.shape = Shape.rect(
-      -horizontalMargin, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
-      horizontalMargin * 2 + MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight );
+      -horizontalMargin, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
+      horizontalMargin * 2 + MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight );
 
     // Resets fields tracking what is grabbed, where it was grabbed from, etc that are saved at the beginning
     // of an interaction.
@@ -364,13 +364,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
-            alerter.alert( MembraneChannelsMessages.canceledBackInMembraneMessageProperty );
+            alerter.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
           }
           else {
 
             // Dropped into toolbox
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
-            alerter.alert( MembraneChannelsMessages.releasedBackInToolboxMessageProperty );
+            alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
           }
         }
 
@@ -390,7 +390,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection = {
       grabbedNode: this.view.createFromKeyboard( channelType, origin ),
       initialSlot: slot,
-      currentSlotIndex: this.membraneChannelsModel.getSlotIndex( slot )
+      currentSlotIndex: this.membraneTransportModel.getSlotIndex( slot )
     };
 
     // Offset above the membrane so it is clear it isn't in the model
@@ -409,4 +409,4 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   }
 }
 
-membraneChannels.register( 'MembraneGroupSelectView', MembraneGroupSelectView );
+membraneTransport.register( 'MembraneGroupSelectView', MembraneGroupSelectView );

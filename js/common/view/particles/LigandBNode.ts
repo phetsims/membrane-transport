@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import potassiumLigand_svg from '../../../../images/potassiumLigand_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * LigandBNode is a 4-pointed star-shaped ligand representation.
@@ -22,4 +22,4 @@ export default class LigandBNode extends Node {
   }
 }
 
-membraneChannels.register( 'LigandBNode', LigandBNode );
+membraneTransport.register( 'LigandBNode', LigandBNode );

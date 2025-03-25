@@ -10,8 +10,8 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import membraneChannels from '../../../membraneChannels.js';
-import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import { LigandType } from '../SoluteType.js';
 import Channel from './Channel.js';
@@ -37,7 +37,7 @@ export default class LigandGatedChannel extends Channel {
   // Tracks time since a ligand was unbound, used for rebinding delay
   private timeSinceUnbound = REBINDING_DELAY; // Start ready to bind
 
-  public constructor( model: MembraneChannelsModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
+  public constructor( model: MembraneTransportModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
     super( model, type, position );
   }
 
@@ -108,4 +108,4 @@ export default class LigandGatedChannel extends Channel {
   }
 }
 
-membraneChannels.register( 'LigandGatedChannel', LigandGatedChannel );
+membraneTransport.register( 'LigandGatedChannel', LigandGatedChannel );

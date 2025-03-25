@@ -11,8 +11,8 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
-import membraneChannels from '../../membraneChannels.js';
+import MembraneTransportColors from '../../common/MembraneTransportColors.js';
+import membraneTransport from '../../membraneTransport.js';
 
 /**
  * MacroCellNode shows the "zoomed out" view of the cell, with the cell membrane and inside coloring.
@@ -110,20 +110,20 @@ const line3EndProperty = new Vector2Property( new Vector2( ${Utils.roundSymmetri
 
     // Solid blue shape at the bottom
     this.addChild( new Path( shapeProperty, {
-      fill: MembraneChannelsColors.insideCellColorProperty,
+      fill: MembraneTransportColors.insideCellColorProperty,
       stroke: null
     } ) );
 
     // Orange outer heads
     this.addChild( new Path( shapeProperty, {
       lineWidth: 13,
-      stroke: MembraneChannelsColors.phospholipidHeadColorProperty
+      stroke: MembraneTransportColors.phospholipidHeadColorProperty
     } ) );
 
     // Pink inner tails
     this.addChild( new Path( shapeProperty, {
       lineWidth: 4,
-      stroke: MembraneChannelsColors.phospholipidTailColorProperty
+      stroke: MembraneTransportColors.phospholipidTailColorProperty
     } ) );
 
     if ( phet.chipper.queryParameters.dev ) {
@@ -154,4 +154,4 @@ const line3EndProperty = new Vector2Property( new Vector2( ${Utils.roundSymmetri
   }
 }
 
-membraneChannels.register( 'MacroCellNode', MacroCellNode );
+membraneTransport.register( 'MacroCellNode', MacroCellNode );

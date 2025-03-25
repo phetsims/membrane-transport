@@ -11,9 +11,9 @@
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsColors from '../MembraneChannelsColors.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportColors from '../MembraneTransportColors.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
 // Constants controlling the tail control point movement
 const controlPointStepSize = 0.2; // random component for the change in velocity
@@ -45,7 +45,7 @@ type TailState = {
 const headRadius = 1.3;
 
 // So that the edge of the head is at the edge of the membrane bounds
-const headY = MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - headRadius;
+const headY = MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - headRadius;
 
 export default class Phospholipid {
 
@@ -105,7 +105,7 @@ export default class Phospholipid {
    * Prepare to draw heads.
    */
   public static initHeads( context: CanvasRenderingContext2D ): void {
-    context.fillStyle = MembraneChannelsColors.lipidHeadColorProperty.value.toCSS();
+    context.fillStyle = MembraneTransportColors.lipidHeadColorProperty.value.toCSS();
     context.strokeStyle = 'black';
     context.lineWidth = 1.3;
   }
@@ -129,7 +129,7 @@ export default class Phospholipid {
    * Prepare to draw tails.
    */
   public static initTails( context: CanvasRenderingContext2D ): void {
-    context.strokeStyle = MembraneChannelsColors.lipidTailColorProperty.value.toCSS();
+    context.strokeStyle = MembraneTransportColors.lipidTailColorProperty.value.toCSS();
     context.lineWidth = 1.3;
     context.lineCap = 'round';
   }
@@ -239,4 +239,4 @@ export default class Phospholipid {
   }
 }
 
-membraneChannels.register( 'Phospholipid', Phospholipid );
+membraneTransport.register( 'Phospholipid', Phospholipid );

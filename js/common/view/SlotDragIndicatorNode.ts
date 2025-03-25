@@ -2,7 +2,7 @@
 
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import membraneChannels from '../../membraneChannels.js';
+import membraneTransport from '../../membraneTransport.js';
 import Slot from '../model/Slot.js';
 
 /**
@@ -28,4 +28,4 @@ export default class SlotDragIndicatorNode extends Rectangle {
   }
 }
 
-membraneChannels.register( 'SlotDragIndicatorNode', SlotDragIndicatorNode );
+membraneTransport.register( 'SlotDragIndicatorNode', SlotDragIndicatorNode );

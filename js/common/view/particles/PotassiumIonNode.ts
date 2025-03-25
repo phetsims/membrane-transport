@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import potassiumIon_svg from '../../../../images/potassiumIon_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * Potassium ion node. Does not rotate.
@@ -22,4 +22,4 @@ export default class PotassiumIonNode extends Node {
   }
 }
 
-membraneChannels.register( 'PotassiumIonNode', PotassiumIonNode );
+membraneTransport.register( 'PotassiumIonNode', PotassiumIonNode );

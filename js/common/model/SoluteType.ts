@@ -1,9 +1,9 @@
 // Copyright 2025, University of Colorado Boulder
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
-import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
+import MembraneTransportColors from '../../common/MembraneTransportColors.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
@@ -26,19 +26,19 @@ export type { LigandType, ParticleType };
 
 export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringProperty =>
 
-  soluteType === 'oxygen' ? MembraneChannelsStrings.oxygenStringProperty :
-  soluteType === 'carbonDioxide' ? MembraneChannelsStrings.carbonDioxideStringProperty :
-  soluteType === 'sodiumIon' ? MembraneChannelsStrings.sodiumIonStringProperty :
-  soluteType === 'potassiumIon' ? MembraneChannelsStrings.potassiumIonStringProperty :
-  soluteType === 'glucose' ? MembraneChannelsStrings.glucoseStringProperty :
-  MembraneChannelsStrings.atpStringProperty;
+  soluteType === 'oxygen' ? MembraneTransportStrings.oxygenStringProperty :
+  soluteType === 'carbonDioxide' ? MembraneTransportStrings.carbonDioxideStringProperty :
+  soluteType === 'sodiumIon' ? MembraneTransportStrings.sodiumIonStringProperty :
+  soluteType === 'potassiumIon' ? MembraneTransportStrings.potassiumIonStringProperty :
+  soluteType === 'glucose' ? MembraneTransportStrings.glucoseStringProperty :
+  MembraneTransportStrings.atpStringProperty;
 
 export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes ): ProfileColorProperty =>
-  soluteType === 'oxygen' ? MembraneChannelsColors.oxygenColorProperty :
-  soluteType === 'carbonDioxide' ? MembraneChannelsColors.carbonDioxideColorProperty :
-  soluteType === 'sodiumIon' ? MembraneChannelsColors.sodiumIonColorProperty :
-  soluteType === 'potassiumIon' ? MembraneChannelsColors.potassiumIonColorProperty :
-  MembraneChannelsColors.glucoseColorProperty;
+  soluteType === 'oxygen' ? MembraneTransportColors.oxygenColorProperty :
+  soluteType === 'carbonDioxide' ? MembraneTransportColors.carbonDioxideColorProperty :
+  soluteType === 'sodiumIon' ? MembraneTransportColors.sodiumIonColorProperty :
+  soluteType === 'potassiumIon' ? MembraneTransportColors.potassiumIonColorProperty :
+  MembraneTransportColors.glucoseColorProperty;
 
 const oxygenModelSize = 3;
 
@@ -46,7 +46,7 @@ export const getParticleModelWidth = ( particleType: ParticleType ): number =>
 
   // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
   particleType === 'oxygen' ? oxygenModelSize :
-  particleType === 'carbonDioxide' ? oxygenModelSize * MembraneChannelsConstants.CARBON_DIOXIDE_NODE_HEIGHT / MembraneChannelsConstants.OXYGEN_NODE_WIDTH :
+  particleType === 'carbonDioxide' ? oxygenModelSize * MembraneTransportConstants.CARBON_DIOXIDE_NODE_HEIGHT / MembraneTransportConstants.OXYGEN_NODE_WIDTH :
 
   particleType === 'sodiumIon' ? 4 :
   particleType === 'potassiumIon' ? 6 :

@@ -16,12 +16,12 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CanvasNode from '../../../../scenery/js/nodes/CanvasNode.js';
 import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
-import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
-import { animateLipidsProperty } from '../MembraneChannelsPreferences.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneTransportColors from '../../common/MembraneTransportColors.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import { animateLipidsProperty } from '../MembraneTransportPreferences.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 import Phospholipid from './Phospholipid.js';
@@ -32,7 +32,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   private readonly phospholipids: Phospholipid[] = [];
 
   public constructor(
-    private readonly model: MembraneChannelsModel,
+    private readonly model: MembraneTransportModel,
     private readonly modelViewTransform: ModelViewTransform2,
     canvasBounds: Bounds2,
     private readonly layer: 'back' | 'front'
@@ -47,8 +47,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
     // Compute the exact number of phospholipids needed to fill the screen
     const A = Phospholipid.headRadius * 2;
-    const left = -MembraneChannelsConstants.MODEL_WIDTH / 2 / A;
-    const right = MembraneChannelsConstants.MODEL_WIDTH / 2 / A;
+    const left = -MembraneTransportConstants.MODEL_WIDTH / 2 / A;
+    const right = MembraneTransportConstants.MODEL_WIDTH / 2 / A;
     const iMin = Number.isInteger( left ) ? left - 1 : Math.floor( left );
     const iMax = Number.isInteger( right ) ? right + 1 : Math.ceil( right );
 
@@ -153,13 +153,13 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
     const numberOfCharges = Utils.roundSymmetric( 18 * Math.abs( potentialNumber ) / 70 );
     const margin = 5;
-    const separation = ( MembraneChannelsConstants.MEMBRANE_BOUNDS.width - margin * 2 ) / ( numberOfCharges - 1 );
+    const separation = ( MembraneTransportConstants.MEMBRANE_BOUNDS.width - margin * 2 ) / ( numberOfCharges - 1 );
 
     for ( let i = 0; i < numberOfCharges; i++ ) {
-      this.drawSign( context, potentialNumber < 0 ? '+' : '-', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, 15 ) );
+      this.drawSign( context, potentialNumber < 0 ? '+' : '-', new Vector2( margin + i * separation + MembraneTransportConstants.MEMBRANE_BOUNDS.minX, 15 ) );
     }
     for ( let i = 0; i < numberOfCharges; i++ ) {
-      this.drawSign( context, potentialNumber < 0 ? '-' : '+', new Vector2( margin + i * separation + MembraneChannelsConstants.MEMBRANE_BOUNDS.minX, -15 ) );
+      this.drawSign( context, potentialNumber < 0 ? '-' : '+', new Vector2( margin + i * separation + MembraneTransportConstants.MEMBRANE_BOUNDS.minX, -15 ) );
     }
   }
 
@@ -202,10 +202,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
     if ( this.layer === 'back' ) {
       // Draw the background: upper half for outside cell, lower half for inside cell.
-      context.fillStyle = MembraneChannelsColors.outsideCellColorProperty.value.toCSS();
-      context.fillRect( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
-      context.fillStyle = MembraneChannelsColors.insideCellColorProperty.value.toCSS();
-      context.fillRect( 0, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+      context.fillStyle = MembraneTransportColors.outsideCellColorProperty.value.toCSS();
+      context.fillRect( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+      context.fillStyle = MembraneTransportColors.insideCellColorProperty.value.toCSS();
+      context.fillRect( 0, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
       if ( this.model.isShowingMembranePotentialLabelsProperty.value ) {
         this.drawCharges( context );
@@ -238,10 +238,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         context.strokeStyle = 'red';
         context.lineWidth = 5;
 
-        const outsideBounds = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
+        const outsideBounds = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS;
         this.strokeRect( context, outsideBounds.minX, outsideBounds.minY, outsideBounds.width, outsideBounds.height );
 
-        const insideBounds = MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+        const insideBounds = MembraneTransportConstants.INSIDE_CELL_BOUNDS;
         this.strokeRect( context, insideBounds.minX, insideBounds.minY, insideBounds.width, insideBounds.height );
       }
     }
@@ -263,4 +263,4 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     context.stroke();
   }
 }
-membraneChannels.register( 'ObservationWindowCanvasNode', ObservationWindowCanvasNode );
+membraneTransport.register( 'ObservationWindowCanvasNode', ObservationWindowCanvasNode );

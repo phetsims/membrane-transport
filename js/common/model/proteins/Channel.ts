@@ -2,9 +2,9 @@
 
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
-import membraneChannels from '../../../membraneChannels.js';
-import MembraneChannelsConstants from '../../MembraneChannelsConstants.js';
-import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Slot from '../Slot.js';
 import ChannelType from './ChannelType.js';
 
@@ -29,14 +29,14 @@ export default abstract class Channel {
    * @param position - the horizontal position of the channel in the membrane
    */
   public constructor(
-    public readonly model: MembraneChannelsModel,
+    public readonly model: MembraneTransportModel,
     public readonly type: ChannelType,
     public readonly position: number ) {
     this.bounds = new Bounds2(
-      position - MembraneChannelsConstants.CHANNEL_WIDTH / 2,
-      MembraneChannelsConstants.MEMBRANE_BOUNDS.minY,
-      position + MembraneChannelsConstants.CHANNEL_WIDTH / 2,
-      MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
+      position - MembraneTransportConstants.CHANNEL_WIDTH / 2,
+      MembraneTransportConstants.MEMBRANE_BOUNDS.minY,
+      position + MembraneTransportConstants.CHANNEL_WIDTH / 2,
+      MembraneTransportConstants.MEMBRANE_BOUNDS.maxY
     );
   }
 
@@ -54,4 +54,4 @@ export default abstract class Channel {
   }
 }
 
-membraneChannels.register( 'Channel', Channel );
+membraneTransport.register( 'Channel', Channel );

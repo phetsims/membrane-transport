@@ -12,10 +12,10 @@ import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
-import MembraneChannelsPreferencesNode from './common/view/MembraneChannelsPreferencesNode.js';
+import MembraneTransportPreferencesNode from './common/view/MembraneTransportPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
-import MembraneChannelsStrings from './MembraneChannelsStrings.js';
-import './common/MembraneChannelsQueryParameters.js';
+import MembraneTransportStrings from './MembraneTransportStrings.js';
+import './common/MembraneTransportQueryParameters.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
 import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
 
@@ -23,7 +23,7 @@ import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
 simLauncher.launch( () => {
 
-  const titleStringProperty = MembraneChannelsStrings[ 'membrane-channels' ].titleStringProperty;
+  const titleStringProperty = MembraneTransportStrings[ 'membrane-transport' ].titleStringProperty;
 
   const screens = [
     new SimpleDiffusionScreen( Tandem.ROOT.createTandem( 'simpleDiffusionScreen' ) ),
@@ -48,7 +48,7 @@ simLauncher.launch( () => {
     preferencesModel: new PreferencesModel( {
       simulationOptions: {
         customPreferences: [ {
-          createContent: tandem => new MembraneChannelsPreferencesNode( tandem )
+          createContent: tandem => new MembraneTransportPreferencesNode( tandem )
         } ]
       }
     } )

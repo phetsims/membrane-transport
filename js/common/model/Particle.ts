@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * The model for a particle in membrane channels.
+ * The model for a particle in membrane transport.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -16,9 +16,9 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportModel from './MembraneTransportModel.js';
 import Channel from './proteins/Channel.js';
 import ChannelType from './proteins/ChannelType.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
@@ -35,7 +35,7 @@ const CROSSING_COOLDOWN = 0.5;
 
 // The radius of the circle around the center of a channel where a particle will be captured so
 // we can decide how it should interact with the channel.
-export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
+export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
 
 type RandomWalkMode = {
   type: 'randomWalk';
@@ -168,7 +168,7 @@ export default class Particle<T extends ParticleType> {
   ) {
     this.dimension = new Dimension2(
       getParticleModelWidth( type ),
-      getParticleModelWidth( type ) / MembraneChannelsConstants.PARTICLE_ASPECT_RATIO_MAP[ type ]
+      getParticleModelWidth( type ) / MembraneTransportConstants.PARTICLE_ASPECT_RATIO_MAP[ type ]
     );
 
     // Start in random walk mode with random directions.
@@ -218,10 +218,10 @@ export default class Particle<T extends ParticleType> {
    * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
    * in Projectile Data Lab's SamplingModel.launchButtonPressed
    */
-  public step( dt: number, model: MembraneChannelsModel ): void {
+  public step( dt: number, model: MembraneTransportModel ): void {
 
     // When glucose is inside the cell, it is absorbed.
-    if ( this.type === 'glucose' && this.position.y < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+    if ( this.type === 'glucose' && this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
       this.opacity -= 0.01;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
@@ -330,8 +330,8 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'enteringChannel' ) {
       const direction = this.position.y > 0 ? -1 : 1;
       const thresholdY = direction === -1
-                         ? MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2
-                         : MembraneChannelsConstants.MEMBRANE_BOUNDS.minY + this.dimension.height / 2;
+                         ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2
+                         : MembraneTransportConstants.MEMBRANE_BOUNDS.minY + this.dimension.height / 2;
 
       this.position.y += direction * typicalSpeed * dt;
 
@@ -397,7 +397,7 @@ export default class Particle<T extends ParticleType> {
                             this.mode.direction === 'outward' && this.position.y > 0;
 
         // If the particle has moved through the channel, unbind from the ligand
-        if ( crossedOver && Math.abs( this.position.y ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.height / 2 ) {
+        if ( crossedOver && Math.abs( this.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
           const channel = this.mode.slot.channelProperty.value;
 
           // If fully moved through a SodiumGluoseCotransporter, close the channel
@@ -408,14 +408,14 @@ export default class Particle<T extends ParticleType> {
       }
 
       // Once the particle has moved sufficiently far from the membrane, resume random walk.
-      if ( this.mode.direction === 'inward' && ( this.position.y + this.dimension.height / 2 ) < MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) {
+      if ( this.mode.direction === 'inward' && ( this.position.y + this.dimension.height / 2 ) < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
         const downwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( -1, 0 )
         ).normalize();
         this.moveInDirection( downwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
       }
-      if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) {
+      if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ) {
         const upwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( 0, 1 )
@@ -429,7 +429,7 @@ export default class Particle<T extends ParticleType> {
    * Step the particle along a random walk path, including bouncing off the membrane
    * (central horizontal band) and the bounding walls.
    */
-  private stepRandomWalk( dt: number, model: MembraneChannelsModel ): void {
+  private stepRandomWalk( dt: number, model: MembraneTransportModel ): void {
     const randomWalk = this.mode as RandomWalkMode;
 
     randomWalk.timeUntilNextDirection -= dt;
@@ -468,7 +468,7 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
-    if ( MembraneChannelsConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
+    if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       // Check for passive diffusion for oxygen or carbon dioxide.
       if ( ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 ) {
@@ -482,8 +482,8 @@ export default class Particle<T extends ParticleType> {
 
       // Determine the overlap and sign based on whether the entity is outside the cell.
       const overlap = outsideOfCell ?
-                      MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY :
-                      thisBounds.maxY - MembraneChannelsConstants.MEMBRANE_BOUNDS.minY;
+                      MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY :
+                      thisBounds.maxY - MembraneTransportConstants.MEMBRANE_BOUNDS.minY;
       const sign = outsideOfCell ? 1 : -1;
 
       // Push the entity back out of the membrane.
@@ -500,7 +500,7 @@ export default class Particle<T extends ParticleType> {
     this.position.y += direction.y * dt * typicalSpeed;
 
     // Now bounce off the 3 other walls in whichever bounding region we are in
-    const boundingRegion = outsideOfCell ? MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS : MembraneChannelsConstants.INSIDE_CELL_BOUNDS;
+    const boundingRegion = outsideOfCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
 
     // Recompute thisBounds after the move
     const updatedBounds = this.getBounds();
@@ -531,7 +531,7 @@ export default class Particle<T extends ParticleType> {
   /**
    * During randomWalk, check for interactions with channels.
    */
-  private handleChannelInteractionDuringRandomWalk( slot: Slot, channel: Channel, model: MembraneChannelsModel, outsideOfCell: boolean ): boolean {
+  private handleChannelInteractionDuringRandomWalk( slot: Slot, channel: Channel, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
     // Check for ligand interaction with ligand-gated channels
     if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
@@ -661,7 +661,7 @@ export default class Particle<T extends ParticleType> {
 
   /**
    * Individual Solute instances are not PhET-iO Instrumented. Instead, the container that contains the Solutes
-   * calls ParticleIO.toStateObject to serialize the Solute instances. MembraneChannelsModel uses reference type serialization
+   * calls ParticleIO.toStateObject to serialize the Solute instances. MembraneTransportModel uses reference type serialization
    * as a composite of the Solutes, which use data type serialization.
    *
    * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
@@ -687,4 +687,4 @@ export type SoluteStateObject = {
   type: SoluteType;
 };
 
-membraneChannels.register( 'Particle', Particle );
+membraneTransport.register( 'Particle', Particle );

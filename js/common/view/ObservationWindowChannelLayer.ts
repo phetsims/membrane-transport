@@ -3,13 +3,13 @@
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import membraneChannels from '../../membraneChannels.js';
+import membraneTransport from '../../membraneTransport.js';
 import Channel from '../model/proteins/Channel.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './proteins/getChannelNode.js';
 import VoltageGatedChannelNode from './proteins/VoltageGatedChannelNode.js';
-import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 /**
  * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
@@ -28,8 +28,8 @@ export default class ObservationWindowChannelLayer extends Node {
   private readonly record = new Map<Channel, SlottedNode>();
 
   public constructor(
-    public readonly model: MembraneChannelsModel,
-    view: MembraneChannelsScreenView,
+    public readonly model: MembraneTransportModel,
+    view: MembraneTransportScreenView,
     modelViewTransform: ModelViewTransform2
   ) {
     super();
@@ -84,4 +84,4 @@ export default class ObservationWindowChannelLayer extends Node {
   }
 }
 
-membraneChannels.register( 'ObservationWindowChannelLayer', ObservationWindowChannelLayer );
+membraneTransport.register( 'ObservationWindowChannelLayer', ObservationWindowChannelLayer );

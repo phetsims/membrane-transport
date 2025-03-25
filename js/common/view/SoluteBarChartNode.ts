@@ -19,10 +19,10 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 
@@ -37,7 +37,7 @@ export default class SoluteBarChartNode extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( model: MembraneChannelsModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
 
     const outsideAmountProperty = model.outsideSoluteCountProperties[ soluteType ];
     const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
@@ -65,7 +65,7 @@ export default class SoluteBarChartNode extends Node {
     const sizeDescriptionProperty = new StringProperty( 'small' );
     const directionDescriptionProperty = new StringProperty( 'upward' );
 
-    const descriptionProperty = new PatternMessageProperty( MembraneChannelsMessages.barChartPatternMessageProperty, {
+    const descriptionProperty = new PatternMessageProperty( MembraneTransportMessages.barChartPatternMessageProperty, {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
       size: sizeDescriptionProperty,
@@ -88,7 +88,7 @@ export default class SoluteBarChartNode extends Node {
     const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, { fill: 'white', opacity: 0.2, stroke: 'black', lineWidth: 1 } );
 
     const icon = getParticleNode( soluteType );
-    icon.setScaleMagnitude( MembraneChannelsConstants.PARTICLE_NODE_ICON_SCALE );
+    icon.setScaleMagnitude( MembraneTransportConstants.PARTICLE_NODE_ICON_SCALE );
     icon.centerX = BOX_WIDTH / 2;
     icon.top = 2;
 
@@ -160,12 +160,12 @@ export default class SoluteBarChartNode extends Node {
     const PADDING_FACTOR = 0.95;
     const BAR_MULTIPLIER = 2;
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      outsideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      outsideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       outsideBar.left = origin.centerX;
     } );
 
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      insideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneChannelsConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      insideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
       insideBar.left = origin.centerX;
     } );
 
@@ -173,4 +173,4 @@ export default class SoluteBarChartNode extends Node {
   }
 }
 
-membraneChannels.register( 'SoluteBarChartNode', SoluteBarChartNode );
+membraneTransport.register( 'SoluteBarChartNode', SoluteBarChartNode );

@@ -7,11 +7,11 @@ import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import ChannelType from '../model/proteins/ChannelType.js';
 import getChannelNode from './proteins/getChannelNode.js';
-import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 const richTextOptions: RichTextOptions = {
   align: 'center',
@@ -23,7 +23,7 @@ const richTextOptions: RichTextOptions = {
 };
 
 /**
- * In the "Membrane Channels" accordion box, show a tool icon that can be dragged to create a new channel.
+ * In the "Membrane Transport" accordion box, show a tool icon that can be dragged to create a new channel.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -32,7 +32,7 @@ export default class ChannelToolNode extends VBox {
   // So we can return ChannelDragNodes to its exact location
   public readonly channelNode: Node;
 
-  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneChannelsScreenView ) {
+  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const channelNode = getChannelNode( type, null );
@@ -44,7 +44,7 @@ export default class ChannelToolNode extends VBox {
       children: [ channelNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: accessibleName,
-      accessibleHelpText: MembraneChannelsStrings.a11y.accordionBoxGroup.toolAccessibleHelpTextStringProperty
+      accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.toolAccessibleHelpTextStringProperty
     } ) );
 
     this.addInputListener( {
@@ -55,4 +55,4 @@ export default class ChannelToolNode extends VBox {
   }
 }
 
-membraneChannels.register( 'ChannelToolNode', ChannelToolNode );
+membraneTransport.register( 'ChannelToolNode', ChannelToolNode );

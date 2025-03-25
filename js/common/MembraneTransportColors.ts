@@ -17,54 +17,54 @@
 
 import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import ProfileColorProperty from '../../../scenery/js/util/ProfileColorProperty.js';
-import membraneChannels from '../membraneChannels.js';
+import membraneTransport from '../membraneTransport.js';
 
-const MembraneChannelsColors = {
+const MembraneTransportColors = {
 
   // Color for the outside/extracellular fluid, also serves as the background color for the screen.
-  outsideCellColorProperty: new ProfileColorProperty( membraneChannels, 'outsideCellColor', {
+  outsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'outsideCellColor', {
     default: 'rgb(152,205,255)'
   } ),
-  insideCellColorProperty: new ProfileColorProperty( membraneChannels, 'insideCellColor', {
+  insideCellColorProperty: new ProfileColorProperty( membraneTransport, 'insideCellColor', {
     default: 'rgb(101,185,234)'
   } ),
-  oxygenColorProperty: new ProfileColorProperty( membraneChannels, 'O2Color', {
+  oxygenColorProperty: new ProfileColorProperty( membraneTransport, 'O2Color', {
     default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
   } ),
-  phosphateColorProperty: new ProfileColorProperty( membraneChannels, 'phosphateColor', {
+  phosphateColorProperty: new ProfileColorProperty( membraneTransport, 'phosphateColor', {
     default: 'rgb(123,104,238)'
   } ),
-  carbonDioxideColorProperty: new ProfileColorProperty( membraneChannels, 'CO2BarChartColor', {
+  carbonDioxideColorProperty: new ProfileColorProperty( membraneTransport, 'CO2BarChartColor', {
     default: 'rgb(95,80,69)'
   } ),
-  sodiumIonColorProperty: new ProfileColorProperty( membraneChannels, 'NaBarChartColor', {
+  sodiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'NaBarChartColor', {
     default: 'rgb(255,255,11)'
   } ),
-  potassiumIonColorProperty: new ProfileColorProperty( membraneChannels, 'KBarChartColor', {
+  potassiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'KBarChartColor', {
     default: 'rgb(32,255,253)'
   } ),
-  glucoseColorProperty: new ProfileColorProperty( membraneChannels, 'glucoseBarChartColor', {
+  glucoseColorProperty: new ProfileColorProperty( membraneTransport, 'glucoseBarChartColor', {
     default: 'rgb(106,42,211)'
   } ),
-  lipidTailColorProperty: new ProfileColorProperty( membraneChannels, 'lipidTailColor', {
+  lipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
   } ),
-  lipidHeadColorProperty: new ProfileColorProperty( membraneChannels, 'lipidHeadColor', {
+  lipidHeadColorProperty: new ProfileColorProperty( membraneTransport, 'lipidHeadColor', {
     default: 'rgb(248,161,46)'
   } ),
-  atpColorProperty: new ProfileColorProperty( membraneChannels, 'atpColorProperty', {
+  atpColorProperty: new ProfileColorProperty( membraneTransport, 'atpColorProperty', {
     default: 'rgb(59,147,74)'
   } ),
-  phospholipidHeadColorProperty: new ProfileColorProperty( membraneChannels, 'phospholipidHeadColor', {
+  phospholipidHeadColorProperty: new ProfileColorProperty( membraneTransport, 'phospholipidHeadColor', {
     default: 'rgb(220,120,39)'
   } ),
-  phospholipidTailColorProperty: new ProfileColorProperty( membraneChannels, 'phospholipidTailColor', {
+  phospholipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'phospholipidTailColor', {
     default: 'rgb(234,144,255)'
   } ),
-  ligandButtonColorProperty: new ProfileColorProperty( membraneChannels, 'ligandButtonColor', {
+  ligandButtonColorProperty: new ProfileColorProperty( membraneTransport, 'ligandButtonColor', {
     default: 'rgb(224,200,88)'
   } )
 };
 
-membraneChannels.register( 'MembraneChannelsColors', MembraneChannelsColors );
-export default MembraneChannelsColors;
+membraneTransport.register( 'MembraneTransportColors', MembraneTransportColors );
+export default MembraneTransportColors;

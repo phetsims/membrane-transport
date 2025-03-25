@@ -9,7 +9,7 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import Channel from './Channel.js';
 
 export default class SodiumPotassiumPump extends Channel {
@@ -72,4 +72,4 @@ export default class SodiumPotassiumPump extends Channel {
   }
 }
 
-membraneChannels.register( 'SodiumPotassiumPump', SodiumPotassiumPump );
+membraneTransport.register( 'SodiumPotassiumPump', SodiumPotassiumPump );

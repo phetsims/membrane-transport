@@ -8,27 +8,27 @@
 import PhetioProperty from '../../../axon/js/PhetioProperty.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import MembraneChannelsColors from '../common/MembraneChannelsColors.js';
-import membraneChannels from '../membraneChannels.js';
-import MembraneChannelsFeatureSet from './MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel from './model/MembraneChannelsModel.js';
-import MembraneChannelsKeyboardHelpNode from './view/MembraneChannelsKeyboardHelpNode.js';
-import MembraneChannelsScreenView from './view/MembraneChannelsScreenView.js';
+import MembraneTransportColors from '../common/MembraneTransportColors.js';
+import membraneTransport from '../membraneTransport.js';
+import MembraneTransportFeatureSet from './MembraneTransportFeatureSet.js';
+import MembraneTransportModel from './model/MembraneTransportModel.js';
+import MembraneTransportKeyboardHelpNode from './view/MembraneTransportKeyboardHelpNode.js';
+import MembraneTransportScreenView from './view/MembraneTransportScreenView.js';
 
-export default class MembraneChannelsScreen extends Screen<MembraneChannelsModel, MembraneChannelsScreenView> {
+export default class MembraneTransportScreen extends Screen<MembraneTransportModel, MembraneTransportScreenView> {
 
-  public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem, featureSet: MembraneChannelsFeatureSet ) {
+  public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem, featureSet: MembraneTransportFeatureSet ) {
 
     super(
-      () => new MembraneChannelsModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),
-      model => new MembraneChannelsScreenView( model, { tandem: tandem.createTandem( 'view' ) } ), {
+      () => new MembraneTransportModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),
+      model => new MembraneTransportScreenView( model, { tandem: tandem.createTandem( 'view' ) } ), {
         name: nameProperty,
-        backgroundColorProperty: MembraneChannelsColors.outsideCellColorProperty,
+        backgroundColorProperty: MembraneTransportColors.outsideCellColorProperty,
         tandem: tandem,
-        createKeyboardHelpNode: () => new MembraneChannelsKeyboardHelpNode( featureSet )
+        createKeyboardHelpNode: () => new MembraneTransportKeyboardHelpNode( featureSet )
       }
     );
   }
 }
 
-membraneChannels.register( 'MembraneChannelsScreen', MembraneChannelsScreen );
+membraneTransport.register( 'MembraneTransportScreen', MembraneTransportScreen );

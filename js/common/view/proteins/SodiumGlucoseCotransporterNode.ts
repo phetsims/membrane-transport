@@ -8,7 +8,7 @@
 
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
 import ProteinNode from './ProteinNode.js';
 
@@ -33,4 +33,4 @@ export default class SodiumGlucoseCotransporterNode extends ProteinNode {
   }
 }
 
-membraneChannels.register( 'SodiumGlucoseCotransporterNode', SodiumGlucoseCotransporterNode );
+membraneTransport.register( 'SodiumGlucoseCotransporterNode', SodiumGlucoseCotransporterNode );

@@ -12,13 +12,13 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import membraneChannels from '../../membraneChannels.js';
+import membraneTransport from '../../membraneTransport.js';
 import ChannelType from '../model/proteins/ChannelType.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './proteins/getChannelNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
-import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
@@ -35,8 +35,8 @@ export default class ChannelDragNode extends Node {
   private readonly positionProperty: Vector2Property;
 
   public constructor(
-    model: MembraneChannelsModel,
-    view: MembraneChannelsScreenView,
+    model: MembraneTransportModel,
+    view: MembraneTransportScreenView,
     observationWindow: ObservationWindow,
     screenViewModelViewTransform: ModelViewTransform2,
     modelPosition: Vector2,
@@ -166,4 +166,4 @@ export default class ChannelDragNode extends Node {
   }
 }
 
-membraneChannels.register( 'ChannelDragNode', ChannelDragNode );
+membraneTransport.register( 'ChannelDragNode', ChannelDragNode );

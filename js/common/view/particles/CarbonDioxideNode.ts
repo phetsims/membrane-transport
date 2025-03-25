@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import carbonDioxide_svg from '../../../../images/carbonDioxide_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * Carbon dioxide molecule node. Does not rotate.
@@ -22,4 +22,4 @@ export default class CarbonDioxideNode extends Node {
   }
 }
 
-membraneChannels.register( 'CarbonDioxideNode', CarbonDioxideNode );
+membraneTransport.register( 'CarbonDioxideNode', CarbonDioxideNode );

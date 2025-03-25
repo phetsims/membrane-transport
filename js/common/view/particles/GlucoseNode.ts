@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import glucose_svg from '../../../../images/glucose_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * The Glucose molecule. Does not rotate. A hexagon drawn with a spherical gradient radiating out from the center.
@@ -24,4 +24,4 @@ export default class GlucoseNode extends Node {
   }
 }
 
-membraneChannels.register( 'GlucoseNode', GlucoseNode );
+membraneTransport.register( 'GlucoseNode', GlucoseNode );

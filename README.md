@@ -1,7 +1,7 @@
-Membrane Channels
+Membrane Transport
 ================
 
-"Membrane Channels" is an educational simulation in HTML5, by <a href="https://phet.colorado.edu/" target="_blank">PhET
+"Membrane Transport" is an educational simulation in HTML5, by <a href="https://phet.colorado.edu/" target="_blank">PhET
 Interactive Simulations</a>
 at the University of Colorado Boulder.
 
@@ -16,4 +16,4 @@ other important information.
 
 ### License
 
-See the <a href="https://github.com/phetsims/membrane-channels/blob/main/LICENSE" target="_blank">LICENSE</a>
+See the <a href="https://github.com/phetsims/membrane-transport/blob/main/LICENSE" target="_blank">LICENSE</a>

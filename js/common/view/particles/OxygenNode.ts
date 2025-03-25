@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import oxygen_svg from '../../../../images/oxygen_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * Diatomic oxygen molecule. Does not rotate.
@@ -22,4 +22,4 @@ export default class OxygenNode extends Node {
   }
 }
 
-membraneChannels.register( 'OxygenNode', OxygenNode );
+membraneTransport.register( 'OxygenNode', OxygenNode );

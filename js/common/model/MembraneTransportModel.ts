@@ -1,7 +1,7 @@
 // Copyright 2024-2025, University of Colorado Boulder
 
 /**
- * The main model for Membrane Channels. This manages the solutes, membrane channels, and methods for moving them
+ * The main model for Membrane Transport. This manages the solutes, membrane channels, and methods for moving them
  * and counting them.
  *
  * @author Sam Reid (PhET Interactive Simulations
@@ -31,10 +31,10 @@ import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsQueryParameters from '../MembraneChannelsQueryParameters.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
 import Channel from './proteins/Channel.js';
 import ChannelType from './proteins/ChannelType.js';
@@ -44,7 +44,7 @@ import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type MembraneChannelsModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type MembraneTransportModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 type FluxEntry = {
   soluteType: SoluteType;
@@ -62,7 +62,7 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
   SLOT_POSITIONS.push( i * SLOT_SPACING - SLOT_MAX_X );
 }
 
-export default class MembraneChannelsModel extends PhetioObject {
+export default class MembraneTransportModel extends PhetioObject {
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
@@ -97,11 +97,11 @@ export default class MembraneChannelsModel extends PhetioObject {
   public readonly slots: Slot[];
 
   public constructor(
-    public readonly featureSet: MembraneChannelsFeatureSet,
-    providedOptions: MembraneChannelsModelOptions ) {
+    public readonly featureSet: MembraneTransportFeatureSet,
+    providedOptions: MembraneTransportModelOptions ) {
 
-    const options = optionize<MembraneChannelsModelOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioType: MembraneChannelsModel.MembraneChannelsModelIO,
+    const options = optionize<MembraneTransportModelOptions, SelfOptions, PhetioObjectOptions>()( {
+      phetioType: MembraneTransportModel.MembraneTransportModelIO,
       phetioState: true,
       phetioFeatured: true
     }, providedOptions );
@@ -168,7 +168,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       }
     } );
 
-    if ( MembraneChannelsQueryParameters.defaultSolutes ) {
+    if ( MembraneTransportQueryParameters.defaultSolutes ) {
 
       const populateInitialSolutes = () => {
         // A random sample of solutes in the solutes array
@@ -205,14 +205,14 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   public addLigands(): void {
-    this.addParticles( 'ligandA', 'outside', MembraneChannelsConstants.LIGAND_COUNT, this.ligands );
-    this.addParticles( 'ligandB', 'outside', MembraneChannelsConstants.LIGAND_COUNT, this.ligands );
+    this.addParticles( 'ligandA', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
+    this.addParticles( 'ligandB', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
   }
 
   public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle<SoluteType | LigandType>[] ): void {
     for ( let i = 0; i < count; i++ ) {
-      const x = dotRandom.nextDoubleBetween( MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minX, MembraneChannelsConstants.INSIDE_CELL_BOUNDS.maxX );
-      const y = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS.minY : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.maxY;
+      const x = dotRandom.nextDoubleBetween( MembraneTransportConstants.INSIDE_CELL_BOUNDS.minX, MembraneTransportConstants.INSIDE_CELL_BOUNDS.maxX );
+      const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY;
       soluteArray.push( new Particle( new Vector2( x, y ), soluteType ) );
     }
   }
@@ -235,7 +235,7 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
-    const cellBounds = location === 'inside' ? MembraneChannelsConstants.INSIDE_CELL_BOUNDS : MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS;
+    const cellBounds = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS;
 
     const removableSolutes = this.solutes.filter( solute => solute.type === soluteType && cellBounds.containsPoint( solute.position ) );
 
@@ -418,12 +418,12 @@ export default class MembraneChannelsModel extends PhetioObject {
   }
 
   /**
-   * For serialization, the MembraneChannelsModel uses reference type serialization, following the pattern in Field.FieldIO.
+   * For serialization, the MembraneTransportModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
    */
-  public static readonly MembraneChannelsModelIO = new IOType<MembraneChannelsModel>( 'MembraneChannelsModelIO', {
+  public static readonly MembraneTransportModelIO = new IOType<MembraneTransportModel>( 'MembraneTransportModelIO', {
     supertype: GetSetButtonsIO,
-    valueType: MembraneChannelsModel,
+    valueType: MembraneTransportModel,
     stateSchema: {
       solutes: ReferenceArrayIO( Particle.ParticleIO ),
       ligands: ReferenceArrayIO( Particle.ParticleIO ),
@@ -431,7 +431,7 @@ export default class MembraneChannelsModel extends PhetioObject {
       time: NumberIO,
       soluteTypeFlux: ObjectLiteralIO
     },
-    applyState: ( model: MembraneChannelsModel, state: IntentionalAny ) => {
+    applyState: ( model: MembraneTransportModel, state: IntentionalAny ) => {
       ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
       ReferenceArrayIO( Particle.ParticleIO ).applyState( model.ligands, state.ligands );
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
@@ -444,15 +444,15 @@ export default class MembraneChannelsModel extends PhetioObject {
       getValue: {
         returnType: ObjectLiteralIO,
         parameterTypes: [],
-        implementation: function( this: MembraneChannelsModel ) {
+        implementation: function( this: MembraneTransportModel ) {
           return phet.phetio.phetioEngine.phetioStateEngine.getState( this );
         },
-        documentation: 'Gets the current value of the MembraneChannelsModel on this screen.'
+        documentation: 'Gets the current value of the MembraneTransportModel on this screen.'
       },
       getValidationError: {
         returnType: NullableIO( StringIO ),
         parameterTypes: [ ObjectLiteralIO ],
-        implementation: function( this: MembraneChannelsModel, value ) {
+        implementation: function( this: MembraneTransportModel, value ) {
 
           // check if the specified data corresponds to this.tandemID. To avoid pasting from one screen to another
           const keys = Array.from( Object.keys( value ) );
@@ -471,7 +471,7 @@ export default class MembraneChannelsModel extends PhetioObject {
         returnType: VoidIO,
         parameterTypes: [ ObjectLiteralIO ],
         documentation: 'Sets the model state that was created on this screen. Trying to set state from another screen results in an error.',
-        implementation: function( this: MembraneChannelsModel, state: PhetioState ) {
+        implementation: function( this: MembraneTransportModel, state: PhetioState ) {
           phet.phetio.phetioEngine.phetioStateEngine.setState( state, this.tandem );
         }
       }
@@ -497,18 +497,18 @@ export const ChannelIO = new IOType( 'ChannelIO', {
     position: NumberIO,
 
     // Necessary in order to get information from the model to the Channel, such as the membrane potential
-    model: ReferenceIO( MembraneChannelsModel.MembraneChannelsModelIO )
+    model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO )
   },
   toStateObject: ( channel: Channel ): ChannelStateObject => {
     return {
       type: channel.type,
       position: channel.position,
-      model: ReferenceIO( MembraneChannelsModel.MembraneChannelsModelIO ).toStateObject( channel.model )
+      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( channel.model )
     };
   },
   fromStateObject: ( stateObject: ChannelStateObject ) => {
-    return getChannel( ReferenceIO( MembraneChannelsModel.MembraneChannelsModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
+    return getChannel( ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
   }
 } );
 
-membraneChannels.register( 'MembraneChannelsModel', MembraneChannelsModel );
+membraneTransport.register( 'MembraneTransportModel', MembraneTransportModel );

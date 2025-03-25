@@ -9,10 +9,10 @@
 
 import getStringModule from '../../chipper/js/browser/getStringModule.js';
 import type LocalizedStringProperty from '../../chipper/js/browser/LocalizedStringProperty.js';
-import membraneChannels from './membraneChannels.js';
+import membraneTransport from './membraneTransport.js';
 
 type StringsType = {
-  'membrane-channels': {
+  'membrane-transport': {
     'titleStringProperty': LocalizedStringProperty;
   };
   'screen': {
@@ -74,8 +74,8 @@ type StringsType = {
   }
 };
 
-const MembraneChannelsStrings = getStringModule( 'MEMBRANE_CHANNELS' ) as StringsType;
+const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as StringsType;
 
-membraneChannels.register( 'MembraneChannelsStrings', MembraneChannelsStrings );
+membraneTransport.register( 'MembraneTransportStrings', MembraneTransportStrings );
 
-export default MembraneChannelsStrings;
+export default MembraneTransportStrings;

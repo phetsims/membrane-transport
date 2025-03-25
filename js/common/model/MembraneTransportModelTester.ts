@@ -1,24 +1,24 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Utility functions that help exercise the MembraneChannelsModel.
+ * Utility functions that help exercise the MembraneTransportModel.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
-import MembraneChannelsModel from './MembraneChannelsModel.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportModel from './MembraneTransportModel.js';
 
-export default class MembraneChannelsModelTester {
+export default class MembraneTransportModelTester {
 
   /**
    * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a channel
    * to test functionality.
    */
-  public static testLigandChannel( model: MembraneChannelsModel, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
+  public static testLigandChannel( model: MembraneTransportModel, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
 
     // Put a sodium in the first slot
     model.slots[ 0 ].channelType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
@@ -38,12 +38,12 @@ export default class MembraneChannelsModelTester {
     sodiumIon.position.set( new Vector2( -30, side === 'outside' ? 50 : -50 ) );
     firstLigand.position.set( new Vector2( -40, 50 ) ); // ligands are always outside
 
-    sodiumIon.moveToPosition( new Vector2( model.slots[ 0 ].position, side === 'outside' ? MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY
-                                                                                         : MembraneChannelsConstants.MEMBRANE_BOUNDS.minY ) );
+    sodiumIon.moveToPosition( new Vector2( model.slots[ 0 ].position, side === 'outside' ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY
+                                                                                         : MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) );
     if ( withLigand ) {
-      firstLigand.moveToPosition( new Vector2( model.slots[ 0 ].position, MembraneChannelsConstants.MEMBRANE_BOUNDS.maxY ) );
+      firstLigand.moveToPosition( new Vector2( model.slots[ 0 ].position, MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ) );
     }
   }
 }
 
-membraneChannels.register( 'MembraneChannelsModelTester', MembraneChannelsModelTester );
+membraneTransport.register( 'MembraneTransportModelTester', MembraneTransportModelTester );

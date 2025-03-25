@@ -8,15 +8,15 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
-import membraneChannels from '../../../membraneChannels.js';
-import MembraneChannelsModel from '../MembraneChannelsModel.js';
+import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Channel from './Channel.js';
 
 export default class VoltageGatedChannel extends Channel {
 
   public readonly isOpenProperty: TReadOnlyProperty<boolean>;
 
-  public constructor( model: MembraneChannelsModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
+  public constructor( model: MembraneTransportModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
     super( model, type, position );
 
     // * 3 point control that controls the open/close states of the Na and K channels separately and possibly instantaneously.
@@ -33,4 +33,4 @@ export default class VoltageGatedChannel extends Channel {
   }
 }
 
-membraneChannels.register( 'VoltageGatedChannel', VoltageGatedChannel );
+membraneTransport.register( 'VoltageGatedChannel', VoltageGatedChannel );

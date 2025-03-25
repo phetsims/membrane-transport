@@ -10,18 +10,18 @@
 import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import membraneChannels from '../../membraneChannels.js';
+import membraneTransport from '../../membraneTransport.js';
 import Channel from './proteins/Channel.js';
 import ChannelType from './proteins/ChannelType.js';
 import getChannel from './proteins/getChannel.js';
-import MembraneChannelsModel, { ChannelIO } from './MembraneChannelsModel.js';
+import MembraneTransportModel, { ChannelIO } from './MembraneTransportModel.js';
 
 export default class Slot {
 
   // The type of channel that is currently in this slot.
   public readonly channelProperty: Property<null | Channel>;
 
-  public constructor( private readonly model: MembraneChannelsModel, public readonly position: number, tandem: Tandem ) {
+  public constructor( private readonly model: MembraneTransportModel, public readonly position: number, tandem: Tandem ) {
     this.channelProperty = new Property<null | Channel>( null, {
       tandem: tandem.createTandem( 'channelProperty' ),
       phetioValueType: NullableIO( ChannelIO ),
@@ -50,4 +50,4 @@ export default class Slot {
   }
 }
 
-membraneChannels.register( 'Slot', Slot );
+membraneTransport.register( 'Slot', Slot );

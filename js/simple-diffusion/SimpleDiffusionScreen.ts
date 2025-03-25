@@ -1,19 +1,19 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Tandem from '../../../tandem/js/Tandem.js';
-import MembraneChannelsScreen from '../common/MembraneChannelsScreen.js';
-import membraneChannels from '../membraneChannels.js';
-import MembraneChannelsStrings from '../MembraneChannelsStrings.js';
+import MembraneTransportScreen from '../common/MembraneTransportScreen.js';
+import membraneTransport from '../membraneTransport.js';
+import MembraneTransportStrings from '../MembraneTransportStrings.js';
 
 /**
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class SimpleDiffusionScreen extends MembraneChannelsScreen {
+export default class SimpleDiffusionScreen extends MembraneTransportScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneChannelsStrings.screen.simpleDiffusionStringProperty, tandem, 'simpleDiffusion' );
+    super( MembraneTransportStrings.screen.simpleDiffusionStringProperty, tandem, 'simpleDiffusion' );
   }
 
 }
 
-membraneChannels.register( 'SimpleDiffusionScreen', SimpleDiffusionScreen );
+membraneTransport.register( 'SimpleDiffusionScreen', SimpleDiffusionScreen );

@@ -3,7 +3,7 @@
 import SoluteType, { SoluteTypes } from './model/SoluteType.js';
 
 /**
- * MembraneChannelsFeatureSet allows us to identify which features are used in each screen.
+ * MembraneTransportFeatureSet allows us to identify which features are used in each screen.
  *
  * There are 4 screens - they are very similar in structure and capabilities. Screen 4 (Playground) is the most complex
  * and each preceding screen is a simplified variation. I’ll begin at screen 1 and build to screen 4.
@@ -19,23 +19,23 @@ import SoluteType, { SoluteTypes } from './model/SoluteType.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-type MembraneChannelsFeatureSet = 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground';
+type MembraneTransportFeatureSet = 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground';
 
-export default MembraneChannelsFeatureSet;
+export default MembraneTransportFeatureSet;
 
-export const getFeatureSetSoluteTypes = ( featureSet: MembraneChannelsFeatureSet ): readonly SoluteType[] => {
+export const getFeatureSetSoluteTypes = ( featureSet: MembraneTransportFeatureSet ): readonly SoluteType[] => {
   return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypes : SoluteTypes.filter( type => type !== 'atp' );
 };
 
 // TODO: Duplicated with above
-export const getFeatureSetSoluteTypesForSolutesPanel = ( featureSet: MembraneChannelsFeatureSet ): readonly SoluteType[] => {
+export const getFeatureSetSoluteTypesForSolutesPanel = ( featureSet: MembraneTransportFeatureSet ): readonly SoluteType[] => {
   return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypes.filter( type => type !== 'adp' && type !== 'phosphate' ) : SoluteTypes.filter( type => type !== 'atp' && type !== 'adp' && type !== 'phosphate' );
 };
 
-export const getFeatureSetHasVoltages = ( featureSet: MembraneChannelsFeatureSet ): boolean => {
+export const getFeatureSetHasVoltages = ( featureSet: MembraneTransportFeatureSet ): boolean => {
   return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
 };
 
-export const getFeatureSetHasLigands = ( featureSet: MembraneChannelsFeatureSet ): boolean => {
+export const getFeatureSetHasLigands = ( featureSet: MembraneTransportFeatureSet ): boolean => {
   return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
 };

@@ -5,7 +5,7 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import Shape from '../../../../../kite/js/Shape.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import Path from '../../../../../scenery/js/nodes/Path.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
 import ProteinNode from './ProteinNode.js';
 
@@ -162,4 +162,4 @@ export default class VoltageGatedChannelNode extends ProteinNode {
   }
 }
 
-membraneChannels.register( 'VoltageGatedChannelNode', VoltageGatedChannelNode );
+membraneTransport.register( 'VoltageGatedChannelNode', VoltageGatedChannelNode );

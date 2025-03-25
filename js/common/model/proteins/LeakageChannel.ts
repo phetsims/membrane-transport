@@ -2,7 +2,7 @@
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import Channel from './Channel.js';
 
 /**
@@ -14,4 +14,4 @@ export default class LeakageChannel extends Channel {
   public override isOpenProperty: TReadOnlyProperty<boolean> = new BooleanProperty( true );
 }
 
-membraneChannels.register( 'LeakageChannel', LeakageChannel );
+membraneTransport.register( 'LeakageChannel', LeakageChannel );

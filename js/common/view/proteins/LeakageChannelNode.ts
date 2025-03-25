@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import ProteinNode from './ProteinNode.js';
 
 /**
@@ -34,4 +34,4 @@ export default class LeakageChannelNode extends ProteinNode {
   }
 }
 
-membraneChannels.register( 'LeakageChannelNode', LeakageChannelNode );
+membraneTransport.register( 'LeakageChannelNode', LeakageChannelNode );

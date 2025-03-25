@@ -9,11 +9,11 @@
 import Text from '../../../../scenery/js/nodes/Text.js';
 import BooleanRectangularToggleButton from '../../../../sun/js/buttons/BooleanRectangularToggleButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import MembraneChannelsColors from '../MembraneChannelsColors.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import MembraneTransportColors from '../MembraneTransportColors.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 const TEXT_OPTIONS = {
   fontSize: 14,
@@ -21,29 +21,29 @@ const TEXT_OPTIONS = {
 } as const;
 
 export default class LigandControl extends BooleanRectangularToggleButton {
-  public constructor( model: MembraneChannelsModel, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, tandem: Tandem ) {
 
-    const trueNode = new Text( MembraneChannelsStrings.removeLigandsStringProperty, TEXT_OPTIONS );
-    const falseNode = new Text( MembraneChannelsStrings.addLigandsStringProperty, TEXT_OPTIONS );
+    const trueNode = new Text( MembraneTransportStrings.removeLigandsStringProperty, TEXT_OPTIONS );
+    const falseNode = new Text( MembraneTransportStrings.addLigandsStringProperty, TEXT_OPTIONS );
 
     super( model.areLigandsAddedProperty, trueNode, falseNode, {
-      baseColor: MembraneChannelsColors.ligandButtonColorProperty,
+      baseColor: MembraneTransportColors.ligandButtonColorProperty,
       tandem: tandem,
 
       // pdom
-      accessibleHelpText: MembraneChannelsMessages.ligandControlAccessibleHelpTextMessageProperty
+      accessibleHelpText: MembraneTransportMessages.ligandControlAccessibleHelpTextMessageProperty
     } );
 
     // TODO: High level API for context responses?
     // TODO: What if you set areLigandsAddedProperty programmatically?
     model.areLigandsAddedProperty.link( areLigandsAdded => {
       if ( areLigandsAdded ) {
-        this.alertDescriptionUtterance( MembraneChannelsMessages.ligandControlAddedContextResponseMessageProperty );
+        this.alertDescriptionUtterance( MembraneTransportMessages.ligandControlAddedContextResponseMessageProperty );
       }
       else {
-        this.alertDescriptionUtterance( MembraneChannelsMessages.ligandControlRemovedContextResponseMessageProperty );
+        this.alertDescriptionUtterance( MembraneTransportMessages.ligandControlRemovedContextResponseMessageProperty );
       }
     } );
   }
 }
-membraneChannels.register( 'LigandControl', LigandControl );
+membraneTransport.register( 'LigandControl', LigandControl );

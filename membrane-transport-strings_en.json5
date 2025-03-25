@@ -1,6 +1,6 @@
 {
   //  Title
-  'membrane-channels.title': 'Membrane Channels',
+  'membrane-transport.title': 'Membrane Transport',
 
   // Screen names
   'screen.simpleDiffusion': 'Simple Diffusion',

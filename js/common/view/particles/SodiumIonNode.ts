@@ -3,7 +3,7 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import sodiumIon_svg from '../../../../images/sodiumIon_svg.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 
 /**
  * Sodium ion node. Does not rotate. TODO: Revise the size of all provided artwork.
@@ -22,4 +22,4 @@ export default class SodiumIonNode extends Node {
   }
 }
 
-membraneChannels.register( 'SodiumIonNode', SodiumIonNode );
+membraneTransport.register( 'SodiumIonNode', SodiumIonNode );

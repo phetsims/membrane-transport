@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * MembraneChannelsKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.
+ * MembraneTransportKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.
  * Elements that are not relevant to all screens may be omitted via the featureSet.
  *
  * TODO (design): Let's request a design here, and work on that that before spending much time i18n
@@ -16,13 +16,13 @@ import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/Keybo
 import MoveDraggableItemsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/MoveDraggableItemsKeyboardHelpSection.js';
 import TimeControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/TimeControlsKeyboardHelpSection.js';
 import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsFeatureSet from '../MembraneChannelsFeatureSet.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFeatureSet from '../MembraneTransportFeatureSet.js';
 import MoveGrabbedChannelProteinKeyboardHelpSection from './MoveGrabbedChannelProteinKeyboardHelpSection.js';
 
-export default class MembraneChannelsKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
+export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
-  public constructor( featureSet: MembraneChannelsFeatureSet ) {
+  public constructor( featureSet: MembraneTransportFeatureSet ) {
 
     const leftColumn = [
       new FromAnywhereInSimHelpSection(),
@@ -56,4 +56,4 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
   }
 }
 
-membraneChannels.register( 'MembraneChannelsKeyboardHelpNode', MembraneChannelsKeyboardHelpNode );
+membraneTransport.register( 'MembraneTransportKeyboardHelpNode', MembraneTransportKeyboardHelpNode );

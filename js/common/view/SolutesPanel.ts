@@ -11,11 +11,11 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import VStrut from '../../../../scenery/js/nodes/VStrut.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Panel from '../../../../sun/js/Panel.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import MembraneChannelsFeatureSet, { getFeatureSetSoluteTypesForSolutesPanel } from '../MembraneChannelsFeatureSet.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import MembraneTransportFeatureSet, { getFeatureSetSoluteTypesForSolutesPanel } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 
@@ -25,11 +25,11 @@ import getParticleNode from './particles/getParticleNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class SolutesPanel extends Node {
-  public constructor( featureSet: MembraneChannelsFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+  public constructor( featureSet: MembraneTransportFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();
 
-    const title = new Text( MembraneChannelsStrings.solutesStringProperty, {
-      fontSize: MembraneChannelsConstants.PANEL_TITLE_FONT_SIZE,
+    const title = new Text( MembraneTransportStrings.solutesStringProperty, {
+      fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
       maxWidth: 200
     } );
 
@@ -48,7 +48,7 @@ export default class SolutesPanel extends Node {
         createNode: () => {
 
           const icon = getParticleNode( soluteType );
-          icon.setScaleMagnitude( MembraneChannelsConstants.PARTICLE_NODE_ICON_SCALE );
+          icon.setScaleMagnitude( MembraneTransportConstants.PARTICLE_NODE_ICON_SCALE );
 
           return alignGroup.createBox( new VBox( {
             spacing: 3,
@@ -73,8 +73,8 @@ export default class SolutesPanel extends Node {
       lineSpacing: 5,
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
-      accessibleName: MembraneChannelsStrings.solutesStringProperty,
-      accessibleHelpText: MembraneChannelsMessages.soluteRadioButtonGroupHelpTextMessageProperty
+      accessibleName: MembraneTransportStrings.solutesStringProperty,
+      accessibleHelpText: MembraneTransportMessages.soluteRadioButtonGroupHelpTextMessageProperty
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally
@@ -96,4 +96,4 @@ export default class SolutesPanel extends Node {
   }
 }
 
-membraneChannels.register( 'SolutesPanel', SolutesPanel );
+membraneTransport.register( 'SolutesPanel', SolutesPanel );

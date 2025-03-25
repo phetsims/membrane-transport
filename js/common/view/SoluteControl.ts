@@ -12,10 +12,10 @@ import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js'
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 
@@ -32,7 +32,7 @@ const coarseDelta = 10;
  */
 export default class SoluteControl extends Panel {
 
-  public constructor( model: MembraneChannelsModel, soluteType: SoluteType, side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {
+  public constructor( model: MembraneTransportModel, soluteType: SoluteType, side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {
 
     const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
       return soluteType === selectedSolute;
@@ -44,7 +44,7 @@ export default class SoluteControl extends Panel {
 
     // Create a proxy property for the FineCoarseSpinner
     // When the proxy Property changes, create new solutes based on that value
-    const allowedRangeProperty = new Property( new Range( 0, MembraneChannelsConstants.MAX_SOLUTE_COUNT ) );
+    const allowedRangeProperty = new Property( new Range( 0, MembraneTransportConstants.MAX_SOLUTE_COUNT ) );
 
     // Amount the user has added or removed. Can go negative if solutes diffuse across to this side, then are removed.
     const userControlledCountProperty = new NumberProperty( 0, {
@@ -65,7 +65,7 @@ export default class SoluteControl extends Panel {
       ( userValue, countOnThisSide, totalCount ) => {
 
         let amountTheUserCouldRemove = countOnThisSide;
-        let amountTheUserCouldAdd = MembraneChannelsConstants.MAX_SOLUTE_COUNT - totalCount;
+        let amountTheUserCouldAdd = MembraneTransportConstants.MAX_SOLUTE_COUNT - totalCount;
 
         // TODO (JG): Is the total exceeding the MAX indicative of an inconsistent transient value?
         if ( amountTheUserCouldAdd < 0 ) {
@@ -107,7 +107,7 @@ export default class SoluteControl extends Panel {
              'many';
     } );
 
-    const objectResponseMessageProperty = new PatternMessageProperty( MembraneChannelsMessages.soluteSpinnerObjectResponsePatternMessageProperty, {
+    const objectResponseMessageProperty = new PatternMessageProperty( MembraneTransportMessages.soluteSpinnerObjectResponsePatternMessageProperty, {
       amount: qualitativeCountProperty,
       soluteType: model.selectedSoluteProperty
     } );
@@ -120,13 +120,13 @@ export default class SoluteControl extends Panel {
         scale: 0.65,
         tandem: Tandem.OPT_OUT
       },
-      accessibleName: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
-                      MembraneChannelsMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
+      accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
+                      MembraneTransportMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
 
-      accessibleHelpText: side === 'inside' ? MembraneChannelsMessages.insideMembraneSpinnerHelpTextMessageProperty :
-                          MembraneChannelsMessages.outsideMembraneSpinnerHelpTextMessageProperty,
+      accessibleHelpText: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerHelpTextMessageProperty :
+                          MembraneTransportMessages.outsideMembraneSpinnerHelpTextMessageProperty,
 
-      accessibleRoleDescription: MembraneChannelsMessages.soluteSpinnerRoleDescriptionMessageProperty,
+      accessibleRoleDescription: MembraneTransportMessages.soluteSpinnerRoleDescriptionMessageProperty,
 
       pdomCreateAriaValueText: ( value: number ) => {
         return objectResponseMessageProperty;
@@ -155,7 +155,7 @@ export default class SoluteControl extends Panel {
 
         // 4. Supply these to the translation message
         return FluentUtils.formatMessage(
-          MembraneChannelsMessages.soluteSpinnerContextResponsePatternMessageProperty,
+          MembraneTransportMessages.soluteSpinnerContextResponsePatternMessageProperty,
           {
             amount: amount,                // aLittle / aLot
             addedOrRemoved: addedOrRemoved, // added / removed
@@ -190,4 +190,4 @@ export default class SoluteControl extends Panel {
   }
 }
 
-membraneChannels.register( 'SoluteControl', SoluteControl );
+membraneTransport.register( 'SoluteControl', SoluteControl );

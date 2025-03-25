@@ -14,8 +14,8 @@ import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibilit
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsConstants from '../MembraneChannelsConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
 
@@ -73,7 +73,7 @@ export default class LigandNode extends Node {
         this.operateOnLigand( ligand => {
 
           const constrainPosition = ( proposedPosition: Vector2 ) => {
-            const boundModelPoint = MembraneChannelsConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
+            const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
             ligand.position.set( boundModelPoint );
           };
 
@@ -144,4 +144,4 @@ export default class LigandNode extends Node {
     } );
   }
 }
-membraneChannels.register( 'LigandNode', LigandNode );
+membraneTransport.register( 'LigandNode', LigandNode );

@@ -2,15 +2,15 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import MembraneChannelsQueryParameters from './MembraneChannelsQueryParameters.js';
+import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 
 /**
- * Sim-specific preferences for Membrane Channels.
+ * Sim-specific preferences for Membrane Transport.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export const animateLipidsProperty = new BooleanProperty( MembraneChannelsQueryParameters.animateLipids, {
+export const animateLipidsProperty = new BooleanProperty( MembraneTransportQueryParameters.animateLipids, {
   tandem: Tandem.PREFERENCES.createTandem( 'animateLipidsProperty' ),
   phetioFeatured: true
 } );

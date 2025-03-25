@@ -7,7 +7,7 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import membraneChannels from '../../../membraneChannels.js';
+import membraneTransport from '../../../membraneTransport.js';
 import Channel from './Channel.js';
 
 export default class SodiumGlucoseCotransporter extends Channel {
@@ -70,4 +70,4 @@ export default class SodiumGlucoseCotransporter extends Channel {
   }
 }
 
-membraneChannels.register( 'SodiumGlucoseCotransporter', SodiumGlucoseCotransporter );
+membraneTransport.register( 'SodiumGlucoseCotransporter', SodiumGlucoseCotransporter );

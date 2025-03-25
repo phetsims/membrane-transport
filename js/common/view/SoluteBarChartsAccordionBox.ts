@@ -6,12 +6,12 @@ import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import MembraneChannelsColors from '../../common/MembraneChannelsColors.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import MembraneChannelsMessages from '../../strings/MembraneChannelsMessages.js';
-import { getFeatureSetSoluteTypes } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneTransportColors from '../../common/MembraneTransportColors.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
 
@@ -27,7 +27,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
   public readonly stepEmitter: Emitter<[ number ]>;
 
-  public constructor( model: MembraneChannelsModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
+  public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleNode: new Text( 'Solute Bar Charts', { fontSize: 20 } ),
@@ -52,10 +52,10 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
 
     // the top half is extracelluar
     const topHalf = new Rectangle( 0, 0, contentWidth, 50, {
-      fill: MembraneChannelsColors.outsideCellColorProperty
+      fill: MembraneTransportColors.outsideCellColorProperty
     } );
     const bottomHalf = new Rectangle( 0, 50, contentWidth, 50, {
-      fill: MembraneChannelsColors.insideCellColorProperty
+      fill: MembraneTransportColors.insideCellColorProperty
     } );
 
     contentNode.addChild( topHalf );
@@ -64,8 +64,8 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     // NOTE: Duplication with ObservationWindow
     const TEXT_MARGIN = 30;
     const textOptions = { fontSize: 13, left: 3, maxWidth: 200 };
-    const outsideText = new Text( MembraneChannelsStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
-    const insideText = new Text( MembraneChannelsStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
+    const outsideText = new Text( MembraneTransportStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
+    const insideText = new Text( MembraneTransportStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
 
     contentNode.addChild( outsideText );
     contentNode.addChild( insideText );
@@ -83,7 +83,7 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
       tagName: 'ul',
 
       descriptionTagName: 'p',
-      descriptionContent: MembraneChannelsMessages.soluteBarChartsDescriptionParagraphMessageProperty
+      descriptionContent: MembraneTransportMessages.soluteBarChartsDescriptionParagraphMessageProperty
     } );
     contentNode.addChild( hbox );
 
@@ -100,4 +100,4 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     this.stepEmitter = stepEmitter;
   }
 }
-membraneChannels.register( 'SoluteBarChartsAccordionBox', SoluteBarChartsAccordionBox );
+membraneTransport.register( 'SoluteBarChartsAccordionBox', SoluteBarChartsAccordionBox );

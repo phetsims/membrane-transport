@@ -9,7 +9,7 @@
  */
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
-import membraneChannels from '../membraneChannels.js';
+import membraneTransport from '../membraneTransport.js';
 
 const SCHEMA_MAP = {
 
@@ -31,16 +31,16 @@ const SCHEMA_MAP = {
   }
 } as const;
 
-const MembraneChannelsQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
+const MembraneTransportQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
 
 // The schema map is a read-only part of the public API, in case schema details (e.g. validValues) are needed elsewhere.
-MembraneChannelsQueryParameters.SCHEMA_MAP = SCHEMA_MAP;
+MembraneTransportQueryParameters.SCHEMA_MAP = SCHEMA_MAP;
 
-membraneChannels.register( 'MembraneChannelsQueryParameters', MembraneChannelsQueryParameters );
+membraneTransport.register( 'MembraneTransportQueryParameters', MembraneTransportQueryParameters );
 
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );
 logGlobal( 'phet.preloads.phetio.queryParameters' );
-logGlobal( 'phet.membraneChannels.MembraneChannelsQueryParameters' );
+logGlobal( 'phet.membraneTransport.MembraneTransportQueryParameters' );
 
-export default MembraneChannelsQueryParameters;
+export default MembraneTransportQueryParameters;

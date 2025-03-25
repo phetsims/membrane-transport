@@ -1,5 +1,5 @@
 {
-  "comment": "# membrane-channels 1.0.0-dev.5 Tue Mar 25 2025 09:01:55 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# membrane-transport 1.0.0-dev.5 Tue Mar 25 2025 09:01:55 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "main"
@@ -28,7 +28,7 @@
     "sha": "1170b84ee01b7b2a5c499a54aca07b9ab59e6073",
     "branch": "main"
   },
-  "membrane-channels": {
+  "membrane-transport": {
     "sha": "09f686bb46b87402a8b83e441871f7902b4c1e90",
     "branch": "main"
   },

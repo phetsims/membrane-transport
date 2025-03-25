@@ -13,13 +13,13 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneChannelsConstants from '../../common/MembraneChannelsConstants.js';
-import membraneChannels from '../../membraneChannels.js';
-import MembraneChannelsStrings from '../../MembraneChannelsStrings.js';
-import { getFeatureSetHasLigands } from '../MembraneChannelsFeatureSet.js';
-import MembraneChannelsModel from '../model/MembraneChannelsModel.js';
+import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
+import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import LigandNode from './LigandNode.js';
-import MembraneChannelsScreenView from './MembraneChannelsScreenView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import MembraneGroupSelectView from './MembraneGroupSelectView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer, { SlottedNode } from './ObservationWindowChannelLayer.js';
@@ -46,10 +46,10 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly channelLayer: ObservationWindowChannelLayer;
 
-  public constructor( private readonly model: MembraneChannelsModel, view: MembraneChannelsScreenView,
+  public constructor( private readonly model: MembraneTransportModel, view: MembraneTransportScreenView,
                       public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
 
-    const frameNode = new Rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT, {
+    const frameNode = new Rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
       lineWidth: 2,
       pickable: false
@@ -57,12 +57,12 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     // Clipping region that contains the background canvas and the ligand node
     const clipNode = new Node( {
-      clipArea: Shape.rectangle( 0, 0, MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH, MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT )
+      clipArea: Shape.rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
 
     super( {
       children: [ clipNode, frameNode ],
-      accessibleName: MembraneChannelsStrings.a11y.observationWindow.membrane.accessibleNameStringProperty
+      accessibleName: MembraneTransportStrings.a11y.observationWindow.membrane.accessibleNameStringProperty
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
@@ -88,8 +88,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
       const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
       ligandViewNodes.forEach( ( ligandViewNode, j ) => {
-        for ( let i = 0; i < MembraneChannelsConstants.LIGAND_COUNT; i++ ) {
-          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * MembraneChannelsConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem(), i === 0 );
+        for ( let i = 0; i < MembraneTransportConstants.LIGAND_COUNT; i++ ) {
+          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * MembraneTransportConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem(), i === 0 );
           this.ligandNodes.push( ligandNode );
         }
       } );
@@ -103,16 +103,16 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     const TEXT_MARGIN = 3;
     const textOptions = { fontSize: 13, maxWidth: 200 };
     const panelOptions = { stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
-    const outsideText = new Panel( new Text( MembraneChannelsStrings.outsideStringProperty, textOptions ), panelOptions );
-    const insideText = new Panel( new Text( MembraneChannelsStrings.insideStringProperty, textOptions ), panelOptions );
+    const outsideText = new Panel( new Text( MembraneTransportStrings.outsideStringProperty, textOptions ), panelOptions );
+    const insideText = new Panel( new Text( MembraneTransportStrings.insideStringProperty, textOptions ), panelOptions );
 
     ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
       outsideTextProxy.top = TEXT_MARGIN;
-      outsideTextProxy.right = MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
+      outsideTextProxy.right = MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
     } );
     ManualConstraint.create( this, [ insideText ], insideTextProxy => {
-      insideTextProxy.bottom = MembraneChannelsConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN;
-      insideTextProxy.right = MembraneChannelsConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
+      insideTextProxy.bottom = MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN;
+      insideTextProxy.right = MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
     } );
 
     this.addChild( outsideText );
@@ -151,4 +151,4 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   }
 
 }
-membraneChannels.register( 'ObservationWindow', ObservationWindow );
+membraneTransport.register( 'ObservationWindow', ObservationWindow );
