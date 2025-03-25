@@ -1,6 +1,6 @@
 {
   "name": "membrane-channels",
-  "version": "1.0.0-dev.4",
+  "version": "1.0.0-dev.5",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
@@ -15,7 +15,6 @@
   "scripts": {
     "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"grunt dev-server-runnable --port=8123\"",
     "watch-strings": "chokidar \"membrane-channels-strings_en.json5\" \"./strings/MembraneChannels_en.ftl\" -c \"grunt modulify\"",
-
     "transpileWithoutGrunt": "../perennial/bin/sage run ../chipper/js/grunt/tasks/transpile.ts --live",
     "serve-8081": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081",
     "dev81": "concurrently \"npm run transpileWithoutGrunt\" \"npm run serve-8081\""
