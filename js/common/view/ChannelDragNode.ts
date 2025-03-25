@@ -155,13 +155,10 @@ export default class ChannelDragNode extends Node {
       }
     } );
     this.addInputListener( this.dragListener );
-
-    // TODO (JG): Interactive highlight?
-    // this.setInteractiveHighlight( new HighlightFromNode( this ) );
   }
 
   public press( event: PressListenerEvent ): void {
-    this.dragListener.press( event );
+    this.dragListener.press( event, this );
   }
 
   public setModelPosition( modelPosition: Vector2 ): void {

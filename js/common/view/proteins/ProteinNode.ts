@@ -9,6 +9,7 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import optionize from '../../../../../phet-core/js/optionize.js';
+import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import membraneChannels from '../../../membraneChannels.js';
 
@@ -24,7 +25,7 @@ type ParentOptions = NodeOptions;
 
 type ProteinNodeOptions = SelfOptions & ParentOptions;
 
-export default class ProteinNode extends Node {
+export default class ProteinNode extends InteractiveHighlighting( Node ) {
 
   public readonly viewOffset: Vector2;
 
