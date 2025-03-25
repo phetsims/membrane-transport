@@ -168,8 +168,13 @@ export default class Particle<T extends ParticleType> {
   ) {
     this.dimension = new Dimension2(
       getParticleModelWidth( type ),
-      getParticleModelWidth( type ) / MembraneTransportConstants.PARTICLE_ASPECT_RATIO_MAP[ type ]
+      getParticleModelWidth( type ) / MembraneTransportConstants.getParticleAspectRatioMap()[ type ]
     );
+
+    assert && assert( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
+    assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );
+    assert && assert( this.dimension.width > 0, 'dimension.width should be greater than 0' );
+    assert && assert( this.dimension.height > 0, 'dimension.height should be greater than 0' );
 
     // Start in random walk mode with random directions.
     this.mode = this.createRandomWalkMode();

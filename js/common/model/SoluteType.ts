@@ -3,7 +3,9 @@ import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStr
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import MembraneTransportConstants from '../MembraneTransportConstants.js';
+// TODO: Better way
+// eslint-disable-next-line phet/no-view-imported-from-model
+import getParticleNode from '../view/particles/getParticleNode.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
@@ -46,7 +48,7 @@ export const getParticleModelWidth = ( particleType: ParticleType ): number =>
 
   // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
   particleType === 'oxygen' ? oxygenModelSize :
-  particleType === 'carbonDioxide' ? oxygenModelSize * MembraneTransportConstants.CARBON_DIOXIDE_NODE_HEIGHT / MembraneTransportConstants.OXYGEN_NODE_WIDTH :
+  particleType === 'carbonDioxide' ? oxygenModelSize * getParticleNode( 'carbonDioxide' ).bounds.width / getParticleNode( 'oxygen' ).bounds.width :
 
   particleType === 'sodiumIon' ? 4 :
   particleType === 'potassiumIon' ? 6 :

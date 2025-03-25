@@ -39,18 +39,19 @@ export default class MembraneTransportConstants {
 
   // A map of solute type to the aspect ratio of its artwork so that we can create bounds
   // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
-  public static readonly PARTICLE_ASPECT_RATIO_MAP = ( () => {
+  // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
+  // get good bounds. Hence this is a method rather than an attribute, and called during screen creation.
+  public static getParticleAspectRatioMap(): Record<ParticleType, number> {
     const record = {} as Record<ParticleType, number>;
     ParticleTypes.forEach( soluteType => {
-      const soluteNode = getParticleNode( soluteType ).bounds;
-      record[ soluteType ] = soluteNode.width / soluteNode.height;
+      const myParticleNode = getParticleNode( soluteType );
+      const soluteNodeBounds = myParticleNode.bounds;
+
+      assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
+      record[ soluteType ] = soluteNodeBounds.width / soluteNodeBounds.height;
     } );
     return record;
-  } )();
-
-  // compute width of O2 and CO2
-  public static readonly OXYGEN_NODE_WIDTH = getParticleNode( 'oxygen' ).bounds.width;
-  public static readonly CARBON_DIOXIDE_NODE_HEIGHT = getParticleNode( 'carbonDioxide' ).bounds.width;
+  }
 
   public static readonly LIGAND_COUNT = 10; // Per ligand type
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
