@@ -160,5 +160,5 @@ grabbedProteinResponseWithHintPattern = { grabbedProteinResponsePattern } Move p
 
 # accessibleHelpText for the ligand control
 ligandControlAccessibleHelpText = Add two types of ligands to outside of membrane.
-ligandControlAddedContextResponse = 'Several ligands added to outside.'
-ligandControlRemovedContextResponse = 'Ligands removed.'
+ligandControlAddedContextResponse = Several ligands added to outside.
+ligandControlRemovedContextResponse = Ligands removed.
