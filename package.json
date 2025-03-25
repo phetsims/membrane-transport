@@ -1,10 +1,10 @@
 {
-  "name": "membrane-channels",
+  "name": "membrane-transport",
   "version": "1.0.0-dev.5",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/phetsims/membrane-channels.git"
+    "url": "https://github.com/phetsims/membrane-transport.git"
   },
   "devDependencies": {
     "grunt": "~1.5.3",
@@ -14,13 +14,13 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"grunt dev-server-runnable --port=8123\"",
-    "watch-strings": "chokidar \"membrane-channels-strings_en.json5\" \"./strings/MembraneChannels_en.ftl\" -c \"grunt modulify\"",
+    "watch-strings": "chokidar \"membrane-transport-strings_en.json5\" \"./strings/MembraneChannels_en.ftl\" -c \"grunt modulify\"",
     "transpileWithoutGrunt": "../perennial/bin/sage run ../chipper/js/grunt/tasks/transpile.ts --live",
-    "serve-8081": "npx esbuild ../chipper/dist/js/membrane-channels/js/membrane-channels-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081",
+    "serve-8081": "npx esbuild ../chipper/dist/js/membrane-transport/js/membrane-transport-main.js --bundle --format=iife --global-name=MembraneChannelsBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081",
     "dev81": "concurrently \"npm run transpileWithoutGrunt\" \"npm run serve-8081\""
   },
   "phet": {
-    "requirejsNamespace": "MEMBRANE_CHANNELS",
+    "requirejsNamespace": "MEMBRANE_TRANSPORT",
     "simulation": true,
     "runnable": true,
     "supportedBrands": [
@@ -35,10 +35,10 @@
       "supportsSound": true
     },
     "screenNameKeys": [
-      "MEMBRANE_CHANNELS/screen.simpleDiffusion",
-      "MEMBRANE_CHANNELS/screen.facilitatedDiffusion",
-      "MEMBRANE_CHANNELS/screen.activeTransport",
-      "MEMBRANE_CHANNELS/screen.playground"
+      "MEMBRANE_TRANSPORT/screen.simpleDiffusion",
+      "MEMBRANE_TRANSPORT/screen.facilitatedDiffusion",
+      "MEMBRANE_TRANSPORT/screen.activeTransport",
+      "MEMBRANE_TRANSPORT/screen.playground"
     ],
     "preload": [
       "../sherpa/lib/d3-interpolate-path-2.3.0.js"
