@@ -219,7 +219,9 @@ export default class MembraneChannelsScreenView extends ScreenView {
     }
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const ligandControl = new LigandControl( model, options.tandem.createTandem( 'ligandControl' ) );
+      // TODO: Choose a nice tandem
+      // TODO: Rename LigandControl to match the tandem
+      const ligandControl = new LigandControl( model, options.tandem.createTandem( 'addRemoveLigandsButton' ) );
 
       rightSideVBoxChildren.push( ligandControl );
     }
