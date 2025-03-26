@@ -34,6 +34,9 @@ import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+// TODO: Extending InteractiveHighlightingNode means all children activate the highlight,
+//   even those that are not interactive. Either focus on interactive parts or make non-interactive children
+//   pickable: false.
 export default class ObservationWindow extends InteractiveHighlightingNode {
 
   public readonly ligandNodes: LigandNode[] = [];
