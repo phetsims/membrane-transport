@@ -3,12 +3,16 @@
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
+import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import Particle from './model/Particle.js';
 
 const collectSound = new SoundClip( collect_mp3, { initialOutputLevel: 0.6 } );
 soundManager.addSoundGenerator( collectSound );
+
+const brightMarimbaShortSound = new SoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
+soundManager.addSoundGenerator( brightMarimbaShortSound );
 
 /**
  * Play sound effects on certain events.
@@ -17,6 +21,14 @@ soundManager.addSoundGenerator( collectSound );
  */
 
 export default class MembraneTransportSounds {
+  public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ):void {
+
+    console.log( numberSodiumsFilled );
+    brightMarimbaShortSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
+                                             numberSodiumsFilled === 2 ? 1.1 :
+                                             1.2 );
+    brightMarimbaShortSound.play();
+  }
   public static particleBounced( particle: Particle<IntentionalAny> ): void {
     // too annoying
   }

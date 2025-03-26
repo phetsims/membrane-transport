@@ -313,6 +313,8 @@ export default class Particle<T extends ParticleType> {
             slot: this.mode.slot,
             site: this.mode.site
           };
+
+          MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, ( this.mode.slot.channelProperty.value as SodiumPotassiumPump ).getNumberOfFilledSodiumSites() );
         }
         else if ( this.type === 'atp' ) {
 

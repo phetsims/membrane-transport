@@ -36,21 +36,49 @@ export default class SodiumPotassiumPump extends Channel {
     return availableSites;
   }
 
+  public getNumberOfFilledSodiumSites(): number {
+
+    const slot = this.model.getSlotForChannel( this )!;
+
+    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'sodium1' );
+    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'sodium2' );
+    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'sodium3' );
+
+    // Count the number of sodiums that are filled
+    let numberSodiumsFilled = 0;
+    if ( sodium1 ) {
+      numberSodiumsFilled++;
+    }
+    if ( sodium2 ) {
+      numberSodiumsFilled++;
+    }
+    if ( sodium3 ) {
+      numberSodiumsFilled++;
+    }
+    return numberSodiumsFilled;
+  }
+
   public readonly isOpenProperty: BooleanProperty = new BooleanProperty( false );
 
   public override step( dt: number ): void {
 
     const slot = this.model.getSlotForChannel( this )!;
 
-    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
-                                                       solute.mode.site === 'left' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+                                                       solute.mode.site === 'sodium1' );
+    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
-                                                       solute.mode.site === 'center' );
-    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+                                                       solute.mode.site === 'sodium2' );
+    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                         solute.mode.slot === slot &&
-                                                        solute.mode.site === 'right' );
+                                                       solute.mode.site === 'sodium3' );
 
     if ( sodium1 && sodium2 && sodium3 ) {
       this.isOpenProperty.set( true );
