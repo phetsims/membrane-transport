@@ -202,9 +202,9 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
     if ( this.layer === 'back' ) {
       // Draw the background: upper half for outside cell, lower half for inside cell.
-      context.fillStyle = MembraneTransportColors.outsideCellColorProperty.value.toCSS();
+      context.fillStyle = MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS();
       context.fillRect( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
-      context.fillStyle = MembraneTransportColors.insideCellColorProperty.value.toCSS();
+      context.fillStyle = MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS();
       context.fillRect( 0, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
       if ( this.model.isShowingMembranePotentialLabelsProperty.value ) {

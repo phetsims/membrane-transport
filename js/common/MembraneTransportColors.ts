@@ -28,6 +28,15 @@ const MembraneTransportColors = {
   insideCellColorProperty: new ProfileColorProperty( membraneTransport, 'insideCellColor', {
     default: 'rgb(101,185,234)'
   } ),
+
+  // Color for the outside/extracellular fluid, also serves as the background color for the screen.
+  observationWindowOutsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'observationWindowOutsideCellColor', {
+    default: 'rgb(179, 218, 255)'
+  } ),
+  observationWindowInsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'observationWindowInsideCellColor', {
+    default: 'rgb(126, 189, 226)'
+  } ),
+
   oxygenColorProperty: new ProfileColorProperty( membraneTransport, 'O2Color', {
     default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
   } ),
