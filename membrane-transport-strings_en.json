@@ -86,6 +86,9 @@
   "animateLipidsDescription": {
     "value": "Whether the phospholipids forming the cell membrane should be animated"
   },
+  "soluteConcentrations": {
+    "value": "Solute Concentrations"
+  },
   "a11y": {
     "observationWindow": {
       "membrane": {

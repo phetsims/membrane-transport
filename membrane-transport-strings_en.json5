@@ -46,6 +46,8 @@
   animateLipids: 'Animate Lipids',
   animateLipidsDescription: 'Whether the phospholipids forming the cell membrane should be animated',
 
+  soluteConcentrations: 'Solute Concentrations',
+
   a11y: {
 
     observationWindow: {

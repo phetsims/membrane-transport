@@ -45,6 +45,7 @@ type StringsType = {
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
+  'soluteConcentrationsStringProperty': LocalizedStringProperty;
   'a11y': {
     'observationWindow': {
       'membrane': {
