@@ -33,6 +33,7 @@ export default class MembraneTransportSounds {
   }
 
   public static gasMoleculeEnteredMembrane( particle: Particle<IntentionalAny>, direction: 'inward' | 'outward' ): void {
+    collectSound.setPlaybackRate( direction === 'inward' ? 1 : 1.2 );
     collectSound.play();
   }
 }
