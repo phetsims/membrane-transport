@@ -14,9 +14,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import MoveToTrashButton from '../../../../scenery-phet/js/buttons/MoveToTrashButton.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
@@ -135,9 +134,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       return inside > 0 || outside > 0;
     } );
 
-    const resetSolutesButton = new MoveToTrashButton( {
-      baseColor: 'rgb(220,220,232)',
-      arrowColor: PhetColorScheme.RED_COLORBLIND,
+    const resetSolutesButton = new EraserButton( {
+      baseColor: 'rgb(239,214,147)',
       tandem: options.tandem.createTandem( 'resetSolutesButton' ),
       left: this.observationWindow.right + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.observationWindow.bottom,
