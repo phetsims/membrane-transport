@@ -37,10 +37,7 @@
       },
       "scripts": {
         "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"grunt dev-server-runnable --port=8123\"",
-        "watch-strings": "chokidar \"membrane-transport-strings_en.json5\" \"./strings/MembraneTransport_en.ftl\" -c \"grunt modulify\"",
-        "transpileWithoutGrunt": "../perennial/bin/sage run ../chipper/js/grunt/tasks/transpile.ts --live",
-        "serve-8081": "npx esbuild ../chipper/dist/js/membrane-transport/js/membrane-transport-main.js --bundle --format=iife --global-name=MembraneTransportBundle --outfile=dist/bundle.js --sourcemap --watch --servedir=.. --serve=8081",
-        "dev81": "concurrently \"npm run transpileWithoutGrunt\" \"npm run serve-8081\""
+        "watch-strings": "chokidar \"membrane-transport-strings_en.json5\" \"./strings/MembraneTransport_en.ftl\" -c \"grunt modulify\""
       },
       "phet": {
         "requirejsNamespace": "MEMBRANE_TRANSPORT",
@@ -55,7 +52,8 @@
         "simFeatures": {
           "supportsDynamicLocale": true,
           "supportsInteractiveDescription": true,
-          "supportsSound": true
+          "supportsSound": true,
+          "supportsVoicing": true
         },
         "screenNameKeys": [
           "MEMBRANE_TRANSPORT/screen.simpleDiffusion",

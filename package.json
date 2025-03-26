@@ -29,7 +29,8 @@
     "simFeatures": {
       "supportsDynamicLocale": true,
       "supportsInteractiveDescription": true,
-      "supportsSound": true
+      "supportsSound": true,
+      "supportsVoicing": true
     },
     "screenNameKeys": [
       "MEMBRANE_TRANSPORT/screen.simpleDiffusion",
