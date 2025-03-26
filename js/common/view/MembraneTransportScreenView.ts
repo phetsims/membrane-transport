@@ -8,6 +8,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
@@ -24,20 +25,21 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import ChannelType from '../model/proteins/ChannelType.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import MembraneTransportModelTester from '../model/MembraneTransportModelTester.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
+import ChannelType from '../model/proteins/ChannelType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
+import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportAccordionBoxGroup from './MembraneTransportAccordionBoxGroup.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
-import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox.js';
 import SoluteControl from './SoluteControl.js';
@@ -129,15 +131,25 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.addChild( timeControlNode );
 
-    const trashButton = new MoveToTrashButton( {
+    const hasAnySolutesProperty = new DerivedProperty( [ model.insideSoluteTypesCountProperty, model.outsideSoluteTypesCountProperty ], ( inside, outside ) => {
+      return inside > 0 || outside > 0;
+    } );
+
+    const resetSolutesButton = new MoveToTrashButton( {
       baseColor: 'rgb(220,220,232)',
       arrowColor: PhetColorScheme.RED_COLORBLIND,
-      tandem: options.tandem.createTandem( 'trashButton' ),
+      tandem: options.tandem.createTandem( 'resetSolutesButton' ),
       left: this.observationWindow.right + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.observationWindow.bottom
+      bottom: this.observationWindow.bottom,
+      accessibleName: MembraneTransportStrings.a11y.resetSolutesButton.accessibleNameStringProperty,
+      enabledProperty: hasAnySolutesProperty
     } );
-    trashButton.addListener( () => model.clear() );
-    this.addChild( trashButton );
+
+    resetSolutesButton.addListener( () => {
+      this.alertDescriptionUtterance( MembraneTransportStrings.a11y.resetSolutesButton.accessibleContextResponseStringProperty );
+      model.clear();
+    } );
+    this.addChild( resetSolutesButton );
 
     // Solute concentrations
     const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, {
@@ -244,7 +256,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     ];
 
     this.pdomControlAreaNode.pdomOrder = [
-      trashButton,
+      resetSolutesButton,
       timeControlNode,
       resetAllButton
     ];

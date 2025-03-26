@@ -52,6 +52,10 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
       }
     };
+    'resetSolutesButton': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseStringProperty': LocalizedStringProperty;
+    };
     'accordionBoxGroup': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'ligandGatedAccordionBox': {

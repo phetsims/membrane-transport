@@ -56,6 +56,11 @@
       }
     },
 
+    resetSolutesButton: {
+      accessibleName: 'Reset Solutes',
+      accessibleContextResponse: 'Solutes cleared. Add solutes to observe changes'
+    },
+
     accordionBoxGroup: {
       accessibleHelpText: 'Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane.',
 
