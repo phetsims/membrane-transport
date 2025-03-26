@@ -39,7 +39,7 @@ import MembraneTransportAccordionBoxGroup from './MembraneTransportAccordionBoxG
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import ObservationWindow from './ObservationWindow.js';
-import SoluteBarChartsAccordionBox from './SoluteBarChartsAccordionBox.js';
+import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox.js';
 import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
 import ThumbnailNode from './ThumbnailNode.js';
@@ -139,18 +139,18 @@ export default class MembraneTransportScreenView extends ScreenView {
     trashButton.addListener( () => model.clear() );
     this.addChild( trashButton );
 
-    // Solute bar charts
-    const soluteBarChartsAccordionBox = new SoluteBarChartsAccordionBox( model, {
-      tandem: options.tandem.createTandem( 'soluteBarChartsAccordionBox' )
+    // Solute concentrations
+    const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, {
+      tandem: options.tandem.createTandem( 'soluteConcentrationsAccordionBox' )
     } );
 
-    this.resetEmitter.addListener( () => soluteBarChartsAccordionBox.reset() );
+    this.resetEmitter.addListener( () => soluteConcentrationsAccordionBox.reset() );
 
-    soluteBarChartsAccordionBox.left = this.layoutBounds.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN;
-    soluteBarChartsAccordionBox.bottom = this.layoutBounds.bottom - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN;
+    soluteConcentrationsAccordionBox.left = this.layoutBounds.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN;
+    soluteConcentrationsAccordionBox.bottom = this.layoutBounds.bottom - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN;
 
-    this.addChild( soluteBarChartsAccordionBox );
-    this.stepEmitter.addListener( dt => soluteBarChartsAccordionBox.stepEmitter.emit( dt ) );
+    this.addChild( soluteConcentrationsAccordionBox );
+    this.stepEmitter.addListener( dt => soluteConcentrationsAccordionBox.stepEmitter.emit( dt ) );
 
     const soluteControlsTandem = options.tandem.createTandem( 'soluteControls' );
 
@@ -237,7 +237,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomPlayAreaNode.pdomOrder = [
       solutesPanel,
       ...soluteControls,
-      soluteBarChartsAccordionBox,
+      soluteConcentrationsAccordionBox,
       this.observationWindow,
       rightSideVBox,
       ...this.observationWindow.ligandNodes

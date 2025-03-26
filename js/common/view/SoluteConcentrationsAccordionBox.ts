@@ -23,14 +23,14 @@ type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class SoluteBarChartsAccordionBox extends AccordionBox {
+export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
   public readonly stepEmitter: Emitter<[ number ]>;
 
   public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
-      titleNode: new Text( 'Solute Bar Charts', { fontSize: 20 } ),
+      titleNode: new Text( 'Solute Concentrations', { fontSize: 20 } ),
 
       // Makes it easy to position the collapsed accordion box so that when it expands it has the correct layout.
       useExpandedBoundsWhenCollapsed: true,
@@ -100,4 +100,4 @@ export default class SoluteBarChartsAccordionBox extends AccordionBox {
     this.stepEmitter = stepEmitter;
   }
 }
-membraneTransport.register( 'SoluteBarChartsAccordionBox', SoluteBarChartsAccordionBox );
+membraneTransport.register( 'SoluteConcentrationsAccordionBox', SoluteConcentrationsAccordionBox );

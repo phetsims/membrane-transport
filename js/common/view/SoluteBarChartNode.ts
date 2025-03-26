@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * In the SoluteBarChartsAccordionBox, the node that shows an icon, bar chart and arrow for one solute.
+ * In the SoluteConcentrationsAccordionBox, the node that shows an icon, bar chart and arrow for one solute.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

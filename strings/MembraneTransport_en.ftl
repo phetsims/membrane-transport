@@ -14,7 +14,7 @@
 
 -playAreaSummaryVoltagePotential = There are options to change membrane voltage potential and optionally hide visual charge labels.
 
--playAreaSummaryBarcharts = Solute barcharts provide a comparative summary for amount of each solute inside and outside membrane.
+-playAreaSummaryBarCharts = Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane.
 
 
 # END REUSABLE STRINGS .............................
@@ -29,15 +29,15 @@
 # Sim Overview
 # ..
 # Play Area Summary - Screen 1
-playAreaSummaryScreen1 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryBarcharts}
+playAreaSummaryScreen1 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryBarCharts}
 
 # ..
 # Play Area Summary - Screen 2 and 4
-playAreaSummaryScreen2and4 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryProteins } { -playAreaSummaryVoltagePotential } { -playAreaSummaryBarcharts }
+playAreaSummaryScreen2and4 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryProteins } { -playAreaSummaryVoltagePotential } { -playAreaSummaryBarCharts }
 
 # ..
 # Play Area Summary - Screen 3
-playAreaSummaryScreen3 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryProteins } { -playAreaSummaryBarcharts }
+playAreaSummaryScreen3 =  { -playAreaSummaryIntro } {-playAreaSummarySolutes} { -playAreaSummaryProteins } { -playAreaSummaryBarCharts }
 
 # ..
 # Control Area Summary - All Screens

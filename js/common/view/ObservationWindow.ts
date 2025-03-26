@@ -99,7 +99,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       shuffledLigandNodes.forEach( ligandNode => clipNode.addChild( ligandNode ) );
     }
 
-    // NOTE: Duplication with SoluteBarChartsAccordionBox
+    // NOTE: Duplication with SoluteConcentrationsAccordionBox
     const TEXT_MARGIN = 3;
     const textOptions = { fontSize: 13, maxWidth: 200 };
     const panelOptions = { stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
