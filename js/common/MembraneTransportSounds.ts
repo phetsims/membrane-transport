@@ -23,7 +23,6 @@ soundManager.addSoundGenerator( brightMarimbaShortSound );
 export default class MembraneTransportSounds {
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ):void {
 
-    console.log( numberSodiumsFilled );
     brightMarimbaShortSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
                                              numberSodiumsFilled === 2 ? 1.1 :
                                              1.2 );
