@@ -84,9 +84,9 @@ export default class SodiumPotassiumPump extends Channel {
       this.isOpenProperty.set( true );
 
       // Move solutes through the open channel
-      sodium1.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: -5 };
-      sodium2.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
-      sodium3.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
+      sodium1.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward', offset: -5 };
+      sodium2.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward' };
+      sodium3.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward', offset: +5 };
     }
   }
 
