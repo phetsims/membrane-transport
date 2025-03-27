@@ -16,7 +16,7 @@ import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 const TEXT_OPTIONS = {
-  fontSize: 14,
+  fontSize: 12,
   maxWidth: 160
 } as const;
 
