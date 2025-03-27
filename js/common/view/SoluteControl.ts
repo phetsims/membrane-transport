@@ -7,10 +7,11 @@ import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Range from '../../../../dot/js/Range.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
-import Panel from '../../../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
@@ -38,7 +39,7 @@ export default class SoluteControl extends Panel {
       return soluteType === selectedSolute;
     } );
 
-    const options = optionize<SoluteControlOptions, SelfOptions, NodeOptions>()( {
+    const options = optionize<SoluteControlOptions, SelfOptions, PanelOptions>()( {
       visibleProperty: visibleProperty
     }, providedOptions );
 
@@ -117,7 +118,10 @@ export default class SoluteControl extends Panel {
       deltaCoarse: coarseDelta,
       numberDisplayOptions: {
         opacity: 0,
-        scale: 0.65,
+
+        // Scale chosen by inspection, so that it creates horizontal space without getting too tall.
+        // TODO: Dynamic layout instead? It should match the width of the SolutesPanel. 
+        scale: new Vector2( 1.1, 1 ),
         tandem: Tandem.OPT_OUT
       },
       accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
@@ -149,9 +153,9 @@ export default class SoluteControl extends Panel {
 
         // Describe relative to the spinner that is being controlled
         const moreOrLessOrSame = ( differenceInsideMinusOutside === 0 ) ? 'same' :
-                           side === 'inside' ?
-                           ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
-                           ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
+                                 side === 'inside' ?
+                                 ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
+                                 ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
         // 4. Supply these to the translation message
         return FluentUtils.formatMessage(
@@ -176,7 +180,13 @@ export default class SoluteControl extends Panel {
     } );
 
     const icon = getParticleNode( soluteType, {
-      center: spinner.center
+      center: spinner.center,
+
+      // Chosen by inspection to make the icons small enough for the largest icon fit between spinner buttons.
+      maxWidth: 40
+
+      // TODO: Request new artwork because the icons seem to have extra white space above/below them.
+      //   We were trying to use maxHeight for consistently sized icons.
     } );
 
     // TODO (phet-io) Take tandem out of options and make it a required parameter. Pass it through for the buttons.
