@@ -52,6 +52,10 @@ export default abstract class Channel {
   public get slot(): Slot {
     return this.model.getSlotForChannel( this )!;
   }
+
+  public hasSolutesMovingThroughChannel(): boolean {
+    return !!this.model.solutes.find( solute => solute.mode.type === 'movingThroughChannel' && solute.mode.slot === this.slot );
+  }
 }
 
 membraneTransport.register( 'Channel', Channel );

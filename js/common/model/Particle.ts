@@ -428,7 +428,7 @@ export default class Particle<T extends ParticleType> {
         const crossedOver = this.mode.direction === 'inward' && this.position.y < 0 ||
                             this.mode.direction === 'outward' && this.position.y > 0;
 
-        // If the particle has moved through the channel, unbind from the ligand
+        // If the particle has moved through the channel, close
         if ( crossedOver && Math.abs( this.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
           const channel = this.mode.slot.channelProperty.value;
 
@@ -652,7 +652,7 @@ export default class Particle<T extends ParticleType> {
       channel instanceof SodiumPotassiumPump &&
       channel.conformation === 'awaiting-sodium' &&
       this.position.y < 0 && // Only approach from intracellular side
-      !channel.stillHasSolutesMovingThroughChannel() // make sure no potassiums still leaving
+      !channel.hasSolutesMovingThroughChannel() // make sure no potassiums still leaving
     ) {
 
       const openSodiumSites = channel.getOpenSodiumSites();
@@ -683,7 +683,7 @@ export default class Particle<T extends ParticleType> {
       channel instanceof SodiumPotassiumPump &&
       channel.conformation === 'awaiting-potassium' &&
       this.position.y > 0 && // Only approach from extracellular side
-      !channel.stillHasSolutesMovingThroughChannel() // make sure no sodiums still leaving
+      !channel.hasSolutesMovingThroughChannel() // make sure no sodiums still leaving
     ) {
 
       const openPotassiumSites = channel.getOpenPotassiumSites();

@@ -204,11 +204,6 @@ export default class SodiumPotassiumPump extends Channel {
   public isATPEnRoute(): boolean {
     return false;
   }
-
-  public stillHasSolutesMovingThroughChannel(): boolean {
-    const slot = this.model.getSlotForChannel( this )!;
-    return !!this.model.solutes.find( solute => solute.mode.type === 'movingThroughChannel' && solute.mode.slot === slot );
-  }
 }
 
 membraneTransport.register( 'SodiumPotassiumPump', SodiumPotassiumPump );

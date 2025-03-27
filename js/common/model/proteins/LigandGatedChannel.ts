@@ -48,7 +48,8 @@ export default class LigandGatedChannel extends Channel {
       this.timeSinceLigandBound += dt;
       
       // After the binding duration, release the ligand
-      if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand ) {
+      // TODO: Prevent solutes from passing through if this.timeSinceLigandBound >= this.bindingDuration, so that we don't end up in an infinite loop
+      if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand && !this.hasSolutesMovingThroughChannel() ) {
         this.unbindLigand();
       }
     }
