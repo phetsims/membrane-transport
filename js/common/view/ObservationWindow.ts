@@ -19,8 +19,8 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import LigandNode from './LigandNode.js';
-import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import MembraneGroupSelectView from './MembraneGroupSelectView.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer, { SlottedNode } from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
@@ -134,8 +134,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   }
 
   /**
-   * Sets slot indicators to be visible or invisible. Filled slots will always have
-   * invisible indicators.
+   * Sets slot indicators to be visible or invisible. Filled slots will always have invisible indicators.
+   * NOTE: This is called from mouse and keyboard interaction, so those will compete and "fight", whichever happens more
+   * recently takes precedence
    */
   public setSlotDragIndicatorsVisible( visible: boolean ): void {
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
@@ -153,5 +154,10 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.membraneGroupSelectView.reset();
   }
 
+  public clearSlotDragIndicatorHighlights(): void {
+    this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
+      slotDragIndicatorNode.stroke = 'black';
+    } );
+  }
 }
 membraneTransport.register( 'ObservationWindow', ObservationWindow );

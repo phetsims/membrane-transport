@@ -152,6 +152,8 @@ export default class ChannelDragNode extends Node {
 
           animation.start();
         }
+
+        observationWindow.clearSlotDragIndicatorHighlights();
       }
     } );
     this.addInputListener( this.dragListener );

@@ -67,6 +67,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       tandem: Tandem.OPT_OUT // TODO (phet-io): Hopefully this doesn't need to be instrumented, can we confirm?
     } );
 
+    groupSelectModel.isGroupItemKeyboardGrabbedProperty.link( isGroupItemKeyboardGrabbed => {
+      observationWindow.setSlotDragIndicatorsVisible( isGroupItemKeyboardGrabbed );
+    } );
+
     // A list of all keys that are listened to, except those covered by the numberKeyMapper
     const movementKeys = [
       'd', 'arrowRight', 'a', 'arrowLeft', 'arrowUp', 'arrowDown', 'w', 's',
