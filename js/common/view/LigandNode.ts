@@ -91,7 +91,7 @@ export default class LigandNode extends Node {
       },
       end: () => {
         this.operateOnLigand( ligand => {
-          ligand.mode = soundRichDragListener.dragListener.looksOverProperty.value ? { type: 'userOver', slot: null } : ligand.createRandomWalkMode();
+          ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : ligand.createRandomWalkMode();
         } );
         pressOffset = null;
       },
@@ -113,7 +113,7 @@ export default class LigandNode extends Node {
     } );
     this.addInputListener( soundRichDragListener );
 
-    soundRichDragListener.dragListener.looksOverProperty.link( isOver => {
+    soundRichDragListener.dragListener.isOverOrFocusedProperty.link( isOver => {
       this.operateOnLigand( ligand => {
 
         // If the ligand is already controlled, don't start walking when the pointer goes out
