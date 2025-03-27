@@ -144,7 +144,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
 
     resetSolutesButton.addListener( () => {
-      this.alertDescriptionUtterance( MembraneTransportStrings.a11y.resetSolutesButton.accessibleContextResponseStringProperty );
+      this.addAccessibleResponse( MembraneTransportStrings.a11y.resetSolutesButton.accessibleContextResponseStringProperty );
       model.clear();
     } );
     this.addChild( resetSolutesButton );

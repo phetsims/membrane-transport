@@ -38,10 +38,10 @@ export default class LigandControl extends BooleanRectangularToggleButton {
     // TODO: What if you set areLigandsAddedProperty programmatically?
     model.areLigandsAddedProperty.link( areLigandsAdded => {
       if ( areLigandsAdded ) {
-        this.alertDescriptionUtterance( MembraneTransportMessages.ligandControlAddedContextResponseMessageProperty );
+        this.addAccessibleResponse( MembraneTransportMessages.ligandControlAddedContextResponseMessageProperty );
       }
       else {
-        this.alertDescriptionUtterance( MembraneTransportMessages.ligandControlRemovedContextResponseMessageProperty );
+        this.addAccessibleResponse( MembraneTransportMessages.ligandControlRemovedContextResponseMessageProperty );
       }
     } );
   }
