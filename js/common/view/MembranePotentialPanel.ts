@@ -38,7 +38,7 @@ export default class MembranePotentialPanel extends Panel {
     } );
 
     const content = new VBox( {
-      spacing: 10,
+      spacing: 4,
       align: 'left',
       children: [
 
@@ -58,6 +58,9 @@ export default class MembranePotentialPanel extends Panel {
       ]
     } );
     super( content, {
+      cornerRadius: 4,
+      stroke: null,
+      fill: 'rgb(230,229,229)',
       tandem: tandem
     } );
   }
