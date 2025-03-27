@@ -235,6 +235,15 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
+    // Free phosphate molecules move normally for a while, then are absorbed
+    if ( this.type === 'phosphate' && this.mode.type === 'randomWalk' && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
+      this.opacity -= 0.01;
+      if ( this.opacity <= 0 ) {
+        model.removeParticle( this );
+        return;
+      }
+    }
+
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
