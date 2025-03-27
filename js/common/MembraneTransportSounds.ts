@@ -29,6 +29,11 @@ export default class MembraneTransportSounds {
     brightMarimbaShortSound.play();
   }
 
+  public static potassiumLockedInToSodiumPotassiumPump( site: string, numberPotassiumsFilled: number ): void {
+    brightMarimbaShortSound.setPlaybackRate( numberPotassiumsFilled === 1 ? 0.5 : 0.7 );
+    brightMarimbaShortSound.play();
+  }
+
   public static phosphateLockedInToSodiumPotassiumPump(): void {
     brightMarimbaShortSound.setPlaybackRate( 2 );
     brightMarimbaShortSound.play();

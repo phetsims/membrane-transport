@@ -70,7 +70,7 @@ type MoveToSodiumGlucoseTransporterMode = {
 type MoveToSodiumPotassiumPumpMode = {
   type: 'moveToSodiumPotassiumPump';
   slot: Slot;
-  site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp';
+  site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2';
 };
 
 type WaitingInSodiumGlucoseTransporterMode = {
@@ -82,7 +82,7 @@ type WaitingInSodiumGlucoseTransporterMode = {
 type WaitingInSodiumPotassiumPumpMode = {
   type: 'waitingInSodiumPotassiumPump';
   slot: Slot;
-  site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp';
+  site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2';
 };
 
 type MoveToLigandBindingLocationMode = {
@@ -291,8 +291,10 @@ export default class Particle<T extends ParticleType> {
       const offset = this.mode.site === 'sodium1' ? new Vector2( -5, -10 ) :
                      this.mode.site === 'sodium2' ? new Vector2( -5, -5 ) :
                      this.mode.site === 'sodium3' ? new Vector2( -5, 0 ) :
-                     this.mode.site === 'atp' ? new Vector2( 0, -12 ) :
-                     new Vector2( 0, 0 );
+                     this.mode.site === 'phosphate' ? new Vector2( 0, -12 ) :
+                     this.mode.site === 'potassium1' ? new Vector2( 5, 5 ) :
+                     this.mode.site === 'potassium2' ? new Vector2( 5, 10 ) :
+                     new Vector2( 0, 0 ); // TODO: IIFE throw error here
 
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
 
@@ -329,14 +331,22 @@ export default class Particle<T extends ParticleType> {
             site: this.mode.site
           };
           model.addSolute( phosphate );
-          MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
-
           model.removeSolute( this );
-          // returns early to avoid the rest of the step method
 
-          console.log( 'ATP bound, created adp, created phosphate' );
+          sodiumPotassiumPump.openUpward();
+          MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
+        }
+        else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.conformation === 'awaiting-potassium' ) {
+          this.mode = {
+            type: 'waitingInSodiumPotassiumPump',
+            slot: this.mode.slot,
+            site: this.mode.site
+          };
+          MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
 
-          sodiumPotassiumPump.open();
+          if ( sodiumPotassiumPump.getNumberOfFilledPotassiumSites() === 2 ) {
+            sodiumPotassiumPump.openDownward();
+          }
         }
       }
     }
@@ -632,9 +642,8 @@ export default class Particle<T extends ParticleType> {
       slot.channelType === 'sodiumPotassiumPump' &&
       channel instanceof SodiumPotassiumPump &&
       channel.conformation === 'awaiting-sodium' &&
-
-      // Only approach from intracellular side
-      this.position.y < 0
+      this.position.y < 0 && // Only approach from intracellular side
+      !channel.stillHasSolutesMovingThroughChannel() // make sure no potassiums still leaving
     ) {
 
       const openSodiumSites = channel.getOpenSodiumSites();
@@ -650,17 +659,31 @@ export default class Particle<T extends ParticleType> {
       this.type === 'atp' &&
       slot.channelType === 'sodiumPotassiumPump' &&
       channel instanceof SodiumPotassiumPump &&
-
-      // Only approach from intracellular side
-      this.position.y < 0 &&
-
+      this.position.y < 0 && // Only approach from intracellular side
       channel.conformation === 'awaiting-phosphate' &&
-
       !channel.isATPEnRoute()
     ) {
 
-      this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'atp' };
+      this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'phosphate' };
       return true;
+    }
+
+    if (
+      this.type === 'potassiumIon' &&
+      slot.channelType === 'sodiumPotassiumPump' &&
+      channel instanceof SodiumPotassiumPump &&
+      channel.conformation === 'awaiting-potassium' &&
+      this.position.y > 0 && // Only approach from extracellular side
+      !channel.stillHasSolutesMovingThroughChannel() // make sure no sodiums still leaving
+    ) {
+
+      const openPotassiumSites = channel.getOpenPotassiumSites();
+
+      if ( openPotassiumSites.length > 0 ) {
+        const site = dotRandom.sample( openPotassiumSites );
+        this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
+        return true;
+      }
     }
 
     return false;
