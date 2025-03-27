@@ -95,7 +95,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         if ( groupSelectModel.selectedGroupItemProperty.value !== null ) {
 
           const groupItem = groupSelectModel.selectedGroupItemProperty.value;
-          const oldValue = this.model.getGroupItemValue( groupItem )!;
 
           // Moving an item
           if ( groupSelectModel.isGroupItemKeyboardGrabbedProperty.value ) {
@@ -134,6 +133,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             }
           }
           else {
+
+            const oldValue = groupItem;
+
+            affirm( typeof oldValue === 'number', 'oldValue should be a number, but it was: ' + oldValue );
 
             // Selecting an item
             const delta = getDeltaForKey( keysPressed );
