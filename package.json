@@ -13,7 +13,7 @@
     "concurrently": "^9.1.2"
   },
   "scripts": {
-    "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"grunt dev-server-runnable --port=8123\"",
+    "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\"",
     "watch-strings": "chokidar \"membrane-transport-strings_en.json5\" \"./strings/MembraneTransport_en.ftl\" -c \"grunt modulify\""
   },
   "phet": {

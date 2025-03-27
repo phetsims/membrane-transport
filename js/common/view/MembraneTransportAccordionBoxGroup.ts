@@ -3,7 +3,6 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -11,7 +10,7 @@ import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
+import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
@@ -43,7 +42,8 @@ type AccordionBoxConfig = {
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export default class MembraneTransportAccordionBoxGroup extends Node {
+// TODO: Rename this file
+export default class MembraneTransportAccordionBoxGroup extends Panel {
   public readonly resetEmitter = new Emitter();
 
   // So we can return ChannelDragNode instances to their corresponding ChannelToolNode icons
@@ -51,17 +51,9 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
 
   public constructor( model: MembraneTransportModel, tandem: Tandem, view: MembraneTransportScreenView ) {
 
-    const fontSize = 16;
-    const accordionBoxOptions: AccordionBoxOptions = {
-      useExpandedBoundsWhenCollapsed: false,
-      cornerRadius: 0,
-      lineWidth: 0,
-      titleAlignX: 'left',
-      fill: 'white',
-      headingTagName: 'h4'
-    };
+    const fontSize = 14;
 
-    const accordionBoxes: AccordionBox[] = [];
+    const panels: Panel[] = [];
 
     // put all titles in an align box so they take up the same amount of space
     const titleAlignGroup = new AlignGroup();
@@ -71,7 +63,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
     /**
      * Creates an accordion box based on the provided configuration
      */
-    const createAccordionBox = ( config: AccordionBoxConfig, ...additionalControls: Node[] ): AccordionBox => {
+    const createPanel = ( config: AccordionBoxConfig, ...additionalControls: Node[] ): Panel => {
       const content = new HBox( {
         spacing: 10,
         children: config.channels.map( channel => {
@@ -88,22 +80,24 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       } );
 
       // TODO: Get rid of the accordion boxes, they will just be labels and always open.
-      return new AccordionBox( new VBox( {
+      return new Panel( new VBox( {
+        spacing: 5, // spacing between the title and the content
         children: [
+          titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize, maxWidth: 150 } ), { xAlign: 'left' } ),
           // contentAlignGroup.createBox( content ),
           content,
           ...additionalControls
         ]
-      } ), combineOptions<AccordionBoxOptions>( {
-        expandedDefaultValue: true,
-        titleNode: titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize, maxWidth: 150 } ), { xAlign: 'left' } ),
-        tandem: tandem.createTandem( config.tandemName )
-      }, accordionBoxOptions ) );
+      } ), {
+        cornerRadius: 0,
+        stroke: null
+      } );
     };
 
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
+
       // Leakage channels
-      const leakageAccordionBox = createAccordionBox( {
+      const leakageAccordionBox = createPanel( {
         titleProperty: MembraneTransportStrings.leakageChannelsStringProperty,
         tandemName: 'leakageChannelsAccordionBox',
         expanded: true,
@@ -122,7 +116,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       } );
 
       // Voltage-gated channels
-      const voltageGatedAccordionBox = createAccordionBox( {
+      const voltageGatedAccordionBox = createPanel( {
         titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
         tandemName: 'voltageGatedChannelsAccordionBox',
           expanded: true,
@@ -143,7 +137,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       );
 
       // Ligand-gated channels
-      const ligandGatedAccordionBox = createAccordionBox( {
+      const ligandGatedAccordionBox = createPanel( {
         titleProperty: MembraneTransportStrings.ligandGatedChannelsStringProperty,
         tandemName: 'ligandGatedChannelsAccordionBox',
         expanded: true,
@@ -161,7 +155,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
         ]
       }, new LigandControl( model, tandem.createTandem( 'myLigandToggleButton' ) ) ); // TODO: fix tandem
 
-      accordionBoxes.push(
+      panels.push(
         leakageAccordionBox,
         voltageGatedAccordionBox,
         ligandGatedAccordionBox
@@ -170,7 +164,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
 
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
       // Active transport channels
-      const activeTransportAccordionBox = createAccordionBox( {
+      const activeTransportAccordionBox = createPanel( {
         titleProperty: MembraneTransportStrings.activeTransportersStringProperty,
         tandemName: 'activeTransportersAccordionBox',
         expanded: true,
@@ -188,14 +182,14 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
         ]
       } );
 
-      accordionBoxes.push( activeTransportAccordionBox );
+      panels.push( activeTransportAccordionBox );
     }
 
     const interleaveHSeparators = ( nodes: Node[] ) => {
       const result: Node[] = [];
       for ( let i = 0; i < nodes.length; i++ ) {
         if ( i > 0 ) {
-          result.push( new HSeparator( { stroke: 'black', lineWidth: 1 } ) );
+          result.push( new HSeparator( { stroke: 'lightGray', lineWidth: 1 } ) );
         }
         result.push( nodes[ i ] );
       }
@@ -203,20 +197,15 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
     };
     const vbox = new VBox( {
       spacing: 0,
-      children: interleaveHSeparators( accordionBoxes )
+      children: interleaveHSeparators( panels )
     } );
-    super( {
-      children: [ vbox ],
-
-      // pdom
+    super( vbox, {
       tagName: 'div',
       labelTagName: 'h3',
       accessibleName: MembraneTransportStrings.a11y.accordionBoxGroup.transportProteinsStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
-
-    this.resetEmitter.addListener( () => accordionBoxes.forEach( box => box.reset() ) );
 
     this.mutate( { left: 20, top: 20 } );
     this.channelToolNodes = channelToolNodes;
