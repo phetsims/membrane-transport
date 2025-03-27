@@ -4,12 +4,12 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
-import Channel from '../model/proteins/Channel.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import Channel from '../model/proteins/Channel.js';
 import Slot from '../model/Slot.js';
-import getChannelNode from './proteins/getChannelNode.js';
-import VoltageGatedChannelNode from './proteins/VoltageGatedChannelNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
+import getChannelNode from './proteins/getChannelNode.js';
+import ProteinNode from './proteins/ProteinNode.js';
 
 /**
  * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
@@ -77,7 +77,7 @@ export default class ObservationWindowChannelLayer extends Node {
 
   public step( dt: number ): void {
     this.children.forEach( child => {
-      if ( child instanceof VoltageGatedChannelNode ) {
+      if ( child instanceof ProteinNode ) {
         child.step( dt );
       }
     } );

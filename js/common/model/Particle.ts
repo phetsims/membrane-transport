@@ -304,9 +304,11 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
+      const sodiumPotassiumPump = this.mode.slot.channelProperty.value as SodiumPotassiumPump;
+
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
 
-        if ( this.type === 'sodiumIon' ) {
+        if ( this.type === 'sodiumIon' && sodiumPotassiumPump.conformation === 'awaiting-sodium' ) {
 
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
@@ -314,9 +316,9 @@ export default class Particle<T extends ParticleType> {
             site: this.mode.site
           };
 
-          MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, ( this.mode.slot.channelProperty.value as SodiumPotassiumPump ).getNumberOfFilledSodiumSites() );
+          MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
         }
-        else if ( this.type === 'atp' ) {
+        else if ( this.type === 'atp' && sodiumPotassiumPump.conformation === 'awaiting-phosphate' ) {
 
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
@@ -327,11 +329,14 @@ export default class Particle<T extends ParticleType> {
             site: this.mode.site
           };
           model.addSolute( phosphate );
+          MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
 
           model.removeSolute( this );
           // returns early to avoid the rest of the step method
 
           console.log( 'ATP bound, created adp, created phosphate' );
+
+          sodiumPotassiumPump.open();
         }
       }
     }
@@ -626,6 +631,7 @@ export default class Particle<T extends ParticleType> {
       this.type === 'sodiumIon' &&
       slot.channelType === 'sodiumPotassiumPump' &&
       channel instanceof SodiumPotassiumPump &&
+      channel.conformation === 'awaiting-sodium' &&
 
       // Only approach from intracellular side
       this.position.y < 0
@@ -648,7 +654,7 @@ export default class Particle<T extends ParticleType> {
       // Only approach from intracellular side
       this.position.y < 0 &&
 
-      channel.isSodiumFullyBound() &&
+      channel.conformation === 'awaiting-phosphate' &&
 
       !channel.isATPEnRoute()
     ) {

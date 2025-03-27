@@ -14,6 +14,8 @@ import Channel from './Channel.js';
 
 export default class SodiumPotassiumPump extends Channel {
 
+  public conformation: 'awaiting-sodium' | 'awaiting-phosphate' | 'awaiting-potassium' = 'awaiting-sodium';
+
   private isSiteOpen( site: 'sodium1' | 'sodium2' | 'sodium3' ): boolean {
     return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
                                                 solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
@@ -77,21 +79,50 @@ export default class SodiumPotassiumPump extends Channel {
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'sodium2' );
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                        solute.mode.slot === slot &&
+                                                       solute.mode.slot === slot &&
                                                        solute.mode.site === 'sodium3' );
 
-    if ( sodium1 && sodium2 && sodium3 ) {
-      this.isOpenProperty.set( true );
+    if ( this.conformation === 'awaiting-sodium' ) {
 
-      // Move solutes through the open channel
-      sodium1.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward', offset: -5 };
-      sodium2.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward' };
-      sodium3.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward', offset: +5 };
+      if ( sodium1 && sodium2 && sodium3 ) {
+        this.conformation = 'awaiting-phosphate';
+      }
+    }
+    else if ( this.conformation === 'awaiting-phosphate' ) {
+
+      //
+    }
+    else if ( this.conformation === 'awaiting-potassium' ) {
+
+      //
     }
   }
 
   public isSodiumFullyBound(): boolean {
     return this.getOpenSodiumSites().length === 0;
+  }
+
+  // Open upward, letting sodiums go outside the cell
+  public open(): void {
+
+    const slot = this.model.getSlotForChannel( this )!;
+
+    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'sodium1' );
+    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'sodium2' );
+    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                       solute.mode.slot === slot &&
+                                                       solute.mode.site === 'sodium3' );
+    this.conformation = 'awaiting-potassium';
+    this.isOpenProperty.set( true );
+
+    // Move solutes through the open channel
+    sodium1!.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward', offset: -5 };
+    sodium2!.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward' };
+    sodium3!.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'outward', offset: +5 };
   }
 
   // True if an ATP is on the way or waiting in the site

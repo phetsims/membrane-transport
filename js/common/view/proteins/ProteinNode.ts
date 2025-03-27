@@ -37,6 +37,11 @@ export default class ProteinNode extends InteractiveHighlighting( Node ) {
 
     this.viewOffset = options.viewOffset;
   }
+
+  public step( dt: number ): void {
+
+    // override as needed
+  }
 }
 
 membraneTransport.register( 'ProteinNode', ProteinNode );

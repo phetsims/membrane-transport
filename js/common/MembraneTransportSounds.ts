@@ -28,6 +28,12 @@ export default class MembraneTransportSounds {
                                              1.2 );
     brightMarimbaShortSound.play();
   }
+
+  public static phosphateLockedInToSodiumPotassiumPump(): void {
+    brightMarimbaShortSound.setPlaybackRate( 2 );
+    brightMarimbaShortSound.play();
+  }
+
   public static particleBounced( particle: Particle<IntentionalAny> ): void {
     // too annoying
   }

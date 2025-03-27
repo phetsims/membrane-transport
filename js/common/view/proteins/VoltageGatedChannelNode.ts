@@ -103,7 +103,7 @@ export default class VoltageGatedChannelNode extends ProteinNode {
     }
   }
 
-  public step( dt: number ): void {
+  public override step( dt: number ): void {
     const targetValue = voltageValues[ this.targetVoltage ];
 
     if ( this.currentVoltageValue === targetValue ) {
