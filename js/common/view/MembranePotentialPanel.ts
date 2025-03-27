@@ -7,7 +7,6 @@ import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 /**
@@ -42,17 +41,20 @@ export default class MembranePotentialPanel extends Panel {
       spacing: 10,
       align: 'left',
       children: [
-        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneTransportStrings.membranePotentialLabelsStringProperty, {
-          maxWidth: 140
-        } ), {
-          tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' )
-        } ),
 
-        new Text( MembraneTransportStrings.membraneVoltagePotential_mVStringProperty, {
+        // TODO: i18n
+        new Text( 'Membrane Potential (mV)', {
           maxWidth: 160
         } ),
 
-        membraneVoltagePotentialRadioButtonGroup
+        membraneVoltagePotentialRadioButtonGroup,
+
+        // TODO: i18n
+        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( 'Signs', {
+          maxWidth: 140
+        } ), {
+          tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' ) // TODO: Match to the signs label if we keep it
+        } )
       ]
     } );
     super( content, {

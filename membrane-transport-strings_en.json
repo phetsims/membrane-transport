@@ -41,9 +41,6 @@
   "inside": {
     "value": "Inside"
   },
-  "membraneProteins": {
-    "value": "Membrane Proteins"
-  },
   "membranePotentialLabels": {
     "value": "Membrane Potential Labels"
   },
@@ -106,6 +103,9 @@
       }
     },
     "accordionBoxGroup": {
+      "transportProteins": {
+        "value": "Transport Proteins"
+      },
       "accessibleHelpText": {
         "value": "Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane."
       },

@@ -30,7 +30,6 @@ type StringsType = {
   'atpStringProperty': LocalizedStringProperty;
   'outsideStringProperty': LocalizedStringProperty;
   'insideStringProperty': LocalizedStringProperty;
-  'membraneProteinsStringProperty': LocalizedStringProperty;
   'membranePotentialLabelsStringProperty': LocalizedStringProperty;
   'voltageGatedChannelsStringProperty': LocalizedStringProperty;
   'ligandGatedChannelsStringProperty': LocalizedStringProperty;
@@ -57,6 +56,7 @@ type StringsType = {
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };
     'accordionBoxGroup': {
+      'transportProteinsStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'ligandGatedAccordionBox': {
         'sodiumIonNaPlusLigandGatedStringProperty': LocalizedStringProperty;

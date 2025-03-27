@@ -25,7 +25,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import MembraneTransportModelTester from '../model/MembraneTransportModelTester.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
@@ -34,9 +34,7 @@ import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
-import LigandControl from './LigandControl.js';
 import MacroCellNode from './MacroCellNode.js';
-import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportAccordionBoxGroup from './MembraneTransportAccordionBoxGroup.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -137,7 +135,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const resetSolutesButton = new EraserButton( {
       baseColor: 'rgb(239,214,147)',
       tandem: options.tandem.createTandem( 'resetSolutesButton' ),
-      left: this.observationWindow.right + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
+      right: this.observationWindow.left - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.observationWindow.bottom,
       accessibleName: MembraneTransportStrings.a11y.resetSolutesButton.accessibleNameStringProperty,
       enabledProperty: hasAnySolutesProperty
@@ -223,19 +221,6 @@ export default class MembraneTransportScreenView extends ScreenView {
       this.membraneTransportAccordionBoxGroup = membraneTransportAccordionBoxGroup;
     }
 
-    if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-      const membranePotentialPanel = new MembranePotentialPanel( model, options.tandem.createTandem( 'membranePotentialPanel' ) );
-      rightSideVBoxChildren.push( membranePotentialPanel );
-    }
-
-    if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      // TODO: Choose a nice tandem
-      // TODO: Rename LigandControl to match the tandem
-      const ligandControl = new LigandControl( model, options.tandem.createTandem( 'addRemoveLigandsButton' ) );
-
-      rightSideVBoxChildren.push( ligandControl );
-    }
-
     const rightSideVBox = new VBox( {
       spacing: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
       children: rightSideVBoxChildren,
@@ -247,6 +232,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomPlayAreaNode.pdomOrder = [
       solutesPanel,
       ...soluteControls,
+      resetSolutesButton,
       soluteConcentrationsAccordionBox,
       this.observationWindow,
       rightSideVBox,
@@ -254,7 +240,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     ];
 
     this.pdomControlAreaNode.pdomOrder = [
-      resetSolutesButton,
       timeControlNode,
       resetAllButton
     ];

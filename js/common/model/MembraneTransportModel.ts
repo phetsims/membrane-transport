@@ -294,7 +294,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
     // Prune any recentSoluteFlux that is more than 1000ms old.
     this.fluxEntries.slice().forEach( fluxEntry => {
-      if ( this.time - fluxEntry.time > 1 ) {
+      if ( this.time - fluxEntry.time > 0.1 ) {
         this.fluxEntries.splice( this.fluxEntries.indexOf( fluxEntry ), 1 );
       }
     } );

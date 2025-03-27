@@ -1,6 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
@@ -12,12 +13,13 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import ChannelType from '../model/proteins/ChannelType.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import ChannelType from '../model/proteins/ChannelType.js';
 import ChannelToolNode from './ChannelToolNode.js';
+import LigandControl from './LigandControl.js';
+import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 // Type definition for channel configuration
@@ -59,7 +61,6 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       headingTagName: 'h4'
     };
 
-    const contentAlignGroup = new AlignGroup();
     const accordionBoxes: AccordionBox[] = [];
 
     // put all titles in an align box so they take up the same amount of space
@@ -70,7 +71,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
     /**
      * Creates an accordion box based on the provided configuration
      */
-    const createAccordionBox = ( config: AccordionBoxConfig ): AccordionBox => {
+    const createAccordionBox = ( config: AccordionBoxConfig, ...additionalControls: Node[] ): AccordionBox => {
       const content = new HBox( {
         spacing: 10,
         children: config.channels.map( channel => {
@@ -86,8 +87,15 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
         )
       } );
 
-      return new AccordionBox( contentAlignGroup.createBox( content ), combineOptions<AccordionBoxOptions>( {
-        expandedDefaultValue: config.expanded,
+      // TODO: Get rid of the accordion boxes, they will just be labels and always open.
+      return new AccordionBox( new VBox( {
+        children: [
+          // contentAlignGroup.createBox( content ),
+          content,
+          ...additionalControls
+        ]
+      } ), combineOptions<AccordionBoxOptions>( {
+        expandedDefaultValue: true,
         titleNode: titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize, maxWidth: 150 } ), { xAlign: 'left' } ),
         tandem: tandem.createTandem( config.tandemName )
       }, accordionBoxOptions ) );
@@ -102,12 +110,12 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
         channels: [
           {
             channelType: 'sodiumIonLeakageChannel',
-            labelProperty: MembraneTransportStrings.sodiumIonNaPlusStringProperty,
+            labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty
           },
           {
             channelType: 'potassiumIonLeakageChannel',
-            labelProperty: MembraneTransportStrings.potassiumIonKPlusStringProperty,
+            labelProperty: new StringProperty( 'K+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty
           }
         ]
@@ -117,39 +125,41 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       const voltageGatedAccordionBox = createAccordionBox( {
         titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
         tandemName: 'voltageGatedChannelsAccordionBox',
-        expanded: false,
+          expanded: true,
         channels: [
           {
             channelType: 'sodiumIonVoltageGatedChannel',
-            labelProperty: MembraneTransportStrings.sodiumIonNaPlusStringProperty,
+            labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
           },
           {
             channelType: 'potassiumIonVoltageGatedChannel',
-            labelProperty: MembraneTransportStrings.potassiumIonKPlusStringProperty,
+            labelProperty: new StringProperty( 'K+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
           }
         ]
-      } );
+        },
+        new MembranePotentialPanel( model, tandem.createTandem( 'membranePotentialPanel' ) )
+      );
 
       // Ligand-gated channels
       const ligandGatedAccordionBox = createAccordionBox( {
         titleProperty: MembraneTransportStrings.ligandGatedChannelsStringProperty,
         tandemName: 'ligandGatedChannelsAccordionBox',
-        expanded: false,
+        expanded: true,
         channels: [
           {
             channelType: 'sodiumIonLigandGatedChannel',
-            labelProperty: MembraneTransportStrings.sodiumIonNaPlusStringProperty,
+            labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty
           },
           {
             channelType: 'potassiumIonLigandGatedChannel',
-            labelProperty: MembraneTransportStrings.potassiumIonKPlusStringProperty,
+            labelProperty: new StringProperty( 'K+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty
           }
         ]
-      } );
+      }, new LigandControl( model, tandem.createTandem( 'myLigandToggleButton' ) ) ); // TODO: fix tandem
 
       accordionBoxes.push(
         leakageAccordionBox,
@@ -163,7 +173,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       const activeTransportAccordionBox = createAccordionBox( {
         titleProperty: MembraneTransportStrings.activeTransportersStringProperty,
         tandemName: 'activeTransportersAccordionBox',
-        expanded: false,
+        expanded: true,
         channels: [
           {
             channelType: 'sodiumPotassiumPump',
@@ -181,19 +191,6 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       accordionBoxes.push( activeTransportAccordionBox );
     }
 
-    accordionBoxes.forEach( box => {
-      box.expandedProperty.link( expanded => {
-        if ( expanded ) {
-
-          // collapse the other ones
-          accordionBoxes.forEach( otherBox => {
-            if ( otherBox !== box ) {
-              otherBox.expandedProperty.value = false;
-            }
-          } );
-        }
-      } );
-    } );
     const interleaveHSeparators = ( nodes: Node[] ) => {
       const result: Node[] = [];
       for ( let i = 0; i < nodes.length; i++ ) {
@@ -206,14 +203,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
     };
     const vbox = new VBox( {
       spacing: 0,
-      children: [
-        new Text( MembraneTransportStrings.membraneProteinsStringProperty, {
-          fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
-          maxWidth: 150
-        } ),
-
-        ...interleaveHSeparators( accordionBoxes )
-      ]
+      children: interleaveHSeparators( accordionBoxes )
     } );
     super( {
       children: [ vbox ],
@@ -221,7 +211,7 @@ export default class MembraneTransportAccordionBoxGroup extends Node {
       // pdom
       tagName: 'div',
       labelTagName: 'h3',
-      accessibleName: MembraneTransportStrings.membraneProteinsStringProperty,
+      accessibleName: MembraneTransportStrings.a11y.accordionBoxGroup.transportProteinsStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );

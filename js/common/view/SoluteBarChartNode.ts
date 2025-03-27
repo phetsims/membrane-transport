@@ -142,7 +142,7 @@ export default class SoluteBarChartNode extends Node {
       const smoothedNet = model.getRecentSoluteFluxWithSmoothing( soluteType );
       if ( Math.abs( smoothedNet ) > 0.01 ) {
         arrow.visible = true;
-        const constrainedArrowHeight = clamp( smoothedNet * 20, -MAX_ARROW_HEIGHT, MAX_ARROW_HEIGHT );
+        const constrainedArrowHeight = clamp( smoothedNet * 50, -MAX_ARROW_HEIGHT, MAX_ARROW_HEIGHT );
         arrow.setTailAndTip( 10, 0, 10, constrainedArrowHeight );
         arrow.centerY = BOX_HEIGHT / 2;
 

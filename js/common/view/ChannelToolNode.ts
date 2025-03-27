@@ -36,6 +36,7 @@ export default class ChannelToolNode extends VBox {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const channelNode = getChannelNode( type, null );
+    channelNode.setScaleMagnitude( 0.7 );
     channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
     super( combineOptions<VBoxOptions>( {}, {

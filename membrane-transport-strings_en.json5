@@ -22,7 +22,6 @@
   inside: 'Inside',
 
   // Channel and Membrane Proteins
-  membraneProteins: 'Membrane Proteins',
   membranePotentialLabels: 'Membrane Potential Labels',
   voltageGatedChannels: 'Voltage-gated Channels',
   ligandGatedChannels: 'Ligand-gated Channels',
@@ -62,6 +61,8 @@
     },
 
     accordionBoxGroup: {
+
+      transportProteins: 'Transport Proteins',
       accessibleHelpText: 'Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane.',
 
       ligandGatedAccordionBox: {
