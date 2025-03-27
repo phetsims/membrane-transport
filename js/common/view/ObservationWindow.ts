@@ -1,6 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -25,6 +26,7 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowChannelLayer, { SlottedNode } from './ObservationWindowChannelLayer.js';
 import LigandANode from './particles/LigandANode.js';
 import LigandBNode from './particles/LigandBNode.js';
+import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
 /**
@@ -63,9 +65,41 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       clipArea: Shape.rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
 
+    // TODO: This is not production worthy, needs refinement, see the design doc. Add i18n. etc.
+    const accessibleParagraphProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
+
+    model.channelCountProperty.link( channelCount => {
+
+      const phrases = model.slots.map( ( slot, index ) => {
+
+        if ( slot.isFilled() ) {
+
+          const channel = slot.channelProperty.value!;
+
+          return `The ${index + 1} slot contains a ${getBriefProteinName( channel.type )} transport protein.`;
+        }
+        else {
+          return '';// TODO: Probably lots of whitespaces
+        }
+      } );
+
+
+      const paragraph = phrases.join( ' ' );
+
+      accessibleParagraphProperty.set( channelCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : 'Zoomed-in Membrane. ' + paragraph );
+    } );
+
+    // create a StringProperty that just says zoomed in membrane and the number of proteins or none
+    const accessibleNameProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
+    model.channelCountProperty.link( channelCount => {
+      accessibleNameProperty.set( channelCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : `Zoomed-in Membrane. ${channelCount} channels in there` );
+    } );
+
     super( {
       children: [ clipNode, frameNode ],
-      accessibleName: MembraneTransportStrings.a11y.observationWindow.membrane.accessibleNameStringProperty
+      accessibleName: accessibleNameProperty,
+      accessibleHelpText: new StringProperty( 'Look for transport proteins.' ),
+      accessibleParagraph: accessibleParagraphProperty
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
