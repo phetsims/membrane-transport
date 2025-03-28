@@ -269,6 +269,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           }
         }
         else {
+
+          // TODO: We are hitting this when you press the escape key to release a protein. Why?
           console.log( 'was not dragged item, but why' );
         }
       },
@@ -345,14 +347,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     } );
     observationWindow.addInputListener( deleteKeyboardListener );
 
-    /**
-     * TODO (JG):
-     * - Remove 'm' after 'escape' is working. I used 'm' since it is the same on qwerty and dvorak.
-     * - Why is this not running for 'escape'? The GroupSelectView.grabReleaseKeyboardListener seems to be firing and taking over the escape key. https://github.com/phetsims/scenery/issues/1692
-     * - JG will investigate simplifying the overlap + override parameters in KeyboardListener to make this possible.
-     */
     const escKeyboardListener = new KeyboardListener( {
-      keys: [ 'm', 'escape' ],
+      keys: [ 'escape' ],
       fire: () => {
         const currentSelection = this.currentSelection;
         resetState();
