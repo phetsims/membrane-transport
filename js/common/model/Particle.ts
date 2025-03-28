@@ -28,6 +28,8 @@ import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
 import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
 
+const ABSORB_GLUCOSE = false;
+
 // Typical speed for movement
 const typicalSpeed = 30;
 
@@ -227,11 +229,22 @@ export default class Particle<T extends ParticleType> {
   public step( dt: number, model: MembraneTransportModel ): void {
 
     // When glucose is inside the cell, it is absorbed.
-    if ( this.type === 'glucose' && this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
+    if ( this.type === 'glucose' && this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
       this.opacity -= 0.01;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
         return;
+      }
+    }
+
+    if ( this.type === 'glucose' ) {
+      if ( this.position.y > MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
+        this.opacity = 1; // Full opacity outside the cell
+      }
+      else {
+
+        // Gradual fade based on distance from membrane
+        this.opacity = clamp( this.opacity - 0.01, 0.5, 1 );
       }
     }
 
