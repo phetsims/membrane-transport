@@ -9,6 +9,7 @@
  */
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import membraneTransport from '../membraneTransport.js';
 
 const SCHEMA_MAP = {
