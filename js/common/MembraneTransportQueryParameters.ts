@@ -12,7 +12,7 @@ import logGlobal from '../../../phet-core/js/logGlobal.js';
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import membraneTransport from '../membraneTransport.js';
 
-const SCHEMA_MAP = {
+const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
 
   // A flag that populates the sim with a set of default solutes.
   defaultSolutes: {
@@ -30,12 +30,7 @@ const SCHEMA_MAP = {
     type: 'number',
     defaultValue: 50
   }
-} as const;
-
-const MembraneTransportQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
-
-// The schema map is a read-only part of the public API, in case schema details (e.g. validValues) are needed elsewhere.
-MembraneTransportQueryParameters.SCHEMA_MAP = SCHEMA_MAP;
+} );
 
 membraneTransport.register( 'MembraneTransportQueryParameters', MembraneTransportQueryParameters );
 
