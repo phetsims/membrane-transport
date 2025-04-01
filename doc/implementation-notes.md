@@ -9,7 +9,7 @@ incorporating modern PhET frameworks and updated pedagogical features.
 ## Features Overview
 
 - **Included:**
-  - phet-io instrumentation
+  - PhET-iO instrumentation
   - description tiers (1 and 2)
   - sonification
   - keyboard support and interactive highlights
@@ -40,8 +40,8 @@ incorporating modern PhET frameworks and updated pedagogical features.
 
 ### Model
 
-The model is purposefully simple, with flat data structures to facilitate phet-io serialization. For instance,
-Several model Properties for particlar channel state are not phet-io instrumented; instead they appear in the state via
+The model is purposefully simple, with flat data structures to facilitate PhET-iO serialization. For instance,
+Several model Properties for particular channel state are not PhET-iO instrumented; instead they appear in the state via
 serialization of the container.
 
 Each Particle has a finite state machine to indicate what mode it is in, such as a random walk, or passing through a channel.
