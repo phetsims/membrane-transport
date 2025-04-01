@@ -31,6 +31,9 @@ incorporating modern PhET frameworks and updated pedagogical features.
   transient node is removed and the channel is added to the model. For the GrabSortInteraction, it operates on transient 
   nodes as well. Preferring transient, short-lived Nodes helps us keep each individual node simpler and more manageable,
   as opposed to if we had a single Node that had to handle all modalities.
+* **Strings** The simulation is experimenting with JSON5 for the JSON strings, see `membrane-transport-strings_en.json5` and
+  a simplified syntax that omits the "value" keys. This allows for comments in the file. The standard json file is generated
+  during `grunt update` or `grunt modulify`. Longer strings for description are written in Fluent, which is in ./strings/MembraneTransport_en.ftl
 
 ### Model
 
@@ -38,9 +41,12 @@ The model is purposefully simple, with flat data structures to facilitate phet-i
 Several model Properties for particlar channel state are not phet-io instrumented; instead they appear in the state via
 serialization of the container.
 
+Each Particle has a finite state machine to indicate what mode it is in, such as a random walk, or passing through a channel.
+Membrane transport proteins additionally add their own state (often with their own finite state machine) to manage their
+interactions.
+
 Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are non-interactive.
-Ligands can be added via the buttons, and flow in from the left or right of the ObservationWindow. Ligands are interactive,
-and can be dragged around the canvas with mouse or keyboard.
+Ligands can be added via a button, and Ligands are interactive, and can be dragged around the canvas with mouse or keyboard.
 Solutes and Ligands subclasses of `class Particle`. They are represented by a finite state machine which indicates
 their current mode and during step() can transition to a new mode based on the current mode and the current state of the
 simulation.
