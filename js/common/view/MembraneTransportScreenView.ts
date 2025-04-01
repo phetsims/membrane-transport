@@ -188,6 +188,10 @@ export default class MembraneTransportScreenView extends ScreenView {
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
     getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
 
+      if ( soluteType === 'adp' || soluteType === 'phosphate' ) {
+        return;
+      }
+
       // ATP can only be added inside the cell
       if ( soluteType !== 'atp' ) {
         const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {

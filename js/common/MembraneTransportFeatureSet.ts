@@ -27,11 +27,6 @@ export const getFeatureSetSoluteTypes = ( featureSet: MembraneTransportFeatureSe
   return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypes : SoluteTypes.filter( type => type !== 'atp' );
 };
 
-// TODO: Duplicated with above
-export const getFeatureSetSoluteTypesForSolutesPanel = ( featureSet: MembraneTransportFeatureSet ): readonly SoluteType[] => {
-  return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypes.filter( type => type !== 'adp' && type !== 'phosphate' ) : SoluteTypes.filter( type => type !== 'atp' && type !== 'adp' && type !== 'phosphate' );
-};
-
 export const getFeatureSetHasVoltages = ( featureSet: MembraneTransportFeatureSet ): boolean => {
   return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
 };

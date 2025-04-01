@@ -34,6 +34,9 @@ incorporating modern PhET frameworks and updated pedagogical features.
 * **Strings** The simulation is experimenting with JSON5 for the JSON strings, see `membrane-transport-strings_en.json5` and
   a simplified syntax that omits the "value" keys. This allows for comments in the file. The standard json file is generated
   during `grunt update` or `grunt modulify`. Longer strings for description are written in Fluent, which is in ./strings/MembraneTransport_en.ftl
+* **MembraneTransportConstants** is implemented via static attributes in a class, so the values can refer to each other in the declaration.
+  This is unlike other simulations that export const and use file-specific local variables for cross-references.
+  This also helps with searchability, since values are referred to the same way everywhere.
 
 ### Model
 

@@ -15,7 +15,7 @@ import MembraneTransportConstants from '../../common/MembraneTransportConstants.
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
-import MembraneTransportFeatureSet, { getFeatureSetSoluteTypesForSolutesPanel } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 
@@ -35,7 +35,9 @@ export default class SolutesPanel extends Node {
 
     const alignGroup = new AlignGroup();
 
-    const soluteTypes = getFeatureSetSoluteTypesForSolutesPanel( featureSet );
+    const soluteTypes = getFeatureSetSoluteTypes( featureSet ).filter( soluteType => {
+      return soluteType !== 'phosphate' && soluteType !== 'adp';
+    } );
 
     const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, soluteTypes.map( soluteType => {
       return {
