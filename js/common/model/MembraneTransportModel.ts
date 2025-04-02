@@ -28,7 +28,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
@@ -36,9 +36,9 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
+import getTransportProtein from './proteins/getTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
-import getTransportProtein from './proteins/getTransportProtein.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
@@ -421,7 +421,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * For serialization, the MembraneTransportModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
    */
-  public static readonly MembraneTransportModelIO = new IOType<MembraneTransportModel>( 'MembraneTransportModelIO', {
+  public static readonly MembraneTransportModelIO = new IOType<MembraneTransportModel, IntentionalAny>( 'MembraneTransportModelIO', {
     supertype: GetSetButtonsIO,
     valueType: MembraneTransportModel,
     stateSchema: {
@@ -482,7 +482,7 @@ export default class MembraneTransportModel extends PhetioObject {
 type TransportProteinStateObject = {
   type: TransportProteinType;
   position: number;
-  model: string;
+  model: ReferenceIOState;
 };
 
 /**
@@ -490,7 +490,7 @@ type TransportProteinStateObject = {
  * would create a circular dependency. So we declare it here.
  *
  */
-export const TransportProteinIO = new IOType( 'TransportProteinIO', {
+export const TransportProteinIO = new IOType<TransportProtein, TransportProteinStateObject>( 'TransportProteinIO', {
   valueType: TransportProtein,
   stateSchema: {
     type: StringIO,
@@ -507,7 +507,11 @@ export const TransportProteinIO = new IOType( 'TransportProteinIO', {
     };
   },
   fromStateObject: ( stateObject: TransportProteinStateObject ) => {
-    return getTransportProtein( ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
+    return getTransportProtein(
+      ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ) as MembraneTransportModel,
+      stateObject.type,
+      stateObject.position
+    );
   }
 } );
 
