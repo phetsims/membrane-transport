@@ -29,7 +29,7 @@ import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import MembraneTransportModelTester from '../model/MembraneTransportModelTester.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
-import ChannelType from '../model/proteins/ChannelType.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import ChannelDragNode from './ChannelDragNode.js';
@@ -285,7 +285,7 @@ export default class MembraneTransportScreenView extends ScreenView {
    * @param channelToolNode - The channel tool node that the channel will animate to if dropped in the empty area
    * @returns The created channel drag node
    */
-  private createChannelDragNode( modelPosition: Vector2, type: ChannelType, origin: Slot | ChannelToolNode ): ChannelDragNode {
+  private createChannelDragNode( modelPosition: Vector2, type: TransportProteinType, origin: Slot | ChannelToolNode ): ChannelDragNode {
     const channelDragNode = new ChannelDragNode(
       this.model,
       this,
@@ -304,7 +304,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   /**
    * Called when the user presses a membrane protein in the accordion box to create one with mouse drag.
    */
-  public createFromMouseDrag( event: PressListenerEvent, type: ChannelType, origin: Slot | ChannelToolNode ): void {
+  public createFromMouseDrag( event: PressListenerEvent, type: TransportProteinType, origin: Slot | ChannelToolNode ): void {
     const viewPoint = this.globalToLocalPoint( event.pointer.point );
     const modelPosition = this.screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
@@ -312,7 +312,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     channelDragNode.press( event );
   }
 
-  public forwardFromKeyboard( type: ChannelType, channelToolNode: ChannelToolNode ): void {
+  public forwardFromKeyboard( type: TransportProteinType, channelToolNode: ChannelToolNode ): void {
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
     this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot, type, channelToolNode );
     this.afterRelease = () => channelToolNode.focus();
@@ -321,7 +321,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   /**
    * Called when the user presses a membrane protein in the accordion box to create one via keyboard.
    */
-  public createFromKeyboard( type: ChannelType, origin: Slot | ChannelToolNode ): ChannelDragNode {
+  public createFromKeyboard( type: TransportProteinType, origin: Slot | ChannelToolNode ): ChannelDragNode {
 
     // Move over the first available slot
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
@@ -355,7 +355,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.afterRelease = null;
   }
 
-  public getChannelToolNode( type: ChannelType ): ChannelToolNode {
+  public getChannelToolNode( type: TransportProteinType ): ChannelToolNode {
     return this.membraneTransportAccordionBoxGroup!.getChannelToolNode( type );
   }
 }

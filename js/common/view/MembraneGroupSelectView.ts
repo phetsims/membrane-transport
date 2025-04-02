@@ -16,7 +16,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel, { SLOT_COUNT } from '../model/MembraneTransportModel.js';
-import ChannelType from '../model/proteins/ChannelType.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import ChannelDragNode from './ChannelDragNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
@@ -124,8 +124,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // alert the user of the new position
               // Only call this method if there is a channel
               const getContentsString = () => {
-                const channelType = this.membraneTransportModel.getSlotForIndex( newIndex ).channelType;
-                const contentsString = channelType === null ? 'empty' : getBriefProteinName( channelType );
+                const transportProteinType = this.membraneTransportModel.getSlotForIndex( newIndex ).transportProteinType;
+                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType );
                 return contentsString;
               };
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
@@ -165,9 +165,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
-          const channelType = slot.channelType;
+          const transportProteinType = slot.transportProteinType;
           const slotIndex = membraneTransportModel.getSlotIndex( slot );
-          const channelName = channelType ? getBriefProteinName( channelType ) : 'empty';
+          const channelName = transportProteinType ? getBriefProteinName( transportProteinType ) : 'empty';
 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
@@ -193,13 +193,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         else {
           const slot = observationWindow.getChannelNodes()[ groupItem ].slot;
 
-          const channelType = slot.channelType;
-          affirm( channelType, 'The grabbed item should have a channel type' );
+          const transportProteinType = slot.transportProteinType;
+          affirm( transportProteinType, 'The grabbed item should have a channel type' );
 
           // Remove the channel from the model
           slot.clear();
 
-          this.initializeKeyboardDrag( slot, channelType, slot );
+          this.initializeKeyboardDrag( slot, transportProteinType, slot );
 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
@@ -232,16 +232,16 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             const droppedIntoSlot = membraneTransportModel.getSlotForIndex( currentSlotIndex );
             if ( currentSlotIndex < SLOT_COUNT ) {
 
-              const oldContents = droppedIntoSlot.channelType;
+              const oldContents = droppedIntoSlot.transportProteinType;
 
               // Drop the item into the membrane
-              droppedIntoSlot.channelType = grabbedNode.type;
+              droppedIntoSlot.transportProteinType = grabbedNode.type;
 
               const contentsString = getBriefProteinName( grabbedNode.type );
               alerter.alert( `Released ${contentsString} into membrane` );
 
               if ( oldContents && grabbedNode.origin instanceof Slot ) {
-                grabbedNode.origin.channelType = oldContents;
+                grabbedNode.origin.transportProteinType = oldContents;
               }
             }
             else {
@@ -359,7 +359,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // TODO (JG/SR): What if something else moved there in the meantime?
             // TODO (JG/SR): If you are dragging one with the mouse when you tab to the group, the highlight region is wrong.
-            grabbedNode.origin.channelType = grabbedNode.type;
+            grabbedNode.origin.transportProteinType = grabbedNode.type;
 
             // Select the index corresponding to the item just dropped
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
@@ -387,11 +387,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.groupSelectModel = groupSelectModel;
   }
 
-  private initializeKeyboardDrag( slot: Slot, channelType: ChannelType, origin: Slot | ChannelToolNode ): void {
+  private initializeKeyboardDrag( slot: Slot, transportProteinType: TransportProteinType, origin: Slot | ChannelToolNode ): void {
 
     // Create a ChannelDragNode at the location of the selected item, in an offset position.
     this.currentSelection = {
-      grabbedNode: this.view.createFromKeyboard( channelType, origin ),
+      grabbedNode: this.view.createFromKeyboard( transportProteinType, origin ),
       initialSlot: slot,
       currentSlotIndex: this.membraneTransportModel.getSlotIndex( slot )
     };
@@ -400,8 +400,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection.grabbedNode.setModelPosition( new Vector2( slot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
   }
 
-  public forwardFromKeyboard( slot: Slot, channelType: ChannelType, channelToolNode: ChannelToolNode ): void {
-    this.initializeKeyboardDrag( slot, channelType, channelToolNode );
+  public forwardFromKeyboard( slot: Slot, transportProteinType: TransportProteinType, channelToolNode: ChannelToolNode ): void {
+    this.initializeKeyboardDrag( slot, transportProteinType, channelToolNode );
 
     this.keyboardGrab( 'grabbedItem' );
   }

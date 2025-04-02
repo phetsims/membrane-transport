@@ -31,10 +31,10 @@ export default class SodiumGlucoseCotransporter extends TransportProtein {
     if ( leftIon && glucose && rightIon ) {
       this.isOpenProperty.set( true );
 
-      // Move solutes through the open channel
-      leftIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: -5 };
-      glucose.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward' };
-      rightIon.mode = { type: 'movingThroughChannel', slot: slot, channelType: this.type, direction: 'inward', offset: +5 };
+      // Move solutes through the open transport protein
+      leftIon.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
+      glucose.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward' };
+      rightIon.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: +5 };
     }
   }
 
@@ -49,7 +49,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein {
   }
 
   /**
-   * Determine open sites on the channel for sodium ions
+   * Determine open sites on the sodium glucose cotransporter for sodium ions
    */
   public getOpenSodiumSites(): Array<'left' | 'right'> {
 

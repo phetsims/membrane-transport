@@ -21,7 +21,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
 import TransportProtein from './proteins/TransportProtein.js';
-import ChannelType from './proteins/ChannelType.js';
+import TransportProteinType from './proteins/TransportProteinType.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './proteins/SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
@@ -37,7 +37,7 @@ const typicalSpeed = 30;
 const CROSSING_COOLDOWN = 0.5;
 
 // The radius of the circle around the center of a channel where a particle will be captured so
-// we can decide how it should interact with the channel.
+// we can decide how it should interact with the transport protein.
 export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
 
 type RandomWalkMode = {
@@ -113,7 +113,7 @@ type PassiveDiffusionMode = {
 type MovingThroughChannelMode = {
   type: 'movingThroughChannel';
   slot: Slot;
-  channelType: ChannelType;
+  transportProteinType: TransportProteinType;
   direction: 'inward' | 'outward';
   offset?: number;
 };
@@ -328,7 +328,7 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
-      const sodiumPotassiumPump = this.mode.slot.channelProperty.value as SodiumPotassiumPump;
+      const sodiumPotassiumPump = this.mode.slot.transportProteinProperty.value as SodiumPotassiumPump;
 
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
 
@@ -397,17 +397,17 @@ export default class Particle<T extends ParticleType> {
         this.mode = {
           type: 'movingThroughChannel',
           slot: this.mode.slot,
-          channelType: this.mode.slot.channelType!,
+          transportProteinType: this.mode.slot.transportProteinType!,
           direction: outsideOfCell ? 'inward' : 'outward'
         };
       }
     }
     else if ( this.mode.type === 'moveToLigandBindingLocation' ) {
 
-      const channel = this.mode.slot.channelProperty.value as LigandGatedChannel;
-      if ( channel ) {
+      const ligandGatedChannel = this.mode.slot.transportProteinProperty.value as LigandGatedChannel;
+      if ( ligandGatedChannel ) {
         const currentPosition = this.position;
-        const targetPosition = channel.getBindingPosition();
+        const targetPosition = ligandGatedChannel.getBindingPosition();
         const maxStepSize = typicalSpeed * dt;
 
         // Move toward the binding position
@@ -415,21 +415,21 @@ export default class Particle<T extends ParticleType> {
         this.position.y += Math.sign( targetPosition.y - currentPosition.y ) * maxStepSize;
 
         // When close enough, transition to a bound mode.
-        if ( targetPosition.distance( currentPosition ) <= maxStepSize && channel.isAvailableForBinding() ) {
+        if ( targetPosition.distance( currentPosition ) <= maxStepSize && ligandGatedChannel.isAvailableForBinding() ) {
           affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
-          channel.bindLigand( this as Particle<LigandType> );
+          ligandGatedChannel.bindLigand( this as Particle<LigandType> );
         }
       }
     }
     else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) {
 
-      // For both passive diffusion and moving through channel, use similar movement logic.
+      // For both passive diffusion and moving through, use similar movement logic.
       const sign = this.mode.direction === 'inward' ? -1 : 1;
 
       this.position.y += sign * ( typicalSpeed / 4 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
       this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * ( typicalSpeed / 2 ) * dt;
 
-      // If moving through a channel, don't let the position get very far from the center. Allow a little movement
+      // If moving through, don't let the position get very far from the center. Allow a little movement
       // so that it looks like it "struggles" to get through.
       if ( this.mode.type === 'movingThroughChannel' ) {
         const center = this.mode.slot.position + ( this.mode.offset || 0 );
@@ -441,13 +441,13 @@ export default class Particle<T extends ParticleType> {
         const crossedOver = this.mode.direction === 'inward' && this.position.y < 0 ||
                             this.mode.direction === 'outward' && this.position.y > 0;
 
-        // If the particle has moved through the channel, close
+        // If the particle has moved through, close
         if ( crossedOver && Math.abs( this.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
-          const channel = this.mode.slot.channelProperty.value;
+          const transportProtein = this.mode.slot.transportProteinProperty.value;
 
-          // If fully moved through a SodiumGluoseCotransporter, close the channel
-          if ( channel instanceof SodiumGlucoseCotransporter ) {
-            channel.isOpenProperty.set( false );
+          // If fully moved through a SodiumGluoseCotransporter, close
+          if ( transportProtein instanceof SodiumGlucoseCotransporter ) {
+            transportProtein.isOpenProperty.set( false );
           }
         }
       }
@@ -497,16 +497,16 @@ export default class Particle<T extends ParticleType> {
     const thisBounds = this.getBounds();
     const outsideOfCell = this.position.y > 0;
 
-    // Check each channel to for interaction
+    // Check each transport protein to for interaction
     for ( let i = 0; i < model.slots.length; i++ ) {
       const slot = model.slots[ i ];
-      const channel = slot.channelProperty.value;
+      const transportProtein = slot.transportProteinProperty.value;
 
-      // If the particle is within a certain radial distance from the center of the channel, it can interact with the channel
+      // If the particle is within a certain radial distance from the center of the transport protein, it can interact
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
-      if ( channel && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
-        const interactedWithChannel = this.handleChannelInteractionDuringRandomWalk( slot, channel, model, outsideOfCell );
+      if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
+        const interactedWithChannel = this.handleChannelInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );
         if ( interactedWithChannel ) {
           return;
         }
@@ -582,21 +582,21 @@ export default class Particle<T extends ParticleType> {
   /**
    * During randomWalk, check for interactions with channels.
    */
-  private handleChannelInteractionDuringRandomWalk( slot: Slot, channel: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+  private handleChannelInteractionDuringRandomWalk( slot: Slot, transportProtein: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
     // Check for ligand interaction with ligand-gated channels
     if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
 
       // Match ligandA with sodium channels and ligandB with potassium channels
-      const channelType = this.type === 'ligandA' ?
+      const transportProteinType = this.type === 'ligandA' ?
                           'sodiumIonLigandGatedChannel' :
                           'potassiumIonLigandGatedChannel';
 
       // Check if this slot has the correct type of ligand-gated channel
-      if ( slot.channelType === channelType ) {
+      if ( slot.transportProteinType === transportProteinType ) {
 
         // Check that it's actually a LigandGatedChannel and is available for binding, and no other ligand is headed that way
-        if ( channel instanceof LigandGatedChannel && channel.isAvailableForBinding() ) {
+        if ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForBinding() ) {
 
           // check that no other ligand is already moving to that slot.
           // TODO (JG/SR): This isn't working for unknown reasons.
@@ -612,16 +612,16 @@ export default class Particle<T extends ParticleType> {
     }
 
     // Check for sodium and potassium ions interacting with leakage channels.
-    const sodiumGates: ChannelType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
-    const potassiumGates: ChannelType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
+    const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
+    const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-    if ( channel.isOpenProperty.value && model.isChannelSoluteFree( slot ) ) {
-      if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.channelType! ) ) {
+    if ( transportProtein.isOpenProperty.value && model.isChannelSoluteFree( slot ) ) {
+      if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) {
         this.mode = { type: 'moveToCenterOfChannel', slot: slot };
         return true;
       }
 
-      if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.channelType! ) ) {
+      if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) {
         this.mode = { type: 'moveToCenterOfChannel', slot: slot };
         return true;
       }
@@ -629,21 +629,21 @@ export default class Particle<T extends ParticleType> {
 
     if (
       ( this.type === 'sodiumIon' || this.type === 'glucose' ) &&
-      slot.channelType === 'sodiumGlucoseCotransporter' &&
-      channel instanceof SodiumGlucoseCotransporter &&
+      slot.transportProteinType === 'sodiumGlucoseCotransporter' &&
+      transportProtein instanceof SodiumGlucoseCotransporter &&
       model.outsideSoluteCountProperties.sodiumIon.value > model.insideSoluteCountProperties.sodiumIon.value &&
 
       // Only approach from extracellular side
       this.position.y > 0 &&
 
       // Don't approach if other solutes are already passing through
-      !channel.isOpenProperty.value
+      !transportProtein.isOpenProperty.value
     ) {
 
       if ( this.type === 'sodiumIon' ) {
 
         // Sodium ions can use left or right site
-        const availableSites = channel.getOpenSodiumSites();
+        const availableSites = transportProtein.getOpenSodiumSites();
 
         if ( availableSites.length > 0 ) {
           const site = dotRandom.sample( availableSites );
@@ -651,7 +651,7 @@ export default class Particle<T extends ParticleType> {
           return true;
         }
       }
-      else if ( this.type === 'glucose' && channel.isGlucoseSiteOpen() ) {
+      else if ( this.type === 'glucose' && transportProtein.isGlucoseSiteOpen() ) {
 
         // Glucose can only use center site
         this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: 'center' };
@@ -661,14 +661,14 @@ export default class Particle<T extends ParticleType> {
 
     if (
       this.type === 'sodiumIon' &&
-      slot.channelType === 'sodiumPotassiumPump' &&
-      channel instanceof SodiumPotassiumPump &&
-      channel.conformation === 'awaiting-sodium' &&
+      slot.transportProteinType === 'sodiumPotassiumPump' &&
+      transportProtein instanceof SodiumPotassiumPump &&
+      transportProtein.conformation === 'awaiting-sodium' &&
       this.position.y < 0 && // Only approach from intracellular side
-      !channel.hasSolutesMovingThroughChannel() // make sure no potassiums still leaving
+      !transportProtein.hasSolutesMovingThroughChannel() // make sure no potassiums still leaving
     ) {
 
-      const openSodiumSites = channel.getOpenSodiumSites();
+      const openSodiumSites = transportProtein.getOpenSodiumSites();
 
       if ( openSodiumSites.length > 0 ) {
         const site = dotRandom.sample( openSodiumSites );
@@ -679,11 +679,11 @@ export default class Particle<T extends ParticleType> {
 
     if (
       this.type === 'atp' &&
-      slot.channelType === 'sodiumPotassiumPump' &&
-      channel instanceof SodiumPotassiumPump &&
+      slot.transportProteinType === 'sodiumPotassiumPump' &&
+      transportProtein instanceof SodiumPotassiumPump &&
       this.position.y < 0 && // Only approach from intracellular side
-      channel.conformation === 'awaiting-phosphate' &&
-      !channel.isATPEnRoute()
+      transportProtein.conformation === 'awaiting-phosphate' &&
+      !transportProtein.isATPEnRoute()
     ) {
 
       this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'phosphate' };
@@ -692,14 +692,14 @@ export default class Particle<T extends ParticleType> {
 
     if (
       this.type === 'potassiumIon' &&
-      slot.channelType === 'sodiumPotassiumPump' &&
-      channel instanceof SodiumPotassiumPump &&
-      channel.conformation === 'awaiting-potassium' &&
+      slot.transportProteinType === 'sodiumPotassiumPump' &&
+      transportProtein instanceof SodiumPotassiumPump &&
+      transportProtein.conformation === 'awaiting-potassium' &&
       this.position.y > 0 && // Only approach from extracellular side
-      !channel.hasSolutesMovingThroughChannel() // make sure no sodiums still leaving
+      !transportProtein.hasSolutesMovingThroughChannel() // make sure no sodiums still leaving
     ) {
 
-      const openPotassiumSites = channel.getOpenPotassiumSites();
+      const openPotassiumSites = transportProtein.getOpenPotassiumSites();
 
       if ( openPotassiumSites.length > 0 ) {
         const site = dotRandom.sample( openPotassiumSites );

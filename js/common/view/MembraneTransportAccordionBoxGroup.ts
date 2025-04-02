@@ -15,15 +15,15 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import ChannelType from '../model/proteins/ChannelType.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import LigandControl from './LigandControl.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 // Type definition for channel configuration
-type ChannelConfig = {
-  channelType: ChannelType;
+type TransportProteinConfig = {
+  transportProteinType: TransportProteinType;
   labelProperty: TReadOnlyProperty<string>;
   accessibleNameProperty: TReadOnlyProperty<string>;
 };
@@ -33,7 +33,7 @@ type AccordionBoxConfig = {
   titleProperty: TReadOnlyProperty<string>;
   tandemName: string;
   expanded: boolean;
-  channels: ChannelConfig[];
+  transportProteins: TransportProteinConfig[];
 };
 
 /**
@@ -47,7 +47,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
   public readonly resetEmitter = new Emitter();
 
   // So we can return ChannelDragNode instances to their corresponding ChannelToolNode icons
-  private readonly channelToolNodes: Map<ChannelType, ChannelToolNode>;
+  private readonly channelToolNodes: Map<TransportProteinType, ChannelToolNode>;
 
   public constructor( model: MembraneTransportModel, tandem: Tandem, view: MembraneTransportScreenView ) {
 
@@ -58,7 +58,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     // put all titles in an align box so they take up the same amount of space
     const titleAlignGroup = new AlignGroup();
 
-    const channelToolNodes = new Map<ChannelType, ChannelToolNode>();
+    const channelToolNodes = new Map<TransportProteinType, ChannelToolNode>();
 
     /**
      * Creates an accordion box based on the provided configuration
@@ -66,14 +66,14 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     const createPanel = ( config: AccordionBoxConfig, ...additionalControls: Node[] ): Panel => {
       const content = new HBox( {
         spacing: 10,
-        children: config.channels.map( channel => {
+        children: config.transportProteins.map( transportProtein => {
             const channelToolNode = new ChannelToolNode(
-              channel.channelType,
-              channel.labelProperty,
-              channel.accessibleNameProperty,
+              transportProtein.transportProteinType,
+              transportProtein.labelProperty,
+              transportProtein.accessibleNameProperty,
               view
             );
-            channelToolNodes.set( channel.channelType, channelToolNode );
+            channelToolNodes.set( transportProtein.transportProteinType, channelToolNode );
             return channelToolNode;
           }
         )
@@ -101,14 +101,14 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
         titleProperty: MembraneTransportStrings.leakageChannelsStringProperty,
         tandemName: 'leakageChannelsAccordionBox',
         expanded: true,
-        channels: [
+        transportProteins: [
           {
-            channelType: 'sodiumIonLeakageChannel',
+            transportProteinType: 'sodiumIonLeakageChannel',
             labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty
           },
           {
-            channelType: 'potassiumIonLeakageChannel',
+            transportProteinType: 'potassiumIonLeakageChannel',
             labelProperty: new StringProperty( 'K+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty
           }
@@ -120,14 +120,14 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
         titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
         tandemName: 'voltageGatedChannelsAccordionBox',
           expanded: true,
-        channels: [
+          transportProteins: [
           {
-            channelType: 'sodiumIonVoltageGatedChannel',
+            transportProteinType: 'sodiumIonVoltageGatedChannel',
             labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
           },
           {
-            channelType: 'potassiumIonVoltageGatedChannel',
+            transportProteinType: 'potassiumIonVoltageGatedChannel',
             labelProperty: new StringProperty( 'K+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
           }
@@ -141,14 +141,14 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
         titleProperty: MembraneTransportStrings.ligandGatedChannelsStringProperty,
         tandemName: 'ligandGatedChannelsAccordionBox',
         expanded: true,
-        channels: [
+        transportProteins: [
           {
-            channelType: 'sodiumIonLigandGatedChannel',
+            transportProteinType: 'sodiumIonLigandGatedChannel',
             labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty
           },
           {
-            channelType: 'potassiumIonLigandGatedChannel',
+            transportProteinType: 'potassiumIonLigandGatedChannel',
             labelProperty: new StringProperty( 'K+' ), // TODO: i18n
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty
           }
@@ -168,14 +168,14 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
         titleProperty: MembraneTransportStrings.activeTransportersStringProperty,
         tandemName: 'activeTransportersAccordionBox',
         expanded: true,
-        channels: [
+        transportProteins: [
           {
-            channelType: 'sodiumPotassiumPump',
+            transportProteinType: 'sodiumPotassiumPump',
             labelProperty: MembraneTransportStrings.NaPlusKPlusPumpStringProperty,
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
           },
           {
-            channelType: 'sodiumGlucoseCotransporter',
+            transportProteinType: 'sodiumGlucoseCotransporter',
             labelProperty: MembraneTransportStrings.sodiumGlucoseCotransporterStringProperty,
             accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty
           }
@@ -215,8 +215,8 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     this.resetEmitter.emit();
   }
 
-  public getChannelToolNode( channelType: ChannelType ): ChannelToolNode {
-    return this.channelToolNodes.get( channelType )!;
+  public getChannelToolNode( transportProteinType: TransportProteinType ): ChannelToolNode {
+    return this.channelToolNodes.get( transportProteinType )!;
   }
 }
 

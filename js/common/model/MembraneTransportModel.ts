@@ -37,7 +37,7 @@ import MembraneTransportFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSol
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
 import TransportProtein from './proteins/TransportProtein.js';
-import ChannelType from './proteins/ChannelType.js';
+import TransportProteinType from './proteins/TransportProteinType.js';
 import getTransportProtein from './proteins/getTransportProtein.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
@@ -75,7 +75,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
   public readonly insideSoluteTypesCountProperty = new NumberProperty( 0 );
   public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
-  public readonly channelCountProperty = new NumberProperty( 0 );
+  public readonly transportProteinCountProperty = new NumberProperty( 0 );
 
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
@@ -194,7 +194,7 @@ export default class MembraneTransportModel extends PhetioObject {
       } );
     } );
 
-    this.slots.forEach( slot => slot.channelProperty.link( () => this.updateChannelCounts() ) );
+    this.slots.forEach( slot => slot.transportProteinProperty.link( () => this.updateTransportProteinCounts() ) );
   }
 
   /**
@@ -279,8 +279,8 @@ export default class MembraneTransportModel extends PhetioObject {
       this.solutes.forEach( solute => solute.step( dt, this ) );
       this.ligands.forEach( ligand => ligand.step( dt, this ) );
       this.slots.forEach( slot => {
-        if ( slot.channelProperty.value ) {
-          slot.channelProperty.value.step( dt );
+        if ( slot.transportProteinProperty.value ) {
+          slot.transportProteinProperty.value.step( dt );
         }
       } );
 
@@ -363,8 +363,8 @@ export default class MembraneTransportModel extends PhetioObject {
   /**
    * Update the channel count based on the number of filled slots.
    */
-  private updateChannelCounts(): void {
-    this.channelCountProperty.value = this.slots.filter( slot => slot.isFilled() ).length;
+  private updateTransportProteinCounts(): void {
+    this.transportProteinCountProperty.value = this.slots.filter( slot => slot.isFilled() ).length;
   }
 
   /**
@@ -413,8 +413,8 @@ export default class MembraneTransportModel extends PhetioObject {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
-  public getSlotForChannel( channel: TransportProtein ): Slot | undefined {
-    return this.slots.find( slot => slot.channelProperty.value === channel );
+  public getSlotForChannel( transportProtein: TransportProtein ): Slot | undefined {
+    return this.slots.find( slot => slot.transportProteinProperty.value === transportProtein );
   }
 
   /**
@@ -480,7 +480,7 @@ export default class MembraneTransportModel extends PhetioObject {
 }
 
 type ChannelStateObject = {
-  type: ChannelType;
+  type: TransportProteinType;
   position: number;
   model: string;
 };
@@ -499,11 +499,11 @@ export const ChannelIO = new IOType( 'ChannelIO', {
     // Necessary in order to get information from the model to the TransportProtein, such as the membrane potential
     model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO )
   },
-  toStateObject: ( channel: TransportProtein ): ChannelStateObject => {
+  toStateObject: ( transportProtein: TransportProtein ): ChannelStateObject => {
     return {
-      type: channel.type,
-      position: channel.position,
-      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( channel.model )
+      type: transportProtein.type,
+      position: transportProtein.position,
+      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model )
     };
   },
   fromStateObject: ( stateObject: ChannelStateObject ) => {

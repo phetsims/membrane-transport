@@ -6,7 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type ChannelType =
+type TransportProteinType =
   'sodiumIonLeakageChannel' |
   'potassiumIonLeakageChannel' |
 
@@ -19,4 +19,4 @@ type ChannelType =
   'sodiumPotassiumPump' |
   'sodiumGlucoseCotransporter';
 
-export default ChannelType;
+export default TransportProteinType;

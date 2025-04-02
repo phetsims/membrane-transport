@@ -13,7 +13,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneTransport from '../../membraneTransport.js';
-import ChannelType from '../model/proteins/ChannelType.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Slot from '../model/Slot.js';
 import getChannelNode from './proteins/getChannelNode.js';
@@ -41,7 +41,7 @@ export default class ChannelDragNode extends Node {
     screenViewModelViewTransform: ModelViewTransform2,
     modelPosition: Vector2,
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
-    public readonly type: ChannelType,
+    public readonly type: TransportProteinType,
     // Where this came from, so that during a swap, the other one knows where to go. Or when pressing 'escape', it knows where to return
     public readonly origin: Slot | ChannelToolNode
   ) {
@@ -114,13 +114,13 @@ export default class ChannelDragNode extends Node {
 
         if ( closest ) {
 
-          const otherContents = closest.slot.channelType;
+          const otherContents = closest.slot.transportProteinType;
 
           // drop into the selected target
-          closest.slot.channelType = this.type;
+          closest.slot.transportProteinType = this.type;
 
           if ( otherContents && this.origin instanceof Slot ) {
-            this.origin.channelType = otherContents;
+            this.origin.transportProteinType = otherContents;
           }
 
           // Reuse

@@ -9,7 +9,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import ChannelType from '../model/proteins/ChannelType.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import getChannelNode from './proteins/getChannelNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
@@ -32,7 +32,7 @@ export default class ChannelToolNode extends VBox {
   // So we can return ChannelDragNodes to its exact location
   public readonly channelNode: Node;
 
-  public constructor( type: ChannelType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
+  public constructor( type: TransportProteinType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const channelNode = getChannelNode( type, null );

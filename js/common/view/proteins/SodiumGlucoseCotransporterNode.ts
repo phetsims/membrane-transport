@@ -13,7 +13,7 @@ import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotran
 import ProteinNode from './ProteinNode.js';
 
 export default class SodiumGlucoseCotransporterNode extends ProteinNode {
-  public constructor( channel: SodiumGlucoseCotransporter | null ) {
+  public constructor( sodiumGlucoseCotransporter: SodiumGlucoseCotransporter | null ) {
 
     super();
 
@@ -25,8 +25,8 @@ export default class SodiumGlucoseCotransporterNode extends ProteinNode {
     } );
     this.addChild( text );
 
-    if ( channel ) {
-      channel.isOpenProperty.link( open => {
+    if ( sodiumGlucoseCotransporter ) {
+      sodiumGlucoseCotransporter.isOpenProperty.link( open => {
         text.string = open ? 'open' : 'closed';
       } );
     }

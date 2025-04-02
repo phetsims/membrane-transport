@@ -21,7 +21,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     const stringProperties = [
       new PatternMessageProperty( MembraneTransportMessages.currentDetailsOutsideSoluteCountMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
       new PatternMessageProperty( MembraneTransportMessages.currentDetailsInsideSoluteCountMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsChannelCountMessageProperty, { channelCount: model.channelCountProperty } )
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsChannelCountMessageProperty, { channelCount: model.transportProteinCountProperty } )
     ];
 
     const currentDetailsNode = new Node( {

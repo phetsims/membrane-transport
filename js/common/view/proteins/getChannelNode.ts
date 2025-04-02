@@ -2,7 +2,7 @@
 
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import TransportProtein from '../../model/proteins/TransportProtein.js';
-import ChannelType from '../../model/proteins/ChannelType.js';
+import TransportProteinType from '../../model/proteins/TransportProteinType.js';
 import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
@@ -15,11 +15,11 @@ import SodiumPotassiumPumpNode from './SodiumPotassiumPumpNode.js';
 import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
 
 /**
- * Returns the Node for the given ChannelType
+ * Returns the Node for the given TransportProteinType
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default function( type: ChannelType, channel: TransportProtein | null ): ProteinNode {
+export default function( type: TransportProteinType, transportProtein: TransportProtein | null ): ProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );
   }
@@ -27,28 +27,28 @@ export default function( type: ChannelType, channel: TransportProtein | null ): 
     return new LeakageChannelNode( type );
   }
   else if ( type === 'sodiumIonVoltageGatedChannel' ) {
-    affirm( channel === null || channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
-    return new VoltageGatedChannelNode( type, channel );
+    affirm( transportProtein === null || transportProtein instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
+    return new VoltageGatedChannelNode( type, transportProtein );
   }
   else if ( type === 'potassiumIonVoltageGatedChannel' ) {
-    affirm( channel === null || channel instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
-    return new VoltageGatedChannelNode( type, channel );
+    affirm( transportProtein === null || transportProtein instanceof VoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
+    return new VoltageGatedChannelNode( type, transportProtein );
   }
   else if ( type === 'sodiumIonLigandGatedChannel' ) {
-    affirm( channel === null || channel instanceof LigandGatedChannel, 'model for sodiumIonLigandGatedChannel must be LigandGatedChannel' );
-    return new LigandGatedChannelNode( type, channel );
+    affirm( transportProtein === null || transportProtein instanceof LigandGatedChannel, 'model for sodiumIonLigandGatedChannel must be LigandGatedChannel' );
+    return new LigandGatedChannelNode( type, transportProtein );
   }
   else if ( type === 'potassiumIonLigandGatedChannel' ) {
-    affirm( channel === null || channel instanceof LigandGatedChannel, 'model for potassiumIonLigandGatedChannel must be LigandGatedChannel' );
-    return new LigandGatedChannelNode( type, channel );
+    affirm( transportProtein === null || transportProtein instanceof LigandGatedChannel, 'model for potassiumIonLigandGatedChannel must be LigandGatedChannel' );
+    return new LigandGatedChannelNode( type, transportProtein );
   }
   else if ( type === 'sodiumPotassiumPump' ) {
-    affirm( channel === null || channel instanceof SodiumPotassiumPump, 'model must be a SodiumPotassiumPump' );
-    return new SodiumPotassiumPumpNode( channel );
+    affirm( transportProtein === null || transportProtein instanceof SodiumPotassiumPump, 'model must be a SodiumPotassiumPump' );
+    return new SodiumPotassiumPumpNode( transportProtein );
   }
   else if ( type === 'sodiumGlucoseCotransporter' ) {
-    affirm( channel === null || channel instanceof SodiumGlucoseCotransporter, 'model for sodiumGlucoseCotransporter must be SodiumGlucoseCotransporter' );
-    return new SodiumGlucoseCotransporterNode( channel );
+    affirm( transportProtein === null || transportProtein instanceof SodiumGlucoseCotransporter, 'model for sodiumGlucoseCotransporter must be SodiumGlucoseCotransporter' );
+    return new SodiumGlucoseCotransporterNode( transportProtein );
   }
   else {
     // final fallback -> throw

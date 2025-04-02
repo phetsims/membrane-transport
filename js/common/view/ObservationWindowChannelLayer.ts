@@ -35,21 +35,21 @@ export default class ObservationWindowChannelLayer extends Node {
     super();
 
     model.slots.forEach( slot => {
-      slot.channelProperty.link( ( channel, oldChannel ) => {
+      slot.transportProteinProperty.link( ( transportProtein, oldTransportProtein ) => {
 
-        if ( oldChannel ) {
-          const node = this.record.get( oldChannel );
+        if ( oldTransportProtein ) {
+          const node = this.record.get( oldTransportProtein );
           if ( node ) {
             this.removeChild( node.node );
-            this.record.delete( oldChannel );
+            this.record.delete( oldTransportProtein );
           }
         }
 
-        const type = slot.channelType;
+        const type = slot.transportProteinType;
         if ( type !== null ) {
 
           // NOTE: There is similar code in ChannelToolNode (which drags out of the panel).
-          const channelNode = getChannelNode( type, slot.channelProperty.value );
+          const channelNode = getChannelNode( type, slot.transportProteinProperty.value );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
             slot.clear();
             view.createFromMouseDrag( event, type, slot );
@@ -62,7 +62,7 @@ export default class ObservationWindowChannelLayer extends Node {
           } );
 
           this.addChild( channelNode );
-          this.record.set( slot.channelProperty.value!, { slot: slot, node: channelNode } );
+          this.record.set( slot.transportProteinProperty.value!, { slot: slot, node: channelNode } );
         }
       } );
     } );

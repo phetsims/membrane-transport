@@ -6,7 +6,7 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Slot from '../Slot.js';
-import ChannelType from './ChannelType.js';
+import TransportProteinType from './TransportProteinType.js';
 
 /**
  * TransportProtein keeps track of stateful model information for a channel (protein) that is actively in a slot.
@@ -30,12 +30,12 @@ export default abstract class TransportProtein {
    */
   public constructor(
     public readonly model: MembraneTransportModel,
-    public readonly type: ChannelType,
+    public readonly type: TransportProteinType,
     public readonly position: number ) {
     this.bounds = new Bounds2(
-      position - MembraneTransportConstants.CHANNEL_WIDTH / 2,
+      position - MembraneTransportConstants.TRANSPORT_PROTEIN_WIDTH / 2,
       MembraneTransportConstants.MEMBRANE_BOUNDS.minY,
-      position + MembraneTransportConstants.CHANNEL_WIDTH / 2,
+      position + MembraneTransportConstants.TRANSPORT_PROTEIN_WIDTH / 2,
       MembraneTransportConstants.MEMBRANE_BOUNDS.maxY
     );
   }

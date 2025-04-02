@@ -1,15 +1,15 @@
 // Copyright 2025, University of Colorado Boulder
 
-import ChannelType from '../../model/proteins/ChannelType.js';
+import TransportProteinType from '../../model/proteins/TransportProteinType.js';
 
 /**
- * Get the brief name for a ChannelType
+ * Get the brief name for a TransportProteinType
  * TODO (JG): This may move into fluent during i18n.
  * TODO (JG): i18n once design is finalized.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default function( type: ChannelType ): string {
+export default function( type: TransportProteinType ): string {
   return type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
          type === 'potassiumIonLeakageChannel' ? 'Potassium Ion, Leakage' :
 

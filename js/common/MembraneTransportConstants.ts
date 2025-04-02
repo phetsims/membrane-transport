@@ -56,7 +56,7 @@ export default class MembraneTransportConstants {
 
   public static readonly LIGAND_COUNT = 10; // Per ligand type
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
-  public static readonly CHANNEL_WIDTH = 10; // Width of the channel in model coordinates
+  public static readonly TRANSPORT_PROTEIN_WIDTH = 10; // Width in model coordinates
 
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;

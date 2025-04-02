@@ -21,7 +21,7 @@ export default class MembraneTransportModelTester {
   public static testLigandChannel( model: MembraneTransportModel, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
 
     // Put a sodium in the first slot
-    model.slots[ 0 ].channelType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
+    model.slots[ 0 ].transportProteinType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
 
     model.areLigandsAddedProperty.value = true;
 

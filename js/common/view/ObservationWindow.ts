@@ -68,15 +68,15 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     // TODO: This is not production worthy, needs refinement, see the design doc. Add i18n. etc.
     const accessibleParagraphProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
 
-    model.channelCountProperty.link( channelCount => {
+    model.transportProteinCountProperty.link( channelCount => {
 
       const phrases = model.slots.map( ( slot, index ) => {
 
         if ( slot.isFilled() ) {
 
-          const channel = slot.channelProperty.value!;
+          const transportProtein = slot.transportProteinProperty.value!;
 
-          return `The ${index + 1} slot contains a ${getBriefProteinName( channel.type )} transport protein.`;
+          return `The ${index + 1} slot contains a ${getBriefProteinName( transportProtein.type )} transport protein.`;
         }
         else {
           return '';// TODO: Probably lots of whitespaces
@@ -91,7 +91,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     // create a StringProperty that just says zoomed in membrane and the number of proteins or none
     const accessibleNameProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
-    model.channelCountProperty.link( channelCount => {
+    model.transportProteinCountProperty.link( channelCount => {
       accessibleNameProperty.set( channelCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : `Zoomed-in Membrane. ${channelCount} channels in there` );
     } );
 
