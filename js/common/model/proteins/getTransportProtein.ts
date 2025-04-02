@@ -28,5 +28,5 @@ export default function( model: MembraneTransportModel, type: TransportProteinTy
          type === 'sodiumPotassiumPump' ? new SodiumPotassiumPump( model, type, position ) :
          type === 'sodiumGlucoseCotransporter' ? new SodiumGlucoseCotransporter( model, type, position ) :
 
-         ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+         ( () => { throw new Error( `Unrecognized transport protein type: ${type}` ); } )();
 }

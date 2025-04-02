@@ -23,11 +23,11 @@ const richTextOptions: RichTextOptions = {
 };
 
 /**
- * In the "Membrane Transport" accordion box, show a tool icon that can be dragged to create a new channel.
+ * In the "Membrane Transport" accordion box, show a tool icon that can be dragged to create a new transport protein.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class ChannelToolNode extends VBox {
+export default class TransportProteinToolNode extends VBox {
 
   // So we can return ChannelDragNodes to its exact location
   public readonly channelNode: Node;
@@ -56,4 +56,4 @@ export default class ChannelToolNode extends VBox {
   }
 }
 
-membraneTransport.register( 'ChannelToolNode', ChannelToolNode );
+membraneTransport.register( 'TransportProteinToolNode', TransportProteinToolNode );

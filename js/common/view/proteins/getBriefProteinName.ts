@@ -22,5 +22,5 @@ export default function( type: TransportProteinType ): string {
          type === 'sodiumPotassiumPump' ? 'Sodium Potassium Pump' :
          type === 'sodiumGlucoseCotransporter' ? 'Sodium-Glucose Cotransporter' :
            // final fallback -> throw
-         ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+         ( () => { throw new Error( `Unrecognized transport protein type: ${type}` ); } )();
 }

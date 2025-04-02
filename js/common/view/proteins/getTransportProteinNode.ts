@@ -52,6 +52,6 @@ export default function( type: TransportProteinType, transportProtein: Transport
   }
   else {
     // final fallback -> throw
-    throw new Error( `Unrecognized channel type: ${type}` );
+    throw new Error( `Unrecognized transport protein type: ${type}` );
   }
 }

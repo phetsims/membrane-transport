@@ -9,7 +9,7 @@ import Slot from '../Slot.js';
 import TransportProteinType from './TransportProteinType.js';
 
 /**
- * TransportProtein keeps track of stateful model information for a channel (protein) that is actively in a slot.
+ * TransportProtein keeps track of stateful model information for a transport protein that is actively in a slot.
  * NOTE: this does not extend PhetioObject only the critical part (the type) is needed for serialization.
  * This allows us to avoid dynamic elements in the PhET-iO tree and in the state.
  *
@@ -18,15 +18,15 @@ import TransportProteinType from './TransportProteinType.js';
  */
 export default abstract class TransportProtein {
 
-  // Bounds of the channel in model coordinates.
+  // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;
 
   public abstract readonly isOpenProperty: TReadOnlyProperty<boolean>;
 
   /**
    * @param model - reference to the containing model, so we can access information like the membrane voltage
-   * @param type - the type of channel
-   * @param position - the horizontal position of the channel in the membrane
+   * @param type - the type of transport protein
+   * @param position - the horizontal position of the transport protein in the membrane
    */
   public constructor(
     public readonly model: MembraneTransportModel,

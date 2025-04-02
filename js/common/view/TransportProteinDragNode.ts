@@ -17,12 +17,12 @@ import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Slot from '../model/Slot.js';
 import getTransportProteinNode from './proteins/getTransportProteinNode.js';
-import ChannelToolNode from './ChannelToolNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 
 /**
- * Display the membrane channel for a node, which can be dragged out of the toolbox and dropped into specific targets
+ * Display the membrane transport protein for a node, which can be dragged out of the toolbox and dropped into specific targets
  * in the membrane.
  *
  * This Node is transient and only displayed while dragging. Therefore, it does not need to be phet-io instrumented.
@@ -30,7 +30,7 @@ import ObservationWindow from './ObservationWindow.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export default class ChannelDragNode extends Node {
+export default class TransportProteinDragNode extends Node {
   private readonly dragListener: DragListener;
   private readonly positionProperty: Vector2Property;
 
@@ -43,7 +43,7 @@ export default class ChannelDragNode extends Node {
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     public readonly type: TransportProteinType,
     // Where this came from, so that during a swap, the other one knows where to go. Or when pressing 'escape', it knows where to return
-    public readonly origin: Slot | ChannelToolNode
+    public readonly origin: Slot | TransportProteinToolNode
   ) {
     super( {
       tagName: 'p',
@@ -60,7 +60,7 @@ export default class ChannelDragNode extends Node {
     const positionProperty = this.positionProperty;
 
     // Convert view bounds to model bounds for dragging constraints
-    // If the view bounds change while dragging, it's OK to not keep the node in bounds, because the ChannelDragNode is
+    // If the view bounds change while dragging, it's OK to not keep the node in bounds, because the TransportProteinDragNode is
     // transient and will return to the toolbox when it is dropped anyways.
     const modelBoundsProperty = new DerivedProperty( [ visibleBoundsProperty ], visibleBounds => {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
@@ -90,7 +90,7 @@ export default class ChannelDragNode extends Node {
       } );
     };
 
-    // Mouse drag listener while dragging a channel with mouse/touch.
+    // Mouse drag listener while dragging a transport protein with mouse/touch.
     // Do not use RichDragListener or SoundRichDragListener because the keyboard interaction is mediated by the MembraneGroupSelectView
     this.dragListener = new DragListener( {
       useParentOffset: true,
@@ -168,4 +168,4 @@ export default class ChannelDragNode extends Node {
   }
 }
 
-membraneTransport.register( 'ChannelDragNode', ChannelDragNode );
+membraneTransport.register( 'TransportProteinDragNode', TransportProteinDragNode );

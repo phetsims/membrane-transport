@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Scenery Node for a SodiumPotassiumPump, used to represent the channel in the membrane.
+ * Scenery Node for a SodiumPotassiumPump, used to represent the transport protein in the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

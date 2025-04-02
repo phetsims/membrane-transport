@@ -16,12 +16,12 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import ChannelToolNode from './ChannelToolNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 import LigandControl from './LigandControl.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
-// Type definition for channel configuration
+// Type definition for transport protein configuration
 type TransportProteinConfig = {
   transportProteinType: TransportProteinType;
   labelProperty: TReadOnlyProperty<string>;
@@ -46,8 +46,8 @@ type AccordionBoxConfig = {
 export default class MembraneTransportAccordionBoxGroup extends Panel {
   public readonly resetEmitter = new Emitter();
 
-  // So we can return ChannelDragNode instances to their corresponding ChannelToolNode icons
-  private readonly channelToolNodes: Map<TransportProteinType, ChannelToolNode>;
+  // So we can return TransportProteinDragNode instances to their corresponding TransportProteinToolNode icons
+  private readonly channelToolNodes: Map<TransportProteinType, TransportProteinToolNode>;
 
   public constructor( model: MembraneTransportModel, tandem: Tandem, view: MembraneTransportScreenView ) {
 
@@ -58,7 +58,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     // put all titles in an align box so they take up the same amount of space
     const titleAlignGroup = new AlignGroup();
 
-    const channelToolNodes = new Map<TransportProteinType, ChannelToolNode>();
+    const channelToolNodes = new Map<TransportProteinType, TransportProteinToolNode>();
 
     /**
      * Creates an accordion box based on the provided configuration
@@ -67,7 +67,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
       const content = new HBox( {
         spacing: 10,
         children: config.transportProteins.map( transportProtein => {
-            const channelToolNode = new ChannelToolNode(
+            const channelToolNode = new TransportProteinToolNode(
               transportProtein.transportProteinType,
               transportProtein.labelProperty,
               transportProtein.accessibleNameProperty,
@@ -215,7 +215,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     this.resetEmitter.emit();
   }
 
-  public getChannelToolNode( transportProteinType: TransportProteinType ): ChannelToolNode {
+  public getChannelToolNode( transportProteinType: TransportProteinType ): TransportProteinToolNode {
     return this.channelToolNodes.get( transportProteinType )!;
   }
 }

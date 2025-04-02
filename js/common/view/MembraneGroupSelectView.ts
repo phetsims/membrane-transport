@@ -18,8 +18,8 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel, { SLOT_COUNT } from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import ChannelDragNode from './ChannelDragNode.js';
-import ChannelToolNode from './ChannelToolNode.js';
+import TransportProteinDragNode from './TransportProteinDragNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
@@ -28,7 +28,7 @@ import getBriefProteinName from './proteins/getBriefProteinName.js';
 type ItemModel = number | 'grabbedItem';
 
 type Selection = {
-  grabbedNode: ChannelDragNode;
+  grabbedNode: TransportProteinDragNode;
   initialSlot: Slot;
   currentSlotIndex: number;
 };
@@ -79,7 +79,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
     // Get the delta to change the value given what key was pressed.
     const getDeltaForKey = ( key: string ): number => {
-      const fullRange = SLOT_COUNT + 1; // the extra space is by the toolbox, to put the channel away
+      const fullRange = SLOT_COUNT + 1; // the extra space is by the toolbox, to put the transport protein away
       return key === 'home' ? -fullRange :
              key === 'end' ? fullRange :
              [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key ) ? -1 :
@@ -122,7 +122,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               this.currentSelection!.currentSlotIndex = newIndex;
 
               // alert the user of the new position
-              // Only call this method if there is a channel
+              // Only call this method if there is a transport protein
               const getContentsString = () => {
                 const transportProteinType = this.membraneTransportModel.getSlotForIndex( newIndex ).transportProteinType;
                 const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType );
@@ -194,9 +194,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           const slot = observationWindow.getTransportProteinNodes()[ groupItem ].slot;
 
           const transportProteinType = slot.transportProteinType;
-          affirm( transportProteinType, 'The grabbed item should have a channel type' );
+          affirm( transportProteinType, 'The grabbed item should have a transport protein type' );
 
-          // Remove the channel from the model
+          // Remove the transport protein from the model
           slot.clear();
 
           this.initializeKeyboardDrag( slot, transportProteinType, slot );
@@ -387,9 +387,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.groupSelectModel = groupSelectModel;
   }
 
-  private initializeKeyboardDrag( slot: Slot, transportProteinType: TransportProteinType, origin: Slot | ChannelToolNode ): void {
+  private initializeKeyboardDrag( slot: Slot, transportProteinType: TransportProteinType, origin: Slot | TransportProteinToolNode ): void {
 
-    // Create a ChannelDragNode at the location of the selected item, in an offset position.
+    // Create a TransportProteinDragNode at the location of the selected item, in an offset position.
     this.currentSelection = {
       grabbedNode: this.view.createFromKeyboard( transportProteinType, origin ),
       initialSlot: slot,
@@ -400,7 +400,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection.grabbedNode.setModelPosition( new Vector2( slot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
   }
 
-  public forwardFromKeyboard( slot: Slot, transportProteinType: TransportProteinType, channelToolNode: ChannelToolNode ): void {
+  public forwardFromKeyboard( slot: Slot, transportProteinType: TransportProteinType, channelToolNode: TransportProteinToolNode ): void {
     this.initializeKeyboardDrag( slot, transportProteinType, channelToolNode );
 
     this.keyboardGrab( 'grabbedItem' );

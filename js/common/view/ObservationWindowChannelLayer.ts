@@ -13,7 +13,7 @@ import ProteinNode from './proteins/ProteinNode.js';
 
 /**
  * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
- * creates ChannelDragNode instances. They also animate based on the model characteristics.
+ * creates TransportProteinDragNode instances. They also animate based on the model characteristics.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -48,7 +48,7 @@ export default class ObservationWindowChannelLayer extends Node {
         const type = slot.transportProteinType;
         if ( type !== null ) {
 
-          // NOTE: There is similar code in ChannelToolNode (which drags out of the panel).
+          // NOTE: There is similar code in TransportProteinToolNode (which drags out of the panel).
           const channelNode = getTransportProteinNode( type, slot.transportProteinProperty.value );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
             slot.clear();

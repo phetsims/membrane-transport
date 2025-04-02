@@ -361,7 +361,7 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   /**
-   * Update the channel count based on the number of filled slots.
+   * Update the transport count based on the number of filled slots.
    */
   private updateTransportProteinCounts(): void {
     this.transportProteinCountProperty.value = this.slots.filter( slot => slot.isFilled() ).length;

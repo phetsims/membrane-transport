@@ -114,7 +114,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.stepEmitter.addListener( dt => this.channelLayer.step( dt ) );
     clipNode.addChild( this.channelLayer );
 
-    // ligand and membrane channel layer
+    // ligand and membrane transport protein layer
     // On top, we will have a layer for the interactive parts of the simulation
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
