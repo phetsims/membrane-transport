@@ -15,7 +15,7 @@ import MembraneTransportModel from './MembraneTransportModel.js';
 export default class MembraneTransportModelTester {
 
   /**
-   * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a channel
+   * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a ligand channel
    * to test functionality.
    */
   public static testLigandChannel( model: MembraneTransportModel, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
