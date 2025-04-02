@@ -8,9 +8,9 @@
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import membraneTransport from '../../../membraneTransport.js';
-import Channel from './Channel.js';
+import TransportProtein from './TransportProtein.js';
 
-export default class SodiumGlucoseCotransporter extends Channel {
+export default class SodiumGlucoseCotransporter extends TransportProtein {
 
   public readonly isOpenProperty: BooleanProperty = new BooleanProperty( false );
 

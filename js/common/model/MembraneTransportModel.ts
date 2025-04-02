@@ -36,7 +36,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
-import Channel from './proteins/Channel.js';
+import TransportProtein from './proteins/TransportProtein.js';
 import ChannelType from './proteins/ChannelType.js';
 import getChannel from './proteins/getChannel.js';
 import Slot from './Slot.js';
@@ -413,7 +413,7 @@ export default class MembraneTransportModel extends PhetioObject {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
-  public getSlotForChannel( channel: Channel ): Slot | undefined {
+  public getSlotForChannel( channel: TransportProtein ): Slot | undefined {
     return this.slots.find( slot => slot.channelProperty.value === channel );
   }
 
@@ -486,20 +486,20 @@ type ChannelStateObject = {
 };
 
 /**
- * Ideally this would be declared in Channel.ts. However, since this creates subtypes like LigandGatedChannel, that
+ * Ideally this would be declared in TransportProtein.ts. However, since this creates subtypes like LigandGatedChannel, that
  * would create a circular dependency. So we declare it here.
  *
  */
 export const ChannelIO = new IOType( 'ChannelIO', {
-  valueType: Channel,
+  valueType: TransportProtein,
   stateSchema: {
     type: StringIO,
     position: NumberIO,
 
-    // Necessary in order to get information from the model to the Channel, such as the membrane potential
+    // Necessary in order to get information from the model to the TransportProtein, such as the membrane potential
     model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO )
   },
-  toStateObject: ( channel: Channel ): ChannelStateObject => {
+  toStateObject: ( channel: TransportProtein ): ChannelStateObject => {
     return {
       type: channel.type,
       position: channel.position,

@@ -9,14 +9,14 @@ import Slot from '../Slot.js';
 import ChannelType from './ChannelType.js';
 
 /**
- * Channel keeps track of stateful model information for a channel (protein) that is actively in a slot.
+ * TransportProtein keeps track of stateful model information for a channel (protein) that is actively in a slot.
  * NOTE: this does not extend PhetioObject only the critical part (the type) is needed for serialization.
  * This allows us to avoid dynamic elements in the PhET-iO tree and in the state.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default abstract class Channel {
+export default abstract class TransportProtein {
 
   // Bounds of the channel in model coordinates.
   public readonly bounds: Bounds2;
@@ -58,4 +58,4 @@ export default abstract class Channel {
   }
 }
 
-membraneTransport.register( 'Channel', Channel );
+membraneTransport.register( 'TransportProtein', TransportProtein );

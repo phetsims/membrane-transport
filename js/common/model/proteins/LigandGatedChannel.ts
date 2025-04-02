@@ -14,12 +14,12 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import { LigandType } from '../SoluteType.js';
-import Channel from './Channel.js';
+import TransportProtein from './TransportProtein.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind
 const REBINDING_DELAY = 5;
 
-export default class LigandGatedChannel extends Channel {
+export default class LigandGatedChannel extends TransportProtein {
 
   public readonly isLigandBoundProperty = new BooleanProperty( false );
 

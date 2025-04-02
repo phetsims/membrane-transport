@@ -5,7 +5,7 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import Channel from '../model/proteins/Channel.js';
+import TransportProtein from '../model/proteins/TransportProtein.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import getChannelNode from './proteins/getChannelNode.js';
@@ -25,7 +25,7 @@ export type SlottedNode = {
 
 export default class ObservationWindowChannelLayer extends Node {
 
-  private readonly record = new Map<Channel, SlottedNode>();
+  private readonly record = new Map<TransportProtein, SlottedNode>();
 
   public constructor(
     public readonly model: MembraneTransportModel,

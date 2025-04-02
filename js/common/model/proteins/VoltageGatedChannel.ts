@@ -10,9 +10,9 @@ import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import Channel from './Channel.js';
+import TransportProtein from './TransportProtein.js';
 
-export default class VoltageGatedChannel extends Channel {
+export default class VoltageGatedChannel extends TransportProtein {
 
   public readonly isOpenProperty: TReadOnlyProperty<boolean>;
 

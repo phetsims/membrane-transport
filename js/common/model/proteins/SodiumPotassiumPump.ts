@@ -23,9 +23,9 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
-import Channel from './Channel.js';
+import TransportProtein from './TransportProtein.js';
 
-export default class SodiumPotassiumPump extends Channel {
+export default class SodiumPotassiumPump extends TransportProtein {
 
   public conformation: 'awaiting-sodium' | 'awaiting-phosphate' | 'awaiting-potassium' = 'awaiting-sodium';
 

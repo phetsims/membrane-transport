@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import Channel from './Channel.js';
+import TransportProtein from './TransportProtein.js';
 import ChannelType from './ChannelType.js';
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
@@ -10,12 +10,12 @@ import SodiumPotassiumPump from './SodiumPotassiumPump.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
 
 /**
- * Creates a new Channel corresponding to the given ChannelType
+ * Creates a new TransportProtein corresponding to the given ChannelType
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default function( model: MembraneTransportModel, type: ChannelType, position: number ): Channel {
+export default function( model: MembraneTransportModel, type: ChannelType, position: number ): TransportProtein {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 

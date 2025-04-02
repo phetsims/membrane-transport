@@ -27,8 +27,8 @@ incorporating modern PhET frameworks and updated pedagogical features.
   and hence not amenable to subclassing. We also chose to avoid mixins since they introduce other difficulties. Instead,
   we use MembraneTransportFeatureSet to identify which features apply to which screens.
 * **Transient Short-Lived Nodes**: We have taken efforts to keep the model and view lightweight. For example, when 
-  dragging a channel, a transient non-PhET-iO instrumented Node is temporarily created. When dropping the channel, the 
-  transient node is removed and the channel is added to the model. For the GrabSortInteraction, it operates on transient 
+  dragging a transport protein, a transient non-PhET-iO instrumented Node is temporarily created. When dropping the channel, the 
+  transient node is removed and the transport protein is added to the model. For the GrabSortInteraction, it operates on transient 
   nodes as well. Preferring transient, short-lived Nodes helps us keep each individual node simpler and more manageable,
   as opposed to if we had a single Node that had to handle all modalities.
 * **Strings** The simulation is experimenting with JSON5 for the JSON strings, see `membrane-transport-strings_en.json5` and
@@ -41,10 +41,10 @@ incorporating modern PhET frameworks and updated pedagogical features.
 ### Model
 
 The model is purposefully simple, with flat data structures to facilitate PhET-iO serialization. For instance,
-Several model Properties for particular channel state are not PhET-iO instrumented; instead they appear in the state via
+Several model Properties for particular transport protein state are not PhET-iO instrumented; instead they appear in the state via
 serialization of the container.
 
-Each Particle has a finite state machine to indicate what mode it is in, such as a random walk, or passing through a channel.
+Each Particle has a finite state machine to indicate what mode it is in, such as a random walk, or passing through a transport protein.
 Membrane transport proteins additionally add their own state (often with their own finite state machine) to manage their
 interactions.
 
@@ -54,8 +54,8 @@ Solutes and Ligands subclasses of `class Particle`. They are represented by a fi
 their current mode and during step() can transition to a new mode based on the current mode and the current state of the
 simulation.
 
-**Slots** are the 7 positions on the membrane where a protein/channel can be added.
-**Slot Contents** refers to what a Slot may contain, which may be null or a protein/channel.
+**Slots** are the 7 positions on the membrane where a transport protein can be added.
+**Slot Contents** refers to what a Slot may contain, which may be null or a transport protein.
 
 ### View
 

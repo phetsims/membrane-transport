@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
-import Channel from '../../model/proteins/Channel.js';
+import TransportProtein from '../../model/proteins/TransportProtein.js';
 import ChannelType from '../../model/proteins/ChannelType.js';
 import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
@@ -19,7 +19,7 @@ import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default function( type: ChannelType, channel: Channel | null ): ProteinNode {
+export default function( type: ChannelType, channel: TransportProtein | null ): ProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );
   }

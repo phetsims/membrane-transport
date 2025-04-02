@@ -20,7 +20,7 @@ import MembraneTransportConstants from '../../common/MembraneTransportConstants.
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
-import Channel from './proteins/Channel.js';
+import TransportProtein from './proteins/TransportProtein.js';
 import ChannelType from './proteins/ChannelType.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './proteins/SodiumGlucoseCotransporter.js';
@@ -582,7 +582,7 @@ export default class Particle<T extends ParticleType> {
   /**
    * During randomWalk, check for interactions with channels.
    */
-  private handleChannelInteractionDuringRandomWalk( slot: Slot, channel: Channel, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+  private handleChannelInteractionDuringRandomWalk( slot: Slot, channel: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
     // Check for ligand interaction with ligand-gated channels
     if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
