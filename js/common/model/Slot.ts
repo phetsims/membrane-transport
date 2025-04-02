@@ -13,7 +13,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneTransport from '../../membraneTransport.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import ChannelType from './proteins/ChannelType.js';
-import getChannel from './proteins/getChannel.js';
+import getTransportProtein from './proteins/getTransportProtein.js';
 import MembraneTransportModel, { ChannelIO } from './MembraneTransportModel.js';
 
 export default class Slot {
@@ -38,7 +38,7 @@ export default class Slot {
   }
 
   public set channelType( channelType: ChannelType | null ) {
-    this.channelProperty.value = channelType ? getChannel( this.model, channelType, this.position ) : null;
+    this.channelProperty.value = channelType ? getTransportProtein( this.model, channelType, this.position ) : null;
   }
 
   public isFilled(): boolean {

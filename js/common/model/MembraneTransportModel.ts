@@ -38,7 +38,7 @@ import MembraneTransportQueryParameters from '../MembraneTransportQueryParameter
 import Particle from './Particle.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import ChannelType from './proteins/ChannelType.js';
-import getChannel from './proteins/getChannel.js';
+import getTransportProtein from './proteins/getTransportProtein.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
@@ -507,7 +507,7 @@ export const ChannelIO = new IOType( 'ChannelIO', {
     };
   },
   fromStateObject: ( stateObject: ChannelStateObject ) => {
-    return getChannel( ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
+    return getTransportProtein( ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
   }
 } );
 
