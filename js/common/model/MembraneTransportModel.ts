@@ -402,18 +402,18 @@ export default class MembraneTransportModel extends PhetioObject {
   /**
    * If a slot already has a solute traversing it, or moving to it, then it is "reserved" and cannot accommodate a second solute.
    */
-  public isChannelSoluteFree( slot: Slot ): boolean {
+  public isTransportProteinSoluteFree( slot: Slot ): boolean {
 
     // Check if any Particle mode has this slot
-    const isChannelReserved = this.solutes.some( solute => solute.mode.slot === slot );
-    return !isChannelReserved;
+    const isReserved = this.solutes.some( solute => solute.mode.slot === slot );
+    return !isReserved;
   }
 
   public getTimeSpeedFactor(): number {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
-  public getSlotForChannel( transportProtein: TransportProtein ): Slot | undefined {
+  public getSlotForTransportProtein( transportProtein: TransportProtein ): Slot | undefined {
     return this.slots.find( slot => slot.transportProteinProperty.value === transportProtein );
   }
 
@@ -479,7 +479,7 @@ export default class MembraneTransportModel extends PhetioObject {
   } );
 }
 
-type ChannelStateObject = {
+type TransportProteinStateObject = {
   type: TransportProteinType;
   position: number;
   model: string;
@@ -490,7 +490,7 @@ type ChannelStateObject = {
  * would create a circular dependency. So we declare it here.
  *
  */
-export const ChannelIO = new IOType( 'ChannelIO', {
+export const TransportProteinIO = new IOType( 'TransportProteinIO', {
   valueType: TransportProtein,
   stateSchema: {
     type: StringIO,
@@ -499,14 +499,14 @@ export const ChannelIO = new IOType( 'ChannelIO', {
     // Necessary in order to get information from the model to the TransportProtein, such as the membrane potential
     model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO )
   },
-  toStateObject: ( transportProtein: TransportProtein ): ChannelStateObject => {
+  toStateObject: ( transportProtein: TransportProtein ): TransportProteinStateObject => {
     return {
       type: transportProtein.type,
       position: transportProtein.position,
       model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model )
     };
   },
-  fromStateObject: ( stateObject: ChannelStateObject ) => {
+  fromStateObject: ( stateObject: TransportProteinStateObject ) => {
     return getTransportProtein( ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ), stateObject.type, stateObject.position );
   }
 } );

@@ -58,7 +58,7 @@ type BoundMode = {
   slot: null;
 };
 
-type MoveToCenterOfChannelMode = {
+type MoveToCenterOfTransportProteinMode = {
   type: 'moveToCenterOfChannel';
   slot: Slot;
 };
@@ -92,7 +92,7 @@ type MoveToLigandBindingLocationMode = {
   slot: Slot;
 };
 
-type EnteringChannelMode = {
+type EnteringTransportProteinMode = {
   type: 'enteringChannel';
   slot: Slot;
   direction: 'inward' | 'outward';
@@ -110,7 +110,7 @@ type PassiveDiffusionMode = {
   slot: null;
 };
 
-type MovingThroughChannelMode = {
+type MovingThroughTransportProteinMode = {
   type: 'movingThroughChannel';
   slot: Slot;
   transportProteinType: TransportProteinType;
@@ -131,12 +131,12 @@ type UserOverMode = {
 type ParticleMode =
   | RandomWalkMode
   | BoundMode
-  | MoveToCenterOfChannelMode
-  | EnteringChannelMode
+  | MoveToCenterOfTransportProteinMode
+  | EnteringTransportProteinMode
   | SheddingCagedWaterMoleculesMode
   | MoveToLigandBindingLocationMode
   | PassiveDiffusionMode
-  | MovingThroughChannelMode
+  | MovingThroughTransportProteinMode
   | UserControlledMode
   | UserOverMode
   | MoveToSodiumGlucoseTransporterMode
@@ -506,8 +506,8 @@ export default class Particle<T extends ParticleType> {
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
       if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
-        const interactedWithChannel = this.handleChannelInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );
-        if ( interactedWithChannel ) {
+        const interactedWithProtein = this.handleProteinInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );
+        if ( interactedWithProtein ) {
           return;
         }
       }
@@ -582,7 +582,7 @@ export default class Particle<T extends ParticleType> {
   /**
    * During randomWalk, check for interactions with channels.
    */
-  private handleChannelInteractionDuringRandomWalk( slot: Slot, transportProtein: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+  private handleProteinInteractionDuringRandomWalk( slot: Slot, transportProtein: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
     // Check for ligand interaction with ligand-gated channels
     if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
@@ -615,7 +615,7 @@ export default class Particle<T extends ParticleType> {
     const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-    if ( transportProtein.isOpenProperty.value && model.isChannelSoluteFree( slot ) ) {
+    if ( transportProtein.isOpenProperty.value && model.isTransportProteinSoluteFree( slot ) ) {
       if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) {
         this.mode = { type: 'moveToCenterOfChannel', slot: slot };
         return true;
@@ -665,7 +665,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.conformation === 'awaiting-sodium' &&
       this.position.y < 0 && // Only approach from intracellular side
-      !transportProtein.hasSolutesMovingThroughChannel() // make sure no potassiums still leaving
+      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no potassiums still leaving
     ) {
 
       const openSodiumSites = transportProtein.getOpenSodiumSites();
@@ -696,7 +696,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.conformation === 'awaiting-potassium' &&
       this.position.y > 0 && // Only approach from extracellular side
-      !transportProtein.hasSolutesMovingThroughChannel() // make sure no sodiums still leaving
+      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no sodiums still leaving
     ) {
 
       const openPotassiumSites = transportProtein.getOpenPotassiumSites();

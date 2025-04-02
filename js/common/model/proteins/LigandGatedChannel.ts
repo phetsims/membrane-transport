@@ -49,7 +49,7 @@ export default class LigandGatedChannel extends TransportProtein {
       
       // After the binding duration, release the ligand
       // TODO: Prevent solutes from passing through if this.timeSinceLigandBound >= this.bindingDuration, so that we don't end up in an infinite loop
-      if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand && !this.hasSolutesMovingThroughChannel() ) {
+      if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand && !this.hasSolutesMovingThroughTransportProtein() ) {
         this.unbindLigand();
       }
     }

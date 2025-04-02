@@ -16,7 +16,7 @@ import membraneTransport from '../../membraneTransport.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Slot from '../model/Slot.js';
-import getChannelNode from './proteins/getChannelNode.js';
+import getTransportProteinNode from './proteins/getTransportProteinNode.js';
 import ChannelToolNode from './ChannelToolNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -50,7 +50,7 @@ export default class ChannelDragNode extends Node {
       focusable: true
     } );
 
-    this.addChild( getChannelNode( type, null ) );
+    this.addChild( getTransportProteinNode( type, null ) );
 
     this.positionProperty = new Vector2Property( modelPosition );
     this.positionProperty.link( position => {

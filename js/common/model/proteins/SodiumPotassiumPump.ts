@@ -65,7 +65,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
 
   public getNumberOfFilledSodiumSites(): number {
 
-    const slot = this.model.getSlotForChannel( this )!;
+    const slot = this.model.getSlotForTransportProtein( this )!;
 
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
@@ -93,7 +93,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
 
   public getNumberOfFilledPotassiumSites(): number {
 
-    const slot = this.model.getSlotForChannel( this )!;
+    const slot = this.model.getSlotForTransportProtein( this )!;
 
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
@@ -117,7 +117,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
 
   public override step( dt: number ): void {
 
-    const slot = this.model.getSlotForChannel( this )!;
+    const slot = this.model.getSlotForTransportProtein( this )!;
 
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
@@ -152,7 +152,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
   // Open upward, letting sodiums go outside the cell
   public openUpward(): void {
 
-    const slot = this.model.getSlotForChannel( this )!;
+    const slot = this.model.getSlotForTransportProtein( this )!;
 
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
@@ -175,7 +175,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
   // Open upward, letting sodiums go outside the cell
   public openDownward(): void {
 
-    const slot = this.model.getSlotForChannel( this )!;
+    const slot = this.model.getSlotForTransportProtein( this )!;
 
     const potassium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                           solute.mode.slot === slot &&

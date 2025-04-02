@@ -10,7 +10,7 @@ import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import getChannelNode from './proteins/getChannelNode.js';
+import getTransportProteinNode from './proteins/getTransportProteinNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 const richTextOptions: RichTextOptions = {
@@ -35,7 +35,7 @@ export default class ChannelToolNode extends VBox {
   public constructor( type: TransportProteinType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
-    const channelNode = getChannelNode( type, null );
+    const channelNode = getTransportProteinNode( type, null );
     channelNode.setScaleMagnitude( 0.7 );
     channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 

@@ -14,7 +14,7 @@ import membraneTransport from '../../membraneTransport.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import getTransportProtein from './proteins/getTransportProtein.js';
-import MembraneTransportModel, { ChannelIO } from './MembraneTransportModel.js';
+import MembraneTransportModel, { TransportProteinIO } from './MembraneTransportModel.js';
 
 export default class Slot {
 
@@ -24,7 +24,7 @@ export default class Slot {
   public constructor( private readonly model: MembraneTransportModel, public readonly position: number, tandem: Tandem ) {
     this.transportProteinProperty = new Property<null | TransportProtein>( null, {
       tandem: tandem.createTandem( 'transportProteinProperty' ),
-      phetioValueType: NullableIO( ChannelIO ),
+      phetioValueType: NullableIO( TransportProteinIO ),
       phetioFeatured: true
     } );
   }

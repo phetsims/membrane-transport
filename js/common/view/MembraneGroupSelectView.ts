@@ -142,7 +142,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             const delta = getDeltaForKey( keysPressed );
             this.model.hasKeyboardSelectedGroupItemProperty.value = true;
 
-            const channelNodes = observationWindow.getChannelNodes();
+            const channelNodes = observationWindow.getTransportProteinNodes();
 
             const selectMax = channelNodes.length - 1;
             groupSelectModel.selectedGroupItemProperty.value = clamp( oldValue + delta, 0, selectMax );
@@ -160,7 +160,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
       // Only alert for numeric indices (not for 'grabbedItem' state)
       if ( typeof selectedItem === 'number' ) {
-        const channelNodes = observationWindow.getChannelNodes();
+        const channelNodes = observationWindow.getTransportProteinNodes();
         const selectedNode = channelNodes[ selectedItem ];
 
         if ( selectedNode ) {
@@ -191,7 +191,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           console.log( 'hello grabbed item' );
         }
         else {
-          const slot = observationWindow.getChannelNodes()[ groupItem ].slot;
+          const slot = observationWindow.getTransportProteinNodes()[ groupItem ].slot;
 
           const transportProteinType = slot.transportProteinType;
           affirm( transportProteinType, 'The grabbed item should have a channel type' );
@@ -253,7 +253,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             view.keyboardDroppedMembraneChannel();
 
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
-            const selectedIndex = observationWindow.getChannelNodes().findIndex( node => node.slot === droppedIntoSlot );
+            const selectedIndex = observationWindow.getTransportProteinNodes().findIndex( node => node.slot === droppedIntoSlot );
 
             // Dropped into membrane
             if ( currentSlotIndex < SLOT_COUNT ) {
@@ -262,7 +262,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // dropped into toolbox
-              groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
+              groupSelectModel.selectedGroupItemProperty.value = observationWindow.getTransportProteinNodes().length === 0 ? null : 0;
             }
 
             resetState();
@@ -276,7 +276,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       },
       getGroupItemToSelect: () => {
 
-        const channelNodes = observationWindow.getChannelNodes();
+        const channelNodes = observationWindow.getTransportProteinNodes();
         if ( channelNodes.length > 0 ) {
           return 0; // the left most Node
         }
@@ -297,7 +297,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           }
         }
         else {
-          const channelNodes = observationWindow.getChannelNodes();
+          const channelNodes = observationWindow.getTransportProteinNodes();
           const slottedNode = channelNodes[ model ];
           if ( slottedNode ) {
             return slottedNode.node;
@@ -338,7 +338,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
 
           // next, tell the group select interaction that nothing is grabbed.
-          groupSelectModel.selectedGroupItemProperty.value = this.observationWindow.getChannelNodes().length > 0 ? 0 : null;
+          groupSelectModel.selectedGroupItemProperty.value = this.observationWindow.getTransportProteinNodes().length > 0 ? 0 : null;
 
           // TODO (JG/SR): If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
           // See how this is done via keyboardDroppedMembraneChannel when something is dropped in the membrane
@@ -363,7 +363,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Select the index corresponding to the item just dropped
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
-            const selectedIndex = observationWindow.getChannelNodes().findIndex( node => node.slot === grabbedNode.origin );
+            const selectedIndex = observationWindow.getTransportProteinNodes().findIndex( node => node.slot === grabbedNode.origin );
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
@@ -372,7 +372,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           else {
 
             // Dropped into toolbox
-            groupSelectModel.selectedGroupItemProperty.value = observationWindow.getChannelNodes().length === 0 ? null : 0;
+            groupSelectModel.selectedGroupItemProperty.value = observationWindow.getTransportProteinNodes().length === 0 ? null : 0;
             alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
           }
         }

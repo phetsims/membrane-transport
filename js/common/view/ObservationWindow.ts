@@ -163,8 +163,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.membraneGroupSelectView = new MembraneGroupSelectView( model, view, this );
   }
 
-  public getChannelNodes(): SlottedNode[] {
-    return this.channelLayer.getChannelNodes();
+  public getTransportProteinNodes(): SlottedNode[] {
+    return this.channelLayer.getTransportProteinNodes();
   }
 
   /**

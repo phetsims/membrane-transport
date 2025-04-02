@@ -50,10 +50,10 @@ export default abstract class TransportProtein {
   }
 
   public get slot(): Slot {
-    return this.model.getSlotForChannel( this )!;
+    return this.model.getSlotForTransportProtein( this )!;
   }
 
-  public hasSolutesMovingThroughChannel(): boolean {
+  public hasSolutesMovingThroughTransportProtein(): boolean {
     return !!this.model.solutes.find( solute => solute.mode.type === 'movingThroughChannel' && solute.mode.slot === this.slot );
   }
 }

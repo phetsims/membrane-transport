@@ -16,7 +16,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein {
 
   public override step( dt: number ): void {
 
-    const slot = this.model.getSlotForChannel( this )!;
+    const slot = this.model.getSlotForTransportProtein( this )!;
 
     const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
                                                        solute.mode.slot === slot &&

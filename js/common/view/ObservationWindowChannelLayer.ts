@@ -8,7 +8,7 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
-import getChannelNode from './proteins/getChannelNode.js';
+import getTransportProteinNode from './proteins/getTransportProteinNode.js';
 import ProteinNode from './proteins/ProteinNode.js';
 
 /**
@@ -49,7 +49,7 @@ export default class ObservationWindowChannelLayer extends Node {
         if ( type !== null ) {
 
           // NOTE: There is similar code in ChannelToolNode (which drags out of the panel).
-          const channelNode = getChannelNode( type, slot.transportProteinProperty.value );
+          const channelNode = getTransportProteinNode( type, slot.transportProteinProperty.value );
           channelNode.addInputListener( DragListener.createForwardingListener( event => {
             slot.clear();
             view.createFromMouseDrag( event, type, slot );
@@ -69,7 +69,7 @@ export default class ObservationWindowChannelLayer extends Node {
   }
 
   // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
-  public getChannelNodes(): SlottedNode[] {
+  public getTransportProteinNodes(): SlottedNode[] {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.slots.indexOf( a.slot ) - this.model.slots.indexOf( b.slot );
     } );
