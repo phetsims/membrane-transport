@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * MoveGrabbedChannelProteinKeyboardHelpSection provides help content within the KeyboardHelpDialog. It instructs
+ * MoveGrabbedTransportProteinKeyboardHelpSection provides help content within the KeyboardHelpDialog. It instructs
  * users on how to move a grabbed ball and/or card using keyboard inputs in the Center and Variability simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
@@ -17,7 +17,7 @@ import membraneTransport from '../../membraneTransport.js';
 
 export const SECTION_LABEL_OPTIONS = { labelOptions: { lineWrap: 200 } };
 
-export default class MoveGrabbedChannelProteinKeyboardHelpSection extends KeyboardHelpSection {
+export default class MoveGrabbedTransportProteinKeyboardHelpSection extends KeyboardHelpSection {
   public constructor(
     title: TReadOnlyProperty<string>,
     moveMessage: TReadOnlyProperty<string>,
@@ -37,4 +37,4 @@ export default class MoveGrabbedChannelProteinKeyboardHelpSection extends Keyboa
   }
 }
 
-membraneTransport.register( 'MoveGrabbedChannelProteinKeyboardHelpSection', MoveGrabbedChannelProteinKeyboardHelpSection );
+membraneTransport.register( 'MoveGrabbedTransportProteinKeyboardHelpSection', MoveGrabbedTransportProteinKeyboardHelpSection );

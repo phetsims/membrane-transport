@@ -93,7 +93,7 @@ type MoveToLigandBindingLocationMode = {
 };
 
 type EnteringTransportProteinMode = {
-  type: 'enteringChannel';
+  type: 'enteringTransportProtein';
   slot: Slot;
   direction: 'inward' | 'outward';
 };
@@ -274,10 +274,10 @@ export default class Particle<T extends ParticleType> {
       const maxStepSize = typicalSpeed * dt;
       this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
-      // When close enough, transition to enteringChannel mode.
+      // When close enough, transition to enteringTransportProtein mode.
       if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
         this.mode = {
-          type: 'enteringChannel',
+          type: 'enteringTransportProtein',
           slot: this.mode.slot,
           direction: this.position.y > 0 ? 'inward' : 'outward'
         };
@@ -297,7 +297,7 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
-      // When close enough, transition to enteringChannel mode.
+      // When close enough, transition to enteringTransportProtein mode.
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
         this.mode = {
           type: 'waitingInSodiumGlucoseTransporter',
@@ -372,7 +372,7 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
-    else if ( this.mode.type === 'enteringChannel' ) {
+    else if ( this.mode.type === 'enteringTransportProtein' ) {
       const direction = this.position.y > 0 ? -1 : 1;
       const thresholdY = direction === -1
                          ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2
@@ -580,7 +580,7 @@ export default class Particle<T extends ParticleType> {
   }
 
   /**
-   * During randomWalk, check for interactions with channels.
+   * During randomWalk, check for interactions with transport proteins.
    */
   private handleProteinInteractionDuringRandomWalk( slot: Slot, transportProtein: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 

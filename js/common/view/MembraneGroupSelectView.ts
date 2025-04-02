@@ -36,7 +36,7 @@ type Selection = {
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
 /**
- * Keyboard interaction for channels on the membrane.
+ * Keyboard interaction for membrane proteins on the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -142,9 +142,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             const delta = getDeltaForKey( keysPressed );
             this.model.hasKeyboardSelectedGroupItemProperty.value = true;
 
-            const channelNodes = observationWindow.getTransportProteinNodes();
+            const transportProteinNodes = observationWindow.getTransportProteinNodes();
 
-            const selectMax = channelNodes.length - 1;
+            const selectMax = transportProteinNodes.length - 1;
             groupSelectModel.selectedGroupItemProperty.value = clamp( oldValue + delta, 0, selectMax );
           }
           this.onGroupItemChange( groupItem );
@@ -160,20 +160,20 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
       // Only alert for numeric indices (not for 'grabbedItem' state)
       if ( typeof selectedItem === 'number' ) {
-        const channelNodes = observationWindow.getTransportProteinNodes();
-        const selectedNode = channelNodes[ selectedItem ];
+        const transportProteinNodes = observationWindow.getTransportProteinNodes();
+        const selectedNode = transportProteinNodes[ selectedItem ];
 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
           const transportProteinType = slot.transportProteinType;
           const slotIndex = membraneTransportModel.getSlotIndex( slot );
-          const channelName = transportProteinType ? getBriefProteinName( transportProteinType ) : 'empty';
+          const transportProteinName = transportProteinType ? getBriefProteinName( transportProteinType ) : 'empty';
 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
 
-            alerter.alert( new PatternMessageProperty( MembraneTransportMessages.selectedChannelInSlotMessageProperty, {
-              channelName: channelName,
+            alerter.alert( new PatternMessageProperty( MembraneTransportMessages.selectedTransportProteinInSlotMessageProperty, {
+              channelName: transportProteinName,
               slotIndex: slotIndex + 1,
               slotCount: SLOT_COUNT
             } ) );
@@ -250,7 +250,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
             }
 
-            view.keyboardDroppedMembraneChannel();
+            view.keyboardDroppedMembraneTransportProtein();
 
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
             const selectedIndex = observationWindow.getTransportProteinNodes().findIndex( node => node.slot === droppedIntoSlot );
@@ -276,8 +276,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       },
       getGroupItemToSelect: () => {
 
-        const channelNodes = observationWindow.getTransportProteinNodes();
-        if ( channelNodes.length > 0 ) {
+        const transportProteinNodes = observationWindow.getTransportProteinNodes();
+        if ( transportProteinNodes.length > 0 ) {
           return 0; // the left most Node
         }
         else {
@@ -297,8 +297,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           }
         }
         else {
-          const channelNodes = observationWindow.getTransportProteinNodes();
-          const slottedNode = channelNodes[ model ];
+          const transportProteinNodes = observationWindow.getTransportProteinNodes();
+          const slottedNode = transportProteinNodes[ model ];
           if ( slottedNode ) {
             return slottedNode.node;
           }
@@ -341,7 +341,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.selectedGroupItemProperty.value = this.observationWindow.getTransportProteinNodes().length > 0 ? 0 : null;
 
           // TODO (JG/SR): If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
-          // See how this is done via keyboardDroppedMembraneChannel when something is dropped in the membrane
+          // See how this is done via keyboardDroppedMembraneTransportProtein when something is dropped in the membrane
         }
       }
     } );
@@ -380,7 +380,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
         groupSelectModel.isKeyboardFocusedProperty.value = true;
 
-        view.keyboardDroppedMembraneChannel();
+        view.keyboardDroppedMembraneTransportProtein();
       }
     } );
     observationWindow.addInputListener( escKeyboardListener );
@@ -400,8 +400,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection.grabbedNode.setModelPosition( new Vector2( slot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
   }
 
-  public forwardFromKeyboard( slot: Slot, transportProteinType: TransportProteinType, channelToolNode: TransportProteinToolNode ): void {
-    this.initializeKeyboardDrag( slot, transportProteinType, channelToolNode );
+  public forwardFromKeyboard( slot: Slot, transportProteinType: TransportProteinType, transportProteinToolNode: TransportProteinToolNode ): void {
+    this.initializeKeyboardDrag( slot, transportProteinType, transportProteinToolNode );
 
     this.keyboardGrab( 'grabbedItem' );
   }

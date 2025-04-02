@@ -21,7 +21,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     const stringProperties = [
       new PatternMessageProperty( MembraneTransportMessages.currentDetailsOutsideSoluteCountMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
       new PatternMessageProperty( MembraneTransportMessages.currentDetailsInsideSoluteCountMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsChannelCountMessageProperty, { channelCount: model.transportProteinCountProperty } )
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinCountMessageProperty, { channelCount: model.transportProteinCountProperty } )
     ];
 
     const currentDetailsNode = new Node( {
@@ -51,7 +51,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       },
 
       interactionHintContent: featureSet === 'simpleDiffusion' ? MembraneTransportMessages.interactionHintMessageProperty :
-                              MembraneTransportMessages.interactionHintWithChannelsMessageProperty
+                              MembraneTransportMessages.interactionHintWithTransportProteinsMessageProperty
     } );
   }
 }

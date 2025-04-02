@@ -37,7 +37,7 @@ type AccordionBoxConfig = {
 };
 
 /**
- * Shows the title and group of accordion boxes for the membrane channels, which can be dragged into the play area.
+ * Shows the title and group of accordion boxes for the membrane proteins, which can be dragged into the play area.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -47,7 +47,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
   public readonly resetEmitter = new Emitter();
 
   // So we can return TransportProteinDragNode instances to their corresponding TransportProteinToolNode icons
-  private readonly channelToolNodes: Map<TransportProteinType, TransportProteinToolNode>;
+  private readonly transportProteinToolNodes: Map<TransportProteinType, TransportProteinToolNode>;
 
   public constructor( model: MembraneTransportModel, tandem: Tandem, view: MembraneTransportScreenView ) {
 
@@ -58,7 +58,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     // put all titles in an align box so they take up the same amount of space
     const titleAlignGroup = new AlignGroup();
 
-    const channelToolNodes = new Map<TransportProteinType, TransportProteinToolNode>();
+    const transportProteinToolNodes = new Map<TransportProteinType, TransportProteinToolNode>();
 
     /**
      * Creates an accordion box based on the provided configuration
@@ -67,14 +67,14 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
       const content = new HBox( {
         spacing: 10,
         children: config.transportProteins.map( transportProtein => {
-            const channelToolNode = new TransportProteinToolNode(
+            const transportProteinToolNode = new TransportProteinToolNode(
               transportProtein.transportProteinType,
               transportProtein.labelProperty,
               transportProtein.accessibleNameProperty,
               view
             );
-            channelToolNodes.set( transportProtein.transportProteinType, channelToolNode );
-            return channelToolNode;
+            transportProteinToolNodes.set( transportProtein.transportProteinType, transportProteinToolNode );
+            return transportProteinToolNode;
           }
         )
       } );
@@ -163,7 +163,7 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     }
 
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
-      // Active transport channels
+      // Active transport proteins
       const activeTransportAccordionBox = createPanel( {
         titleProperty: MembraneTransportStrings.activeTransportersStringProperty,
         tandemName: 'activeTransportersAccordionBox',
@@ -208,15 +208,15 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
     } );
 
     this.mutate( { left: 20, top: 20 } );
-    this.channelToolNodes = channelToolNodes;
+    this.transportProteinToolNodes = transportProteinToolNodes;
   }
 
   public reset(): void {
     this.resetEmitter.emit();
   }
 
-  public getChannelToolNode( transportProteinType: TransportProteinType ): TransportProteinToolNode {
-    return this.channelToolNodes.get( transportProteinType )!;
+  public getTransportProteinToolNode( transportProteinType: TransportProteinType ): TransportProteinToolNode {
+    return this.transportProteinToolNodes.get( transportProteinType )!;
   }
 }
 

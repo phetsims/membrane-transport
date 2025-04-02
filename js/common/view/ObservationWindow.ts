@@ -23,14 +23,14 @@ import LigandNode from './LigandNode.js';
 import MembraneGroupSelectView from './MembraneGroupSelectView.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
-import ObservationWindowChannelLayer, { SlottedNode } from './ObservationWindowChannelLayer.js';
+import ObservationWindowTransportProteinLayer, { SlottedNode } from './ObservationWindowTransportProteinLayer.js';
 import LigandANode from './particles/LigandANode.js';
 import LigandBNode from './particles/LigandBNode.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
 /**
- * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, membrane channels are.
+ * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, transport proteins are.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -49,7 +49,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   } );
   public readonly membraneGroupSelectView: MembraneGroupSelectView;
 
-  private readonly channelLayer: ObservationWindowChannelLayer;
+  private readonly transportProteinLayer: ObservationWindowTransportProteinLayer;
 
   public constructor( private readonly model: MembraneTransportModel, view: MembraneTransportScreenView,
                       public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
@@ -68,7 +68,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     // TODO: This is not production worthy, needs refinement, see the design doc. Add i18n. etc.
     const accessibleParagraphProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
 
-    model.transportProteinCountProperty.link( channelCount => {
+    model.transportProteinCountProperty.link( transportProteinCount => {
 
       const phrases = model.slots.map( ( slot, index ) => {
 
@@ -86,13 +86,13 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
       const paragraph = phrases.join( ' ' );
 
-      accessibleParagraphProperty.set( channelCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : 'Zoomed-in Membrane. ' + paragraph );
+      accessibleParagraphProperty.set( transportProteinCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : 'Zoomed-in Membrane. ' + paragraph );
     } );
 
     // create a StringProperty that just says zoomed in membrane and the number of proteins or none
     const accessibleNameProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
-    model.transportProteinCountProperty.link( channelCount => {
-      accessibleNameProperty.set( channelCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : `Zoomed-in Membrane. ${channelCount} channels in there` );
+    model.transportProteinCountProperty.link( transportProteinCount => {
+      accessibleNameProperty.set( transportProteinCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : `Zoomed-in Membrane. ${transportProteinCount} channels in there` );
     } );
 
     super( {
@@ -110,9 +110,9 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     this.slotDragIndicatorNodes = model.slots.map( slot => new SlotDragIndicatorNode( slot, modelViewTransform ) );
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
 
-    this.channelLayer = new ObservationWindowChannelLayer( model, view, modelViewTransform );
-    this.stepEmitter.addListener( dt => this.channelLayer.step( dt ) );
-    clipNode.addChild( this.channelLayer );
+    this.transportProteinLayer = new ObservationWindowTransportProteinLayer( model, view, modelViewTransform );
+    this.stepEmitter.addListener( dt => this.transportProteinLayer.step( dt ) );
+    clipNode.addChild( this.transportProteinLayer );
 
     // ligand and membrane transport protein layer
     // On top, we will have a layer for the interactive parts of the simulation
@@ -164,7 +164,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   }
 
   public getTransportProteinNodes(): SlottedNode[] {
-    return this.channelLayer.getTransportProteinNodes();
+    return this.transportProteinLayer.getTransportProteinNodes();
   }
 
   /**

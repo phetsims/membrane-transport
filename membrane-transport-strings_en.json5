@@ -21,7 +21,7 @@
   outside: 'Outside',
   inside: 'Inside',
 
-  // Channel and Membrane Proteins
+  // Membrane Proteins
   membranePotentialLabels: 'Membrane Potential Labels',
   voltageGatedChannels: 'Voltage-gated Channels',
   ligandGatedChannels: 'Ligand-gated Channels',
@@ -87,8 +87,5 @@
 
       toolAccessibleHelpText: 'Grab to pull protein to the membrane.'
     }
-
-    // Channels in the toolbox
-
   }
 }

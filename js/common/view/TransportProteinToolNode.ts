@@ -30,19 +30,19 @@ const richTextOptions: RichTextOptions = {
 export default class TransportProteinToolNode extends VBox {
 
   // So we can return ChannelDragNodes to its exact location
-  public readonly channelNode: Node;
+  public readonly transportProteinNode: Node;
 
   public constructor( type: TransportProteinType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
-    const channelNode = getTransportProteinNode( type, null );
-    channelNode.setScaleMagnitude( 0.7 );
-    channelNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
+    const transportProteinNode = getTransportProteinNode( type, null );
+    transportProteinNode.setScaleMagnitude( 0.7 );
+    transportProteinNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
     super( combineOptions<VBoxOptions>( {}, {
       spacing: 3,
       tagName: 'button',
-      children: [ channelNode, new RichText( label, richTextOptions ) ],
+      children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: accessibleName,
       accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.toolAccessibleHelpTextStringProperty
@@ -52,7 +52,7 @@ export default class TransportProteinToolNode extends VBox {
       click: () => view.forwardFromKeyboard( type, this )
     } );
 
-    this.channelNode = channelNode;
+    this.transportProteinNode = transportProteinNode;
   }
 }
 

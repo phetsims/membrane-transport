@@ -46,7 +46,7 @@ controlAreaSummary = There are options for how fast the action happens in the ob
 # ..........
 # Interaction Hint
 interactionHint = Add or remove solute to inside or outside of membrane.
-interactionHintWithChannels = Add or remove solutes to inside or outside of membrane, and play with transport channels.
+interactionHintWithTransportProteins = Add or remove solutes to inside or outside of membrane, and play with transport channels.
 
 # ..........
 # Current Details
@@ -138,16 +138,16 @@ barChartPattern = { solute }: { barSizeDescription }; { arrowSizeDescription } {
 #                        {1-6} solute types outside;
 #                        E.g., if Na+ is 0, do not count it
 #                        {1-6} solute types inside;
-#                        {1-7} transport channels
+#                        {1-7} transport membrane proteins
 currentDetailsRightNow = Right now,
 currentDetailsOutsideSoluteCount = membrane has { $outsideSoluteCount } solute types outside;
 currentDetailsInsideSoluteCount = { $insideSoluteCount } solute types inside;
-currentDetailsChannelCount = { $channelCount } transport channels;
+currentDetailsTransportProteinCount = { $channelCount } transport proteins;
 
 releasedBackInToolbox = Released. Back in toolbox.
 
-# Indicate the select channel, for alerter
-selectedChannelInSlot = Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
+# Indicate the selected membrane protein, for alerter
+selectedTransportProteinInSlot = Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
 
 canceledBackInMembrane = Cancelled. Back in membrane.
 

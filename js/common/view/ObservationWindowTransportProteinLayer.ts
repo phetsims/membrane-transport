@@ -23,7 +23,7 @@ export type SlottedNode = {
   node: Node;
 };
 
-export default class ObservationWindowChannelLayer extends Node {
+export default class ObservationWindowTransportProteinLayer extends Node {
 
   private readonly record = new Map<TransportProtein, SlottedNode>();
 
@@ -49,20 +49,20 @@ export default class ObservationWindowChannelLayer extends Node {
         if ( type !== null ) {
 
           // NOTE: There is similar code in TransportProteinToolNode (which drags out of the panel).
-          const channelNode = getTransportProteinNode( type, slot.transportProteinProperty.value );
-          channelNode.addInputListener( DragListener.createForwardingListener( event => {
+          const transportProteinNode = getTransportProteinNode( type, slot.transportProteinProperty.value );
+          transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
             slot.clear();
             view.createFromMouseDrag( event, type, slot );
           } ) );
 
-          channelNode.mutate( {
-            center: modelViewTransform.modelToViewXY( slot.position, 0 ).plus( channelNode.viewOffset ),
+          transportProteinNode.mutate( {
+            center: modelViewTransform.modelToViewXY( slot.position, 0 ).plus( transportProteinNode.viewOffset ),
             scale: 1.2,
             cursor: 'pointer'
           } );
 
-          this.addChild( channelNode );
-          this.record.set( slot.transportProteinProperty.value!, { slot: slot, node: channelNode } );
+          this.addChild( transportProteinNode );
+          this.record.set( slot.transportProteinProperty.value!, { slot: slot, node: transportProteinNode } );
         }
       } );
     } );
@@ -84,4 +84,4 @@ export default class ObservationWindowChannelLayer extends Node {
   }
 }
 
-membraneTransport.register( 'ObservationWindowChannelLayer', ObservationWindowChannelLayer );
+membraneTransport.register( 'ObservationWindowTransportProteinLayer', ObservationWindowTransportProteinLayer );

@@ -132,9 +132,9 @@ export default class TransportProteinDragNode extends Node {
 
           myself.pickable = false; // Prevent being grabbed on the way home
 
-          const toolNode = view.getChannelToolNode( this.type );
+          const toolNode = view.getTransportProteinToolNode( this.type );
           assert && assert( toolNode, `toolNode should be defined, type = ${this.type}` ); // This was failing on CT
-          const viewPoint = view.globalToLocalPoint( toolNode.channelNode.globalBounds.center );
+          const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
           const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
           const animation = new Animation( {

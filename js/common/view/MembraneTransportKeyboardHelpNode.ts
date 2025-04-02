@@ -18,7 +18,7 @@ import TimeControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboar
 import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet from '../MembraneTransportFeatureSet.js';
-import MoveGrabbedChannelProteinKeyboardHelpSection from './MoveGrabbedChannelProteinKeyboardHelpSection.js';
+import MoveGrabbedTransportProteinKeyboardHelpSection from './MoveGrabbedTransportProteinKeyboardHelpSection.js';
 
 export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
@@ -27,7 +27,7 @@ export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboard
     const leftColumn = [
       new FromAnywhereInSimHelpSection(),
       new GrabReleaseKeyboardHelpSection( new StringProperty( 'thing as title' ), new StringProperty( 'thing as content' ) ),
-      new MoveGrabbedChannelProteinKeyboardHelpSection(
+      new MoveGrabbedTransportProteinKeyboardHelpSection(
         new StringProperty( 'title' ),
         new StringProperty( 'move' ),
         new StringProperty( 'jump start' ),

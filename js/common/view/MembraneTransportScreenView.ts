@@ -285,7 +285,7 @@ export default class MembraneTransportScreenView extends ScreenView {
    * @returns The created transport protein drag node
    */
   private createTransportProteinDragNode( modelPosition: Vector2, type: TransportProteinType, origin: Slot | TransportProteinToolNode ): TransportProteinDragNode {
-    const channelDragNode = new TransportProteinDragNode(
+    const transportProteinDragNode = new TransportProteinDragNode(
       this.model,
       this,
       this.observationWindow,
@@ -295,9 +295,9 @@ export default class MembraneTransportScreenView extends ScreenView {
       type,
       origin
     );
-    this.addChild( channelDragNode );
+    this.addChild( transportProteinDragNode );
 
-    return channelDragNode;
+    return transportProteinDragNode;
   }
 
   /**
@@ -311,10 +311,10 @@ export default class MembraneTransportScreenView extends ScreenView {
     channelDragNode.press( event );
   }
 
-  public forwardFromKeyboard( type: TransportProteinType, channelToolNode: TransportProteinToolNode ): void {
+  public forwardFromKeyboard( type: TransportProteinType, transportProteinToolNode: TransportProteinToolNode ): void {
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
-    this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot, type, channelToolNode );
-    this.afterRelease = () => channelToolNode.focus();
+    this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot, type, transportProteinToolNode );
+    this.afterRelease = () => transportProteinToolNode.focus();
   }
 
   /**
@@ -328,9 +328,9 @@ export default class MembraneTransportScreenView extends ScreenView {
     const y = 10;
     const modelPoint = new Vector2( slotX, y );
 
-    const channelDragNode = this.createTransportProteinDragNode( modelPoint, type, origin );
-    channelDragNode.pickable = false; // keyboard only
-    return channelDragNode;
+    const dragNode = this.createTransportProteinDragNode( modelPoint, type, origin );
+    dragNode.pickable = false; // keyboard only
+    return dragNode;
   }
 
   /**
@@ -349,13 +349,13 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.stepEmitter.emit( dt );
   }
 
-  public keyboardDroppedMembraneChannel(): void {
+  public keyboardDroppedMembraneTransportProtein(): void {
     this.afterRelease && this.afterRelease();
     this.afterRelease = null;
   }
 
-  public getChannelToolNode( type: TransportProteinType ): TransportProteinToolNode {
-    return this.membraneTransportAccordionBoxGroup!.getChannelToolNode( type );
+  public getTransportProteinToolNode( type: TransportProteinType ): TransportProteinToolNode {
+    return this.membraneTransportAccordionBoxGroup!.getTransportProteinToolNode( type );
   }
 }
 
