@@ -15,14 +15,15 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel, { SLOT_COUNT } from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import TransportProteinDragNode from './TransportProteinDragNode.js';
-import TransportProteinToolNode from './TransportProteinToolNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
+import TransportProteinDragNode from './TransportProteinDragNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 // This is the index of the slot in the model, or if an item has been grabbed.
 type ItemModel = number | 'grabbedItem';
@@ -205,8 +206,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
 
         const fluentPatternMessageProperty = this.isFirstGrab ?
-                              MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
-                              MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
+                                             MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
+                                             MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
         const grabbedAlert = FluentUtils.formatMessage( fluentPatternMessageProperty, {
           slotIndex: this.currentSelection!.currentSlotIndex + 1,
           slotCount: SLOT_COUNT
@@ -248,6 +249,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
               // Drop the item back into the toolbox
               alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+
+              MembraneTransportSounds.proteinReturnedToToolbox();
             }
 
             view.keyboardDroppedMembraneTransportProtein();
@@ -374,6 +377,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             // Dropped into toolbox
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getTransportProteinNodes().length === 0 ? null : 0;
             alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+
+            MembraneTransportSounds.proteinReturnedToToolbox();
           }
         }
 

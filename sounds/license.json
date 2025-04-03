@@ -1,0 +1,18 @@
+{
+  "proteinReturnSound.mp3": {
+    "text": [
+      "Copyright 2002-2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "proteinReturnSound2.mp3": {
+    "text": [
+      "Copyright 2002-2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  }
+}

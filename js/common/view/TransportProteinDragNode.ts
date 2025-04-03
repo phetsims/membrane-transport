@@ -13,13 +13,14 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import membraneTransport from '../../membraneTransport.js';
-import TransportProteinType from '../model/proteins/TransportProteinType.js';
+import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import getTransportProteinNode from './proteins/getTransportProteinNode.js';
-import TransportProteinToolNode from './TransportProteinToolNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
+import getTransportProteinNode from './proteins/getTransportProteinNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 /**
  * Display the membrane transport protein for a node, which can be dragged out of the toolbox and dropped into specific targets
@@ -91,7 +92,8 @@ export default class TransportProteinDragNode extends Node {
     };
 
     // Mouse drag listener while dragging a transport protein with mouse/touch.
-    // Do not use RichDragListener or SoundRichDragListener because the keyboard interaction is mediated by the MembraneGroupSelectView
+    // Do not use RichDragListener or SoundRichDragListener because the keyboard
+    // interaction is mediated by the MembraneGroupSelectView
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
@@ -147,10 +149,13 @@ export default class TransportProteinDragNode extends Node {
             easing: Easing.CUBIC_IN_OUT
           } );
           animation.endedEmitter.addListener( () => {
+
             this.visible = false;
           } );
 
           animation.start();
+
+          MembraneTransportSounds.proteinReturnedToToolbox();
         }
 
         observationWindow.clearSlotDragIndicatorHighlights();

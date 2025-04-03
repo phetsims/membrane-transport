@@ -5,6 +5,7 @@ import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
+import proteinReturnSound_mp3 from '../../sounds/proteinReturnSound_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import Particle from './model/Particle.js';
 
@@ -14,6 +15,9 @@ soundManager.addSoundGenerator( collectSound );
 const brightMarimbaShortSound = new SoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
 soundManager.addSoundGenerator( brightMarimbaShortSound );
 
+const proteinReturnSound = new SoundClip( proteinReturnSound_mp3 );
+soundManager.addSoundGenerator( proteinReturnSound );
+
 /**
  * Play sound effects on certain events.
  *
@@ -21,7 +25,7 @@ soundManager.addSoundGenerator( brightMarimbaShortSound );
  */
 
 export default class MembraneTransportSounds {
-  public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ):void {
+  public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
 
     brightMarimbaShortSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
                                              numberSodiumsFilled === 2 ? 1.1 :
@@ -46,6 +50,10 @@ export default class MembraneTransportSounds {
   public static gasMoleculeEnteredMembrane( particle: Particle<IntentionalAny>, direction: 'inward' | 'outward' ): void {
     collectSound.setPlaybackRate( direction === 'inward' ? 1 : 1.2 );
     collectSound.play();
+  }
+
+  public static proteinReturnedToToolbox(): void {
+    proteinReturnSound.play();
   }
 }
 
