@@ -316,7 +316,7 @@ export default class Particle<T extends ParticleType> {
                      this.mode.site === 'phosphate' ? new Vector2( 0, -12 ) :
                      this.mode.site === 'potassium1' ? new Vector2( 5, 5 ) :
                      this.mode.site === 'potassium2' ? new Vector2( 5, 10 ) :
-                     new Vector2( 0, 0 ); // TODO: IIFE throw error here
+                     ( () => { throw new Error( `Unhandled site: ${this.mode.site}` ); } )(); // IIFE to throw error
 
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
 
@@ -542,7 +542,7 @@ export default class Particle<T extends ParticleType> {
       randomWalk.targetDirection.y = sign * Math.abs( randomWalk.targetDirection.y );
     }
 
-    // Move the this according to the direction and speed
+    // Move according to the direction and speed
     this.position.x += direction.x * dt * typicalSpeed;
     this.position.y += direction.y * dt * typicalSpeed;
 
@@ -589,8 +589,8 @@ export default class Particle<T extends ParticleType> {
 
       // Match ligandA with sodium channels and ligandB with potassium channels
       const transportProteinType = this.type === 'ligandA' ?
-                          'sodiumIonLigandGatedChannel' :
-                          'potassiumIonLigandGatedChannel';
+                                   'sodiumIonLigandGatedChannel' :
+                                   'potassiumIonLigandGatedChannel';
 
       // Check if this slot has the correct type of ligand-gated channel
       if ( slot.transportProteinType === transportProteinType ) {
