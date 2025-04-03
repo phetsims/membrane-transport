@@ -131,6 +131,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               };
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
               alerter.alert( message );
+
+              // TODO: Visit more alerter cases and update the accessible name like this
+              observationWindow.accessibleName = message;
             }
           }
           else {

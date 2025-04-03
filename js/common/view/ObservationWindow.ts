@@ -89,17 +89,20 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       accessibleParagraphProperty.set( transportProteinCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : 'Zoomed-in Membrane. ' + paragraph );
     } );
 
-    // create a StringProperty that just says zoomed in membrane and the number of proteins or none
-    const accessibleNameProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
-    model.transportProteinCountProperty.link( transportProteinCount => {
-      accessibleNameProperty.set( transportProteinCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : `Zoomed-in Membrane. ${transportProteinCount} channels in there` );
-    } );
-
     super( {
       children: [ clipNode, frameNode ],
-      accessibleName: accessibleNameProperty,
+      accessibleHeading: new StringProperty( 'Proteins in Membrane' ),
+      accessibleHeadingIncrement: +3, // h1 => h3. TODO: This can be deleted once joist is using accessibleHeading, since it will number automatically
+
+      // TODO: Make sure that mutating the accessibleName works on all browsers + screen readers
+      accessibleName: new StringProperty( 'hello' ), // TODO: Should be initialized blank, but the group select view is responsible for setting the accessibleName
       accessibleHelpText: new StringProperty( 'Look for transport proteins.' ),
       accessibleParagraph: accessibleParagraphProperty
+    } );
+
+    // The membrane is only focusable when there is at least one transport protein
+    model.transportProteinCountProperty.link( transportProteinCount => {
+      this.focusable = transportProteinCount > 0;
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
