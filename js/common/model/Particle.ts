@@ -222,7 +222,7 @@ export default class Particle<T extends ParticleType> {
   }
 
   /**
-   * This is a finite-state-machinelike implementation of the particle's behavior. We use a lightweight approach,
+   * This is a finite-state-machine-like implementation of the particle's behavior. We use a lightweight approach,
    * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
    * in Projectile Data Lab's SamplingModel.launchButtonPressed
    */
@@ -445,7 +445,7 @@ export default class Particle<T extends ParticleType> {
         if ( crossedOver && Math.abs( this.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
           const transportProtein = this.mode.slot.transportProteinProperty.value;
 
-          // If fully moved through a SodiumGluoseCotransporter, close
+          // If fully moved through a SodiumGlucoseCotransporter, close
           if ( transportProtein instanceof SodiumGlucoseCotransporter ) {
             transportProtein.isOpenProperty.set( false );
           }
@@ -665,7 +665,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.conformation === 'awaiting-sodium' &&
       this.position.y < 0 && // Only approach from intracellular side
-      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no potassiums still leaving
+      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no potassium still leaving
     ) {
 
       const openSodiumSites = transportProtein.getOpenSodiumSites();
@@ -696,7 +696,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.conformation === 'awaiting-potassium' &&
       this.position.y > 0 && // Only approach from extracellular side
-      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no sodiums still leaving
+      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no sodium still leaving
     ) {
 
       const openPotassiumSites = transportProtein.getOpenPotassiumSites();
