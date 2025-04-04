@@ -1,22 +1,26 @@
 // Copyright 2025, University of Colorado Boulder
 
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
-import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
+import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
+import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
+import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
 import proteinReturnSound_mp3 from '../../sounds/proteinReturnSound_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import Particle from './model/Particle.js';
 
-const collectSound = new SoundClip( collect_mp3, { initialOutputLevel: 0.6 } );
-soundManager.addSoundGenerator( collectSound );
+const newSoundClip = ( sound: WrappedAudioBuffer, options?: SoundClipOptions ) => {
+  const soundClip = new SoundClip( sound, options );
+  soundManager.addSoundGenerator( soundClip );
+  return soundClip;
+};
 
-const brightMarimbaShortSound = new SoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
-soundManager.addSoundGenerator( brightMarimbaShortSound );
-
-const proteinReturnSound = new SoundClip( proteinReturnSound_mp3 );
-soundManager.addSoundGenerator( proteinReturnSound );
+const collectSound = newSoundClip( collect_mp3, { initialOutputLevel: 0.6 } );
+const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
+const proteinReturnSound = newSoundClip( proteinReturnSound_mp3 );
+const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
 /**
  * Play sound effects on certain events.
@@ -54,6 +58,10 @@ export default class MembraneTransportSounds {
 
   public static proteinReturnedToToolbox(): void {
     proteinReturnSound.play();
+  }
+
+  public static boundaryReached(): void {
+    boundaryReachedSound.play();
   }
 }
 

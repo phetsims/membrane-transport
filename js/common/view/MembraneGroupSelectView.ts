@@ -109,6 +109,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               const currentSlotIndex = this.currentSelection!.currentSlotIndex;
 
               const newIndex = clamp( currentSlotIndex + delta, 0, SLOT_COUNT );
+              if ( newIndex === currentSlotIndex ) {
+                MembraneTransportSounds.boundaryReached();
+              }
 
               if ( newIndex === SLOT_COUNT ) {
 
