@@ -32,8 +32,6 @@ import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
-import TransportProteinDragNode from './TransportProteinDragNode.js';
-import TransportProteinToolNode from './TransportProteinToolNode.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembraneTransportAccordionBoxGroup from './MembraneTransportAccordionBoxGroup.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
@@ -42,6 +40,8 @@ import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox
 import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
 import ThumbnailNode from './ThumbnailNode.js';
+import TransportProteinDragNode from './TransportProteinDragNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -122,7 +122,7 @@ export default class MembraneTransportScreenView extends ScreenView {
         }
       },
       tandem: options.tandem.createTandem( 'timeControlNode' ),
-      left: this.observationWindow.right + MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
+      left: this.observationWindow.right + 36,
       bottom: this.layoutBounds.maxY - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
