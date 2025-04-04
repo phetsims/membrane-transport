@@ -25,6 +25,10 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
 
     super();
     this.image = new Image( naKPumpState1_svg );
+
+    // Scale down the SVG
+    this.image.setScaleMagnitude( 0.08 ); //TODO: @samreid: I added this to make the image smaller, but it is not clear if this is the best way to do it. We will also need to tweak the position I'm guessing.
+    
     this.addChild( this.image );
 
     if ( sodiumPotassiumPump ) {

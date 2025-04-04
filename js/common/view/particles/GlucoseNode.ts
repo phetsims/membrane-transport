@@ -18,7 +18,7 @@ export default class GlucoseNode extends Node {
 
     super( {
       children: [ new Image( glucose_svg, {
-        scale: 0.75
+        scale: 0.2
       } ) ]
     } );
   }

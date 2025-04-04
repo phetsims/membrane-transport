@@ -16,7 +16,7 @@ export default class SodiumIonNode extends Node {
 
     super( {
       children: [ new Image( sodiumIon_svg, {
-        scale: 1.25 // TODO: Probably should have the same scale as potassium
+        scale: 0.2// TODO: Probably should have the same scale as potassium
       } ) ]
     } );
   }

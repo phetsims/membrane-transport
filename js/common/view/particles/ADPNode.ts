@@ -16,7 +16,7 @@ export default class ADPNode extends Node {
 
     super( {
       children: [ new Image( adp_svg, {
-        scale: 4
+        scale: 0.2
       } ) ]
     } );
   }

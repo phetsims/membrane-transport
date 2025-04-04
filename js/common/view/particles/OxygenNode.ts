@@ -16,7 +16,7 @@ export default class OxygenNode extends Node {
 
     super( {
       children: [ new Image( oxygen_svg, {
-        scale: 4
+        scale: 0.2
       } ) ]
     } );
   }

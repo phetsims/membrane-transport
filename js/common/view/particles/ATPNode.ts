@@ -16,7 +16,7 @@ export default class ATPNode extends Node {
 
     super( {
       children: [ new Image( atp_svg, {
-        scale: 0.75
+        scale: 0.05
       } ) ]
     } );
   }

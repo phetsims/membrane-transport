@@ -16,7 +16,7 @@ export default class LigandBNode extends Node {
 
     super( {
       children: [ new Image( potassiumLigand_svg, {
-        scale: 0.75
+        scale: 0.1
       } ) ]
     } );
   }

@@ -16,7 +16,7 @@ export default class CarbonDioxideNode extends Node {
 
     super( {
       children: [ new Image( carbonDioxide_svg, {
-        scale: 4 // TODO: This number should probably sync with OxygenNode scale?
+        scale: 0.2 // TODO: This number should probably sync with OxygenNode scale?
       } ) ]
     } );
   }
