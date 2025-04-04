@@ -99,7 +99,7 @@ export default class SoluteBarChartNode extends Node {
     icon.top = 2;
 
     const text = new RichText( getSoluteTypeString( soluteType ), {
-      font: new PhetFont( 10 ),
+      font: new PhetFont( 14 ),
       centerX: BOX_WIDTH / 2,
       bottom: BOX_HEIGHT - 2,
       maxWidth: BOX_WIDTH * 0.8
