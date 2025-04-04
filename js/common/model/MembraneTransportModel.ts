@@ -368,6 +368,14 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   /**
+   * Returns an array of transport proteins that exist in the membrane.
+   */
+  public getProteins(): TransportProtein[] {
+    const filledSlotList = this.slots.filter( slot => slot.isFilled() );
+    return filledSlotList.map( slot => slot.transportProteinProperty.value! );
+  }
+
+  /**
    * Count the number of solutes inside or outside of the cell membrane.
    */
   public countSolutes( soluteType: SoluteType, location: 'inside' | 'outside' ): number {

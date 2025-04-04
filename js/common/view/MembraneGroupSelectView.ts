@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
+import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
-import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -12,6 +12,8 @@ import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sor
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
+import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -56,8 +58,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   public constructor( private readonly membraneTransportModel: MembraneTransportModel, private readonly view: MembraneTransportScreenView, private readonly observationWindow: ObservationWindow ) {
 
     const alerter = new Alerter( {
-      descriptionAlertNode: observationWindow,
-      alertToVoicing: false
+      descriptionAlertNode: observationWindow
     } );
 
     const groupSelectModel = new GroupSelectModel<ItemModel>( {
@@ -134,9 +135,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               };
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
               alerter.alert( message );
-
-              // TODO: Visit more alerter cases and update the accessible name like this
-              observationWindow.accessibleName = message;
             }
           }
           else {
@@ -161,6 +159,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
     observationWindow.addInputListener( deltaKeyboardListener );
 
+    const utterance = new Utterance( {
+
+      // This utterance is not registered to a Node, and so it will always be spoken.
+      // TODO: This is required because this Node does not compose Voicing. Is that too strict? Can we remove the assertion in Voicing.alertUtterance?
+      voicingCanAnnounceProperties: [ new Property( true ) ]
+    } );
+
     // Alert the user of the type of protein that has been selected, and which slot it is in.
     // This handles both initial selection and subsequent changes
     groupSelectModel.selectedGroupItemProperty.lazyLink( selectedItem => {
@@ -173,17 +178,19 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
           const transportProteinType = slot.transportProteinType;
-          const slotIndex = membraneTransportModel.getSlotIndex( slot );
+          const filledProteins = membraneTransportModel.getProteins();
+          const proteinIndex = filledProteins.indexOf( slot.transportProteinProperty.value! );
+
           const transportProteinName = transportProteinType ? getBriefProteinName( transportProteinType ) : 'empty';
 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
 
-            alerter.alert( new PatternMessageProperty( MembraneTransportMessages.selectedTransportProteinInSlotMessageProperty, {
-              channelName: transportProteinName,
-              slotIndex: slotIndex + 1,
-              slotCount: SLOT_COUNT
-            } ) );
+            utterance.alert = new ResponsePacket( {
+              nameResponse: transportProteinName,
+              objectResponse: `Open, ${proteinIndex + 1} of ${filledProteins.length}`
+            } );
+            alerter.alert( utterance );
           }
         }
       }
