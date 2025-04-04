@@ -31,20 +31,18 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
     this.addChild( this.image );
 
     if ( sodiumPotassiumPump ) {
-      sodiumPotassiumPump.isOpenProperty.link( open => {
-        this.image.image = open ? naKPumpState1_svg : naKPumpState2_svg;
-      } );
-
-      this.text = new Text( sodiumPotassiumPump.conformation );
+      this.text = new Text( sodiumPotassiumPump.stateProperty.value );
       this.addChild( this.text );
     }
   }
 
   public override step( dt: number ): void {
     if ( this.sodiumPotassiumPump && this.text ) {
-      this.text.string = this.sodiumPotassiumPump.conformation;
-      this.image.image = this.sodiumPotassiumPump.conformation === 'awaiting-sodium' ? naKPumpState1_svg :
-                         this.sodiumPotassiumPump.conformation === 'awaiting-phosphate' ? naKPumpState2_svg :
+
+      // TODO: Move any of this to a stateProperty.link?
+      this.text.string = this.sodiumPotassiumPump.stateProperty.value;
+      this.image.image = this.sodiumPotassiumPump.stateProperty.value === 'awaiting-sodium' ? naKPumpState1_svg :
+                         this.sodiumPotassiumPump.stateProperty.value === 'awaiting-phosphate' ? naKPumpState2_svg :
                          naKPumpState3_svg;
     }
   }

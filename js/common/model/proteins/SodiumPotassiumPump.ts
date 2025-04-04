@@ -20,14 +20,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
+import TransportProteinType from './TransportProteinType.js';
 
-export default class SodiumPotassiumPump extends TransportProtein {
+// TODO: Rename more like 'idle', 'hasSodium', 'hasPotassium' etc.
+export default class SodiumPotassiumPump extends TransportProtein<'awaiting-sodium' | 'awaiting-phosphate' | 'awaiting-potassium'> {
 
-  public conformation: 'awaiting-sodium' | 'awaiting-phosphate' | 'awaiting-potassium' = 'awaiting-sodium';
+  public constructor(
+    model: MembraneTransportModel,
+    type: TransportProteinType,
+    position: number
+  ) {
+    super( model, type, position, 'awaiting-sodium' );
+  }
 
   private isSiteOpen( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' ): boolean {
     return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
@@ -113,8 +121,6 @@ export default class SodiumPotassiumPump extends TransportProtein {
   }
 
 
-  public readonly isOpenProperty: BooleanProperty = new BooleanProperty( false );
-
   public override step( dt: number ): void {
 
     const slot = this.model.getSlotForTransportProtein( this )!;
@@ -129,17 +135,17 @@ export default class SodiumPotassiumPump extends TransportProtein {
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'sodium3' );
 
-    if ( this.conformation === 'awaiting-sodium' ) {
+    if ( this.stateProperty.value === 'awaiting-sodium' ) {
 
       if ( sodium1 && sodium2 && sodium3 ) {
-        this.conformation = 'awaiting-phosphate';
+        this.stateProperty.value = 'awaiting-phosphate';
       }
     }
-    else if ( this.conformation === 'awaiting-phosphate' ) {
+    else if ( this.stateProperty.value === 'awaiting-phosphate' ) {
 
       //
     }
-    else if ( this.conformation === 'awaiting-potassium' ) {
+    else if ( this.stateProperty.value === 'awaiting-potassium' ) {
 
       //
     }
@@ -163,8 +169,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'sodium3' );
-    this.conformation = 'awaiting-potassium';
-    this.isOpenProperty.set( true );
+    this.stateProperty.value = 'awaiting-potassium';
 
     // Move solutes through the open sodium potassium pump
     sodium1!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
@@ -172,7 +177,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
     sodium3!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
   }
 
-  // Open upward, letting sodiums go outside the cell
+  // Open upward, letting sodium go outside the cell
   public openDownward(): void {
 
     const slot = this.model.getSlotForTransportProtein( this )!;
@@ -183,8 +188,7 @@ export default class SodiumPotassiumPump extends TransportProtein {
     const potassium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                           solute.mode.slot === slot &&
                                                           solute.mode.site === 'potassium2' );
-    this.conformation = 'awaiting-sodium';
-    this.isOpenProperty.set( false );
+    this.stateProperty.value = 'awaiting-sodium';
 
     // Move solutes through the open sodium potassium pump
     potassium1!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };

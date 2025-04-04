@@ -7,8 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
@@ -19,11 +17,11 @@ import TransportProtein from './TransportProtein.js';
 // Time in seconds that must elapse after a ligand unbinds before another can bind
 const REBINDING_DELAY = 5;
 
-export default class LigandGatedChannel extends TransportProtein {
+export default class LigandGatedChannel extends TransportProtein<'closed' | 'ligandBoundClosed' | 'ligandBoundOpen'> {
 
-  public readonly isLigandBoundProperty = new BooleanProperty( false );
-
-  public readonly isOpenProperty: TReadOnlyProperty<boolean> = this.isLigandBoundProperty;
+  // public readonly isLigandBoundProperty = new BooleanProperty( false );
+  //
+  // public readonly isOpenProperty: TReadOnlyProperty<boolean> = this.isLigandBoundProperty;
 
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;
@@ -38,13 +36,17 @@ export default class LigandGatedChannel extends TransportProtein {
   private timeSinceUnbound = REBINDING_DELAY; // Start ready to bind
 
   public constructor( model: MembraneTransportModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
-    super( model, type, position );
+    super( model, type, position, 'closed' );
+  }
+
+  public get isLigandBound(): boolean {
+    return this.stateProperty.value === 'ligandBoundClosed' || this.stateProperty.value === 'ligandBoundOpen';
   }
 
   public override step( dt: number ): void {
 
     // If a ligand is bound, increment the timer
-    if ( this.isLigandBoundProperty.value ) {
+    if ( this.isLigandBound ) {
       this.timeSinceLigandBound += dt;
 
       // After the binding duration, release the ligand
@@ -64,7 +66,7 @@ export default class LigandGatedChannel extends TransportProtein {
    * Returns whether the channel is available for binding (not currently bound and past the rebinding delay)
    */
   public isAvailableForBinding(): boolean {
-    return !this.isLigandBoundProperty.value && this.timeSinceUnbound >= REBINDING_DELAY;
+    return !this.isLigandBound && this.timeSinceUnbound >= REBINDING_DELAY;
   }
 
   /**
@@ -74,7 +76,7 @@ export default class LigandGatedChannel extends TransportProtein {
 
     // Only bind if not already bound and past the rebinding delay
     if ( this.isAvailableForBinding() ) {
-      this.isLigandBoundProperty.value = true;
+      this.stateProperty.value = 'ligandBoundClosed';
       this.boundLigand = ligand;
       this.timeSinceLigandBound = 0;
 
@@ -92,7 +94,7 @@ export default class LigandGatedChannel extends TransportProtein {
       this.boundLigand.mode = this.boundLigand.createRandomWalkMode();
 
       // Clear the bound state
-      this.isLigandBoundProperty.value = false;
+      this.stateProperty.value = 'closed';
       this.boundLigand = null;
       this.timeSinceLigandBound = 0;
       this.timeSinceUnbound = 0; // Reset the unbinding timer

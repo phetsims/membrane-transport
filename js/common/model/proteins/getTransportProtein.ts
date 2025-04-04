@@ -1,12 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import TransportProtein from './TransportProtein.js';
-import TransportProteinType from './TransportProteinType.js';
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './SodiumPotassiumPump.js';
+import TransportProtein from './TransportProtein.js';
+import TransportProteinType from './TransportProteinType.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
 
 /**

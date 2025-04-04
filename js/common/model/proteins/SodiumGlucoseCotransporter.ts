@@ -6,13 +6,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
+import TransportProteinType from './TransportProteinType.js';
 
-export default class SodiumGlucoseCotransporter extends TransportProtein {
+export default class SodiumGlucoseCotransporter extends TransportProtein<'openToOutside' | 'openToInside'> {
 
-  public readonly isOpenProperty: BooleanProperty = new BooleanProperty( false );
+  public constructor( model: MembraneTransportModel, type: TransportProteinType, position: number ) {
+    super( model, type, position, 'openToOutside' );
+  }
 
   public override step( dt: number ): void {
 
@@ -29,7 +32,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein {
                                                         solute.mode.site === 'right' );
 
     if ( leftIon && glucose && rightIon ) {
-      this.isOpenProperty.set( true );
+      this.stateProperty.value = 'openToInside';
 
       // Move solutes through the open transport protein
       leftIon.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };

@@ -6,29 +6,24 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 
-export default class VoltageGatedChannel extends TransportProtein {
-
-  public readonly isOpenProperty: TReadOnlyProperty<boolean>;
+export default class VoltageGatedChannel extends TransportProtein<'open' | 'closed'> {
 
   public constructor( model: MembraneTransportModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
-    super( model, type, position );
+    super( model, type, position, 'closed' );
 
     // * 3 point control that controls the open/close states of the Na and K channels separately and possibly instantaneously.
     // * -70: resting, both closed
     // * -50: Na open, K closed
     // * +30: Na closed, K open
-    this.isOpenProperty = new DerivedProperty( [ model.membraneVoltagePotentialProperty ], voltage => {
-      return voltage === '-70' ? false :
-             voltage === '-50' ? ( type === 'sodiumIonVoltageGatedChannel' ) :
-             voltage === '30' ? ( type === 'potassiumIonVoltageGatedChannel' ) :
-
-             ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
+    model.membraneVoltagePotentialProperty.link( voltage => {
+      this.stateProperty.value = voltage === '-70' ? 'closed' :
+                                 voltage === '-50' ? ( type === 'sodiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
+                                 voltage === '30' ? ( type === 'potassiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
+                                 ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
     } );
   }
 }

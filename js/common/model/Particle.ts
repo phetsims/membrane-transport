@@ -20,11 +20,13 @@ import MembraneTransportConstants from '../../common/MembraneTransportConstants.
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
-import TransportProtein from './proteins/TransportProtein.js';
-import TransportProteinType from './proteins/TransportProteinType.js';
+import LeakageChannel from './proteins/LeakageChannel.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './proteins/SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
+import TransportProtein from './proteins/TransportProtein.js';
+import TransportProteinType from './proteins/TransportProteinType.js';
+import VoltageGatedChannel from './proteins/VoltageGatedChannel.js';
 import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
 
@@ -342,7 +344,7 @@ export default class Particle<T extends ParticleType> {
 
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
 
-        if ( this.type === 'sodiumIon' && sodiumPotassiumPump.conformation === 'awaiting-sodium' ) {
+        if ( this.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'awaiting-sodium' ) {
 
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
@@ -352,7 +354,7 @@ export default class Particle<T extends ParticleType> {
 
           MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
         }
-        else if ( this.type === 'atp' && sodiumPotassiumPump.conformation === 'awaiting-phosphate' ) {
+        else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'awaiting-phosphate' ) {
 
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
@@ -368,7 +370,7 @@ export default class Particle<T extends ParticleType> {
           sodiumPotassiumPump.openUpward();
           MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
         }
-        else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.conformation === 'awaiting-potassium' ) {
+        else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'awaiting-potassium' ) {
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
             slot: this.mode.slot,
@@ -457,7 +459,7 @@ export default class Particle<T extends ParticleType> {
 
           // If fully moved through a SodiumGlucoseCotransporter, close
           if ( transportProtein instanceof SodiumGlucoseCotransporter ) {
-            transportProtein.isOpenProperty.set( false );
+            transportProtein.stateProperty.value = 'openToInside';
           }
         }
       }
@@ -625,15 +627,17 @@ export default class Particle<T extends ParticleType> {
     const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-    if ( transportProtein.isOpenProperty.value && model.isTransportProteinSoluteFree( slot ) ) {
-      if ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) {
-        this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-        return true;
-      }
+    if ( model.isTransportProteinSoluteFree( slot ) ) {
 
-      if ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) {
-        this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-        return true;
+      if ( transportProtein instanceof LeakageChannel ||
+           ( transportProtein instanceof LigandGatedChannel && transportProtein.stateProperty.value === 'ligandBoundOpen' ) ||
+           ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' ) ) {
+
+        if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
+             ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
+          this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+          return true;
+        }
       }
     }
 
@@ -647,7 +651,7 @@ export default class Particle<T extends ParticleType> {
       this.position.y > 0 &&
 
       // Don't approach if other solutes are already passing through
-      !transportProtein.isOpenProperty.value
+      transportProtein.stateProperty.value === 'openToInside'
     ) {
 
       if ( this.type === 'sodiumIon' ) {
@@ -673,7 +677,7 @@ export default class Particle<T extends ParticleType> {
       this.type === 'sodiumIon' &&
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
-      transportProtein.conformation === 'awaiting-sodium' &&
+      transportProtein.stateProperty.value === 'awaiting-sodium' &&
       this.position.y < 0 && // Only approach from intracellular side
       !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no potassium still leaving
     ) {
@@ -692,7 +696,7 @@ export default class Particle<T extends ParticleType> {
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
       this.position.y < 0 && // Only approach from intracellular side
-      transportProtein.conformation === 'awaiting-phosphate' &&
+      transportProtein.stateProperty.value === 'awaiting-phosphate' &&
       !transportProtein.isATPEnRoute()
     ) {
 
@@ -704,7 +708,7 @@ export default class Particle<T extends ParticleType> {
       this.type === 'potassiumIon' &&
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
-      transportProtein.conformation === 'awaiting-potassium' &&
+      transportProtein.stateProperty.value === 'awaiting-potassium' &&
       this.position.y > 0 && // Only approach from extracellular side
       !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no sodium still leaving
     ) {
