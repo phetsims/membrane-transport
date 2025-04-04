@@ -27,13 +27,13 @@ export default class LigandGatedChannel extends TransportProtein {
 
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;
-  
+
   // Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time.
   private readonly bindingDuration = 7;
-  
+
   // Tracks how long the current ligand has been bound
   private timeSinceLigandBound = 0;
-  
+
   // Tracks time since a ligand was unbound, used for rebinding delay
   private timeSinceUnbound = REBINDING_DELAY; // Start ready to bind
 
@@ -46,7 +46,7 @@ export default class LigandGatedChannel extends TransportProtein {
     // If a ligand is bound, increment the timer
     if ( this.isLigandBoundProperty.value ) {
       this.timeSinceLigandBound += dt;
-      
+
       // After the binding duration, release the ligand
       // TODO: Prevent solutes from passing through if this.timeSinceLigandBound >= this.bindingDuration, so that we don't end up in an infinite loop
       if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand && !this.hasSolutesMovingThroughTransportProtein() ) {
@@ -59,14 +59,14 @@ export default class LigandGatedChannel extends TransportProtein {
       this.timeSinceUnbound += dt;
     }
   }
-  
+
   /**
    * Returns whether the channel is available for binding (not currently bound and past the rebinding delay)
    */
   public isAvailableForBinding(): boolean {
     return !this.isLigandBoundProperty.value && this.timeSinceUnbound >= REBINDING_DELAY;
   }
-  
+
   /**
    * Called when a ligand hits the membrane near this channel
    */
@@ -82,7 +82,7 @@ export default class LigandGatedChannel extends TransportProtein {
       ligand.mode = { type: 'ligandBound', slot: null };
     }
   }
-  
+
   /**
    * Release the bound ligand if any
    */
@@ -90,7 +90,7 @@ export default class LigandGatedChannel extends TransportProtein {
     if ( this.boundLigand ) {
       // Reset the ligand to random walk mode
       this.boundLigand.mode = this.boundLigand.createRandomWalkMode();
-      
+
       // Clear the bound state
       this.isLigandBoundProperty.value = false;
       this.boundLigand = null;
@@ -104,8 +104,9 @@ export default class LigandGatedChannel extends TransportProtein {
    */
   public getBindingPosition(): Vector2 {
 
-    // For now, just return the top right of the bounds
-    return new Vector2( this.bounds.maxX, this.bounds.maxY );
+    return this.type === 'sodiumIonLigandGatedChannel' ?
+           new Vector2( this.bounds.minX, this.bounds.maxY ) :
+           new Vector2( this.bounds.minX - 2.75, this.bounds.maxY + 3.5 );
   }
 }
 

@@ -13,8 +13,7 @@ import ADPNode from './ADPNode.js';
 import ATPNode from './ATPNode.js';
 import CarbonDioxideNode from './CarbonDioxideNode.js';
 import GlucoseNode from './GlucoseNode.js';
-import LigandANode from './LigandANode.js';
-import LigandBNode from './LigandBNode.js';
+import LigandParticleNode from './LigandParticleNode.js';
 import OxygenNode from './OxygenNode.js';
 import PhosphateNode from './PhosphateNode.js';
 import PotassiumIonNode from './PotassiumIonNode.js';
@@ -26,8 +25,8 @@ const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): N
                        particleType === 'sodiumIon' ? new SodiumIonNode() :
                        particleType === 'potassiumIon' ? new PotassiumIonNode() :
                        particleType === 'glucose' ? new GlucoseNode() :
-                       particleType === 'ligandA' ? new LigandANode() :
-                       particleType === 'ligandB' ? new LigandBNode() :
+                       particleType === 'ligandA' ? new LigandParticleNode( particleType ) :
+                       particleType === 'ligandB' ? new LigandParticleNode( particleType ) :
                        particleType === 'atp' ? new ATPNode() :
                        particleType === 'adp' ? new ADPNode() :
                        particleType === 'phosphate' ? new PhosphateNode() :

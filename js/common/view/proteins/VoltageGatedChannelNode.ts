@@ -7,13 +7,12 @@
  */
 
 import Image from '../../../../../scenery/js/nodes/Image.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
-
-import sodiumVoltageGatedMinus70mV_svg from '../../../../images/sodiumVoltageGatedMinus70mV_svg.js';
-import sodiumVoltageGatedMinus50mV_svg from '../../../../images/sodiumVoltageGatedMinus50mV_svg.js';
-import sodiumVoltageGatedPlus30mV_svg from '../../../../images/sodiumVoltageGatedPlus30mV_svg.js';
 import potassiumVoltageGatedMinus70and50mV_svg from '../../../../images/potassiumVoltageGatedMinus70and50mV_svg.js';
 import potassiumVoltageGatedPlus30mV_svg from '../../../../images/potassiumVoltageGatedPlus30mV_svg.js';
+import sodiumVoltageGatedMinus50mV_svg from '../../../../images/sodiumVoltageGatedMinus50mV_svg.js';
+
+import sodiumVoltageGatedMinus70mV_svg from '../../../../images/sodiumVoltageGatedMinus70mV_svg.js';
+import sodiumVoltageGatedPlus30mV_svg from '../../../../images/sodiumVoltageGatedPlus30mV_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
@@ -21,7 +20,6 @@ import ProteinNode from './ProteinNode.js';
 
 export default class VoltageGatedChannelNode extends ProteinNode {
 
-  private readonly text: Text | null = null;
   private readonly image: Image;
 
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {

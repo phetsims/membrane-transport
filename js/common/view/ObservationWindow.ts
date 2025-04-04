@@ -24,8 +24,7 @@ import MembraneGroupSelectView from './MembraneGroupSelectView.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowTransportProteinLayer, { SlottedNode } from './ObservationWindowTransportProteinLayer.js';
-import LigandANode from './particles/LigandANode.js';
-import LigandBNode from './particles/LigandBNode.js';
+import LigandParticleNode from './particles/LigandParticleNode.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
@@ -126,7 +125,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       //   See LigandNode where input listeners opt out of tandems.
       const groupTandem = tandem.createTandem( 'ligandNodes' ).createGroupTandem( 'ligandNode' );
 
-      const ligandViewNodes = [ new LigandANode(), new LigandBNode() ];
+      const ligandViewNodes = [ new LigandParticleNode( 'ligandA' ), new LigandParticleNode( 'ligandB' ) ];
       ligandViewNodes.forEach( ( ligandViewNode, j ) => {
         for ( let i = 0; i < MembraneTransportConstants.LIGAND_COUNT; i++ ) {
           const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * MembraneTransportConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, groupTandem.createNextTandem(), i === 0 );
