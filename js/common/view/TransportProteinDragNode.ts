@@ -91,6 +91,16 @@ export default class TransportProteinDragNode extends Node {
       } );
     };
 
+    const inContactWithWallProperty = new DerivedProperty( [ positionProperty, modelBoundsProperty ], ( position, bounds ) => {
+      return position.x === bounds.minX || position.x === bounds.maxX || position.y === bounds.minY || position.y === bounds.maxY;
+    } );
+
+    inContactWithWallProperty.lazyLink( inContactWithWall => {
+      if ( inContactWithWall ) {
+        MembraneTransportSounds.boundaryReached();
+      }
+    } );
+
     // Mouse drag listener while dragging a transport protein with mouse/touch.
     // Do not use RichDragListener or SoundRichDragListener because the keyboard
     // interaction is mediated by the MembraneGroupSelectView
