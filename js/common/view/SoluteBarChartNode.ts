@@ -101,7 +101,9 @@ export default class SoluteBarChartNode extends Node {
     const text = new RichText( getSoluteTypeString( soluteType ), {
       font: new PhetFont( 14 ),
       centerX: BOX_WIDTH / 2,
-      bottom: BOX_HEIGHT - 2,
+
+      // Use y instead of bottom so the text baselines will align
+      y: BOX_HEIGHT - 8,
       maxWidth: BOX_WIDTH * 0.8
     } );
     const originExtent = 50;
