@@ -17,6 +17,7 @@ import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
 import ProteinNode from './ProteinNode.js';
 
+// TODO: It is unclear from the artwork how/when to show the different states
 export default class SodiumGlucoseCotransporterNode extends ProteinNode {
 
   private readonly image: Image;
