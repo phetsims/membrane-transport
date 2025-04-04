@@ -15,9 +15,7 @@ export default class PotassiumIonNode extends Node {
   public constructor() {
 
     super( {
-      children: [ new Image( potassiumIon_svg, {
-        scale: 0.2
-      } ) ]
+      children: [ new Image( potassiumIon_svg ) ]
     } );
   }
 }

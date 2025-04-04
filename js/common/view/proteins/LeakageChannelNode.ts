@@ -1,7 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
+import Image from '../../../../../scenery/js/nodes/Image.js';
+import potassiumLeakage_svg from '../../../../images/potassiumLeakage_svg.js';
+
+import sodiumLeakage_svg from '../../../../images/sodiumLeakage_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import ProteinNode from './ProteinNode.js';
 
 /**
@@ -11,26 +15,17 @@ import ProteinNode from './ProteinNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class LeakageChannelNode extends ProteinNode {
-  public constructor( public readonly type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' ) {
+
+  public constructor( type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' ) {
 
     super();
+    const image = new Image( type === 'sodiumIonLeakageChannel' ? sodiumLeakage_svg : potassiumLeakage_svg );
 
-    const modelWidth = 40;
-    const modelHeight = 52;
+    // Scale down the SVG
+    //TODO: @jessegreenberg: We are confused why we cannot use the same scale as in the canvas. The svgs are relatively sized correctly, so the same scale should work, but there must be some other scale at play.
+    image.setScaleMagnitude( MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE );
 
-    const cornerRound = 4;
-
-    // For the leakage channels, the sodium pore should be smaller than the potassium pore
-    const poreSize = type === 'sodiumIonLeakageChannel' ? 8 : 12;
-    const sideWidth = modelWidth / 2 - poreSize / 2;
-
-    const backgroundRectangle = new Rectangle( 0, 0, modelWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(191,191,191)', stroke: 'black', lineWidth: 2 } );
-    const leftPore = new Rectangle( 0, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(254,254,254)', stroke: 'black', lineWidth: 2 } );
-    const rightPore = new Rectangle( modelWidth - sideWidth, 0, sideWidth, modelHeight, cornerRound, cornerRound, { fill: 'rgb(254,254,254)', stroke: 'black', lineWidth: 2 } );
-
-    this.addChild( backgroundRectangle );
-    this.addChild( leftPore );
-    this.addChild( rightPore );
+    this.addChild( image );
   }
 }
 

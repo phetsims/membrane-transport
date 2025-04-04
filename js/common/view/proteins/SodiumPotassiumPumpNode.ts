@@ -13,6 +13,7 @@ import naKPumpState1_svg from '../../../../images/naKPumpState1_svg.js';
 import naKPumpState2_svg from '../../../../images/naKPumpState2_svg.js';
 import naKPumpState3_svg from '../../../../images/naKPumpState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import ProteinNode from './ProteinNode.js';
 
@@ -25,10 +26,8 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
 
     super();
     this.image = new Image( naKPumpState1_svg );
+    this.image.setScaleMagnitude( MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE );
 
-    // Scale down the SVG
-    this.image.setScaleMagnitude( 0.08 ); //TODO: @samreid: I added this to make the image smaller, but it is not clear if this is the best way to do it. We will also need to tweak the position I'm guessing.
-    
     this.addChild( this.image );
 
     if ( sodiumPotassiumPump ) {

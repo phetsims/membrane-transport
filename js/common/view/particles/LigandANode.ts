@@ -15,9 +15,7 @@ export default class LigandANode extends Node {
   public constructor() {
 
     super( {
-      children: [ new Image( sodiumLigand_svg, {
-        scale: 0.1
-      } ) ]
+      children: [ new Image( sodiumLigand_svg ) ]
     } );
   }
 }

@@ -15,9 +15,7 @@ export default class PhosphateNode extends Node {
   public constructor() {
 
     super( {
-      children: [ new Image( phosphate_svg, {
-        scale: 0.2
-      } ) ]
+      children: [ new Image( phosphate_svg ) ]
     } );
   }
 }

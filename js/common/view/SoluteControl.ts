@@ -183,10 +183,8 @@ export default class SoluteControl extends Panel {
       center: spinner.center,
 
       // Chosen by inspection to make the icons small enough for the largest icon fit between spinner buttons.
-      maxWidth: 40
-
-      // TODO: Request new artwork because the icons seem to have extra white space above/below them.
-      //   We were trying to use maxHeight for consistently sized icons.
+      maxWidth: 40,
+      maxHeight: 20
     } );
 
     // TODO (phet-io) Take tandem out of options and make it a required parameter. Pass it through for the buttons.

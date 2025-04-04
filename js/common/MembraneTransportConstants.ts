@@ -58,6 +58,9 @@ export default class MembraneTransportConstants {
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
   public static readonly TRANSPORT_PROTEIN_WIDTH = 10; // Width in model coordinates
 
+  // TODO: Is this number really independent from TRANSPORT_PROTEIN_WIDTH?
+  public static readonly TRANSPORT_PROTEIN_IMAGE_SCALE = 0.1;
+
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;
 
@@ -78,7 +81,6 @@ export default class MembraneTransportConstants {
   );
 
   public static readonly PANEL_TITLE_FONT_SIZE = 18;
-  public static readonly PARTICLE_NODE_ICON_SCALE = 0.65;
 }
 
 membraneTransport.register( 'MembraneTransportConstants', MembraneTransportConstants );

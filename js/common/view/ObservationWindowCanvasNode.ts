@@ -115,7 +115,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       const y = this.modelViewTransform.modelToViewY( solute.position.y );
 
       // A scale from model to view coordinates.
-      const scale = this.modelViewTransform.modelToViewDeltaX( solute.dimension.width ) / image.width;
+      const scale = 0.02 * 1.2; // TODO: why is this scale different than the leakage channel scale
 
       const width = image.width * scale;
       const height = image.height * scale;
@@ -181,21 +181,6 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     this.moveTo( context, point.x - radius, point.y );
     this.lineTo( context, point.x + radius, point.y );
     context.stroke();
-  }
-
-  public static drawRoundedRectangle( context: CanvasRenderingContext2D, modelViewTransform: ModelViewTransform2, x: number, y: number, width: number, height: number, radius: number ): void {
-    const xView = modelViewTransform.modelToViewX( x );
-    const yView = modelViewTransform.modelToViewY( y );
-    const widthView = modelViewTransform.modelToViewDeltaX( width );
-    const heightView = modelViewTransform.modelToViewDeltaY( height );
-    const radiusView = modelViewTransform.modelToViewDeltaX( radius );
-
-    context.beginPath();
-    context.moveTo( xView + radiusView, yView - heightView / 2 );
-    context.arcTo( xView + widthView, yView - heightView / 2, xView + widthView, yView + heightView / 2, radiusView );
-    context.arcTo( xView + widthView, yView + heightView / 2, xView, yView + heightView / 2, radiusView );
-    context.arcTo( xView, yView + heightView / 2, xView, yView - heightView / 2, radiusView );
-    context.arcTo( xView, yView - heightView / 2, xView + widthView, yView - heightView / 2, radiusView );
   }
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {

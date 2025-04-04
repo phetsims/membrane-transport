@@ -243,7 +243,8 @@ export default class Particle<T extends ParticleType> {
       }
       else {
 
-        // Gradual fade based on distance from membrane
+        // Gradual fade over time after moving inside the cell.
+        // TODO: explain this better or find out why it's necessary
         this.opacity = clamp( this.opacity - 0.01, 0.5, 1 );
       }
     }
@@ -251,6 +252,15 @@ export default class Particle<T extends ParticleType> {
     // Free phosphate molecules move normally for a while, then are absorbed
     if ( this.type === 'phosphate' && this.mode.type === 'randomWalk' && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
       this.opacity -= 0.01;
+      if ( this.opacity <= 0 ) {
+        model.removeParticle( this );
+        return;
+      }
+    }
+
+    // Free phosphate molecules move normally for a while, then are absorbed
+    if ( this.type === 'adp' && this.mode.type === 'randomWalk' ) {
+      this.opacity -= 0.001;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
         return;
@@ -310,9 +320,9 @@ export default class Particle<T extends ParticleType> {
 
       const currentPosition = this.position.copy();
 
-      const offset = this.mode.site === 'sodium1' ? new Vector2( -5, -10 ) :
-                     this.mode.site === 'sodium2' ? new Vector2( -5, -5 ) :
-                     this.mode.site === 'sodium3' ? new Vector2( -5, 0 ) :
+      const offset = this.mode.site === 'sodium1' ? new Vector2( -4.3, -7.6 ) :
+                     this.mode.site === 'sodium2' ? new Vector2( -4.2, -1.3 ) :
+                     this.mode.site === 'sodium3' ? new Vector2( 2.8, -4.5 ) :
                      this.mode.site === 'phosphate' ? new Vector2( 0, -12 ) :
                      this.mode.site === 'potassium1' ? new Vector2( 5, 5 ) :
                      this.mode.site === 'potassium2' ? new Vector2( 5, 10 ) :

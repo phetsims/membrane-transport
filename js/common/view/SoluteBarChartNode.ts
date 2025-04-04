@@ -88,7 +88,13 @@ export default class SoluteBarChartNode extends Node {
     const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, { fill: 'white', opacity: 0.2, stroke: 'black', lineWidth: 1 } );
 
     const icon = getParticleNode( soluteType );
-    icon.setScaleMagnitude( MembraneTransportConstants.PARTICLE_NODE_ICON_SCALE );
+
+    // We want to keep the relative sizes correct for the gas solutes and the ions
+    // but the ATP and Glucose are much larger, so we scale them down.
+    icon.setScaleMagnitude( soluteType === 'glucose' ? 0.075 :
+                            soluteType === 'potassiumIon' ? 0.08 :
+                            0.1 );
+
     icon.centerX = BOX_WIDTH / 2;
     icon.top = 2;
 

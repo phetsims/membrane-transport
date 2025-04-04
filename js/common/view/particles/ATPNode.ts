@@ -15,9 +15,7 @@ export default class ATPNode extends Node {
   public constructor() {
 
     super( {
-      children: [ new Image( atp_svg, {
-        scale: 0.05
-      } ) ]
+      children: [ new Image( atp_svg ) ]
     } );
   }
 }
