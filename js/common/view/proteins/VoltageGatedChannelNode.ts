@@ -1,164 +1,51 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Matrix3 from '../../../../../dot/js/Matrix3.js';
-import Vector2 from '../../../../../dot/js/Vector2.js';
-import Shape from '../../../../../kite/js/Shape.js';
-import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import Path from '../../../../../scenery/js/nodes/Path.js';
-import membraneTransport from '../../../membraneTransport.js';
-import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
-import ProteinNode from './ProteinNode.js';
-
 /**
- * Uses canvas to render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
- * in the membrane.
- *
- * Use https://github.com/pbeshai/d3-interpolate-path for path interpolation.
+ * Artwork for the voltage gated channel protein.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import { sodiumVoltageGatedShapeClosedNegative70, sodiumVoltageGatedShapeClosedPositive30, sodiumVoltageGatedShapeOpenNegative50 } from './SodiumVoltageGatedChannelShapes.js';
 
-const parse = ( segment: string ) => segment.startsWith( 'M ' ) ? segment.trim() : ( 'M ' + segment ).trim();
-const sodiumClosedNegative70Segments = sodiumVoltageGatedShapeClosedNegative70.split( ' M ' ).map( parse );
-const sodiumOpenSegments = sodiumVoltageGatedShapeOpenNegative50.split( ' M ' ).map( parse );
-const sodiumClosedPositive30Segments = sodiumVoltageGatedShapeClosedPositive30.split( ' M ' ).map( parse );
+import Image from '../../../../../scenery/js/nodes/Image.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
 
-const potassiumClosedNegative70Segments = sodiumClosedNegative70Segments;
-const potassiumOpenSegments = sodiumOpenSegments;
-const potassiumClosedPositive30Segments = sodiumClosedPositive30Segments;
-
-// Create interpolation functions between different voltage states
-const sodiumInterpolateNegative70ToNegative50: IntentionalAny[] = [];
-const sodiumInterpolateNegative50ToPositive30: IntentionalAny[] = [];
-const potassiumInterpolateNegative70ToNegative50: IntentionalAny[] = [];
-const potassiumInterpolateNegative50ToPositive30: IntentionalAny[] = [];
-
-for ( let i = 0; i < sodiumClosedNegative70Segments.length; i++ ) {
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  sodiumInterpolateNegative70ToNegative50[ i ] = window.interpolatePath( sodiumClosedNegative70Segments[ i ], sodiumOpenSegments[ i ] );
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  sodiumInterpolateNegative50ToPositive30[ i ] = window.interpolatePath( sodiumOpenSegments[ i ], sodiumClosedPositive30Segments[ i ] );
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  potassiumInterpolateNegative70ToNegative50[ i ] = window.interpolatePath( potassiumClosedNegative70Segments[ i ], potassiumClosedPositive30Segments[ i ] );
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  potassiumInterpolateNegative50ToPositive30[ i ] = window.interpolatePath( potassiumClosedPositive30Segments[ i ], potassiumOpenSegments[ i ] );
-}
-
-type TargetVoltage = '-70' | '-50' | '30';
-
-// Map string voltage values to numerical values for interpolation
-const voltageValues: Record<TargetVoltage, number> = {
-  '-70': -70,
-  '-50': -50,
-  30: 30
-};
-
-// Voltage range constants for interpolation
-const RANGE_NEGATIVE_70_TO_NEGATIVE_50 = voltageValues[ '-50' ] - voltageValues[ '-70' ];
-const RANGE_NEGATIVE_50_TO_POSITIVE_30 = voltageValues[ '30' ] - voltageValues[ '-50' ];
+import sodiumVoltageGatedMinus70mV_svg from '../../../../images/sodiumVoltageGatedMinus70mV_svg.js';
+import sodiumVoltageGatedMinus50mV_svg from '../../../../images/sodiumVoltageGatedMinus50mV_svg.js';
+import sodiumVoltageGatedPlus30mV_svg from '../../../../images/sodiumVoltageGatedPlus30mV_svg.js';
+import potassiumVoltageGatedMinus70and50mV_svg from '../../../../images/potassiumVoltageGatedMinus70and50mV_svg.js';
+import potassiumVoltageGatedPlus30mV_svg from '../../../../images/potassiumVoltageGatedPlus30mV_svg.js';
+import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
+import ProteinNode from './ProteinNode.js';
 
 export default class VoltageGatedChannelNode extends ProteinNode {
 
-  private targetVoltage: TargetVoltage = '-70';
-  private currentVoltageValue = -70;
-
-  private readonly segments: Path[] = [];
+  private readonly text: Text | null = null;
+  private readonly image: Image;
 
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
-    super( {
 
-      // By inspection, so the protein looks centered.
-      viewOffset: new Vector2( 0, 12 )
-    } );
+    super();
+    this.image = new Image( type === 'sodiumIonVoltageGatedChannel' ? sodiumVoltageGatedMinus70mV_svg : potassiumVoltageGatedMinus70and50mV_svg );
+    this.image.setScaleMagnitude( MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE );
 
-    // Draw a segment for each part of the SVG path
-    sodiumClosedNegative70Segments.forEach( ( segment, index ) => {
-      const segmentPath = new Path( new Shape( segment ).transformed( Matrix3.translation( 0, 100 ) ), {
-        stroke: 'black',
-        lineWidth: 0.4,
-        fill: index === 4 ? null : 'white',
-        scale: 4,
-        translation: new Vector2( 100, 0 )
-      } );
-      this.addChild( segmentPath );
-      this.segments.push( segmentPath );
-    } );
-
-    this.touchArea = this.localBounds.dilatedXY( 10, 10 );
-    this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
+    this.addChild( this.image );
 
     if ( channel ) {
-      channel.model.membraneVoltagePotentialProperty.link( voltage => {
-        this.targetVoltage = voltage;
+      channel.model.membraneVoltagePotentialProperty.link( membraneVoltagePotential => {
+        this.image.image = type === 'sodiumIonVoltageGatedChannel' ?
+                           ( membraneVoltagePotential === '-70' ? sodiumVoltageGatedMinus70mV_svg :
+                             membraneVoltagePotential === '-50' ? sodiumVoltageGatedMinus50mV_svg :
+                             membraneVoltagePotential === '30' ? sodiumVoltageGatedPlus30mV_svg :
+                             ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() ) :
+                           type === 'potassiumIonVoltageGatedChannel' ?
+                           ( membraneVoltagePotential === '-70' || membraneVoltagePotential === '-50' ? potassiumVoltageGatedMinus70and50mV_svg :
+                             membraneVoltagePotential === '30' ? potassiumVoltageGatedPlus30mV_svg :
+                             ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() ) :
+                           ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
       } );
     }
-  }
-
-  public override step( dt: number ): void {
-    const targetValue = voltageValues[ this.targetVoltage ];
-
-    if ( this.currentVoltageValue === targetValue ) {
-      return;
-    }
-
-    const delta = dt * 60;
-
-    // If already at target, don't regenerate the shape
-    if ( Math.abs( this.currentVoltageValue - targetValue ) < delta ) {
-      this.currentVoltageValue = targetValue;
-    }
-    else {
-
-      // step toward the targetValue by 1
-      if ( this.currentVoltageValue < targetValue ) {
-        this.currentVoltageValue += delta;
-      }
-      else {
-        this.currentVoltageValue -= delta;
-      }
-    }
-
-    // Update the shapes based on the current voltage
-    this.updateShapes();
-  }
-
-  private updateShapes(): void {
-
-    // Calculate interpolation values based on current voltage
-    let interpolationValue: number;
-    let interpolationFunction: IntentionalAny[];
-
-    if ( this.currentVoltageValue <= -50 ) {
-
-      // Interpolate between -70 and -50
-      interpolationValue = ( this.currentVoltageValue - ( -70 ) ) / RANGE_NEGATIVE_70_TO_NEGATIVE_50;
-      interpolationFunction = this.type === 'sodiumIonVoltageGatedChannel' ? sodiumInterpolateNegative70ToNegative50 : potassiumInterpolateNegative70ToNegative50;
-    }
-    else {
-
-      // Interpolate between -50 and 30
-      interpolationValue = ( this.currentVoltageValue - ( -50 ) ) / RANGE_NEGATIVE_50_TO_POSITIVE_30;
-      interpolationFunction = this.type === 'sodiumIonVoltageGatedChannel' ? sodiumInterpolateNegative50ToPositive30 : potassiumInterpolateNegative50ToPositive30;
-    }
-
-    // Clamp interpolation value between 0 and 1
-    interpolationValue = Math.max( 0, Math.min( 1, interpolationValue ) );
-
-    // Update all path shapes
-    this.segments.forEach( ( child, index ) => {
-      if ( interpolationFunction[ index ] ) {
-        child.shape = new Shape( interpolationFunction[ index ]( interpolationValue ) ).transformed( Matrix3.translation( 0, 100 ) );
-      }
-    } );
   }
 }
 

@@ -20,7 +20,7 @@ import ProteinNode from './ProteinNode.js';
 export default class SodiumPotassiumPumpNode extends ProteinNode {
 
   private readonly text: Text | null = null;
-  private image: Image;
+  private readonly image: Image;
 
   public constructor( public readonly sodiumPotassiumPump: SodiumPotassiumPump | null ) {
 
