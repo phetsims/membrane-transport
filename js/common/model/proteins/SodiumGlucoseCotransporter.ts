@@ -48,6 +48,12 @@ export default class SodiumGlucoseCotransporter extends TransportProtein {
                                               solute.mode.site === site ) === undefined;
   }
 
+  public get conformation(): 'awaiting-sodium' | 'awaiting-glucose' | 'open' {
+    return this.getOpenSodiumSites().length !== 0 ? 'awaiting-sodium' :
+           this.isGlucoseSiteOpen() ? 'awaiting-glucose' :
+           'open';
+  }
+
   /**
    * Determine open sites on the sodium glucose cotransporter for sodium ions
    */
