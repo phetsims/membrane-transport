@@ -49,11 +49,10 @@ export default class MembranePotentialPanel extends Panel {
 
         membraneVoltagePotentialRadioButtonGroup,
 
-        // TODO: i18n
-        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( 'Signs', {
+        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
           maxWidth: 140
         } ), {
-          tandem: tandem.createTandem( 'membranePotentialLabelsCheckbox' ) // TODO: Match to the signs label if we keep it
+          tandem: tandem.createTandem( 'signsCheckbox' ) // TODO: Match to the signs label if we keep it
         } )
       ]
     } );

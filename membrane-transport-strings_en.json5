@@ -38,6 +38,7 @@
 
   // Additional Controls
   membranePotential_mV: 'Membrane Potential (mV)',
+  signs: 'Signs',
   addLigands: 'Add Ligands',
   removeLigands: 'Remove Ligands',
 
