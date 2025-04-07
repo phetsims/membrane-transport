@@ -28,7 +28,7 @@ export default abstract class TransportProtein<State = IntentionalAny> { // TODO
    * @param model - reference to the containing model, so we can access information like the membrane voltage
    * @param type - the type of transport protein
    * @param position - the horizontal position of the transport protein in the membrane
-   * @param initialState - transport proteins may be in one of many states, such as 'open', 'closed', 'idle', 'sodiumBound'.
+   * @param initialState - transport proteins may be in one of many states, such as 'open', 'closed', 'openToInsideEmpty', 'openToInsideSodiumBound'.
    */
   public constructor(
     public readonly model: MembraneTransportModel,

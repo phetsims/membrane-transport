@@ -349,7 +349,7 @@ export default class Particle<T extends ParticleType> {
 
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
 
-        if ( this.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'idle' ) {
+        if ( this.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToInsideEmpty' ) {
 
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
@@ -359,7 +359,7 @@ export default class Particle<T extends ParticleType> {
 
           MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
         }
-        else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'sodiumBound' ) {
+        else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
@@ -681,7 +681,7 @@ export default class Particle<T extends ParticleType> {
       this.type === 'sodiumIon' &&
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
-      transportProtein.stateProperty.value === 'idle' &&
+      transportProtein.stateProperty.value === 'openToInsideEmpty' &&
       this.position.y < 0 && // Only approach from intracellular side
       !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no potassium still leaving
     ) {
@@ -700,7 +700,7 @@ export default class Particle<T extends ParticleType> {
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
       this.position.y < 0 && // Only approach from intracellular side
-      transportProtein.stateProperty.value === 'sodiumBound' &&
+      transportProtein.stateProperty.value === 'openToInsideSodiumBound' &&
       !transportProtein.isATPEnRoute()
     ) {
 
