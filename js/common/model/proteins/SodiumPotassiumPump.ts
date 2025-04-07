@@ -82,7 +82,7 @@ export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodi
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
 
-    // Count the number of sodiums that are filled
+    // Count the number of sodium that are filled
     let numberSodiumFilled = 0;
     if ( sodium1 ) {
       numberSodiumFilled++;
@@ -189,7 +189,6 @@ export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodi
   }
 
   // True if an ATP is on the way or waiting in the site
-  // TODO: This looks broken, is it used?
   public isATPEnRoute(): boolean {
 
     // check if an ATP is going to the site
