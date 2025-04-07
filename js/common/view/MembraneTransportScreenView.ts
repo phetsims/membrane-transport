@@ -238,9 +238,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       ...soluteControls,
       resetSolutesButton,
       soluteConcentrationsAccordionBox,
-      this.observationWindow,
-      rightSideVBox,
-      ...this.observationWindow.ligandNodes
+      this.observationWindow, // Contains the ligands. TODO: When focusing the ligands, why does the highlight show around the membrane?
+      rightSideVBox
     ];
 
     this.pdomControlAreaNode.pdomOrder = [
