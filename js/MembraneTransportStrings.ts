@@ -39,7 +39,7 @@ type StringsType = {
   'potassiumIonKPlusStringProperty': LocalizedStringProperty;
   'NaPlusKPlusPumpStringProperty': LocalizedStringProperty;
   'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
-  'membraneVoltagePotential_mVStringProperty': LocalizedStringProperty;
+  'membranePotential_mVStringProperty': LocalizedStringProperty;
   'addLigandsStringProperty': LocalizedStringProperty;
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;

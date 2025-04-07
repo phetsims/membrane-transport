@@ -7,6 +7,7 @@ import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 /**
@@ -42,8 +43,7 @@ export default class MembranePotentialPanel extends Panel {
       align: 'left',
       children: [
 
-        // TODO: i18n
-        new Text( 'Membrane Potential (mV)', {
+        new Text( MembraneTransportStrings.membranePotential_mVStringProperty, {
           maxWidth: 160
         } ),
 
