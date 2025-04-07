@@ -72,41 +72,37 @@ export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodi
 
   public getNumberOfFilledSodiumSites(): number {
 
-    const slot = this.model.getSlotForTransportProtein( this )!;
-
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium1' );
     const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium2' );
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
 
     // Count the number of sodiums that are filled
-    let numberSodiumsFilled = 0;
+    let numberSodiumFilled = 0;
     if ( sodium1 ) {
-      numberSodiumsFilled++;
+      numberSodiumFilled++;
     }
     if ( sodium2 ) {
-      numberSodiumsFilled++;
+      numberSodiumFilled++;
     }
     if ( sodium3 ) {
-      numberSodiumsFilled++;
+      numberSodiumFilled++;
     }
-    return numberSodiumsFilled;
+    return numberSodiumFilled;
   }
 
   public getNumberOfFilledPotassiumSites(): number {
 
-    const slot = this.model.getSlotForTransportProtein( this )!;
-
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'potassium1' );
     const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'potassium2' );
 
     let numberSitesFilled = 0;
@@ -122,16 +118,14 @@ export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodi
 
   public override step( dt: number ): void {
 
-    const slot = this.model.getSlotForTransportProtein( this )!;
-
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium1' );
     const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium2' );
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
 
     if ( this.stateProperty.value === 'idle' ) {
@@ -150,52 +144,44 @@ export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodi
     }
   }
 
-  public isSodiumFullyBound(): boolean {
-    return this.getOpenSodiumSites().length === 0;
-  }
-
-  // Open upward, letting sodiums go outside the cell
+  // Open upward, letting sodium go outside the cell
   public openUpward(): void {
 
-    const slot = this.model.getSlotForTransportProtein( this )!;
-
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium1' );
     const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium2' );
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === slot &&
+                                                       solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
     this.stateProperty.value = 'openToOutside';
 
     // Move solutes through the open sodium potassium pump
-    sodium1!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
-    sodium2!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'outward' };
-    sodium3!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
+    sodium1!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
+    sodium2!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'outward' };
+    sodium3!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
   }
 
   // Open upward, letting sodium go outside the cell
   public openDownward(): void {
 
-    const slot = this.model.getSlotForTransportProtein( this )!;
-
     const potassium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                          solute.mode.slot === slot &&
+                                                          solute.mode.slot === this.slot &&
                                                           solute.mode.site === 'potassium1' );
     const potassium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                          solute.mode.slot === slot &&
+                                                          solute.mode.slot === this.slot &&
                                                           solute.mode.site === 'potassium2' );
     this.stateProperty.value = 'idle';
 
     // Move solutes through the open sodium potassium pump
-    potassium1!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
-    potassium2!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward' };
+    potassium1!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
+    potassium2!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'inward' };
 
-    // release the phoshpate
+    // release the phosphate
     const phosphate = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                         solute.mode.slot === slot &&
+                                                         solute.mode.slot === this.slot &&
                                                          solute.mode.site === 'phosphate' );
     if ( phosphate ) {
       phosphate.moveInDirection( new Vector2( 0, -1 ), 0.5 );
@@ -205,7 +191,10 @@ export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodi
   // True if an ATP is on the way or waiting in the site
   // TODO: This looks broken, is it used?
   public isATPEnRoute(): boolean {
-    return false;
+
+    // check if an ATP is going to the site
+    return !!this.model.solutes.find( solute => solute.mode.type === 'moveToSodiumPotassiumPump' &&
+                                                solute.mode.slot === this.slot );
   }
 }
 
