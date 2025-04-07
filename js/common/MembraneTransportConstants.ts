@@ -20,6 +20,8 @@ import MembraneTransportQueryParameters from './MembraneTransportQueryParameters
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
 import getParticleNode from './view/particles/getParticleNode.js';
 
+let particleAspectRatioMap: Record<ParticleType, number> | null = null;
+
 export default class MembraneTransportConstants {
 
   // Size of the observation window in view coordinates
@@ -40,18 +42,21 @@ export default class MembraneTransportConstants {
   // A map of solute type to the aspect ratio of its artwork so that we can create bounds
   // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
   // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
-  // get good bounds. Hence this is a method rather than an attribute, and called during screen creation.
-  // TODO: This creates lots of particle nodes every time you create one model instance. This is a performance + garbage issue. Cache, but do not compute until the sim has started up and we have good bounds.
+  // get good bounds. Hence, this is a method rather than an attribute, and called during screen creation.
   public static getParticleAspectRatioMap(): Record<ParticleType, number> {
-    const record = {} as Record<ParticleType, number>;
-    ParticleTypes.forEach( soluteType => {
-      const myParticleNode = getParticleNode( soluteType );
-      const soluteNodeBounds = myParticleNode.bounds;
 
-      assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
-      record[ soluteType ] = soluteNodeBounds.width / soluteNodeBounds.height;
-    } );
-    return record;
+    if ( !particleAspectRatioMap ) {
+      const record = {} as Record<ParticleType, number>;
+      ParticleTypes.forEach( soluteType => {
+        const myParticleNode = getParticleNode( soluteType );
+        const soluteNodeBounds = myParticleNode.bounds;
+
+        assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
+        record[ soluteType ] = soluteNodeBounds.width / soluteNodeBounds.height;
+      } );
+      particleAspectRatioMap = record;
+    }
+    return particleAspectRatioMap;
   }
 
   public static readonly LIGAND_COUNT = 10; // Per ligand type

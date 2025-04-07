@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
@@ -44,14 +45,40 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
 
 const oxygenModelSize = 3;
 
+// Only access images after loading complete
+let carbonDioxideViewWidth: number | null = null;
+let oxygenViewWidth: number | null = null;
+
+const getCarbonDioxideViewWidth = (): number => {
+  if ( carbonDioxideViewWidth === null ) {
+    const carbonDioxideNode = getParticleNode( 'carbonDioxide' );
+    affirm( typeof carbonDioxideNode.bounds.width === 'number', 'carbonDioxideViewWidth should be a number' );
+    affirm( !isNaN( carbonDioxideNode.bounds.width ), 'carbonDioxideViewWidth should not be NaN' );
+    affirm( carbonDioxideNode.bounds.width > 0, 'carbonDioxideViewWidth should be positive' );
+    carbonDioxideViewWidth = carbonDioxideNode.bounds.width;
+  }
+
+  return carbonDioxideViewWidth;
+};
+
+const getOxygenViewWidth = (): number => {
+  if ( oxygenViewWidth === null ) {
+    const oxygenNode = getParticleNode( 'oxygen' );
+    affirm( typeof oxygenNode.bounds.width === 'number', 'carbonDioxideViewWidth should be a number' );
+    affirm( !isNaN( oxygenNode.bounds.width ), 'carbonDioxideViewWidth should not be NaN' );
+    affirm( oxygenNode.bounds.width > 0, 'carbonDioxideViewWidth should be positive' );
+    oxygenViewWidth = oxygenNode.bounds.width;
+  }
+  return oxygenViewWidth;
+};
+
 export const getParticleModelWidth = ( particleType: ParticleType ): number =>
 
   // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
   particleType === 'oxygen' ? oxygenModelSize :
 
-  // TODO: Sadly, this creates and disposes a view node every time you create a model particle. This is a performance + garbage issue.
-  // Cache them, but not until the sim has started up and we have good bounds.
-  particleType === 'carbonDioxide' ? oxygenModelSize * getParticleNode( 'carbonDioxide' ).bounds.width / getParticleNode( 'oxygen' ).bounds.width :
+    // Cache them, but not until the sim has started up, and we have good bounds.
+  particleType === 'carbonDioxide' ? oxygenModelSize * getCarbonDioxideViewWidth() / getOxygenViewWidth() :
 
   particleType === 'sodiumIon' ? 4 :
   particleType === 'potassiumIon' ? 6 :
@@ -75,6 +102,3 @@ export const getSoluteAccessibleName = ( soluteType: SoluteType ): string => {
          soluteType === 'glucose' ? 'Glucose, hexagonal ring, large' :
          'Adenosine Triphosphate, ATP, complex, large';
 };
-
-export const isSolute = ( particleType: ParticleType ): particleType is SoluteType => SoluteTypes.includes( particleType as SoluteType );
-export const isLigand = ( particleType: ParticleType ): particleType is LigandType => LigandTypes.includes( particleType as LigandType );
