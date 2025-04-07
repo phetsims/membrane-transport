@@ -327,9 +327,13 @@ export default class Particle<T extends ParticleType> {
 
       const currentPosition = this.position.copy();
 
-      const offset = this.mode.site === 'sodium1' ? new Vector2( -4.3, -7.6 ) :
-                     this.mode.site === 'sodium2' ? new Vector2( -4.2, -1.3 ) :
-                     this.mode.site === 'sodium3' ? new Vector2( 2.8, -4.5 ) :
+      // TODO: Should this be moved into the subclass? Is there another way we can get this information?
+      //   It is time consuming to find these points.
+      const offset = this.mode.site === 'sodium1' ? new Vector2( -3.5, -5.6 ) :
+                     this.mode.site === 'sodium2' ? new Vector2( -3.2, 0.8 ) :
+                     this.mode.site === 'sodium3' ? new Vector2( 3.5, -2.2 ) :
+
+                     // TODO: These need to be adjusted to match the artwork.
                      this.mode.site === 'phosphate' ? new Vector2( 0, -12 ) :
                      this.mode.site === 'potassium1' ? new Vector2( 5, 5 ) :
                      this.mode.site === 'potassium2' ? new Vector2( 5, 10 ) :
@@ -357,10 +361,14 @@ export default class Particle<T extends ParticleType> {
             site: this.mode.site
           };
 
+          // Set to the exact target position now that it is inside the pump.
+          this.position.set( targetPosition );
+
           MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
         }
         else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
+          // TODO: Initial positions need to be adjusted to match the artwork.
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
           const phosphate = new Particle( currentPosition.copy(), 'phosphate' );
@@ -369,6 +377,7 @@ export default class Particle<T extends ParticleType> {
             slot: this.mode.slot,
             site: this.mode.site
           };
+
           model.addSolute( phosphate );
           model.removeSolute( this );
 
@@ -381,6 +390,10 @@ export default class Particle<T extends ParticleType> {
             slot: this.mode.slot,
             site: this.mode.site
           };
+
+          // Set to the exact target position now that it is inside the pump.
+          this.position.set( targetPosition );
+
           MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
 
           if ( sodiumPotassiumPump.getNumberOfFilledPotassiumSites() === 2 ) {
