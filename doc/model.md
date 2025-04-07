@@ -105,3 +105,16 @@ Students using the simulation should be able to:
 - Describe how ligand and voltage signals regulate channel activity.
 - Explain how passive and active transport differ in energy requirements and direction relative to concentration
   gradients.
+
+<!-- TODO: @bfiedler Rough running list below, refine and integrate -->
+Assumptions and Simplifications:
+
+- The simulation assumes idealized conditions, such as perfect channel opening/closing and instantaneous ligand binding.
+- It does not account for complex cellular environments, interactions, or real-world kinetics.
+- It does not include all possible transport mechanisms or cellular processes, allowing students to grasp fundamental principles without overwhelming complexity.
+- Lipid Bilayer movement is suggested using slight oscillation of the membrane, but not modeled in detail.
+- The simulation does not include the effects of temperature, pressure, or other environmental factors on diffusion rates.
+- Scales of molecules and transport proteins are not to scale, as the simulation is designed for educational clarity rather than precise molecular representation.
+
+<!-- TODO: @bfiedler remove below and transfer to teacher tips before publication -->
+Teaching Tips
