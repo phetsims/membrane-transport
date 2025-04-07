@@ -41,8 +41,8 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
 
       // TODO: Move any of this to a stateProperty.link?
       this.text.string = this.sodiumPotassiumPump.stateProperty.value;
-      this.image.image = this.sodiumPotassiumPump.stateProperty.value === 'awaiting-sodium' ? naKPumpState1_svg :
-                         this.sodiumPotassiumPump.stateProperty.value === 'awaiting-phosphate' ? naKPumpState2_svg :
+      this.image.image = this.sodiumPotassiumPump.stateProperty.value === 'idle' ? naKPumpState1_svg :
+                         this.sodiumPotassiumPump.stateProperty.value === 'sodiumBound' ? naKPumpState2_svg :
                          naKPumpState3_svg;
     }
   }

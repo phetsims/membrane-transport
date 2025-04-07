@@ -19,10 +19,6 @@ const REBINDING_DELAY = 5;
 
 export default class LigandGatedChannel extends TransportProtein<'closed' | 'ligandBoundClosed' | 'ligandBoundOpen'> {
 
-  // public readonly isLigandBoundProperty = new BooleanProperty( false );
-  //
-  // public readonly isOpenProperty: TReadOnlyProperty<boolean> = this.isLigandBoundProperty;
-
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;
 

@@ -26,15 +26,14 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
-// TODO: Rename more like 'idle', 'hasSodium', 'hasPotassium' etc.
-export default class SodiumPotassiumPump extends TransportProtein<'awaiting-sodium' | 'awaiting-phosphate' | 'awaiting-potassium'> {
+export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodiumBound' | 'openToOutside'> {
 
   public constructor(
     model: MembraneTransportModel,
     type: TransportProteinType,
     position: number
   ) {
-    super( model, type, position, 'awaiting-sodium' );
+    super( model, type, position, 'idle' );
   }
 
   private isSiteOpen( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' ): boolean {
@@ -135,17 +134,17 @@ export default class SodiumPotassiumPump extends TransportProtein<'awaiting-sodi
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'sodium3' );
 
-    if ( this.stateProperty.value === 'awaiting-sodium' ) {
+    if ( this.stateProperty.value === 'idle' ) {
 
       if ( sodium1 && sodium2 && sodium3 ) {
-        this.stateProperty.value = 'awaiting-phosphate';
+        this.stateProperty.value = 'sodiumBound';
       }
     }
-    else if ( this.stateProperty.value === 'awaiting-phosphate' ) {
+    else if ( this.stateProperty.value === 'sodiumBound' ) {
 
       //
     }
-    else if ( this.stateProperty.value === 'awaiting-potassium' ) {
+    else if ( this.stateProperty.value === 'openToOutside' ) {
 
       //
     }
@@ -169,7 +168,7 @@ export default class SodiumPotassiumPump extends TransportProtein<'awaiting-sodi
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'sodium3' );
-    this.stateProperty.value = 'awaiting-potassium';
+    this.stateProperty.value = 'openToOutside';
 
     // Move solutes through the open sodium potassium pump
     sodium1!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
@@ -188,7 +187,7 @@ export default class SodiumPotassiumPump extends TransportProtein<'awaiting-sodi
     const potassium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                           solute.mode.slot === slot &&
                                                           solute.mode.site === 'potassium2' );
-    this.stateProperty.value = 'awaiting-sodium';
+    this.stateProperty.value = 'idle';
 
     // Move solutes through the open sodium potassium pump
     potassium1!.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
