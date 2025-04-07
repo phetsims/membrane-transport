@@ -32,10 +32,9 @@ export default class SodiumGlucoseCotransporterNode extends ProteinNode {
 
   public override step( dt: number ): void {
     if ( this.sodiumGlucoseCotransporter ) {
-      console.log( this.sodiumGlucoseCotransporter.conformation );
-      this.image.image = this.sodiumGlucoseCotransporter.conformation === 'idle' ? sodiumGlucoseCotransporterState1_svg :
-                         this.sodiumGlucoseCotransporter.conformation === 'awaiting-glucose' ? sodiumGlucoseCotransporterState2_svg :
-                         sodiumGlucoseCotransporterState3_svg;
+      this.image.image = this.sodiumGlucoseCotransporter.stateProperty.value === 'openToOutside' ? sodiumGlucoseCotransporterState1_svg :
+                         this.sodiumGlucoseCotransporter.stateProperty.value === 'openToInside' ? sodiumGlucoseCotransporterState3_svg :
+                         sodiumGlucoseCotransporterState2_svg;
     }
   }
 }

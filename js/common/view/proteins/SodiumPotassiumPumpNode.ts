@@ -39,7 +39,7 @@ export default class SodiumPotassiumPumpNode extends ProteinNode {
   public override step( dt: number ): void {
     if ( this.sodiumPotassiumPump && this.text ) {
 
-      // TODO: Move any of this to a stateProperty.link?
+      // TODO: Move any of this to a stateProperty.link? April 7
       this.text.string = this.sodiumPotassiumPump.stateProperty.value;
       this.image.image = this.sodiumPotassiumPump.stateProperty.value === 'idle' ? naKPumpState1_svg :
                          this.sodiumPotassiumPump.stateProperty.value === 'sodiumBound' ? naKPumpState2_svg :

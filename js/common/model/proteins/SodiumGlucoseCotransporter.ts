@@ -45,16 +45,10 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<'openTo
    * Determine if a site is available. A site may be reserved if a particle is moving toward it, or waiting in it.
    */
   private isSiteOpen( site: 'left' | 'center' | 'right' ): boolean {
-    return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseTransporter' ||
+    return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseCotransporter' ||
                                                 solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
                                               solute.mode.slot === this.slot &&
                                               solute.mode.site === site ) === undefined;
-  }
-
-  public get conformation(): 'idle' | 'awaiting-glucose' | 'open' {
-    return this.getOpenSodiumSites().length !== 0 ? 'idle' :
-           this.isGlucoseSiteOpen() ? 'awaiting-glucose' :
-           'open';
   }
 
   /**

@@ -35,6 +35,7 @@ export default class LigandGatedChannelNode extends ProteinNode {
       channel.stateProperty.link( state => {
         this.image.image = type === 'sodiumIonLigandGatedChannel' ?
                            ( state === 'closed' ? sodiumLigandGatedClosed_svg : sodiumLigandGatedOpen_svg ) :
+                           // TODO: April 7, write in a way that looks less buggy
                            ( state === 'closed' ? potassiumLigandGatedClosed_svg : potassiumLigandGatedOpen_svg );
       } );
     }

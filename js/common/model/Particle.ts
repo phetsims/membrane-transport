@@ -66,7 +66,7 @@ type MoveToCenterOfTransportProteinMode = {
 };
 
 type MoveToSodiumGlucoseTransporterMode = {
-  type: 'moveToSodiumGlucoseTransporter';
+  type: 'moveToSodiumGlucoseCotransporter';
   slot: Slot;
   site: 'left' | 'center' | 'right';
 };
@@ -295,11 +295,16 @@ export default class Particle<T extends ParticleType> {
         };
       }
     }
-    else if ( this.mode.type === 'moveToSodiumGlucoseTransporter' ) {
+    else if ( this.mode.type === 'moveToSodiumGlucoseCotransporter' ) {
 
       const currentPosition = this.position.copy();
-      const targetPosition = new Vector2( this.mode.slot.position + 4 * ( this.mode.site === 'left' ? -1 :
-                                                                          this.mode.site === 'right' ? 1 : 0 ), 0 );
+
+      const targetOffset = this.mode.site === 'left' ? new Vector2( -5.2, 8.5 ) :
+                           this.mode.site === 'right' ? new Vector2( 6.2, 8.5 ) :
+                           this.mode.site === 'center' ? new Vector2( 0.65, 3 ) :
+                           ( () => { throw new Error( `Unhandled site: ${this.mode.site}` ); } )(); // IIFE to throw error
+
+      const targetPosition = new Vector2( this.mode.slot.position + targetOffset.x, targetOffset.y );
 
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
@@ -650,8 +655,7 @@ export default class Particle<T extends ParticleType> {
       // Only approach from extracellular side
       this.position.y > 0 &&
 
-      // Don't approach if other solutes are already passing through
-      transportProtein.stateProperty.value === 'openToInside'
+      transportProtein.stateProperty.value === 'openToOutside'
     ) {
 
       if ( this.type === 'sodiumIon' ) {
@@ -661,14 +665,14 @@ export default class Particle<T extends ParticleType> {
 
         if ( availableSites.length > 0 ) {
           const site = dotRandom.sample( availableSites );
-          this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: site };
+          this.mode = { type: 'moveToSodiumGlucoseCotransporter', slot: slot, site: site };
           return true;
         }
       }
       else if ( this.type === 'glucose' && transportProtein.isGlucoseSiteOpen() ) {
 
         // Glucose can only use center site
-        this.mode = { type: 'moveToSodiumGlucoseTransporter', slot: slot, site: 'center' };
+        this.mode = { type: 'moveToSodiumGlucoseCotransporter', slot: slot, site: 'center' };
         return true;
       }
     }

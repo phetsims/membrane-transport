@@ -26,7 +26,7 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
-export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodiumBound' | 'openToOutside'> {
+export default class SodiumPotassiumPump extends TransportProtein<'idle' | 'sodiumBound' | 'openToOutside'> { // TODO: April 7, check on these names, they seem asymmetrical
 
   public constructor(
     model: MembraneTransportModel,

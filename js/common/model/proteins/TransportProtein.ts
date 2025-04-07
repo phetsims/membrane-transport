@@ -17,7 +17,7 @@ import TransportProteinType from './TransportProteinType.js';
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default abstract class TransportProtein<State = IntentionalAny> {
+export default abstract class TransportProtein<State = IntentionalAny> { // TODO: April 7
 
   // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;
