@@ -178,7 +178,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
           const transportProteinType = slot.transportProteinType;
-          const filledProteins = membraneTransportModel.getProteins();
+          const filledProteins = membraneTransportModel.getTransportProteins();
           const proteinIndex = filledProteins.indexOf( slot.transportProteinProperty.value! );
 
           const transportProteinName = transportProteinType ? getBriefProteinName( transportProteinType ) : 'empty';

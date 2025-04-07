@@ -14,10 +14,13 @@ import TransportProteinType from './TransportProteinType.js';
  * NOTE: this does not extend PhetioObject only the critical part (the type) is needed for serialization.
  * This allows us to avoid dynamic elements in the PhET-iO tree and in the state.
  *
+ * The type parameter defaults to IntentionalAny, since there are ~10 cases where we need to specify the type
+ * TransportProtein without caring about the specific states it can be in.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default abstract class TransportProtein<State = IntentionalAny> { // TODO: April 7
+export default abstract class TransportProtein<State = IntentionalAny> {
 
   // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;
@@ -30,7 +33,7 @@ export default abstract class TransportProtein<State = IntentionalAny> { // TODO
    * @param position - the horizontal position of the transport protein in the membrane
    * @param initialState - transport proteins may be in one of many states, such as 'open', 'closed', 'openToInsideEmpty', 'openToInsideSodiumBound'.
    */
-  public constructor(
+  protected constructor(
     public readonly model: MembraneTransportModel,
     public readonly type: TransportProteinType,
     public readonly position: number,
