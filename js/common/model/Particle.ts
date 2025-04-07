@@ -155,8 +155,8 @@ function getInterpolatedDirection( mode: RandomWalkMode ): Vector2 {
 }
 
 // TODO (design): refine these values
-const MIN_RANDOM_WALK_TIME = 0.01;
-const MAX_RANDOM_WALK_TIME = 0.05;
+const MIN_RANDOM_WALK_TIME = 0.00001;
+const MAX_RANDOM_WALK_TIME = 0.001;
 
 export default class Particle<T extends ParticleType> {
 
@@ -190,7 +190,7 @@ export default class Particle<T extends ParticleType> {
       type: 'randomWalk',
       currentDirection: Particle.createRandomUnitVector(),
       targetDirection: Particle.createRandomUnitVector(),
-      turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
+      turnDuration: dotRandom.nextDoubleBetween( 0.0001, 0.0002 ),
       turnElapsed: 0,
       timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ),
       slot: null,
@@ -207,7 +207,7 @@ export default class Particle<T extends ParticleType> {
       type: 'randomWalk',
       currentDirection: direction,
       targetDirection: direction,
-      turnDuration: dotRandom.nextDoubleBetween( 0.1, 0.2 ),
+      turnDuration: dotRandom.nextDoubleBetween( 0.0001, 0.0002 ),
       turnElapsed: 0,
       timeUntilNextDirection: duration,
       slot: null,
