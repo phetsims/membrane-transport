@@ -4,7 +4,7 @@ import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-// TODO: Better way
+// We use the view dimensions to determine the model aspect ratio, in order to avoid having to duplicate/repeat that dimension.
 // eslint-disable-next-line phet/no-view-imported-from-model
 import getParticleNode from '../view/particles/getParticleNode.js';
 
