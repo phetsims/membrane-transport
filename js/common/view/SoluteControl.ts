@@ -7,10 +7,9 @@ import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
-import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -21,7 +20,7 @@ import SoluteType from '../model/SoluteType.js';
 import getParticleNode from './particles/getParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type SoluteControlOptions = SelfOptions & NodeOptions;
+type SoluteControlOptions = SelfOptions & PanelOptions;
 
 const fineDelta = 2;
 const coarseDelta = 10;
@@ -121,7 +120,7 @@ export default class SoluteControl extends Panel {
 
         // Scale chosen by inspection, so that it creates horizontal space without getting too tall.
         // TODO: Dynamic layout instead? It should match the width of the SolutesPanel. 
-        scale: new Vector2( 1.1, 1 ),
+        // scale: new Vector2( 1.1, 1 ),
         tandem: Tandem.OPT_OUT
       },
       accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :

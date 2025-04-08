@@ -29,7 +29,7 @@ import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
 /**
- * Shows the rectangle with the cross section of the cell membrane where solutes, ligands, transport proteins are.
+ * Shows the rectangle with the cross-section of the cell membrane where solutes, ligands, transport proteins are.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)

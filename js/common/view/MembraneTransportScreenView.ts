@@ -197,7 +197,8 @@ export default class MembraneTransportScreenView extends ScreenView {
         const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {
           centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
           bottom: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ),
-          tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
+          tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ),
+          preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
         } );
         outsideSoluteControlNode.addChild( outsideSoluteControl );
         soluteControls.push( outsideSoluteControl );
@@ -206,7 +207,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
         centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
         top: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.minY ),
-        tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) )
+        tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ),
+        preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
       } );
       insideSoluteControlNode.addChild( insideSoluteControl );
       soluteControls.push( insideSoluteControl );
