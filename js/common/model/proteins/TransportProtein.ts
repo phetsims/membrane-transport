@@ -62,8 +62,8 @@ export default abstract class TransportProtein<State = IntentionalAny> {
     return this.model.getSlotForTransportProtein( this )!;
   }
 
-  public hasSolutesMovingThroughTransportProtein(): boolean {
-    return !!this.model.solutes.find( solute => solute.mode.type === 'movingThroughChannel' && solute.mode.slot === this.slot );
+  public hasSolutesMovingTowardOrThroughTransportProtein(): boolean {
+    return !this.model.isTransportProteinSoluteFree( this.slot );
   }
 }
 
