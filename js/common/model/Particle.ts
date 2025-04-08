@@ -611,9 +611,9 @@ export default class Particle<T extends ParticleType> {
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
 
-    if ( ( transportProtein instanceof LeakageChannel && !transportProtein.hasSolutesMovingThroughTransportProtein() ) ||
+    if ( ( transportProtein instanceof LeakageChannel && !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() ) ||
          ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForTransport() ) ||
-         ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' && !transportProtein.hasSolutesMovingThroughTransportProtein() ) ) {
+         ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' && !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() ) ) {
 
       if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
            ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
@@ -659,7 +659,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.stateProperty.value === 'openToInsideEmpty' &&
       this.position.y < 0 && // Only approach from intracellular side
-      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no potassium still leaving
+      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() // make sure no potassium still leaving
     ) {
 
       const openSodiumSites = transportProtein.getOpenSodiumSites();
@@ -690,7 +690,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.stateProperty.value === 'openToOutside' &&
       this.position.y > 0 && // Only approach from extracellular side
-      !transportProtein.hasSolutesMovingThroughTransportProtein() // make sure no sodium still leaving
+      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() // make sure no sodium still leaving
     ) {
 
       const openPotassiumSites = transportProtein.getOpenPotassiumSites();

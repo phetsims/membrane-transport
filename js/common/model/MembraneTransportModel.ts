@@ -409,6 +409,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
   /**
    * If a slot already has a solute traversing it, or moving to it, then it is "reserved" and cannot accommodate a second solute.
+   * TODO: Document how this doesn't classify a ligand as a solute for the interaction.
    */
   public isTransportProteinSoluteFree( slot: Slot ): boolean {
 
