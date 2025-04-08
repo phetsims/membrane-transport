@@ -1,13 +1,13 @@
 // Copyright 2025, University of Colorado Boulder
 
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
+import phetAudioContext from '../../../tambo/js/phetAudioContext.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 // import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
-
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
 import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
@@ -23,15 +23,38 @@ const newSoundClip = ( sound: WrappedAudioBuffer, options?: SoundClipOptions ) =
   return soundClip;
 };
 
+// TODO (design): Brett, want to tune these numbers?
+const bandpassFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'bandpass',
+  Q: 10,
+  frequency: 1600
+} );
+
 // const collectSound = newSoundClip( collect_mp3, { initialOutputLevel: 0.6 } );
 const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
 const proteinReturnSound = newSoundClip( proteinReturnSound_mp3 );
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
-const mtSoluteCrossing001 = newSoundClip( mtSoluteCrossing001_mp3 );
-const mtSoluteCrossing002 = newSoundClip( mtSoluteCrossing002_mp3 );
-const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3 );
-const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3 );
-const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3 );
+const mtSoluteCrossing001 = newSoundClip( mtSoluteCrossing001_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
+const mtSoluteCrossing002 = newSoundClip( mtSoluteCrossing002_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
+const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
+const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
+const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
+
+const mtSoluteCrossing001Outward = newSoundClip( mtSoluteCrossing001_mp3, {
+  additionalAudioNodes: [ bandpassFilter ]
+} );
+const mtSoluteCrossing002Outward = newSoundClip( mtSoluteCrossing002_mp3, {
+  additionalAudioNodes: [ bandpassFilter ]
+} );
+const mtSoluteCrossing003Outward = newSoundClip( mtSoluteCrossing003_mp3, {
+  additionalAudioNodes: [ bandpassFilter ]
+} );
+const mtSoluteCrossing004Outward = newSoundClip( mtSoluteCrossing004_mp3, {
+  additionalAudioNodes: [ bandpassFilter ]
+} );
+const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, {
+  additionalAudioNodes: [ bandpassFilter ]
+} );
 
 /**
  * Play sound effects on certain events.
@@ -75,23 +98,43 @@ export default class MembraneTransportSounds {
     boundaryReachedSound.play();
   }
 
-  public static soluteCrossingSound( type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'ligandA' | 'ligandB' ): void {
+  public static soluteCrossingSound( type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'ligandA' | 'ligandB', direction: 'inward' | 'outward' ): void {
 
-    if ( type === 'oxygen' ) {
-      mtSoluteCrossing001.play();
-    }
-    else if ( type === 'carbonDioxide' ) {
-      mtSoluteCrossing002.play();
-    }
-    else if ( type === 'sodiumIon' ) {
-      mtSoluteCrossing003.play();
-    }
-    else if ( type === 'potassiumIon' ) {
-      mtSoluteCrossing004.play();
+    if ( direction === 'inward' ) {
+      if ( type === 'oxygen' ) {
+        mtSoluteCrossing001.play();
+      }
+      else if ( type === 'carbonDioxide' ) {
+        mtSoluteCrossing002.play();
+      }
+      else if ( type === 'sodiumIon' ) {
+        mtSoluteCrossing003.play();
+      }
+      else if ( type === 'potassiumIon' ) {
+        mtSoluteCrossing004.play();
+      }
+      else {
+        mtSoluteCrossing005.play();
+      }
     }
     else {
-      mtSoluteCrossing005.play();
+      if ( type === 'oxygen' ) {
+        mtSoluteCrossing001Outward.play();
+      }
+      else if ( type === 'carbonDioxide' ) {
+        mtSoluteCrossing002Outward.play();
+      }
+      else if ( type === 'sodiumIon' ) {
+        mtSoluteCrossing003Outward.play();
+      }
+      else if ( type === 'potassiumIon' ) {
+        mtSoluteCrossing004Outward.play();
+      }
+      else {
+        mtSoluteCrossing005Outward.play();
+      }
     }
+
   }
 }
 

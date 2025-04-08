@@ -437,7 +437,7 @@ export default class Particle<T extends ParticleType> {
       const signAfter = this.position.y > 0;
 
       if ( signBefore !== signAfter ) {
-        MembraneTransportSounds.soluteCrossingSound( this.type );
+        MembraneTransportSounds.soluteCrossingSound( this.type, this.position.y > 0 ? 'outward' : 'inward' );
       }
 
       // If moving through, don't let the position get very far from the center. Allow a little movement
