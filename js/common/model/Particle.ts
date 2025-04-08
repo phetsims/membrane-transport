@@ -46,9 +46,6 @@ export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportCons
 type RandomWalkMode = {
   type: 'randomWalk';
   currentDirection: Vector2;
-  targetDirection: Vector2;
-  turnDuration: number;
-  turnElapsed: number;
   timeUntilNextDirection: number;
   slot: null;
 
@@ -147,17 +144,9 @@ type ParticleMode =
   | MoveToSodiumPotassiumPumpMode
   | WaitingInSodiumPotassiumPumpMode;
 
-/**
- * Gets the current interpolated direction from a random walk mode, based on how far the particle has turned.
- */
-function getInterpolatedDirection( mode: RandomWalkMode ): Vector2 {
-  const alpha = clamp( mode.turnElapsed / mode.turnDuration, 0, 1 );
-  return mode.currentDirection.blend( mode.targetDirection, alpha ).normalized();
-}
-
 // TODO (design): refine these values
-const MIN_RANDOM_WALK_TIME = 0.00001;
-const MAX_RANDOM_WALK_TIME = 0.001;
+const MIN_RANDOM_WALK_TIME = 0.1;
+const MAX_RANDOM_WALK_TIME = 0.2;
 
 export default class Particle<T extends ParticleType> {
 
@@ -190,9 +179,6 @@ export default class Particle<T extends ParticleType> {
     return {
       type: 'randomWalk',
       currentDirection: Particle.createRandomUnitVector(),
-      targetDirection: Particle.createRandomUnitVector(),
-      turnDuration: dotRandom.nextDoubleBetween( 0.0001, 0.0002 ),
-      turnElapsed: 0,
       timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ),
       slot: null,
       timeElapsedSinceMembraneCrossing: 0
@@ -207,9 +193,6 @@ export default class Particle<T extends ParticleType> {
     this.mode = {
       type: 'randomWalk',
       currentDirection: direction,
-      targetDirection: direction,
-      turnDuration: dotRandom.nextDoubleBetween( 0.0001, 0.0002 ),
-      turnElapsed: 0,
       timeUntilNextDirection: duration,
       slot: null,
       timeElapsedSinceMembraneCrossing: 0
@@ -499,18 +482,11 @@ export default class Particle<T extends ParticleType> {
 
     // Time for a new direction
     if ( randomWalk.timeUntilNextDirection <= 0 ) {
-      randomWalk.currentDirection = getInterpolatedDirection( randomWalk );
-      randomWalk.targetDirection = Particle.createRandomUnitVector();
-      randomWalk.turnDuration = dotRandom.nextDoubleBetween( 0.05, 0.1 );
-      randomWalk.turnElapsed = 0;
+      randomWalk.currentDirection = Particle.createRandomUnitVector();
       randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME );
     }
 
     // Accumulate turn time and compute the interpolated direction.
-    randomWalk.turnElapsed += dt;
-    const alpha = clamp( randomWalk.turnElapsed / randomWalk.turnDuration, 0, 1 );
-    const direction = randomWalk.currentDirection.blend( randomWalk.targetDirection, alpha );
-
     const thisBounds = this.getBounds();
     const outsideOfCell = this.position.y > 0;
 
@@ -554,10 +530,10 @@ export default class Particle<T extends ParticleType> {
       this.position.y += sign * overlap;
 
       // Reflect the vertical motion
-      direction.y = sign * Math.abs( direction.y );
       randomWalk.currentDirection.y = sign * Math.abs( randomWalk.currentDirection.y );
-      randomWalk.targetDirection.y = sign * Math.abs( randomWalk.targetDirection.y );
     }
+
+    const direction = randomWalk.currentDirection;
 
     // Move according to the direction and speed
     this.position.x += direction.x * dt * typicalSpeed;
@@ -574,7 +550,6 @@ export default class Particle<T extends ParticleType> {
       this.position[ axis ] = adjustment.newPos;
       direction[ axis ] = adjustment.newDir;
       randomWalk.currentDirection[ axis ] = adjustment.newDir;
-      randomWalk.targetDirection[ axis ] = adjustment.newDir;
 
       if ( adjustment.bounce ) {
         MembraneTransportSounds.particleBounced( this );
