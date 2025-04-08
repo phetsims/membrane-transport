@@ -51,7 +51,6 @@ export default class LigandGatedChannel extends TransportProtein<'closed' | 'lig
       }
 
       // After the binding duration, release the ligand
-      // TODO: Prevent solutes from passing through if this.timeSinceLigandBound >= this.bindingDuration, so that we don't end up in an infinite loop
       if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand && !this.hasSolutesMovingThroughTransportProtein() ) {
         this.unbindLigand();
       }
@@ -63,8 +62,11 @@ export default class LigandGatedChannel extends TransportProtein<'closed' | 'lig
     }
   }
 
+  /**
+   * The ligand remains attached while solutes are passing through, so we must prevent new solutes from passing through
+   * if this.timeSinceLigandBound >= this.bindingDuration, so that we don't end up in an infinite loop.
+   */
   public isAvailableForTransport(): boolean {
-    console.log( this.stateProperty.value, this.timeSinceLigandBound < this.bindingDuration, this.hasSolutesMovingThroughTransportProtein() );
     return this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceLigandBound < this.bindingDuration && !this.hasSolutesMovingThroughTransportProtein();
   }
 
