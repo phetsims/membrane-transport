@@ -116,11 +116,9 @@ export default class SoluteControl extends Panel {
       deltaFine: fineDelta,
       deltaCoarse: coarseDelta,
       numberDisplayOptions: {
-        opacity: 0,
 
-        // Scale chosen by inspection, so that it creates horizontal space without getting too tall.
-        // TODO: Dynamic layout instead? It should match the width of the SolutesPanel. 
-        // scale: new Vector2( 1.1, 1 ),
+        // Custom icon will be added later
+        opacity: 0,
         tandem: Tandem.OPT_OUT
       },
       accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
