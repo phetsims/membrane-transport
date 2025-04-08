@@ -299,12 +299,9 @@ export default class Particle<T extends ParticleType> {
 
       const currentPosition = this.position.copy();
 
-      const targetOffset = this.mode.site === 'left' ? new Vector2( -5.2, 8.5 ) :
-                           this.mode.site === 'right' ? new Vector2( 6.2, 8.5 ) :
-                           this.mode.site === 'center' ? new Vector2( 0.65, 3 ) :
-                           ( () => { throw new Error( `Unhandled site: ${this.mode.site}` ); } )(); // IIFE to throw error
+      const offset = SodiumGlucoseCotransporter.getSitePosition( this.mode.site );
 
-      const targetPosition = new Vector2( this.mode.slot.position + targetOffset.x, targetOffset.y );
+      const targetPosition = new Vector2( this.mode.slot.position + offset.x, offset.y );
 
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
@@ -327,17 +324,7 @@ export default class Particle<T extends ParticleType> {
 
       const currentPosition = this.position.copy();
 
-      // TODO: Should this be moved into the subclass? Is there another way we can get this information?
-      //   It is time consuming to find these points.
-      const offset = this.mode.site === 'sodium1' ? new Vector2( -3.5, -5.6 ) :
-                     this.mode.site === 'sodium2' ? new Vector2( -3.2, 0.8 ) :
-                     this.mode.site === 'sodium3' ? new Vector2( 3.5, -2.2 ) :
-
-                     // TODO: These need to be adjusted to match the artwork.
-                     this.mode.site === 'phosphate' ? new Vector2( 0, -12 ) :
-                     this.mode.site === 'potassium1' ? new Vector2( 5, 5 ) :
-                     this.mode.site === 'potassium2' ? new Vector2( 5, 10 ) :
-                     ( () => { throw new Error( `Unhandled site: ${this.mode.site}` ); } )(); // IIFE to throw error
+      const offset = SodiumPotassiumPump.getSitePosition( this.mode.site );
 
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
 

@@ -195,6 +195,19 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
     return !!this.model.solutes.find( solute => solute.mode.type === 'moveToSodiumPotassiumPump' &&
                                                 solute.mode.slot === this.slot );
   }
+
+  public static getSitePosition( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
+
+    return site === 'sodium1' ? new Vector2( -3.5, -5.6 ) :
+           site === 'sodium2' ? new Vector2( -3.2, 0.8 ) :
+           site === 'sodium3' ? new Vector2( 3.5, -2.2 ) :
+
+             // TODO: These need to be adjusted to match the artwork.
+           site === 'phosphate' ? new Vector2( 0, -12 ) :
+           site === 'potassium1' ? new Vector2( 5, 5 ) :
+           site === 'potassium2' ? new Vector2( 5, 10 ) :
+           ( () => { throw new Error( `Unhandled site: ${site}` ); } )(); // IIFE to throw error
+  }
 }
 
 membraneTransport.register( 'SodiumPotassiumPump', SodiumPotassiumPump );

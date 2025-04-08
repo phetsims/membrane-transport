@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
@@ -82,6 +83,13 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<'openTo
 
   public isGlucoseSiteOpen(): boolean {
     return this.isSiteOpen( 'center' );
+  }
+
+  public static getSitePosition( site: 'left' | 'right' | 'center' ): Vector2 {
+    return site === 'left' ? new Vector2( -5.2, 8.5 ) :
+           site === 'right' ? new Vector2( 6.2, 8.5 ) :
+           site === 'center' ? new Vector2( 0.65, 3 ) :
+           ( () => { throw new Error( `Unhandled site: ${site}` ); } )(); // IIFE to throw error
   }
 }
 
