@@ -129,6 +129,8 @@ export default class LigandNode extends Node {
    * may be added or removed but the view component will always exist.
    */
   private operateOnLigand( operation: ( ligand: Particle<LigandType> ) => void ): void {
+
+    // TODO: Can we just preallocate all the ligands and get rid of this part?
     const ligand = this.ligands[ this.ligandIndex ] || null;
     if ( ligand ) {
       operation( ligand );

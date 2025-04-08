@@ -52,7 +52,7 @@ export default class MembranePotentialPanel extends Panel {
         new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
           maxWidth: 140
         } ), {
-          tandem: tandem.createTandem( 'signsCheckbox' ) // TODO: Match to the signs label if we keep it
+          tandem: tandem.createTandem( 'signsCheckbox' )
         } )
       ]
     } );
