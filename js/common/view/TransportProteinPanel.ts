@@ -16,10 +16,10 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import TransportProteinToolNode from './TransportProteinToolNode.js';
 import LigandControl from './LigandControl.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 // Type definition for transport protein configuration
 type TransportProteinConfig = {
@@ -37,13 +37,11 @@ type AccordionBoxConfig = {
 };
 
 /**
- * Shows the title and group of accordion boxes for the membrane proteins, which can be dragged into the play area.
+ * Shows the transport proteins which can be dragged into the play area, along with their respective controls, if any.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-
-// TODO: Rename this file
-export default class MembraneTransportAccordionBoxGroup extends Panel {
+export default class TransportProteinPanel extends Panel {
   public readonly resetEmitter = new Emitter();
 
   // So we can return TransportProteinDragNode instances to their corresponding TransportProteinToolNode icons
@@ -117,21 +115,21 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
 
       // Voltage-gated channels
       const voltageGatedAccordionBox = createPanel( {
-        titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
-        tandemName: 'voltageGatedChannelsAccordionBox',
+          titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
+          tandemName: 'voltageGatedChannelsAccordionBox',
           expanded: true,
           transportProteins: [
-          {
-            transportProteinType: 'sodiumIonVoltageGatedChannel',
-            labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
-          },
-          {
-            transportProteinType: 'potassiumIonVoltageGatedChannel',
-            labelProperty: new StringProperty( 'K+' ), // TODO: i18n
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
-          }
-        ]
+            {
+              transportProteinType: 'sodiumIonVoltageGatedChannel',
+              labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
+              accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
+            },
+            {
+              transportProteinType: 'potassiumIonVoltageGatedChannel',
+              labelProperty: new StringProperty( 'K+' ), // TODO: i18n
+              accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
+            }
+          ]
         },
         new MembranePotentialPanel( model, tandem.createTandem( 'membranePotentialPanel' ) )
       );
@@ -220,4 +218,4 @@ export default class MembraneTransportAccordionBoxGroup extends Panel {
   }
 }
 
-membraneTransport.register( 'MembraneTransportAccordionBoxGroup', MembraneTransportAccordionBoxGroup );
+membraneTransport.register( 'TransportProteinPanel', TransportProteinPanel );

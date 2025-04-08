@@ -33,7 +33,6 @@ import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
-import MembraneTransportAccordionBoxGroup from './MembraneTransportAccordionBoxGroup.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox.js';
@@ -41,6 +40,7 @@ import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
 import ThumbnailNode from './ThumbnailNode.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
+import TransportProteinPanel from './TransportProteinPanel.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -63,7 +63,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   );
   public readonly screenViewModelViewTransform: ModelViewTransform2;
   private afterRelease: ( () => void ) | null = null;
-  private readonly membraneTransportAccordionBoxGroup?: MembraneTransportAccordionBoxGroup;
+  private readonly membraneTransportAccordionBoxGroup?: TransportProteinPanel;
 
   public constructor(
     public readonly model: MembraneTransportModel,
@@ -217,12 +217,10 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      const membraneTransportAccordionBoxGroup = new MembraneTransportAccordionBoxGroup( model, options.tandem.createTandem( 'membraneProteinsAccordionBoxGroup' ), this );
-      this.resetEmitter.addListener( () => membraneTransportAccordionBoxGroup.reset() );
-
-      rightSideVBoxChildren.push( membraneTransportAccordionBoxGroup );
-
-      this.membraneTransportAccordionBoxGroup = membraneTransportAccordionBoxGroup;
+      const transportProteinPanel = new TransportProteinPanel( model, options.tandem.createTandem( 'transportProteinPanel' ), this );
+      this.resetEmitter.addListener( () => transportProteinPanel.reset() );
+      rightSideVBoxChildren.push( transportProteinPanel );
+      this.membraneTransportAccordionBoxGroup = transportProteinPanel;
     }
 
     const rightSideVBox = new VBox( {
