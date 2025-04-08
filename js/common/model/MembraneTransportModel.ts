@@ -407,16 +407,6 @@ export default class MembraneTransportModel extends PhetioObject {
     return this.slots[ Math.floor( this.slots.length / 2 ) ];
   }
 
-  /**
-   * If a slot already has a solute traversing it, or moving to it, then it is "reserved" and cannot accommodate a second solute.
-   */
-  public isTransportProteinSoluteFree( slot: Slot ): boolean {
-
-    // Check if any Particle mode has this slot
-    const isReserved = this.solutes.some( solute => solute.mode.slot === slot );
-    return !isReserved;
-  }
-
   public getTimeSpeedFactor(): number {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
