@@ -1,0 +1,48 @@
+/* eslint-disable */
+/* @formatter:off */
+
+import asyncLoader from '../../phet-core/js/asyncLoader.js';
+import base64SoundToByteArray from '../../tambo/js/base64SoundToByteArray.js';
+import WrappedAudioBuffer from '../../tambo/js/WrappedAudioBuffer.js';
+import phetAudioContext from '../../tambo/js/phetAudioContext.js';
+
+const soundURI = 'data:audio/mpeg;base64,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qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv/7cMRtg8AAAaQAAAAgAAA0gAAABKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuMTAwqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/+3LEbQPAAAGkAAAAIAAANIAAAASqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqg==';
+const soundByteArray = base64SoundToByteArray( phetAudioContext, soundURI );
+const unlock = asyncLoader.createLock( soundURI );
+const wrappedAudioBuffer = new WrappedAudioBuffer();
+
+// safe way to unlock
+let unlocked = false;
+const safeUnlock = () => {
+  if ( !unlocked ) {
+    unlock();
+    unlocked = true;
+  }
+};
+
+const onDecodeSuccess = decodedAudio => {
+  if ( wrappedAudioBuffer.audioBufferProperty.value === null ) {
+    wrappedAudioBuffer.audioBufferProperty.set( decodedAudio );
+    safeUnlock();
+  }
+};
+const onDecodeError = decodeError => {
+  console.warn( 'decode of audio data failed, using stubbed sound, error: ' + decodeError );
+  wrappedAudioBuffer.audioBufferProperty.set( phetAudioContext.createBuffer( 1, 1, phetAudioContext.sampleRate ) );
+  safeUnlock();
+};
+const decodePromise = phetAudioContext.decodeAudioData( soundByteArray.buffer, onDecodeSuccess, onDecodeError );
+if ( decodePromise ) {
+  decodePromise
+    .then( decodedAudio => {
+      if ( wrappedAudioBuffer.audioBufferProperty.value === null ) {
+        wrappedAudioBuffer.audioBufferProperty.set( decodedAudio );
+        safeUnlock();
+      }
+    } )
+    .catch( e => {
+      console.warn( 'promise rejection caught for audio decode, error = ' + e );
+      safeUnlock();
+    } );
+}
+export default wrappedAudioBuffer;

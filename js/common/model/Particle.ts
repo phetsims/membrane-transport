@@ -424,13 +424,21 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
-    else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) {
+    else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) { // TODO: rename to movingThroughTransportProtein
 
       // For both passive diffusion and moving through, use similar movement logic.
       const sign = this.mode.direction === 'inward' ? -1 : 1;
 
+      const signBefore = this.position.y > 0;
+
       this.position.y += sign * ( typicalSpeed / 4 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
       this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * ( typicalSpeed / 2 ) * dt;
+
+      const signAfter = this.position.y > 0;
+
+      if ( signBefore !== signAfter ) {
+        MembraneTransportSounds.soluteCrossingSound( this.type );
+      }
 
       // If moving through, don't let the position get very far from the center. Allow a little movement
       // so that it looks like it "struggles" to get through.
