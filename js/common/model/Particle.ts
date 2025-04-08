@@ -30,6 +30,7 @@ import VoltageGatedChannel from './proteins/VoltageGatedChannel.js';
 import Slot from './Slot.js';
 import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
 
+// TODO (design) can this be deleted?
 const ABSORB_GLUCOSE = false;
 
 // Typical speed for movement
@@ -246,7 +247,6 @@ export default class Particle<T extends ParticleType> {
       else {
 
         // Gradual fade over time after moving inside the cell.
-        // TODO: explain this better or find out why it's necessary
         this.opacity = clamp( this.opacity - 0.01, 0.5, 1 );
       }
     }
