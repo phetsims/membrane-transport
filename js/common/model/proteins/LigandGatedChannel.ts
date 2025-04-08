@@ -45,6 +45,11 @@ export default class LigandGatedChannel extends TransportProtein<'closed' | 'lig
     if ( this.isLigandBound ) {
       this.timeSinceLigandBound += dt;
 
+      // after 500ms, transition from ligandBoundClosed to ligandBoundOpen
+      if ( this.stateProperty.value === 'ligandBoundClosed' && this.timeSinceLigandBound >= 0.5 ) {
+        this.stateProperty.value = 'ligandBoundOpen';
+      }
+
       // After the binding duration, release the ligand
       // TODO: Prevent solutes from passing through if this.timeSinceLigandBound >= this.bindingDuration, so that we don't end up in an infinite loop
       if ( this.timeSinceLigandBound >= this.bindingDuration && this.boundLigand && !this.hasSolutesMovingThroughTransportProtein() ) {
@@ -56,6 +61,11 @@ export default class LigandGatedChannel extends TransportProtein<'closed' | 'lig
       // If no ligand is bound, increment the unbinding timer
       this.timeSinceUnbound += dt;
     }
+  }
+
+  public isAvailableForTransport(): boolean {
+    console.log( this.stateProperty.value, this.timeSinceLigandBound < this.bindingDuration, this.hasSolutesMovingThroughTransportProtein() );
+    return this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceLigandBound < this.bindingDuration && !this.hasSolutesMovingThroughTransportProtein();
   }
 
   /**

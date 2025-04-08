@@ -632,17 +632,15 @@ export default class Particle<T extends ParticleType> {
     const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-    if ( model.isTransportProteinSoluteFree( slot ) ) {
 
-      if ( transportProtein instanceof LeakageChannel ||
-           ( transportProtein instanceof LigandGatedChannel && transportProtein.stateProperty.value === 'ligandBoundOpen' ) ||
-           ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' ) ) {
+    if ( ( transportProtein instanceof LeakageChannel && !transportProtein.hasSolutesMovingThroughTransportProtein() ) ||
+         ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForTransport() ) ||
+         ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' && !transportProtein.hasSolutesMovingThroughTransportProtein() ) ) {
 
-        if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
-             ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
-          this.mode = { type: 'moveToCenterOfChannel', slot: slot };
-          return true;
-        }
+      if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
+           ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
+        this.mode = { type: 'moveToCenterOfChannel', slot: slot };
+        return true;
       }
     }
 
