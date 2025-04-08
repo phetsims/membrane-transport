@@ -11,6 +11,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import { boxMullerTransform } from '../../../../dot/js/util/boxMullerTransform.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -145,8 +146,10 @@ type ParticleMode =
   | WaitingInSodiumPotassiumPumpMode;
 
 // TODO (design): refine these values
-const MIN_RANDOM_WALK_TIME = 0.1;
-const MAX_RANDOM_WALK_TIME = 0.2;
+const sampleValueHowLongToGoStraight = () => {
+  const result = boxMullerTransform( 0.2, 0.05, dotRandom );
+  return clamp( result, 0.01, 2 );
+};
 
 export default class Particle<T extends ParticleType> {
 
@@ -179,7 +182,7 @@ export default class Particle<T extends ParticleType> {
     return {
       type: 'randomWalk',
       currentDirection: Particle.createRandomUnitVector(),
-      timeUntilNextDirection: dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ),
+      timeUntilNextDirection: sampleValueHowLongToGoStraight(),
       slot: null,
       timeElapsedSinceMembraneCrossing: 0
     };
@@ -458,14 +461,14 @@ export default class Particle<T extends ParticleType> {
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( -1, 0 )
         ).normalize();
-        this.moveInDirection( downwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
+        this.moveInDirection( downwardDirection, sampleValueHowLongToGoStraight() );
       }
       if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ) {
         const upwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( 0, 1 )
         ).normalize();
-        this.moveInDirection( upwardDirection, dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME ) );
+        this.moveInDirection( upwardDirection, sampleValueHowLongToGoStraight() );
       }
     }
   }
@@ -483,7 +486,7 @@ export default class Particle<T extends ParticleType> {
     // Time for a new direction
     if ( randomWalk.timeUntilNextDirection <= 0 ) {
       randomWalk.currentDirection = Particle.createRandomUnitVector();
-      randomWalk.timeUntilNextDirection = dotRandom.nextDoubleBetween( MIN_RANDOM_WALK_TIME, MAX_RANDOM_WALK_TIME );
+      randomWalk.timeUntilNextDirection = sampleValueHowLongToGoStraight();
     }
 
     // Accumulate turn time and compute the interpolated direction.
