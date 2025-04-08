@@ -44,13 +44,15 @@ export default class MembranePotentialPanel extends Panel {
       children: [
 
         new Text( MembraneTransportStrings.membranePotential_mVStringProperty, {
-          maxWidth: 160
+          maxWidth: 160,
+          fontSize: 14
         } ),
 
         membraneVoltagePotentialRadioButtonGroup,
 
         new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
-          maxWidth: 140
+          maxWidth: 140,
+          fontSize: 14
         } ), {
           tandem: tandem.createTandem( 'signsCheckbox' )
         } )

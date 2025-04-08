@@ -147,7 +147,7 @@ type ParticleMode =
 
 // TODO (design): refine these values
 const sampleValueHowLongToGoStraight = () => {
-  const result = boxMullerTransform( 0.2, 0.05, dotRandom );
+  const result = boxMullerTransform( 0.3, 0.4, dotRandom );
   return clamp( result, 0.01, 2 );
 };
 

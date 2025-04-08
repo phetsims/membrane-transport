@@ -15,7 +15,7 @@ import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 const richTextOptions: RichTextOptions = {
   align: 'center',
-  font: new PhetFont( 12 ),
+  font: new PhetFont( 14 ),
 
   // Found by inspection. maxHeight required to constrain multi-line text.
   maxWidth: 100,
@@ -36,7 +36,7 @@ export default class TransportProteinToolNode extends VBox {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const transportProteinNode = getTransportProteinNode( type, null );
-    transportProteinNode.setScaleMagnitude( 0.7 );
+    transportProteinNode.setScaleMagnitude( 0.5 );
     transportProteinNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
     super( combineOptions<VBoxOptions>( {}, {

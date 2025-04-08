@@ -49,7 +49,7 @@ export default class TransportProteinPanel extends Panel {
 
   public constructor( model: MembraneTransportModel, tandem: Tandem, view: MembraneTransportScreenView ) {
 
-    const fontSize = 14;
+    const fontSize = 16;
 
     const panels: Panel[] = [];
 
@@ -63,7 +63,7 @@ export default class TransportProteinPanel extends Panel {
      */
     const createPanel = ( config: AccordionBoxConfig, ...additionalControls: Node[] ): Panel => {
       const content = new HBox( {
-        spacing: 10,
+        spacing: 20,
         children: config.transportProteins.map( transportProtein => {
             const transportProteinToolNode = new TransportProteinToolNode(
               transportProtein.transportProteinType,
