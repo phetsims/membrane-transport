@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
@@ -16,6 +17,7 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
 
@@ -57,6 +59,14 @@ export default class LigandNode extends Node {
     // For dragging relative to the press point on the ligand
     let pressOffset: null | Vector2 = null;
 
+    // Play a sound when hitting the boundary via mouse or keyboard
+    const isOnBoundaryProperty = new BooleanProperty( false );
+    isOnBoundaryProperty.lazyLink( isOnBoundary => {
+      if ( isOnBoundary ) {
+        MembraneTransportSounds.boundaryReached();
+      }
+    } );
+
     const soundRichDragListener = new SoundRichDragListener( {
       start: event => {
         this.operateOnLigand( ligand => {
@@ -72,20 +82,21 @@ export default class LigandNode extends Node {
 
         this.operateOnLigand( ligand => {
 
-          const constrainPosition = ( proposedPosition: Vector2 ) => {
+          const setConstrainedPosition = ( proposedPosition: Vector2 ) => {
             const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
+            isOnBoundaryProperty.value = !boundModelPoint.equals( proposedPosition );
             ligand.position.set( boundModelPoint );
           };
 
           if ( event.isFromPDOM() ) {
             const proposedPosition = ligand.position.plus( listener.modelDelta );
-            constrainPosition( proposedPosition );
+            setConstrainedPosition( proposedPosition );
           }
           else {
             const localPoint = this.globalToParentPoint( event.pointer.point );
             const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
             const proposedPosition = modelPointerPosition.minus( pressOffset! );
-            constrainPosition( proposedPosition );
+            setConstrainedPosition( proposedPosition );
           }
         } );
       },
