@@ -7,6 +7,11 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
+
+// eslint-disable-next-line phet/default-import-match-filename
+import mtChannelCloseSet1001_mp3 from '../../sounds/mtChannelCloseSet1-001_mp3.js';
+// eslint-disable-next-line phet/default-import-match-filename
+import mtChannelOpenSet1001_mp3 from '../../sounds/mtChannelOpenSet1-001_mp3.js';
 // import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
@@ -40,21 +45,14 @@ const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutp
 const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 
-const mtSoluteCrossing001Outward = newSoundClip( mtSoluteCrossing001_mp3, {
-  additionalAudioNodes: [ bandpassFilter ]
-} );
-const mtSoluteCrossing002Outward = newSoundClip( mtSoluteCrossing002_mp3, {
-  additionalAudioNodes: [ bandpassFilter ]
-} );
-const mtSoluteCrossing003Outward = newSoundClip( mtSoluteCrossing003_mp3, {
-  additionalAudioNodes: [ bandpassFilter ]
-} );
-const mtSoluteCrossing004Outward = newSoundClip( mtSoluteCrossing004_mp3, {
-  additionalAudioNodes: [ bandpassFilter ]
-} );
-const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, {
-  additionalAudioNodes: [ bandpassFilter ]
-} );
+const mtChannelOpenSet1001 = newSoundClip( mtChannelOpenSet1001_mp3 );
+const mtChannelCloseSet1001 = newSoundClip( mtChannelCloseSet1001_mp3 );
+
+const mtSoluteCrossing001Outward = newSoundClip( mtSoluteCrossing001_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
+const mtSoluteCrossing002Outward = newSoundClip( mtSoluteCrossing002_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
+const mtSoluteCrossing003Outward = newSoundClip( mtSoluteCrossing003_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
+const mtSoluteCrossing004Outward = newSoundClip( mtSoluteCrossing004_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
+const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
 
 /**
  * Play sound effects on certain events.
@@ -63,6 +61,7 @@ const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, {
  */
 
 export default class MembraneTransportSounds {
+
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
 
     brightMarimbaShortSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
@@ -135,6 +134,14 @@ export default class MembraneTransportSounds {
       }
     }
 
+  }
+
+  public static channelOpened(): void {
+    mtChannelOpenSet1001.play();
+  }
+
+  public static channelClosed(): void {
+    mtChannelCloseSet1001.play();
   }
 }
 
