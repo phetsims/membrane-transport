@@ -571,6 +571,7 @@ export default class Particle<T extends ParticleType> {
     const epsilon = NUDGE_EPSILON;
 
     // Check for exit left: particle bounds are fully to the left of the view
+    // TODO: ATP is blinking out way too soon, or may have wrong bounds.
     if ( updatedBoundsAfterMove.maxX < totalBounds.minX ) {
 
       // Teleport to the right side, fully out of view, then nudge slightly inside
