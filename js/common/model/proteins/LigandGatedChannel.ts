@@ -17,6 +17,7 @@ import TransportProtein from './TransportProtein.js';
 // Time in seconds that must elapse after a ligand unbinds before another can bind
 const REBINDING_DELAY = 5;
 
+// TODO: Add another state so there can be a delay when the ligand unbinds before the channel closes.
 export default class LigandGatedChannel extends TransportProtein<'closed' | 'ligandBoundClosed' | 'ligandBoundOpen'> {
 
   // When a ligand is bound, keep track of it
