@@ -77,6 +77,7 @@ export const getParticleModelWidth = ( particleType: ParticleType ): number =>
   // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
   particleType === 'oxygen' ? oxygenModelSize :
 
+  // TODO: Consider hard coding the dimension of the co2 so we don't need to do view lookups? Or is there a better way? April 9
     // Cache them, but not until the sim has started up, and we have good bounds.
   particleType === 'carbonDioxide' ? oxygenModelSize * getCarbonDioxideViewWidth() / getOxygenViewWidth() :
 

@@ -436,6 +436,7 @@ export default class Particle<T extends ParticleType> {
 
       const signAfter = this.position.y > 0;
 
+      // TODO: Is it unusual to trigger sounds from the model directly? Should we use a more MVC pattern?
       if ( signBefore !== signAfter ) {
         MembraneTransportSounds.soluteCrossingSound( this.type, this.position.y > 0 ? 'outward' : 'inward' );
       }
@@ -618,7 +619,7 @@ export default class Particle<T extends ParticleType> {
     const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-
+    // TODO: This is kind of complex and asymmetrical, is there a better way?
     if ( ( transportProtein instanceof LeakageChannel && !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() ) ||
          ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForTransport() ) ||
          ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' && !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() ) ) {

@@ -15,7 +15,7 @@ import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 const richTextOptions: RichTextOptions = {
   align: 'center',
-  font: new PhetFont( 14 ),
+  font: new PhetFont( 14 ), // TODO (SR): Factor out reused fonts or font sizes
 
   // Found by inspection. maxHeight required to constrain multi-line text.
   maxWidth: 100,

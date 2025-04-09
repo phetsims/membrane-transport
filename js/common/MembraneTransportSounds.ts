@@ -8,6 +8,7 @@ import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 
+// TODO: Better way to streamline creation and/or clustering of all the sounds
 // eslint-disable-next-line phet/default-import-match-filename
 import mtChannelCloseSet1001_mp3 from '../../sounds/mtChannelCloseSet1-001_mp3.js';
 // eslint-disable-next-line phet/default-import-match-filename
