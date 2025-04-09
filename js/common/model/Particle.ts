@@ -175,16 +175,21 @@ export default class Particle<T extends ParticleType> {
     assert && assert( this.dimension.height > 0, 'dimension.height should be greater than 0' );
 
     // Start in random walk mode with random directions.
-    this.mode = this.createRandomWalkMode();
+    this.mode = this.createRandomWalkMode( true );
   }
 
-  public createRandomWalkMode(): RandomWalkMode {
+  /**
+   * @param allowImmediateInteraction - Some particles should be allowed to interact immediately, while others should not.
+   */
+  public createRandomWalkMode( allowImmediateInteraction: boolean ): RandomWalkMode {
+
+    const timeElapsedSinceMembraneCrossing = allowImmediateInteraction ? CROSSING_COOLDOWN : 0;
     return {
       type: 'randomWalk',
       currentDirection: Particle.createRandomUnitVector(),
       timeUntilNextDirection: sampleValueHowLongToGoStraight(),
       slot: null,
-      timeElapsedSinceMembraneCrossing: 0
+      timeElapsedSinceMembraneCrossing: timeElapsedSinceMembraneCrossing
     };
   }
 
@@ -509,6 +514,10 @@ export default class Particle<T extends ParticleType> {
 
       // If the particle is within a certain radial distance from the center of the transport protein, it can interact
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
+
+      // if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value ) {
+      //   debugger;
+      // }
 
       if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
         const interactedWithProtein = this.handleProteinInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );

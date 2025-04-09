@@ -13,6 +13,12 @@ import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3
 import mtChannelCloseSet1001_mp3 from '../../sounds/mtChannelCloseSet1-001_mp3.js';
 // eslint-disable-next-line phet/default-import-match-filename
 import mtChannelOpenSet1001_mp3 from '../../sounds/mtChannelOpenSet1-001_mp3.js';
+import mtLigandsStickv1_mp3 from '../../sounds/mtLigandsStickv1_mp3.js';
+// import mtLigandsStickv2_mp3 from '../../sounds/mtLigandsStickv2_mp3.js';
+// import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
+import mtLigandsUnstickv1_mp3 from '../../sounds/mtLigandsUnstickv1_mp3.js';
+// import mtLigandsUnstickv2_mp3 from '../../sounds/mtLigandsUnstickv2_mp3.js';
+// import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
 // import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
@@ -46,14 +52,22 @@ const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutp
 const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 
-const mtChannelOpenSet1001 = newSoundClip( mtChannelOpenSet1001_mp3 );
-const mtChannelCloseSet1001 = newSoundClip( mtChannelCloseSet1001_mp3 );
+const mtChannelOpenSet1001 = newSoundClip( mtChannelOpenSet1001_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1001 = newSoundClip( mtChannelCloseSet1001_mp3, { initialOutputLevel: 0.6 } );
 
 const mtSoluteCrossing001Outward = newSoundClip( mtSoluteCrossing001_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
 const mtSoluteCrossing002Outward = newSoundClip( mtSoluteCrossing002_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
 const mtSoluteCrossing003Outward = newSoundClip( mtSoluteCrossing003_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
 const mtSoluteCrossing004Outward = newSoundClip( mtSoluteCrossing004_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
 const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
+
+// Additional options for the ligand binding sounds, commented out for lint.
+const mtLigandsStickv1 = newSoundClip( mtLigandsStickv1_mp3, { initialOutputLevel: 0.6 } );
+// const mtLigandsStickv2 = newSoundClip( mtLigandsStickv2_mp3, { initialOutputLevel: 0.6 } );
+// const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
+const mtLigandsUnstickv1 = newSoundClip( mtLigandsUnstickv1_mp3, { initialOutputLevel: 0.6 } );
+// const mtLigandsUnstickv2 = newSoundClip( mtLigandsUnstickv2_mp3, { initialOutputLevel: 0.6 } );
+// const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
 
 /**
  * Play sound effects on certain events.
@@ -134,7 +148,6 @@ export default class MembraneTransportSounds {
         mtSoluteCrossing005Outward.play();
       }
     }
-
   }
 
   public static channelOpened(): void {
@@ -143,6 +156,14 @@ export default class MembraneTransportSounds {
 
   public static channelClosed(): void {
     mtChannelCloseSet1001.play();
+  }
+
+  public static ligandBound(): void {
+    mtLigandsStickv1.play();
+  }
+
+  public static ligandUnbound(): void {
+    mtLigandsUnstickv1.play();
   }
 }
 

@@ -27,7 +27,8 @@ export default class VoltageGatedChannel extends TransportProtein<'open' | 'clos
                                  ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
     } );
 
-    this.stateProperty.link( state => {
+    // TODO: Move to the view.
+    this.stateProperty.lazyLink( state => {
       if ( state === 'open' ) {
         MembraneTransportSounds.channelOpened();
       }

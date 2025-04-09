@@ -99,7 +99,7 @@ export default class LigandGatedChannel extends TransportProtein<'closed' | 'lig
   public unbindLigand(): void {
     if ( this.boundLigand ) {
       // Reset the ligand to random walk mode
-      this.boundLigand.mode = this.boundLigand.createRandomWalkMode();
+      this.boundLigand.mode = this.boundLigand.createRandomWalkMode( false );
 
       // Clear the bound state
       this.stateProperty.value = 'closed';

@@ -7,6 +7,7 @@ import sodiumLigandGatedClosed_svg from '../../../../images/sodiumLigandGatedClo
 import sodiumLigandGatedOpen_svg from '../../../../images/sodiumLigandGatedOpen_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import ProteinNode from './ProteinNode.js';
 
@@ -32,11 +33,21 @@ export default class LigandGatedChannelNode extends ProteinNode {
 
     this.addChild( this.image );
     if ( channel ) {
-      channel.stateProperty.link( state => {
+      channel.stateProperty.link( ( ( state, oldState ) => {
         this.image.image = type === 'sodiumIonLigandGatedChannel' ? ( state === 'closed' ? sodiumLigandGatedClosed_svg : sodiumLigandGatedOpen_svg ) :
                            type === 'potassiumIonLigandGatedChannel' ? ( state === 'closed' ? potassiumLigandGatedClosed_svg : potassiumLigandGatedOpen_svg ) :
                            ( () => { throw new Error( `Unrecognized ligand-gated channel type: ${type}` ); } )();
-      } );
+
+        // Sounds should play lazily
+        if ( oldState ) {
+          if ( state === 'closed' ) {
+            MembraneTransportSounds.ligandUnbound();
+          }
+          else if ( state === 'ligandBoundClosed' ) {
+            MembraneTransportSounds.ligandBound();
+          }
+        }
+      } ) );
     }
   }
 }
