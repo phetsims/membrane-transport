@@ -44,7 +44,7 @@ const bandpassFilter = new BiquadFilterNode( phetAudioContext, {
 
 // const collectSound = newSoundClip( collect_mp3, { initialOutputLevel: 0.6 } );
 const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
-const proteinReturnSound = newSoundClip( proteinReturnSound_mp3 );
+const proteinReturnSound = newSoundClip( proteinReturnSound_mp3, { initialOutputLevel: 0.75 } );
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 const mtSoluteCrossing001 = newSoundClip( mtSoluteCrossing001_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 const mtSoluteCrossing002 = newSoundClip( mtSoluteCrossing002_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
