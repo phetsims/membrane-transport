@@ -44,6 +44,9 @@ const CROSSING_COOLDOWN = 0.5;
 // we can decide how it should interact with the transport protein.
 export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
 
+// Epsilon value for nudging particle into bounds after teleporting, so that it doesn't instantly teleport back to the other side
+const NUDGE_EPSILON = 1E-6;
+
 type RandomWalkMode = {
   type: 'randomWalk';
   currentDirection: Vector2;
@@ -489,7 +492,7 @@ export default class Particle<T extends ParticleType> {
 
   /**
    * Step the particle along a random walk path, including bouncing off the membrane
-   * (central horizontal band) and the bounding walls.
+   * (central horizontal band) and the top/bottom walls, and wrapping around left/right walls.
    */
   private stepRandomWalk( dt: number, model: MembraneTransportModel ): void {
     const randomWalk = this.mode as RandomWalkMode;
@@ -503,11 +506,12 @@ export default class Particle<T extends ParticleType> {
       randomWalk.timeUntilNextDirection = sampleValueHowLongToGoStraight();
     }
 
-    // Accumulate turn time and compute the interpolated direction.
+    // Store direction locally for modification if needed during bounce/wrap
+    const direction = randomWalk.currentDirection.copy();
+
     const thisBounds = this.getBounds();
     const outsideOfCell = this.position.y > 0;
 
-    // Check each transport protein to for interaction
     for ( let i = 0; i < model.slots.length; i++ ) {
       const slot = model.slots[ i ];
       const transportProtein = slot.transportProteinProperty.value;
@@ -529,7 +533,7 @@ export default class Particle<T extends ParticleType> {
 
     if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
-      // Check for passive diffusion for oxygen or carbon dioxide.
+      // Check for passive diffusion first, might change mode
       if ( ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 ) {
         this.mode = {
           type: 'passiveDiffusion',
@@ -541,7 +545,7 @@ export default class Particle<T extends ParticleType> {
         return;
       }
 
-      // Determine the overlap and sign based on whether the entity is outside the cell.
+      // If not diffusing, bounce off membrane
       const overlap = outsideOfCell ?
                       MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY :
                       thisBounds.maxY - MembraneTransportConstants.MEMBRANE_BOUNDS.minY;
@@ -551,39 +555,52 @@ export default class Particle<T extends ParticleType> {
       this.position.y += sign * overlap;
 
       // Reflect the vertical motion
-      randomWalk.currentDirection.y = sign * Math.abs( randomWalk.currentDirection.y );
+      direction.y = sign * Math.abs( direction.y );
+      randomWalk.currentDirection.y = direction.y;
     }
 
-    const direction = randomWalk.currentDirection;
-
-    // Move according to the direction and speed
+    // Move according to the potentially modified direction and speed
     this.position.x += direction.x * dt * typicalSpeed;
     this.position.y += direction.y * dt * typicalSpeed;
 
-    // Now bounce off the 3 other walls in whichever bounding region we are in
+    // --- BEGIN HORIZONTAL WRAP ---
+    const updatedBoundsAfterMove = this.getBounds(); // Bounds AFTER movement
     const boundingRegion = outsideOfCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
+    const totalBounds = boundingRegion;
+    const particleWidth = this.dimension.width;
+    const epsilon = NUDGE_EPSILON;
 
-    // Recompute thisBounds after the move
-    const updatedBounds = this.getBounds();
+    // Check for exit left: particle bounds are fully to the left of the view
+    if ( updatedBoundsAfterMove.maxX < totalBounds.minX ) {
 
-    // Helper function to apply the adjustment to the specified axis
-    const applyAxisAdjustment = ( axis: 'x' | 'y', adjustment: { bounce: boolean; newPos: number; newDir: number } ) => {
-      this.position[ axis ] = adjustment.newPos;
-      direction[ axis ] = adjustment.newDir;
-      randomWalk.currentDirection[ axis ] = adjustment.newDir;
+      // Teleport to the right side, fully out of view, then nudge slightly inside
+      this.position.x = totalBounds.maxX + particleWidth / 2 - epsilon;
+    }
+    // Check for exit right: particle bounds are fully to the right of the view
+    else if ( updatedBoundsAfterMove.minX > totalBounds.maxX ) {
 
-      if ( adjustment.bounce ) {
-        MembraneTransportSounds.particleBounced( this );
-      }
-    };
+      // Teleport to the left side, fully out of view, then nudge slightly inside
+      this.position.x = totalBounds.minX - particleWidth / 2 + epsilon;
+    }
+    // --- END HORIZONTAL WRAP ---
 
-    // Adjust x-axis collision
-    const xAdjustment = Particle.adjustAxis( this.position.x, updatedBounds.minX, updatedBounds.maxX, boundingRegion.minX, boundingRegion.maxX, direction.x );
-    applyAxisAdjustment( 'x', xAdjustment );
+    // --- BEGIN VERTICAL BOUNCE ---
+    // Use bounds after potential wrap for vertical check
+    const finalBounds = this.getBounds();
 
-    // Adjust y-axis collision
-    const yAdjustment = Particle.adjustAxis( this.position.y, updatedBounds.minY, updatedBounds.maxY, boundingRegion.minY, boundingRegion.maxY, direction.y );
-    applyAxisAdjustment( 'y', yAdjustment );
+    // Adjust y-axis collision using Particle.adjustAxis static method
+    const yAdjustment = Particle.adjustAxis( this.position.y, finalBounds.minY, finalBounds.maxY, boundingRegion.minY, boundingRegion.maxY, direction.y );
+
+    if ( yAdjustment.bounce ) {
+
+      // Apply position correction
+      this.position.y = yAdjustment.newPos;
+      // Update the mode's vertical direction component
+      randomWalk.currentDirection.y = yAdjustment.newDir;
+
+      MembraneTransportSounds.particleBounced( this );
+    }
+    // --- END VERTICAL BOUNCE ---
   }
 
   private static adjustAxis( position: number, particleMin: number, particleMax: number, regionMin: number, regionMax: number, currentDir: number ): { bounce: boolean; newPos: number; newDir: number } {
