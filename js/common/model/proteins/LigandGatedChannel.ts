@@ -42,10 +42,6 @@ export default class LigandGatedChannel extends TransportProtein<
     } );
   }
 
-  public get isLigandBound(): boolean {
-    return this.stateProperty.value === 'ligandBoundClosed' || this.stateProperty.value === 'ligandBoundOpen';
-  }
-
   public override step( dt: number ): void {
 
     this.timeSinceStateTransition += dt;
@@ -78,7 +74,7 @@ export default class LigandGatedChannel extends TransportProtein<
    * Returns whether the channel is available for binding (not currently bound and past the rebinding delay)
    */
   public isAvailableForBinding(): boolean {
-    return !this.isLigandBound && this.timeSinceStateTransition >= REBINDING_DELAY;
+    return this.stateProperty.value === 'closed' && this.timeSinceStateTransition >= REBINDING_DELAY;
   }
 
   /**
