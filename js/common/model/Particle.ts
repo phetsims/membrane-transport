@@ -590,18 +590,33 @@ export default class Particle<T extends ParticleType> {
     // --- END HORIZONTAL WRAP ---
 
     // --- BEGIN VERTICAL BOUNCE ---
-    // Use bounds after potential wrap for vertical check
-    const finalBounds = this.getBounds();
+    const newBounds = this.getBounds();
 
-    // Adjust y-axis collision using Particle.adjustAxis static method
-    const yAdjustment = Particle.adjustAxis( this.position.y, finalBounds.minY, finalBounds.maxY, boundingRegion.minY, boundingRegion.maxY, direction.y );
+    let bounce = false;
+    let newPositionY = this.position.y;
+    let newDirectionY = direction.y;
 
-    if ( yAdjustment.bounce ) {
+    // Dilate the bounding region by the height of the particle, so it can go just barely out of bounds.
+    const dilatedBoundingRegion = boundingRegion.dilated( newBounds.height - NUDGE_EPSILON );
 
-      // Apply position correction
-      this.position.y = yAdjustment.newPos;
-      // Update the mode's vertical direction component
-      randomWalk.currentDirection.y = yAdjustment.newDir;
+    // Detect fully out of bounds
+    if ( newBounds.minY < dilatedBoundingRegion.minY ) {
+      bounce = true;
+      newPositionY += ( dilatedBoundingRegion.minY - newBounds.minY );
+      newDirectionY = Math.abs( newDirectionY );
+    }
+    else if ( newBounds.maxY > dilatedBoundingRegion.maxY ) {
+      bounce = true;
+      newPositionY -= ( newBounds.maxY - dilatedBoundingRegion.maxY );
+      newDirectionY = -Math.abs( newDirectionY );
+    }
+
+    if ( bounce ) {
+      this.position.y = newPositionY;
+      randomWalk.currentDirection.y = newDirectionY;
+
+      // Teleport to give the sense that one particle left at once coordinate and another entered at the same time
+      this.position.x = dotRandom.nextDoubleBetween( boundingRegion.minX, boundingRegion.maxX );
 
       MembraneTransportSounds.particleBounced( this );
     }
