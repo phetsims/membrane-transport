@@ -1,12 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
-import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-// We use the view dimensions to determine the model aspect ratio, in order to avoid having to duplicate/repeat that dimension.
-// eslint-disable-next-line phet/no-view-imported-from-model
-import getParticleNode from '../view/particles/getParticleNode.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
@@ -42,51 +38,6 @@ export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes
   soluteType === 'sodiumIon' ? MembraneTransportColors.sodiumIonColorProperty :
   soluteType === 'potassiumIon' ? MembraneTransportColors.potassiumIonColorProperty :
   MembraneTransportColors.glucoseColorProperty;
-
-const oxygenModelSize = 3;
-
-// Only access images after loading complete
-let carbonDioxideViewWidth: number | null = null;
-let oxygenViewWidth: number | null = null;
-
-const getCarbonDioxideViewWidth = (): number => {
-  if ( carbonDioxideViewWidth === null ) {
-    const carbonDioxideNode = getParticleNode( 'carbonDioxide' );
-    affirm( typeof carbonDioxideNode.bounds.width === 'number', 'carbonDioxideViewWidth should be a number' );
-    affirm( !isNaN( carbonDioxideNode.bounds.width ), 'carbonDioxideViewWidth should not be NaN' );
-    affirm( carbonDioxideNode.bounds.width > 0, 'carbonDioxideViewWidth should be positive' );
-    carbonDioxideViewWidth = carbonDioxideNode.bounds.width;
-  }
-
-  return carbonDioxideViewWidth;
-};
-
-const getOxygenViewWidth = (): number => {
-  if ( oxygenViewWidth === null ) {
-    const oxygenNode = getParticleNode( 'oxygen' );
-    affirm( typeof oxygenNode.bounds.width === 'number', 'carbonDioxideViewWidth should be a number' );
-    affirm( !isNaN( oxygenNode.bounds.width ), 'carbonDioxideViewWidth should not be NaN' );
-    affirm( oxygenNode.bounds.width > 0, 'carbonDioxideViewWidth should be positive' );
-    oxygenViewWidth = oxygenNode.bounds.width;
-  }
-  return oxygenViewWidth;
-};
-
-export const getParticleModelWidth = ( particleType: ParticleType ): number =>
-
-  // Since oxygen and carbon dioxide share the O atom, we need to make sure the O atoms have the same size in both.
-  particleType === 'oxygen' ? oxygenModelSize :
-
-  // TODO: Consider hard coding the dimension of the co2 so we don't need to do view lookups? Or is there a better way? April 9
-    // Cache them, but not until the sim has started up, and we have good bounds.
-  particleType === 'carbonDioxide' ? oxygenModelSize * getCarbonDioxideViewWidth() / getOxygenViewWidth() :
-
-  particleType === 'sodiumIon' ? 4 :
-  particleType === 'potassiumIon' ? 6 :
-  particleType === 'glucose' ? 10 :
-  particleType === 'ligandA' ? 10 :
-  particleType === 'ligandB' ? 10 :
-  10;
 
 export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ): string =>
   `${soluteType}BarChart`;

@@ -29,7 +29,7 @@ import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import VoltageGatedChannel from './proteins/VoltageGatedChannel.js';
 import Slot from './Slot.js';
-import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
+import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 // TODO (design) can this be deleted?
 const ABSORB_GLUCOSE = false;
@@ -167,10 +167,11 @@ export default class Particle<T extends ParticleType> {
     public readonly position: Vector2,
     public readonly type: T
   ) {
-    this.dimension = new Dimension2(
-      getParticleModelWidth( type ),
-      getParticleModelWidth( type ) / MembraneTransportConstants.getParticleAspectRatioMap()[ type ]
-    );
+    const lookup = MembraneTransportConstants.getParticleViewDimensions()[ type ];
+
+    // TODO: How can we compute this number analytically? I manually tuned it for now.
+    const scale = 0.035;
+    this.dimension = new Dimension2( lookup.width * scale, lookup.height * scale );
 
     assert && assert( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
     assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );
