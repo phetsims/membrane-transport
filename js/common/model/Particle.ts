@@ -400,7 +400,7 @@ export default class Particle<T extends ParticleType> {
       }
     }
     else if ( this.mode.type === 'sheddingCagedWaterMolecules' ) {
-      const sheddingDuration = 0.5; // adjust as needed
+      const sheddingDuration = 0.1; // adjust as needed
       this.mode.sheddingElapsed = ( this.mode.sheddingElapsed || 0 ) + dt;
 
       if ( this.mode.sheddingElapsed >= sheddingDuration ) {
@@ -439,8 +439,8 @@ export default class Particle<T extends ParticleType> {
 
       const signBefore = this.position.y > 0;
 
-      this.position.y += sign * ( typicalSpeed / 4 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
-      this.position.x += dotRandom.nextDoubleBetween( -1, 1 ) * ( typicalSpeed / 2 ) * dt;
+      this.position.y += sign * ( typicalSpeed / 5 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+      this.position.x += dotRandom.nextDoubleBetween( -2, 2 ) * ( typicalSpeed / 2 ) * dt;
 
       const signAfter = this.position.y > 0;
 
@@ -453,7 +453,7 @@ export default class Particle<T extends ParticleType> {
       // so that it looks like it "struggles" to get through.
       if ( this.mode.type === 'movingThroughChannel' ) {
         const center = this.mode.slot.position + ( this.mode.offset || 0 );
-        const maxDistanceFromCenter = 0.5;
+        const maxDistanceFromCenter = 0.8;
         if ( Math.abs( this.position.x - center ) > maxDistanceFromCenter ) {
           this.position.x = center + maxDistanceFromCenter * Math.sign( this.position.x - center );
         }
