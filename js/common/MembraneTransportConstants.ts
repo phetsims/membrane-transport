@@ -41,7 +41,7 @@ export default class MembraneTransportConstants {
                                         MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH;
 
   // A map of solute type to the aspect ratio of its artwork so that we can create bounds
-  // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
+  // in the model that accurately match the artwork.
   // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
   // get good bounds. Hence, this is a method rather than an attribute, and called during screen creation.
   public static getParticleViewDimensions(): Record<ParticleType, Dimension2> {
@@ -53,7 +53,11 @@ export default class MembraneTransportConstants {
         const soluteNodeBounds = myParticleNode.bounds;
 
         assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
-        record[ soluteType ] = new Dimension2( soluteNodeBounds.width, soluteNodeBounds.height );
+
+        // Ligands are rendered in scenery, not in canvas, and have a different scale factor
+        const scale = soluteType === 'ligandA' || soluteType === 'ligandB' ? 1 / MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE : 1;
+
+        record[ soluteType ] = new Dimension2( soluteNodeBounds.width * scale, soluteNodeBounds.height * scale );
       } );
       particleAspectRatioMap = record;
     }

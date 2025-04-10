@@ -142,6 +142,21 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         );
       }
     }
+
+    // when debugging also show the bounding boxes around the ligands
+    if ( phet.chipper.queryParameters.dev ) {
+      this.model.ligands.forEach( ligand => {
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        this.strokeRect(
+          context,
+          ( ligand.position.x - ligand.dimension.width / 2 ),
+          ( ligand.position.y - ligand.dimension.height / 2 ),
+          ( ligand.dimension.width ),
+          ( ligand.dimension.height )
+        );
+      } );
+    }
   }
 
 

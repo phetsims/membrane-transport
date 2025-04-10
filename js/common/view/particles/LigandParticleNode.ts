@@ -18,7 +18,8 @@ export default class LigandParticleNode extends Node {
 
     super( {
       children: [ new Image( type === 'ligandA' ? sodiumLigand_svg : potassiumLigand_svg, {
-        scale: MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE
+        scale: MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE,
+        opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
       } ) ]
     } );
   }
