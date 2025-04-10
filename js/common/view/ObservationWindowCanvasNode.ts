@@ -156,10 +156,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     const separation = ( MembraneTransportConstants.MEMBRANE_BOUNDS.width - margin * 2 ) / ( numberOfCharges - 1 );
 
     for ( let i = 0; i < numberOfCharges; i++ ) {
-      this.drawSign( context, potentialNumber < 0 ? '+' : '-', new Vector2( margin + i * separation + MembraneTransportConstants.MEMBRANE_BOUNDS.minX, 15 ) );
+      this.drawSign( context, potentialNumber < 0 ? '+' : '-', new Vector2( margin + i * separation + MembraneTransportConstants.MEMBRANE_BOUNDS.minX, 17 ) );
     }
     for ( let i = 0; i < numberOfCharges; i++ ) {
-      this.drawSign( context, potentialNumber < 0 ? '-' : '+', new Vector2( margin + i * separation + MembraneTransportConstants.MEMBRANE_BOUNDS.minX, -15 ) );
+      this.drawSign( context, potentialNumber < 0 ? '-' : '+', new Vector2( margin + i * separation + MembraneTransportConstants.MEMBRANE_BOUNDS.minX, -17 ) );
     }
   }
 
