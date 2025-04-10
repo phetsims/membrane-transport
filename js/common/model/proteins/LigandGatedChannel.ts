@@ -20,7 +20,7 @@ const REBINDING_DELAY = 5;
 // Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time.
 const BINDING_DURATION = 7;
 
-// TODO: Add another state so there can be a delay when the ligand unbinds before the channel closes.
+// TODO (JG): Would be good to review the state machine here, and also I'm still seeing cases where the ligand doesn't bind right away. I thought we fixed it, but perhaps the new states are interfering?
 export default class LigandGatedChannel extends TransportProtein<
   'closed' | // idle state, not bound to a ligand
   'ligandBoundClosed' | // ligand has bound, but channel has not yet opened (brief)
