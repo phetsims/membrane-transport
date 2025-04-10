@@ -235,9 +235,11 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
-    const cellBounds = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS;
 
-    const removableSolutes = this.solutes.filter( solute => solute.type === soluteType && cellBounds.containsPoint( solute.position ) );
+    const removableSolutes = this.solutes.filter( solute =>
+      solute.type === soluteType &&
+      ( location === 'inside' ? solute.position.y < 0 : solute.position.y >= 0 )
+    );
 
     // So that solutes are randomly removed instead of removing the oldest ones.
     const shuffledRemovables = dotRandom.shuffle( removableSolutes );
@@ -324,7 +326,7 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   /**
-   * Sum up all of the flux history for a given solute type. Positive values indicate that the solute has passed
+   * Sum up all the flux history for a given solute type. Positive values indicate that the solute has passed
    * through the membrane from the outside to the inside, and negative values indicate the opposite.
    */
   public getRecentSoluteFluxWithSmoothing( soluteType: SoluteType ): number {
@@ -383,7 +385,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
       // Compare against the y value because a solute is still considered 'inside' until it full passes through
       // the middle of the membrane.
-      return solute.type === soluteType && ( location === 'inside' ? solute.position.y < 0 : solute.position.y > 0 );
+      return solute.type === soluteType && ( location === 'inside' ? solute.position.y < 0 : solute.position.y >= 0 );
     } ).length;
   }
 
