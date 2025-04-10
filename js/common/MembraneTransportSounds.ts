@@ -14,11 +14,11 @@ import mtChannelCloseSet1001_mp3 from '../../sounds/mtChannelCloseSet1-001_mp3.j
 // eslint-disable-next-line phet/default-import-match-filename
 import mtChannelOpenSet1001_mp3 from '../../sounds/mtChannelOpenSet1-001_mp3.js';
 import mtLigandsStickv1_mp3 from '../../sounds/mtLigandsStickv1_mp3.js';
-// import mtLigandsStickv2_mp3 from '../../sounds/mtLigandsStickv2_mp3.js';
-// import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
+import mtLigandsStickv2_mp3 from '../../sounds/mtLigandsStickv2_mp3.js';
+import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
 import mtLigandsUnstickv1_mp3 from '../../sounds/mtLigandsUnstickv1_mp3.js';
-// import mtLigandsUnstickv2_mp3 from '../../sounds/mtLigandsUnstickv2_mp3.js';
-// import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
+import mtLigandsUnstickv2_mp3 from '../../sounds/mtLigandsUnstickv2_mp3.js';
+import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
 // import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
@@ -27,6 +27,7 @@ import mtSoluteCrossing004_mp3 from '../../sounds/mtSoluteCrossing004_mp3.js';
 import mtSoluteCrossing005_mp3 from '../../sounds/mtSoluteCrossing005_mp3.js';
 import proteinReturnSound_mp3 from '../../sounds/proteinReturnSound_mp3.js';
 import membraneTransport from '../membraneTransport.js';
+import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import Particle from './model/Particle.js';
 
 const newSoundClip = ( sound: WrappedAudioBuffer, options?: SoundClipOptions ) => {
@@ -63,11 +64,11 @@ const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, { addi
 
 // Additional options for the ligand binding sounds, commented out for lint.
 const mtLigandsStickv1 = newSoundClip( mtLigandsStickv1_mp3, { initialOutputLevel: 0.6 } );
-// const mtLigandsStickv2 = newSoundClip( mtLigandsStickv2_mp3, { initialOutputLevel: 0.6 } );
-// const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
+const mtLigandsStickv2 = newSoundClip( mtLigandsStickv2_mp3, { initialOutputLevel: 0.6 } );
+const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsUnstickv1 = newSoundClip( mtLigandsUnstickv1_mp3, { initialOutputLevel: 0.6 } );
-// const mtLigandsUnstickv2 = newSoundClip( mtLigandsUnstickv2_mp3, { initialOutputLevel: 0.6 } );
-// const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
+const mtLigandsUnstickv2 = newSoundClip( mtLigandsUnstickv2_mp3, { initialOutputLevel: 0.6 } );
+const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
 
 /**
  * Play sound effects on certain events.
@@ -159,11 +160,19 @@ export default class MembraneTransportSounds {
   }
 
   public static ligandBound(): void {
-    mtLigandsStickv1.play();
+
+    const sound = MembraneTransportQueryParameters.soundLigandBind === 1 ? mtLigandsStickv1 :
+                  MembraneTransportQueryParameters.soundLigandBind === 2 ? mtLigandsStickv2 :
+                  mtLigandsStickv3;
+
+    sound.play();
   }
 
   public static ligandUnbound(): void {
-    mtLigandsUnstickv1.play();
+    const sound = MembraneTransportQueryParameters.soundLigandBind === 1 ? mtLigandsUnstickv1 :
+                  MembraneTransportQueryParameters.soundLigandBind === 2 ? mtLigandsUnstickv2 :
+                  mtLigandsUnstickv3;
+    sound.play();
   }
 }
 
