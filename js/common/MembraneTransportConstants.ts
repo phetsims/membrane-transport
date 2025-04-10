@@ -15,12 +15,13 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
+import Dimension2 from '../../../dot/js/Dimension2.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
 import getParticleNode from './view/particles/getParticleNode.js';
 
-let particleAspectRatioMap: Record<ParticleType, number> | null = null;
+let particleAspectRatioMap: Record<ParticleType, Dimension2> | null = null;
 
 export default class MembraneTransportConstants {
 
@@ -43,16 +44,16 @@ export default class MembraneTransportConstants {
   // in the model that accurately match the artwork. The aspect ratio is the width divided by the height.
   // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
   // get good bounds. Hence, this is a method rather than an attribute, and called during screen creation.
-  public static getParticleAspectRatioMap(): Record<ParticleType, number> {
+  public static getParticleViewDimensions(): Record<ParticleType, Dimension2> {
 
     if ( !particleAspectRatioMap ) {
-      const record = {} as Record<ParticleType, number>;
+      const record = {} as Record<ParticleType, Dimension2>;
       ParticleTypes.forEach( soluteType => {
         const myParticleNode = getParticleNode( soluteType );
         const soluteNodeBounds = myParticleNode.bounds;
 
         assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
-        record[ soluteType ] = soluteNodeBounds.width / soluteNodeBounds.height;
+        record[ soluteType ] = new Dimension2( soluteNodeBounds.width, soluteNodeBounds.height );
       } );
       particleAspectRatioMap = record;
     }

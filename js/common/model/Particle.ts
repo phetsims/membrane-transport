@@ -29,7 +29,7 @@ import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import VoltageGatedChannel from './proteins/VoltageGatedChannel.js';
 import Slot from './Slot.js';
-import SoluteType, { getParticleModelWidth, LigandType, ParticleType } from './SoluteType.js';
+import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 // TODO (design) can this be deleted?
 const ABSORB_GLUCOSE = false;
@@ -148,7 +148,11 @@ type ParticleMode =
   | MoveToSodiumPotassiumPumpMode
   | WaitingInSodiumPotassiumPumpMode;
 
-// TODO (design): refine these values
+/**
+ * For the random walk, the brownian motion is straight lines then random angles. This function determines how long to
+ * go straight before a sudden direction change.
+ * TODO (design): refine these values
+ */
 const sampleValueHowLongToGoStraight = () => {
   const result = boxMullerTransform( 0.3, 0.4, dotRandom );
   return clamp( result, 0.01, 2 );
@@ -167,10 +171,11 @@ export default class Particle<T extends ParticleType> {
     public readonly position: Vector2,
     public readonly type: T
   ) {
-    this.dimension = new Dimension2(
-      getParticleModelWidth( type ),
-      getParticleModelWidth( type ) / MembraneTransportConstants.getParticleAspectRatioMap()[ type ]
-    );
+    const lookup = MembraneTransportConstants.getParticleViewDimensions()[ type ];
+
+    // TODO: How can we compute this number analytically? I manually tuned it for now.
+    const scale = 0.035;
+    this.dimension = new Dimension2( lookup.width * scale, lookup.height * scale );
 
     assert && assert( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
     assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );
@@ -571,7 +576,6 @@ export default class Particle<T extends ParticleType> {
     const epsilon = NUDGE_EPSILON;
 
     // Check for exit left: particle bounds are fully to the left of the view
-    // TODO: ATP is blinking out way too soon, or may have wrong bounds.
     if ( updatedBoundsAfterMove.maxX < totalBounds.minX ) {
 
       // Teleport to the right side, fully out of view, then nudge slightly inside

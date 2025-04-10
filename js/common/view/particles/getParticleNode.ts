@@ -19,6 +19,7 @@ import PhosphateNode from './PhosphateNode.js';
 import PotassiumIonNode from './PotassiumIonNode.js';
 import SodiumIonNode from './SodiumIonNode.js';
 
+// TODO: If all particle nodes are just new Image, we can simplify this quite a bit.
 const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): Node => {
   const particleNode = particleType === 'oxygen' ? new OxygenNode() :
                        particleType === 'carbonDioxide' ? new CarbonDioxideNode() :
