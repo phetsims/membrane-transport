@@ -623,12 +623,6 @@ export default class Particle<T extends ParticleType> {
     // --- END VERTICAL BOUNCE ---
   }
 
-  private static adjustAxis( position: number, particleMin: number, particleMax: number, regionMin: number, regionMax: number, currentDir: number ): { bounce: boolean; newPos: number; newDir: number } {
-    return particleMin < regionMin ? ( { bounce: true, newPos: position + ( regionMin - particleMin ), newDir: Math.abs( currentDir ) } ) :
-           particleMax > regionMax ? ( { bounce: true, newPos: position - ( particleMax - regionMax ), newDir: -Math.abs( currentDir ) } ) :
-           ( { bounce: false, newPos: position, newDir: currentDir } );
-  }
-
   /**
    * During randomWalk, check for interactions with transport proteins.
    */
