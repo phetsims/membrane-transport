@@ -148,7 +148,11 @@ type ParticleMode =
   | MoveToSodiumPotassiumPumpMode
   | WaitingInSodiumPotassiumPumpMode;
 
-// TODO (design): refine these values
+/**
+ * For the random walk, the brownian motion is straight lines then random angles. This function determines how long to
+ * go straight before a sudden direction change.
+ * TODO (design): refine these values
+ */
 const sampleValueHowLongToGoStraight = () => {
   const result = boxMullerTransform( 0.3, 0.4, dotRandom );
   return clamp( result, 0.01, 2 );
