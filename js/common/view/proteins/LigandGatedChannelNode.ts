@@ -33,31 +33,26 @@ export default class LigandGatedChannelNode extends ProteinNode {
 
     this.addChild( this.image );
     if ( channel ) {
-      channel.stateProperty.link( ( ( state, oldState ) => {
-        this.image.image = type === 'sodiumIonLigandGatedChannel' ? ( state !== 'ligandBoundOpen' ? sodiumLigandGatedClosed_svg : sodiumLigandGatedOpen_svg ) :
-                           type === 'potassiumIonLigandGatedChannel' ? ( state !== 'ligandBoundOpen' ? potassiumLigandGatedClosed_svg : potassiumLigandGatedOpen_svg ) :
+      channel.stateProperty.link( state => {
+        this.image.image = type === 'sodiumIonLigandGatedChannel' ? ( state === 'ligandBoundOpen' || state === 'ligandUnboundOpen' ) ? sodiumLigandGatedOpen_svg : sodiumLigandGatedClosed_svg :
+                           type === 'potassiumIonLigandGatedChannel' ? ( state === 'ligandBoundOpen' || state === 'ligandUnboundOpen' ) ? potassiumLigandGatedOpen_svg : potassiumLigandGatedClosed_svg :
                            ( () => { throw new Error( `Unrecognized ligand-gated channel type: ${type}` ); } )();
+      } );
 
-        // Sounds should play lazily
-        if ( oldState ) {
-          if ( state === 'closed' ) {
-            MembraneTransportSounds.ligandUnbound();
-          }
-          else if ( state === 'ligandBoundClosed' ) {
-            MembraneTransportSounds.ligandBound();
-          }
+      channel.stateProperty.lazyLink( state => {
+        if ( state === 'closed' ) {
+          MembraneTransportSounds.channelClosed();
         }
-
-        // Sounds should play lazily
-        if ( oldState ) {
-          if ( state === 'ligandBoundOpen' ) {
-            MembraneTransportSounds.channelOpened();
-          }
-          else if ( state === 'closed' ) {
-            MembraneTransportSounds.channelClosed();
-          }
+        else if ( state === 'ligandBoundClosed' ) {
+          MembraneTransportSounds.ligandBound();
         }
-      } ) );
+        else if ( state === 'ligandBoundOpen' ) {
+          MembraneTransportSounds.channelOpened();
+        }
+        else if ( state === 'ligandUnboundOpen' ) {
+          MembraneTransportSounds.ligandUnbound();
+        }
+      } );
     }
   }
 }
