@@ -40,8 +40,8 @@ export default class MembraneTransportConstants {
                                         MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT /
                                         MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH;
 
-  // A map of solute type to the aspect ratio of its artwork so that we can create bounds
-  // in the model that accurately match the artwork.
+  // A map of solute type to the dimension of the artwork so that we can create bounds in the model that accurately
+  // match the artwork.
   // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
   // get good bounds. Hence, this is a method rather than an attribute, and called during screen creation.
   public static getParticleViewDimensions(): Record<ParticleType, Dimension2> {
@@ -67,9 +67,7 @@ export default class MembraneTransportConstants {
   public static readonly LIGAND_COUNT = 10; // Per ligand type
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
   public static readonly TRANSPORT_PROTEIN_WIDTH = 10; // Width in model coordinates
-
-  // TODO: Is this number really independent from TRANSPORT_PROTEIN_WIDTH?
-  public static readonly TRANSPORT_PROTEIN_IMAGE_SCALE = 0.1;
+  public static readonly TRANSPORT_PROTEIN_IMAGE_SCALE = 0.1; // Based on the given artwork
 
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;
