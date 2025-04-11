@@ -270,6 +270,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       keys: [ 'm' ], fire: () => {
         const initialValue = CAPTURE_RADIUS_PROPERTY.initialValue;
         CAPTURE_RADIUS_PROPERTY.value = CAPTURE_RADIUS_PROPERTY.value === initialValue ? initialValue * 100 : initialValue;
+        console.log( 'Capture radius: ', CAPTURE_RADIUS_PROPERTY.value );
       }
     } );
 

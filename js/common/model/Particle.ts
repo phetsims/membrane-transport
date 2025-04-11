@@ -646,11 +646,9 @@ export default class Particle<T extends ParticleType> {
         if ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForBinding() ) {
 
           // check that no other ligand is already moving to that slot.
-          // TODO (JG/SR): This isn't working for unknown reasons.
-          const otherLigand = model.solutes.find( solute => ( solute.mode.type === 'moveToLigandBindingLocation' ) && solute.mode.slot === slot );
-          // console.log( 'other ligand headed that way?', otherLigand );
+          const isLigandFree = model.isTransportProteinLigandFree( slot );
 
-          if ( !otherLigand ) {
+          if ( isLigandFree ) {
             this.mode = { type: 'moveToLigandBindingLocation', slot: slot };
             return true;
           }

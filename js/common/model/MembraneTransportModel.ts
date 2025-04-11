@@ -414,17 +414,23 @@ export default class MembraneTransportModel extends PhetioObject {
    * This does not check for ligands.
    *
    * @param slot - The slot to check
-   * @param solutePredicate - A predicate function to filter the solutes. By default, it returns true for all solutes.
+   * @param predicate - A predicate function to filter the solutes. By default, it returns true for all solutes.
    */
   public isTransportProteinSoluteFree(
     slot: Slot,
-    solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true )
+    predicate: ( solute: Particle<SoluteType> ) => boolean = ( () => true )
   ): boolean {
 
-    // Check if any Particle mode has this slot
-    const filteredSolutes = this.solutes.filter( solutePredicate );
-    const isReserved = filteredSolutes.some( solute => solute.mode.slot === slot );
-    return !isReserved;
+    // Check if any Particle mode has this slot and matches the predicate
+    return !this.solutes.some( solute => solute.mode.slot === slot && predicate( solute ) );
+  }
+
+  // See above
+  public isTransportProteinLigandFree(
+    slot: Slot,
+    predicate: ( ligand: Particle<LigandType> ) => boolean = ( () => true )
+  ): boolean {
+    return !this.ligands.some( ligand => ligand.mode.slot === slot && predicate( ligand ) );
   }
 
   public getTimeSpeedFactor(): number {
