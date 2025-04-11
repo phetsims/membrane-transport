@@ -31,6 +31,8 @@ export default class SodiumGlucoseCotransporterNode extends ProteinNode {
   }
 
   public override step( dt: number ): void {
+
+    // TODO: Move to link, and add disposer
     if ( this.sodiumGlucoseCotransporter ) {
       this.image.image = this.sodiumGlucoseCotransporter.stateProperty.value === 'openToOutside' ? sodiumGlucoseCotransporterState1_svg :
                          this.sodiumGlucoseCotransporter.stateProperty.value === 'openToInside' ? sodiumGlucoseCotransporterState3_svg :

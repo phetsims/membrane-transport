@@ -7,7 +7,6 @@
  */
 
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 
@@ -25,16 +24,6 @@ export default class VoltageGatedChannel extends TransportProtein<'open' | 'clos
                                  voltage === '-50' ? ( type === 'sodiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
                                  voltage === '30' ? ( type === 'potassiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
                                  ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
-    } );
-
-    // TODO: Move to the view.
-    this.stateProperty.lazyLink( state => {
-      if ( state === 'open' ) {
-        MembraneTransportSounds.channelOpened();
-      }
-      else {
-        MembraneTransportSounds.channelClosed();
-      }
     } );
   }
 }

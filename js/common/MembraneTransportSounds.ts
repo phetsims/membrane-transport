@@ -1,5 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
+// TODO: Better way to streamline creation and/or clustering of all the sounds
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import phetAudioContext from '../../../tambo/js/phetAudioContext.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
@@ -7,19 +8,44 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
-
-// TODO: Better way to streamline creation and/or clustering of all the sounds
-// eslint-disable-next-line phet/default-import-match-filename
-import mtChannelCloseSet1001_mp3 from '../../sounds/mtChannelCloseSet1-001_mp3.js';
-// eslint-disable-next-line phet/default-import-match-filename
-import mtChannelOpenSet1001_mp3 from '../../sounds/mtChannelOpenSet1-001_mp3.js';
+import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
+import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
+import mtChannelCloseSet1_002_mp3 from '../../sounds/mtChannelCloseSet1_002_mp3.js';
+import mtChannelCloseSet1_002_muffled_mp3 from '../../sounds/mtChannelCloseSet1_002_muffled_mp3.js';
+import mtChannelCloseSet1_003_mp3 from '../../sounds/mtChannelCloseSet1_003_mp3.js';
+import mtChannelCloseSet1_003_muffled_mp3 from '../../sounds/mtChannelCloseSet1_003_muffled_mp3.js';
+import mtChannelCloseSet1_004_mp3 from '../../sounds/mtChannelCloseSet1_004_mp3.js';
+import mtChannelCloseSet1_004_muffled_mp3 from '../../sounds/mtChannelCloseSet1_004_muffled_mp3.js';
+import mtChannelCloseSet2_001_mp3 from '../../sounds/mtChannelCloseSet2_001_mp3.js';
+import mtChannelCloseSet2_001_muffled_mp3 from '../../sounds/mtChannelCloseSet2_001_muffled_mp3.js';
+import mtChannelCloseSet2_002_mp3 from '../../sounds/mtChannelCloseSet2_002_mp3.js';
+import mtChannelCloseSet2_002_muffled_mp3 from '../../sounds/mtChannelCloseSet2_002_muffled_mp3.js';
+import mtChannelCloseSet2_003_mp3 from '../../sounds/mtChannelCloseSet2_003_mp3.js';
+import mtChannelCloseSet2_003_muffled_mp3 from '../../sounds/mtChannelCloseSet2_003_muffled_mp3.js';
+import mtChannelCloseSet2_004_mp3 from '../../sounds/mtChannelCloseSet2_004_mp3.js';
+import mtChannelCloseSet2_004_muffled_mp3 from '../../sounds/mtChannelCloseSet2_004_muffled_mp3.js';
+import mtChannelOpenSet1_001_mp3 from '../../sounds/mtChannelOpenSet1_001_mp3.js';
+import mtChannelOpenSet1_001_muffled_mp3 from '../../sounds/mtChannelOpenSet1_001_muffled_mp3.js';
+import mtChannelOpenSet1_002_mp3 from '../../sounds/mtChannelOpenSet1_002_mp3.js';
+import mtChannelOpenSet1_002_muffled_mp3 from '../../sounds/mtChannelOpenSet1_002_muffled_mp3.js';
+import mtChannelOpenSet1_003_mp3 from '../../sounds/mtChannelOpenSet1_003_mp3.js';
+import mtChannelOpenSet1_003_muffled_mp3 from '../../sounds/mtChannelOpenSet1_003_muffled_mp3.js';
+import mtChannelOpenSet1_004_mp3 from '../../sounds/mtChannelOpenSet1_004_mp3.js';
+import mtChannelOpenSet1_004_muffled_mp3 from '../../sounds/mtChannelOpenSet1_004_muffled_mp3.js';
+import mtChannelOpenSet2_001_mp3 from '../../sounds/mtChannelOpenSet2_001_mp3.js';
+import mtChannelOpenSet2_001_muffled_mp3 from '../../sounds/mtChannelOpenSet2_001_muffled_mp3.js';
+import mtChannelOpenSet2_002_mp3 from '../../sounds/mtChannelOpenSet2_002_mp3.js';
+import mtChannelOpenSet2_002_muffled_mp3 from '../../sounds/mtChannelOpenSet2_002_muffled_mp3.js';
+import mtChannelOpenSet2_003_mp3 from '../../sounds/mtChannelOpenSet2_003_mp3.js';
+import mtChannelOpenSet2_003_muffled_mp3 from '../../sounds/mtChannelOpenSet2_003_muffled_mp3.js';
+import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js';
+import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
 import mtLigandsStickv1_mp3 from '../../sounds/mtLigandsStickv1_mp3.js';
 import mtLigandsStickv2_mp3 from '../../sounds/mtLigandsStickv2_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
 import mtLigandsUnstickv1_mp3 from '../../sounds/mtLigandsUnstickv1_mp3.js';
 import mtLigandsUnstickv2_mp3 from '../../sounds/mtLigandsUnstickv2_mp3.js';
 import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
-// import collect_mp3 from '../../../tambo/sounds/collect_mp3.js';
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
 import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
@@ -43,7 +69,6 @@ const bandpassFilter = new BiquadFilterNode( phetAudioContext, {
   frequency: 1600
 } );
 
-// const collectSound = newSoundClip( collect_mp3, { initialOutputLevel: 0.6 } );
 const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
 const proteinReturnSound = newSoundClip( proteinReturnSound_mp3, { initialOutputLevel: 0.75 } );
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
@@ -53,8 +78,46 @@ const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutp
 const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } ); // quieter to match the bandpassed ones
 
-const mtChannelOpenSet1001 = newSoundClip( mtChannelOpenSet1001_mp3, { initialOutputLevel: 0.6 } );
-const mtChannelCloseSet1001 = newSoundClip( mtChannelCloseSet1001_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_001 = newSoundClip( mtChannelCloseSet1_001_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_002 = newSoundClip( mtChannelCloseSet1_002_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_003 = newSoundClip( mtChannelCloseSet1_003_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_004 = newSoundClip( mtChannelCloseSet1_004_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelCloseSet2_001 = newSoundClip( mtChannelCloseSet2_001_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet2_002 = newSoundClip( mtChannelCloseSet2_002_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet2_003 = newSoundClip( mtChannelCloseSet2_003_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet2_004 = newSoundClip( mtChannelCloseSet2_004_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelCloseSet1_001_muffled = newSoundClip( mtChannelCloseSet1_001_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_002_muffled = newSoundClip( mtChannelCloseSet1_002_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_003_muffled = newSoundClip( mtChannelCloseSet1_003_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet1_004_muffled = newSoundClip( mtChannelCloseSet1_004_muffled_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelCloseSet2_001_muffled = newSoundClip( mtChannelCloseSet2_001_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet2_002_muffled = newSoundClip( mtChannelCloseSet2_002_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet2_003_muffled = newSoundClip( mtChannelCloseSet2_003_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelCloseSet2_004_muffled = newSoundClip( mtChannelCloseSet2_004_muffled_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelOpenSet1_001 = newSoundClip( mtChannelOpenSet1_001_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet1_002 = newSoundClip( mtChannelOpenSet1_002_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet1_003 = newSoundClip( mtChannelOpenSet1_003_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet1_004 = newSoundClip( mtChannelOpenSet1_004_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelOpenSet2_001 = newSoundClip( mtChannelOpenSet2_001_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet2_002 = newSoundClip( mtChannelOpenSet2_002_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet2_003 = newSoundClip( mtChannelOpenSet2_003_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet2_004 = newSoundClip( mtChannelOpenSet2_004_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelOpenSet1_001_muffled = newSoundClip( mtChannelOpenSet1_001_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet1_002_muffled = newSoundClip( mtChannelOpenSet1_002_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet1_003_muffled = newSoundClip( mtChannelOpenSet1_003_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet1_004_muffled = newSoundClip( mtChannelOpenSet1_004_muffled_mp3, { initialOutputLevel: 0.6 } );
+
+const mtChannelOpenSet2_001_muffled = newSoundClip( mtChannelOpenSet2_001_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet2_002_muffled = newSoundClip( mtChannelOpenSet2_002_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet2_003_muffled = newSoundClip( mtChannelOpenSet2_003_muffled_mp3, { initialOutputLevel: 0.6 } );
+const mtChannelOpenSet2_004_muffled = newSoundClip( mtChannelOpenSet2_004_muffled_mp3, { initialOutputLevel: 0.6 } );
+
 
 const mtSoluteCrossing001Outward = newSoundClip( mtSoluteCrossing001_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
 const mtSoluteCrossing002Outward = newSoundClip( mtSoluteCrossing002_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
@@ -151,12 +214,102 @@ export default class MembraneTransportSounds {
     }
   }
 
-  public static channelOpened(): void {
-    mtChannelOpenSet1001.play();
+  /**
+   * Map to a set.
+   *
+   * mtChannelOpenSet1-001.mp3 : NA LGC
+   * mtChannelOpenSet1-002.mp3 : K LGC
+   * mtChannelOpenSet1-003.mp3 : NA VGC
+   * mtChannelOpenSet1-004.mp3: K VGC
+   */
+  private static getOpenSoundSet1( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelOpenSet1_001 :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelOpenSet1_002 :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelOpenSet1_003 :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelOpenSet1_004 :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
   }
 
-  public static channelClosed(): void {
-    mtChannelCloseSet1001.play();
+  private static getOpenSoundSet2( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelOpenSet2_001 :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelOpenSet2_002 :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelOpenSet2_003 :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelOpenSet2_004 :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  private static getOpenSoundSet1Muffled( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelOpenSet1_001_muffled :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelOpenSet1_002_muffled :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelOpenSet1_003_muffled :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelOpenSet1_004_muffled :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  private static getOpenSoundSet2Muffled( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelOpenSet2_001_muffled :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelOpenSet2_002_muffled :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelOpenSet2_003_muffled :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelOpenSet2_004_muffled :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  private static getCloseSoundSet1( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelCloseSet1_001 :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelCloseSet1_002 :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelCloseSet1_003 :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelCloseSet1_004 :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  private static getCloseSoundSet2( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelCloseSet2_001 :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelCloseSet2_002 :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelCloseSet2_003 :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelCloseSet2_004 :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  private static getCloseSoundSet1Muffled( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelCloseSet1_001_muffled :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelCloseSet1_002_muffled :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelCloseSet1_003_muffled :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelCloseSet1_004_muffled :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  private static getCloseSoundSet2Muffled( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): SoundClip {
+    return type === 'sodiumIonLigandGatedChannel' ? mtChannelCloseSet2_001_muffled :
+           type === 'potassiumIonLigandGatedChannel' ? mtChannelCloseSet2_002_muffled :
+           type === 'sodiumIonVoltageGatedChannel' ? mtChannelCloseSet2_003_muffled :
+           type === 'potassiumIonVoltageGatedChannel' ? mtChannelCloseSet2_004_muffled :
+           ( () => { throw new Error( `Unrecognized channel type: ${type}` ); } )();
+  }
+
+  public static channelOpened( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): void {
+
+    const set = MembraneTransportQueryParameters.soundChannelOpenCloseSet;
+
+    const sound = set === '1' ? this.getOpenSoundSet1( type ) :
+                  set === '2' ? this.getOpenSoundSet2( type ) :
+                  set === '1muffled' ? this.getOpenSoundSet1Muffled( type ) :
+                  set === '2muffled' ? this.getOpenSoundSet2Muffled( type ) :
+                  ( () => { throw new Error( `Unrecognized soundChannelOpenCloseSet: ${set}` ); } )();
+
+    sound.play();
+  }
+
+  public static channelClosed( type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' ): void {
+
+    const set = MembraneTransportQueryParameters.soundChannelOpenCloseSet;
+
+    const sound = set === '1' ? this.getCloseSoundSet1( type ) :
+                  set === '2' ? this.getCloseSoundSet2( type ) :
+                  set === '1muffled' ? this.getCloseSoundSet1Muffled( type ) :
+                  set === '2muffled' ? this.getCloseSoundSet2Muffled( type ) :
+                  ( () => { throw new Error( `Unrecognized soundChannelOpenCloseSet: ${set}` ); } )();
+
+    sound.play();
   }
 
   public static ligandBound(): void {

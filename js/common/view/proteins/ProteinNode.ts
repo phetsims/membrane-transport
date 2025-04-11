@@ -25,6 +25,7 @@ type ParentOptions = NodeOptions;
 
 type ProteinNodeOptions = SelfOptions & ParentOptions;
 
+// TODO: Rename TransportProteinNode
 export default class ProteinNode extends InteractiveHighlighting( Node ) {
 
   public readonly viewOffset: Vector2;

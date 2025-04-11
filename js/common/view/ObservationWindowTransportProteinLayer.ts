@@ -41,6 +41,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           const node = this.record.get( oldTransportProtein );
           if ( node ) {
             this.removeChild( node.node );
+            node.node.dispose();
             this.record.delete( oldTransportProtein );
           }
         }
