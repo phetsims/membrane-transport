@@ -42,7 +42,9 @@ const CROSSING_COOLDOWN = 0.5;
 
 // The radius of the circle around the center of a transport protein where a particle will be captured so
 // we can decide how it should interact with the transport protein.
-export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 1.8 );
+// The extra capture radius was added so that all particles can be captured. If the capture radius is less than
+// half the height of a particle, it will never be captured.
+export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 2.5 );
 
 // Epsilon value for nudging particle into bounds after teleporting, so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
@@ -181,6 +183,7 @@ export default class Particle<T extends ParticleType> {
     assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );
     assert && assert( this.dimension.width > 0, 'dimension.width should be greater than 0' );
     assert && assert( this.dimension.height > 0, 'dimension.height should be greater than 0' );
+    assert && assert( this.dimension.height / 2 < CAPTURE_RADIUS_PROPERTY.value, 'The capture radius is too small for interaction with membrane.' );
 
     // Start in random walk mode with random directions.
     this.mode = this.createRandomWalkMode( true );
@@ -708,7 +711,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.stateProperty.value === 'openToInsideEmpty' &&
       this.position.y < 0 && // Only approach from intracellular side
-      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() // make sure no potassium still leaving
+      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'potassiumIon' ) ) // make sure no potassium still leaving
     ) {
 
       const openSodiumSites = transportProtein.getOpenSodiumSites();
@@ -726,7 +729,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       this.position.y < 0 && // Only approach from intracellular side
       transportProtein.stateProperty.value === 'openToInsideSodiumBound' &&
-      !transportProtein.isATPEnRoute()
+      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'atp' ) ) // make sure no sodium still leaving
     ) {
 
       this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'phosphate' };
@@ -739,7 +742,7 @@ export default class Particle<T extends ParticleType> {
       transportProtein instanceof SodiumPotassiumPump &&
       transportProtein.stateProperty.value === 'openToOutside' &&
       this.position.y > 0 && // Only approach from extracellular side
-      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() // make sure no sodium still leaving
+      !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'sodiumIon' ) ) // make sure no sodium still leaving
     ) {
 
       const openPotassiumSites = transportProtein.getOpenPotassiumSites();

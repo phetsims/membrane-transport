@@ -6,7 +6,9 @@ import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js'
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
 import Slot from '../Slot.js';
+import { ParticleType } from '../SoluteType.js';
 import TransportProteinType from './TransportProteinType.js';
 
 /**
@@ -62,8 +64,8 @@ export default abstract class TransportProtein<State = IntentionalAny> {
     return this.model.getSlotForTransportProtein( this )!;
   }
 
-  public hasSolutesMovingTowardOrThroughTransportProtein(): boolean {
-    return !this.model.isTransportProteinSoluteFree( this.slot );
+  public hasSolutesMovingTowardOrThroughTransportProtein( solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true ) ): boolean {
+    return !this.model.isTransportProteinSoluteFree( this.slot, solutePredicate );
   }
 }
 

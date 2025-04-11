@@ -411,13 +411,19 @@ export default class MembraneTransportModel extends PhetioObject {
 
   /**
    * If a slot already has a solute traversing it, or moving to it, then it is "reserved" and cannot accommodate a second solute.
-   * TODO: Document how this doesn't classify a ligand as a solute for the interaction.
-   * TODO: This is preventing the sodium potassium pump from working properly. April 9
+   * This does not check for ligands.
+   *
+   * @param slot - The slot to check
+   * @param solutePredicate - A predicate function to filter the solutes. By default, it returns true for all solutes.
    */
-  public isTransportProteinSoluteFree( slot: Slot ): boolean {
+  public isTransportProteinSoluteFree(
+    slot: Slot,
+    solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true )
+  ): boolean {
 
     // Check if any Particle mode has this slot
-    const isReserved = this.solutes.some( solute => solute.mode.slot === slot );
+    const filteredSolutes = this.solutes.filter( solutePredicate );
+    const isReserved = filteredSolutes.some( solute => solute.mode.slot === slot );
     return !isReserved;
   }
 

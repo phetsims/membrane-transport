@@ -129,7 +129,6 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
                                                        solute.mode.site === 'sodium3' );
 
     if ( this.stateProperty.value === 'openToInsideEmpty' ) {
-
       if ( sodium1 && sodium2 && sodium3 ) {
         this.stateProperty.value = 'openToInsideSodiumBound';
       }
