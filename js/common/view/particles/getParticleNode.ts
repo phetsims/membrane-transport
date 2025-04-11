@@ -7,30 +7,35 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
+import adp_svg from '../../../../images/adp_svg.js';
+import atp_svg from '../../../../images/atp_svg.js';
+import carbonDioxide_svg from '../../../../images/carbonDioxide_svg.js';
+import glucose_svg from '../../../../images/glucose_svg.js';
+import oxygen_svg from '../../../../images/oxygen_svg.js';
+import phosphate_svg from '../../../../images/phosphate_svg.js';
+import potassiumIon_svg from '../../../../images/potassiumIon_svg.js';
+import potassiumLigand_svg from '../../../../images/potassiumLigand_svg.js';
+import sodiumIon_svg from '../../../../images/sodiumIon_svg.js';
+import sodiumLigand_svg from '../../../../images/sodiumLigand_svg.js';
 import { ParticleType } from '../../model/SoluteType.js';
-import ADPNode from './ADPNode.js';
-import ATPNode from './ATPNode.js';
-import CarbonDioxideNode from './CarbonDioxideNode.js';
-import GlucoseNode from './GlucoseNode.js';
-import LigandParticleNode from './LigandParticleNode.js';
-import OxygenNode from './OxygenNode.js';
-import PhosphateNode from './PhosphateNode.js';
-import PotassiumIonNode from './PotassiumIonNode.js';
-import SodiumIonNode from './SodiumIonNode.js';
 
-// TODO: If all particle nodes are just new Image, we can simplify this quite a bit.
 const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): Node => {
-  const particleNode = particleType === 'oxygen' ? new OxygenNode() :
-                       particleType === 'carbonDioxide' ? new CarbonDioxideNode() :
-                       particleType === 'sodiumIon' ? new SodiumIonNode() :
-                       particleType === 'potassiumIon' ? new PotassiumIonNode() :
-                       particleType === 'glucose' ? new GlucoseNode() :
-                       particleType === 'ligandA' ? new LigandParticleNode( particleType ) :
-                       particleType === 'ligandB' ? new LigandParticleNode( particleType ) :
-                       particleType === 'atp' ? new ATPNode() :
-                       particleType === 'adp' ? new ADPNode() :
-                       particleType === 'phosphate' ? new PhosphateNode() :
+  const particleNode = particleType === 'oxygen' ? new Image( oxygen_svg ) :
+                       particleType === 'carbonDioxide' ? new Image( carbonDioxide_svg ) :
+                       particleType === 'sodiumIon' ? new Image( sodiumIon_svg ) :
+                       particleType === 'potassiumIon' ? new Image( potassiumIon_svg ) :
+                       particleType === 'glucose' ? new Image( glucose_svg ) :
+                       particleType === 'ligandA' ? new Image( sodiumLigand_svg, {
+                                                    opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
+                                                  } ) :
+                       particleType === 'ligandB' ? new Image( potassiumLigand_svg, {
+                                                    opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
+                                                  } ) :
+                       particleType === 'atp' ? new Image( atp_svg ) :
+                       particleType === 'adp' ? new Image( adp_svg ) :
+                       particleType === 'phosphate' ? new Image( phosphate_svg ) :
 
                          // throw error
                        ( () => { throw new Error( `Unrecognized particle type: ${particleType}` ); } )();
