@@ -56,11 +56,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  private readonly observationWindowModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
-    new Vector2( 0, 0 ),
-    MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center,
-    MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
-  );
   public readonly screenViewModelViewTransform: ModelViewTransform2;
   private afterRelease: ( () => void ) | null = null;
   private readonly membraneTransportAccordionBoxGroup?: TransportProteinPanel;
@@ -85,7 +80,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const macroCellNode = new MacroCellNode();
     this.addChild( macroCellNode );
 
-    this.observationWindow = new ObservationWindow( model, this, this.observationWindowModelViewTransform, MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
+    this.observationWindow = new ObservationWindow( model, this, MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM, MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
     this.stepEmitter.addListener( dt => this.observationWindow.step( dt ) );
     this.resetEmitter.addListener( () => this.observationWindow.reset() );
 

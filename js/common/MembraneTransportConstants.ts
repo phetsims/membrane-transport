@@ -16,6 +16,8 @@
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
@@ -89,6 +91,12 @@ export default class MembraneTransportConstants {
   );
 
   public static readonly PANEL_TITLE_FONT_SIZE = 18;
+
+  public static readonly OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+    new Vector2( 0, 0 ),
+    MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center,
+    MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
+  );
 }
 
 membraneTransport.register( 'MembraneTransportConstants', MembraneTransportConstants );

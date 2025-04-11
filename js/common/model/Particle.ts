@@ -175,9 +175,11 @@ export default class Particle<T extends ParticleType> {
   ) {
     const lookup = MembraneTransportConstants.getParticleViewDimensions()[ type ];
 
-    // TODO: How can we compute this number analytically? I manually tuned it for now.
-    const scale = 0.035;
-    this.dimension = new Dimension2( lookup.width * scale, lookup.height * scale );
+    const width = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaX( lookup.width );
+    const height = Math.abs( MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaY( lookup.height ) );
+
+    // TODO: Why is this still off by 10x?
+    this.dimension = new Dimension2( width / 10, height / 10 );
 
     assert && assert( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
     assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );

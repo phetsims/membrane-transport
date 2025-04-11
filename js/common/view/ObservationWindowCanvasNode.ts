@@ -111,14 +111,12 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
       // draw image scaled by a factor of 4 in each dimension
       const image = this.soluteTypeToImageMap.get( solute.type )!;
+
       const x = this.modelViewTransform.modelToViewX( solute.position.x );
       const y = this.modelViewTransform.modelToViewY( solute.position.y );
 
-      // A scale from model to view coordinates.
-      const scale = 0.02 * 1.2; // TODO: why is this scale different than the leakage channel scale
-
-      const width = image.width * scale;
-      const height = image.height * scale;
+      const width = this.modelViewTransform.modelToViewDeltaX( solute.dimension.width );
+      const height = this.modelViewTransform.modelToViewDeltaY( solute.dimension.height );
 
       // Draw the image centered at the position.
       context.drawImage( image, x - width / 2, y - height / 2, width, height );
@@ -131,8 +129,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       if ( phet.chipper.queryParameters.dev ) {
 
         // Draw the solute's bounding box
-        context.strokeStyle = 'black';
-        context.lineWidth = 2;
+        context.strokeStyle = 'gray';
+        context.lineWidth = 0.5;
         this.strokeRect(
           context,
           ( solute.position.x - solute.dimension.width / 2 ),
@@ -146,8 +144,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     // when debugging also show the bounding boxes around the ligands
     if ( phet.chipper.queryParameters.dev ) {
       this.model.ligands.forEach( ligand => {
-        context.strokeStyle = 'black';
-        context.lineWidth = 2;
+        context.strokeStyle = 'gray';
+        context.lineWidth = 0.5;
         this.strokeRect(
           context,
           ( ligand.position.x - ligand.dimension.width / 2 ),
