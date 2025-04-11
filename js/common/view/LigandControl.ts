@@ -35,7 +35,9 @@ export default class LigandControl extends BooleanRectangularToggleButton {
     } );
 
     // TODO: High level API for context responses?
-    // TODO: What if you set areLigandsAddedProperty programmatically?
+    // TODO: What if you set areLigandsAddedProperty programmatically? Should it speak when changed with phet-io? - lets discuss with design.
+    //   We could have a shut-off valve for all responses when something is set by PhET-iO.
+    //   OR The high level API could speak the response from user input (like sound implementation, see produceSoundEmitter)
     model.areLigandsAddedProperty.link( areLigandsAdded => {
       if ( areLigandsAdded ) {
         this.addAccessibleResponse( MembraneTransportMessages.ligandControlAddedContextResponseMessageProperty );
