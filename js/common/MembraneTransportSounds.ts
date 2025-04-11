@@ -170,7 +170,7 @@ const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutput
  * Play sound effects on certain events.
  *
  * @author Sam Reid (PhET Interactive Simulations)
- * @author Michael Kauzmann (PhET Interactive Simulations) - Refactored channel sounds
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 export default class MembraneTransportSounds {
 
