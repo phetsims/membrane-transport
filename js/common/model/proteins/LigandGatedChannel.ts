@@ -66,8 +66,8 @@ export default class LigandGatedChannel extends TransportProtein<
    * The ligand remains attached while solutes are passing through, so we must prevent new solutes from passing through
    * if this.timeSinceLigandBound >= this.BINDING_DURATION, so that we don't end up in an infinite loop.
    */
-  public isAvailableForTransport(): boolean {
-    return this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceStateTransition < BINDING_DURATION && !this.hasSolutesMovingTowardOrThroughTransportProtein();
+  public override isAvailableForTransport(): boolean {
+    return this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceStateTransition < BINDING_DURATION && super.isAvailableForTransport();
   }
 
   /**

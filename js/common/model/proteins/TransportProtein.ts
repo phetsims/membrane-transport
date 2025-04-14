@@ -67,6 +67,14 @@ export default abstract class TransportProtein<State = IntentionalAny> {
   public hasSolutesMovingTowardOrThroughTransportProtein( solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true ) ): boolean {
     return !this.model.isTransportProteinSoluteFree( this.slot, solutePredicate );
   }
+
+  /**
+   * A transport protein is available for transport if there are no solutes moving toward or through it. Subclasses may
+   * have additional criteria for availability.
+   */
+  public isAvailableForTransport(): boolean {
+    return !this.hasSolutesMovingTowardOrThroughTransportProtein();
+  }
 }
 
 membraneTransport.register( 'TransportProtein', TransportProtein );

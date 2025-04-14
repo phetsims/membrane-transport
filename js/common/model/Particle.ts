@@ -21,13 +21,11 @@ import MembraneTransportConstants from '../../common/MembraneTransportConstants.
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
-import LeakageChannel from './proteins/LeakageChannel.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './proteins/SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
-import VoltageGatedChannel from './proteins/VoltageGatedChannel.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
@@ -672,11 +670,8 @@ export default class Particle<T extends ParticleType> {
     const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-    // TODO: This is kind of complex and asymmetrical, is there a better way?
-    if ( ( transportProtein instanceof LeakageChannel && !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() ) ||
-         ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForTransport() ) ||
-         ( transportProtein instanceof VoltageGatedChannel && transportProtein.stateProperty.value === 'open' && !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein() ) ) {
-
+    // If the transport protein is available for transport, and the particle is the right type, move to the center of the channel.
+    if ( transportProtein.isAvailableForTransport() ) {
       if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
            ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
         this.mode = { type: 'moveToCenterOfChannel', slot: slot };

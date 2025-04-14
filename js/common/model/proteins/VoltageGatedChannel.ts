@@ -26,6 +26,13 @@ export default class VoltageGatedChannel extends TransportProtein<'open' | 'clos
                                  ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
     } );
   }
+
+  /**
+   * A voltage gated channel is only available for transport if in the correct state.
+   */
+  public override isAvailableForTransport(): boolean {
+    return this.stateProperty.value === 'open' && super.isAvailableForTransport();
+  }
 }
 
 membraneTransport.register( 'VoltageGatedChannel', VoltageGatedChannel );
