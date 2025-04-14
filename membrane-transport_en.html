@@ -23,7 +23,7 @@
   window.phet.chipper.packageObject =
     {
       "name": "membrane-transport",
-      "version": "1.0.0-dev.5",
+      "version": "1.0.0-dev.6",
       "license": "GPL-3.0",
       "repository": {
         "type": "git",
@@ -36,7 +36,7 @@
         "concurrently": "^9.1.2"
       },
       "scripts": {
-        "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"grunt dev-server-runnable\" \"npm run watch-sounds\"",
+        "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"npm run watch-sounds\"",
         "watch-strings": "chokidar \"membrane-transport-strings_en.json5\" \"./strings/MembraneTransport_en.ftl\" -c \"grunt modulify\"",
         "watch-sounds": "chokidar \"./sounds/*.mp3\" -c \"grunt modulify && ../perennial-alias/bin/sage run ../perennial-alias/js/scripts/generate-license-json.ts ./sounds/ 'created by Ashton Morris (PhET Interactive Simulations)'\""
       },
