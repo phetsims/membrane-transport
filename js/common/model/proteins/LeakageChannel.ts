@@ -18,6 +18,10 @@ export default class LeakageChannel extends TransportProtein<'open'> {
   ) {
     super( model, type, position, 'open' );
   }
+
+  public override isAvailableForPassiveTransport(): boolean {
+    return !this.hasSolutesMovingTowardOrThroughTransportProtein();
+  }
 }
 
 membraneTransport.register( 'LeakageChannel', LeakageChannel );

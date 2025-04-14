@@ -72,9 +72,7 @@ export default abstract class TransportProtein<State = IntentionalAny> {
    * A transport protein is available for transport if there are no solutes moving toward or through it. Subclasses may
    * have additional criteria for availability.
    */
-  public isAvailableForTransport(): boolean {
-    return !this.hasSolutesMovingTowardOrThroughTransportProtein();
-  }
+  public abstract isAvailableForPassiveTransport(): boolean;
 }
 
 membraneTransport.register( 'TransportProtein', TransportProtein );

@@ -30,8 +30,8 @@ export default class VoltageGatedChannel extends TransportProtein<'open' | 'clos
   /**
    * A voltage gated channel is only available for transport if in the correct state.
    */
-  public override isAvailableForTransport(): boolean {
-    return this.stateProperty.value === 'open' && super.isAvailableForTransport();
+  public override isAvailableForPassiveTransport(): boolean {
+    return this.stateProperty.value === 'open' && !this.hasSolutesMovingTowardOrThroughTransportProtein();
   }
 }
 

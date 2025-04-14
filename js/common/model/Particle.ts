@@ -671,7 +671,7 @@ export default class Particle<T extends ParticleType> {
     const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
     // If the transport protein is available for transport, and the particle is the right type, move to the center of the channel.
-    if ( transportProtein.isAvailableForTransport() ) {
+    if ( transportProtein.isAvailableForPassiveTransport() ) {
       if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
            ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
         this.mode = { type: 'moveToCenterOfChannel', slot: slot };

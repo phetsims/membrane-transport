@@ -53,6 +53,10 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
                                               solute.mode.site === site ) === undefined;
   }
 
+  public override isAvailableForPassiveTransport(): boolean {
+    return false;
+  }
+
   public getOpenSodiumSites(): Array<'sodium1' | 'sodium2' | 'sodium3'> {
     const availableSites: Array<'sodium1' | 'sodium2' | 'sodium3'> = [];
     if ( this.isSiteOpen( 'sodium1' ) ) {

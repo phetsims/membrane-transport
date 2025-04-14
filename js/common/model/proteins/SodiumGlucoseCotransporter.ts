@@ -91,6 +91,10 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<'openTo
     return this.isSiteOpen( 'center' );
   }
 
+  public isAvailableForPassiveTransport(): boolean {
+    return false;
+  }
+
   public static getSitePosition( site: 'left' | 'right' | 'center' ): Vector2 {
 
     return site === 'left' ? SodiumGlucoseCotransporter.SODIUM_SITE_LEFT :
