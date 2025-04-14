@@ -134,7 +134,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 return contentsString;
               };
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
-              alerter.alert( message );
+              utterance.alert = message;
+              alerter.alert( utterance );
             }
           }
           else {
@@ -226,7 +227,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           slotCount: SLOT_COUNT
         } );
 
-        alerter.alert( grabbedAlert );
+        utterance.alert = grabbedAlert;
+        alerter.alert( utterance );
 
         this.isFirstGrab = false;
       },
@@ -252,7 +254,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               droppedIntoSlot.transportProteinType = grabbedNode.type;
 
               const contentsString = getBriefProteinName( grabbedNode.type );
-              alerter.alert( `Released ${contentsString} into membrane` );
+              utterance.alert = `Released ${contentsString} into membrane`;
+              alerter.alert( utterance ); // TODO: is this the API we want?
 
               if ( oldContents && grabbedNode.origin instanceof Slot ) {
                 grabbedNode.origin.transportProteinType = oldContents;
@@ -261,7 +264,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+              utterance.alert = MembraneTransportMessages.releasedBackInToolboxMessageProperty;
+              alerter.alert( utterance );
 
               MembraneTransportSounds.proteinReturnedToToolbox();
             }
