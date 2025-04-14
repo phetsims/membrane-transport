@@ -95,6 +95,12 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   public readonly slots: Slot[];
+  public readonly soluteCrossedMembraneEmitter = new Emitter<[ Particle<IntentionalAny>, 'outward' | 'inward' ]>( {
+    parameters: [
+      { valueType: Particle },
+      { validValues: [ 'outward', 'inward' ] }
+    ]
+  } );
 
   public constructor(
     public readonly featureSet: MembraneTransportFeatureSet,

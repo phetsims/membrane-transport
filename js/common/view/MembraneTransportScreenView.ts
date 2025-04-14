@@ -26,6 +26,7 @@ import MembraneTransportConstants from '../../common/MembraneTransportConstants.
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import MembraneTransportModelTester from '../model/MembraneTransportModelTester.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
@@ -270,6 +271,10 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
 
     this.screenViewModelViewTransform = screenViewModelViewTransform;
+
+    model.soluteCrossedMembraneEmitter.addListener( ( particle, direction ) => {
+      MembraneTransportSounds.soluteCrossingSound( particle.type, direction );
+    } );
   }
 
   /**

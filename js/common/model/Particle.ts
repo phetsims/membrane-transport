@@ -465,9 +465,8 @@ export default class Particle<T extends ParticleType> {
 
       const signAfter = this.position.y > 0;
 
-      // TODO: Is it unusual to trigger sounds from the model directly? Should we use a more MVC pattern?
       if ( signBefore !== signAfter ) {
-        MembraneTransportSounds.soluteCrossingSound( this.type, this.position.y > 0 ? 'outward' : 'inward' );
+        model.soluteCrossedMembraneEmitter.emit( this, this.position.y > 0 ? 'outward' : 'inward' );
       }
 
       // If moving through, don't let the position get very far from the center. Allow a little movement
