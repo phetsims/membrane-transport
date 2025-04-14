@@ -141,8 +141,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       }
     }
 
-    // when debugging also show the bounding boxes around the ligands
+
     if ( phet.chipper.queryParameters.dev ) {
+
+      // when debugging also show the bounding boxes around the ligands
       this.model.ligands.forEach( ligand => {
         context.strokeStyle = 'gray';
         context.lineWidth = 0.5;
@@ -154,6 +156,18 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
           ( ligand.dimension.height )
         );
       } );
+
+      // and draw a grid for measurements, every 10 model units in x and y
+      context.strokeStyle = 'lightgray';
+      context.lineWidth = 0.5;
+
+      for ( let i = 0; i < 20; i++ ) {
+        for ( let j = 0; j < 20; j++ ) {
+          this.drawCrosshairsAt( context, new Vector2( i * 10, j * 10 ) );
+        }
+      }
+
+      context.stroke();
     }
   }
 

@@ -36,7 +36,10 @@ export default class TransportProteinToolNode extends VBox {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const transportProteinNode = getTransportProteinNode( type, null );
-    transportProteinNode.setScaleMagnitude( 0.5 );
+
+    // Scale down the icon further so there is enough space in the toolbox to fit all controls.
+    transportProteinNode.scale( 0.5 );
+
     transportProteinNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
     super( combineOptions<VBoxOptions>( {}, {

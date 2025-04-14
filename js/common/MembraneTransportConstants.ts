@@ -56,8 +56,8 @@ export default class MembraneTransportConstants {
 
         assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
 
-        // Ligands are rendered in scenery, not in canvas, and have a different scale factor
-        const scale = soluteType === 'ligandA' || soluteType === 'ligandB' ? 1 / MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE : 1;
+        // TODO: Why is this scale factor still necessary?
+        const scale = 0.1;
 
         record[ soluteType ] = new Dimension2( soluteNodeBounds.width * scale, soluteNodeBounds.height * scale );
       } );
@@ -68,8 +68,7 @@ export default class MembraneTransportConstants {
 
   public static readonly LIGAND_COUNT = 10; // Per ligand type
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
-  public static readonly TRANSPORT_PROTEIN_WIDTH = 10; // Width in model coordinates
-  public static readonly TRANSPORT_PROTEIN_IMAGE_SCALE = 0.1; // Based on the given artwork
+  public static readonly TRANSPORT_PROTEIN_WIDTH = 25; // Width in model coordinates
 
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;

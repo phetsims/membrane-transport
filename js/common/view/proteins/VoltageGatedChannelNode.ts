@@ -14,27 +14,21 @@ import sodiumVoltageGatedMinus50mV_svg from '../../../../images/sodiumVoltageGat
 import sodiumVoltageGatedMinus70mV_svg from '../../../../images/sodiumVoltageGatedMinus70mV_svg.js';
 import sodiumVoltageGatedPlus30mV_svg from '../../../../images/sodiumVoltageGatedPlus30mV_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
 import ProteinNode from './ProteinNode.js';
 
 export default class VoltageGatedChannelNode extends ProteinNode {
 
-  private readonly image: Image;
-
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
 
-    super();
-    this.image = new Image( type === 'sodiumIonVoltageGatedChannel' ? sodiumVoltageGatedMinus70mV_svg : potassiumVoltageGatedMinus70and50mV_svg );
-    this.image.setScaleMagnitude( MembraneTransportConstants.TRANSPORT_PROTEIN_IMAGE_SCALE );
-
-    this.addChild( this.image );
+    const image = new Image( type === 'sodiumIonVoltageGatedChannel' ? sodiumVoltageGatedMinus70mV_svg : potassiumVoltageGatedMinus70and50mV_svg );
+    super( image );
 
     if ( channel ) {
 
       channel.model.membraneVoltagePotentialProperty.link( membraneVoltagePotential => {
-        this.image.image = type === 'sodiumIonVoltageGatedChannel' ?
+        image.image = type === 'sodiumIonVoltageGatedChannel' ?
                            ( membraneVoltagePotential === -70 ? sodiumVoltageGatedMinus70mV_svg :
                              membraneVoltagePotential === -50 ? sodiumVoltageGatedMinus50mV_svg :
                              membraneVoltagePotential === 30 ? sodiumVoltageGatedPlus30mV_svg :
@@ -46,6 +40,7 @@ export default class VoltageGatedChannelNode extends ProteinNode {
                            ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
       }, { disposer: this } );
 
+      // This link does not need to by disposed because the channel itself will be disposed when it is removed from the membrane.
       channel.stateProperty.lazyLink( state => {
         if ( state === 'open' ) {
           MembraneTransportSounds.channelOpened( type );
@@ -53,7 +48,7 @@ export default class VoltageGatedChannelNode extends ProteinNode {
         else {
           MembraneTransportSounds.channelClosed( type );
         }
-      }, { disposer: this } ); // TODO: We probably don't need disposer here, right?
+      } );
     }
   }
 }

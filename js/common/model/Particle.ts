@@ -177,8 +177,7 @@ export default class Particle<T extends ParticleType> {
     const width = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaX( lookup.width );
     const height = Math.abs( MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaY( lookup.height ) );
 
-    // TODO: Why is this still off by 10x?
-    this.dimension = new Dimension2( width / 10, height / 10 );
+    this.dimension = new Dimension2( width, height );
 
     assert && assert( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
     assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );

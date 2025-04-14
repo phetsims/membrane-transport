@@ -22,6 +22,15 @@ import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
 
 export default class LigandNode extends Node {
+
+  // Controls whether we have set the scale of the ligand Node. Ligands in the model are created
+  // lazily but LigandNode is created eagerly. So we change the transformation of this Node
+  // after the ligand is created (in step). But we only want to do that once or else the
+  // scale computation will fight itself every frame.
+  // TODO: This might be a workaround. If we do not need to instrument LigandNode,
+  //   we can dynamically create them.
+  private ligandScaleSet = false;
+
   public constructor(
     areLigandsAddedProperty: TProperty<boolean>,
     private readonly ligands: Particle<LigandType>[],
@@ -153,6 +162,17 @@ export default class LigandNode extends Node {
    */
   public step(): void {
     this.operateOnLigand( ligand => {
+
+      const modelWidth = ligand.dimension.width;
+      const viewWidth = this.modelViewTransform.modelToViewDeltaX( modelWidth );
+
+      if ( !this.ligandScaleSet ) {
+        const viewScale = viewWidth / this.width;
+        this.setScaleMagnitude( viewScale );
+
+        this.ligandScaleSet = true;
+      }
+
       this.center = this.modelViewTransform.modelToViewPosition( ligand.position );
     } );
   }
