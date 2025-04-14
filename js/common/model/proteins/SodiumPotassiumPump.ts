@@ -28,6 +28,16 @@ import TransportProteinType from './TransportProteinType.js';
 
 export default class SodiumPotassiumPump extends TransportProtein<'openToInsideEmpty' | 'openToInsideSodiumBound' | 'openToOutside'> {
 
+  // Declared like so, so that they can be adjusted at runtime in the dev tools, like so:
+  // phet.membraneTransport.SodiumPotassiumPump.SODIUM_SITE_1.y=-6.5
+  // TODO: These need to be adjusted to match the artwork.
+  public static readonly SODIUM_SITE_1 = new Vector2( -3.5, -5.6 );
+  public static readonly SODIUM_SITE_2 = new Vector2( -3.2, 0.8 );
+  public static readonly SODIUM_SITE_3 = new Vector2( 3.5, -2.2 );
+  public static readonly PHOSPHATE_SITE = new Vector2( 0, -12 );
+  public static readonly POTASSIUM_SITE_1 = new Vector2( 5, 5 );
+  public static readonly POTASSIUM_SITE_2 = new Vector2( 5, 10 );
+
   public constructor(
     model: MembraneTransportModel,
     type: TransportProteinType,
@@ -196,15 +206,12 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
   }
 
   public static getSitePosition( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
-
-    return site === 'sodium1' ? new Vector2( -3.5, -5.6 ) :
-           site === 'sodium2' ? new Vector2( -3.2, 0.8 ) :
-           site === 'sodium3' ? new Vector2( 3.5, -2.2 ) :
-
-             // TODO: These need to be adjusted to match the artwork.
-           site === 'phosphate' ? new Vector2( 0, -12 ) :
-           site === 'potassium1' ? new Vector2( 5, 5 ) :
-           site === 'potassium2' ? new Vector2( 5, 10 ) :
+    return site === 'sodium1' ? SodiumPotassiumPump.SODIUM_SITE_1 :
+           site === 'sodium2' ? SodiumPotassiumPump.SODIUM_SITE_2 :
+           site === 'sodium3' ? SodiumPotassiumPump.SODIUM_SITE_3 :
+           site === 'phosphate' ? SodiumPotassiumPump.PHOSPHATE_SITE :
+           site === 'potassium1' ? SodiumPotassiumPump.POTASSIUM_SITE_1 :
+           site === 'potassium2' ? SodiumPotassiumPump.POTASSIUM_SITE_2 :
            ( () => { throw new Error( `Unhandled site: ${site}` ); } )(); // IIFE to throw error
   }
 }

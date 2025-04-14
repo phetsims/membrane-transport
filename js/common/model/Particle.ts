@@ -391,6 +391,20 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
+    else if ( this.mode.type === 'waitingInSodiumPotassiumPump' && phet.chipper.queryParameters.dev ) {
+
+      // For debugging only, so that the site positions can be adjusted
+      const offset = SodiumPotassiumPump.getSitePosition( this.mode.site );
+      const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
+      this.position.set( targetPosition );
+    }
+    else if ( this.mode.type === 'waitingInSodiumGlucoseTransporter' && phet.chipper.queryParameters.dev ) {
+
+      // For debugging only, so that the site positions can be adjusted
+      const offset = SodiumGlucoseCotransporter.getSitePosition( this.mode.site );
+      const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
+      this.position.set( targetPosition );
+    }
     else if ( this.mode.type === 'enteringTransportProtein' ) {
       const direction = this.position.y > 0 ? -1 : 1;
       const thresholdY = direction === -1

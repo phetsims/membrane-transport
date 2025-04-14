@@ -14,6 +14,12 @@ import TransportProteinType from './TransportProteinType.js';
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<'openToOutside' | 'openToInside'> {
 
+  // Declared like so in order to allow editing in the dev tools
+  // TODO: These need to be adjusted to match the artwork.
+  public static readonly SODIUM_SITE_LEFT = new Vector2( -5.2, 8.5 );
+  public static readonly SODIUM_SITE_RIGHT = new Vector2( 6.2, 8.5 );
+  public static readonly GLUCOSE_SITE_CENTER = new Vector2( 0.65, 3 );
+
   public constructor( model: MembraneTransportModel, type: TransportProteinType, position: number ) {
     super( model, type, position, 'openToOutside' );
   }
@@ -86,9 +92,10 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<'openTo
   }
 
   public static getSitePosition( site: 'left' | 'right' | 'center' ): Vector2 {
-    return site === 'left' ? new Vector2( -5.2, 8.5 ) :
-           site === 'right' ? new Vector2( 6.2, 8.5 ) :
-           site === 'center' ? new Vector2( 0.65, 3 ) :
+
+    return site === 'left' ? SodiumGlucoseCotransporter.SODIUM_SITE_LEFT :
+           site === 'right' ? SodiumGlucoseCotransporter.SODIUM_SITE_RIGHT :
+           site === 'center' ? SodiumGlucoseCotransporter.GLUCOSE_SITE_CENTER :
            ( () => { throw new Error( `Unhandled site: ${site}` ); } )(); // IIFE to throw error
   }
 }
