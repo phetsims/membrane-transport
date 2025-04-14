@@ -141,7 +141,8 @@ export default class MembraneTransportModel extends PhetioObject {
       tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
       validValues: [ -70, -50, 30 ],
       units: 'mV',
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioValueType: NumberIO
     } );
     this.resetEmitter.addListener( () => this.membraneVoltagePotentialProperty.reset() );
 
