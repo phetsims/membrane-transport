@@ -21,7 +21,7 @@ const REBINDING_DELAY = 5;
 const BINDING_DURATION = 7;
 
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
-const STATE_TRANSITION_INTERVAL = 3;
+const STATE_TRANSITION_INTERVAL = 0.5;
 
 // TODO (JG): Would be good to review the state machine here, and also I'm still seeing cases where the ligand doesn't bind right away. I thought we fixed it, but perhaps the new states are interfering?
 export default class LigandGatedChannel extends TransportProtein<
