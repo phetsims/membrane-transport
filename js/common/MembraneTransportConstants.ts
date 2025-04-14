@@ -23,7 +23,7 @@ import MembraneTransportQueryParameters from './MembraneTransportQueryParameters
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
 import getParticleNode from './view/particles/getParticleNode.js';
 
-let particleAspectRatioMap: Record<ParticleType, Dimension2> | null = null;
+let particleDimensionMap: Record<ParticleType, Dimension2> | null = null;
 
 export default class MembraneTransportConstants {
 
@@ -48,7 +48,7 @@ export default class MembraneTransportConstants {
   // get good bounds. Hence, this is a method rather than an attribute, and called during screen creation.
   public static getParticleViewDimensions(): Record<ParticleType, Dimension2> {
 
-    if ( !particleAspectRatioMap ) {
+    if ( !particleDimensionMap ) {
       const record = {} as Record<ParticleType, Dimension2>;
       ParticleTypes.forEach( soluteType => {
         const myParticleNode = getParticleNode( soluteType );
@@ -56,14 +56,11 @@ export default class MembraneTransportConstants {
 
         assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
 
-        // TODO: Why is this scale factor still necessary?
-        const scale = 0.1;
-
-        record[ soluteType ] = new Dimension2( soluteNodeBounds.width * scale, soluteNodeBounds.height * scale );
+        record[ soluteType ] = new Dimension2( soluteNodeBounds.width, soluteNodeBounds.height );
       } );
-      particleAspectRatioMap = record;
+      particleDimensionMap = record;
     }
-    return particleAspectRatioMap;
+    return particleDimensionMap;
   }
 
   public static readonly LIGAND_COUNT = 10; // Per ligand type
@@ -72,6 +69,10 @@ export default class MembraneTransportConstants {
 
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;
+
+  // The artwork is sized correctly relatively to each other, but this determines the overall scale factor so that
+  // they will have the correct model bounds.
+  public static readonly PARTICLE_ARTWORK_SCALE = 0.1;
 
   // Bounds of the membrane for collision detection and rendering.
   public static readonly MEMBRANE_BOUNDS = new Bounds2(
