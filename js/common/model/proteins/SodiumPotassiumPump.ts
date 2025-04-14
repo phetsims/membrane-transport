@@ -209,7 +209,7 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
                                                 solute.mode.slot === this.slot );
   }
 
-  public static getSitePosition( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
+  public static getSitePositionOffset( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
     return site === 'sodium1' ? SodiumPotassiumPump.SODIUM_SITE_1 :
            site === 'sodium2' ? SodiumPotassiumPump.SODIUM_SITE_2 :
            site === 'sodium3' ? SodiumPotassiumPump.SODIUM_SITE_3 :

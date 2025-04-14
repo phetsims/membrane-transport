@@ -14,11 +14,14 @@ import Particle from '../Particle.js';
 import { LigandType } from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 
-// Time in seconds that must elapse after a ligand unbinds before another can bind
+// Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
 const REBINDING_DELAY = 5;
 
-// Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time.
+// Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time, in seconds.
 const BINDING_DURATION = 7;
+
+// Delay for the protein to transition from bound and closed to bound and open, in seconds.
+const STATE_TRANSITION_INTERVAL = 3;
 
 // TODO (JG): Would be good to review the state machine here, and also I'm still seeing cases where the ligand doesn't bind right away. I thought we fixed it, but perhaps the new states are interfering?
 export default class LigandGatedChannel extends TransportProtein<
@@ -34,6 +37,12 @@ export default class LigandGatedChannel extends TransportProtein<
   // Start ready to bind
   private timeSinceStateTransition = REBINDING_DELAY;
 
+  // Offsets for binding positions, relative to the center of the slot. Static so that they can be controlled from the dev tools.
+  private static readonly SODIUM_BINDING_OFFSET_CLOSED = new Vector2( -5.5, 11 );
+  private static readonly SODIUM_BINDING_OFFSET_OPEN = new Vector2( -7.5, 11 );
+  private static readonly POTASSIUM_BINDING_OFFSET_CLOSED = new Vector2( 2.75, 3.5 );
+  private static readonly POTASSIUM_BINDING_OFFSET_OPEN = new Vector2( 2.75, 3.5 );
+
   public constructor( model: MembraneTransportModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
     super( model, type, position, 'closed' );
 
@@ -46,13 +55,13 @@ export default class LigandGatedChannel extends TransportProtein<
 
     this.timeSinceStateTransition += dt;
 
-    // after 500ms, transitions from ligandUnboundOpen to closed
-    if ( this.stateProperty.value === 'ligandUnboundOpen' && this.timeSinceStateTransition >= 0.5 ) {
+    // after an interval, transitions from ligandUnboundOpen to closed
+    if ( this.stateProperty.value === 'ligandUnboundOpen' && this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
       this.stateProperty.value = 'closed';
     }
 
-    // after 500ms, transition from ligandBoundClosed to ligandBoundOpen
-    if ( this.stateProperty.value === 'ligandBoundClosed' && this.timeSinceStateTransition >= 0.5 ) {
+    // after an interval, transition from ligandBoundClosed to ligandBoundOpen
+    if ( this.stateProperty.value === 'ligandBoundClosed' && this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
       this.stateProperty.value = 'ligandBoundOpen';
     }
 
@@ -88,7 +97,10 @@ export default class LigandGatedChannel extends TransportProtein<
       this.boundLigand = ligand;
 
       // Set the ligand to 'bound' mode to pause its motion. The slot is null because a solute has not reserved it.
-      ligand.mode = { type: 'ligandBound', slot: null };
+      // TODO: Add the slot to this, and make the checks to see if the slot is available more sophisticated.
+      //  We need the slot so we know how to find the binding location for the ligand.
+      //  ligandGatedChannel would be replaced by slot once this is done.
+      ligand.mode = { type: 'ligandBound', slot: null, ligandGatedChannel: this };
     }
   }
 
@@ -110,11 +122,10 @@ export default class LigandGatedChannel extends TransportProtein<
   /**
    * Returns the position of the binding site for the ligand.
    */
-  public getBindingPosition(): Vector2 {
-
+  public getBindingPositionOffset(): Vector2 {
     return this.type === 'sodiumIonLigandGatedChannel' ?
-           new Vector2( this.bounds.minX, this.bounds.maxY ) :
-           new Vector2( this.bounds.minX - 2.75, this.bounds.maxY + 3.5 );
+           this.stateProperty.value === 'ligandBoundClosed' ? LigandGatedChannel.SODIUM_BINDING_OFFSET_CLOSED : LigandGatedChannel.SODIUM_BINDING_OFFSET_OPEN :
+           this.stateProperty.value === 'ligandBoundClosed' ? LigandGatedChannel.POTASSIUM_BINDING_OFFSET_CLOSED : LigandGatedChannel.POTASSIUM_BINDING_OFFSET_OPEN;
   }
 }
 

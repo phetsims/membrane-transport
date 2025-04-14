@@ -59,6 +59,7 @@ type RandomWalkMode = {
 
 type BoundMode = {
   type: 'ligandBound';
+  ligandGatedChannel: LigandGatedChannel;
   slot: null;
 };
 
@@ -275,7 +276,10 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'ligandBound' ) {
 
       // The LigandGatedChannel is responsible for tracking the time bound, so it can detach after a certain amount of time.
-      // Therefore, nothing to do here (particle remains stationary while bound).
+      // Update the position because the binding site changes when the channel opens.
+      const bindingPositionOffset = this.mode.ligandGatedChannel.getBindingPositionOffset();
+      const bindingPosition = new Vector2( this.mode.ligandGatedChannel.slot.position, 0 ).plus( bindingPositionOffset );
+      this.position.set( bindingPosition );
     }
     else if ( this.mode.type === 'moveToCenterOfChannel' ) {
 
@@ -299,7 +303,7 @@ export default class Particle<T extends ParticleType> {
 
       const currentPosition = this.position.copy();
 
-      const offset = SodiumGlucoseCotransporter.getSitePosition( this.mode.site );
+      const offset = SodiumGlucoseCotransporter.getSitePositionOffset( this.mode.site );
 
       const targetPosition = new Vector2( this.mode.slot.position + offset.x, offset.y );
 
@@ -324,7 +328,7 @@ export default class Particle<T extends ParticleType> {
 
       const currentPosition = this.position.copy();
 
-      const offset = SodiumPotassiumPump.getSitePosition( this.mode.site );
+      const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
 
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
 
@@ -391,14 +395,16 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'waitingInSodiumPotassiumPump' && phet.chipper.queryParameters.dev ) {
 
       // For debugging only, so that the site positions can be adjusted
-      const offset = SodiumPotassiumPump.getSitePosition( this.mode.site );
+      const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
       this.position.set( targetPosition );
     }
     else if ( this.mode.type === 'waitingInSodiumGlucoseTransporter' && phet.chipper.queryParameters.dev ) {
 
       // For debugging only, so that the site positions can be adjusted
-      const offset = SodiumGlucoseCotransporter.getSitePosition( this.mode.site );
+      const offset = SodiumGlucoseCotransporter.getSitePositionOffset( this.mode.site );
+
+      // TODO: Can getSitePosition include the slot position for us?
       const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
       this.position.set( targetPosition );
     }
@@ -437,7 +443,8 @@ export default class Particle<T extends ParticleType> {
       const ligandGatedChannel = this.mode.slot.transportProteinProperty.value as LigandGatedChannel;
       if ( ligandGatedChannel ) {
         const currentPosition = this.position;
-        const targetPosition = ligandGatedChannel.getBindingPosition();
+        const targetPositionOffset = ligandGatedChannel.getBindingPositionOffset();
+        const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( targetPositionOffset );
         const maxStepSize = typicalSpeed * dt;
 
         // Move toward the binding position
@@ -448,6 +455,9 @@ export default class Particle<T extends ParticleType> {
         if ( targetPosition.distance( currentPosition ) <= maxStepSize && ligandGatedChannel.isAvailableForBinding() ) {
           affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
           ligandGatedChannel.bindLigand( this as Particle<LigandType> );
+
+          // Set the particle positions exactly to the binding position
+          this.position.set( targetPosition );
         }
       }
     }
