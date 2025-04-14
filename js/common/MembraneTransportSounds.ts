@@ -145,7 +145,7 @@ const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutp
 const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } );
 const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } );
 
-// TODO (design): Brett, want to tune these numbers?
+// TODO: We decided to get rid of this, and Ashton will provide different sounds
 const bandpassFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'bandpass',
   Q: 10,

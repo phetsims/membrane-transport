@@ -31,7 +31,7 @@ import VoltageGatedChannel from './proteins/VoltageGatedChannel.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
-// TODO (design) can this be deleted?
+// TODO (design) can this be deleted? Brett will meet with content experts before we decide.
 const ABSORB_GLUCOSE = false;
 
 // Typical speed for movement
@@ -153,7 +153,6 @@ type ParticleMode =
 /**
  * For the random walk, the brownian motion is straight lines then random angles. This function determines how long to
  * go straight before a sudden direction change.
- * TODO (design): refine these values
  */
 const sampleValueHowLongToGoStraight = () => {
   const result = boxMullerTransform( 0.3, 0.4, dotRandom );
