@@ -15,6 +15,8 @@ import { LigandType } from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
+// TODO (design): Should the rebinding delay cooldown finish when you release a ligand right on top of the channel?
+//   It is confusing sometimes when you release a ligand on the channel and it just moves away.
 const REBINDING_DELAY = 5;
 
 // Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time, in seconds.
@@ -23,7 +25,6 @@ const BINDING_DURATION = 7;
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
 
-// TODO (JG): Would be good to review the state machine here, and also I'm still seeing cases where the ligand doesn't bind right away. I thought we fixed it, but perhaps the new states are interfering?
 export default class LigandGatedChannel extends TransportProtein<
   'closed' | // idle state, not bound to a ligand
   'ligandBoundClosed' | // ligand has bound, but channel has not yet opened (brief)
