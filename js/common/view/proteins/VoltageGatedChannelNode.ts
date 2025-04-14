@@ -35,13 +35,13 @@ export default class VoltageGatedChannelNode extends ProteinNode {
 
       channel.model.membraneVoltagePotentialProperty.link( membraneVoltagePotential => {
         this.image.image = type === 'sodiumIonVoltageGatedChannel' ?
-                           ( membraneVoltagePotential === '-70' ? sodiumVoltageGatedMinus70mV_svg :
-                             membraneVoltagePotential === '-50' ? sodiumVoltageGatedMinus50mV_svg :
-                             membraneVoltagePotential === '30' ? sodiumVoltageGatedPlus30mV_svg :
+                           ( membraneVoltagePotential === -70 ? sodiumVoltageGatedMinus70mV_svg :
+                             membraneVoltagePotential === -50 ? sodiumVoltageGatedMinus50mV_svg :
+                             membraneVoltagePotential === 30 ? sodiumVoltageGatedPlus30mV_svg :
                              ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() ) :
                            type === 'potassiumIonVoltageGatedChannel' ?
-                           ( membraneVoltagePotential === '-70' || membraneVoltagePotential === '-50' ? potassiumVoltageGatedMinus70and50mV_svg :
-                             membraneVoltagePotential === '30' ? potassiumVoltageGatedPlus30mV_svg :
+                           ( membraneVoltagePotential === -70 || membraneVoltagePotential === -50 ? potassiumVoltageGatedMinus70and50mV_svg :
+                             membraneVoltagePotential === 30 ? potassiumVoltageGatedPlus30mV_svg :
                              ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() ) :
                            ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
       }, { disposer: this } );

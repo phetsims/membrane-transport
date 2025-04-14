@@ -159,10 +159,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
 
   private drawCharges( context: CanvasRenderingContext2D ): void {
-    const potentialString = this.model.membraneVoltagePotentialProperty.value;
-    const potentialNumber = potentialString === '-70' ? -70 :
-                            potentialString === '-50' ? -50 :
-                            30;
+    const potentialNumber = this.model.membraneVoltagePotentialProperty.value;
 
     const numberOfCharges = Utils.roundSymmetric( 18 * Math.abs( potentialNumber ) / 70 );
     const margin = 5;
@@ -205,7 +202,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       context.fillStyle = MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS();
       context.fillRect( 0, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
-      if ( this.model.isShowingMembranePotentialLabelsProperty.value ) {
+      if ( this.model.isShowingSignsProperty.value ) {
         this.drawCharges( context );
       }
 

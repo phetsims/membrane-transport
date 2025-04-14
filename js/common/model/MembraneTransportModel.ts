@@ -79,8 +79,8 @@ export default class MembraneTransportModel extends PhetioObject {
 
   public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
 
-  public readonly isShowingMembranePotentialLabelsProperty: Property<boolean>;
-  public readonly membraneVoltagePotentialProperty: Property<'-70' | '-50' | '30'>;
+  public readonly isShowingSignsProperty: Property<boolean>;
+  public readonly membraneVoltagePotentialProperty: Property< -70 | -50 | 30>;
 
   public readonly solutes: Particle<SoluteType>[] = [];
   public readonly ligands: Particle<LigandType>[] = [];
@@ -131,18 +131,18 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
     this.resetEmitter.addListener( () => this.isPlayingProperty.reset() );
 
-    this.isShowingMembranePotentialLabelsProperty = new BooleanProperty( false, {
-      tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'isShowingMembranePotentialLabelsProperty' ) : Tandem.OPT_OUT,
+    this.isShowingSignsProperty = new BooleanProperty( false, {
+      tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'isShowingSignsProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
-    this.resetEmitter.addListener( () => this.isShowingMembranePotentialLabelsProperty.reset() );
+    this.resetEmitter.addListener( () => this.isShowingSignsProperty.reset() );
 
-    this.membraneVoltagePotentialProperty = new StringUnionProperty( '-70', {
+    this.membraneVoltagePotentialProperty = new NumberProperty( -70, {
       tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
-      validValues: [ '-70', '-50', '30' ],
+      validValues: [ -70, -50, 30 ],
       units: 'mV',
       phetioFeatured: true
-    } );
+    } ) as Property< -70 | -50 | 30 >; // TODO: Better type support for a union of numbers?
     this.resetEmitter.addListener( () => this.membraneVoltagePotentialProperty.reset() );
 
     this.areLigandsAddedProperty = new BooleanProperty( false, {

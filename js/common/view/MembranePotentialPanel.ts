@@ -20,17 +20,17 @@ export default class MembranePotentialPanel extends Panel {
   public constructor( model: MembraneTransportModel, tandem: Tandem ) {
 
     const membraneVoltagePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
-      value: '-70',
+      value: -70,
       createNode: tandem => new Text( '-70' ),
       tandemName: 'minus70RadioButton'
     },
       {
-        value: '-50',
+        value: -50,
         createNode: tandem => new Text( '-50' ),
         tandemName: 'minus50RadioButton'
       },
       {
-        value: '30',
+        value: 30,
         createNode: tandem => new Text( '+30' ),
         tandemName: 'plus30RadioButton'
       } ], {
@@ -50,7 +50,7 @@ export default class MembranePotentialPanel extends Panel {
 
         membraneVoltagePotentialRadioButtonGroup,
 
-        new Checkbox( model.isShowingMembranePotentialLabelsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
+        new Checkbox( model.isShowingSignsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
           maxWidth: 140,
           fontSize: 14
         } ), {

@@ -20,9 +20,9 @@ export default class VoltageGatedChannel extends TransportProtein<'open' | 'clos
     // * -50: Na open, K closed
     // * +30: Na closed, K open
     model.membraneVoltagePotentialProperty.link( voltage => {
-      this.stateProperty.value = voltage === '-70' ? 'closed' :
-                                 voltage === '-50' ? ( type === 'sodiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
-                                 voltage === '30' ? ( type === 'potassiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
+      this.stateProperty.value = voltage === -70 ? 'closed' :
+                                 voltage === -50 ? ( type === 'sodiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
+                                 voltage === 30 ? ( type === 'potassiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
                                  ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
     } );
   }
