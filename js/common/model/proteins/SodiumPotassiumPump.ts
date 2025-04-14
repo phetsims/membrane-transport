@@ -168,9 +168,9 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
     this.stateProperty.value = 'openToOutside';
 
     // Move solutes through the open sodium potassium pump
-    sodium1!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
-    sodium2!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'outward' };
-    sodium3!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
+    sodium1!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
+    sodium2!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward' };
+    sodium3!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
   }
 
   // Open upward, letting sodium go outside the cell
@@ -185,8 +185,8 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
     this.stateProperty.value = 'openToInsideEmpty';
 
     // Move solutes through the open sodium potassium pump
-    potassium1!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
-    potassium2!.mode = { type: 'movingThroughChannel', slot: this.slot, transportProteinType: this.type, direction: 'inward' };
+    potassium1!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
+    potassium2!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'inward' };
 
     // release the phosphate
     const phosphate = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&

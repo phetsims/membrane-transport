@@ -117,7 +117,7 @@ type PassiveDiffusionMode = {
 };
 
 type MovingThroughTransportProteinMode = {
-  type: 'movingThroughChannel';
+  type: 'movingThroughTransportProtein';
   slot: Slot;
   transportProteinType: TransportProteinType;
   direction: 'inward' | 'outward';
@@ -357,7 +357,6 @@ export default class Particle<T extends ParticleType> {
         }
         else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
-          // TODO: Initial positions need to be adjusted to match the artwork.
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
           const phosphate = new Particle( currentPosition.copy(), 'phosphate' );
@@ -428,7 +427,7 @@ export default class Particle<T extends ParticleType> {
       if ( this.mode.sheddingElapsed >= sheddingDuration ) {
         const outsideOfCell = this.position.y > 0;
         this.mode = {
-          type: 'movingThroughChannel',
+          type: 'movingThroughTransportProtein',
           slot: this.mode.slot,
           transportProteinType: this.mode.slot.transportProteinType!,
           direction: outsideOfCell ? 'inward' : 'outward'
@@ -454,7 +453,7 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
-    else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughChannel' ) { // TODO: rename to movingThroughTransportProtein
+    else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughTransportProtein' ) {
 
       // For both passive diffusion and moving through, use similar movement logic.
       const sign = this.mode.direction === 'inward' ? -1 : 1;
@@ -473,7 +472,7 @@ export default class Particle<T extends ParticleType> {
 
       // If moving through, don't let the position get very far from the center. Allow a little movement
       // so that it looks like it "struggles" to get through.
-      if ( this.mode.type === 'movingThroughChannel' ) {
+      if ( this.mode.type === 'movingThroughTransportProtein' ) {
         const center = this.mode.slot.position + ( this.mode.offset || 0 );
         const maxDistanceFromCenter = 0.8;
         if ( Math.abs( this.position.x - center ) > maxDistanceFromCenter ) {

@@ -42,15 +42,15 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<'openTo
       this.stateProperty.value = 'openToInside';
 
       // Move solutes through the open transport protein
-      leftIon.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
-      glucose.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward' };
-      rightIon.mode = { type: 'movingThroughChannel', slot: slot, transportProteinType: this.type, direction: 'inward', offset: +5 };
+      leftIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
+      glucose.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward' };
+      rightIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: +5 };
     }
 
     if ( this.stateProperty.value === 'openToInside' ) {
 
       // Check to see if the sodium ions or glucose is still passing through
-      const numberPassingThrough = this.model.solutes.filter( solute => solute.mode.type === 'movingThroughChannel' &&
+      const numberPassingThrough = this.model.solutes.filter( solute => solute.mode.type === 'movingThroughTransportProtein' &&
                                                                         solute.mode.slot === slot );
 
       // Once all solutes have passed through, the sodium glucose cotransporter is open to the outside
