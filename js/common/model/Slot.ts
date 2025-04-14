@@ -8,6 +8,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -47,6 +48,16 @@ export default class Slot {
 
   public clear(): void {
     this.transportProteinProperty.value = null;
+  }
+
+  /**
+   * Returns the model position of this slot. Slots have a horizontal position in the membrane, which is always
+   * vertically at 0.
+   *
+   * This is a convenience function to get the position as a Vecctor2.
+   */
+  public getPositionVector(): Vector2 {
+    return new Vector2( this.position, 0 );
   }
 }
 

@@ -330,7 +330,7 @@ export default class Particle<T extends ParticleType> {
 
       const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
 
-      const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
+      const targetPosition = this.mode.slot.getPositionVector().plus( offset );
 
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
@@ -396,7 +396,7 @@ export default class Particle<T extends ParticleType> {
 
       // For debugging only, so that the site positions can be adjusted
       const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
-      const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
+      const targetPosition = this.mode.slot.getPositionVector().plus( offset );
       this.position.set( targetPosition );
     }
     else if ( this.mode.type === 'waitingInSodiumGlucoseTransporter' && phet.chipper.queryParameters.dev ) {
@@ -404,8 +404,7 @@ export default class Particle<T extends ParticleType> {
       // For debugging only, so that the site positions can be adjusted
       const offset = SodiumGlucoseCotransporter.getSitePositionOffset( this.mode.site );
 
-      // TODO: Can getSitePosition include the slot position for us?
-      const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( offset );
+      const targetPosition = this.mode.slot.getPositionVector().plus( offset );
       this.position.set( targetPosition );
     }
     else if ( this.mode.type === 'enteringTransportProtein' ) {
@@ -444,7 +443,7 @@ export default class Particle<T extends ParticleType> {
       if ( ligandGatedChannel ) {
         const currentPosition = this.position;
         const targetPositionOffset = ligandGatedChannel.getBindingPositionOffset();
-        const targetPosition = new Vector2( this.mode.slot.position, 0 ).plus( targetPositionOffset );
+        const targetPosition = this.mode.slot.getPositionVector().plus( targetPositionOffset );
         const maxStepSize = typicalSpeed * dt;
 
         // Move toward the binding position
