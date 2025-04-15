@@ -3,6 +3,7 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -214,7 +215,9 @@ export default class TransportProteinPanel extends Panel {
   }
 
   public getTransportProteinToolNode( transportProteinType: TransportProteinType ): TransportProteinToolNode {
-    return this.transportProteinToolNodes.get( transportProteinType )!;
+    const transportProteinToolNode = this.transportProteinToolNodes.get( transportProteinType );
+    affirm( transportProteinToolNode, `TransportProteinToolNode not found for type: ${transportProteinType}` );
+    return transportProteinToolNode;
   }
 }
 

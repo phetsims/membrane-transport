@@ -13,6 +13,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CanvasNode from '../../../../scenery/js/nodes/CanvasNode.js';
 import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
@@ -110,7 +111,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       }
 
       // draw image scaled by a factor of 4 in each dimension
-      const image = this.soluteTypeToImageMap.get( solute.type )!;
+      const image = this.soluteTypeToImageMap.get( solute.type );
+      affirm( image, 'image should exist' );
 
       const x = this.modelViewTransform.modelToViewX( solute.position.x );
       const y = this.modelViewTransform.modelToViewY( solute.position.y );
