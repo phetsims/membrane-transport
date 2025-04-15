@@ -21,7 +21,7 @@ import sodiumIon_svg from '../../../../images/sodiumIon_svg.js';
 import sodiumLigand_svg from '../../../../images/sodiumLigand_svg.js';
 import { ParticleType } from '../../model/SoluteType.js';
 
-const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): Node => {
+export default function getParticleNode( particleType: ParticleType, options?: NodeOptions ): Node {
   const particleNode = particleType === 'oxygen' ? new Image( oxygen_svg ) :
                        particleType === 'carbonDioxide' ? new Image( carbonDioxide_svg ) :
                        particleType === 'sodiumIon' ? new Image( sodiumIon_svg ) :
@@ -42,6 +42,4 @@ const getParticleNode = ( particleType: ParticleType, options?: NodeOptions ): N
 
   options && particleNode.mutate( options );
   return particleNode;
-};
-
-export default getParticleNode;
+}

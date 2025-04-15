@@ -9,7 +9,7 @@ import TransportProteinType from '../../model/proteins/TransportProteinType.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default function( type: TransportProteinType ): string {
+export default function getBriefProteinName( type: TransportProteinType ): string {
   return type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
          type === 'potassiumIonLeakageChannel' ? 'Potassium Ion, Leakage' :
 

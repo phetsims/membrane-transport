@@ -15,7 +15,7 @@ import VoltageGatedChannel from './VoltageGatedChannel.js';
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-export default function( model: MembraneTransportModel, type: TransportProteinType, position: number ): TransportProtein {
+export default function getTransportProtein( model: MembraneTransportModel, type: TransportProteinType, position: number ): TransportProtein {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 
