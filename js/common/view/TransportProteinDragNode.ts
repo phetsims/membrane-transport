@@ -181,6 +181,10 @@ export default class TransportProteinDragNode extends Node {
   public setModelPosition( modelPosition: Vector2 ): void {
     this.positionProperty.value = modelPosition;
   }
+  
+  public getModelPosition(): Vector2 {
+    return this.positionProperty.value;
+  }
 }
 
 membraneTransport.register( 'TransportProteinDragNode', TransportProteinDragNode );

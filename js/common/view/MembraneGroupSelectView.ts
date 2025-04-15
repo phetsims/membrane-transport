@@ -19,6 +19,8 @@ import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sor
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -271,6 +273,27 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // Drop the item back into the toolbox
               this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
 
+              // Animate the protein back to the toolbox
+              // TODO: Remove duplication with TransportProteinDragView.ts
+              const toolNode = view.getTransportProteinToolNode( grabbedNode.type );
+              if ( toolNode ) {
+                const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
+                const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
+
+                const animation = new Animation( {
+                  setValue: function( value ) {
+                    grabbedNode.setModelPosition( value );
+                  },
+                  from: grabbedNode.getModelPosition().copy(),
+                  to: modelPoint,
+                  duration: 0.4,
+                  easing: Easing.CUBIC_IN_OUT
+                } );
+                animation.endedEmitter.addListener( () => resetState() );
+
+                animation.start();
+              }
+
               MembraneTransportSounds.proteinReturnedToToolbox();
             }
 
@@ -282,14 +305,15 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             // Dropped into membrane
             if ( currentSlotIndex < SLOT_COUNT ) {
               groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
+              resetState();
             }
             else {
 
               // dropped into toolbox
               groupSelectModel.selectedGroupItemProperty.value = observationWindow.getTransportProteinNodes().length === 0 ? null : 0;
-            }
 
-            resetState();
+              // Will be disposed on animation end
+            }
           }
         }
         else {
