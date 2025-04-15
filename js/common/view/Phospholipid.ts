@@ -72,8 +72,8 @@ export default class Phospholipid {
     const minStaggerY = 0.9;
     const maxStaggerY = 1.1;
     const spacing = anchorY / 6.6;
-    const numberControlPoints = 6;
 
+    const numberControlPoints = 6;
     const createControlPoints = ( anchorX: number, anchorY: number ) => _.times( numberControlPoints, i => ( {
       x: anchorX,
       y: anchorY - spacing * ( i + 1 ) * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ),
