@@ -19,8 +19,6 @@ import GroupSelectView from '../../../../scenery-phet/js/accessibility/group-sor
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -30,6 +28,7 @@ import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel, { SLOT_COUNT } from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import createPositionAnimation from './createPositionAnimation.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
@@ -280,16 +279,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
                 const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-                const animation = new Animation( {
-                  setValue: function( value ) {
-                    grabbedNode.setModelPosition( value );
-                  },
-                  from: grabbedNode.getModelPosition().copy(),
-                  to: modelPoint,
-                  duration: 0.4,
-                  easing: Easing.CUBIC_IN_OUT
-                } );
-                animation.endedEmitter.addListener( () => resetState() );
+                const animation = createPositionAnimation(
+                  value => grabbedNode.setModelPosition( value ),
+                  grabbedNode.getModelPosition(),
+                  modelPoint,
+                  () => resetState()
+                );
 
                 animation.start();
               }

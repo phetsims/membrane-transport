@@ -19,13 +19,12 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import createPositionAnimation from './createPositionAnimation.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
@@ -149,19 +148,7 @@ export default class TransportProteinDragNode extends Node {
           const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
           const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-          const animation = new Animation( {
-            setValue: function( value ) {
-              positionProperty.value = value;
-            },
-            from: positionProperty.value.copy(),
-            to: modelPoint,
-            duration: 0.4,
-            easing: Easing.CUBIC_IN_OUT
-          } );
-          animation.endedEmitter.addListener( () => {
-
-            this.visible = false;
-          } );
+          const animation = createPositionAnimation( value => positionProperty.set( value ), positionProperty.value, modelPoint, () => {this.visible = false;} );
 
           animation.start();
 
@@ -181,7 +168,7 @@ export default class TransportProteinDragNode extends Node {
   public setModelPosition( modelPosition: Vector2 ): void {
     this.positionProperty.value = modelPosition;
   }
-  
+
   public getModelPosition(): Vector2 {
     return this.positionProperty.value;
   }
