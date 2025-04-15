@@ -1,15 +1,16 @@
 // Copyright 2025, University of Colorado Boulder
 
-import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import membraneTransport from '../membraneTransport.js';
-import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
-
 /**
  * Sim-specific preferences for Membrane Transport.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import membraneTransport from '../membraneTransport.js';
+import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
+
 export default class MembraneTransportPreferences {
 
   public readonly animateLipidsProperty = new BooleanProperty( MembraneTransportQueryParameters.animateLipids, {

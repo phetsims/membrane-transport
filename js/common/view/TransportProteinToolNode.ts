@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * In the "Membrane Transport" accordion box, show a tool icon that can be dragged to create a new transport protein.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -22,11 +28,6 @@ const richTextOptions: RichTextOptions = {
   maxHeight: 40
 };
 
-/**
- * In the "Membrane Transport" accordion box, show a tool icon that can be dragged to create a new transport protein.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class TransportProteinToolNode extends VBox {
 
   // So we can return ChannelDragNodes to its exact location

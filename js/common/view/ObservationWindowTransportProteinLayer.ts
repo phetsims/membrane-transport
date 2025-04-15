@@ -1,5 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
+ * creates TransportProteinDragNode instances. They also animate based on the model characteristics.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -10,13 +17,6 @@ import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import ProteinNode from './proteins/ProteinNode.js';
-
-/**
- * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
- * creates TransportProteinDragNode instances. They also animate based on the model characteristics.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 export type SlottedNode = {
   slot: Slot;

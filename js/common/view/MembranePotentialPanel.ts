@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Membrane potential panel for the membrane transport simulation, shown in the bottom right, only in certain screens.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
@@ -9,12 +15,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-
-/**
- * Membrane potential panel for the membrane transport simulation, shown in the bottom right, only in certain screens.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 export default class MembranePotentialPanel extends Panel {
   public constructor( model: Pick<MembraneTransportModel, 'membraneVoltagePotentialProperty' | 'isShowingSignsProperty'>, tandem: Tandem ) {

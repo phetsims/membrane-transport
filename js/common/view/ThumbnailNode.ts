@@ -1,17 +1,18 @@
 // Copyright 2025, University of Colorado Boulder
 
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Line from '../../../../scenery/js/nodes/Line.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import membraneTransport from '../../membraneTransport.js';
-
 /**
  * ThumbnailNode shows a small rectangular view on macroscopic cell shape, showing that the ObservationWindow is a zoomed-
  * in view of the cell.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import membraneTransport from '../../membraneTransport.js';
+
 export default class ThumbnailNode extends Node {
   public constructor( centerX: number, centerY: number, observationWindowBounds: Bounds2 ) {
     super();

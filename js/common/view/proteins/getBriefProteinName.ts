@@ -1,7 +1,5 @@
 // Copyright 2025, University of Colorado Boulder
 
-import TransportProteinType from '../../model/proteins/TransportProteinType.js';
-
 /**
  * Get the brief name for a TransportProteinType
  * TODO (JG): This may move into fluent during i18n.
@@ -9,6 +7,9 @@ import TransportProteinType from '../../model/proteins/TransportProteinType.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import TransportProteinType from '../../model/proteins/TransportProteinType.js';
+
 export default function getBriefProteinName( type: TransportProteinType ): string {
   return type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
          type === 'potassiumIonLeakageChannel' ? 'Potassium Ion, Leakage' :

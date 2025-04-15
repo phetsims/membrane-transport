@@ -1,5 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Play sound effects on certain events.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
+
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import phetAudioContext from '../../../tambo/js/phetAudioContext.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
@@ -165,13 +172,6 @@ const mtLigandsUnstickv1 = newSoundClip( mtLigandsUnstickv1_mp3, { initialOutput
 const mtLigandsUnstickv2 = newSoundClip( mtLigandsUnstickv2_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
 
-
-/**
- * Play sound effects on certain events.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Jesse Greenberg (PhET Interactive Simulations)
- */
 export default class MembraneTransportSounds {
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {

@@ -1,5 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Shows the rectangle with the cross-section of the cell membrane where solutes, ligands, transport proteins are.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
+
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -27,13 +34,6 @@ import ObservationWindowTransportProteinLayer, { SlottedNode } from './Observati
 import LigandParticleNode from './particles/LigandParticleNode.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
-
-/**
- * Shows the rectangle with the cross-section of the cell membrane where solutes, ligands, transport proteins are.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Jesse Greenberg (PhET Interactive Simulations)
- */
 
 // TODO: Extending InteractiveHighlightingNode means all children activate the highlight,
 //   even those that are not interactive. Either focus on interactive parts or make non-interactive children

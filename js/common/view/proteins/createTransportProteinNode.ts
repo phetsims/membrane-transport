@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Returns the Node for the given TransportProteinType
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import TransportProtein from '../../model/proteins/TransportProtein.js';
 import TransportProteinType from '../../model/proteins/TransportProteinType.js';
@@ -14,11 +20,6 @@ import SodiumGlucoseCotransporterNode from './SodiumGlucoseCotransporterNode.js'
 import SodiumPotassiumPumpNode from './SodiumPotassiumPumpNode.js';
 import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
 
-/**
- * Returns the Node for the given TransportProteinType
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): ProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );

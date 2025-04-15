@@ -1,14 +1,16 @@
 // Copyright 2025, University of Colorado Boulder
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
-import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
-import MembraneTransportColors from '../../common/MembraneTransportColors.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 
 /**
  * The types of solutes that can be selected or depicted in the simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
+import MembraneTransportColors from '../../common/MembraneTransportColors.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+
 export const SoluteTypeValues = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp', 'adp', 'phosphate' ] as const;
 export const LigandTypeValues = [ 'ligandA', 'ligandB' ] as const;
 export const ParticleTypeValues = [ ...SoluteTypeValues, ...LigandTypeValues ] as const;

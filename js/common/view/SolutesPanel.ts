@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * In the top left, show radio buttons to select a Solute which can be added to the simulation.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -19,11 +25,6 @@ import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../Membra
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
 
-/**
- * In the top left, show radio buttons to select a Solute which can be added to the simulation.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class SolutesPanel extends Node {
   public constructor( featureSet: MembraneTransportFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();

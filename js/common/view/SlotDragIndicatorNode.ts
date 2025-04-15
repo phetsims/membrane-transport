@@ -1,16 +1,17 @@
 // Copyright 2025, University of Colorado Boulder
 
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import membraneTransport from '../../membraneTransport.js';
-import Slot from '../model/Slot.js';
-
 /**
  * A target zone where a membrane transport protein can be dropped. When the user drags a transport protein toward this slot, it
  * shows a different highlight to indicate it will be dropped into.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import membraneTransport from '../../membraneTransport.js';
+import Slot from '../model/Slot.js';
+
 export default class SlotDragIndicatorNode extends Rectangle {
 
   public constructor( public readonly slot: Slot, modelViewTransform: ModelViewTransform2 ) {

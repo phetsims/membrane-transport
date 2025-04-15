@@ -1,5 +1,14 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Display the membrane transport protein for a node, which can be dragged out of the toolbox and dropped into specific targets
+ * in the membrane.
+ *
+ * This Node is transient and only displayed while dragging. Therefore, it does not need to be phet-io instrumented.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -21,15 +30,6 @@ import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
-
-/**
- * Display the membrane transport protein for a node, which can be dragged out of the toolbox and dropped into specific targets
- * in the membrane.
- *
- * This Node is transient and only displayed while dragging. Therefore, it does not need to be phet-io instrumented.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 export default class TransportProteinDragNode extends Node {
   private readonly dragListener: DragListener;

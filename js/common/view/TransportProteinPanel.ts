@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Shows the transport proteins which can be dragged into the play area, along with their respective controls, if any.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -37,11 +43,6 @@ type AccordionBoxConfig = {
   transportProteins: TransportProteinConfig[];
 };
 
-/**
- * Shows the transport proteins which can be dragged into the play area, along with their respective controls, if any.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class TransportProteinPanel extends Panel {
   public readonly resetEmitter = new Emitter();
 

@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Shows the panel and spinner that allows the user to add and remove a particular type of Solute.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -25,11 +31,6 @@ type SoluteControlOptions = SelfOptions & PanelOptions;
 const fineDelta = 2;
 const coarseDelta = 10;
 
-/**
- * Shows the panel and spinner that allows the user to add and remove a particular type of Solute.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class SoluteControl extends Panel {
 
   public constructor( model: MembraneTransportModel, soluteType: SoluteType, side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {

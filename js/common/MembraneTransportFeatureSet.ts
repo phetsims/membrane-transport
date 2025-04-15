@@ -1,7 +1,5 @@
 // Copyright 2025, University of Colorado Boulder
 
-import SoluteType, { SoluteTypeValues } from './model/SoluteType.js';
-
 /**
  * MembraneTransportFeatureSet allows us to identify which features are used in each screen.
  *
@@ -19,6 +17,9 @@ import SoluteType, { SoluteTypeValues } from './model/SoluteType.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import SoluteType, { SoluteTypeValues } from './model/SoluteType.js';
+
 type MembraneTransportFeatureSet = 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground';
 
 export default MembraneTransportFeatureSet;

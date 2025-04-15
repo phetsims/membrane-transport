@@ -1,5 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * Keyboard interaction for membrane proteins on the membrane.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
+
 import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
@@ -38,12 +45,6 @@ type Selection = {
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10;
 
-/**
- * Keyboard interaction for membrane proteins on the membrane.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Jesse Greenberg (PhET Interactive Simulations)
- */
 export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, Node> {
 
   private currentSelection: Selection | null = null;

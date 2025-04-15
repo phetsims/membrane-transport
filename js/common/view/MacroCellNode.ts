@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * MacroCellNode shows the "zoomed out" view of the cell, with the cell membrane and inside coloring.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Multilink from '../../../../axon/js/Multilink.js';
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -14,11 +20,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import membraneTransport from '../../membraneTransport.js';
 
-/**
- * MacroCellNode shows the "zoomed out" view of the cell, with the cell membrane and inside coloring.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class MacroCellNode extends Node {
 
   // Make public so clients can access the points that define the ThumbnailNode

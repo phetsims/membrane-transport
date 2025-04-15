@@ -1,5 +1,17 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * TransportProtein keeps track of stateful model information for a transport protein that is actively in a slot.
+ * NOTE: this does not extend PhetioObject only the critical part (the type) is needed for serialization.
+ * This allows us to avoid dynamic elements in the PhET-iO tree and in the state.
+ *
+ * The type parameter defaults to IntentionalAny, since there are ~10 cases where we need to specify the type
+ * TransportProtein without caring about the specific states it can be in.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
+
 import Property from '../../../../../axon/js/Property.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -12,17 +24,6 @@ import Slot from '../Slot.js';
 import { ParticleType } from '../SoluteType.js';
 import TransportProteinType from './TransportProteinType.js';
 
-/**
- * TransportProtein keeps track of stateful model information for a transport protein that is actively in a slot.
- * NOTE: this does not extend PhetioObject only the critical part (the type) is needed for serialization.
- * This allows us to avoid dynamic elements in the PhET-iO tree and in the state.
- *
- * The type parameter defaults to IntentionalAny, since there are ~10 cases where we need to specify the type
- * TransportProtein without caring about the specific states it can be in.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Jesse Greenberg (PhET Interactive Simulations)
- */
 export default abstract class TransportProtein<State extends string = IntentionalAny> {
 
   // Bounds of the transport protein in model coordinates.

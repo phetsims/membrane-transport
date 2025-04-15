@@ -1,5 +1,11 @@
 // Copyright 2025, University of Colorado Boulder
 
+/**
+ * In the bottom left of the screen view, the accordion box that contains the solute bar charts.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Emitter from '../../../../axon/js/Emitter.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -18,11 +24,6 @@ import SoluteBarChartNode from './SoluteBarChartNode.js';
 type SelfOptions = EmptySelfOptions;
 type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
 
-/**
- * In the bottom left of the screen view, the accordion box that contains the solute bar charts.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
   public readonly stepEmitter: Emitter<[ number ]>;
