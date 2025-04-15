@@ -99,15 +99,6 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       accessibleParagraph: accessibleParagraphProperty
     } );
 
-    // The membrane is only focusable when there is at least one transport protein
-    model.transportProteinCountProperty.link( transportProteinCount => {
-
-      // TODO: this triggers a reentry detected in an axon property, because when grabbing a protein
-      // from the membrane, it sets the transport protein count to 0 which triggers a blur in the group select view, thus losing that focus.
-      // So we cannot lose focus when there are no transport proteins. Need to handle the case when one is being keyboard dragged
-      // this.focusable = transportProteinCount > 0;
-    } );
-
     // first, we will have a background canvas layer for the performance intensive parts
     const backCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'back' );
     clipNode.addChild( backCanvas );

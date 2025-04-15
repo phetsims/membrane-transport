@@ -199,6 +199,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
     super( groupSelectModel, observationWindow, {
 
+      primaryFocusedNodeOptions: {
+
+        // For the simple diffusion feature set, there are no proteins that you can drag into the membrane so the
+        // membrane is not interactive and therefore removed from the traversal order.
+        focusable: membraneTransportModel.featureSet !== 'simpleDiffusion'
+      },
+
       // Called when a selected item becomes "grabbed" for movement
       onGrab: ( groupItem: ItemModel ) => {
 
