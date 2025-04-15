@@ -28,6 +28,7 @@ export default abstract class TransportProtein<State = IntentionalAny> {
   // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;
 
+  // Certain subtypes of TransportProtein have a specific state, such as 'open', 'closed', 'openToInsideEmpty', etc.
   public readonly stateProperty: Property<State>;
 
   /**
