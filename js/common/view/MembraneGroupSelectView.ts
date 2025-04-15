@@ -20,7 +20,7 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
-import Utterance from '../../../../utterance-queue/js/Utterance.js';
+import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -53,8 +53,14 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   // signifies hasKeyboardGrabbedGroupItemProperty before or after the onGrab is called.
   private isFirstGrab = true;
 
-  private readonly groupSelectModel: GroupSelectModel<ItemModel>;
+  public readonly groupSelectModel: GroupSelectModel<ItemModel>;
+  private readonly utterance = new Utterance( {
 
+    // This utterance is not registered to a Node, and so it will always be spoken.
+    // TODO: This is required because this Node does not compose Voicing. Is that too strict? Can we remove the assertion in Voicing.alertUtterance?
+    voicingCanAnnounceProperties: [ new Property( true ) ]
+  } );
+  private readonly alerter: Alerter;
 
   public constructor( private readonly membraneTransportModel: MembraneTransportModel, private readonly view: MembraneTransportScreenView, private readonly observationWindow: ObservationWindow ) {
 
@@ -135,8 +141,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 return contentsString;
               };
               const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
-              utterance.alert = message;
-              alerter.alert( utterance );
+              this.alert( message );
             }
           }
           else {
@@ -161,13 +166,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
     observationWindow.addInputListener( deltaKeyboardListener );
 
-    const utterance = new Utterance( {
-
-      // This utterance is not registered to a Node, and so it will always be spoken.
-      // TODO: This is required because this Node does not compose Voicing. Is that too strict? Can we remove the assertion in Voicing.alertUtterance?
-      voicingCanAnnounceProperties: [ new Property( true ) ]
-    } );
-
     // Alert the user of the type of protein that has been selected, and which slot it is in.
     // This handles both initial selection and subsequent changes
     groupSelectModel.selectedGroupItemProperty.lazyLink( selectedItem => {
@@ -190,11 +188,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
 
-            utterance.alert = new ResponsePacket( {
+            this.alert( new ResponsePacket( {
               nameResponse: transportProteinName,
               objectResponse: `Open, ${proteinIndex + 1} of ${filledProteins.length}`
-            } );
-            alerter.alert( utterance );
+            } ) );
           }
         }
       }
@@ -225,13 +222,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         const fluentPatternMessageProperty = this.isFirstGrab ?
                                              MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
                                              MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
-        const grabbedAlert = FluentUtils.formatMessage( fluentPatternMessageProperty, {
+        this.alert( FluentUtils.formatMessage( fluentPatternMessageProperty, {
           slotIndex: this.currentSelection!.currentSlotIndex + 1,
           slotCount: SLOT_COUNT
-        } );
-
-        utterance.alert = grabbedAlert;
-        alerter.alert( utterance );
+        } ) );
 
         this.isFirstGrab = false;
       },
@@ -257,8 +251,9 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               droppedIntoSlot.transportProteinType = grabbedNode.type;
 
               const contentsString = getBriefProteinName( grabbedNode.type );
-              utterance.alert = `Released ${contentsString} into membrane`;
-              alerter.alert( utterance ); // TODO: is this the API we want?
+
+              // TODO: is this the API we want?
+              this.alert( `Released ${contentsString} into membrane` );
 
               if ( oldContents && grabbedNode.origin instanceof Slot ) {
                 grabbedNode.origin.transportProteinType = oldContents;
@@ -267,8 +262,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              utterance.alert = MembraneTransportMessages.releasedBackInToolboxMessageProperty;
-              alerter.alert( utterance );
+              this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
 
               MembraneTransportSounds.proteinReturnedToToolbox();
             }
@@ -335,6 +329,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       }
     } );
 
+    this.alerter = alerter;
+
     // Specify shape around the membrane
     const verticalFractionalHeight = 0.3;
     const horizontalMargin = 5;
@@ -390,13 +386,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
-            alerter.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
+            this.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
           }
           else {
 
             // Dropped into toolbox
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getTransportProteinNodes().length === 0 ? null : 0;
-            alerter.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+            this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
 
             MembraneTransportSounds.proteinReturnedToToolbox();
           }
@@ -410,6 +406,11 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     } );
     observationWindow.addInputListener( escKeyboardListener );
     this.groupSelectModel = groupSelectModel;
+  }
+
+  private alert( message: AlertableNoUtterance ): void {
+    this.utterance.alert = message;
+    this.alerter.alert( this.utterance );
   }
 
   private initializeKeyboardDrag( slot: Slot, transportProteinType: TransportProteinType, origin: Slot | TransportProteinToolNode ): void {
