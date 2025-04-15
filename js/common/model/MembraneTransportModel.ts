@@ -536,7 +536,7 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
     return {
       type: transportProtein.type,
       position: transportProtein.position,
-      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model )
+      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model as MembraneTransportModel )
     };
   },
   fromStateObject: ( stateObject: TransportProteinStateObject ) => {

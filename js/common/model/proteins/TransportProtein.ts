@@ -38,7 +38,7 @@ export default abstract class TransportProtein<State extends string = Intentiona
    * @param initialState - transport proteins may be in one of many states, such as 'open', 'closed', 'openToInsideEmpty', 'openToInsideSodiumBound'.
    */
   protected constructor(
-    public readonly model: MembraneTransportModel,
+    public readonly model: Pick<MembraneTransportModel, 'isTransportProteinSoluteFree' | 'getSlotForTransportProtein' | 'solutes' | 'membraneVoltagePotentialProperty'>,
     public readonly type: TransportProteinType,
     public readonly position: number,
     initialState: State
