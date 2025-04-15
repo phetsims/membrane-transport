@@ -57,6 +57,9 @@ import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
 import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
 import mtSoluteCrossing004_mp3 from '../../sounds/mtSoluteCrossing004_mp3.js';
 import mtSoluteCrossing005_mp3 from '../../sounds/mtSoluteCrossing005_mp3.js';
+import proteinReturnSound2_mp3 from '../../sounds/proteinReturnSound2_mp3.js';
+import proteinReturnSound3_mp3 from '../../sounds/proteinReturnSound3_mp3.js';
+import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import proteinReturnSound_mp3 from '../../sounds/proteinReturnSound_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
@@ -143,7 +146,18 @@ const channelSounds: ChannelSoundMap = {
 
 // Other sound definitions remain the same
 const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
-const proteinReturnSound = newSoundClip( proteinReturnSound_mp3, { initialOutputLevel: 0.75 } );
+
+
+const proteinReturnSound = newSoundClip(
+  MembraneTransportQueryParameters.soundProteinReturn === 1 ? proteinReturnSound_mp3 :
+  MembraneTransportQueryParameters.soundProteinReturn === 2 ? proteinReturnSound2_mp3 :
+  MembraneTransportQueryParameters.soundProteinReturn === 3 ? proteinReturnSound3_mp3 :
+  MembraneTransportQueryParameters.soundProteinReturn === 4 ? proteinReturnSound4_mp3 :
+    // IIFE throw error
+  ( () => { throw new Error( 'Invalid protein return sound option' ); } )(), {
+    initialOutputLevel: 0.75
+  } );
+
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
 const mtSoluteCrossing001 = newSoundClip( mtSoluteCrossing001_mp3, { initialOutputLevel: 0.6 } );
