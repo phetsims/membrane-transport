@@ -72,32 +72,25 @@ export default class Phospholipid {
     const minStaggerY = 0.9;
     const maxStaggerY = 1.1;
     const spacing = anchorY / 6.6;
+    const numberControlPoints = 6;
+
+    const createControlPoints = ( anchorX: number, anchorY: number ) => _.times( numberControlPoints, i => ( {
+      x: anchorX,
+      y: anchorY - spacing * ( i + 1 ) * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ),
+      vx: 0
+    } ) );
 
     // Create two tails, each with several control points
     this.tailStates.push( {
       anchorX: anchorXLeft,
       anchorY: anchorY,
-      controlPoints: [
-        { x: anchorXLeft, y: anchorY - spacing * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - spacing * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - spacing * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - spacing * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - spacing * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXLeft, y: anchorY - spacing * 6 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
-      ]
+      controlPoints: createControlPoints( anchorXLeft, anchorY )
     } );
 
     this.tailStates.push( {
       anchorX: anchorXRight,
       anchorY: anchorY,
-      controlPoints: [
-        { x: anchorXRight, y: anchorY - spacing * 1 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - spacing * 2 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - spacing * 3 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - spacing * 4 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - spacing * 5 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 },
-        { x: anchorXRight, y: anchorY - spacing * 6 * dotRandom.nextDoubleBetween( minStaggerY, maxStaggerY ), vx: 0 }
-      ]
+      controlPoints: createControlPoints( anchorXRight, anchorY )
     } );
   }
 
