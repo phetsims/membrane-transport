@@ -17,7 +17,7 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
  */
 
 export default class MembranePotentialPanel extends Panel {
-  public constructor( model: MembraneTransportModel, tandem: Tandem ) {
+  public constructor( model: Pick<MembraneTransportModel, 'membraneVoltagePotentialProperty' | 'isShowingSignsProperty'>, tandem: Tandem ) {
 
     const membraneVoltagePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
       value: -70,
