@@ -46,6 +46,8 @@ type SelfOptions = EmptySelfOptions;
 
 type MembraneTransportModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
+// For the solute bar charts, keep track of how much solute has crossed at which time, so that we can keep a rolling
+// average over a given time window
 type FluxEntry = {
   soluteType: SoluteType;
   time: number;
