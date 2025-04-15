@@ -7,7 +7,7 @@
  */
 
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportModel from '../MembraneTransportModel.js';
+import ModelContext from './ModelContext.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
@@ -15,7 +15,7 @@ type LeakageChannelState = 'open'; // leakage channel is always open
 
 export default class LeakageChannel extends TransportProtein<LeakageChannelState> {
   public constructor(
-    model: MembraneTransportModel,
+    model: ModelContext,
     type: TransportProteinType,
     position: number
   ) {

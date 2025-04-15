@@ -9,9 +9,9 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import { LigandType } from '../SoluteType.js';
+import ModelContext from './ModelContext.js';
 import TransportProtein from './TransportProtein.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
@@ -44,7 +44,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   private static readonly POTASSIUM_BINDING_OFFSET_CLOSED = new Vector2( 2.75, 3.5 );
   private static readonly POTASSIUM_BINDING_OFFSET_OPEN = new Vector2( 2.75, 3.5 );
 
-  public constructor( model: MembraneTransportModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
+  public constructor( model: ModelContext, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
     super( model, type, position, 'closed' );
 
     this.stateProperty.link( state => {

@@ -12,17 +12,18 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneTransport from '../../membraneTransport.js';
+import { TransportProteinIO } from './MembraneTransportModel.js';
+import createTransportProtein from './proteins/createTransportProtein.js';
+import ModelContext from './proteins/ModelContext.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
-import createTransportProtein from './proteins/createTransportProtein.js';
-import MembraneTransportModel, { TransportProteinIO } from './MembraneTransportModel.js';
 
 export default class Slot {
 
   // The type of transport protein that is currently in this slot.
   public readonly transportProteinProperty: Property<null | TransportProtein>;
 
-  public constructor( private readonly model: MembraneTransportModel, public readonly position: number, tandem: Tandem ) {
+  public constructor( private readonly model: ModelContext, public readonly position: number, tandem: Tandem ) {
     this.transportProteinProperty = new Property<null | TransportProtein>( null, {
       tandem: tandem.createTandem( 'transportProteinProperty' ),
       phetioValueType: NullableIO( TransportProteinIO ),
