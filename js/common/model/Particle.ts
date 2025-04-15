@@ -50,6 +50,9 @@ export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportCons
 // Epsilon value for nudging particle into bounds after teleporting, so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
 
+/**
+ * Particle is moving randomly in Brownian motion within the cell or extracellular space.
+ */
 type RandomWalkMode = {
   type: 'randomWalk';
   currentDirection: Vector2;
@@ -60,64 +63,97 @@ type RandomWalkMode = {
   timeElapsedSinceMembraneCrossing: number;
 };
 
+/**
+ * Particle (a ligand) is currently attached to the binding site of a LigandGatedChannel.
+ */
 type BoundMode = {
   type: 'ligandBound';
   ligandGatedChannel: LigandGatedChannel;
   slot: null;
 };
 
+/**
+ * Particle is moving towards the central opening of a transport protein channel (e.g., leakage or gated ion channel).
+ */
 type MoveToCenterOfTransportProteinMode = {
   type: 'moveToCenterOfChannel';
   slot: Slot;
 };
 
+/**
+ * Particle (Sodium or Glucose) is moving towards a specific binding site on the Sodium-Glucose Cotransporter.
+ */
 type MoveToSodiumGlucoseTransporterMode = {
   type: 'moveToSodiumGlucoseCotransporter';
   slot: Slot;
   site: 'left' | 'center' | 'right';
 };
 
+/**
+ * Particle (Sodium, Potassium, or ATP) is moving towards a specific binding site on the Sodium-Potassium Pump.
+ */
 type MoveToSodiumPotassiumPumpMode = {
   type: 'moveToSodiumPotassiumPump';
   slot: Slot;
   site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2';
 };
 
+/**
+ * Particle is occupying a binding site within the Sodium-Glucose Cotransporter, waiting for the transport cycle to proceed.
+ */
 type WaitingInSodiumGlucoseTransporterMode = {
   type: 'waitingInSodiumGlucoseTransporter';
   slot: Slot;
   site: 'left' | 'center' | 'right';
 };
 
+/**
+ * Particle is occupying a binding site within the Sodium-Potassium Pump, waiting for the transport cycle to proceed.
+ */
 type WaitingInSodiumPotassiumPumpMode = {
   type: 'waitingInSodiumPotassiumPump';
   slot: Slot;
   site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2';
 };
 
+/**
+ * Particle (a ligand) is moving towards the designated binding location on a LigandGatedChannel.
+ */
 type MoveToLigandBindingLocationMode = {
   type: 'moveToLigandBindingLocation';
   slot: Slot;
 };
 
+/**
+ * Particle is in the initial phase of entering a transport protein channel from either the inside or outside.
+ */
 type EnteringTransportProteinMode = {
   type: 'enteringTransportProtein';
   slot: Slot;
   direction: 'inward' | 'outward';
 };
 
+/**
+ * Particle is paused briefly upon entering a channel, simulating the shedding of associated water molecules.
+ */
 type SheddingCagedWaterMoleculesMode = {
   type: 'sheddingCagedWaterMolecules';
   slot: Slot;
   sheddingElapsed?: number;
 };
 
+/**
+ * Particle (e.g., O2, CO2) is moving directly across the lipid bilayer without a channel or transporter.
+ */
 type PassiveDiffusionMode = {
   type: 'passiveDiffusion';
   direction: 'inward' | 'outward';
   slot: null;
 };
 
+/**
+ * Particle is moving (active or passive) through the interior of a transport protein channel.
+ */
 type MovingThroughTransportProteinMode = {
   type: 'movingThroughTransportProtein';
   slot: Slot;
@@ -126,11 +162,17 @@ type MovingThroughTransportProteinMode = {
   offset?: number;
 };
 
+/**
+ * Ligand's position is being directly controlled by user input (e.g., dragging).
+ */
 type UserControlledMode = {
   type: 'userControlled';
   slot: null;
 };
 
+/**
+ * User's pointer is currently hovering over the ligand, which pauses its motion.
+ */
 type UserOverMode = {
   type: 'userOver';
   slot: null;
