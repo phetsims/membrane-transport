@@ -1,6 +1,9 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
+ * Class for the Simple Diffusion screen in the Membrane Transport simulation. See MembraneTransportFeatureSet
+ * for details about what features are available in this screen.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
