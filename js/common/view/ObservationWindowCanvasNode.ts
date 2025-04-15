@@ -20,7 +20,7 @@ import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import { animateLipidsProperty } from '../MembraneTransportPreferences.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
@@ -83,7 +83,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   public step( dt: number ): void {
 
-    if ( this.model.isPlayingProperty.value && animateLipidsProperty.value && this.layer === 'back' ) {
+    if ( this.model.isPlayingProperty.value && MembraneTransportPreferences.instance.animateLipidsProperty.value && this.layer === 'back' ) {
 
       // Update the phospholipids
       for ( let i = 0; i < this.phospholipids.length; i++ ) {

@@ -2,6 +2,7 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 
 /**
@@ -9,8 +10,19 @@ import MembraneTransportQueryParameters from './MembraneTransportQueryParameters
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+export default class MembraneTransportPreferences {
 
-export const animateLipidsProperty = new BooleanProperty( MembraneTransportQueryParameters.animateLipids, {
-  tandem: Tandem.PREFERENCES.createTandem( 'animateLipidsProperty' ),
-  phetioFeatured: true
-} );
+  public readonly animateLipidsProperty = new BooleanProperty( MembraneTransportQueryParameters.animateLipids, {
+    tandem: Tandem.PREFERENCES.createTandem( 'animateLipidsProperty' ),
+    phetioFeatured: true
+  } );
+
+  public static readonly instance = new MembraneTransportPreferences();
+
+  private constructor() {
+
+    // This is a singleton, so prevent instantiation.
+  }
+}
+
+membraneTransport.register( 'MembraneTransportPreferences', MembraneTransportPreferences );

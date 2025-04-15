@@ -19,7 +19,7 @@ import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import { animateLipidsProperty } from '../MembraneTransportPreferences.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 
 export default class MembraneTransportPreferencesNode extends VBox {
 
@@ -31,7 +31,7 @@ export default class MembraneTransportPreferencesNode extends VBox {
           isDisposable: false,
           labelNode: new Text( MembraneTransportStrings.animateLipidsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
           descriptionNode: new RichText( MembraneTransportStrings.animateLipidsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-          controlNode: new ToggleSwitch( animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
           tandem: tandem.createTandem( 'animateLipidsControl' ),
           phetioFeatured: true,
           visiblePropertyOptions: {
