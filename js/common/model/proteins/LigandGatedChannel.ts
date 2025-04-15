@@ -53,6 +53,7 @@ export default class LigandGatedChannel extends TransportProtein<
   }
 
   public override step( dt: number ): void {
+    super.step( dt );
 
     this.timeSinceStateTransition += dt;
 

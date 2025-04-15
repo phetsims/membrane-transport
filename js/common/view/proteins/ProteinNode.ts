@@ -31,7 +31,7 @@ export default class ProteinNode extends InteractiveHighlighting( Node ) {
 
   public readonly viewOffset: Vector2;
 
-  public constructor( image: Image, providedOptions?: ProteinNodeOptions ) {
+  protected constructor( image: Image, providedOptions?: ProteinNodeOptions ) {
     const options = optionize<ProteinNodeOptions, SelfOptions, NodeOptions>()( {
       viewOffset: Vector2.ZERO
     }, providedOptions );

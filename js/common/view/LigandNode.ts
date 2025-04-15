@@ -37,7 +37,6 @@ export default class LigandNode extends Node {
     private readonly ligandIndex: number,
     private readonly modelViewTransform: ModelViewTransform2,
     ligandView: Node,
-    tandem: Tandem,
     focusable: boolean
   ) {
 

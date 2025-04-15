@@ -345,6 +345,7 @@ export default class MembraneTransportScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   public override step( dt: number ): void {
+    super.step( dt );
     dt *= this.model.getTimeSpeedFactor();
     this.stepEmitter.emit( dt );
   }

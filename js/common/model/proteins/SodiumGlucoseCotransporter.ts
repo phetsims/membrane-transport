@@ -26,6 +26,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<'openTo
   }
 
   public override step( dt: number ): void {
+    super.step( dt );
 
     const slot = this.model.getSlotForTransportProtein( this )!;
 

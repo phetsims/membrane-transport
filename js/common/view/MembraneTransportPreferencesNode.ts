@@ -12,9 +12,7 @@
 
 import PreferencesControl from '../../../../joist/js/preferences/PreferencesControl.js';
 import PreferencesDialogConstants from '../../../../joist/js/preferences/PreferencesDialogConstants.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
@@ -22,10 +20,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { animateLipidsProperty } from '../MembraneTransportPreferences.js';
-
-type SelfOptions = EmptySelfOptions;
-
-export type MembraneTransportPreferencesNodeOptions = SelfOptions & PickRequired<VBoxOptions, 'tandem'>;
 
 export default class MembraneTransportPreferencesNode extends VBox {
 

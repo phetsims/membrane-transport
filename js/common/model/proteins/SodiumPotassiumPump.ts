@@ -131,6 +131,7 @@ export default class SodiumPotassiumPump extends TransportProtein<'openToInsideE
 
 
   public override step( dt: number ): void {
+    super.step( dt );
 
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === this.slot &&
