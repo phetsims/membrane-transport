@@ -17,12 +17,10 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
-import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import createParticleNode from './particles/createParticleNode.js';
 
@@ -94,13 +92,11 @@ export default class SoluteControl extends Panel {
 
         // We need to add solutes to the outside of the membrane
         model.addSolutes( soluteType, side, difference );
-        MembraneTransportSounds.soluteAdded( soluteType );
       }
       else {
 
         // We need to remove solutes from the outside of the membrane
         model.removeSolutes( soluteType, side, -difference );
-        MembraneTransportSounds.soluteAdded( soluteType );
       }
     } );
 
@@ -178,8 +174,7 @@ export default class SoluteControl extends Panel {
       phetioEnabledPropertyInstrumented: false,
       arrowButtonOptions: {
         phetioVisiblePropertyInstrumented: false
-      },
-      arrowsSoundPlayer: nullSoundPlayer
+      }
     } );
 
     const icon = createParticleNode( soluteType, {

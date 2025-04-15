@@ -57,13 +57,11 @@ import mtSoluteCrossing_Set2_002_mp3 from '../../sounds/mtSoluteCrossing_Set2_00
 import mtSoluteCrossing_Set2_003_mp3 from '../../sounds/mtSoluteCrossing_Set2_003_mp3.js';
 import mtSoluteCrossing_Set2_004_mp3 from '../../sounds/mtSoluteCrossing_Set2_004_mp3.js';
 import mtSoluteCrossing_Set2_005_mp3 from '../../sounds/mtSoluteCrossing_Set2_005_mp3.js';
-import mtSoluteCrossing_Set2_006_mp3 from '../../sounds/mtSoluteCrossing_Set2_006_mp3.js';
 import mtSoluteCrossing_Set3_001_mp3 from '../../sounds/mtSoluteCrossing_Set3_001_mp3.js';
 import mtSoluteCrossing_Set3_002_mp3 from '../../sounds/mtSoluteCrossing_Set3_002_mp3.js';
 import mtSoluteCrossing_Set3_003_mp3 from '../../sounds/mtSoluteCrossing_Set3_003_mp3.js';
 import mtSoluteCrossing_Set3_004_mp3 from '../../sounds/mtSoluteCrossing_Set3_004_mp3.js';
 import mtSoluteCrossing_Set3_005_mp3 from '../../sounds/mtSoluteCrossing_Set3_005_mp3.js';
-import mtSoluteCrossing_Set3_006_mp3 from '../../sounds/mtSoluteCrossing_Set3_006_mp3.js';
 import proteinReturnSound2_mp3 from '../../sounds/proteinReturnSound2_mp3.js';
 import proteinReturnSound3_mp3 from '../../sounds/proteinReturnSound3_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
@@ -202,13 +200,6 @@ const mtSoluteCrossing005 = newSoundClip(
   ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
 );
 
-const mtSoluteCrossing006 = newSoundClip(
-  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing005_mp3 : // NOTE: this series only had 5 sounds
-  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_006_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_006_mp3 :
-  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
-);
-
 // TODO: Fully delete mtLigandsStickv1 and mtLigandsStickv2 files and query parameters.
 const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
@@ -258,19 +249,6 @@ export default class MembraneTransportSounds {
                   type === 'sodiumIon' ? mtSoluteCrossing003 :
                   type === 'potassiumIon' ? mtSoluteCrossing004 :
                   mtSoluteCrossing005;
-    sound.play();
-  }
-
-  // TODO: Sync with soluteCrossedMembrane
-  // TODO: If the same sound used for crossing and adding, rename the sound files to be more general
-  public static soluteAdded( type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' ): void {
-
-    const sound = type === 'oxygen' ? mtSoluteCrossing001 :
-                  type === 'carbonDioxide' ? mtSoluteCrossing002 :
-                  type === 'sodiumIon' ? mtSoluteCrossing003 :
-                  type === 'potassiumIon' ? mtSoluteCrossing004 :
-                  type === 'glucose' ? mtSoluteCrossing005 :
-                  mtSoluteCrossing006;
     sound.play();
   }
 
