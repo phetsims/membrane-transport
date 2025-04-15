@@ -81,7 +81,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const macroCellNode = new MacroCellNode();
     this.addChild( macroCellNode );
 
-    this.observationWindow = new ObservationWindow( model, this, MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM, MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
+    this.observationWindow = new ObservationWindow( model, this, MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM, MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS );
     this.stepEmitter.addListener( dt => this.observationWindow.step( dt ) );
     this.resetEmitter.addListener( () => this.observationWindow.reset() );
 

@@ -20,7 +20,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Panel from '../../../../sun/js/Panel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
@@ -50,8 +49,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly transportProteinLayer: ObservationWindowTransportProteinLayer;
 
-  public constructor( private readonly model: MembraneTransportModel, view: MembraneTransportScreenView,
-                      public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, view: MembraneTransportScreenView,
+                      public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
 
     const frameNode = new Rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',

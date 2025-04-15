@@ -18,7 +18,7 @@ export default class MembraneTransportModelTester {
    * A function for debugging the sodium ligand channel. Creates ligands and sodium particles and moves them toward a ligand channel
    * to test functionality.
    */
-  public static testLigandChannel( model: MembraneTransportModel, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
+  public static testLigandChannel( model: Pick<MembraneTransportModel, 'slots' | 'areLigandsAddedProperty' | 'ligands' | 'addSolutes' | 'solutes'>, type: 'sodium' | 'potassium', withLigand: boolean, side: 'outside' | 'inside' ): void {
 
     // Put a sodium in the first slot
     model.slots[ 0 ].transportProteinType = type === 'sodium' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel';
