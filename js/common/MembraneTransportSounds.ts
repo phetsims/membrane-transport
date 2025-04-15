@@ -45,11 +45,7 @@ import mtChannelOpenSet2_003_mp3 from '../../sounds/mtChannelOpenSet2_003_mp3.js
 import mtChannelOpenSet2_003_muffled_mp3 from '../../sounds/mtChannelOpenSet2_003_muffled_mp3.js';
 import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js';
 import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
-import mtLigandsStickv1_mp3 from '../../sounds/mtLigandsStickv1_mp3.js';
-import mtLigandsStickv2_mp3 from '../../sounds/mtLigandsStickv2_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
-import mtLigandsUnstickv1_mp3 from '../../sounds/mtLigandsUnstickv1_mp3.js';
-import mtLigandsUnstickv2_mp3 from '../../sounds/mtLigandsUnstickv2_mp3.js';
 import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
@@ -213,11 +209,8 @@ const mtSoluteCrossing006 = newSoundClip(
   ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
 );
 
-const mtLigandsStickv1 = newSoundClip( mtLigandsStickv1_mp3, { initialOutputLevel: 0.6 } );
-const mtLigandsStickv2 = newSoundClip( mtLigandsStickv2_mp3, { initialOutputLevel: 0.6 } );
+// TODO: Fully delete mtLigandsStickv1 and mtLigandsStickv2 files and query parameters.
 const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
-const mtLigandsUnstickv1 = newSoundClip( mtLigandsUnstickv1_mp3, { initialOutputLevel: 0.6 } );
-const mtLigandsUnstickv2 = newSoundClip( mtLigandsUnstickv2_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
 
 export default class MembraneTransportSounds {
@@ -315,17 +308,11 @@ export default class MembraneTransportSounds {
   }
 
   public static ligandBound(): void {
-    const sound = MembraneTransportQueryParameters.soundLigandBind === 1 ? mtLigandsStickv1 :
-                  MembraneTransportQueryParameters.soundLigandBind === 2 ? mtLigandsStickv2 :
-                  mtLigandsStickv3;
-    sound.play();
+    mtLigandsStickv3.play();
   }
 
   public static ligandUnbound(): void {
-    const sound = MembraneTransportQueryParameters.soundLigandBind === 1 ? mtLigandsUnstickv1 :
-                  MembraneTransportQueryParameters.soundLigandBind === 2 ? mtLigandsUnstickv2 :
-                  mtLigandsUnstickv3;
-    sound.play();
+    mtLigandsUnstickv3.play();
   }
 }
 
