@@ -8,7 +8,7 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
-import getTransportProteinNode from './proteins/getTransportProteinNode.js';
+import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import ProteinNode from './proteins/ProteinNode.js';
 
 /**
@@ -50,7 +50,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
         if ( type !== null ) {
 
           // NOTE: There is similar code in TransportProteinToolNode (which drags out of the panel).
-          const transportProteinNode = getTransportProteinNode( type, slot.transportProteinProperty.value );
+          const transportProteinNode = createTransportProteinNode( type, slot.transportProteinProperty.value );
           transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
             slot.clear();
             view.createFromMouseDrag( event, type, slot );

@@ -19,7 +19,7 @@ import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default function getTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): ProteinNode {
+export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): ProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );
   }

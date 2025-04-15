@@ -36,7 +36,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
-import getTransportProtein from './proteins/getTransportProtein.js';
+import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
@@ -538,7 +538,7 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
     };
   },
   fromStateObject: ( stateObject: TransportProteinStateObject ) => {
-    return getTransportProtein(
+    return createTransportProtein(
       ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ) as MembraneTransportModel,
       stateObject.type,
       stateObject.position

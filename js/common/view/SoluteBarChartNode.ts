@@ -24,7 +24,7 @@ import MembraneTransportMessages from '../../strings/MembraneTransportMessages.j
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
-import getParticleNode from './particles/getParticleNode.js';
+import createParticleNode from './particles/createParticleNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
@@ -87,7 +87,7 @@ export default class SoluteBarChartNode extends Node {
     // For layout, not just for debugging
     const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, { fill: 'white', opacity: 0.2, stroke: 'black', lineWidth: 1 } );
 
-    const icon = getParticleNode( soluteType );
+    const icon = createParticleNode( soluteType );
 
     // We want to keep the relative sizes correct for the gas solutes and the ions
     // but the ATP and Glucose are much larger, so we scale them down.

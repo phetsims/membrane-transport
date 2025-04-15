@@ -21,7 +21,7 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import { ParticleType, ParticleTypes } from './model/SoluteType.js';
-import getParticleNode from './view/particles/getParticleNode.js';
+import createParticleNode from './view/particles/createParticleNode.js';
 
 let particleDimensionMap: Record<ParticleType, Dimension2> | null = null;
 
@@ -51,7 +51,7 @@ export default class MembraneTransportConstants {
     if ( !particleDimensionMap ) {
       const record = {} as Record<ParticleType, Dimension2>;
       ParticleTypes.forEach( soluteType => {
-        const myParticleNode = getParticleNode( soluteType );
+        const myParticleNode = createParticleNode( soluteType );
         const soluteNodeBounds = myParticleNode.bounds;
 
         assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );

@@ -17,7 +17,7 @@ import MembraneTransportMessages from '../../strings/MembraneTransportMessages.j
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType from '../model/SoluteType.js';
-import getParticleNode from './particles/getParticleNode.js';
+import createParticleNode from './particles/createParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & PanelOptions;
@@ -176,7 +176,7 @@ export default class SoluteControl extends Panel {
       }
     } );
 
-    const icon = getParticleNode( soluteType, {
+    const icon = createParticleNode( soluteType, {
       center: spinner.center,
 
       // Chosen by inspection to make the icons small enough for the largest icon fit between spinner buttons.

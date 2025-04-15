@@ -23,7 +23,7 @@ import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import { animateLipidsProperty } from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType from '../model/SoluteType.js';
-import getParticleNode from './particles/getParticleNode.js';
+import createParticleNode from './particles/createParticleNode.js';
 import Phospholipid from './Phospholipid.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
@@ -64,7 +64,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   }
 
   private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
-    const iconNode = getParticleNode( soluteType );
+    const iconNode = createParticleNode( soluteType );
     return rasterizeNode( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 

@@ -14,7 +14,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneTransport from '../../membraneTransport.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
-import getTransportProtein from './proteins/getTransportProtein.js';
+import createTransportProtein from './proteins/createTransportProtein.js';
 import MembraneTransportModel, { TransportProteinIO } from './MembraneTransportModel.js';
 
 export default class Slot {
@@ -39,7 +39,7 @@ export default class Slot {
   }
 
   public set transportProteinType( transportProteinType: TransportProteinType | null ) {
-    this.transportProteinProperty.value = transportProteinType ? getTransportProtein( this.model, transportProteinType, this.position ) : null;
+    this.transportProteinProperty.value = transportProteinType ? createTransportProtein( this.model, transportProteinType, this.position ) : null;
   }
 
   public isFilled(): boolean {

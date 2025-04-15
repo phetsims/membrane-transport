@@ -10,7 +10,7 @@ import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import getTransportProteinNode from './proteins/getTransportProteinNode.js';
+import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 const richTextOptions: RichTextOptions = {
@@ -35,7 +35,7 @@ export default class TransportProteinToolNode extends VBox {
   public constructor( type: TransportProteinType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
-    const transportProteinNode = getTransportProteinNode( type, null );
+    const transportProteinNode = createTransportProteinNode( type, null );
 
     // Scale down the icon further so there is enough space in the toolbox to fit all controls.
     transportProteinNode.scale( 0.5 );

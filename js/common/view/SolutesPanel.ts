@@ -17,7 +17,7 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
-import getParticleNode from './particles/getParticleNode.js';
+import createParticleNode from './particles/createParticleNode.js';
 
 /**
  * In the top left, show radio buttons to select a Solute which can be added to the simulation.
@@ -49,7 +49,7 @@ export default class SolutesPanel extends Node {
         },
         createNode: () => {
 
-          const icon = getParticleNode( soluteType );
+          const icon = createParticleNode( soluteType );
 
           // We want to keep the relative sizes correct for the gas solutes and the ions
           // but the ATP and Glucose are much larger, so we scale them down.

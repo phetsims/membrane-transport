@@ -19,7 +19,7 @@ import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
-import getTransportProteinNode from './proteins/getTransportProteinNode.js';
+import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 /**
@@ -51,7 +51,7 @@ export default class TransportProteinDragNode extends Node {
       focusable: true
     } );
 
-    this.addChild( getTransportProteinNode( type, null ) );
+    this.addChild( createTransportProteinNode( type, null ) );
 
     this.positionProperty = new Vector2Property( modelPosition );
     this.positionProperty.link( position => {
