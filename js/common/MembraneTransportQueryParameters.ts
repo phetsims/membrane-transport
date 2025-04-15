@@ -19,6 +19,7 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     type: 'flag'
   },
 
+  // Causes the lipids in the membrane to randomly wiggle, can be shut off in query parameter or preferences.
   animateLipids: {
     type: 'boolean',
     defaultValue: true,
@@ -31,12 +32,14 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 50
   },
 
+  // For development only, and not production, choices for the ligand binding sound.
   soundLigandBind: {
     type: 'number',
     validValues: [ 1, 2, 3 ],
     defaultValue: 1
   },
 
+  // For development only, and not production, choices for the open/closing sounds
   soundChannelOpenCloseSet: {
     type: 'string',
     validValues: [ '1', '2', '1muffled', '2muffled' ],
