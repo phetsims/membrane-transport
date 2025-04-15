@@ -13,7 +13,7 @@ import ModelContext from './ModelContext.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
-// The sodium glucode cotransporter is always open to the inside or outside of the cell
+// The sodium glucose cotransporter is always open to the inside or outside of the cell
 type SodiumGlucoseCotransporterState = 'openToOutside' | 'openToInside';
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
