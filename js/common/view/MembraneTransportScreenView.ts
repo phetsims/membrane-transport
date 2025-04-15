@@ -273,7 +273,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.screenViewModelViewTransform = screenViewModelViewTransform;
 
     model.soluteCrossedMembraneEmitter.addListener( ( particle, direction ) => {
-      MembraneTransportSounds.soluteCrossingSound( particle.type, direction );
+      MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction );
     } );
   }
 

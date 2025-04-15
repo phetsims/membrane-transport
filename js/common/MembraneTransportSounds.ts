@@ -8,7 +8,6 @@
  */
 
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
-import phetAudioContext from '../../../tambo/js/phetAudioContext.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
@@ -57,6 +56,18 @@ import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
 import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
 import mtSoluteCrossing004_mp3 from '../../sounds/mtSoluteCrossing004_mp3.js';
 import mtSoluteCrossing005_mp3 from '../../sounds/mtSoluteCrossing005_mp3.js';
+import mtSoluteCrossing_Set2_001_mp3 from '../../sounds/mtSoluteCrossing_Set2_001_mp3.js';
+import mtSoluteCrossing_Set2_002_mp3 from '../../sounds/mtSoluteCrossing_Set2_002_mp3.js';
+import mtSoluteCrossing_Set2_003_mp3 from '../../sounds/mtSoluteCrossing_Set2_003_mp3.js';
+import mtSoluteCrossing_Set2_004_mp3 from '../../sounds/mtSoluteCrossing_Set2_004_mp3.js';
+import mtSoluteCrossing_Set2_005_mp3 from '../../sounds/mtSoluteCrossing_Set2_005_mp3.js';
+import mtSoluteCrossing_Set2_006_mp3 from '../../sounds/mtSoluteCrossing_Set2_006_mp3.js';
+import mtSoluteCrossing_Set3_001_mp3 from '../../sounds/mtSoluteCrossing_Set3_001_mp3.js';
+import mtSoluteCrossing_Set3_002_mp3 from '../../sounds/mtSoluteCrossing_Set3_002_mp3.js';
+import mtSoluteCrossing_Set3_003_mp3 from '../../sounds/mtSoluteCrossing_Set3_003_mp3.js';
+import mtSoluteCrossing_Set3_004_mp3 from '../../sounds/mtSoluteCrossing_Set3_004_mp3.js';
+import mtSoluteCrossing_Set3_005_mp3 from '../../sounds/mtSoluteCrossing_Set3_005_mp3.js';
+import mtSoluteCrossing_Set3_006_mp3 from '../../sounds/mtSoluteCrossing_Set3_006_mp3.js';
 import proteinReturnSound2_mp3 from '../../sounds/proteinReturnSound2_mp3.js';
 import proteinReturnSound3_mp3 from '../../sounds/proteinReturnSound3_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
@@ -160,24 +171,47 @@ const proteinReturnSound = newSoundClip(
 
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
-const mtSoluteCrossing001 = newSoundClip( mtSoluteCrossing001_mp3, { initialOutputLevel: 0.6 } );
-const mtSoluteCrossing002 = newSoundClip( mtSoluteCrossing002_mp3, { initialOutputLevel: 0.6 } );
-const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutputLevel: 0.6 } );
-const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } );
-const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } );
+const mtSoluteCrossing001 = newSoundClip(
+  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing001_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_001_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_001_mp3 :
+  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
+);
 
-// TODO (SR): We decided to get rid of this, and Ashton will provide different sounds
-const bandpassFilter = new BiquadFilterNode( phetAudioContext, {
-  type: 'bandpass',
-  Q: 10,
-  frequency: 1600
-} );
+const mtSoluteCrossing002 = newSoundClip(
+  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing002_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_002_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_002_mp3 :
+  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
+);
 
-const mtSoluteCrossing001Outward = newSoundClip( mtSoluteCrossing001_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
-const mtSoluteCrossing002Outward = newSoundClip( mtSoluteCrossing002_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
-const mtSoluteCrossing003Outward = newSoundClip( mtSoluteCrossing003_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
-const mtSoluteCrossing004Outward = newSoundClip( mtSoluteCrossing004_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
-const mtSoluteCrossing005Outward = newSoundClip( mtSoluteCrossing005_mp3, { additionalAudioNodes: [ bandpassFilter ] } );
+const mtSoluteCrossing003 = newSoundClip(
+  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing003_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_003_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_003_mp3 :
+  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
+);
+
+const mtSoluteCrossing004 = newSoundClip(
+  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing004_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_004_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_004_mp3 :
+  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
+);
+
+const mtSoluteCrossing005 = newSoundClip(
+  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing005_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_005_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_005_mp3 :
+  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
+);
+
+const mtSoluteCrossing006 = newSoundClip(
+  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing005_mp3 : // NOTE: this series only had 5 sounds
+  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_006_mp3 :
+  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_006_mp3 :
+  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
+);
 
 const mtLigandsStickv1 = newSoundClip( mtLigandsStickv1_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsStickv2 = newSoundClip( mtLigandsStickv2_mp3, { initialOutputLevel: 0.6 } );
@@ -222,21 +256,28 @@ export default class MembraneTransportSounds {
     boundaryReachedSound.play();
   }
 
-  public static soluteCrossingSound(
+  public static soluteCrossedMembrane(
     type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'ligandA' | 'ligandB',
     direction: 'inward' | 'outward' ): void {
 
-    const sound: SoundClip =
-      ( direction === 'inward' ) ? ( type === 'oxygen' ? mtSoluteCrossing001 :
-                                     type === 'carbonDioxide' ? mtSoluteCrossing002 :
-                                     type === 'sodiumIon' ? mtSoluteCrossing003 :
-                                     type === 'potassiumIon' ? mtSoluteCrossing004 :
-                                     mtSoluteCrossing005 ) // Default inward sound for other types
-                                 : ( type === 'oxygen' ? mtSoluteCrossing001Outward :
-                                     type === 'carbonDioxide' ? mtSoluteCrossing002Outward :
-                                     type === 'sodiumIon' ? mtSoluteCrossing003Outward :
-                                     type === 'potassiumIon' ? mtSoluteCrossing004Outward :
-                                     mtSoluteCrossing005Outward ); // Default outward sound for other types
+    const sound = type === 'oxygen' ? mtSoluteCrossing001 :
+                  type === 'carbonDioxide' ? mtSoluteCrossing002 :
+                  type === 'sodiumIon' ? mtSoluteCrossing003 :
+                  type === 'potassiumIon' ? mtSoluteCrossing004 :
+                  mtSoluteCrossing005;
+    sound.play();
+  }
+
+  // TODO: Sync with soluteCrossedMembrane
+  // TODO: If the same sound used for crossing and adding, rename the sound files to be more general
+  public static soluteAdded( type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' ): void {
+
+    const sound = type === 'oxygen' ? mtSoluteCrossing001 :
+                  type === 'carbonDioxide' ? mtSoluteCrossing002 :
+                  type === 'sodiumIon' ? mtSoluteCrossing003 :
+                  type === 'potassiumIon' ? mtSoluteCrossing004 :
+                  type === 'glucose' ? mtSoluteCrossing005 :
+                  mtSoluteCrossing006;
     sound.play();
   }
 
