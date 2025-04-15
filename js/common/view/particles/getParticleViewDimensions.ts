@@ -10,7 +10,7 @@
  */
 
 import Dimension2 from '../../../../../dot/js/Dimension2.js';
-import { ParticleType, ParticleTypes } from '../../model/SoluteType.js';
+import { ParticleType, ParticleTypeValues } from '../../model/SoluteType.js';
 import createParticleNode from './createParticleNode.js';
 
 // Cache the result to avoid repeatedly creating the particle node and getting its bounds.
@@ -21,7 +21,7 @@ export default function getParticleViewDimensions(): Record<ParticleType, Dimens
 
   if ( !particleDimensionMap ) {
     const record = {} as Record<ParticleType, Dimension2>;
-    ParticleTypes.forEach( soluteType => {
+    ParticleTypeValues.forEach( soluteType => {
       const myParticleNode = createParticleNode( soluteType );
       const soluteNodeBounds = myParticleNode.bounds;
 

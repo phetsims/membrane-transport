@@ -9,17 +9,17 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export const SoluteTypes = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp', 'adp', 'phosphate' ] as const;
-export const LigandTypes = [ 'ligandA', 'ligandB' ] as const;
-export const ParticleTypes = [ ...SoluteTypes, ...LigandTypes ] as const;
+export const SoluteTypeValues = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp', 'adp', 'phosphate' ] as const;
+export const LigandTypeValues = [ 'ligandA', 'ligandB' ] as const;
+export const ParticleTypeValues = [ ...SoluteTypeValues, ...LigandTypeValues ] as const;
 
-type SoluteType = typeof SoluteTypes[number];
+type SoluteType = typeof SoluteTypeValues[number];
 export default SoluteType;
 
 export type PlottableSoluteTypes = Exclude<SoluteType, 'atp' | 'adp' | 'phosphate'>;
 
-type LigandType = typeof LigandTypes[number];
-type ParticleType = typeof ParticleTypes[number];
+type LigandType = typeof LigandTypeValues[number];
+type ParticleType = typeof ParticleTypeValues[number];
 
 export type { LigandType, ParticleType };
 

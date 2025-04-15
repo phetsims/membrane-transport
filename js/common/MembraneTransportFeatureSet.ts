@@ -1,6 +1,6 @@
 // Copyright 2025, University of Colorado Boulder
 
-import SoluteType, { SoluteTypes } from './model/SoluteType.js';
+import SoluteType, { SoluteTypeValues } from './model/SoluteType.js';
 
 /**
  * MembraneTransportFeatureSet allows us to identify which features are used in each screen.
@@ -24,7 +24,7 @@ type MembraneTransportFeatureSet = 'simpleDiffusion' | 'facilitatedDiffusion' | 
 export default MembraneTransportFeatureSet;
 
 export const getFeatureSetSoluteTypes = ( featureSet: MembraneTransportFeatureSet ): readonly SoluteType[] => {
-  return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypes : SoluteTypes.filter( type => type !== 'atp' );
+  return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypeValues : SoluteTypeValues.filter( type => type !== 'atp' );
 };
 
 export const getFeatureSetHasVoltages = ( featureSet: MembraneTransportFeatureSet ): boolean => {
