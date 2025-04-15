@@ -440,6 +440,7 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'waitingInSodiumPotassiumPump' && phet.chipper.queryParameters.dev ) {
 
       // For debugging only, so that the site positions can be adjusted
+      // TODO: For the cases that add the offset for the binding sites, move these all to instance methods, and make it get the exact position (combining origin + offset).
       const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
       const targetPosition = this.mode.slot.getPositionVector().plus( offset );
       this.position.set( targetPosition );
