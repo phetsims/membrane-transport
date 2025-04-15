@@ -13,7 +13,10 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
-export default class SodiumGlucoseCotransporter extends TransportProtein<'openToOutside' | 'openToInside'> {
+// The sodium glucode cotransporter is always open to the inside or outside of the cell
+type SodiumGlucoseCotransporterState = 'openToOutside' | 'openToInside';
+
+export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
   // Declared like so in order to allow editing in the dev tools
   // TODO (SR|JG): These need to be adjusted to match the artwork.

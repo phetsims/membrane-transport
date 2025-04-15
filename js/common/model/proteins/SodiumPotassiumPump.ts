@@ -26,7 +26,12 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
-export default class SodiumPotassiumPump extends TransportProtein<'openToInsideEmpty' | 'openToInsideSodiumBound' | 'openToOutside'> {
+type SodiumPotassiumPumpState =
+  'openToInsideEmpty' | // Ready to get sodium ions
+  'openToInsideSodiumBound' |  // Got the sodium ions, waiting for the phoshpate from ATP
+  'openToOutside'; // waiting for the potassium
+
+export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
   // Declared like so, so that they can be adjusted at runtime in the dev tools, like so:
   // phet.membraneTransport.SodiumPotassiumPump.SODIUM_SITE_1.y=-6.5

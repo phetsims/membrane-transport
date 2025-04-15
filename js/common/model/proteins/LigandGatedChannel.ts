@@ -25,12 +25,12 @@ const BINDING_DURATION = 7;
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
 
-export default class LigandGatedChannel extends TransportProtein<
-  'closed' | // idle state, not bound to a ligand
-  'ligandBoundClosed' | // ligand has bound, but channel has not yet opened (brief)
-  'ligandBoundOpen' | // ligand has unbound, but channel is still open (brief)
-  'ligandUnboundOpen'  // ligand has bound and channel has opened
-> {
+type LigandGatedChannelState = 'closed' | // idle state, not bound to a ligand
+                                'ligandBoundClosed' | // ligand has bound, but channel has not yet opened (brief)
+                                'ligandBoundOpen' | // ligand has unbound, but channel is still open (brief)
+                                'ligandUnboundOpen';  // ligand has bound and channel has opened
+
+export default class LigandGatedChannel extends TransportProtein<LigandGatedChannelState> {
 
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;

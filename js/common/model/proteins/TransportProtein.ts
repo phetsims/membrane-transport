@@ -15,7 +15,6 @@
 import Property from '../../../../../axon/js/Property.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
-import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
@@ -23,7 +22,9 @@ import Particle from '../Particle.js';
 import Slot from '../Slot.js';
 import { ParticleType } from '../SoluteType.js';
 import TransportProteinType from './TransportProteinType.js';
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 
+// State is a string union defined by the subclass.
 export default abstract class TransportProtein<State extends string = IntentionalAny> {
 
   // Bounds of the transport protein in model coordinates.

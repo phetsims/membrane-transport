@@ -10,7 +10,9 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import TransportProtein from './TransportProtein.js';
 
-export default class VoltageGatedChannel extends TransportProtein<'open' | 'closed'> {
+type VoltageGatedChannelState = 'open' | 'closed'; // opens based on the voltage of the membrane
+
+export default class VoltageGatedChannel extends TransportProtein<VoltageGatedChannelState> {
 
   public constructor( model: MembraneTransportModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
     super( model, type, position, 'closed' );
