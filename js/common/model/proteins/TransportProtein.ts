@@ -2,6 +2,7 @@
 
 import Property from '../../../../../axon/js/Property.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
@@ -61,7 +62,10 @@ export default abstract class TransportProtein<State = IntentionalAny> {
   }
 
   public get slot(): Slot {
-    return this.model.getSlotForTransportProtein( this )!;
+    const slot = this.model.getSlotForTransportProtein( this );
+
+    affirm( slot !== null, 'Slot should be non-null' );
+    return slot;
   }
 
   public hasSolutesMovingTowardOrThroughTransportProtein( solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true ) ): boolean {
