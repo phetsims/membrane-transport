@@ -20,6 +20,9 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
+
+// the model bounds are inferred from the view dimensions
+import getParticleViewDimensions from '../view/particles/getParticleViewDimensions.js'; // eslint-disable-line phet/no-view-imported-from-model
 import MembraneTransportModel from './MembraneTransportModel.js';
 import LigandGatedChannel from './proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from './proteins/SodiumGlucoseCotransporter.js';
@@ -171,7 +174,7 @@ export default class Particle<T extends ParticleType> {
     public readonly position: Vector2,
     public readonly type: T
   ) {
-    const lookup = MembraneTransportConstants.getParticleViewDimensions()[ type ];
+    const lookup = getParticleViewDimensions()[ type ];
 
     const width = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaX( lookup.width * MembraneTransportConstants.PARTICLE_ARTWORK_SCALE );
     const height = Math.abs( MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaY( lookup.height * MembraneTransportConstants.PARTICLE_ARTWORK_SCALE ) );

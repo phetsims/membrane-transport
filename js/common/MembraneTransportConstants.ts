@@ -15,15 +15,10 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import Dimension2 from '../../../dot/js/Dimension2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
-import { ParticleType, ParticleTypes } from './model/SoluteType.js';
-import createParticleNode from './view/particles/createParticleNode.js';
-
-let particleDimensionMap: Record<ParticleType, Dimension2> | null = null;
 
 export default class MembraneTransportConstants {
 
@@ -41,27 +36,6 @@ export default class MembraneTransportConstants {
   public static readonly MODEL_HEIGHT = MembraneTransportConstants.MODEL_WIDTH *
                                         MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT /
                                         MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH;
-
-  // A map of solute type to the dimension of the artwork so that we can create bounds in the model that accurately
-  // match the artwork.
-  // NOTE: When loading SVG files (and maybe PNG files?) you have to wait for the simLauncher to complete before you
-  // get good bounds. Hence, this is a method rather than an attribute, and called during screen creation.
-  public static getParticleViewDimensions(): Record<ParticleType, Dimension2> {
-
-    if ( !particleDimensionMap ) {
-      const record = {} as Record<ParticleType, Dimension2>;
-      ParticleTypes.forEach( soluteType => {
-        const myParticleNode = createParticleNode( soluteType );
-        const soluteNodeBounds = myParticleNode.bounds;
-
-        assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
-
-        record[ soluteType ] = new Dimension2( soluteNodeBounds.width, soluteNodeBounds.height );
-      } );
-      particleDimensionMap = record;
-    }
-    return particleDimensionMap;
-  }
 
   public static readonly LIGAND_COUNT = 10; // Per ligand type
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
@@ -97,6 +71,11 @@ export default class MembraneTransportConstants {
     MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center,
     MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
   );
+
+  private constructor() {
+
+    // This class should not be instantiated
+  }
 }
 
 membraneTransport.register( 'MembraneTransportConstants', MembraneTransportConstants );
