@@ -72,6 +72,7 @@ export default class MembraneTransportConstants {
     MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
   );
 
+  // Yes, it is unused, but this will remind us to not accidentally instantiate
   private constructor() {
 
     // This class should not be instantiated
