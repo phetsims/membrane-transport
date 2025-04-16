@@ -154,14 +154,17 @@ export default class TransportProteinDragNode extends Node {
           // drop into the selected target
           closest.slot.transportProteinType = this.type;
 
+          // swap
           if ( otherContents && this.origin instanceof Slot ) {
             this.origin.transportProteinType = otherContents;
+            MembraneTransportSounds.transportProteinSwapped();
+          }
+          else {
+            MembraneTransportSounds.transportProteinReleased();
           }
 
           // Reuse
           this.visible = false;
-
-          MembraneTransportSounds.transportProteinReleased();
         }
         else {
 

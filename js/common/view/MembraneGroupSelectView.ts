@@ -271,10 +271,15 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // TODO: is this the API we want?
               this.alert( `Released ${contentsString} into membrane` );
 
+              // Swap
               if ( oldContents && grabbedNode.origin instanceof Slot ) {
                 grabbedNode.origin.transportProteinType = oldContents;
+                MembraneTransportSounds.transportProteinSwapped();
               }
-              MembraneTransportSounds.transportProteinReleased();
+              else {
+                MembraneTransportSounds.transportProteinReleased();
+              }
+
             }
             else {
 
@@ -424,10 +429,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             this.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
 
             MembraneTransportSounds.transportProteinReleased();
-            // this.model.isGroupItemKeyboardGrabbedProperty.lazyLink( isGrabbed => {
-            //   isGrabbed && MembraneTransportSounds.transportProteinGrabbed();
-            //   !isGrabbed && MembraneTransportSounds.transportProteinReleased();
-            // } );
           }
           else {
 

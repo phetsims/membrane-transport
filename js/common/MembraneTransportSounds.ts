@@ -67,6 +67,7 @@ import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import Particle from './model/Particle.js';
+import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -181,6 +182,8 @@ const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutp
 const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } );
 const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } );
 
+const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
+
 // TODO: Fully delete mtLigandsStickv1 and mtLigandsStickv2 files and query parameters.
 const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
@@ -284,6 +287,10 @@ export default class MembraneTransportSounds {
 
   public static transportProteinReleased(): void {
     releaseSoundPlayer.play();
+  }
+
+  public static transportProteinSwapped(): void {
+    shareWhooshSound.play();
   }
 
   // TODO: Sometimes plays on top of another sound.
