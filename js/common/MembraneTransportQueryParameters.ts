@@ -46,12 +46,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     defaultValue: '1'
   },
 
-  soundProteinReturn: {
-    type: 'number',
-    validValues: [ 1, 2, 3, 4 ],
-    defaultValue: 1
-  },
-
   soundSoluteCrossing: {
     type: 'number',
     validValues: [ 1, 2, 3 ],
