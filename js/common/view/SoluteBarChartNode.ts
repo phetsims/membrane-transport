@@ -10,9 +10,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
-import { clamp } from '../../../../dot/js/util/clamp.js';
 import Shape from '../../../../kite/js/Shape.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
@@ -29,8 +27,6 @@ import createParticleNode from './particles/createParticleNode.js';
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
 const BOX_HEIGHT = 92;
-
-const MAX_ARROW_HEIGHT = BOX_HEIGHT * 0.9;
 
 export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
@@ -63,7 +59,6 @@ export default class SoluteBarChartNode extends Node {
 
     // TODO (design): i18n
     const sizeDescriptionProperty = new StringProperty( 'small' );
-    const directionDescriptionProperty = new StringProperty( 'upward' );
 
     const descriptionProperty = new PatternMessageProperty( MembraneTransportMessages.barChartPatternMessageProperty, {
       soluteType: soluteType,
@@ -128,11 +123,6 @@ export default class SoluteBarChartNode extends Node {
       left: origin.centerX,
       centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
     } );
-    const arrow = new ArrowNode( 80, 0, 80, 0, {
-      fill: fillColorProperty,
-      stroke: 'black',
-      centerY: BOX_HEIGHT / 2
-    } );
 
     // TODO (JG/SR): Use or remove this code
     // // Update the arrow when the passage history changes - Discrete version
@@ -144,25 +134,6 @@ export default class SoluteBarChartNode extends Node {
     // } );
 
     this.stepEmitter.addListener( dt => {
-
-      // Net positive is into the cell
-      // TODO (design): How to normalize? When done, replace MAX_ARROW_HEIGHT with the normalized value.
-      const smoothedNet = model.getRecentSoluteFluxWithSmoothing( soluteType );
-      if ( Math.abs( smoothedNet ) > 0.01 ) {
-        arrow.visible = true;
-        const constrainedArrowHeight = clamp( smoothedNet * 50, -MAX_ARROW_HEIGHT, MAX_ARROW_HEIGHT );
-        arrow.setTailAndTip( 10, 0, 10, constrainedArrowHeight );
-        arrow.centerY = BOX_HEIGHT / 2;
-
-        sizeDescriptionProperty.value = Math.abs( constrainedArrowHeight ) > MAX_ARROW_HEIGHT / 2 ? 'large' :
-                                        Math.abs( constrainedArrowHeight ) > MAX_ARROW_HEIGHT / 4 ? 'medium' :
-                                        'small';
-
-        directionDescriptionProperty.value = constrainedArrowHeight > 0 ? 'upward' : 'downward';
-      }
-      else {
-        arrow.visible = false;
-      }
 
       // decrement highlight stripe timers and hide when expired
       if ( outsideStripeTimeRemaining > 0 ) {
@@ -244,8 +215,7 @@ export default class SoluteBarChartNode extends Node {
       // highlight stripes
       outsideStripe,
       insideStripe,
-      origin,
-      arrow
+      origin
     ];
   }
 }
