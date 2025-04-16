@@ -606,6 +606,32 @@ export default class Particle<T extends ParticleType> {
    * (central horizontal band) and the top/bottom walls, and wrapping around left/right walls.
    */
   private stepRandomWalk( dt: number, model: MembraneTransportModel ): void {
+    this.updateRandomWalkTimingAndDirection( dt );
+
+    const randomWalk = this.mode as RandomWalkMode;
+    const direction = randomWalk.currentDirection.copy();
+    const thisBounds = this.getBounds();
+    const isOutsideCell = this.position.y > 0;
+
+    if ( this.attemptProteinInteraction( model, isOutsideCell ) ) {
+      return;
+    }
+
+    if ( this.attemptMembraneInteraction( thisBounds, isOutsideCell, direction ) ) {
+      return;
+    }
+
+    this.moveParticle( dt, direction );
+
+    const boundingRegion = isOutsideCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
+    this.handleHorizontalWrap( boundingRegion );
+    this.handleVerticalBounce( boundingRegion, direction );
+  }
+
+  /**
+   * Updates the random walk timing and assigns a new direction if the timer has elapsed.
+   */
+  private updateRandomWalkTimingAndDirection( dt: number ): void {
     const randomWalk = this.mode as RandomWalkMode;
 
     randomWalk.timeUntilNextDirection -= dt;
@@ -616,12 +642,14 @@ export default class Particle<T extends ParticleType> {
       randomWalk.currentDirection = Particle.createRandomUnitVector();
       randomWalk.timeUntilNextDirection = sampleValueHowLongToGoStraight();
     }
+  }
 
-    // Store direction locally for modification if needed during bounce/wrap
-    const direction = randomWalk.currentDirection.copy();
-
-    const thisBounds = this.getBounds();
-    const outsideOfCell = this.position.y > 0;
+  /**
+   * Checks for a protein interaction and handles it.
+   * Returns true if an interaction occurs.
+   */
+  private attemptProteinInteraction( model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+    const randomWalk = this.mode as RandomWalkMode;
 
     for ( let i = 0; i < model.slots.length; i++ ) {
       const slot = model.slots[ i ];
@@ -633,11 +661,18 @@ export default class Particle<T extends ParticleType> {
       if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
         const interactedWithProtein = this.handleProteinInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );
         if ( interactedWithProtein ) {
-          return;
+          return true;
         }
       }
     }
+    return false;
+  }
 
+  /**
+   * Checks for membrane interactions, handling passive diffusion or bounce if necessary.
+   * Returns true if passive diffusion occurs.
+   */
+  private attemptMembraneInteraction( thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
     if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       // Check for passive diffusion first, might change mode
@@ -649,7 +684,7 @@ export default class Particle<T extends ParticleType> {
         };
 
         MembraneTransportSounds.gasMoleculeEnteredMembrane( this, this.mode.direction );
-        return;
+        return true;
       }
 
       // If not diffusing, bounce off membrane
@@ -663,16 +698,24 @@ export default class Particle<T extends ParticleType> {
 
       // Reflect the vertical motion
       direction.y = sign * Math.abs( direction.y );
-      randomWalk.currentDirection.y = direction.y;
+      ( this.mode as RandomWalkMode ).currentDirection.y = direction.y;
     }
+    return false;
+  }
 
-    // Move according to the potentially modified direction and speed
+  /**
+   * Move the particle according to the potentially modified direction and speed.
+   */
+  private moveParticle( dt: number, direction: Vector2 ): void {
     this.position.x += direction.x * dt * typicalSpeed;
     this.position.y += direction.y * dt * typicalSpeed;
+  }
 
-    // --- BEGIN HORIZONTAL WRAP ---
+  /**
+   * Handles horizontal wrapping of the particle around left/right walls.
+   */
+  private handleHorizontalWrap( boundingRegion: Bounds2 ): void {
     const updatedBoundsAfterMove = this.getBounds(); // Bounds AFTER movement
-    const boundingRegion = outsideOfCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
     const totalBounds = boundingRegion;
     const particleWidth = this.dimension.width;
     const epsilon = NUDGE_EPSILON;
@@ -689,9 +732,12 @@ export default class Particle<T extends ParticleType> {
       // Teleport to the left side, fully out of view, then nudge slightly inside
       this.position.x = totalBounds.minX - particleWidth / 2 + epsilon;
     }
-    // --- END HORIZONTAL WRAP ---
+  }
 
-    // --- BEGIN VERTICAL BOUNCE ---
+  /**
+   * Handles vertical bouncing of the particle off the top/bottom walls.
+   */
+  private handleVerticalBounce( boundingRegion: Bounds2, direction: Vector2 ): void {
     const newBounds = this.getBounds();
 
     let bounce = false;
@@ -715,14 +761,13 @@ export default class Particle<T extends ParticleType> {
 
     if ( bounce ) {
       this.position.y = newPositionY;
-      randomWalk.currentDirection.y = newDirectionY;
+      ( this.mode as RandomWalkMode ).currentDirection.y = newDirectionY;
 
       // Teleport to give the sense that one particle left at once coordinate and another entered at the same time
       this.position.x = dotRandom.nextDoubleBetween( boundingRegion.minX, boundingRegion.maxX );
 
       MembraneTransportSounds.particleBounced( this );
     }
-    // --- END VERTICAL BOUNCE ---
   }
 
   /**
