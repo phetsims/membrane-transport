@@ -630,10 +630,6 @@ export default class Particle<T extends ParticleType> {
       // If the particle is within a certain radial distance from the center of the transport protein, it can interact
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
-      // if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value ) {
-      //   debugger;
-      // }
-
       if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
         const interactedWithProtein = this.handleProteinInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );
         if ( interactedWithProtein ) {
