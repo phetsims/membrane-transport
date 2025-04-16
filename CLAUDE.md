@@ -14,7 +14,6 @@
 - Organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport, Playground
 - Common code in js/common/, divided into model/ and view/
 - Use MembraneTransportConstants for shared values
-- Prefer composition over inheritance
 - Follow PhET naming conventions: PascalCase for classes, camelCase for variables
 - JS/TS files do not end with newlines
 - Line comments are preceded by a blank line
