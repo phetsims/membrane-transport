@@ -120,6 +120,19 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       const width = this.modelViewTransform.modelToViewDeltaX( solute.dimension.width );
       const height = this.modelViewTransform.modelToViewDeltaY( solute.dimension.height );
 
+      if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.2 ) {
+
+        // draw a highlight
+        context.fillStyle = 'yellow';
+        context.globalAlpha = 0.5;
+        context.beginPath();
+        context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );
+        context.fill();
+        context.globalAlpha = 1.0;
+        context.fillStyle = 'black';
+
+      }
+
       // Draw the image centered at the position.
       context.drawImage( image, x - width / 2, y - height / 2, width, height );
 

@@ -212,6 +212,9 @@ export default class Particle<T extends ParticleType> {
 
   public opacity = 1;
 
+  // Keep track of how long ago the particle crossed the membrane, to show a highlight when it crosses.
+  public timeSinceCrossedMembrane = Number.POSITIVE_INFINITY;
+
   public constructor(
     public readonly position: Vector2,
     public readonly type: T
@@ -277,12 +280,21 @@ export default class Particle<T extends ParticleType> {
    */
   public step( dt: number, model: MembraneTransportModel ): void {
 
+    this.timeSinceCrossedMembrane += dt;
+
+    const isOutsideCell = this.position.y > 0;
+
     // Handle opacity changes and check if the particle was removed (absorbed)
     const absorbed = this.updateAbsorption( dt, model );
 
     // If the particle has not been absorbed, then proceed with movement calculations
     if ( !absorbed ) {
       this.updateMovement( dt, model );
+    }
+
+    const nowIsOutsideCell = this.position.y > 0;
+    if ( isOutsideCell !== nowIsOutsideCell ) {
+      this.timeSinceCrossedMembrane = 0;
     }
   }
 
