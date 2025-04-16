@@ -280,13 +280,10 @@ export default class Particle<T extends ParticleType> {
     // Handle opacity changes and check if the particle was removed (absorbed)
     const absorbed = this.updateAbsorption( dt, model );
 
-    // If the particle was removed via absorption, don't proceed with movement calculations
-    if ( absorbed ) {
-      return;
+    // If the particle has not been absorbed, then proceed with movement calculations
+    if ( !absorbed ) {
+      this.updateMovement( dt, model );
     }
-
-    // If the particle wasn't removed, update its movement based on its mode
-    this.updateMovement( dt, model );
   }
 
   /**
