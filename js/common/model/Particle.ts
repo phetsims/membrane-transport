@@ -773,23 +773,50 @@ export default class Particle<T extends ParticleType> {
   /**
    * During randomWalk, check for interactions with transport proteins.
    */
-  private handleProteinInteractionDuringRandomWalk( slot: Slot, transportProtein: TransportProtein, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+  private handleProteinInteractionDuringRandomWalk(
+    slot: Slot,
+    transportProtein: TransportProtein,
+    model: MembraneTransportModel,
+    outsideOfCell: boolean
+  ): boolean {
 
-    // Check for ligand interaction with ligand-gated channels
+    // Chain of responsibility pattern to check for interactions. Once we have completed one interaction, we can stop.
+    const handlers = [
+      () => this.handleLigandGatedChannelInteraction( slot, transportProtein, model, outsideOfCell ),
+      () => this.handleLeakageChannelInteraction( slot, transportProtein ),
+      () => this.handleSodiumGlucoseCotransporterInteraction( slot, transportProtein, model ),
+      () => this.handleSodiumPotassiumPumpSodiumIntracellularInteraction( slot, transportProtein ),
+      () => this.handleSodiumPotassiumPumpATPIntracellularInteraction( slot, transportProtein ),
+      () => this.handleSodiumPotassiumPumpPotassiumExtracellularInteraction( slot, transportProtein )
+    ];
+
+    for ( const handler of handlers ) {
+      if ( handler() ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check for ligand interaction with ligand-gated channels.
+   * @returns true if an interaction occurred
+   */
+  private handleLigandGatedChannelInteraction(
+    slot: Slot,
+    transportProtein: TransportProtein,
+    model: MembraneTransportModel,
+    outsideOfCell: boolean
+  ): boolean {
     if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
 
-      // Match ligandA with sodium channels and ligandB with potassium channels
-      const transportProteinType = this.type === 'ligandA' ?
-                                   'sodiumIonLigandGatedChannel' :
-                                   'potassiumIonLigandGatedChannel';
+      const transportProteinType = this.type === 'ligandA'
+                                   ? 'sodiumIonLigandGatedChannel'
+                                   : 'potassiumIonLigandGatedChannel';
 
-      // Check if this slot has the correct type of ligand-gated channel
       if ( slot.transportProteinType === transportProteinType ) {
-
-        // Check that it's actually a LigandGatedChannel and is available for binding, and no other ligand is headed that way
         if ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForBinding() ) {
-
-          // check that no other ligand is already moving to that slot.
           const isLigandFree = model.isTransportProteinLigandFree( slot );
 
           if ( isLigandFree ) {
@@ -799,12 +826,18 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
+    return false;
+  }
 
-    // Check for sodium and potassium ions interacting with leakage channels.
-    const sodiumGates: TransportProteinType[] = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
-    const potassiumGates: TransportProteinType[] = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
+  /**
+   * Check for sodium and potassium ions interacting with leakage channels.
+   * @returns true if an interaction occurred
+   */
+  private handleLeakageChannelInteraction( slot: Slot, transportProtein: TransportProtein ): boolean {
 
-    // If the transport protein is available for transport, and the particle is the right type, move to the center of the channel.
+    const sodiumGates = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
+    const potassiumGates = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
+
     if ( transportProtein.isAvailableForPassiveTransport() ) {
       if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
            ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
@@ -812,16 +845,26 @@ export default class Particle<T extends ParticleType> {
         return true;
       }
     }
+    return false;
+  }
+
+  /**
+   * Check for interaction with sodium-glucose cotransporter.
+   * @returns true if an interaction occurred
+   */
+  private handleSodiumGlucoseCotransporterInteraction(
+    slot: Slot,
+    transportProtein: TransportProtein,
+    model: MembraneTransportModel
+  ): boolean {
 
     if (
       ( this.type === 'sodiumIon' || this.type === 'glucose' ) &&
       slot.transportProteinType === 'sodiumGlucoseCotransporter' &&
       transportProtein instanceof SodiumGlucoseCotransporter &&
       model.outsideSoluteCountProperties.sodiumIon.value > model.insideSoluteCountProperties.sodiumIon.value &&
-
       // Only approach from extracellular side
       this.position.y > 0 &&
-
       transportProtein.stateProperty.value === 'openToOutside'
     ) {
 
@@ -844,6 +887,18 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
+    return false;
+  }
+
+  /**
+   * Sodium ions interact with sodium-potassium pump from intracellular side.
+   * @returns true if an interaction occurred
+   */
+  private handleSodiumPotassiumPumpSodiumIntracellularInteraction(
+    slot: Slot,
+    transportProtein: TransportProtein
+  ): boolean {
+
     if (
       this.type === 'sodiumIon' &&
       slot.transportProteinType === 'sodiumPotassiumPump' &&
@@ -862,6 +917,18 @@ export default class Particle<T extends ParticleType> {
       }
     }
 
+    return false;
+  }
+
+  /**
+   * ATP interaction with sodium-potassium pump from intracellular side.
+   * @returns true if an interaction occurred
+   */
+  private handleSodiumPotassiumPumpATPIntracellularInteraction(
+    slot: Slot,
+    transportProtein: TransportProtein
+  ): boolean {
+
     if (
       this.type === 'atp' &&
       slot.transportProteinType === 'sodiumPotassiumPump' &&
@@ -874,6 +941,18 @@ export default class Particle<T extends ParticleType> {
       this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'phosphate' };
       return true;
     }
+
+    return false;
+  }
+
+  /**
+   * Potassium ions interact with sodium-potassium pump from extracellular side.
+   * @returns true if an interaction occurred
+   */
+  private handleSodiumPotassiumPumpPotassiumExtracellularInteraction(
+    slot: Slot,
+    transportProtein: TransportProtein
+  ): boolean {
 
     if (
       this.type === 'potassiumIon' &&
