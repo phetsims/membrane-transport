@@ -286,7 +286,6 @@ export default class MembraneTransportScreenView extends ScreenView {
    */
   private createTransportProteinDragNode( modelPosition: Vector2, type: TransportProteinType, origin: Slot | TransportProteinToolNode ): TransportProteinDragNode {
     const transportProteinDragNode = new TransportProteinDragNode(
-      this.model,
       this,
       this.observationWindow,
       this.screenViewModelViewTransform,

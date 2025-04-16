@@ -21,7 +21,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
-import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import createPositionAnimation from './createPositionAnimation.js';
@@ -35,7 +34,6 @@ export default class TransportProteinDragNode extends Node {
   private readonly positionProperty: Vector2Property;
 
   public constructor(
-    model: MembraneTransportModel,
     view: MembraneTransportScreenView,
     observationWindow: ObservationWindow,
     screenViewModelViewTransform: ModelViewTransform2,
