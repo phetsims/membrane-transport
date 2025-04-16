@@ -52,16 +52,6 @@ import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
 import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
 import mtSoluteCrossing004_mp3 from '../../sounds/mtSoluteCrossing004_mp3.js';
 import mtSoluteCrossing005_mp3 from '../../sounds/mtSoluteCrossing005_mp3.js';
-import mtSoluteCrossing_Set2_001_mp3 from '../../sounds/mtSoluteCrossing_Set2_001_mp3.js';
-import mtSoluteCrossing_Set2_002_mp3 from '../../sounds/mtSoluteCrossing_Set2_002_mp3.js';
-import mtSoluteCrossing_Set2_003_mp3 from '../../sounds/mtSoluteCrossing_Set2_003_mp3.js';
-import mtSoluteCrossing_Set2_004_mp3 from '../../sounds/mtSoluteCrossing_Set2_004_mp3.js';
-import mtSoluteCrossing_Set2_005_mp3 from '../../sounds/mtSoluteCrossing_Set2_005_mp3.js';
-import mtSoluteCrossing_Set3_001_mp3 from '../../sounds/mtSoluteCrossing_Set3_001_mp3.js';
-import mtSoluteCrossing_Set3_002_mp3 from '../../sounds/mtSoluteCrossing_Set3_002_mp3.js';
-import mtSoluteCrossing_Set3_003_mp3 from '../../sounds/mtSoluteCrossing_Set3_003_mp3.js';
-import mtSoluteCrossing_Set3_004_mp3 from '../../sounds/mtSoluteCrossing_Set3_004_mp3.js';
-import mtSoluteCrossing_Set3_005_mp3 from '../../sounds/mtSoluteCrossing_Set3_005_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
@@ -156,40 +146,11 @@ const proteinReturnSound = newSoundClip( proteinReturnSound4_mp3, {
 
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
-const mtSoluteCrossing001 = newSoundClip(
-  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing001_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_001_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_001_mp3 :
-  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
-);
-
-const mtSoluteCrossing002 = newSoundClip(
-  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing002_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_002_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_002_mp3 :
-  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
-);
-
-const mtSoluteCrossing003 = newSoundClip(
-  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing003_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_003_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_003_mp3 :
-  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
-);
-
-const mtSoluteCrossing004 = newSoundClip(
-  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing004_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_004_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_004_mp3 :
-  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
-);
-
-const mtSoluteCrossing005 = newSoundClip(
-  MembraneTransportQueryParameters.soundSoluteCrossing === 1 ? mtSoluteCrossing005_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 2 ? mtSoluteCrossing_Set2_005_mp3 :
-  MembraneTransportQueryParameters.soundSoluteCrossing === 3 ? mtSoluteCrossing_Set3_005_mp3 :
-  ( () => { throw new Error( 'Invalid solute crossing sound option' ); } )(), { initialOutputLevel: 0.6 }
-);
+const mtSoluteCrossing001 = newSoundClip( mtSoluteCrossing001_mp3, { initialOutputLevel: 0.6 } );
+const mtSoluteCrossing002 = newSoundClip( mtSoluteCrossing002_mp3, { initialOutputLevel: 0.6 } );
+const mtSoluteCrossing003 = newSoundClip( mtSoluteCrossing003_mp3, { initialOutputLevel: 0.6 } );
+const mtSoluteCrossing004 = newSoundClip( mtSoluteCrossing004_mp3, { initialOutputLevel: 0.6 } );
+const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutputLevel: 0.6 } );
 
 // TODO: Fully delete mtLigandsStickv1 and mtLigandsStickv2 files and query parameters.
 const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );

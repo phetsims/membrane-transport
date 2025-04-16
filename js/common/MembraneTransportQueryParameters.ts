@@ -44,14 +44,7 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     type: 'string',
     validValues: [ '1', '2', '1muffled', '2muffled' ],
     defaultValue: '1'
-  },
-
-  soundSoluteCrossing: {
-    type: 'number',
-    validValues: [ 1, 2, 3 ],
-    defaultValue: 1
   }
-
 } );
 
 membraneTransport.register( 'MembraneTransportQueryParameters', MembraneTransportQueryParameters );
