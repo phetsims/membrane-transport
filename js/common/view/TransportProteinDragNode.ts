@@ -136,6 +136,8 @@ export default class TransportProteinDragNode extends Node {
 
           // Reuse
           this.visible = false;
+
+          MembraneTransportSounds.transportProteinReleased();
         }
         else {
 

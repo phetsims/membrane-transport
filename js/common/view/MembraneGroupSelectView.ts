@@ -236,6 +236,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         } ) );
 
         this.isFirstGrab = false;
+
+        MembraneTransportSounds.transportProteinGrabbed();
       },
       onRelease: ( groupItem: ItemModel ) => {
 
@@ -266,6 +268,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               if ( oldContents && grabbedNode.origin instanceof Slot ) {
                 grabbedNode.origin.transportProteinType = oldContents;
               }
+              MembraneTransportSounds.transportProteinReleased();
             }
             else {
 
@@ -413,6 +416,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
             this.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
+
+            MembraneTransportSounds.transportProteinReleased();
+            // this.model.isGroupItemKeyboardGrabbedProperty.lazyLink( isGrabbed => {
+            //   isGrabbed && MembraneTransportSounds.transportProteinGrabbed();
+            //   !isGrabbed && MembraneTransportSounds.transportProteinReleased();
+            // } );
           }
           else {
 

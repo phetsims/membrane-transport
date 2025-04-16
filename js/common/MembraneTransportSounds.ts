@@ -8,6 +8,8 @@
  */
 
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
+
+import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
@@ -56,6 +58,9 @@ import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import Particle from './model/Particle.js';
+
+const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
+const releaseSoundPlayer = sharedSoundPlayers.get( 'release' );
 
 // Helper function to create SoundClip instances and register them with the sound manager.
 const newSoundClip = ( sound: WrappedAudioBuffer, options?: SoundClipOptions ): SoundClip => {
@@ -243,6 +248,14 @@ export default class MembraneTransportSounds {
 
   public static ligandUnbound(): void {
     mtLigandsUnstickv3.play();
+  }
+
+  public static transportProteinGrabbed(): void {
+    grabSoundPlayer.play();
+  }
+
+  public static transportProteinReleased(): void {
+    releaseSoundPlayer.play();
   }
 }
 
