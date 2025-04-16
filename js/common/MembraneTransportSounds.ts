@@ -230,6 +230,10 @@ export default class MembraneTransportSounds {
                   type === 'sodiumIon' ? mtSoluteCrossing003 :
                   type === 'potassiumIon' ? mtSoluteCrossing004 :
                   mtSoluteCrossing005;
+
+    // if going outward, increase the frequency one octave
+    sound.setPlaybackRate( direction === 'outward' ? 2 : 1 );
+
     sound.play();
   }
 
