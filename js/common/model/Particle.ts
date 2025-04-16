@@ -277,23 +277,48 @@ export default class Particle<T extends ParticleType> {
    */
   public step( dt: number, model: MembraneTransportModel ): void {
 
-    // When glucose is inside the cell, it is absorbed.
-    if ( this.type === 'glucose' && this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
-      this.opacity -= 0.01;
-      if ( this.opacity <= 0 ) {
-        model.removeParticle( this );
-        return;
-      }
+    // Handle opacity changes and check if the particle was removed (absorbed)
+    const absorbed = this.updateAbsorption( dt, model );
+
+    // If the particle was removed via absorption, don't proceed with movement calculations
+    if ( absorbed ) {
+      return;
     }
 
+    // If the particle wasn't removed, update its movement based on its mode
+    this.updateMovement( dt, model );
+  }
+
+  /**
+   * Updates the particle's opacity based on its type and position/state.
+   * Handles absorption logic (fading out and removal).
+   * Returns true if the particle was removed during this update, false otherwise.
+   *
+   * @param dt - Time step in seconds (currently unused here, but kept for potential future use)
+   * @param model - The overall membrane transport model
+   * @returns true if the particle was removed, false otherwise
+   */
+  private updateAbsorption( dt: number, model: MembraneTransportModel ): boolean {
+
+    // TODO: account for dt in these calculations
     if ( this.type === 'glucose' ) {
-      if ( this.position.y > MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
-        this.opacity = 1; // Full opacity outside the cell
+      if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
+        this.opacity -= 0.01;
+        if ( this.opacity <= 0 ) {
+          model.removeParticle( this );
+          return true; // Particle removed
+        }
       }
       else {
 
-        // Gradual fade over time after moving inside the cell.
-        this.opacity = clamp( this.opacity - 0.01, 0.5, 1 );
+        if ( this.position.y > MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
+          this.opacity = 1; // Full opacity outside the cell
+        }
+        else {
+
+          // Gradual fade over time after moving inside the cell.
+          this.opacity = clamp( this.opacity - 0.01, 0.5, 1 );
+        }
       }
     }
 
@@ -302,19 +327,32 @@ export default class Particle<T extends ParticleType> {
       this.opacity -= 0.01;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
-        return;
+        return true; // Particle removed
       }
     }
 
-    // Free phosphate molecules move normally for a while, then are absorbed
+    // Free ADP molecules move normally for a while, then are absorbed
     if ( this.type === 'adp' && this.mode.type === 'randomWalk' ) {
       this.opacity -= 0.001;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
-        return;
+        return true; // Particle removed
       }
     }
 
+    return false; // particle not absorbed
+  }
+
+  /**
+   * Updates the particle's position and potentially its mode based on its current mode.
+   * This method assumes the particle has not been removed in the current step.
+   *
+   * @param dt - Time step in seconds
+   * @param model - The overall membrane transport model
+   */
+  private updateMovement( dt: number, model: MembraneTransportModel ): void {
+
+    // --- Movement Logic (based on mode) ---
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
@@ -360,7 +398,7 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
-      // When close enough, transition to enteringTransportProtein mode.
+      // When close enough, transition to waitingInSodiumGlucoseTransporter mode.
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
         this.mode = {
           type: 'waitingInSodiumGlucoseTransporter',
@@ -534,7 +572,7 @@ export default class Particle<T extends ParticleType> {
         const crossedOver = this.mode.direction === 'inward' && this.position.y < 0 ||
                             this.mode.direction === 'outward' && this.position.y > 0;
 
-        // If the particle has moved through, close
+        // If the particle has moved through, potentially update transport protein state
         if ( crossedOver && Math.abs( this.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
           const transportProtein = this.mode.slot.transportProteinProperty.value;
 
