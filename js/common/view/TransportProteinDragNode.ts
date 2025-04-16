@@ -94,6 +94,30 @@ export default class TransportProteinDragNode extends Node {
       return position.x === bounds.minX || position.x === bounds.maxX || position.y === bounds.minY || position.y === bounds.maxY;
     } );
 
+    const slotHoverIndexProperty = new DerivedProperty( [ positionProperty ], position => {
+      const closest = getClosestSlotDragIndicatorNode();
+      if ( closest ) {
+        return observationWindow.slotDragIndicatorNodes.indexOf( closest );
+      }
+      else {
+        return null;
+      }
+    } );
+
+    slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
+      if ( newValue !== null ) {
+        if ( oldValue === null ) {
+          MembraneTransportSounds.transportProteinMoved( 'both' );
+        }
+        else if ( newValue > oldValue ) {
+          MembraneTransportSounds.transportProteinMoved( 'right' );
+        }
+        else if ( newValue < oldValue ) {
+          MembraneTransportSounds.transportProteinMoved( 'left' );
+        }
+      }
+    } );
+
     inContactWithWallProperty.lazyLink( inContactWithWall => {
       if ( inContactWithWall ) {
         MembraneTransportSounds.boundaryReached();

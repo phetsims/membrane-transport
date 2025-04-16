@@ -121,6 +121,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               if ( newIndex === currentSlotIndex ) {
                 MembraneTransportSounds.boundaryReached();
               }
+              else if ( newIndex > currentSlotIndex ) {
+                MembraneTransportSounds.transportProteinMoved( 'right' );
+              }
+              else if ( newIndex < currentSlotIndex ) {
+                MembraneTransportSounds.transportProteinMoved( 'left' );
+              }
 
               if ( newIndex === SLOT_COUNT ) {
 

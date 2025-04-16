@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import dotRandom from '../../../dot/js/dotRandom.js';
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
@@ -15,6 +16,14 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
+
+// TODO: If we take these to production, factor out, fix the license entry, etc.
+import cardMovement1_mp3 from '../../sounds/cardMovement1_mp3.js';
+import cardMovement2_mp3 from '../../sounds/cardMovement2_mp3.js';
+import cardMovement3_mp3 from '../../sounds/cardMovement3_mp3.js';
+import cardMovement4_mp3 from '../../sounds/cardMovement4_mp3.js';
+import cardMovement5_mp3 from '../../sounds/cardMovement5_mp3.js';
+import cardMovement6_mp3 from '../../sounds/cardMovement6_mp3.js';
 import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
 import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
 import mtChannelCloseSet1_002_mp3 from '../../sounds/mtChannelCloseSet1_002_mp3.js';
@@ -58,6 +67,21 @@ import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import Particle from './model/Particle.js';
+
+const cardMovementSounds = [
+  cardMovement1_mp3,
+  cardMovement2_mp3,
+  cardMovement3_mp3,
+  cardMovement4_mp3,
+  cardMovement5_mp3,
+  cardMovement6_mp3
+];
+
+export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
+  initialOutputLevel: 0.3,
+  additionalAudioNodes: []
+} ) );
+cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
 const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
 const releaseSoundPlayer = sharedSoundPlayers.get( 'release' );
@@ -256,6 +280,23 @@ export default class MembraneTransportSounds {
 
   public static transportProteinReleased(): void {
     releaseSoundPlayer.play();
+  }
+
+  // TODO: Sometimes plays on top of another sound.
+  public static transportProteinMoved( directionToPlay: 'left' | 'right' | 'both' ): void {
+    const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
+
+    if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {
+
+      const randomClip = availableSoundClips[ dotRandom.nextInt( availableSoundClips.length ) ];
+
+      // Moving to the right, go up in pitch by 4 semitones
+      randomClip.setPlaybackRate( 1.5 *
+                                  ( directionToPlay === 'left' ? 1 :
+                                    directionToPlay === 'right' ? Math.pow( 2, 4 / 12 ) :
+                                    directionToPlay === 'both' ? Math.pow( 2, 2 / 12 ) : 0 ) );
+      randomClip.play();
+    }
   }
 }
 
