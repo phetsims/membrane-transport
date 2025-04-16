@@ -8,12 +8,27 @@
 
 import Text from '../../../../scenery/js/nodes/Text.js';
 import BooleanRectangularToggleButton from '../../../../sun/js/buttons/BooleanRectangularToggleButton.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+
+import mtAddLigands_mp3 from '../../../sounds/mtAddLigands_mp3.js';
+import mtRemoveLigands_mp3 from '../../../sounds/mtRemoveLigands_mp3.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+
+const addLigandSoundPlayer = new SoundClip( mtAddLigands_mp3, {
+  initialOutputLevel: 0.3
+} );
+soundManager.addSoundGenerator( addLigandSoundPlayer );
+
+const removeLigandSoundPlayer = new SoundClip( mtRemoveLigands_mp3, {
+  initialOutputLevel: 0.3
+} );
+soundManager.addSoundGenerator( removeLigandSoundPlayer );
 
 const TEXT_OPTIONS = {
   fontSize: 12,
@@ -31,7 +46,9 @@ export default class LigandControl extends BooleanRectangularToggleButton {
       tandem: tandem,
 
       // pdom
-      accessibleHelpText: MembraneTransportMessages.ligandControlAccessibleHelpTextMessageProperty
+      accessibleHelpText: MembraneTransportMessages.ligandControlAccessibleHelpTextMessageProperty,
+      valueOnSoundPlayer: addLigandSoundPlayer,
+      valueOffSoundPlayer: removeLigandSoundPlayer
     } );
 
     // TODO: High level API for context responses?
