@@ -163,21 +163,90 @@ export default class SoluteBarChartNode extends Node {
       else {
         arrow.visible = false;
       }
+
+      // decrement highlight stripe timers and hide when expired
+      if ( outsideStripeTimeRemaining > 0 ) {
+        outsideStripeTimeRemaining -= dt;
+        if ( outsideStripeTimeRemaining <= 0 ) {
+          outsideStripe.visible = false;
+        }
+      }
+      if ( insideStripeTimeRemaining > 0 ) {
+        insideStripeTimeRemaining -= dt;
+        if ( insideStripeTimeRemaining <= 0 ) {
+          insideStripe.visible = false;
+        }
+      }
     } );
 
     const PADDING_FACTOR = 0.95;
     const BAR_MULTIPLIER = 2;
+
+    // Highlight stripes appear for a short duration when solutes are added
+    const HIGHLIGHT_DURATION = 0.2; // seconds
+    let prevOutsideCount = outsideAmountProperty.value;
+    let prevInsideCount = insideAmountProperty.value;
+
+    // Remaining time (in seconds) for which stripes remain visible
+    let outsideStripeTimeRemaining = 0;
+    let insideStripeTimeRemaining = 0;
+    const outsideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
+      fill: 'yellow',
+      visible: false,
+      left: origin.centerX,
+      centerY: outsideBar.centerY
+    } );
+    const insideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
+      fill: 'yellow',
+      visible: false,
+      left: origin.centerX,
+      centerY: insideBar.centerY
+    } );
+
+    // Update outside bar and show stripe on additions
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      outsideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      const oldWidth = BAR_MULTIPLIER * prevOutsideCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+      const newWidth = BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+      outsideBar.setRectWidth( newWidth );
       outsideBar.left = origin.centerX;
+      if ( soluteCount > prevOutsideCount ) {
+        const deltaWidth = newWidth - oldWidth;
+        outsideStripe.setRectWidth( deltaWidth );
+        outsideStripe.left = origin.centerX + oldWidth;
+        outsideStripe.visible = true;
+        outsideStripeTimeRemaining = HIGHLIGHT_DURATION;
+      }
+      prevOutsideCount = soluteCount;
     } );
 
+    // Update inside bar and show stripe on additions
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      insideBar.setRectWidth( BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * BOX_HEIGHT / 2 * PADDING_FACTOR );
+      const oldWidth = BAR_MULTIPLIER * prevInsideCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+      const newWidth = BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+      insideBar.setRectWidth( newWidth );
       insideBar.left = origin.centerX;
+      if ( soluteCount > prevInsideCount ) {
+        const deltaWidth = newWidth - oldWidth;
+        insideStripe.setRectWidth( deltaWidth );
+        insideStripe.left = origin.centerX + oldWidth;
+        insideStripe.visible = true;
+        insideStripeTimeRemaining = HIGHLIGHT_DURATION;
+      }
+      prevInsideCount = soluteCount;
     } );
 
-    this.children = [ layoutBox, icon, text, outsideBar, insideBar, origin, arrow ];
+    this.children = [
+      layoutBox,
+      icon,
+      text,
+      outsideBar,
+      insideBar,
+      // highlight stripes
+      outsideStripe,
+      insideStripe,
+      origin,
+      arrow
+    ];
   }
 }
 
