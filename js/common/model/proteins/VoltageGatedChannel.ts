@@ -7,14 +7,14 @@
  */
 
 import membraneTransport from '../../../membraneTransport.js';
-import ModelContext from './ModelContext.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProtein from './TransportProtein.js';
 
 type VoltageGatedChannelState = 'open' | 'closed'; // opens based on the voltage of the membrane
 
 export default class VoltageGatedChannel extends TransportProtein<VoltageGatedChannelState> {
 
-  public constructor( model: ModelContext, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
+  public constructor( model: TransportProteinModelContext, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number ) {
     super( model, type, position, 'closed' );
 
     // * 3 point control that controls the open/close states of the Na and K channels separately and possibly instantaneously.

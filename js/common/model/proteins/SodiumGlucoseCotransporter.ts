@@ -9,7 +9,7 @@
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
-import ModelContext from './ModelContext.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
@@ -24,7 +24,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
   public static readonly SODIUM_SITE_RIGHT = new Vector2( 6.2, 8.5 );
   public static readonly GLUCOSE_SITE_CENTER = new Vector2( 0.65, 3 );
 
-  public constructor( model: ModelContext, type: TransportProteinType, position: number ) {
+  public constructor( model: TransportProteinModelContext, type: TransportProteinType, position: number ) {
     super( model, type, position, 'openToOutside' );
   }
 

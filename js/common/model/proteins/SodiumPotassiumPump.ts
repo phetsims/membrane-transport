@@ -22,7 +22,7 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
-import ModelContext from './ModelContext.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
@@ -44,7 +44,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   public static readonly POTASSIUM_SITE_2 = new Vector2( 5, 10 );
 
   public constructor(
-    model: ModelContext,
+    model: TransportProteinModelContext,
     type: TransportProteinType,
     position: number
   ) {
