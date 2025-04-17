@@ -22,6 +22,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import { SoluteControlSolutes } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -32,8 +33,7 @@ const coarseDelta = 10;
 
 export default class SoluteControl extends Panel {
 
-  // TODO: Type alias for controllable solutes
-  public constructor( model: MembraneTransportModel, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp', side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {
+  public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {
 
     const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
       return soluteType === selectedSolute;

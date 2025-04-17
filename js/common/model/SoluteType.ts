@@ -20,6 +20,8 @@ export default SoluteType;
 
 export type PlottableSoluteTypes = Exclude<SoluteType, 'atp' | 'adp' | 'phosphate'>;
 
+export type SoluteControlSolutes = 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp';
+
 type LigandType = typeof LigandTypeValues[number];
 type ParticleType = typeof ParticleTypeValues[number];
 

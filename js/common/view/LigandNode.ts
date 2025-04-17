@@ -6,6 +6,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+// TODO: The focus rectangle shows on the membrane when a ligand has focus. This is incorrect.
+
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -27,8 +29,7 @@ export default class LigandNode extends Node {
   // lazily but LigandNode is created eagerly. So we change the transformation of this Node
   // after the ligand is created (in step). But we only want to do that once or else the
   // scale computation will fight itself every frame.
-  // TODO: This might be a workaround. If we do not need to instrument LigandNode,
-  //   we can dynamically create them.
+  // TODO: This might be a workaround. If we do not need to instrument LigandNode, we can dynamically create them.
   private ligandScaleSet = false;
 
   public constructor(

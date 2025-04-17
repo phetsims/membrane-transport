@@ -7,6 +7,8 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+// TODO: Highlight region is sometimes huge.
+
 import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
@@ -287,7 +289,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
 
               // Animate the protein back to the toolbox
-              // TODO: Remove duplication with TransportProteinDragView.ts
               const toolNode = view.getTransportProteinToolNode( grabbedNode.type );
               if ( toolNode ) {
                 const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
