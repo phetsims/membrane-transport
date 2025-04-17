@@ -198,9 +198,7 @@ export default class TransportProteinPanel extends Panel {
       children: interleaveHSeparators( panels )
     } );
     super( vbox, {
-      tagName: 'div',
-      labelTagName: 'h3',
-      accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.transportProteinsStringProperty,
+      accessibleHeading: MembraneTransportStrings.a11y.transportProteinPanel.transportProteinsStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
