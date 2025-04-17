@@ -70,6 +70,9 @@ type StringsType = {
       'voltageGatedChannelPanel': {
         'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusVoltageGatedStringProperty': LocalizedStringProperty;
+        'membranePotential': {
+          'accessibleHeadingStringProperty': LocalizedStringProperty;
+        }
       };
       'activeTransportProteinPanel': {
         'sodiumPotassiumPumpStringProperty': LocalizedStringProperty;

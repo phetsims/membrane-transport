@@ -45,7 +45,9 @@ export default class MembranePotentialPanel extends Panel {
 
         new Text( MembraneTransportStrings.membranePotential_mVStringProperty, {
           maxWidth: 160,
-          fontSize: 14
+          fontSize: 14,
+          accessibleHeadingIncrement: 2,
+          accessibleHeading: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.accessibleHeadingStringProperty
         } ),
 
         membraneVoltagePotentialRadioButtonGroup,

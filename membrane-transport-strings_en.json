@@ -134,6 +134,11 @@
         },
         "potassiumIonKPlusVoltageGated": {
           "value": "Potassium Ion K plus, Voltage-gated"
+        },
+        "membranePotential": {
+          "accessibleHeading": {
+            "value": "Membrane Potential Options"
+          }
         }
       },
       "activeTransportProteinPanel": {
