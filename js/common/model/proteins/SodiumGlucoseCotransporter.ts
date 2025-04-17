@@ -35,13 +35,13 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
 
     affirm( slot, 'Slot should be non-null' );
 
-    const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'left' );
-    const glucose = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const glucose = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'center' );
-    const rightIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseTransporter' &&
+    const rightIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
                                                         solute.mode.slot === slot &&
                                                         solute.mode.site === 'right' );
 
@@ -72,7 +72,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
    */
   private isSiteOpen( site: 'left' | 'center' | 'right' ): boolean {
     return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseCotransporter' ||
-                                                solute.mode.type === 'waitingInSodiumGlucoseTransporter' ) &&
+                                                solute.mode.type === 'waitingInSodiumGlucoseCotransporter' ) &&
                                               solute.mode.slot === this.slot &&
                                               solute.mode.site === site ) === undefined;
   }

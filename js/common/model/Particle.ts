@@ -105,8 +105,8 @@ type MoveToSodiumPotassiumPumpMode = {
 /**
  * Particle is occupying a binding site within the Sodium-Glucose Cotransporter, waiting for the transport cycle to proceed.
  */
-type WaitingInSodiumGlucoseTransporterMode = {
-  type: 'waitingInSodiumGlucoseTransporter'; // TODO: rename "co"transporter
+type WaitingInSodiumGlucoseCotransporterMode = {
+  type: 'waitingInSodiumGlucoseCotransporter';
   slot: Slot;
   sodiumGlucoseCotransporter: SodiumGlucoseCotransporter;
   site: 'left' | 'center' | 'right';
@@ -196,7 +196,7 @@ type ParticleMode =
   | UserControlledMode
   | UserOverMode
   | MoveToSodiumGlucoseTransporterMode
-  | WaitingInSodiumGlucoseTransporterMode
+  | WaitingInSodiumGlucoseCotransporterMode
   | MoveToSodiumPotassiumPumpMode
   | WaitingInSodiumPotassiumPumpMode;
 
@@ -414,10 +414,10 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
-      // When close enough, transition to waitingInSodiumGlucoseTransporter mode.
+      // When close enough, transition to waitingInSodiumGlucoseCotransporter mode.
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
         this.mode = {
-          type: 'waitingInSodiumGlucoseTransporter',
+          type: 'waitingInSodiumGlucoseCotransporter',
           slot: this.mode.slot,
           site: this.mode.site,
           sodiumGlucoseCotransporter: this.mode.sodiumGlucoseCotransporter
@@ -503,7 +503,7 @@ export default class Particle<T extends ParticleType> {
       const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
       this.position.set( targetPosition );
     }
-    else if ( this.mode.type === 'waitingInSodiumGlucoseTransporter' && phet.chipper.queryParameters.dev ) {
+    else if ( this.mode.type === 'waitingInSodiumGlucoseCotransporter' && phet.chipper.queryParameters.dev ) {
 
       // For debugging only, so that the site positions can be adjusted
       const targetPosition = this.mode.sodiumGlucoseCotransporter.getSitePosition( this.mode.site );
