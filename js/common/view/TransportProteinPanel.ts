@@ -36,7 +36,7 @@ type TransportProteinConfig = {
 };
 
 // Type definition for accordion box configuration
-type AccordionBoxConfig = {
+type PanelConfig = {
   titleProperty: TReadOnlyProperty<string>;
   tandemName: string;
   expanded: boolean;
@@ -63,7 +63,7 @@ export default class TransportProteinPanel extends Panel {
     /**
      * Creates an accordion box based on the provided configuration
      */
-    const createPanel = ( config: AccordionBoxConfig, ...additionalControls: Node[] ): Panel => {
+    const createPanel = ( config: PanelConfig, ...additionalControls: Node[] ): Panel => {
       const content = new HBox( {
         spacing: 20,
         children: config.transportProteins.map( transportProtein => {
@@ -79,12 +79,10 @@ export default class TransportProteinPanel extends Panel {
         )
       } );
 
-      // TODO: Get rid of the accordion boxes, they will just be labels and always open.
       return new Panel( new VBox( {
         spacing: 5, // spacing between the title and the content
         children: [
           titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize, maxWidth: 150 } ), { xAlign: 'left' } ),
-          // contentAlignGroup.createBox( content ),
           content,
           ...additionalControls
         ]
@@ -97,9 +95,9 @@ export default class TransportProteinPanel extends Panel {
     if ( model.featureSet === 'facilitatedDiffusion' || model.featureSet === 'playground' ) {
 
       // Leakage channels
-      const leakageAccordionBox = createPanel( {
+      const leakageChannelPanel = createPanel( {
         titleProperty: MembraneTransportStrings.leakageChannelsStringProperty,
-        tandemName: 'leakageChannelsAccordionBox',
+        tandemName: 'leakageChannelPanel',
         expanded: true,
         transportProteins: [
           {
@@ -116,9 +114,9 @@ export default class TransportProteinPanel extends Panel {
       } );
 
       // Voltage-gated channels
-      const voltageGatedAccordionBox = createPanel( {
+      const voltageGatedChannelPanel = createPanel( {
           titleProperty: MembraneTransportStrings.voltageGatedChannelsStringProperty,
-          tandemName: 'voltageGatedChannelsAccordionBox',
+          tandemName: 'voltageGatedChannelPanel',
           expanded: true,
           transportProteins: [
             {
@@ -137,9 +135,9 @@ export default class TransportProteinPanel extends Panel {
       );
 
       // Ligand-gated channels
-      const ligandGatedAccordionBox = createPanel( {
+      const ligandGatedChannelPanel = createPanel( {
         titleProperty: MembraneTransportStrings.ligandGatedChannelsStringProperty,
-        tandemName: 'ligandGatedChannelsAccordionBox',
+        tandemName: 'ligandGatedChannelPanel',
         expanded: true,
         transportProteins: [
           {
@@ -156,17 +154,18 @@ export default class TransportProteinPanel extends Panel {
       }, new LigandControl( model, tandem.createTandem( 'myLigandToggleButton' ) ) ); // TODO: fix tandem
 
       panels.push(
-        leakageAccordionBox,
-        voltageGatedAccordionBox,
-        ligandGatedAccordionBox
+        leakageChannelPanel,
+        voltageGatedChannelPanel,
+        ligandGatedChannelPanel
       );
     }
 
     if ( model.featureSet === 'activeTransport' || model.featureSet === 'playground' ) {
+
       // Active transport proteins
-      const activeTransportAccordionBox = createPanel( {
+      const activeTransportProteinPanel = createPanel( {
         titleProperty: MembraneTransportStrings.activeTransportersStringProperty,
-        tandemName: 'activeTransportersAccordionBox',
+        tandemName: 'activeTransportProteinPanel',
         expanded: true,
         transportProteins: [
           {
@@ -182,7 +181,7 @@ export default class TransportProteinPanel extends Panel {
         ]
       } );
 
-      panels.push( activeTransportAccordionBox );
+      panels.push( activeTransportProteinPanel );
     }
 
     const interleaveHSeparators = ( nodes: Node[] ) => {
