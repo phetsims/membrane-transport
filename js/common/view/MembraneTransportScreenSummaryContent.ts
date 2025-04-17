@@ -21,16 +21,18 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
   public constructor( model: MembraneTransportModel ) {
 
     const stringProperties = [
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsOutsideSoluteCountMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsInsideSoluteCountMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinCountMessageProperty, { channelCount: model.transportProteinCountProperty } )
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnOutsideMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnInsideMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ),
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinsMessageProperty, { transportProteinCount: model.transportProteinCountProperty } ),
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsLigandsMessageProperty, { hasLigands: model.areLigandsAddedProperty } ),
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } )
     ];
 
     const currentDetailsNode = new Node( {
       children: [
         new Node( {
           tagName: 'p',
-          accessibleName: MembraneTransportMessages.currentDetailsRightNowMessageProperty
+          accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { amount: 123 } )
         } ),
         new Node( {
           tagName: 'ul',
