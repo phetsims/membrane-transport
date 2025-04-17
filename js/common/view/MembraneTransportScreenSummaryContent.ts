@@ -6,6 +6,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -40,11 +41,25 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       stringProperties.push( new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } ) );
     }
 
+    // A Property that describes that activity level of the particles and transport proteins in the model.
+    const activityLevelProperty = new DerivedProperty( [
+      model.outsideSoluteTypesCountProperty,
+      model.insideSoluteTypesCountProperty,
+      model.transportProteinCountProperty,
+      model.areLigandsAddedProperty,
+      model.isPlayingProperty
+    ], ( outsideSoluteCount, insideSoluteCount, transportProteinCount, areLigandsAdded, isPlaying ) => {
+      const isCalm = outsideSoluteCount === 0 && insideSoluteCount === 0 && transportProteinCount === 0 && !areLigandsAdded;
+      return isCalm ? 'calm' :
+             isPlaying ? 'active' :
+             'activeAndPaused';
+    } );
+
     const currentDetailsNode = new Node( {
       children: [
         new Node( {
           tagName: 'p',
-          accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { amount: 123 } )
+          accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { activityLevel: activityLevelProperty } )
         } ),
         new Node( {
           tagName: 'ul',

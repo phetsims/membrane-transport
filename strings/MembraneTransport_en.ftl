@@ -134,8 +134,8 @@ barSizeDescription = { $amount ->
 
 barChartPattern = { solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }.
 
-currentDetailsActivityLevel = { $amount ->
-  *[relativelyCalm] relatively calm
+currentDetailsActivityLevel = { $activityLevel ->
+  *[calm] relatively calm
   [active] active
   [activeAndPaused] active and paused
 }
