@@ -86,6 +86,7 @@ type MoveToCenterOfTransportProteinMode = {
 type MoveToSodiumGlucoseTransporterMode = {
   type: 'moveToSodiumGlucoseCotransporter';
   slot: Slot;
+  sodiumGlucoseCotransporter: SodiumGlucoseCotransporter;
   site: 'left' | 'center' | 'right';
 };
 
@@ -400,10 +401,7 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'moveToSodiumGlucoseCotransporter' ) {
 
       const currentPosition = this.position.copy();
-
-      const offset = SodiumGlucoseCotransporter.getSitePositionOffset( this.mode.site );
-
-      const targetPosition = new Vector2( this.mode.slot.position + offset.x, offset.y );
+      const targetPosition = this.mode.sodiumGlucoseCotransporter.getSitePosition( this.mode.site );
 
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
@@ -420,6 +418,11 @@ export default class Particle<T extends ParticleType> {
           slot: this.mode.slot,
           site: this.mode.site
         };
+
+        this.position.set( targetPosition );
+
+        // TODO (sound): What sound to play here?
+        MembraneTransportSounds.ligandBound();
       }
     }
     else if ( this.mode.type === 'moveToSodiumPotassiumPump' ) {
@@ -890,14 +893,14 @@ export default class Particle<T extends ParticleType> {
 
         if ( availableSites.length > 0 ) {
           const site = dotRandom.sample( availableSites );
-          this.mode = { type: 'moveToSodiumGlucoseCotransporter', slot: slot, site: site };
+          this.mode = { type: 'moveToSodiumGlucoseCotransporter', slot: slot, site: site, sodiumGlucoseCotransporter: transportProtein };
           return true;
         }
       }
       else if ( this.type === 'glucose' && transportProtein.isGlucoseSiteOpen() ) {
 
         // Glucose can only use center site
-        this.mode = { type: 'moveToSodiumGlucoseCotransporter', slot: slot, site: 'center' };
+        this.mode = { type: 'moveToSodiumGlucoseCotransporter', slot: slot, site: 'center', sodiumGlucoseCotransporter: transportProtein };
         return true;
       }
     }
