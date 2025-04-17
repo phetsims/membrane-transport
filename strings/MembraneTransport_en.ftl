@@ -134,15 +134,22 @@ barSizeDescription = { $amount ->
 
 barChartPattern = { solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }.
 
-# Show a sentence like Right now, membrane has
-#                        {1-6} solute types outside;
-#                        E.g., if Na+ is 0, do not count it
-#                        {1-6} solute types inside;
-#                        {1-7} transport membrane proteins
-currentDetailsRightNow = Right now,
-currentDetailsOutsideSoluteCount = membrane has { $outsideSoluteCount } solute types outside;
-currentDetailsInsideSoluteCount = { $insideSoluteCount } solute types inside;
-currentDetailsTransportProteinCount = { $channelCount } transport proteins;
+currentDetailsActivityLevel = { $amount ->
+  *[relativelyCalm] relatively calm
+  [active] active
+  [activeAndPaused] active and paused
+}
+
+currentDetails = Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:
+
+currentDetailsSoluteTypesOnOutside = { $outsideSoluteCount } solute types on outside;
+currentDetailsSoluteTypesOnInside = { $insideSoluteCount} solute types on inside;
+currentDetailsTransportProteins = { $transportProteinCount } transport proteins in membrane;
+currentDetailsLigands = { $hasLigands ->
+  *[false] No ligands on outside; and
+  [true] 2 types of ligands on outside; and
+}
+currentDetailsMembranePotential = { $membranePotential } millivolts.
 
 releasedBackInToolbox = Released. Back in toolbox.
 
