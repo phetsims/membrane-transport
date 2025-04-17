@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Implements the screen summary for trig-tour.
+ * Implements the screen summary for Membrane Transport.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -11,12 +11,14 @@ import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
-import MembraneTransportFeatureSet from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembraneTransportScreenSummaryContent extends ScreenSummaryContent {
-  public constructor( featureSet: MembraneTransportFeatureSet,
-                      model: MembraneTransportModel ) {
+
+  /**
+   * @param model - This class is responsible for describing the entire model so it takes the entire model and is coupled to it.
+   */
+  public constructor( model: MembraneTransportModel ) {
 
     const stringProperties = [
       new PatternMessageProperty( MembraneTransportMessages.currentDetailsOutsideSoluteCountMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
@@ -40,17 +42,17 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     super( {
 
       // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in.
-      playAreaContent: new PatternMessageProperty( featureSet === 'simpleDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen1MessageProperty :
-                                    featureSet === 'facilitatedDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty :
-                                    featureSet === 'activeTransport' ? MembraneTransportMessages.playAreaSummaryScreen3MessageProperty :
-                                    MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty, {}
-        ),
+      playAreaContent: new PatternMessageProperty( model.featureSet === 'simpleDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen1MessageProperty :
+                                                   model.featureSet === 'facilitatedDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty :
+                                                   model.featureSet === 'activeTransport' ? MembraneTransportMessages.playAreaSummaryScreen3MessageProperty :
+                                                   MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty, {}
+      ),
       controlAreaContent: MembraneTransportMessages.controlAreaSummaryMessageProperty,
       currentDetailsContent: {
         node: currentDetailsNode
       },
 
-      interactionHintContent: featureSet === 'simpleDiffusion' ? MembraneTransportMessages.interactionHintMessageProperty :
+      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportMessages.interactionHintMessageProperty :
                               MembraneTransportMessages.interactionHintWithTransportProteinsMessageProperty
     } );
   }
