@@ -1,7 +1,10 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * In the SoluteConcentrationsAccordionBox, the node that shows an icon, bar chart and arrow for one solute.
+ * In the SoluteConcentrationsAccordionBox, the node that shows an icon and bar chart representing the
+ * solute concentrations inside and outside the cell.
+ *
+ * The design of this chart is simple enough that we decided not to use bamboo (PhET's charting library).
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
