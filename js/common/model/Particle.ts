@@ -425,7 +425,7 @@ export default class Particle<T extends ParticleType> {
 
         this.position.set( targetPosition );
 
-        // TODO (sound): What sound to play here?
+        // TODO (design/sound): What sound to play here?
         MembraneTransportSounds.ligandBound();
       }
     }
