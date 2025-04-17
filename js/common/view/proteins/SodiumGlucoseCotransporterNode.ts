@@ -13,9 +13,9 @@ import sodiumGlucoseCotransporterState2_svg from '../../../../images/sodiumGluco
 import sodiumGlucoseCotransporterState3_svg from '../../../../images/sodiumGlucoseCotransporterState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
-import ProteinNode from './ProteinNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 
-export default class SodiumGlucoseCotransporterNode extends ProteinNode {
+export default class SodiumGlucoseCotransporterNode extends TransportProteinNode {
   public constructor( public readonly sodiumGlucoseCotransporter: SodiumGlucoseCotransporter | null ) {
 
     const image = new Image( sodiumGlucoseCotransporterState1_svg );

@@ -12,9 +12,9 @@ import potassiumLeakage_svg from '../../../../images/potassiumLeakage_svg.js';
 
 import sodiumLeakage_svg from '../../../../images/sodiumLeakage_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
-import ProteinNode from './ProteinNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 
-export default class LeakageChannelNode extends ProteinNode {
+export default class LeakageChannelNode extends TransportProteinNode {
 
   public constructor( type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' ) {
 

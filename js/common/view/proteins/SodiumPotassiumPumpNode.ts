@@ -13,9 +13,9 @@ import naKPumpState2_svg from '../../../../images/naKPumpState2_svg.js';
 import naKPumpState3_svg from '../../../../images/naKPumpState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
-import ProteinNode from './ProteinNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 
-export default class SodiumPotassiumPumpNode extends ProteinNode {
+export default class SodiumPotassiumPumpNode extends TransportProteinNode {
 
   public constructor( public readonly sodiumPotassiumPump: SodiumPotassiumPump | null ) {
 

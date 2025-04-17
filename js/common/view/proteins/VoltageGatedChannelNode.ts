@@ -16,9 +16,9 @@ import sodiumVoltageGatedPlus30mV_svg from '../../../../images/sodiumVoltageGate
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
-import ProteinNode from './ProteinNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 
-export default class VoltageGatedChannelNode extends ProteinNode {
+export default class VoltageGatedChannelNode extends TransportProteinNode {
 
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
 

@@ -15,12 +15,12 @@ import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import VoltageGatedChannel from '../../model/proteins/VoltageGatedChannel.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import LigandGatedChannelNode from './LigandGatedChannelNode.js';
-import ProteinNode from './ProteinNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 import SodiumGlucoseCotransporterNode from './SodiumGlucoseCotransporterNode.js';
 import SodiumPotassiumPumpNode from './SodiumPotassiumPumpNode.js';
 import VoltageGatedChannelNode from './VoltageGatedChannelNode.js';
 
-export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): ProteinNode {
+export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): TransportProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type );
   }

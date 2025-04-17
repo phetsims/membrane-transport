@@ -16,9 +16,9 @@ import sodiumLigandGatedOpen_svg from '../../../../images/sodiumLigandGatedOpen_
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
-import ProteinNode from './ProteinNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 
-export default class LigandGatedChannelNode extends ProteinNode {
+export default class LigandGatedChannelNode extends TransportProteinNode {
   public constructor(
     public readonly type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel',
     public readonly channel: LigandGatedChannel | null

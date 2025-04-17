@@ -16,7 +16,7 @@ import TransportProtein from '../model/proteins/TransportProtein.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
-import ProteinNode from './proteins/ProteinNode.js';
+import TransportProteinNode from './proteins/TransportProteinNode.js';
 
 export type SlottedNode = {
   slot: Slot;
@@ -77,7 +77,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
   public step( dt: number ): void {
     this.children.forEach( child => {
-      if ( child instanceof ProteinNode ) {
+      if ( child instanceof TransportProteinNode ) {
         child.step( dt );
       }
     } );
