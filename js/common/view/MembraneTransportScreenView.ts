@@ -59,7 +59,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
   public readonly screenViewModelViewTransform: ModelViewTransform2;
   private afterRelease: ( () => void ) | null = null;
-  private readonly membraneTransportAccordionBoxGroup?: TransportProteinPanel;
+  private readonly transportProteinPanel?: TransportProteinPanel;
 
   public constructor(
     public readonly model: MembraneTransportModel,
@@ -218,7 +218,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       const transportProteinPanel = new TransportProteinPanel( model, options.tandem.createTandem( 'transportProteinPanel' ), this );
       this.resetEmitter.addListener( () => transportProteinPanel.reset() );
       rightSideVBoxChildren.push( transportProteinPanel );
-      this.membraneTransportAccordionBoxGroup = transportProteinPanel;
+      this.transportProteinPanel = transportProteinPanel;
     }
 
     const rightSideVBox = new VBox( {
@@ -300,7 +300,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   }
 
   /**
-   * Called when the user presses a membrane protein in the accordion box to create one with mouse drag.
+   * Called when the user presses a membrane protein in the toolbox to create one with mouse drag.
    */
   public createFromMouseDrag( event: PressListenerEvent, type: TransportProteinType, origin: Slot | TransportProteinToolNode ): void {
     const viewPoint = this.globalToLocalPoint( event.pointer.point );
@@ -318,7 +318,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   }
 
   /**
-   * Called when the user presses a membrane protein in the accordion box to create one via keyboard.
+   * Called when the user presses a membrane protein in the toolbox to create one via keyboard.
    */
   public createFromKeyboard( type: TransportProteinType, origin: Slot | TransportProteinToolNode ): TransportProteinDragNode {
 
@@ -356,7 +356,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   }
 
   public getTransportProteinToolNode( type: TransportProteinType ): TransportProteinToolNode {
-    return this.membraneTransportAccordionBoxGroup!.getTransportProteinToolNode( type );
+    return this.transportProteinPanel!.getTransportProteinToolNode( type );
   }
 }
 

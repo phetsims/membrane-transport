@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * In the "Membrane Transport" accordion box, show a tool icon that can be dragged to create a new transport protein.
+ * In the TransportProteinPanel toolbox, show a tool icon that can be dragged to create a new transport protein.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
