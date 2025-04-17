@@ -17,6 +17,7 @@
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 
@@ -71,6 +72,8 @@ export default class MembraneTransportConstants {
     MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center,
     MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
   );
+
+  public static readonly FONT = new PhetFont( 14 );
 
   // Yes, it is unused, but this will remind us to not accidentally instantiate
   private constructor() {

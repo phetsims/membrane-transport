@@ -8,20 +8,20 @@
 
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
+import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 
 const richTextOptions: RichTextOptions = {
   align: 'center',
-  font: new PhetFont( 14 ), // TODO (SR): Factor out reused fonts or font sizes
+  font: MembraneTransportConstants.FONT,
 
   // Found by inspection. maxHeight required to constrain multi-line text.
   maxWidth: 100,

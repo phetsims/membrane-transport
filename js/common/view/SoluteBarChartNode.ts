@@ -11,7 +11,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -94,7 +93,7 @@ export default class SoluteBarChartNode extends Node {
     icon.top = 2;
 
     const text = new RichText( getSoluteTypeString( soluteType ), {
-      font: new PhetFont( 14 ),
+      font: MembraneTransportConstants.FONT,
       centerX: BOX_WIDTH / 2,
 
       // Use y instead of bottom so the text baselines will align

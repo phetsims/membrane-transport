@@ -8,7 +8,6 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
@@ -64,7 +63,7 @@ export default class SolutesPanel extends Node {
               new VStrut( 2 ),
               icon,
               new RichText( getSoluteTypeString( soluteType ), {
-                font: new PhetFont( 14 ),
+                font: MembraneTransportConstants.FONT,
 
                 // Reduced so that at max length, the radio buttons still take 2 rows x 3 columns
                 maxWidth: 53
