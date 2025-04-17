@@ -291,7 +291,7 @@ export default class Particle<T extends ParticleType> {
     const isOutsideCell = this.position.y > 0;
 
     // Handle opacity changes and check if the particle was removed (absorbed)
-    const absorbed = this.updateAbsorption( dt, model );
+    const absorbed = this.updateAbsorption( dt, model.removeParticle.bind( model ) );
 
     // If the particle has not been absorbed, then proceed with movement calculations
     if ( !absorbed ) {
@@ -310,10 +310,10 @@ export default class Particle<T extends ParticleType> {
    * Returns true if the particle was removed during this update, false otherwise.
    *
    * @param dt - Time step in seconds (currently unused here, but kept for potential future use)
-   * @param model - The overall membrane transport model
+   * @param removeParticle - Handles removal of the particle from the model.
    * @returns true if the particle was removed, false otherwise
    */
-  private updateAbsorption( dt: number, model: MembraneTransportModel ): boolean {
+  private updateAbsorption( dt: number, removeParticle: ( particle: Particle<T> ) => void ): boolean {
 
     // Incorporate dt into opacity deltas for consistent behavior on varying frame rates
     const FRAME_RATE = 60;
@@ -326,7 +326,7 @@ export default class Particle<T extends ParticleType> {
       if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
         this.opacity -= fadeRateGlucose;
         if ( this.opacity <= 0 ) {
-          model.removeParticle( this );
+          removeParticle( this );
           return true; // Particle removed
         }
       }
@@ -347,7 +347,7 @@ export default class Particle<T extends ParticleType> {
     if ( this.type === 'phosphate' && this.mode.type === 'randomWalk' && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
       this.opacity -= fadeRatePhosphate;
       if ( this.opacity <= 0 ) {
-        model.removeParticle( this );
+        removeParticle( this );
         return true; // Particle removed
       }
     }
@@ -356,7 +356,7 @@ export default class Particle<T extends ParticleType> {
     if ( this.type === 'adp' && this.mode.type === 'randomWalk' ) {
       this.opacity -= fadeRateAdp;
       if ( this.opacity <= 0 ) {
-        model.removeParticle( this );
+        removeParticle( this );
         return true; // Particle removed
       }
     }
