@@ -184,7 +184,6 @@ const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutp
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
-// TODO: Fully delete mtLigandsStickv1 and mtLigandsStickv2 files and query parameters.
 const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
 

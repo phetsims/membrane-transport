@@ -32,13 +32,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 50
   },
 
-  // For development only, and not production, choices for the ligand binding sound.
-  soundLigandBind: {
-    type: 'number',
-    validValues: [ 1, 2, 3 ],
-    defaultValue: 1
-  },
-
   // For development only, and not production, choices for the open/closing sounds
   soundChannelOpenCloseSet: {
     type: 'string',
