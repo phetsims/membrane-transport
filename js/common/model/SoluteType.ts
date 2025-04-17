@@ -3,6 +3,10 @@
 /**
  * The types of solutes that can be selected or depicted in the simulation.
  *
+ * Solute types are modeled as strings to simplify PhET-iO serialization. As strings, we can easily
+ * iterate over values without instantiating solutes. It also lets us declare types with
+ * closely related behavior without writing a new class for each type.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
