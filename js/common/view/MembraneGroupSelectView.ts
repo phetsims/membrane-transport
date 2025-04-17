@@ -27,7 +27,8 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
-import MembraneTransportModel, { SLOT_COUNT } from '../model/MembraneTransportModel.js';
+import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
+import TransportProtein from '../model/proteins/TransportProtein.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import createPositionAnimation from './createPositionAnimation.js';
@@ -65,7 +66,12 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   } );
   private readonly alerter: Alerter;
 
-  public constructor( private readonly membraneTransportModel: MembraneTransportModel, private readonly view: MembraneTransportScreenView, private readonly observationWindow: ObservationWindow ) {
+  public constructor(
+    private readonly slots: Slot[],
+    focusable: boolean,
+    private readonly view: MembraneTransportScreenView,
+    private readonly observationWindow: ObservationWindow
+  ) {
 
     const alerter = new Alerter( {
       descriptionAlertNode: observationWindow
@@ -136,7 +142,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
                 grabbedNode.setModelPosition( new Vector2( 90, 50 ) );
               }
               else {
-                const newSlot = membraneTransportModel.getSlotForIndex( newIndex );
+                const newSlot = this.getSlotForIndex( newIndex );
                 grabbedNode.setModelPosition( new Vector2( newSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
               }
 
@@ -145,7 +151,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // alert the user of the new position
               // Only call this method if there is a transport protein
               const getContentsString = () => {
-                const transportProteinType = this.membraneTransportModel.getSlotForIndex( newIndex ).transportProteinType;
+                const transportProteinType = this.getSlotForIndex( newIndex ).transportProteinType;
                 const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType );
                 return contentsString;
               };
@@ -187,7 +193,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         if ( selectedNode ) {
           const slot = selectedNode.slot;
           const transportProteinType = slot.transportProteinType;
-          const filledProteins = membraneTransportModel.getTransportProteins();
+          const filledProteins = this.getTransportProteins();
           const transportProtein = slot.transportProteinProperty.value;
           affirm( transportProtein, 'The selected item should have a transport protein type' );
           const proteinIndex = filledProteins.indexOf( transportProtein );
@@ -212,7 +218,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
         // For the simple diffusion feature set, there are no proteins that you can drag into the membrane so the
         // membrane is not interactive and therefore removed from the traversal order.
-        focusable: membraneTransportModel.featureSet !== 'simpleDiffusion'
+        focusable: focusable
       },
 
       // Called when a selected item becomes "grabbed" for movement
@@ -260,7 +266,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           if ( currentSlotIndex >= 0 && grabbedNode && !grabbedNode.isDisposed ) {
 
             // when returning focus here
-            const droppedIntoSlot = membraneTransportModel.getSlotForIndex( currentSlotIndex );
+            const droppedIntoSlot = this.getSlotForIndex( currentSlotIndex );
             if ( currentSlotIndex < SLOT_COUNT ) {
 
               const oldContents = droppedIntoSlot.transportProteinType;
@@ -462,7 +468,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.currentSelection = {
       grabbedNode: this.view.createFromKeyboard( transportProteinType, origin ),
       initialSlot: slot,
-      currentSlotIndex: this.membraneTransportModel.getSlotIndex( slot )
+      currentSlotIndex: this.getSlotIndex( slot )
     };
 
     // Offset above the membrane so it is clear it isn't in the model
@@ -473,6 +479,22 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.initializeKeyboardDrag( slot, transportProteinType, transportProteinToolNode );
 
     this.keyboardGrab( 'grabbedItem' );
+  }
+
+  private getSlotIndex( slot: Slot ): number {
+    return this.slots.indexOf( slot );
+  }
+
+  private getSlotForIndex( index: number ): Slot {
+    return this.slots[ index ];
+  }
+
+  /**
+   * Returns an array of transport proteins that exist in the membrane.
+   */
+  private getTransportProteins(): TransportProtein[] {
+    const filledSlotList = this.slots.filter( slot => slot.isFilled() );
+    return filledSlotList.map( slot => slot.transportProteinProperty.value! );
   }
 
   public reset(): void {

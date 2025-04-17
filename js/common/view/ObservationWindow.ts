@@ -152,7 +152,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
-    this.membraneGroupSelectView = new MembraneGroupSelectView( model, view, this );
+    this.membraneGroupSelectView = new MembraneGroupSelectView( model.slots, model.featureSet !== 'simpleDiffusion', view, this );
   }
 
   public getTransportProteinNodes(): SlottedNode[] {
