@@ -7,6 +7,7 @@
  */
 
 // TODO: The focus rectangle shows on the membrane when a ligand has focus. This is incorrect.
+// TODO (design): Rewrite keyboard interaction to be discrete instead of continuous
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
