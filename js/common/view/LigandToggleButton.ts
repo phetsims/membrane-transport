@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * LigandControl.ts shows an Add Ligands or Remove Ligands button for screens that support ligands.
+ * LigandToggleButton.ts shows an Add Ligands or Remove Ligands button for screens that support ligands.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -35,7 +35,7 @@ const TEXT_OPTIONS = {
   maxWidth: 160
 } as const;
 
-export default class LigandControl extends BooleanRectangularToggleButton {
+export default class LigandToggleButton extends BooleanRectangularToggleButton {
   public constructor( model: Pick<MembraneTransportModel, 'areLigandsAddedProperty'>, tandem: Tandem ) {
 
     const trueNode = new Text( MembraneTransportStrings.removeLigandsStringProperty, TEXT_OPTIONS );
@@ -46,7 +46,7 @@ export default class LigandControl extends BooleanRectangularToggleButton {
       tandem: tandem,
 
       // pdom
-      accessibleHelpText: MembraneTransportMessages.ligandControlAccessibleHelpTextMessageProperty,
+      accessibleHelpText: MembraneTransportMessages.ligandToggleButtonAccessibleHelpTextMessageProperty,
       valueOnSoundPlayer: addLigandSoundPlayer,
       valueOffSoundPlayer: removeLigandSoundPlayer
     } );
@@ -58,12 +58,12 @@ export default class LigandControl extends BooleanRectangularToggleButton {
     //   Consensus: We should not speak when the model changes, only when the user interacts with the UI. The screen summary "current details" will mention whether ligands are here or not.
     model.areLigandsAddedProperty.lazyLink( areLigandsAdded => {
       if ( areLigandsAdded ) {
-        this.addAccessibleResponse( MembraneTransportMessages.ligandControlAddedContextResponseMessageProperty );
+        this.addAccessibleResponse( MembraneTransportMessages.ligandToggleButtonAddedContextResponseMessageProperty );
       }
       else {
-        this.addAccessibleResponse( MembraneTransportMessages.ligandControlRemovedContextResponseMessageProperty );
+        this.addAccessibleResponse( MembraneTransportMessages.ligandToggleButtonRemovedContextResponseMessageProperty );
       }
     } );
   }
 }
-membraneTransport.register( 'LigandControl', LigandControl );
+membraneTransport.register( 'LigandToggleButton', LigandToggleButton );

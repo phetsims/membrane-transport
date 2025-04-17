@@ -7,7 +7,6 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
@@ -23,7 +22,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import LigandControl from './LigandControl.js';
+import LigandToggleButton from './LigandToggleButton.js';
 import MembranePotentialPanel from './MembranePotentialPanel.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
@@ -102,12 +101,12 @@ export default class TransportProteinPanel extends Panel {
         transportProteins: [
           {
             transportProteinType: 'sodiumIonLeakageChannel',
-            labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
+            labelProperty: MembraneTransportStrings.sodiumIonStringProperty,
             accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty
           },
           {
             transportProteinType: 'potassiumIonLeakageChannel',
-            labelProperty: new StringProperty( 'K+' ), // TODO: i18n
+            labelProperty: MembraneTransportStrings.potassiumIonStringProperty,
             accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty
           }
         ]
@@ -121,12 +120,12 @@ export default class TransportProteinPanel extends Panel {
           transportProteins: [
             {
               transportProteinType: 'sodiumIonVoltageGatedChannel',
-              labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
+              labelProperty: MembraneTransportStrings.sodiumIonStringProperty,
               accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty
             },
             {
               transportProteinType: 'potassiumIonVoltageGatedChannel',
-              labelProperty: new StringProperty( 'K+' ), // TODO: i18n
+              labelProperty: MembraneTransportStrings.potassiumIonStringProperty,
               accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty
             }
           ]
@@ -142,16 +141,16 @@ export default class TransportProteinPanel extends Panel {
         transportProteins: [
           {
             transportProteinType: 'sodiumIonLigandGatedChannel',
-            labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
+            labelProperty: MembraneTransportStrings.sodiumIonStringProperty,
             accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty
           },
           {
             transportProteinType: 'potassiumIonLigandGatedChannel',
-            labelProperty: new StringProperty( 'K+' ), // TODO: i18n
+            labelProperty: MembraneTransportStrings.potassiumIonStringProperty,
             accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty
           }
         ]
-      }, new LigandControl( model, tandem.createTandem( 'myLigandToggleButton' ) ) ); // TODO: fix tandem
+      }, new LigandToggleButton( model, tandem.createTandem( 'ligandToggleButton' ) ) );
 
       panels.push(
         leakageChannelPanel,
