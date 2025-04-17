@@ -105,7 +105,7 @@ export default class TransportProteinDragNode extends Node {
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
       if ( newValue !== null ) {
         if ( oldValue === null ) {
-          MembraneTransportSounds.transportProteinMoved( 'both' );
+          // the pick up sound will play in this case
         }
         else if ( newValue > oldValue ) {
           MembraneTransportSounds.transportProteinMoved( 'right' );

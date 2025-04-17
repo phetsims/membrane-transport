@@ -64,10 +64,10 @@ import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
 import mtSoluteCrossing004_mp3 from '../../sounds/mtSoluteCrossing004_mp3.js';
 import mtSoluteCrossing005_mp3 from '../../sounds/mtSoluteCrossing005_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
+import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import Particle from './model/Particle.js';
-import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -292,7 +292,6 @@ export default class MembraneTransportSounds {
     shareWhooshSound.play();
   }
 
-  // TODO: Sometimes plays on top of another sound.
   public static transportProteinMoved( directionToPlay: 'left' | 'right' | 'both' ): void {
     const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
 
