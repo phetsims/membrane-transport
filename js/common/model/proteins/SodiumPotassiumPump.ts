@@ -22,8 +22,8 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProtein from './TransportProtein.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
 type SodiumPotassiumPumpState =
@@ -208,11 +208,17 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   }
 
   // True if an ATP is on the way or waiting in the site
+  // TODO: Is this unused?
   public isATPEnRoute(): boolean {
 
     // check if an ATP is going to the site
     return !!this.model.solutes.find( solute => solute.mode.type === 'moveToSodiumPotassiumPump' &&
                                                 solute.mode.slot === this.slot );
+  }
+
+  public getSitePosition( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
+    const offset = SodiumPotassiumPump.getSitePositionOffset( site );
+    return this.slot.getPositionVector().plus( offset );
   }
 
   public static getSitePositionOffset( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {

@@ -50,6 +50,8 @@ export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportCons
 // Epsilon value for nudging particle into bounds after teleporting, so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
 
+// TODO: phosphate doesn't unbind from the sodium potassium pump
+
 /**
  * Particle is moving randomly in Brownian motion within the cell or extracellular space.
  */
@@ -96,6 +98,7 @@ type MoveToSodiumGlucoseTransporterMode = {
 type MoveToSodiumPotassiumPumpMode = {
   type: 'moveToSodiumPotassiumPump';
   slot: Slot;
+  sodiumPotassiumPump: SodiumPotassiumPump;
   site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2';
 };
 
@@ -103,8 +106,9 @@ type MoveToSodiumPotassiumPumpMode = {
  * Particle is occupying a binding site within the Sodium-Glucose Cotransporter, waiting for the transport cycle to proceed.
  */
 type WaitingInSodiumGlucoseTransporterMode = {
-  type: 'waitingInSodiumGlucoseTransporter';
+  type: 'waitingInSodiumGlucoseTransporter'; // TODO: rename "co"transporter
   slot: Slot;
+  sodiumGlucoseCotransporter: SodiumGlucoseCotransporter;
   site: 'left' | 'center' | 'right';
 };
 
@@ -114,6 +118,7 @@ type WaitingInSodiumGlucoseTransporterMode = {
 type WaitingInSodiumPotassiumPumpMode = {
   type: 'waitingInSodiumPotassiumPump';
   slot: Slot;
+  sodiumPotassiumPump: SodiumPotassiumPump;
   site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2';
 };
 
@@ -376,9 +381,7 @@ export default class Particle<T extends ParticleType> {
 
       // The LigandGatedChannel is responsible for tracking the time bound, so it can detach after a certain amount of time.
       // Update the position because the binding site changes when the channel opens.
-      const bindingPositionOffset = this.mode.ligandGatedChannel.getBindingPositionOffset();
-      const bindingPosition = new Vector2( this.mode.ligandGatedChannel.slot.position, 0 ).plus( bindingPositionOffset );
-      this.position.set( bindingPosition );
+      this.position.set( this.mode.ligandGatedChannel.getBindingPosition() );
     }
     else if ( this.mode.type === 'moveToCenterOfChannel' ) {
 
@@ -416,7 +419,8 @@ export default class Particle<T extends ParticleType> {
         this.mode = {
           type: 'waitingInSodiumGlucoseTransporter',
           slot: this.mode.slot,
-          site: this.mode.site
+          site: this.mode.site,
+          sodiumGlucoseCotransporter: this.mode.sodiumGlucoseCotransporter
         };
 
         this.position.set( targetPosition );
@@ -428,10 +432,7 @@ export default class Particle<T extends ParticleType> {
     else if ( this.mode.type === 'moveToSodiumPotassiumPump' ) {
 
       const currentPosition = this.position.copy();
-
-      const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
-
-      const targetPosition = this.mode.slot.getPositionVector().plus( offset );
+      const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
 
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
@@ -450,7 +451,8 @@ export default class Particle<T extends ParticleType> {
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
             slot: this.mode.slot,
-            site: this.mode.site
+            site: this.mode.site,
+            sodiumPotassiumPump: sodiumPotassiumPump
           };
 
           // Set to the exact target position now that it is inside the pump.
@@ -466,7 +468,8 @@ export default class Particle<T extends ParticleType> {
           phosphate.mode = {
             type: 'waitingInSodiumPotassiumPump',
             slot: this.mode.slot,
-            site: this.mode.site
+            site: this.mode.site,
+            sodiumPotassiumPump: sodiumPotassiumPump
           };
 
           model.addSolute( phosphate );
@@ -479,7 +482,8 @@ export default class Particle<T extends ParticleType> {
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
             slot: this.mode.slot,
-            site: this.mode.site
+            site: this.mode.site,
+            sodiumPotassiumPump: sodiumPotassiumPump
           };
 
           // Set to the exact target position now that it is inside the pump.
@@ -495,18 +499,14 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode.type === 'waitingInSodiumPotassiumPump' && phet.chipper.queryParameters.dev ) {
 
-      // For debugging only, so that the site positions can be adjusted
-      // TODO: For the cases that add the offset for the binding sites, move these all to instance methods, and make it get the exact position (combining origin + offset).
-      const offset = SodiumPotassiumPump.getSitePositionOffset( this.mode.site );
-      const targetPosition = this.mode.slot.getPositionVector().plus( offset );
+      // For debugging only, so that the site positions can be adjusted at runtime
+      const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
       this.position.set( targetPosition );
     }
     else if ( this.mode.type === 'waitingInSodiumGlucoseTransporter' && phet.chipper.queryParameters.dev ) {
 
       // For debugging only, so that the site positions can be adjusted
-      const offset = SodiumGlucoseCotransporter.getSitePositionOffset( this.mode.site );
-
-      const targetPosition = this.mode.slot.getPositionVector().plus( offset );
+      const targetPosition = this.mode.sodiumGlucoseCotransporter.getSitePosition( this.mode.site );
       this.position.set( targetPosition );
     }
     else if ( this.mode.type === 'enteringTransportProtein' ) {
@@ -544,8 +544,7 @@ export default class Particle<T extends ParticleType> {
       const ligandGatedChannel = this.mode.slot.transportProteinProperty.value as LigandGatedChannel;
       if ( ligandGatedChannel ) {
         const currentPosition = this.position;
-        const targetPositionOffset = ligandGatedChannel.getBindingPositionOffset();
-        const targetPosition = this.mode.slot.getPositionVector().plus( targetPositionOffset );
+        const targetPosition = ligandGatedChannel.getBindingPosition();
         const maxStepSize = typicalSpeed * dt;
 
         // Move toward the binding position
@@ -930,7 +929,7 @@ export default class Particle<T extends ParticleType> {
 
       if ( openSodiumSites.length > 0 ) {
         const site = dotRandom.sample( openSodiumSites );
-        this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
+        this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site, sodiumPotassiumPump: transportProtein };
         return true;
       }
     }
@@ -956,7 +955,7 @@ export default class Particle<T extends ParticleType> {
       !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'atp' ) ) // make sure no sodium still leaving
     ) {
 
-      this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'phosphate' };
+      this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: 'phosphate', sodiumPotassiumPump: transportProtein };
       return true;
     }
 
@@ -985,7 +984,7 @@ export default class Particle<T extends ParticleType> {
 
       if ( openPotassiumSites.length > 0 ) {
         const site = dotRandom.sample( openPotassiumSites );
-        this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site };
+        this.mode = { type: 'moveToSodiumPotassiumPump', slot: slot, site: site, sodiumPotassiumPump: transportProtein };
         return true;
       }
     }

@@ -11,8 +11,8 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import Particle from '../Particle.js';
 import { LigandType } from '../SoluteType.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProtein from './TransportProtein.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
 // TODO (design): Should the rebinding delay cooldown finish when you release a ligand right on top of the channel?
@@ -128,6 +128,11 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     return this.type === 'sodiumIonLigandGatedChannel' ?
            this.stateProperty.value === 'ligandBoundClosed' ? LigandGatedChannel.SODIUM_BINDING_OFFSET_CLOSED : LigandGatedChannel.SODIUM_BINDING_OFFSET_OPEN :
            this.stateProperty.value === 'ligandBoundClosed' ? LigandGatedChannel.POTASSIUM_BINDING_OFFSET_CLOSED : LigandGatedChannel.POTASSIUM_BINDING_OFFSET_OPEN;
+  }
+
+  public getBindingPosition(): Vector2 {
+    const bindingPositionOffset = this.getBindingPositionOffset();
+    return new Vector2( this.slot.position, 0 ).plus( bindingPositionOffset );
   }
 }
 
