@@ -11,6 +11,7 @@ import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembraneTransportScreenSummaryContent extends ScreenSummaryContent {
@@ -20,13 +21,24 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
    */
   public constructor( model: MembraneTransportModel ) {
 
+    // Keep in mind these are order-dependent
     const stringProperties = [
       new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnOutsideMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnInsideMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinsMessageProperty, { transportProteinCount: model.transportProteinCountProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsLigandsMessageProperty, { hasLigands: model.areLigandsAddedProperty } ),
-      new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } )
+      new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnInsideMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } )
     ];
+
+    // No transport proteins for simple diffusion
+    if ( model.featureSet !== 'simpleDiffusion' ) {
+      stringProperties.push( new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinsMessageProperty, { transportProteinCount: model.transportProteinCountProperty } ) );
+    }
+
+    if ( getFeatureSetHasLigands( model.featureSet ) ) {
+      stringProperties.push( new PatternMessageProperty( MembraneTransportMessages.currentDetailsLigandsMessageProperty, { hasLigands: model.areLigandsAddedProperty } ) );
+    }
+
+    if ( getFeatureSetHasVoltages( model.featureSet ) ) {
+      stringProperties.push( new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } ) );
+    }
 
     const currentDetailsNode = new Node( {
       children: [
