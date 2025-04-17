@@ -35,7 +35,7 @@ type TransportProteinConfig = {
   accessibleNameProperty: TReadOnlyProperty<string>;
 };
 
-// Type definition for accordion box configuration
+// Type definition for Panel configuration
 type PanelConfig = {
   titleProperty: TReadOnlyProperty<string>;
   tandemName: string;
@@ -61,7 +61,7 @@ export default class TransportProteinPanel extends Panel {
     const transportProteinToolNodes = new Map<TransportProteinType, TransportProteinToolNode>();
 
     /**
-     * Creates an accordion box based on the provided configuration
+     * Creates a Panel based on the provided configuration
      */
     const createPanel = ( config: PanelConfig, ...additionalControls: Node[] ): Panel => {
       const content = new HBox( {
@@ -103,12 +103,12 @@ export default class TransportProteinPanel extends Panel {
           {
             transportProteinType: 'sodiumIonLeakageChannel',
             labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.sodiumIonNaPlusLeakageStringProperty
+            accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty
           },
           {
             transportProteinType: 'potassiumIonLeakageChannel',
             labelProperty: new StringProperty( 'K+' ), // TODO: i18n
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.leakageChannelsAccordionBox.potassiumIonKPlusLeakageStringProperty
+            accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty
           }
         ]
       } );
@@ -122,12 +122,12 @@ export default class TransportProteinPanel extends Panel {
             {
               transportProteinType: 'sodiumIonVoltageGatedChannel',
               labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
-              accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.sodiumIonNaPlusVoltageGatedStringProperty
+              accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty
             },
             {
               transportProteinType: 'potassiumIonVoltageGatedChannel',
               labelProperty: new StringProperty( 'K+' ), // TODO: i18n
-              accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.voltageGatedChannelsAccordionBox.potassiumIonKPlusVoltageGatedStringProperty
+              accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty
             }
           ]
         },
@@ -143,12 +143,12 @@ export default class TransportProteinPanel extends Panel {
           {
             transportProteinType: 'sodiumIonLigandGatedChannel',
             labelProperty: new StringProperty( 'Na+' ), // TODO: i18n
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.sodiumIonNaPlusLigandGatedStringProperty
+            accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty
           },
           {
             transportProteinType: 'potassiumIonLigandGatedChannel',
             labelProperty: new StringProperty( 'K+' ), // TODO: i18n
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.ligandGatedAccordionBox.potassiumIonKPlusLigandGatedStringProperty
+            accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty
           }
         ]
       }, new LigandControl( model, tandem.createTandem( 'myLigandToggleButton' ) ) ); // TODO: fix tandem
@@ -171,12 +171,12 @@ export default class TransportProteinPanel extends Panel {
           {
             transportProteinType: 'sodiumPotassiumPump',
             labelProperty: MembraneTransportStrings.NaPlusKPlusPumpStringProperty,
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumPotassiumPumpStringProperty
+            accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty
           },
           {
             transportProteinType: 'sodiumGlucoseCotransporter',
             labelProperty: MembraneTransportStrings.sodiumGlucoseCotransporterStringProperty,
-            accessibleNameProperty: MembraneTransportStrings.a11y.accordionBoxGroup.activeTransportersAccordionBox.sodiumGlucoseCotransporterStringProperty
+            accessibleNameProperty: MembraneTransportStrings.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty
           }
         ]
       } );
@@ -201,8 +201,8 @@ export default class TransportProteinPanel extends Panel {
     super( vbox, {
       tagName: 'div',
       labelTagName: 'h3',
-      accessibleName: MembraneTransportStrings.a11y.accordionBoxGroup.transportProteinsStringProperty,
-      accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.accessibleHelpTextStringProperty,
+      accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.transportProteinsStringProperty,
+      accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
 

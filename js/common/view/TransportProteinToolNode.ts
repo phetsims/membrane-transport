@@ -49,7 +49,7 @@ export default class TransportProteinToolNode extends VBox {
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: accessibleName,
-      accessibleHelpText: MembraneTransportStrings.a11y.accordionBoxGroup.toolAccessibleHelpTextStringProperty
+      accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
     } ) );
 
     this.addInputListener( {

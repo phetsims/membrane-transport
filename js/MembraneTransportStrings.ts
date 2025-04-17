@@ -56,22 +56,22 @@ type StringsType = {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };
-    'accordionBoxGroup': {
+    'transportProteinPanel': {
       'transportProteinsStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'ligandGatedAccordionBox': {
+      'ligandGatedChannelPanel': {
         'sodiumIonNaPlusLigandGatedStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusLigandGatedStringProperty': LocalizedStringProperty;
       };
-      'leakageChannelsAccordionBox': {
+      'leakageChannelPanel': {
         'sodiumIonNaPlusLeakageStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusLeakageStringProperty': LocalizedStringProperty;
       };
-      'voltageGatedChannelsAccordionBox': {
+      'voltageGatedChannelPanel': {
         'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusVoltageGatedStringProperty': LocalizedStringProperty;
       };
-      'activeTransportersAccordionBox': {
+      'activeTransportProteinPanel': {
         'sodiumPotassiumPumpStringProperty': LocalizedStringProperty;
         'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
       };

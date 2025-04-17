@@ -105,14 +105,14 @@
         "value": "Solutes cleared. Add solutes to observe changes"
       }
     },
-    "accordionBoxGroup": {
+    "transportProteinPanel": {
       "transportProteins": {
         "value": "Transport Proteins"
       },
       "accessibleHelpText": {
         "value": "Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane."
       },
-      "ligandGatedAccordionBox": {
+      "ligandGatedChannelPanel": {
         "sodiumIonNaPlusLigandGated": {
           "value": "Sodium Ion NA plus, Ligand-gated"
         },
@@ -120,7 +120,7 @@
           "value": "Potassium Ion K plus, Ligand-gated"
         }
       },
-      "leakageChannelsAccordionBox": {
+      "leakageChannelPanel": {
         "sodiumIonNaPlusLeakage": {
           "value": "Sodium Ion NA plus, Leakage"
         },
@@ -128,7 +128,7 @@
           "value": "Potassium Ion K plus, Leakage"
         }
       },
-      "voltageGatedChannelsAccordionBox": {
+      "voltageGatedChannelPanel": {
         "sodiumIonNaPlusVoltageGated": {
           "value": "Sodium Ion NA plus, Voltage-gated"
         },
@@ -136,7 +136,7 @@
           "value": "Potassium Ion K plus, Voltage-gated"
         }
       },
-      "activeTransportersAccordionBox": {
+      "activeTransportProteinPanel": {
         "sodiumPotassiumPump": {
           "value": "Sodium-Potassium Pump"
         },
