@@ -309,10 +309,16 @@ export default class Particle<T extends ParticleType> {
    */
   private updateAbsorption( dt: number, model: MembraneTransportModel ): boolean {
 
-    // TODO: account for dt in these calculations
+    // Incorporate dt into opacity deltas for consistent behavior on varying frame rates
+    const FRAME_RATE = 60;
+    const frameFactor = dt * FRAME_RATE;
+    const fadeRateGlucose = 0.01 * frameFactor;
+    const fadeRatePhosphate = 0.01 * frameFactor;
+    const fadeRateAdp = 0.001 * frameFactor;
+
     if ( this.type === 'glucose' ) {
       if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
-        this.opacity -= 0.01;
+        this.opacity -= fadeRateGlucose;
         if ( this.opacity <= 0 ) {
           model.removeParticle( this );
           return true; // Particle removed
@@ -326,14 +332,14 @@ export default class Particle<T extends ParticleType> {
         else {
 
           // Gradual fade over time after moving inside the cell.
-          this.opacity = clamp( this.opacity - 0.01, 0.5, 1 );
+          this.opacity = clamp( this.opacity - fadeRateGlucose, 0.5, 1 );
         }
       }
     }
 
     // Free phosphate molecules move normally for a while, then are absorbed
     if ( this.type === 'phosphate' && this.mode.type === 'randomWalk' && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
-      this.opacity -= 0.01;
+      this.opacity -= fadeRatePhosphate;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
         return true; // Particle removed
@@ -342,7 +348,7 @@ export default class Particle<T extends ParticleType> {
 
     // Free ADP molecules move normally for a while, then are absorbed
     if ( this.type === 'adp' && this.mode.type === 'randomWalk' ) {
-      this.opacity -= 0.001;
+      this.opacity -= fadeRateAdp;
       if ( this.opacity <= 0 ) {
         model.removeParticle( this );
         return true; // Particle removed
