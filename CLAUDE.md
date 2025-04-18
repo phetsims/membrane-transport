@@ -24,6 +24,12 @@
 - Use `Property<T>` from axon when you need to mutate the property
 - String properties from translations are `LocalizedStringProperty` type, not directly assignable to `Property<string>`
 
+## Internationalization (i18n)
+- Strings in JSON follow a nested structure that must be mirrored in MembraneTransportStrings.ts
+- The `grunt modulify` command automatically updates the MembraneTransportStrings.ts when strings are changed
+- A11y strings often need deeper nesting (component > subcomponent > feature > property)
+- When adding new accessibility text, check existing patterns for proper nesting structure
+
 ## Component Patterns
 - Use configuration objects with standardized patterns for creating similar components
 - Factor out repeated component creation logic into standalone functions
