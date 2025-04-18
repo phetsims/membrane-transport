@@ -14,7 +14,7 @@ import membraneTransport from '../../../membraneTransport.js';
 
 export default class LigandParticleNode extends Node {
 
-  public constructor( type: 'ligandA' | 'ligandB' ) {
+  public constructor( public readonly type: 'ligandA' | 'ligandB' ) {
 
     super( {
       children: [ new Image( type === 'ligandA' ? sodiumLigand_svg : potassiumLigand_svg, {

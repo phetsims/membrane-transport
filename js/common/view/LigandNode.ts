@@ -23,6 +23,7 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle from '../model/Particle.js';
 import { LigandType } from '../model/SoluteType.js';
+import LigandParticleNode from './particles/LigandParticleNode.js';
 
 export default class LigandNode extends Node {
 
@@ -38,7 +39,7 @@ export default class LigandNode extends Node {
     private readonly ligands: Particle<LigandType>[],
     private readonly ligandIndex: number,
     private readonly modelViewTransform: ModelViewTransform2,
-    ligandView: Node,
+    ligandView: LigandParticleNode,
     focusable: boolean
   ) {
 
@@ -55,13 +56,9 @@ export default class LigandNode extends Node {
       * - Maybe the model should always allocate the Ligands, but they may or may not participate based on the settings.
       * - Or we can use the index or other metadata to identify the ligand.
       */
-      accessibleName: 'Ligand',
-
-      focusable: focusable
+      accessibleName: ligandView.type === 'ligandA' ? 'Triangle Ligand' : 'Star Ligand' // TODO: i18n
     }, AccessibleDraggableOptions, {
-
-      // Must take precedence over the AccessibleDraggableOptions which has focusable: true
-      focusable: focusable
+      pdomVisible: focusable // TODO: After rewriting to be discrete keyboard interaction, make sure only 2 are in the DOM
     } );
 
     super( options );
