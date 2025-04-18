@@ -82,7 +82,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       // This is only used in assertions, so it is ok to return a constant.
       getGroupItemValue: () => 0,
 
-      tandem: Tandem.OPT_OUT // TODO (phet-io): Hopefully this doesn't need to be instrumented, can we confirm?
+      tandem: Tandem.OPT_OUT // TODO (phet-io design): Hopefully this doesn't need to be instrumented, can we confirm?
     } );
 
     groupSelectModel.isGroupItemKeyboardGrabbedProperty.link( isGroupItemKeyboardGrabbed => {
@@ -313,7 +313,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               MembraneTransportSounds.proteinReturnedToToolbox();
             }
 
-            view.keyboardDroppedMembraneTransportProtein();
+            view.keyboardDroppedOrDeletedTransportProtein();
 
             // Look through the nodes to find the corresponding index of the one just released, so it can retain highlight.
             const selectedIndex = observationWindow.getTransportProteinNodes().findIndex( node => node.slot === droppedIntoSlot );
@@ -406,8 +406,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           // next, tell the group select interaction that nothing is grabbed.
           groupSelectModel.selectedGroupItemProperty.value = this.observationWindow.getTransportProteinNodes().length > 0 ? 0 : null;
 
-          // TODO (JG/SR): If you grabbed from the toolbox, then hit backspace/delete, focus should go back to the toolbox.
-          // See how this is done via keyboardDroppedMembraneTransportProtein when something is dropped in the membrane
+          // Restore focus to the toolbox, if that is where the deleted transport protein was.
+          view.keyboardDroppedOrDeletedTransportProtein();
         }
       }
     } );
@@ -450,7 +450,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         groupSelectModel.isGroupItemKeyboardGrabbedProperty.value = false;
         groupSelectModel.isKeyboardFocusedProperty.value = true;
 
-        view.keyboardDroppedMembraneTransportProtein();
+        view.keyboardDroppedOrDeletedTransportProtein();
       }
     } );
     observationWindow.addInputListener( escKeyboardListener );

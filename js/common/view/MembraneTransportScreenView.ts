@@ -350,7 +350,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.stepEmitter.emit( dt );
   }
 
-  public keyboardDroppedMembraneTransportProtein(): void {
+  public keyboardDroppedOrDeletedTransportProtein(): void {
     this.afterRelease && this.afterRelease();
     this.afterRelease = null;
   }
