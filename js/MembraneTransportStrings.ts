@@ -74,6 +74,15 @@ type StringsType = {
           'accessibleHeadingStringProperty': LocalizedStringProperty;
           'radioButtonGroup': {
             'accessibleHelpTextStringProperty': LocalizedStringProperty;
+            'minus70RadioButton': {
+              'accessibleNameStringProperty': LocalizedStringProperty;
+            };
+            'minus50RadioButton': {
+              'accessibleNameStringProperty': LocalizedStringProperty;
+            };
+            'plus30RadioButton': {
+              'accessibleNameStringProperty': LocalizedStringProperty;
+            }
           }
         }
       };

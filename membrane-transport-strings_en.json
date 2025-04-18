@@ -142,6 +142,21 @@
           "radioButtonGroup": {
             "accessibleHelpText": {
               "value": "Play with membrane voltage potential and observe changes."
+            },
+            "minus70RadioButton": {
+              "accessibleName": {
+                "value": "negative 70 millivolts"
+              }
+            },
+            "minus50RadioButton": {
+              "accessibleName": {
+                "value": "negative 50 millivolts"
+              }
+            },
+            "plus30RadioButton": {
+              "accessibleName": {
+                "value": "positive 30 millivolts"
+              }
             }
           }
         }
