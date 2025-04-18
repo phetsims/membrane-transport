@@ -140,6 +140,9 @@
             "value": "Membrane Potential Options"
           },
           "radioButtonGroup": {
+            "accessibleName": {
+              "value": "Voltage (mV)"
+            },
             "accessibleHelpText": {
               "value": "Play with membrane voltage potential and observe changes."
             },

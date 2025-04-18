@@ -73,6 +73,7 @@ type StringsType = {
         'membranePotential': {
           'accessibleHeadingStringProperty': LocalizedStringProperty;
           'radioButtonGroup': {
+            'accessibleNameStringProperty': LocalizedStringProperty;
             'accessibleHelpTextStringProperty': LocalizedStringProperty;
             'minus70RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;

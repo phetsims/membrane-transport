@@ -87,7 +87,10 @@ export default class TransportProteinPanel extends Panel {
         ]
       } ), {
         cornerRadius: 0,
-        stroke: null
+        stroke: null,
+
+        // pdom
+        accessibleHeading: config.titleProperty
       } );
     };
 
