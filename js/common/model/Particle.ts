@@ -50,8 +50,6 @@ export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportCons
 // Epsilon value for nudging particle into bounds after teleporting, so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
 
-// TODO: phosphate doesn't unbind from the sodium potassium pump
-
 /**
  * Particle is moving randomly in Brownian motion within the cell or extracellular space.
  */
