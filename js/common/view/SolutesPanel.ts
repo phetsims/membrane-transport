@@ -8,11 +8,11 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import VoicingText from '../../../../scenery/js/accessibility/voicing/nodes/VoicingText.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
 import VStrut from '../../../../scenery/js/nodes/VStrut.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -27,7 +27,7 @@ export default class SolutesPanel extends Node {
   public constructor( featureSet: MembraneTransportFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();
 
-    const title = new Text( MembraneTransportStrings.solutesStringProperty, {
+    const title = new VoicingText( MembraneTransportStrings.solutesStringProperty, {
       fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
       maxWidth: 200
     } );
