@@ -47,7 +47,7 @@ const CROSSING_COOLDOWN = 0.5;
 // half the height of a particle, it will never be captured.
 export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 2.5 );
 
-// Epsilon value for nudging particle into bounds after teleporting, so that it doesn't instantly teleport back to the other side
+// Epsilon value for nudging the particle into bounds after teleporting so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
 
 /**
