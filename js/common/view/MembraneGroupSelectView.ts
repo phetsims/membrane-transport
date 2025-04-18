@@ -66,11 +66,19 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   } );
   private readonly alerter: Alerter;
 
+  /**
+   * @param slots
+   * @param focusable - If false, this interaction is removed from the traversal order.
+   * @param view
+   * @param observationWindow
+   * @param groupSelectContainer - The primaryFocusedNode for the group select interaction.
+   */
   public constructor(
     private readonly slots: Slot[],
     focusable: boolean,
     private readonly view: MembraneTransportScreenView,
-    private readonly observationWindow: ObservationWindow
+    private readonly observationWindow: ObservationWindow,
+    groupSelectContainer: Node
   ) {
 
     const alerter = new Alerter( {
@@ -179,7 +187,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       }
     } );
 
-    observationWindow.addInputListener( deltaKeyboardListener );
+    groupSelectContainer.addInputListener( deltaKeyboardListener );
 
     // Alert the user of the type of protein that has been selected, and which slot it is in.
     // This handles both initial selection and subsequent changes
@@ -212,7 +220,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       }
     } );
 
-    super( groupSelectModel, observationWindow, {
+    super( groupSelectModel, groupSelectContainer, {
 
       primaryFocusedNodeOptions: {
 
@@ -411,7 +419,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
       }
     } );
-    observationWindow.addInputListener( deleteKeyboardListener );
+    groupSelectContainer.addInputListener( deleteKeyboardListener );
 
     const escKeyboardListener = new KeyboardListener( {
       keys: [ 'escape' ],
@@ -453,7 +461,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         view.keyboardDroppedOrDeletedTransportProtein();
       }
     } );
-    observationWindow.addInputListener( escKeyboardListener );
+    groupSelectContainer.addInputListener( escKeyboardListener );
     this.groupSelectModel = groupSelectModel;
   }
 

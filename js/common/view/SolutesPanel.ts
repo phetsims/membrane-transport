@@ -19,7 +19,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
@@ -80,8 +79,7 @@ export default class SolutesPanel extends Node {
       lineSpacing: 5,
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
-      accessibleName: MembraneTransportStrings.solutesStringProperty,
-      accessibleHelpText: MembraneTransportMessages.soluteRadioButtonGroupHelpTextMessageProperty
+      accessibleName: MembraneTransportStrings.solutesStringProperty
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally

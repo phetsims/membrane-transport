@@ -89,13 +89,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     super( {
       children: [ clipNode, frameNode ],
-      accessibleHeading: new StringProperty( 'Proteins in Membrane' ),
-      accessibleHeadingIncrement: +3, // h1 => h3. TODO: This can be deleted once joist is using accessibleHeading, since it will number automatically
-
-      // TODO: Make sure that mutating the accessibleName works on all browsers + screen readers
-      accessibleName: new StringProperty( 'hello' ), // TODO: Should be initialized blank, but the group select view is responsible for setting the accessibleName
-      accessibleHelpText: new StringProperty( 'Look for transport proteins.' ),
-      accessibleParagraph: accessibleParagraphProperty
+      accessibleHeading: new StringProperty( 'Observation Window' ) // Possibly call this the observation window?
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts
@@ -152,7 +146,17 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
-    this.membraneGroupSelectView = new MembraneGroupSelectView( model.slots, model.featureSet !== 'simpleDiffusion', view, this );
+    const groupSelectContainer = new Node( {
+      accessibleHeading: 'Cell Membrane',
+
+      // TODO: Make sure that mutating the accessibleName works on all browsers + screen readers
+      accessibleName: new StringProperty( 'hello' ), // TODO: Should be initialized blank, but the group select view is responsible for setting the accessibleName
+      accessibleHelpText: new StringProperty( 'Look for transport proteins.' ),
+      accessibleParagraph: accessibleParagraphProperty
+    } );
+    this.addChild( groupSelectContainer );
+
+    this.membraneGroupSelectView = new MembraneGroupSelectView( model.slots, model.featureSet !== 'simpleDiffusion', view, this, groupSelectContainer );
   }
 
   public getTransportProteinNodes(): SlottedNode[] {

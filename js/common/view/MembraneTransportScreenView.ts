@@ -17,6 +17,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
@@ -25,6 +26,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -128,6 +130,14 @@ export default class MembraneTransportScreenView extends ScreenView {
       return inside > 0 || outside > 0;
     } );
 
+    // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
+    const soluteControlsNode = new Node( {
+      accessibleHeading: 'Solute Controls', // TODO i18n
+      accessibleHelpText: MembraneTransportMessages.soluteRadioButtonGroupHelpTextMessageProperty,
+      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
+    } );
+    this.addChild( soluteControlsNode );
+
     const resetSolutesButton = new EraserButton( {
       baseColor: 'rgb(239,214,147)',
       tandem: options.tandem.createTandem( 'resetSolutesButton' ),
@@ -141,7 +151,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       this.addAccessibleResponse( MembraneTransportStrings.a11y.resetSolutesButton.accessibleContextResponseStringProperty );
       model.clear();
     } );
-    this.addChild( resetSolutesButton );
+    soluteControlsNode.addChild( resetSolutesButton );
 
     // Solute concentrations
     const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, {
@@ -163,8 +173,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
       top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
     } );
-
-    this.addChild( solutesPanel );
+    soluteControlsNode.addChild( solutesPanel );
 
     // For keyboard focus order
     const soluteControls: SoluteControl[] = [];
@@ -210,8 +219,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       soluteControls.push( insideSoluteControl );
     } );
 
-    this.addChild( outsideSoluteControlNode );
-    this.addChild( insideSoluteControlNode );
+    soluteControlsNode.addChild( outsideSoluteControlNode );
+    soluteControlsNode.addChild( insideSoluteControlNode );
 
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
@@ -229,10 +238,14 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
     this.addChild( rightSideVBox );
 
-    this.pdomPlayAreaNode.pdomOrder = [
+    soluteControlsNode.pdomOrder = [
       solutesPanel,
       ...soluteControls,
-      resetSolutesButton,
+      resetSolutesButton
+    ];
+
+    this.pdomPlayAreaNode.pdomOrder = [
+      soluteControlsNode,
       soluteConcentrationsAccordionBox,
       this.observationWindow, // Contains the ligands. TODO: When focusing the ligands, why does the highlight show around the membrane?
       rightSideVBox
