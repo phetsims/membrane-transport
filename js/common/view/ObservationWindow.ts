@@ -74,7 +74,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
           const transportProtein = slot.transportProteinProperty.value!;
 
-          return `The ${index + 1} slot contains a ${getBriefProteinName( transportProtein.type )} transport protein.`;
+          return `The ${index + 1} slot contains a ${getBriefProteinName( transportProtein.type ).value} transport protein.`;
         }
         else {
           return '';// TODO: Probably lots of whitespaces

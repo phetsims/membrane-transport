@@ -2,26 +2,17 @@
 
 /**
  * Get the brief name for a TransportProteinType
- * TODO (JG): This may move into fluent during i18n.
- * TODO (JG): i18n once design is finalized.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import TransportProteinType from '../../model/proteins/TransportProteinType.js';
+import MembraneTransportMessages from '../../../strings/MembraneTransportMessages.js';
+import PatternMessageProperty from '../../../../../chipper/js/browser/PatternMessageProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 
-export default function getBriefProteinName( type: TransportProteinType ): string {
-  return type === 'sodiumIonLeakageChannel' ? 'Sodium Ion, Leakage' :
-         type === 'potassiumIonLeakageChannel' ? 'Potassium Ion, Leakage' :
+export default function getBriefProteinName( type: TransportProteinType ): TReadOnlyProperty<string> {
 
-         type === 'sodiumIonVoltageGatedChannel' ? 'Sodium Ion, Voltage-Gated' :
-         type === 'potassiumIonVoltageGatedChannel' ? 'Potassium Ion, Ligand-Gated' :
-
-         type === 'sodiumIonLigandGatedChannel' ? 'Sodium Ion, Ligand-Gated' :
-         type === 'potassiumIonLigandGatedChannel' ? 'Potassium Ion, Ligand-Gated' :
-
-         type === 'sodiumPotassiumPump' ? 'Sodium Potassium Pump' :
-         type === 'sodiumGlucoseCotransporter' ? 'Sodium-Glucose Cotransporter' :
-           // final fallback -> throw
-         ( () => { throw new Error( `Unrecognized transport protein type: ${type}` ); } )();
+  // Create a pattern message property with the transportProteinType value and return its value
+  return new PatternMessageProperty( MembraneTransportMessages.transportProteinBriefNameMessageProperty, { type: type } );
 }

@@ -6,7 +6,7 @@
 
 # ..
 # PlayAreaSummary strings vary based on screen.
--playAreaSummaryIntro = An observation window zooms in on a cross-section of a cell’s membrane. The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet, that separates fluids inside and outside of cell. Added solute particles are suspended in fluid and randomly move with Brownian motion.
+-playAreaSummaryIntro = An observation window zooms in on a cross-section of a cell's membrane. The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet, that separates fluids inside and outside of cell. Added solute particles are suspended in fluid and randomly move with Brownian motion.
 
 -playAreaSummarySolutes = You can choose from a list of solutes and add them to inside and outside.
 
@@ -15,6 +15,18 @@
 -playAreaSummaryVoltagePotential = There are options to change membrane voltage potential and optionally hide visual charge labels.
 
 -playAreaSummaryBarCharts = Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane.
+
+# Transport protein brief names
+transportProteinBriefName = { $type ->
+  [sodiumIonLeakageChannel] Sodium Ion, Leakage
+  [potassiumIonLeakageChannel] Potassium Ion, Leakage
+  [sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated
+  [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
+  [sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated
+  [potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated
+  [sodiumPotassiumPump] Sodium Potassium Pump
+  *[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter
+}
 
 
 # END REUSABLE STRINGS .............................

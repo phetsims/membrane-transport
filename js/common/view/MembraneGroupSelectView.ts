@@ -152,10 +152,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // Only call this method if there is a transport protein
               const getContentsString = () => {
                 const transportProteinType = this.getSlotForIndex( newIndex ).transportProteinType;
-                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType );
+                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType ).value; // TODO: i18n "empty"
                 return contentsString;
               };
-              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`;
+              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`; // TODO: i18n "Slot"
               this.alert( message );
             }
           }
@@ -198,7 +198,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           affirm( transportProtein, 'The selected item should have a transport protein type' );
           const proteinIndex = filledProteins.indexOf( transportProtein );
 
-          const transportProteinName = transportProteinType ? getBriefProteinName( transportProteinType ) : 'empty';
+          const transportProteinName = transportProteinType ? getBriefProteinName( transportProteinType ).value : 'empty';
 
           // prevent saying what is selected in the group when focus immediately goes back to the toolbox
           if ( groupSelectModel.isKeyboardFocusedProperty.value ) {
@@ -274,7 +274,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // Drop the item into the membrane
               droppedIntoSlot.transportProteinType = grabbedNode.type;
 
-              const contentsString = getBriefProteinName( grabbedNode.type );
+              const contentsString = getBriefProteinName( grabbedNode.type ).value;
 
               // TODO: is this the API we want?
               this.alert( `Released ${contentsString} into membrane` );
