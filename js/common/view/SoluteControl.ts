@@ -88,12 +88,13 @@ export default class SoluteControl extends Panel {
 
     userControlledCountProperty.lazyLink( ( value, oldValue ) => {
       const difference = value - oldValue;
+      assert && assert( difference !== 0, 'Difference is 0' );
       if ( difference > 0 ) {
 
         // We need to add solutes to the outside of the membrane
         model.addSolutes( soluteType, side, difference );
       }
-      else {
+      else if ( difference < 0 ) {
 
         // We need to remove solutes from the outside of the membrane
         model.removeSolutes( soluteType, side, -difference );
@@ -134,6 +135,12 @@ export default class SoluteControl extends Panel {
         return objectResponseMessageProperty;
       },
       pdomCreateContextResponseAlert: ( pdomMappedValue, newValue, valueOnStart ) => {
+
+        // In this simulation, it is possible to have a keyup event that doesn't change the value. In that case,
+        // we don't want to announce anything.
+        if ( newValue === valueOnStart ) {
+          return null;
+        }
 
         // 1. Magnitude of this change
         const difference = newValue - valueOnStart;
