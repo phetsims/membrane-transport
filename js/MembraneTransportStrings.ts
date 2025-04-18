@@ -72,6 +72,9 @@ type StringsType = {
         'potassiumIonKPlusVoltageGatedStringProperty': LocalizedStringProperty;
         'membranePotential': {
           'accessibleHeadingStringProperty': LocalizedStringProperty;
+          'radioButtonGroup': {
+            'accessibleHelpTextStringProperty': LocalizedStringProperty;
+          }
         }
       };
       'activeTransportProteinPanel': {

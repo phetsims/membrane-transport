@@ -138,6 +138,11 @@
         "membranePotential": {
           "accessibleHeading": {
             "value": "Membrane Potential Options"
+          },
+          "radioButtonGroup": {
+            "accessibleHelpText": {
+              "value": "Play with membrane voltage potential and observe changes."
+            }
           }
         }
       },

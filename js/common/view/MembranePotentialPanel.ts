@@ -35,6 +35,7 @@ export default class MembranePotentialPanel extends Panel {
         tandemName: 'plus30RadioButton'
       } ], {
       orientation: 'horizontal',
+      accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: tandem.createTandem( 'membraneVoltagePotentialRadioButtonGroup' )
     } );
 
