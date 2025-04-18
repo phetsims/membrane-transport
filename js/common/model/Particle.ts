@@ -497,9 +497,9 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
-    else if ( this.mode.type === 'waitingInSodiumPotassiumPump' && phet.chipper.queryParameters.dev ) {
+    else if ( this.mode.type === 'waitingInSodiumPotassiumPump' ) {
 
-      // For debugging only, so that the site positions can be adjusted at runtime
+      // The phosphate binding site moves, so we must update this every frame
       const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
       this.position.set( targetPosition );
     }
