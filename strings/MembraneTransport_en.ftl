@@ -72,7 +72,7 @@ interactionHintWithTransportProteins = Add or remove solutes to inside or outsid
 
 # ..
 # Solutes radio button group - group names and help text
-soluteRadioButtonGroupHelpText = Choose solute then add or remove to inside or outside of membrane.
+soluteControlsAccessibleHelpText = Choose solute then add or remove to inside or outside of membrane.
 
 outsideMembraneSpinnerAccessibleName = Outside Membrane
 outsideMembraneSpinnerHelpText = Add or remove chosen solute to outside of membrane.
