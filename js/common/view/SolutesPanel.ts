@@ -51,7 +51,7 @@ export default class SolutesPanel extends Node {
 
           const icon = createParticleNode( soluteType );
 
-          // We want to keep the relative sizes correct for the gas solutes and the ions
+          // We want to keep the relative sizes correct for the gas solutes and the icons
           // but the ATP and Glucose are much larger, so we scale them down.
           icon.setScaleMagnitude( soluteType === 'atp' ? 0.045 :
                                   soluteType === 'glucose' ? 0.09 :
