@@ -157,10 +157,9 @@ currentDetails = Right now, zoomed-in cross-section of cell's membrane is { curr
 currentDetailsSoluteTypesOnOutside = { $outsideSoluteCount } solute types on outside;
 currentDetailsSoluteTypesOnInside = { $insideSoluteCount} solute types on inside;
 currentDetailsTransportProteins = { $transportProteinCount } transport proteins in membrane;
-currentDetailsLigands = { $hasLigands ->
-  *[false] No ligands on outside; and
-  [true] 2 types of ligands on outside; and
-}
+
+ligandsOnOutsideOnly = Ligands on outside only.
+
 currentDetailsMembranePotential = { $membranePotential } millivolts.
 
 releasedBackInToolbox = Released. Back in toolbox.
