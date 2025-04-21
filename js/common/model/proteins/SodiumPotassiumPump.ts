@@ -22,6 +22,7 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
+import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
@@ -210,6 +211,13 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   public getSitePosition( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
     const offset = SodiumPotassiumPump.getSitePositionOffset( site );
     return this.slot.getPositionVector().plus( offset );
+  }
+
+  public override releaseParticles( slot: Slot ): void {
+    super.releaseParticles( slot );
+    this.model.solutes.filter( solute => solute.mode.slot === slot ).forEach( particle => {
+      particle.releaseFromInteraction( particle.type === 'potassiumIon' ? 20 : -20 );
+    } );
   }
 
   public static getSitePositionOffset( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {

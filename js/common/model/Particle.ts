@@ -242,6 +242,7 @@ export default class Particle<T extends ParticleType> {
 
   /**
    * @param allowImmediateInteraction - Some particles should be allowed to interact immediately, while others should not.
+   * TODO: Make static
    */
   public createRandomWalkMode( allowImmediateInteraction: boolean ): RandomWalkMode {
 
@@ -253,6 +254,11 @@ export default class Particle<T extends ParticleType> {
       slot: null,
       timeElapsedSinceMembraneCrossing: timeElapsedSinceMembraneCrossing
     };
+  }
+
+  public releaseFromInteraction( y: number ): void {
+    this.position.y = y;
+    this.mode = this.createRandomWalkMode( true );
   }
 
   /**

@@ -14,8 +14,8 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneTransport from '../../membraneTransport.js';
 import { TransportProteinIO } from './MembraneTransportModel.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
-import TransportProteinModelContext from './proteins/TransportProteinModelContext.js';
 import TransportProtein from './proteins/TransportProtein.js';
+import TransportProteinModelContext from './proteins/TransportProteinModelContext.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 
 export default class Slot {
@@ -28,6 +28,12 @@ export default class Slot {
       tandem: tandem.createTandem( 'transportProteinProperty' ),
       phetioValueType: NullableIO( TransportProteinIO ),
       phetioFeatured: true
+    } );
+
+    this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
+
+      // Pass throug the Slot
+      oldTransportProtein && oldTransportProtein.releaseParticles( this );
     } );
   }
 

@@ -78,6 +78,14 @@ export default abstract class TransportProtein<State extends string = Intentiona
    * have additional criteria for availability.
    */
   public abstract isAvailableForPassiveTransport(): boolean;
+
+  /**
+   * Set free any ligands or particles that are interacting with the transport protein.
+   */
+  public releaseParticles( slot: Slot ): void {
+
+    // implement in a subclass, if necessary
+  }
 }
 
 membraneTransport.register( 'TransportProtein', TransportProtein );

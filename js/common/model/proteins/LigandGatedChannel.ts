@@ -10,6 +10,7 @@
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import Particle from '../Particle.js';
+import Slot from '../Slot.js';
 import { LigandType } from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -133,6 +134,13 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   public getBindingPosition(): Vector2 {
     const bindingPositionOffset = this.getBindingPositionOffset();
     return new Vector2( this.slot.position, 0 ).plus( bindingPositionOffset );
+  }
+
+  public override releaseParticles( slot: Slot ): void {
+    super.releaseParticles( slot );
+    if ( this.boundLigand ) {
+      this.unbindLigand();
+    }
   }
 }
 
