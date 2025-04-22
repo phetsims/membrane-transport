@@ -9,6 +9,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import Disposable from '../../../../../axon/js/Disposable.js';
 import Property from '../../../../../axon/js/Property.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -23,7 +24,7 @@ import TransportProteinType from './TransportProteinType.js';
 
 // The State type parameter is a string union defined by the subclass, indicating which conformation or mode the protein
 // is in. We leave the default as IntentionalAny since there are several (10+) usage sites that don't care what state it is in.
-export default abstract class TransportProtein<State extends string = IntentionalAny> {
+export default abstract class TransportProtein<State extends string = IntentionalAny> extends Disposable{
 
   // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;
@@ -43,6 +44,7 @@ export default abstract class TransportProtein<State extends string = Intentiona
     public readonly position: number,
     initialState: State
   ) {
+    super();
     this.bounds = new Bounds2(
       position - MembraneTransportConstants.TRANSPORT_PROTEIN_WIDTH / 2,
       MembraneTransportConstants.MEMBRANE_BOUNDS.minY,

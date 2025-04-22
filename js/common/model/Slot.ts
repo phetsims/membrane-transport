@@ -32,8 +32,9 @@ export default class Slot {
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
 
-      // Pass throug the Slot
+      // TODO: Combine into one, see https://github.com/phetsims/membrane-transport/issues/112
       oldTransportProtein && oldTransportProtein.releaseParticles( this );
+      oldTransportProtein && oldTransportProtein.dispose();
     } );
   }
 

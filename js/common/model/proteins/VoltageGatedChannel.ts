@@ -7,8 +7,8 @@
  */
 
 import membraneTransport from '../../../membraneTransport.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProtein from './TransportProtein.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 
 type VoltageGatedChannelState = 'open' | 'closed'; // opens based on the voltage of the membrane
 
@@ -26,7 +26,7 @@ export default class VoltageGatedChannel extends TransportProtein<VoltageGatedCh
                                  voltage === -50 ? ( type === 'sodiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
                                  voltage === 30 ? ( type === 'potassiumIonVoltageGatedChannel' ? 'open' : 'closed' ) :
                                  ( () => { throw new Error( `Unrecognized voltage: ${voltage}` ); } )();
-    } );
+    }, { disposer: this } );
   }
 
   /**
