@@ -24,7 +24,7 @@ import TransportProteinType from './TransportProteinType.js';
 
 // The State type parameter is a string union defined by the subclass, indicating which conformation or mode the protein
 // is in. We leave the default as IntentionalAny since there are several (10+) usage sites that don't care what state it is in.
-export default abstract class TransportProtein<State extends string = IntentionalAny> extends Disposable{
+export default abstract class TransportProtein<State extends string = IntentionalAny> extends Disposable {
 
   // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;

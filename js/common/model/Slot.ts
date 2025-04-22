@@ -36,6 +36,7 @@ export default class Slot {
       oldTransportProtein && oldTransportProtein.releaseParticles( this );
       oldTransportProtein && oldTransportProtein.dispose();
     } );
+
   }
 
   public reset(): void {
