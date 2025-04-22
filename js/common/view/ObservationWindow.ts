@@ -63,7 +63,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       clipArea: Shape.rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT )
     } );
 
-    // TODO (SR): This is not production worthy, needs refinement, see the design doc. Add i18n. etc. https://github.com/phetsims/membrane-transport/issues/86
+    // TODO (SR): This is not production worthy, needs refinement, see the design doc. Add i18n. etc. https://github.com/phetsims/membrane-transport/issues/82
     const accessibleParagraphProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
 
     model.transportProteinCountProperty.link( transportProteinCount => {
