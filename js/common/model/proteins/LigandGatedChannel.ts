@@ -100,7 +100,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
       this.boundLigand = ligand;
 
       // Set the ligand to 'bound' mode to pause its motion. The slot is null because a solute has not reserved it.
-      // TODO (SR): Add the slot to this, and make the checks to see if the slot is available more sophisticated. https://github.com/phetsims/membrane-transport/issues/86
+      // TODO (SR): Add the slot to this, and make the checks to see if the slot is available more sophisticated. https://github.com/phetsims/membrane-transport/issues/105
       //  We need the slot so we know how to find the binding location for the ligand.
       //  ligandGatedChannel would be replaced by slot once this is done.
       ligand.mode = { type: 'ligandBound', slot: null, ligandGatedChannel: this };
