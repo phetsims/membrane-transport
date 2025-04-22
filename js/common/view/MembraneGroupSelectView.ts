@@ -342,7 +342,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
         else {
 
-          // TODO (SR): We are hitting this when you press the escape key to release a protein. Why? https://github.com/phetsims/membrane-transport/issues/86
+          // TODO (SR): We are hitting this when you press the escape key to release a protein. Why? https://github.com/phetsims/membrane-transport/issues/107
           console.log( 'was not dragged item, but why' );
         }
       },
