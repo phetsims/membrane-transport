@@ -431,8 +431,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
           if ( grabbedNode.origin instanceof Slot ) {
 
-            // TODO (SR/JG): What if something else moved there in the meantime? https://github.com/phetsims/membrane-transport/issues/86
-            // TODO (SR/JG): If you are dragging one with the mouse when you tab to the group, the highlight region is wrong. https://github.com/phetsims/membrane-transport/issues/86
             grabbedNode.origin.transportProteinType = grabbedNode.type;
 
             // Select the index corresponding to the item just dropped
