@@ -9,7 +9,6 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 
 import sodiumGlucoseCotransporterState1_svg from '../../../../images/sodiumGlucoseCotransporterState1_svg.js';
-import sodiumGlucoseCotransporterState2_svg from '../../../../images/sodiumGlucoseCotransporterState2_svg.js';
 import sodiumGlucoseCotransporterState3_svg from '../../../../images/sodiumGlucoseCotransporterState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
@@ -23,12 +22,10 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
 
     if ( sodiumGlucoseCotransporter ) {
 
-      // TODO (SR): We only need two states for this, design team said we can remove the
-      //   sodiumGlucoseCotransporterState2_svg https://github.com/phetsims/membrane-transport/issues/86
       sodiumGlucoseCotransporter.stateProperty.link( state => {
         image.image = state === 'openToOutside' ? sodiumGlucoseCotransporterState1_svg :
                       state === 'openToInside' ? sodiumGlucoseCotransporterState3_svg :
-                      sodiumGlucoseCotransporterState2_svg;
+                      ( () => { throw new Error( 'Invalid state: ' + state ); } )();
       }, { disposer: this } );
     }
   }
