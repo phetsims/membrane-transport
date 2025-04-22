@@ -23,7 +23,7 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
 
     if ( sodiumGlucoseCotransporter ) {
 
-      // TODO: We only need two states for this, design team said we can remove the
+      // TODO (SR): We only need two states for this, design team said we can remove the
       //   sodiumGlucoseCotransporterState2_svg
       sodiumGlucoseCotransporter.stateProperty.link( state => {
         image.image = state === 'openToOutside' ? sodiumGlucoseCotransporterState1_svg :

@@ -51,8 +51,8 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
       valueOffSoundPlayer: removeLigandSoundPlayer
     } );
 
-    // TODO: High level API for context responses?
-    // TODO: What if you set areLigandsAddedProperty programmatically? Should it speak when changed with phet-io? - lets discuss with design.
+    // TODO (JG): High level API for context responses?
+    // TODO (SR): What if you set areLigandsAddedProperty programmatically? Should it speak when changed with phet-io? - lets discuss with design.
     //   We could have a shut-off valve for all responses when something is set by PhET-iO.
     //   OR The high level API could speak the response from user input (like sound implementation, see produceSoundEmitter)
     //   Consensus: We should not speak when the model changes, only when the user interacts with the UI. The screen summary "current details" will mention whether ligands are here or not.

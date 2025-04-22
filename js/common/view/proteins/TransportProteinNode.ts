@@ -42,7 +42,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     const modelWidth = MembraneTransportConstants.TRANSPORT_PROTEIN_WIDTH;
     const viewWidth = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.modelToViewDeltaX( modelWidth );
 
-    // TODO (design): Can all images be the same width? We found one that is one pixel wider than the others.
+    // TODO (BF): Can all images be the same width? We found one that is one pixel wider than the others.
     assert && assert( equalsEpsilon( image.width, 650, 1 ),
       'We are assuming that all images have the same width so they are all scaled about the same amount. The image should be 650 pixels wide.'
     );
