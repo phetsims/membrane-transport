@@ -1,11 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Artwork for the voltage gated channel protein.
+ * Artwork for the voltage-gated channel protein.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import potassiumVoltageGatedMinus70and50mV_svg from '../../../../images/potassiumVoltageGatedMinus70and50mV_svg.js';
 import potassiumVoltageGatedPlus30mV_svg from '../../../../images/potassiumVoltageGatedPlus30mV_svg.js';
@@ -23,21 +24,23 @@ export default class VoltageGatedChannelNode extends TransportProteinNode {
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
 
     const image = new Image( type === 'sodiumIonVoltageGatedChannel' ? sodiumVoltageGatedMinus70mV_svg : potassiumVoltageGatedMinus70and50mV_svg );
-    super( image );
+    super( image, {
+      viewOffset: new Vector2( 0, 15 )
+    } );
 
     if ( channel ) {
 
       channel.model.membraneVoltagePotentialProperty.link( membraneVoltagePotential => {
         image.image = type === 'sodiumIonVoltageGatedChannel' ?
-                           ( membraneVoltagePotential === -70 ? sodiumVoltageGatedMinus70mV_svg :
-                             membraneVoltagePotential === -50 ? sodiumVoltageGatedMinus50mV_svg :
-                             membraneVoltagePotential === 30 ? sodiumVoltageGatedPlus30mV_svg :
-                             ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() ) :
-                           type === 'potassiumIonVoltageGatedChannel' ?
-                           ( membraneVoltagePotential === -70 || membraneVoltagePotential === -50 ? potassiumVoltageGatedMinus70and50mV_svg :
-                             membraneVoltagePotential === 30 ? potassiumVoltageGatedPlus30mV_svg :
-                             ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() ) :
-                           ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
+                      ( membraneVoltagePotential === -70 ? sodiumVoltageGatedMinus70mV_svg :
+                        membraneVoltagePotential === -50 ? sodiumVoltageGatedMinus50mV_svg :
+                        membraneVoltagePotential === 30 ? sodiumVoltageGatedPlus30mV_svg :
+                        ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() ) :
+                      type === 'potassiumIonVoltageGatedChannel' ?
+                      ( membraneVoltagePotential === -70 || membraneVoltagePotential === -50 ? potassiumVoltageGatedMinus70and50mV_svg :
+                        membraneVoltagePotential === 30 ? potassiumVoltageGatedPlus30mV_svg :
+                        ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() ) :
+                      ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
       }, { disposer: this } );
 
       // This link does not need to by disposed because the channel itself will be disposed when it is removed from the membrane.
