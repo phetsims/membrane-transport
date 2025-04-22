@@ -73,16 +73,14 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
         if ( slot.isFilled() ) {
 
           const transportProtein = slot.transportProteinProperty.value!;
-
           return `The ${index + 1} slot contains a ${getBriefProteinName( transportProtein.type ).value} transport protein.`;
         }
         else {
-          return '';// TODO (SR): Probably lots of whitespaces https://github.com/phetsims/membrane-transport/issues/86
+          return null;
         }
       } );
 
-
-      const paragraph = phrases.join( ' ' );
+      const paragraph = phrases.filter( phrase => phrase !== null ).join( ' ' ); // TODO: https://github.com/phetsims/membrane-transport/issues/102
 
       accessibleParagraphProperty.set( transportProteinCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : 'Zoomed-in Membrane. ' + paragraph );
     } );
