@@ -12,11 +12,5 @@ import banTSCommentConfig from '../perennial-alias/js/eslint/config/util/banTSCo
 
 export default [
   ...simEslintConfig,
-  ...banTSCommentConfig, {
-    rules: {
-
-      // Not compatible with aider
-      'eol-last': 'off'
-    }
-  }
+  ...banTSCommentConfig
 ];
