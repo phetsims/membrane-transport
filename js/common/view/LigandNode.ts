@@ -117,13 +117,13 @@ export default class LigandNode extends Node {
       dragListenerOptions: {
 
         // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
-        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/45
+        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/32
         tandem: Tandem.OPT_OUT
       },
       keyboardDragListenerOptions: {
 
         // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
-        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/45
+        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/32
         tandem: Tandem.OPT_OUT,
         dragSpeed: 200,
         shiftDragSpeed: 50
