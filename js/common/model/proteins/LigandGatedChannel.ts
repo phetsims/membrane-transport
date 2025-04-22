@@ -16,7 +16,7 @@ import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
-// TODO (design): Should the rebinding delay cooldown finish when you release a ligand right on top of the channel?
+// TODO (BF): Should the rebinding delay cooldown finish when you release a ligand right on top of the channel? https://github.com/phetsims/membrane-transport/issues/94
 //   It is confusing sometimes when you release a ligand on the channel and it just moves away.
 const REBINDING_DELAY = 5;
 
@@ -100,7 +100,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
       this.boundLigand = ligand;
 
       // Set the ligand to 'bound' mode to pause its motion. The slot is null because a solute has not reserved it.
-      // TODO (SR): Add the slot to this, and make the checks to see if the slot is available more sophisticated.
+      // TODO (SR): Add the slot to this, and make the checks to see if the slot is available more sophisticated. https://github.com/phetsims/membrane-transport/issues/86
       //  We need the slot so we know how to find the binding location for the ligand.
       //  ligandGatedChannel would be replaced by slot once this is done.
       ligand.mode = { type: 'ligandBound', slot: null, ligandGatedChannel: this };

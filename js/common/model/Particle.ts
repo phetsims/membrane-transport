@@ -32,7 +32,7 @@ import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
-// TODO (design) can this be deleted? Brett will meet with content experts before we decide.
+// TODO (BF) can this be deleted? Brett will meet with content experts before we decide. See https://github.com/phetsims/membrane-transport/issues/92
 const ABSORB_GLUCOSE = false;
 
 // Typical speed for movement
@@ -428,7 +428,7 @@ export default class Particle<T extends ParticleType> {
 
         this.position.set( targetPosition );
 
-        // TODO (design/sound): What sound to play here?
+        // TODO (design/sound): What sound to play here? See https://github.com/phetsims/membrane-transport/issues/93
         MembraneTransportSounds.ligandBound();
       }
     }

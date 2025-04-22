@@ -41,10 +41,10 @@ export default class SoluteBarChartNode extends Node {
     const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
 
     // If time passes, the flux will change.
-    // TODO (JG): This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive the description?
+    // TODO (JG): This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive the description? https://github.com/phetsims/membrane-transport/issues/90
     // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
 
-    // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference.
+    // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference. https://github.com/phetsims/membrane-transport/issues/90
     //   What if the description simply described the magnitude of the outside bar and the inside bar?
     //   "A lot of CO2 outside, a little inside"
     //   "A little CO2 outside, a lot inside"
@@ -59,14 +59,14 @@ export default class SoluteBarChartNode extends Node {
              'aLotLess';
     } );
 
-    // TODO (design): i18n
+    // TODO (design): i18n https://github.com/phetsims/membrane-transport/issues/90
     const sizeDescriptionProperty = new StringProperty( 'small' );
 
     const descriptionProperty = new PatternMessageProperty( MembraneTransportMessages.barChartPatternMessageProperty, {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
       size: sizeDescriptionProperty,
-      direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up
+      direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up https://github.com/phetsims/membrane-transport/issues/90
     } );
 
     super( {
@@ -126,7 +126,7 @@ export default class SoluteBarChartNode extends Node {
       centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
     } );
 
-    // TODO (JG/SR): Use or remove this code
+    // TODO (JG/SR): Use or remove this code https://github.com/phetsims/membrane-transport/issues/90
     // // Update the arrow when the passage history changes - Discrete version
     // this.stepEmitter.addListener( dt => {
     //   // Net positive is into the cell

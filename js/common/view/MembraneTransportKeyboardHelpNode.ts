@@ -4,7 +4,7 @@
  * MembraneTransportKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.
  * Elements that are not relevant to all screens may be omitted via the featureSet.
  *
- * TODO (design): Let's request a design here, and work on that that before spending much time i18n
+ * TODO (design): Let's request a design here, and work on that that before spending much time i18n, see https://github.com/phetsims/membrane-transport/issues/46
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

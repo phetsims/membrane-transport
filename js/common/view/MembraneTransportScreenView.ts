@@ -132,7 +132,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
-      accessibleHeading: 'Solute Controls', // TODO (SR) i18n
+      accessibleHeading: 'Solute Controls', // TODO (SR) i18n https://github.com/phetsims/membrane-transport/issues/86
       accessibleHelpText: MembraneTransportMessages.soluteControlsAccessibleHelpTextMessageProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
@@ -247,7 +247,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomPlayAreaNode.pdomOrder = [
       soluteControlsNode,
       soluteConcentrationsAccordionBox,
-      this.observationWindow, // Contains the ligands. TODO (SR): When focusing the ligands, why does the highlight show around the membrane?
+      this.observationWindow, // Contains the ligands. TODO (SR): When focusing the ligands, why does the highlight show around the membrane? https://github.com/phetsims/membrane-transport/issues/86
       rightSideVBox
     ];
 
@@ -261,7 +261,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       macroCellNode.moveToFront();
     }
 
-    // TODO (SR): These are just for debugging, remove before publication.
+    // TODO (SR): These are just for debugging, remove before publication. https://github.com/phetsims/membrane-transport/issues/86
     // Add hotkeys that let us easily test model behavior.
     KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );

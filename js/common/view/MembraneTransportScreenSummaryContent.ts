@@ -78,7 +78,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
 
     super( {
 
-      // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in.
+      // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in. See https://github.com/phetsims/membrane-transport/issues/91
       playAreaContent: new PatternMessageProperty( model.featureSet === 'simpleDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen1MessageProperty :
                                                    model.featureSet === 'facilitatedDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty :
                                                    model.featureSet === 'activeTransport' ? MembraneTransportMessages.playAreaSummaryScreen3MessageProperty :

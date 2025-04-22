@@ -24,7 +24,7 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
     if ( sodiumGlucoseCotransporter ) {
 
       // TODO (SR): We only need two states for this, design team said we can remove the
-      //   sodiumGlucoseCotransporterState2_svg
+      //   sodiumGlucoseCotransporterState2_svg https://github.com/phetsims/membrane-transport/issues/86
       sodiumGlucoseCotransporter.stateProperty.link( state => {
         image.image = state === 'openToOutside' ? sodiumGlucoseCotransporterState1_svg :
                       state === 'openToInside' ? sodiumGlucoseCotransporterState3_svg :

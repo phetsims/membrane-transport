@@ -6,8 +6,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// TODO (SR): The focus rectangle shows on the membrane when a ligand has focus. This is incorrect.
-// TODO (design): Rewrite keyboard interaction to be discrete instead of continuous
+// TODO (SR): The focus rectangle shows on the membrane when a ligand has focus. This is incorrect. https://github.com/phetsims/membrane-transport/issues/45
+// TODO (design): Rewrite keyboard interaction to be discrete instead of continuous. See https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
@@ -31,7 +31,7 @@ export default class LigandNode extends Node {
   // lazily but LigandNode is created eagerly. So we change the transformation of this Node
   // after the ligand is created (in step). But we only want to do that once or else the
   // scale computation will fight itself every frame.
-  // TODO: This might be a workaround. If we do not need to instrument LigandNode, we can dynamically create them.
+  // TODO: This might be a workaround. If we do not need to instrument LigandNode, we can dynamically create them. https://github.com/phetsims/membrane-transport/issues/45
   private ligandScaleSet = false;
 
   public constructor(
@@ -48,7 +48,7 @@ export default class LigandNode extends Node {
       visibleProperty: areLigandsAddedProperty,
       cursor: 'pointer',
 
-      /* TODO (JG/SR): Add the type of ligand. Add i18n. * Ligand Accessible Names:
+      /* TODO (JG/SR): Add the type of ligand. Add i18n. * Ligand Accessible Names: https://github.com/phetsims/membrane-transport/issues/45
       * Sodium-specific ligand
       * Potassium-specific ligand
       *
@@ -56,9 +56,9 @@ export default class LigandNode extends Node {
       * - Maybe the model should always allocate the Ligands, but they may or may not participate based on the settings.
       * - Or we can use the index or other metadata to identify the ligand.
       */
-      accessibleName: ligandView.type === 'ligandA' ? 'Triangle Ligand' : 'Star Ligand' // TODO: i18n
+      accessibleName: ligandView.type === 'ligandA' ? 'Triangle Ligand' : 'Star Ligand' // TODO: i18n https://github.com/phetsims/membrane-transport/issues/45
     }, AccessibleDraggableOptions, {
-      pdomVisible: focusable // TODO: After rewriting to be discrete keyboard interaction, make sure only 2 are in the DOM
+      pdomVisible: focusable // TODO: After rewriting to be discrete keyboard interaction, make sure only 2 are in the DOM https://github.com/phetsims/membrane-transport/issues/45
     } );
 
     super( options );
@@ -116,14 +116,14 @@ export default class LigandNode extends Node {
       transform: this.modelViewTransform,
       dragListenerOptions: {
 
-        // TODO: Improve the API for tandems for rich drag listeners.
-        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO?
+        // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
+        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/45
         tandem: Tandem.OPT_OUT
       },
       keyboardDragListenerOptions: {
 
-        // TODO: Improve the API for tandems for rich drag listeners.
-        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO?
+        // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
+        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/45
         tandem: Tandem.OPT_OUT,
         dragSpeed: 200,
         shiftDragSpeed: 50
@@ -148,7 +148,7 @@ export default class LigandNode extends Node {
    */
   private operateOnLigand( operation: ( ligand: Particle<LigandType> ) => void ): void {
 
-    // TODO: Can we just preallocate all the ligands and get rid of this part?
+    // TODO: Can we just preallocate all the ligands and get rid of this part? https://github.com/phetsims/membrane-transport/issues/45
     const ligand = this.ligands[ this.ligandIndex ] || null;
     if ( ligand ) {
       operation( ligand );

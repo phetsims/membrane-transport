@@ -7,7 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-// TODO (SR): Highlight region is sometimes huge.
+// TODO (SR): Highlight region is sometimes huge. https://github.com/phetsims/membrane-transport/issues/86
 
 import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
@@ -61,7 +61,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
   private readonly utterance = new Utterance( {
 
     // This utterance is not registered to a Node, and so it will always be spoken.
-    // TODO (JG): This is required because this Node does not compose Voicing. Is that too strict? Can we remove the assertion in Voicing.alertUtterance?
+    // TODO (JG): This is required because this Node does not compose Voicing. Is that too strict? Can we remove the assertion in Voicing.alertUtterance? See https://github.com/phetsims/membrane-transport/issues/95
     voicingCanAnnounceProperties: [ new Property( true ) ]
   } );
   private readonly alerter: Alerter;
@@ -90,7 +90,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       // This is only used in assertions, so it is ok to return a constant.
       getGroupItemValue: () => 0,
 
-      tandem: Tandem.OPT_OUT // TODO (design/phet-io): Hopefully this doesn't need to be instrumented, can we confirm?
+      tandem: Tandem.OPT_OUT // TODO (design/phet-io): Hopefully this doesn't need to be instrumented, can we confirm? See https://github.com/phetsims/membrane-transport/issues/32
     } );
 
     groupSelectModel.isGroupItemKeyboardGrabbedProperty.link( isGroupItemKeyboardGrabbed => {
@@ -160,10 +160,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // Only call this method if there is a transport protein
               const getContentsString = () => {
                 const transportProteinType = this.getSlotForIndex( newIndex ).transportProteinType;
-                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType ).value; // TODO (SR): i18n "empty"
+                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType ).value; // TODO (SR): i18n "empty" https://github.com/phetsims/membrane-transport/issues/86
                 return contentsString;
               };
-              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`; // TODO (SR): i18n "Slot"
+              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`; // TODO (SR): i18n "Slot" https://github.com/phetsims/membrane-transport/issues/86
               this.alert( message );
             }
           }
@@ -284,7 +284,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
               const contentsString = getBriefProteinName( grabbedNode.type ).value;
 
-              // TODO (JG): is this the API we want?
+              // TODO (JG): is this the API we want? See https://github.com/phetsims/membrane-transport/issues/96
               this.alert( `Released ${contentsString} into membrane` );
 
               // Swap
@@ -342,7 +342,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
         else {
 
-          // TODO (SR): We are hitting this when you press the escape key to release a protein. Why?
+          // TODO (SR): We are hitting this when you press the escape key to release a protein. Why? https://github.com/phetsims/membrane-transport/issues/86
           console.log( 'was not dragged item, but why' );
         }
       },
@@ -431,8 +431,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
           if ( grabbedNode.origin instanceof Slot ) {
 
-            // TODO (SR/JG): What if something else moved there in the meantime?
-            // TODO (SR/JG): If you are dragging one with the mouse when you tab to the group, the highlight region is wrong.
+            // TODO (SR/JG): What if something else moved there in the meantime? https://github.com/phetsims/membrane-transport/issues/86
+            // TODO (SR/JG): If you are dragging one with the mouse when you tab to the group, the highlight region is wrong. https://github.com/phetsims/membrane-transport/issues/86
             grabbedNode.origin.transportProteinType = grabbedNode.type;
 
             // Select the index corresponding to the item just dropped

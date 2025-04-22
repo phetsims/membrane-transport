@@ -68,7 +68,7 @@ export default class SoluteControl extends Panel {
         let amountTheUserCouldRemove = countOnThisSide;
         let amountTheUserCouldAdd = MembraneTransportConstants.MAX_SOLUTE_COUNT - totalCount;
 
-        // TODO (JG): Is the total exceeding the MAX indicative of an inconsistent transient value?
+        // TODO (JG): Is the total exceeding the MAX indicative of an inconsistent transient value? see https://github.com/phetsims/membrane-transport/issues/98
         if ( amountTheUserCouldAdd < 0 ) {
           amountTheUserCouldAdd = 0;
         }
@@ -192,7 +192,7 @@ export default class SoluteControl extends Panel {
       maxHeight: 20
     } );
 
-    // TODO (SR) Take tandem out of options and make it a required parameter. Pass it through for the buttons.
+    // TODO (SR) Take tandem out of options and make it a required parameter. Pass it through for the buttons. https://github.com/phetsims/membrane-transport/issues/86
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     delete options.tandem;

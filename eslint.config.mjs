@@ -14,7 +14,6 @@ export default [
   ...simEslintConfig,
   ...banTSCommentConfig, {
     rules: {
-      'phet/todo-should-have-issue': 'off',
 
       // Not compatible with aider
       'eol-last': 'off'
