@@ -97,6 +97,11 @@
         }
       }
     },
+    "soluteControls": {
+      "accessibleHeading": {
+        "value": "Solute Controls"
+      }
+    },
     "resetSolutesButton": {
       "accessibleName": {
         "value": "Reset Solutes"

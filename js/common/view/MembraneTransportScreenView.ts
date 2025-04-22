@@ -132,7 +132,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
-      accessibleHeading: 'Solute Controls', // TODO (SR) i18n https://github.com/phetsims/membrane-transport/issues/86
+      accessibleHeading: MembraneTransportStrings.a11y.soluteControls.accessibleHeadingStringProperty,
       accessibleHelpText: MembraneTransportMessages.soluteControlsAccessibleHelpTextMessageProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
