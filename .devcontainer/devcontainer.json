@@ -1,9 +1,0 @@
-{
-  "name": "Design Preview Env",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
-  "postCreateCommand": "./setup.sh",
-  "postStartCommand": "./refresh.sh && npm run codespaces-server",
-  "forwardPorts": [
-    3000
-  ]
-}
