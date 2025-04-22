@@ -261,7 +261,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       macroCellNode.moveToFront();
     }
 
-    // TODO (SR): These are just for debugging, remove before publication. https://github.com/phetsims/membrane-transport/issues/86
+    // TODO (SR): These are just for debugging, remove before publication. https://github.com/phetsims/membrane-transport/issues/101
     // Add hotkeys that let us easily test model behavior.
     KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
     KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );

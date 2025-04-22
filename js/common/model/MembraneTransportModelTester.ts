@@ -3,6 +3,8 @@
 /**
  * Utility functions that help exercise the MembraneTransportModel.
  *
+ * TODO: Should this file be removed? See https://github.com/phetsims/membrane-transport/issues/101
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
