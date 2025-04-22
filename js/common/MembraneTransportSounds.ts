@@ -17,7 +17,7 @@ import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 
-// TODO (SR): If we take these to production, factor out, fix the license entry, etc. https://github.com/phetsims/membrane-transport/issues/86
+// TODO (SR): If we take these to production, factor out, fix the license entry, etc. https://github.com/phetsims/membrane-transport/issues/100
 import cardMovement1_mp3 from '../../sounds/cardMovement1_mp3.js';
 import cardMovement2_mp3 from '../../sounds/cardMovement2_mp3.js';
 import cardMovement3_mp3 from '../../sounds/cardMovement3_mp3.js';
