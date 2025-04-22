@@ -14,6 +14,7 @@ import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
@@ -26,14 +27,15 @@ import { SoluteControlSolutes } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type SoluteControlOptions = SelfOptions & PanelOptions;
+type SoluteControlOptions = SelfOptions & StrictOmit<PanelOptions, 'tandem'>;
 
 const fineDelta = 2;
 const coarseDelta = 10;
 
 export default class SoluteControl extends Panel {
 
-  public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside', providedOptions: SoluteControlOptions ) {
+  public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside',
+                      tandem: Tandem, providedOptions: SoluteControlOptions ) {
 
     const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
       return soluteType === selectedSolute;
@@ -176,7 +178,7 @@ export default class SoluteControl extends Panel {
         );
       },
       pdomDependencies: [ objectResponseMessageProperty ],
-      tandem: options.tandem,
+      tandem: tandem,
       phetioVisiblePropertyInstrumented: false,
       phetioEnabledPropertyInstrumented: false,
       arrowButtonOptions: {
@@ -191,11 +193,6 @@ export default class SoluteControl extends Panel {
       maxWidth: 40,
       maxHeight: 20
     } );
-
-    // TODO (SR) Take tandem out of options and make it a required parameter. Pass it through for the buttons. https://github.com/phetsims/membrane-transport/issues/86
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    delete options.tandem;
 
     super( new Node( {
       children: [ spinner, icon ]

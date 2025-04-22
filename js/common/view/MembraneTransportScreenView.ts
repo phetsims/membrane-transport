@@ -199,22 +199,22 @@ export default class MembraneTransportScreenView extends ScreenView {
 
       // ATP can only be added inside the cell
       if ( soluteType !== 'atp' ) {
-        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', {
-          centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-          bottom: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ),
-          tandem: outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ),
-          preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
-        } );
+        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside',
+          outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
+            centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
+            bottom: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ),
+            preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
+          } );
         outsideSoluteControlNode.addChild( outsideSoluteControl );
         soluteControls.push( outsideSoluteControl );
       }
 
-      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', {
-        centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-        top: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.minY ),
-        tandem: insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ),
-        preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
-      } );
+      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside',
+        insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
+          centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
+          top: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.minY ),
+          preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
+        } );
       insideSoluteControlNode.addChild( insideSoluteControl );
       soluteControls.push( insideSoluteControl );
     } );
