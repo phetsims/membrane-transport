@@ -23,8 +23,6 @@ import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
 simLauncher.launch( () => {
 
-  console.log( 'hello world' );
-
   const titleStringProperty = MembraneTransportStrings[ 'membrane-transport' ].titleStringProperty;
 
   const screens = [
