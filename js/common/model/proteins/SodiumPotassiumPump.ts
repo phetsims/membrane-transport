@@ -29,7 +29,7 @@ import TransportProteinType from './TransportProteinType.js';
 
 type SodiumPotassiumPumpState =
   'openToInsideEmpty' | // Ready to get sodium ions
-  'openToInsideSodiumBound' |  // Got the sodium ions, waiting for the phoshpate from ATP
+  'openToInsideSodiumBound' |  // Got the sodium ions, waiting for the phosphate from ATP
   'openToOutside'; // waiting for the potassium
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
