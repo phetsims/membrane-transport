@@ -20,7 +20,7 @@ type SodiumGlucoseCotransporterState = 'openToOutside' | 'openToInside';
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
   // Declared like so in order to allow editing in the dev tools
-  // TODO (SR|JG): These need to be adjusted to match the artwork. https://github.com/phetsims/membrane-transport/issues/86
+  // TODO (SR|JG): These need to be adjusted to match the artwork. https://github.com/phetsims/membrane-transport/issues/104
   public static readonly SODIUM_SITE_LEFT = new Vector2( -5.2, 8.5 );
   public static readonly SODIUM_SITE_RIGHT = new Vector2( 6.2, 8.5 );
   public static readonly GLUCOSE_SITE_CENTER = new Vector2( 0.65, 3 );

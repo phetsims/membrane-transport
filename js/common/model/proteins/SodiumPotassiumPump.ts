@@ -36,7 +36,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   // Declared like so, so that they can be adjusted at runtime in the dev tools, like so:
   // phet.membraneTransport.SodiumPotassiumPump.SODIUM_SITE_1.y=-6.5
-  // TODO (SR|JG): These need to be adjusted to match the artwork. https://github.com/phetsims/membrane-transport/issues/86
+  // TODO (SR|JG): These need to be adjusted to match the artwork. https://github.com/phetsims/membrane-transport/issues/104
   public static readonly SODIUM_SITE_1 = new Vector2( -3.5, -5.6 );
   public static readonly SODIUM_SITE_2 = new Vector2( -3.2, 0.8 );
   public static readonly SODIUM_SITE_3 = new Vector2( 3.5, -2.2 );

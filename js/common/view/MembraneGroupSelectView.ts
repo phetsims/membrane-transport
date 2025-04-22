@@ -7,7 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-// TODO (SR): Highlight region is sometimes huge. https://github.com/phetsims/membrane-transport/issues/86
+// TODO (SR): Highlight region is sometimes huge. https://github.com/phetsims/membrane-transport/issues/45
 
 import Property from '../../../../axon/js/Property.js';
 import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';

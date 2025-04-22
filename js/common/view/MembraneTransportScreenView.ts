@@ -247,7 +247,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomPlayAreaNode.pdomOrder = [
       soluteControlsNode,
       soluteConcentrationsAccordionBox,
-      this.observationWindow, // Contains the ligands. TODO (SR): When focusing the ligands, why does the highlight show around the membrane? https://github.com/phetsims/membrane-transport/issues/86
+      this.observationWindow, // Contains the ligands. TODO (SR): When focusing the ligands, why does the highlight show around the membrane? https://github.com/phetsims/membrane-transport/issues/45
       rightSideVBox
     ];
 
