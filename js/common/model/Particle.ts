@@ -237,14 +237,13 @@ export default class Particle<T extends ParticleType> {
     assert && assert( this.dimension.height / 2 < CAPTURE_RADIUS_PROPERTY.value, 'The capture radius is too small for interaction with membrane.' );
 
     // Start in random walk mode with random directions.
-    this.mode = this.createRandomWalkMode( true );
+    this.mode = Particle.createRandomWalkMode( true );
   }
 
   /**
    * @param allowImmediateInteraction - Some particles should be allowed to interact immediately, while others should not.
-   * TODO: Make static
    */
-  public createRandomWalkMode( allowImmediateInteraction: boolean ): RandomWalkMode {
+  public static createRandomWalkMode( allowImmediateInteraction: boolean ): RandomWalkMode {
 
     const timeElapsedSinceMembraneCrossing = allowImmediateInteraction ? CROSSING_COOLDOWN : 0;
     return {
@@ -258,7 +257,7 @@ export default class Particle<T extends ParticleType> {
 
   public releaseFromInteraction( y: number ): void {
     this.position.y = y;
-    this.mode = this.createRandomWalkMode( true );
+    this.mode = Particle.createRandomWalkMode( true );
   }
 
   /**

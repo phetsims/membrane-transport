@@ -109,7 +109,7 @@ export default class LigandNode extends Node {
       },
       end: () => {
         this.operateOnLigand( ligand => {
-          ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : ligand.createRandomWalkMode( true );
+          ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
         } );
         pressOffset = null;
       },
@@ -136,7 +136,7 @@ export default class LigandNode extends Node {
 
         // If the ligand is already controlled, don't start walking when the pointer goes out
         if ( ligand.mode.type !== 'userControlled' ) {
-          ligand.mode = isOver ? { type: 'userOver', slot: null } : ligand.createRandomWalkMode( true );
+          ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
         }
       } );
     } );

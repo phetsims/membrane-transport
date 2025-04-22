@@ -114,7 +114,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     if ( this.boundLigand ) {
 
       // Reset the ligand to random walk mode
-      this.boundLigand.mode = this.boundLigand.createRandomWalkMode( false );
+      this.boundLigand.mode = Particle.createRandomWalkMode( false );
 
       // Clear the bound state
       this.stateProperty.value = 'ligandUnboundOpen';

@@ -106,7 +106,7 @@ Students using the simulation should be able to:
 - Explain how passive and active transport differ in energy requirements and direction relative to concentration
   gradients.
 
-<!-- TODO: @bfiedler Rough running list below, refine and integrate -->
+<!-- TODO (BF): Rough running list below, refine and integrate -->
 Assumptions and Simplifications:
 
 - The simulation assumes idealized conditions, such as perfect channel opening/closing and instantaneous ligand binding.
@@ -116,5 +116,5 @@ Assumptions and Simplifications:
 - The simulation does not include the effects of temperature, pressure, or other environmental factors on diffusion rates.
 - Scales of molecules and transport proteins are not to scale, as the simulation is designed for educational clarity rather than precise molecular representation.
 
-<!-- TODO: @bfiedler remove below and transfer to teacher tips before publication -->
+<!-- TODO (BF): remove below and transfer to teacher tips before publication -->
 Teaching Tips
