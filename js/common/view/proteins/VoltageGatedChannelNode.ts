@@ -25,7 +25,7 @@ export default class VoltageGatedChannelNode extends TransportProteinNode {
 
     const image = new Image( type === 'sodiumIonVoltageGatedChannel' ? sodiumVoltageGatedMinus70mV_svg : potassiumVoltageGatedMinus70and50mV_svg );
     super( image, {
-      viewOffset: new Vector2( 0, 15 )
+      viewOffset: type === 'sodiumIonVoltageGatedChannel' ? new Vector2( 0, 15 ) : Vector2.ZERO
     } );
 
     if ( channel ) {
