@@ -1,4 +1,100 @@
 {
+  "GeneralButtonAddingMany.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonAddingMany_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonAddingOne.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonAddingOne_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingManyv1.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingManyv1_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingManyv2.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingManyv2_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingOnev1.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingOnev1_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingOnev2.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "GeneralButtonRemovingOnev2_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
   "cardMovement1.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"

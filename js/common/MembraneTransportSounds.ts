@@ -24,6 +24,11 @@ import cardMovement3_mp3 from '../../sounds/cardMovement3_mp3.js';
 import cardMovement4_mp3 from '../../sounds/cardMovement4_mp3.js';
 import cardMovement5_mp3 from '../../sounds/cardMovement5_mp3.js';
 import cardMovement6_mp3 from '../../sounds/cardMovement6_mp3.js';
+import GeneralButtonAddingMany_mp3 from '../../sounds/GeneralButtonAddingMany_mp3.js';
+import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingManyv1_mp3.js';
+import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
+import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
+import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
 import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
 import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
 import mtChannelCloseSet1_002_mp3 from '../../sounds/mtChannelCloseSet1_002_mp3.js';
@@ -168,6 +173,12 @@ const channelSounds: ChannelSoundMap = {
 // Other sound definitions remain the same
 const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
 
+export const GeneralButtonAddingManySoundClip = newSoundClip( GeneralButtonAddingMany_mp3, { initialOutputLevel: 0.3 } );
+export const GeneralButtonAddingOneSoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
+export const GeneralButtonRemovingManyv1SoundClip = newSoundClip( GeneralButtonRemovingManyv1_mp3, { initialOutputLevel: 0.3 } );
+export const GeneralButtonRemovingManyv2SoundClip = newSoundClip( GeneralButtonRemovingManyv2_mp3, { initialOutputLevel: 0.3 } );
+export const GeneralButtonRemovingOnev1SoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
+export const GeneralButtonRemovingOnev2SoundClip = newSoundClip( GeneralButtonRemovingOnev2_mp3, { initialOutputLevel: 0.3 } );
 
 const proteinReturnSound = newSoundClip( proteinReturnSound4_mp3, {
   initialOutputLevel: 0.2
