@@ -9,6 +9,7 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Particle from '../Particle.js';
 import Slot from '../Slot.js';
 import { LigandType } from '../SoluteType.js';
@@ -42,8 +43,15 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   // Offsets for binding positions, relative to the center of the slot. Static so that they can be controlled from the dev tools.
   private static readonly SODIUM_BINDING_OFFSET_CLOSED = new Vector2( -5.5, 11 );
   private static readonly SODIUM_BINDING_OFFSET_OPEN = new Vector2( -7.5, 11 );
-  private static readonly POTASSIUM_BINDING_OFFSET_CLOSED = new Vector2( 2.75, 3.5 );
-  private static readonly POTASSIUM_BINDING_OFFSET_OPEN = new Vector2( 2.75, 3.5 );
+
+  private static readonly POTASSIUM_BINDING_OFFSET_CLOSED = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel.closed.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel.closed.ligandBindingSite
+  );
+  private static readonly POTASSIUM_BINDING_OFFSET_OPEN = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel.open.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel.open.ligandBindingSite
+  );
 
   public constructor( model: TransportProteinModelContext, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
     super( model, type, position, 'closed' );

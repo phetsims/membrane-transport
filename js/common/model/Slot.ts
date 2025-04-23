@@ -3,7 +3,7 @@
 /**
  * Model representation for a Slot, which can hold a membrane transport protein.
  *
- * @author Sam Reid (PhET Interactive Simulations
+ * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
@@ -63,7 +63,7 @@ export default class Slot {
    * Returns the model position of this slot. Slots have a horizontal position in the membrane, which is always
    * vertically at 0.
    *
-   * This is a convenience function to get the position as a Vecctor2.
+   * This is a convenience function to get the position as a Vector2.
    */
   public getPositionVector(): Vector2 {
     return new Vector2( this.position, 0 );

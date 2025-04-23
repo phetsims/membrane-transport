@@ -225,8 +225,8 @@ export default class Particle<T extends ParticleType> {
   ) {
     const lookup = getParticleViewDimensions()[ type ];
 
-    const width = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaX( lookup.width * MembraneTransportConstants.PARTICLE_ARTWORK_SCALE );
-    const height = Math.abs( MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaY( lookup.height * MembraneTransportConstants.PARTICLE_ARTWORK_SCALE ) );
+    const width = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaX( lookup.width * MembraneTransportConstants.OVERALL_ARTWORK_SCALE );
+    const height = Math.abs( MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaY( lookup.height * MembraneTransportConstants.OVERALL_ARTWORK_SCALE ) );
 
     this.dimension = new Dimension2( width, height );
 

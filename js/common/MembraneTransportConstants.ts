@@ -15,6 +15,7 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
+import Dimension2 from '../../../dot/js/Dimension2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
@@ -46,8 +47,8 @@ export default class MembraneTransportConstants {
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;
 
   // The artwork is sized correctly relatively to each other, but this determines the overall scale factor so that
-  // they will have the correct model bounds.
-  public static readonly PARTICLE_ARTWORK_SCALE = 0.1;
+  // they will have the correct model bounds. This applies to particles and transport proteins.
+  public static readonly OVERALL_ARTWORK_SCALE = 0.1;
 
   // Bounds of the membrane for collision detection and rendering.
   public static readonly MEMBRANE_BOUNDS = new Bounds2(
@@ -74,6 +75,28 @@ export default class MembraneTransportConstants {
   );
 
   public static readonly FONT = new PhetFont( 14 );
+
+  // Track some image metrics in the constants since they are used interaction coordinates in the model
+  public static readonly IMAGE_METRICS = {
+    potassiumLigandGatedChannel: {
+      closed: {
+        dimension: new Dimension2( 651, 975 ),
+        ligandBindingSite: new Vector2( 132, 135 )
+      },
+      open: {
+        dimension: new Dimension2( 650, 975 ),
+        ligandBindingSite: new Vector2( 132, 135 )
+      }
+    }
+  };
+
+  // Compute the model coordinates offset of the binding site, given its coordinates in the image
+  public static getBindingSiteOffset( dimension: Dimension2, site: Vector2 ): Vector2 {
+    return MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaXY(
+      -( dimension.width / 2 - site.x ) * MembraneTransportConstants.OVERALL_ARTWORK_SCALE,
+      -( dimension.height / 2 - site.y ) * MembraneTransportConstants.OVERALL_ARTWORK_SCALE
+    );
+  }
 
   // Yes, it is unused, but this will remind us to not accidentally instantiate
   private constructor() {
