@@ -28,9 +28,9 @@ const BINDING_DURATION = 7;
 const STATE_TRANSITION_INTERVAL = 0.5;
 
 type LigandGatedChannelState = 'closed' | // idle state, not bound to a ligand
-  'ligandBoundClosed' | // ligand has bound, but channel has not yet opened (brief)
-  'ligandBoundOpen' | // ligand has unbound, but channel is still open (brief)
-  'ligandUnboundOpen';  // ligand has bound and channel has opened
+  'ligandBoundClosed' | // ligand has bound, but the channel has not yet opened (brief)
+  'ligandBoundOpen' | // ligand has unbound, but the channel is still open (brief)
+  'ligandUnboundOpen';  // ligand has bound and the channel has opened
 
 export default class LigandGatedChannel extends TransportProtein<LigandGatedChannelState> {
 
