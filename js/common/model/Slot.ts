@@ -32,7 +32,8 @@ export default class Slot {
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
 
-      // TODO: Combine into one, see https://github.com/phetsims/membrane-transport/issues/112
+      // We must releaseParticle given a slot, since the slot is already disassociated from the transport protein.
+      // However, we also do not want to add arguments to dispose, so we do this in two steps.
       oldTransportProtein && oldTransportProtein.releaseParticles( this );
       oldTransportProtein && oldTransportProtein.dispose();
     } );
