@@ -9,6 +9,7 @@
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -19,11 +20,18 @@ type SodiumGlucoseCotransporterState = 'openToOutside' | 'openToInside';
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
-  // Declared like so in order to allow editing in the dev tools
-  // TODO (SR|JG): These need to be adjusted to match the artwork. https://github.com/phetsims/membrane-transport/issues/104
-  public static readonly SODIUM_SITE_LEFT = new Vector2( -5.2, 8.5 );
-  public static readonly SODIUM_SITE_RIGHT = new Vector2( 6.2, 8.5 );
-  public static readonly GLUCOSE_SITE_CENTER = new Vector2( 0.65, 3 );
+  private static readonly SODIUM_SITE_LEFT = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.sodiumSiteLeft
+  );
+  private static readonly SODIUM_SITE_RIGHT = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.sodiumSiteRight
+  );
+  private static readonly GLUCOSE_SITE_CENTER = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.glucoseSiteCenter
+  );
 
   public constructor( model: TransportProteinModelContext, type: TransportProteinType, position: number ) {
     super( model, type, position, 'openToOutside' );

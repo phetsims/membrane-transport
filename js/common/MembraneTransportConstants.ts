@@ -97,6 +97,13 @@ export default class MembraneTransportConstants {
         dimension: new Dimension2( 650, 900 ),
         ligandBindingSite: new Vector2( 134, 145 )
       }
+    },
+
+    sodiumGlucoseCotransporter: {
+      dimension: new Dimension2( 650, 900 ),
+      sodiumSiteLeft: new Vector2( 196.7, 211.5 ),
+      sodiumSiteRight: new Vector2( 490.3, 211.5 ),
+      glucoseSiteCenter: new Vector2( 345, 369.5 )
     }
   };
 
