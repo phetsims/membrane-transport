@@ -104,6 +104,18 @@ export default class MembraneTransportConstants {
       sodiumSiteLeft: new Vector2( 196.7, 211.5 ),
       sodiumSiteRight: new Vector2( 490.3, 211.5 ),
       glucoseSiteCenter: new Vector2( 345, 369.5 )
+    },
+    sodiumPotassiumPump: {
+      openDownDimension: new Dimension2( 650, 900 ),
+      openDownWithPhosphateSiteDimension: new Dimension2( 650, 900 ),
+      openUpDimension: new Dimension2( 657, 900 ),
+
+      sodiumSite1: new Vector2( 243.6, 619.5 ),
+      sodiumSite2: new Vector2( 408, 528.2 ),
+      sodiumSite3: new Vector2( 254.8, 449.8 ),
+      phosphateSite: new Vector2( 328, 792.7 ),
+      potassiumSite1: new Vector2( 217, 341.1 ),
+      potassiumSite2: new Vector2( 442.5, 342 )
     }
   };
 

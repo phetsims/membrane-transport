@@ -22,6 +22,7 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -34,15 +35,30 @@ type SodiumPotassiumPumpState =
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
-  // Declared like so, so that they can be adjusted at runtime in the dev tools, like so:
-  // phet.membraneTransport.SodiumPotassiumPump.SODIUM_SITE_1.y=-6.5
-  // TODO (SR|JG): These need to be adjusted to match the artwork. https://github.com/phetsims/membrane-transport/issues/104
-  public static readonly SODIUM_SITE_1 = new Vector2( -3.5, -5.6 );
-  public static readonly SODIUM_SITE_2 = new Vector2( -3.2, 0.8 );
-  public static readonly SODIUM_SITE_3 = new Vector2( 3.5, -2.2 );
-  public static readonly PHOSPHATE_SITE = new Vector2( 0, -12 );
-  public static readonly POTASSIUM_SITE_1 = new Vector2( 5, 5 );
-  public static readonly POTASSIUM_SITE_2 = new Vector2( 5, 10 );
+  private static readonly SODIUM_SITE_1 = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.sodiumSite1
+  );
+  private static readonly SODIUM_SITE_2 = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.sodiumSite2
+  );
+  private static readonly SODIUM_SITE_3 = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.sodiumSite3
+  );
+  private static readonly PHOSPHATE_SITE = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownWithPhosphateSiteDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.phosphateSite
+  );
+  private static readonly POTASSIUM_SITE_1 = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openUpDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.potassiumSite1
+  );
+  private static readonly POTASSIUM_SITE_2 = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openUpDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.potassiumSite2
+  );
 
   public constructor(
     model: TransportProteinModelContext,
