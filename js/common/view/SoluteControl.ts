@@ -14,7 +14,6 @@ import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Orientation from '../../../../phet-core/js/Orientation.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import FineCoarseSpinner from '../../../../scenery-phet/js/FineCoarseSpinner.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -184,8 +183,7 @@ export default class SoluteControl extends Panel {
       phetioEnabledPropertyInstrumented: false,
       arrowButtonOptions: {
         phetioVisiblePropertyInstrumented: false
-      },
-      ariaOrientation: Orientation.HORIZONTAL
+      }
     } );
 
     const icon = createParticleNode( soluteType, {
