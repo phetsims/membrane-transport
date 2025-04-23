@@ -95,8 +95,7 @@ const newSoundClip = ( sound: WrappedAudioBuffer, options?: SoundClipOptions ): 
 };
 
 // Define constant options for consistency
-const DEFAULT_OPTIONS: SoundClipOptions = { initialOutputLevel: 0.6 };
-const MUFFLED_OPTIONS: SoundClipOptions = { initialOutputLevel: 0.6 }; // May adjust later if needed
+const CHANNEL_SOUND_OPTIONS: SoundClipOptions = { initialOutputLevel: 0.18 };
 
 // Define specific types for channel identifiers and sound sets
 type ChannelType = 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel';
@@ -110,58 +109,58 @@ type ChannelSoundMap = Record<SoundSetKey, Record<ChannelAction, Record<ChannelT
 const channelSounds: ChannelSoundMap = {
   1: {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_001_mp3, DEFAULT_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_002_mp3, DEFAULT_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_003_mp3, DEFAULT_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_004_mp3, DEFAULT_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_001_mp3, DEFAULT_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_002_mp3, DEFAULT_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_003_mp3, DEFAULT_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_004_mp3, DEFAULT_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
     }
   },
   2: {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_001_mp3, DEFAULT_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_002_mp3, DEFAULT_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_003_mp3, DEFAULT_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_004_mp3, DEFAULT_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_001_mp3, DEFAULT_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_002_mp3, DEFAULT_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_003_mp3, DEFAULT_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_004_mp3, DEFAULT_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
     }
   },
   '1muffled': {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_001_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_002_muffled_mp3, MUFFLED_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_003_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_004_muffled_mp3, MUFFLED_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_001_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_002_muffled_mp3, MUFFLED_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_003_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_004_muffled_mp3, MUFFLED_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     }
   },
   '2muffled': {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_001_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_002_muffled_mp3, MUFFLED_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_003_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_004_muffled_mp3, MUFFLED_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_001_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_002_muffled_mp3, MUFFLED_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_003_muffled_mp3, MUFFLED_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_004_muffled_mp3, MUFFLED_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     }
   }
 };
@@ -184,8 +183,8 @@ const mtSoluteCrossing005 = newSoundClip( mtSoluteCrossing005_mp3, { initialOutp
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
-const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.6 } );
-const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.6 } );
+const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.3 } );
+const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.3 } );
 
 export default class MembraneTransportSounds {
 
