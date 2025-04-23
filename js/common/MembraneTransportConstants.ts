@@ -119,7 +119,12 @@ export default class MembraneTransportConstants {
     }
   };
 
-  // Compute the model coordinates offset of the binding site, given its coordinates in the image
+  /**
+   * Compute the model coordinates of the binding site, given its coordinates in the image.
+   *
+   * @param dimension - The dimension of the protein in the image.
+   * @param site - The coordinates of the binding site in the image.
+   */
   public static getBindingSiteOffset( dimension: Dimension2, site: Vector2 ): Vector2 {
     return MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.viewToModelDeltaXY(
       -( dimension.width / 2 - site.x ) * MembraneTransportConstants.OVERALL_ARTWORK_SCALE,
