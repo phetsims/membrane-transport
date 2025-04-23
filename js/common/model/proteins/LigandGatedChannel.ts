@@ -41,8 +41,14 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   private timeSinceStateTransition = REBINDING_DELAY;
 
   // Offsets for binding positions, relative to the center of the slot. Static so that they can be controlled from the dev tools.
-  private static readonly SODIUM_BINDING_OFFSET_CLOSED = new Vector2( -5.5, 11 );
-  private static readonly SODIUM_BINDING_OFFSET_OPEN = new Vector2( -7.5, 11 );
+  private static readonly SODIUM_BINDING_OFFSET_CLOSED = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumLigandGatedChannel.closed.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumLigandGatedChannel.closed.ligandBindingSite
+  );
+  private static readonly SODIUM_BINDING_OFFSET_OPEN = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumLigandGatedChannel.open.dimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumLigandGatedChannel.open.ligandBindingSite
+  );
 
   private static readonly POTASSIUM_BINDING_OFFSET_CLOSED = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel.closed.dimension,

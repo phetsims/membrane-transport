@@ -87,6 +87,16 @@ export default class MembraneTransportConstants {
         dimension: new Dimension2( 650, 975 ),
         ligandBindingSite: new Vector2( 132, 135 )
       }
+    },
+    sodiumLigandGatedChannel: {
+      closed: {
+        dimension: new Dimension2( 650, 900 ),
+        ligandBindingSite: new Vector2( 187, 134 )
+      },
+      open: {
+        dimension: new Dimension2( 650, 900 ),
+        ligandBindingSite: new Vector2( 134, 145 )
+      }
     }
   };
 
