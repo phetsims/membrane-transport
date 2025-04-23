@@ -110,7 +110,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
       const ligandViewNodes = [ new LigandParticleNode( 'ligandA' ), new LigandParticleNode( 'ligandB' ) ];
       ligandViewNodes.forEach( ( ligandViewNode, j ) => {
         for ( let i = 0; i < MembraneTransportConstants.LIGAND_COUNT; i++ ) {
-          const ligandNode = new LigandNode( model.areLigandsAddedProperty, model.ligands, i + j * MembraneTransportConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, i === 0 );
+          const ligandNode = new LigandNode( model.slots, model.areLigandsAddedProperty, model.ligands, i + j * MembraneTransportConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, i === 0 );
           this.ligandNodes.push( ligandNode );
         }
       } );

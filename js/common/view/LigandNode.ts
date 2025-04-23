@@ -21,7 +21,9 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
-import Particle from '../model/Particle.js';
+import Particle, { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
+import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
+import Slot from '../model/Slot.js';
 import { LigandType } from '../model/SoluteType.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
 
@@ -35,6 +37,7 @@ export default class LigandNode extends Node {
   private ligandScaleSet = false;
 
   public constructor(
+    slots: Slot[],
     areLigandsAddedProperty: TProperty<boolean>,
     private readonly ligands: Particle<LigandType>[],
     private readonly ligandIndex: number,
@@ -110,6 +113,21 @@ export default class LigandNode extends Node {
       end: () => {
         this.operateOnLigand( ligand => {
           ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
+
+          // If the ligand is release within the capture radius of a corresponding ligand gated channel, clear the ligand gated channel cooldown so it can immediately bind.
+          for ( let i = 0; i < slots.length; i++ ) {
+            const transportProtein = slots[ i ].transportProteinProperty.value;
+            const distance = ligand.position.distance( new Vector2( slots[ i ].position, 0 ) );
+
+            if ( transportProtein &&
+                 distance < CAPTURE_RADIUS_PROPERTY.value &&
+                 transportProtein instanceof LigandGatedChannel &&
+                 transportProtein.stateProperty.value === 'closed' &&
+                 ( ( transportProtein.type === 'sodiumIonLigandGatedChannel' && ligand.type === 'ligandA' ) ||
+                   ( transportProtein.type === 'potassiumIonLigandGatedChannel' && ligand.type === 'ligandB' ) ) ) {
+              transportProtein.clearRebindingCooldown();
+            }
+          }
         } );
         pressOffset = null;
       },

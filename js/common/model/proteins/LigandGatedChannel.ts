@@ -17,8 +17,6 @@ import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
-// TODO (BF): Should the rebinding delay cooldown finish when you release a ligand right on top of the channel? https://github.com/phetsims/membrane-transport/issues/94
-//   It is confusing sometimes when you release a ligand on the channel and it just moves away.
 const REBINDING_DELAY = 5;
 
 // Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time, in seconds.
@@ -65,6 +63,10 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     this.stateProperty.link( state => {
       this.timeSinceStateTransition = 0;
     } );
+  }
+
+  public clearRebindingCooldown(): void {
+    this.timeSinceStateTransition = REBINDING_DELAY;
   }
 
   public override step( dt: number ): void {
