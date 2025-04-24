@@ -107,12 +107,20 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
 
-      const ligandViewNodes = [ new LigandParticleNode( 'ligandA' ), new LigandParticleNode( 'ligandB' ) ];
-      ligandViewNodes.forEach( ( ligandViewNode, j ) => {
-        for ( let i = 0; i < MembraneTransportConstants.LIGAND_COUNT; i++ ) {
-          const ligandNode = new LigandNode( model.slots, model.areLigandsAddedProperty, model.ligands, i + j * MembraneTransportConstants.LIGAND_COUNT, modelViewTransform, ligandViewNode, i === 0 );
-          this.ligandNodes.push( ligandNode );
+      const focusableLigandTypes = new Set<string>();
+
+      model.ligands.forEach( ligand => {
+
+        const ligandViewNode = new LigandParticleNode( ligand.type );
+
+        // Make the first ligand of each type focusable
+        const isFocusable = !focusableLigandTypes.has( ligand.type );
+        if ( isFocusable ) {
+          focusableLigandTypes.add( ligand.type );
         }
+
+        const ligandNode = new LigandNode( model.slots, model.areLigandsAddedProperty, ligand, modelViewTransform, ligandViewNode, isFocusable );
+        this.ligandNodes.push( ligandNode );
       } );
 
       // Put in random z-order

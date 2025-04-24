@@ -39,8 +39,7 @@ export default class LigandNode extends Node {
   public constructor(
     slots: Slot[],
     areLigandsAddedProperty: TProperty<boolean>,
-    private readonly ligands: Particle<LigandType>[],
-    private readonly ligandIndex: number,
+    private readonly ligand: Particle<LigandType>,
     private readonly modelViewTransform: ModelViewTransform2,
     ligandView: LigandParticleNode,
     focusable: boolean
@@ -79,56 +78,49 @@ export default class LigandNode extends Node {
 
     const soundRichDragListener = new SoundRichDragListener( {
       start: event => {
-        this.operateOnLigand( ligand => {
-          ligand.mode = { type: 'userControlled', slot: null };
+        ligand.mode = { type: 'userControlled', slot: null };
 
-          // Store initial offset from pointer to ligand position
-          const localPoint = this.globalToParentPoint( event.pointer.point );
-          const modelPoint = this.modelViewTransform.viewToModelPosition( localPoint );
-          pressOffset = modelPoint.minus( ligand.position );
-        } );
+        // Store initial offset from pointer to ligand position
+        const localPoint = this.globalToParentPoint( event.pointer.point );
+        const modelPoint = this.modelViewTransform.viewToModelPosition( localPoint );
+        pressOffset = modelPoint.minus( ligand.position );
       },
       drag: ( event, listener ) => {
 
-        this.operateOnLigand( ligand => {
+        const setConstrainedPosition = ( proposedPosition: Vector2 ) => {
+          const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
+          isOnBoundaryProperty.value = !boundModelPoint.equals( proposedPosition );
+          ligand.position.set( boundModelPoint );
+        };
 
-          const setConstrainedPosition = ( proposedPosition: Vector2 ) => {
-            const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
-            isOnBoundaryProperty.value = !boundModelPoint.equals( proposedPosition );
-            ligand.position.set( boundModelPoint );
-          };
-
-          if ( event.isFromPDOM() ) {
-            const proposedPosition = ligand.position.plus( listener.modelDelta );
-            setConstrainedPosition( proposedPosition );
-          }
-          else {
-            const localPoint = this.globalToParentPoint( event.pointer.point );
-            const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
-            const proposedPosition = modelPointerPosition.minus( pressOffset! );
-            setConstrainedPosition( proposedPosition );
-          }
-        } );
+        if ( event.isFromPDOM() ) {
+          const proposedPosition = ligand.position.plus( listener.modelDelta );
+          setConstrainedPosition( proposedPosition );
+        }
+        else {
+          const localPoint = this.globalToParentPoint( event.pointer.point );
+          const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
+          const proposedPosition = modelPointerPosition.minus( pressOffset! );
+          setConstrainedPosition( proposedPosition );
+        }
       },
       end: () => {
-        this.operateOnLigand( ligand => {
-          ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
+        ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
 
-          // If the ligand is release within the capture radius of a corresponding ligand gated channel, clear the ligand gated channel cooldown so it can immediately bind.
-          for ( let i = 0; i < slots.length; i++ ) {
-            const transportProtein = slots[ i ].transportProteinProperty.value;
-            const distance = ligand.position.distance( new Vector2( slots[ i ].position, 0 ) );
+        // If the ligand is release within the capture radius of a corresponding ligand gated channel, clear the ligand gated channel cooldown so it can immediately bind.
+        for ( let i = 0; i < slots.length; i++ ) {
+          const transportProtein = slots[ i ].transportProteinProperty.value;
+          const distance = ligand.position.distance( new Vector2( slots[ i ].position, 0 ) );
 
-            if ( transportProtein &&
-                 distance < CAPTURE_RADIUS_PROPERTY.value &&
-                 transportProtein instanceof LigandGatedChannel &&
-                 transportProtein.stateProperty.value === 'closed' &&
-                 ( ( transportProtein.type === 'sodiumIonLigandGatedChannel' && ligand.type === 'ligandA' ) ||
-                   ( transportProtein.type === 'potassiumIonLigandGatedChannel' && ligand.type === 'ligandB' ) ) ) {
-              transportProtein.clearRebindingCooldown();
-            }
+          if ( transportProtein &&
+               distance < CAPTURE_RADIUS_PROPERTY.value &&
+               transportProtein instanceof LigandGatedChannel &&
+               transportProtein.stateProperty.value === 'closed' &&
+               ( ( transportProtein.type === 'sodiumIonLigandGatedChannel' && ligand.type === 'ligandA' ) ||
+                 ( transportProtein.type === 'potassiumIonLigandGatedChannel' && ligand.type === 'ligandB' ) ) ) {
+            transportProtein.clearRebindingCooldown();
           }
-        } );
+        }
         pressOffset = null;
       },
       transform: this.modelViewTransform,
@@ -150,47 +142,28 @@ export default class LigandNode extends Node {
     this.addInputListener( soundRichDragListener );
 
     soundRichDragListener.dragListener.isOverOrFocusedProperty.link( isOver => {
-      this.operateOnLigand( ligand => {
-
-        // If the ligand is already controlled, don't start walking when the pointer goes out
-        if ( ligand.mode.type !== 'userControlled' ) {
-          ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
-        }
-      } );
+      // If the ligand is already controlled, don't start walking when the pointer goes out
+      if ( ligand.mode.type !== 'userControlled' ) {
+        ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
+      }
     } );
-  }
-
-  /**
-   * Do some work on the Ligand associate with this Node if it exists. Otherwise, do nothing. The ligand in the model
-   * may be added or removed but the view component will always exist.
-   */
-  private operateOnLigand( operation: ( ligand: Particle<LigandType> ) => void ): void {
-
-    // TODO: Can we just preallocate all the ligands and get rid of this part? https://github.com/phetsims/membrane-transport/issues/45
-    const ligand = this.ligands[ this.ligandIndex ] || null;
-    if ( ligand ) {
-      operation( ligand );
-    }
   }
 
   /**
    * Update the view with the animation state since the positions are not observable.
    */
   public step(): void {
-    this.operateOnLigand( ligand => {
+    const modelWidth = this.ligand.dimension.width;
+    const viewWidth = this.modelViewTransform.modelToViewDeltaX( modelWidth );
 
-      const modelWidth = ligand.dimension.width;
-      const viewWidth = this.modelViewTransform.modelToViewDeltaX( modelWidth );
+    if ( !this.ligandScaleSet ) {
+      const viewScale = viewWidth / this.width;
+      this.setScaleMagnitude( viewScale );
 
-      if ( !this.ligandScaleSet ) {
-        const viewScale = viewWidth / this.width;
-        this.setScaleMagnitude( viewScale );
+      this.ligandScaleSet = true;
+    }
 
-        this.ligandScaleSet = true;
-      }
-
-      this.center = this.modelViewTransform.modelToViewPosition( ligand.position );
-    } );
+    this.center = this.modelViewTransform.modelToViewPosition( this.ligand.position );
   }
 }
 membraneTransport.register( 'LigandNode', LigandNode );
