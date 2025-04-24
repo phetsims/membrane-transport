@@ -166,16 +166,12 @@ export default class MembraneTransportModel extends PhetioObject {
       this.soluteTypeFlux[ soluteType ] = 0;
     } );
 
-    // Ligands are added and removed in response to the areLigandsAddedProperty so that clients can add/remove them
-    // by controlling the Property.
-    this.areLigandsAddedProperty.link( areLigandsAdded => {
-      if ( areLigandsAdded ) {
-        this.addLigands();
-      }
-      else {
-        this.removeLigands();
-      }
-    } );
+    // statically preallocate the ligands, so LigandNodes can be created for them and phet-io instrumented on startup
+    // areLigandsAddedProperty controls whether they interact and are displayed
+    if ( getFeatureSetHasLigands( featureSet ) ) {
+      this.addParticles( 'ligandA', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
+      this.addParticles( 'ligandB', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
+    }
 
     if ( MembraneTransportQueryParameters.defaultSolutes ) {
 
@@ -211,11 +207,6 @@ export default class MembraneTransportModel extends PhetioObject {
    */
   public addSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
     this.addParticles( soluteType, location, count, this.solutes );
-  }
-
-  public addLigands(): void {
-    this.addParticles( 'ligandA', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
-    this.addParticles( 'ligandB', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
   }
 
   public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle<SoluteType | LigandType>[] ): void {
@@ -288,7 +279,9 @@ export default class MembraneTransportModel extends PhetioObject {
       const soluteInitialYValues = new Map( this.solutes.map( solute => [ solute, solute.position.y ] ) );
 
       this.solutes.forEach( solute => solute.step( dt, this ) );
-      this.ligands.forEach( ligand => ligand.step( dt, this ) );
+      if ( this.areLigandsAddedProperty.value ) {
+        this.ligands.forEach( ligand => ligand.step( dt, this ) );
+      }
       this.slots.forEach( slot => {
         if ( slot.transportProteinProperty.value ) {
           slot.transportProteinProperty.value.step( dt );
@@ -439,6 +432,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * Please see that documentation for more information.
    */
   public static readonly MembraneTransportModelIO = new IOType<MembraneTransportModel, IntentionalAny>( 'MembraneTransportModelIO', {
+    documentation: 'IOType for MembraneTransportModel. Note that ligands are preallocated and stored in the state, if supported.',
     supertype: GetSetButtonsIO,
     valueType: MembraneTransportModel,
     stateSchema: {
