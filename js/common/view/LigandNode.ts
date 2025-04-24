@@ -33,8 +33,6 @@ export default class LigandNode extends Node {
   // lazily but LigandNode is created eagerly. So we change the transformation of this Node
   // after the ligand is created (in step). But we only want to do that once or else the
   // scale computation will fight itself every frame.
-  // TODO: This might be a workaround. If we do not need to instrument LigandNode, we can dynamically create them. https://github.com/phetsims/membrane-transport/issues/45
-  private ligandScaleSet = false;
 
   public constructor(
     slots: Slot[],
@@ -146,22 +144,18 @@ export default class LigandNode extends Node {
         ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
       }
     } );
+
+    const modelWidth = this.ligand.dimension.width;
+    const viewWidth = this.modelViewTransform.modelToViewDeltaX( modelWidth );
+
+    const viewScale = viewWidth / this.width;
+    this.setScaleMagnitude( viewScale );
   }
 
   /**
    * Update the view with the animation state since the positions are not observable.
    */
   public step(): void {
-    const modelWidth = this.ligand.dimension.width;
-    const viewWidth = this.modelViewTransform.modelToViewDeltaX( modelWidth );
-
-    if ( !this.ligandScaleSet ) {
-      const viewScale = viewWidth / this.width;
-      this.setScaleMagnitude( viewScale );
-
-      this.ligandScaleSet = true;
-    }
-
     this.center = this.modelViewTransform.modelToViewPosition( this.ligand.position );
   }
 }

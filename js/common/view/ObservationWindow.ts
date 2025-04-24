@@ -131,6 +131,8 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
           ligand, modelViewTransform,
           ligandViewNode,
           isFocusable,
+
+          // TODO (phet-io/design) instrument all LigandNodes, since they can all be dragged with mouse? See https://github.com/phetsims/membrane-transport/issues/32
           isFocusable ? tandem.createTandem( ligand.type === 'ligandA' ? 'ligandANode' : 'ligandBNode' ) : Tandem.OPT_OUT
         );
         this.ligandNodes.push( ligandNode );
