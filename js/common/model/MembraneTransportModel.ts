@@ -33,7 +33,7 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportFeatureSet, { getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
@@ -155,7 +155,7 @@ export default class MembraneTransportModel extends PhetioObject {
     this.resetEmitter.addListener( () => this.membraneVoltagePotentialProperty.reset() );
 
     this.areLigandsAddedProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'areLigandsAddedProperty' ),
+      tandem: getFeatureSetHasLigands( featureSet ) ? providedOptions.tandem.createTandem( 'areLigandsAddedProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
     this.resetEmitter.addListener( () => this.areLigandsAddedProperty.reset() );
