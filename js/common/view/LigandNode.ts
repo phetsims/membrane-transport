@@ -42,7 +42,8 @@ export default class LigandNode extends Node {
     private readonly ligand: Particle<LigandType>,
     private readonly modelViewTransform: ModelViewTransform2,
     ligandView: LigandParticleNode,
-    focusable: boolean
+    focusable: boolean,
+    tandem: Tandem
   ) {
 
     const options = combineOptions<NodeOptions>( {
@@ -127,14 +128,12 @@ export default class LigandNode extends Node {
       dragListenerOptions: {
 
         // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
-        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/32
-        tandem: Tandem.OPT_OUT
+        tandem: tandem.createTandem( 'dragListener' )
       },
       keyboardDragListenerOptions: {
 
         // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
-        // TODO (phet-io, design) - should this (or another input event emitter) be added for PhET-iO? https://github.com/phetsims/membrane-transport/issues/32
-        tandem: Tandem.OPT_OUT,
+        tandem: tandem.createTandem( 'keyboardDragListener' ),
         dragSpeed: 200,
         shiftDragSpeed: 50
       }

@@ -89,11 +89,14 @@ export default class MembraneTransportModel extends PhetioObject {
 
   private readonly resetEmitter = new Emitter();
 
+  // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
   // The flux entries are used to track the recent flux of solutes through the membrane.
   private readonly fluxEntries: FluxEntry[] = [];
   private time = 0;
 
+  // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
   private soluteTypeFlux = {} as Record<SoluteType, number>;
+
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   public readonly slots: Slot[];
@@ -227,13 +230,6 @@ export default class MembraneTransportModel extends PhetioObject {
     this.updateSoluteCounts();
   }
 
-  /**
-   * Removes all ligands (both types) from the model.
-   */
-  public removeLigands(): void {
-    this.ligands.length = 0;
-  }
-
   public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
 
     const removableSolutes = this.solutes.filter( solute =>
@@ -329,7 +325,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
   /**
    * Sum up all the flux history for a given solute type. Positive values indicate that the solute has passed
-   * through the membrane from the outside to the inside, and negative values indicate the opposite.
+   * through the membrane from the outside to the inside, and negative values indicate the opposite. TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
    */
   public getRecentSoluteFluxWithSmoothing( soluteType: SoluteType ): number {
     return this.soluteTypeFlux[ soluteType ];

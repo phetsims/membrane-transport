@@ -20,6 +20,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Panel from '../../../../sun/js/Panel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
@@ -49,8 +50,13 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
   private readonly transportProteinLayer: ObservationWindowTransportProteinLayer;
 
-  public constructor( model: MembraneTransportModel, view: MembraneTransportScreenView,
-                      public readonly modelViewTransform: ModelViewTransform2, canvasBounds: Bounds2 ) {
+  public constructor(
+    model: MembraneTransportModel,
+    view: MembraneTransportScreenView,
+    public readonly modelViewTransform: ModelViewTransform2,
+    canvasBounds: Bounds2,
+    tandem: Tandem
+  ) {
 
     const frameNode = new Rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
@@ -119,7 +125,14 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
           focusableLigandTypes.add( ligand.type );
         }
 
-        const ligandNode = new LigandNode( model.slots, model.areLigandsAddedProperty, ligand, modelViewTransform, ligandViewNode, isFocusable );
+        const ligandNode = new LigandNode(
+          model.slots,
+          model.areLigandsAddedProperty,
+          ligand, modelViewTransform,
+          ligandViewNode,
+          isFocusable,
+          isFocusable ? tandem.createTandem( ligand.type === 'ligandA' ? 'ligandANode' : 'ligandBNode' ) : Tandem.OPT_OUT
+        );
         this.ligandNodes.push( ligandNode );
       } );
 
