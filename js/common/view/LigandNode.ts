@@ -29,11 +29,6 @@ import LigandParticleNode from './particles/LigandParticleNode.js';
 
 export default class LigandNode extends Node {
 
-  // Controls whether we have set the scale of the ligand Node. Ligands in the model are created
-  // lazily but LigandNode is created eagerly. So we change the transformation of this Node
-  // after the ligand is created (in step). But we only want to do that once or else the
-  // scale computation will fight itself every frame.
-
   public constructor(
     slots: Slot[],
     areLigandsAddedProperty: TProperty<boolean>,
