@@ -10,6 +10,7 @@
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
 // TODO: Show a dashed outline when grabbed, see https://github.com/phetsims/membrane-transport/issues/45
 // TODO: Show a message that the ligand can be grabbed (once for each type), see https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Rewrite to use GrabDragInteraction? see https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
