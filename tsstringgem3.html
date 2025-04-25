@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>String Translation Tool (JSON Input)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.5;
+      padding: 1em;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .container {
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      padding: 1em;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 0.8em;
+      font-family: monospace;
+      color: #333;
+      cursor: default; /* Default cursor for labels */
+    }
+
+    label.logical-hint {
+      color: #E65100; /* Orange color for logical hint labels */
+      cursor: help; /* Help cursor indicates tooltip */
+    }
+
+    textarea {
+      width: 95%;
+      min-height: 40px;
+      margin-top: 0.2em;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 0.9em;
+      resize: vertical;
+      background-color: #fff; /* Default background */
+    }
+
+    textarea.logical-hint-input {
+      background-color: #FFF9C4; /* Light yellow background for likely logical inputs */
+      border-color: #FBC02D;
+    }
+
+    fieldset {
+      border: 1px dashed #aaa;
+      margin-top: 1em;
+      padding: 0.5em 1em 1em 1em;
+      background-color: #fff;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #555;
+      font-family: monospace;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-top: 1em;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      font-size: 1em;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #output-container {
+      margin-top: 1.5em;
+    }
+
+    #output-code {
+      width: 100%;
+      height: 400px;
+      font-family: monospace;
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box; /* Include padding in width/height */
+      white-space: pre;
+      overflow: auto;
+      background-color: #eef;
+    }
+
+    .function-info {
+      background-color: #e6f7ff;
+      border: 1px solid #b3e0ff;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+
+    .function-info h4 {
+      margin-top: 0;
+      color: #0056b3;
+    }
+
+    .function-examples {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ccc;
+    }
+
+    .function-examples pre {
+      background-color: #f0f0f0;
+      padding: 5px;
+      border-radius: 3px;
+      font-size: 0.85em;
+      white-space: pre-wrap; /* Wrap long example lines */
+      word-wrap: break-word;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+      border: 1px solid red;
+      padding: 10px;
+      background-color: #ffebeb;
+      margin-bottom: 1em;
+    }
+
+    #loading {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<h1>String Translation Tool (JSON Input)</h1>
+
+<div class="container">
+  <label for="json-file-url">Input JSON File URL:</label>
+  <textarea id="json-file-url" rows="1">./MembraneChannelStrings_en.json</textarea>
+  <button id="fetch-button">Load JSON Data</button>
+  <div id="loading" style="display: none;">Loading...</div>
+  <div id="error-message" class="error" style="display: none;"></div>
+</div>
+
+<form id="translation-form"></form>
+
+<div id="output-container" style="display: none;">
+  <button id="generate-button">Generate Translated JSON</button>
+  <h2>Generated JSON Output:</h2>
+  <pre id="output-code"></pre>
+</div>
+
+<script>
+  /* eslint-disable */
+  const fetchButton = document.getElementById( 'fetch-button' );
+  const urlInput = document.getElementById( 'json-file-url' );
+  const translationForm = document.getElementById( 'translation-form' );
+  const outputContainer = document.getElementById( 'output-container' );
+  const generateButton = document.getElementById( 'generate-button' );
+  const outputCode = document.getElementById( 'output-code' );
+  const errorMessage = document.getElementById( 'error-message' );
+  const loadingMessage = document.getElementById( 'loading' );
+
+  let parsedJsonData = null; // Store the loaded JSON structure
+
+  fetchButton.addEventListener( 'click', loadAndDisplay );
+  generateButton.addEventListener( 'click', generateTranslatedJson );
+
+  async function loadAndDisplay() {
+    const url = urlInput.value.trim();
+    if ( !url ) {
+      showError( 'Please enter a JSON file URL.' );
+      return;
+    }
+
+    clearUI();
+    loadingMessage.style.display = 'block';
+
+    try {
+      const response = await fetch( url );
+      if ( !response.ok ) {
+        throw new Error( `HTTP error! status: ${response.status} fetching ${url}` );
+      }
+      parsedJsonData = await response.json();
+
+      if ( !parsedJsonData || !parsedJsonData.metadata || !parsedJsonData.strings ) {
+        throw new Error( 'Invalid JSON format: Missing \'metadata\' or \'strings\' top-level keys.' );
+      }
+
+      // --- Build UI from JSON ---
+      buildUI( parsedJsonData.strings, translationForm, [] );
+      outputContainer.style.display = 'block'; // Show generate button and output area
+
+    }
+    catch( error ) {
+      console.error( 'Error:', error );
+      if ( error instanceof SyntaxError ) {
+        showError( `Failed to parse JSON: ${error.message}. Check if the file at ${url} is valid JSON.` );
+      }
+      else {
+        showError( `Failed to load or process JSON file: ${error.message}` );
+      }
+      outputContainer.style.display = 'none';
+      parsedJsonData = null; // Clear data on error
+    }
+    finally {
+      loadingMessage.style.display = 'none';
+    }
+  }
+
+  function clearUI() {
+    translationForm.innerHTML = '';
+    outputCode.textContent = '';
+    outputContainer.style.display = 'none';
+    errorMessage.style.display = 'none';
+    errorMessage.textContent = '';
+    parsedJsonData = null; // Clear stored data
+  }
+
+  function showError( message ) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+    loadingMessage.style.display = 'none';
+  }
+
+  /**
+   * Recursively builds the translation UI from the parsed JSON data.
+   * @param {object} data - The current level of the 'strings' or 'children' object from JSON.
+   * @param {HTMLElement} parentElement - The HTML element to append controls to.
+   * @param {string[]} path - The array representing the current key path.
+   */
+  function buildUI( data, parentElement, path ) {
+    const keys = Object.keys( data );
+
+    for ( const key of keys ) {
+      if ( Object.hasOwnProperty.call( data, key ) ) {
+        const nodeData = data[ key ];
+        const currentPath = [ ...path, key ];
+        const pathString = currentPath.join( '.' );
+
+        switch( nodeData._type ) {
+          case 'string': {
+            const label = document.createElement( 'label' );
+            label.textContent = `${key}:`;
+            label.htmlFor = pathString;
+
+            const textarea = document.createElement( 'textarea' );
+            textarea.id = pathString;
+            textarea.value = nodeData.value || '';
+            textarea.rows = ( nodeData.value || '' ).includes( '\n' ) || ( nodeData.value || '' ).includes( '<br>' ) || ( nodeData.value || '' ).length > 80 ? 3 : 1;
+            textarea.dataset.path = pathString;
+            textarea.dataset.type = 'string';
+
+            parentElement.appendChild( label );
+            parentElement.appendChild( textarea );
+            break;
+          }
+          case 'object': {
+            const fieldset = document.createElement( 'fieldset' );
+            const legend = document.createElement( 'legend' );
+            legend.textContent = key;
+            fieldset.appendChild( legend );
+            parentElement.appendChild( fieldset );
+            if ( nodeData.children ) {
+              buildUI( nodeData.children, fieldset, currentPath ); // Recurse
+            }
+            break;
+          }
+          case 'function': {
+            buildFunctionUI( key, nodeData, parentElement, pathString );
+            break;
+          }
+          default:
+            console.warn( `Unknown node type "${nodeData._type}" for key "${key}" at path "${pathString}"` );
+            const unknownDiv = document.createElement( 'div' );
+            unknownDiv.textContent = `[Unsupported type "${nodeData._type}" for key "${key}"]`;
+            unknownDiv.style.color = 'grey';
+            parentElement.appendChild( unknownDiv );
+            break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Builds the UI specific to function nodes from the JSON data.
+   * @param {string} key - The function's key name.
+   * @param {object} funcData - The function object from the JSON data.
+   * @param {HTMLElement} parentElement - The HTML element to append controls to.
+   * @param {string} pathString - The dot-separated path string for this function.
+   */
+  function buildFunctionUI( key, funcData, parentElement, pathString ) {
+    const funcContainer = document.createElement( 'div' );
+    funcContainer.className = 'function-info';
+    parentElement.appendChild( funcContainer );
+
+    const title = document.createElement( 'h4' );
+    title.textContent = `Function: ${key}(${( funcData.parameters || [] ).join( ', ' )})`;
+    funcContainer.appendChild( title );
+
+    // Create textareas for translatable parts
+    if ( funcData.translatableParts && funcData.translatableParts.length > 0 ) {
+      funcData.translatableParts.forEach( part => {
+        const label = document.createElement( 'label' );
+        const inputId = `${pathString}-str-${part.id}`;
+        label.htmlFor = inputId;
+        label.textContent = `Translatable part #${part.id}:`; // Default label text
+
+        const textarea = document.createElement( 'textarea' );
+        textarea.id = inputId;
+        textarea.value = part.value || '';
+        textarea.rows = ( part.value || '' ).includes( '\n' ) || ( part.value || '' ).includes( '<br>' ) || ( part.value || '' ).length > 60 ? 3 : 1;
+        textarea.dataset.path = pathString;
+        textarea.dataset.type = 'functionString';
+        textarea.dataset.originalId = part.id;
+
+        // --- Add Hint for Likely Logical Strings ---
+        if ( part.isLikelyLogical ) {
+          textarea.classList.add( 'logical-hint-input' ); // Add class for styling
+          label.classList.add( 'logical-hint' ); // Add class for styling
+          label.textContent = `Likely logical string #${part.id}:`; // Modify label text
+          label.title = 'This string might be used for comparisons or logic. Only translate if you are sure it is user-facing text. Copy the original value if it should not be translated.';
+        }
+        // --- End Hint ---
+
+        funcContainer.appendChild( label );
+        funcContainer.appendChild( textarea );
+      } );
+    }
+    else {
+      const noPartsMsg = document.createElement( 'p' );
+      noPartsMsg.textContent = '(No translatable string parts found in this function by the build script.)';
+      noPartsMsg.style.fontStyle = 'italic';
+      funcContainer.appendChild( noPartsMsg );
+    }
+
+
+    // --- Generate Examples (using originalSource) ---
+    const examplesDiv = document.createElement( 'div' );
+    examplesDiv.className = 'function-examples';
+    examplesDiv.innerHTML = '<h5>Examples (based on original code):</h5>';
+    funcContainer.appendChild( examplesDiv );
+
+    if ( !funcData.originalSource ) {
+      examplesDiv.innerHTML += '<p><i>Original source code not found in JSON, cannot generate examples.</i></p>';
+      return;
+    }
+
+    try {
+      const funcString = funcData.originalSource;
+      // 1. Parse parameters (use data from JSON)
+      const paramNames = funcData.parameters || [];
+
+      // 2. Prepare function body for new Function()
+      // We need to wrap the originalSource (which should be like `key(...) { ... }`)
+      // into something new Function can execute. A simple way is to make it an object method.
+      // WARNING: Still uses new Function, inherent risks if originalSource is compromised.
+      const executableFunctionString = `
+                     try {
+                         const tempObj = { ${funcString} }; // Wrap in an object literal
+                         return tempObj.${key}(...arguments); // Call the method
+                     } catch (e) {
+                         console.error("Error executing example function:", e);
+                         throw e; // Re-throw to be caught below
+                     }
+                 `;
+
+
+      // 3. Create executable function
+      const executableFunc = new Function( ...paramNames, executableFunctionString );
+
+      // 4. Generate random inputs and call (Simplified)
+      for ( let i = 0; i < 3; i++ ) {
+        const args = paramNames.map( name => {
+          // Basic random generation based on common names in example
+          if ( name === 'amount' || name === 'differenceSize' ) {
+            return Math.random() < 0.5 ? 'aLittle' : 'aLot';
+          }
+          if ( name === 'addedOrRemoved' ) {
+            return Math.random() < 0.5 ? 'added' : 'removed';
+          }
+          if ( name === 'moreOrLessOrSame' ) {
+            return [ 'more', 'less', 'same' ][ Math.floor( Math.random() * 3 ) ];
+          }
+          if ( name === 'directionality' ) {
+            return Math.random() < 0.5 ? 'insideThanOutside' : 'outsideThanInside';
+          }
+          if ( name === 'solute' ) {
+            return [ 'Glucose', 'O2', 'Na+' ][ Math.floor( Math.random() * 3 ) ];
+          }
+          return `[${name}_val_${i + 1}]`; // Default fallback
+        } );
+
+        try {
+          const result = executableFunc( ...args );
+          const examplePre = document.createElement( 'pre' );
+          examplePre.textContent = `Input: (${args.map( a => typeof a === 'string' ? `'${a}'` : a ).join( ', ' )})\nOutput: "${result}"`;
+          examplesDiv.appendChild( examplePre );
+        }
+        catch( callError ) {
+          const examplePre = document.createElement( 'pre' );
+          examplePre.textContent = `Input: (${args.map( a => typeof a === 'string' ? `'${a}'` : a ).join( ', ' )})\nError running example: ${callError.message}`;
+          examplesDiv.appendChild( examplePre );
+        }
+      }
+
+    }
+    catch( exampleError ) {
+      // This catch block handles errors in setting up the executableFunc or the overall example generation logic
+      console.error( `Error generating examples for ${key}:`, exampleError );
+      examplesDiv.innerHTML += `<pre>Could not generate examples: ${exampleError.message}</pre>`;
+    }
+  }
+
+
+  /**
+   * Generates the translated JSON output based on form input.
+   */
+  function generateTranslatedJson() {
+    if ( !parsedJsonData ) {
+      showError( 'No JSON data loaded to generate output from.' );
+      return;
+    }
+
+    // Create a deep copy of the original structure to modify
+    const outputJsonObject = JSON.parse( JSON.stringify( parsedJsonData ) );
+
+    const formElements = translationForm.querySelectorAll( 'textarea[data-path]' );
+
+    formElements.forEach( textarea => {
+      const path = textarea.dataset.path;
+      const type = textarea.dataset.type;
+      const translatedValue = textarea.value;
+      const pathArray = path.split( '.' );
+
+      try {
+        // Navigate using the helper function
+        const { parentNode, finalKey } = getNodeParentAndFinalKey( outputJsonObject.strings, pathArray );
+
+        if ( !parentNode || finalKey === null ) {
+          console.warn( `Could not find node or parent for path: ${path} during output generation.` );
+          return; // Skip if path is invalid
+        }
+
+        const node = parentNode[ finalKey ]; // The actual node to modify
+
+        if ( !node ) {
+          console.warn( `Node at final key "${finalKey}" for path ${path} is undefined.` );
+          return;
+        }
+
+        if ( type === 'string' ) {
+          if ( node._type === 'string' ) {
+            node.value = translatedValue; // Update the value
+          }
+          else {
+            console.warn( `Mismatched type for path ${path}: Expected 'string', found '${node._type}'` );
+          }
+        }
+        else if ( type === 'functionString' ) {
+          if ( node._type === 'function' && node.translatableParts ) {
+            const originalId = parseInt( textarea.dataset.originalId, 10 );
+            const partToUpdate = node.translatableParts.find( p => p.id === originalId );
+            if ( partToUpdate ) {
+              partToUpdate.value = translatedValue; // Update the specific translatable part
+            }
+            else {
+              console.warn( `Could not find translatable part with id ${originalId} for function at path ${path}` );
+            }
+          }
+          else {
+            console.warn( `Mismatched type or missing parts for path ${path}: Expected 'function' with 'translatableParts', found '${node._type}'` );
+          }
+        }
+      }
+      catch( navError ) {
+        console.error( `Error processing path ${path}: ${navError}` );
+      }
+    } );
+
+    // Stringify the modified object
+    let outputJsonString;
+    try {
+      outputJsonString = JSON.stringify( outputJsonObject, null, 2 ); // Pretty print
+    }
+    catch( stringifyError ) {
+      console.error( 'Error stringifying output JSON:', stringifyError );
+      showError( `Error generating output JSON: ${stringifyError.message}` );
+      return;
+    }
+
+    outputCode.textContent = outputJsonString;
+    outputContainer.style.display = 'block'; // Ensure visible
+  }
+
+  /**
+   * Helper function to navigate the nested structure and retrieve the parent node and the final key.
+   * Allows modifying the node via parentNode[finalKey].
+   * @param {object} obj - The starting object (usually outputJsonObject.strings).
+   * @param {string[]} pathArray - Array of keys representing the path.
+   * @returns {{parentNode: object | null, finalKey: string | null}} The parent node and the final key, or nulls if not found.
+   */
+  function getNodeParentAndFinalKey( obj, pathArray ) {
+    let currentParent = null;
+    let current = obj;
+    let key = null;
+
+    for ( let i = 0; i < pathArray.length; i++ ) {
+      key = pathArray[ i ];
+      if ( current === null || typeof current !== 'object' || !current.hasOwnProperty( key ) ) {
+        return { parentNode: null, finalKey: null }; // Invalid path segment
+      }
+
+      if ( i === pathArray.length - 1 ) {
+        // Reached the end, current is the parent, key is the final key
+        return { parentNode: current, finalKey: key };
+      }
+      else {
+        // Need to go deeper
+        currentParent = current; // Store potential parent
+        current = current[ key ]; // Move to the next node
+
+        // Check if we need to navigate into 'children' for objects
+        if ( current && current._type === 'object' && current.children ) {
+          current = current.children;
+        }
+        else if ( current && ( current._type === 'function' || current._type === 'string' ) ) {
+          // If the next step is the last one, we should have returned the parent already.
+          // If not the last step, we can't navigate 'inside' a string or function node via path.
+          if ( i < pathArray.length - 2 ) {
+            return { parentNode: null, finalKey: null }; // Invalid path, trying to go deeper than allowed
+          }
+          // Let the loop continue if next iteration is the last key
+        }
+        else {
+          return { parentNode: null, finalKey: null }; // Path segment doesn't lead to a navigable structure
+        }
+      }
+    }
+    // Should only be reached if pathArray is empty, which is unlikely
+    return { parentNode: null, finalKey: null };
+  }
+
+
+</script>
+
+</body>
+</html>

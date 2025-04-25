@@ -10,7 +10,8 @@
     "grunt": "~1.5.3",
     "esbuild": "^0.24.2",
     "chokidar-cli": "^3.0.0",
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "@typescript-eslint/parser": "^8.31.0"
   },
   "scripts": {
     "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"npm run watch-sounds\"",
