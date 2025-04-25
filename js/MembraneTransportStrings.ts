@@ -108,6 +108,7 @@ type StringsType = {
       'thereIsNoProteinAtThisSlotStringProperty': LocalizedStringProperty;
       'thereIsProteinAtThisSlotPatternStringProperty': LocalizedStringProperty;
       'moveCancelledPatternStringProperty': LocalizedStringProperty;
+      'cannotInteractWhileLigandIsBoundPatternStringProperty': LocalizedStringProperty;
     }
   }
 };

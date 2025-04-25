@@ -214,6 +214,9 @@
       },
       "moveCancelledPattern": {
         "value": "Cancelled moving {{ligandType}}"
+      },
+      "cannotInteractWhileLigandIsBoundPattern": {
+        "value": "Cannot interact with the membrane while {{ligandType}} is bound to a protein"
       }
     }
   }

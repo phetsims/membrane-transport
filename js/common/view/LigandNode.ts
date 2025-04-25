@@ -8,7 +8,7 @@
  */
 
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
-// TODO: When a ligand is bound, it cannot be unbound by the user, see https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Show a dashed outline when grabbed, see https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -206,6 +206,14 @@ export default class LigandNode extends Node {
         fire: ( event, keysPressed ) => {
           // Ignore if focus is lost or interaction disabled somehow
           if ( !this.focused ) { return; }
+
+          if ( ligand.mode.type === 'ligandBound' ) {
+
+            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.cannotInteractWhileLigandIsBoundPatternStringProperty, {
+              ligandType: this.getLigandTypeName()
+            } ) );
+            return;
+          }
 
           const key = keysPressed;
 
