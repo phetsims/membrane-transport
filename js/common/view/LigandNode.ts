@@ -111,14 +111,10 @@ export default class LigandNode extends Node {
 
     // Scenery provides isFocused() as a method, but we must convert it to a Property so we can observe changes.
     this.addInputListener( {
-      focus: () => {
-        // remain in random walk mode
-        // this.ligand.mode = { type: 'ligandKeyboardFocused' };
-        // this.isKeyboardFocusedProperty.value = true;
-      },
       blur: () => {
-        // this.ligand.mode = Particle.createRandomWalkMode( true );
-        // this.isKeyboardFocusedProperty.value = false;
+
+        // Resume brownian motion when focus is lost
+        this.ligand.mode = Particle.createRandomWalkMode( true );
       }
     } );
 
