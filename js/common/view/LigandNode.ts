@@ -355,14 +355,9 @@ export default class LigandNode extends Node {
                 MembraneTransportSounds.boundaryReached();
               }
 
-              // Update visual position to be centered *above* the target slot/area
-              let targetModelPosition: Vector2;
-              if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
-                targetModelPosition = this.getOffMembraneDropPosition();
-              }
-              else {
-                targetModelPosition = this.getTargetPositionForSlot( this.currentTargetSlotIndex );
-              }
+              // Update position to be centered *above* the target slot/area
+              const targetModelPosition = this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ? this.getOffMembraneDropPosition() :
+                                          this.getTargetPositionForSlot( this.currentTargetSlotIndex );
               this.ligand.position.set( targetModelPosition );
               this.updateVisualPosition();
             }
@@ -377,7 +372,7 @@ export default class LigandNode extends Node {
 
               // TODO: https://github.com/phetsims/membrane-transport/issues/45
               // this.alert( MembraneTransportMessages.ligandMoveCancelledPatternStringProperty, { ligandName: this.getLigandTypeName() } );
-              // MembraneTransportSounds.ligandReleased(); // Use release sound for cancel
+              MembraneTransportSounds.ligandReleased(); // Use release sound for cancel
 
               this.resetKeyboardInteractionState();
               this.updateVisualPosition(); // Ensure view matches model after cancel
@@ -440,7 +435,7 @@ export default class LigandNode extends Node {
 
   /**
    * Update the visual position based on the ligand's actual model position.
-   * Call this when not keyboard-dragging, or after a drop/cancel.
+   * Call this when not keyboard-dragging, or after a drop/cancel, so that even when paused this will still update.
    */
   private updateVisualPosition(): void {
     this.center = this.modelViewTransform.modelToViewPosition( this.ligand.position );
