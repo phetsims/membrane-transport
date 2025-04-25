@@ -14,6 +14,7 @@
 // TODO: When a ligand is bound, it cannot be unbound by the user, see https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -94,7 +95,7 @@ export default class LigandNode extends Node {
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
 
-        innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.triangleLigandStringProperty : MembraneTransportStrings.a11y.starLigandStringProperty,
+        innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty,
         appendDescription: true // Append help text dynamically later if needed
 
         // TODO: https://github.com/phetsims/membrane-transport/issues/45
@@ -227,20 +228,14 @@ export default class LigandNode extends Node {
               const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
 
               // Alerting + Hint
-              // TODO: https://github.com/phetsims/membrane-transport/issues/45
-              // const ligandTypeName = ligandView.type === 'ligandA' ? MembraneTransportMessages.triangleLigandStringProperty : MembraneTransportMessages.starLigandStringProperty;
-              // const messageTemplate = grabHintNeeded ? MembraneTransportMessages.grabbedLigandWithHintPatternStringProperty : MembraneTransportMessages.grabbedLigandPatternStringProperty;
-              //
-              // this.alert( FluentUtils.formatMessage( messageTemplate, {
-              //   ligandName: ligandTypeName.value // Pass the string value
-              // } ) );
+              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.grabbedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
 
               if ( grabHintNeeded ) {
                 hasShownGrabHint[ this.ligand.type ] = false;
               }
 
               // const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
-              // MembraneTransportSounds.ligandGrabbed();
+              MembraneTransportSounds.ligandGrabbed();
 
               // Stop any ongoing mouse/touch drag
               soundRichDragListener.interrupt();
@@ -257,7 +252,7 @@ export default class LigandNode extends Node {
                 // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
                 this.ligand.position.set( this.initialPositionBeforeGrab! );
 
-                this.alert( MembraneTransportStrings.a11y.releasedLigandStringProperty );
+                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
                 MembraneTransportSounds.ligandReleased();
               }
               else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
@@ -424,7 +419,7 @@ export default class LigandNode extends Node {
    * Get the user-friendly name for the ligand type.
    */
   private getLigandTypeName(): TReadOnlyProperty<string> {
-    return this.ligand.type === 'ligandA' ? MembraneTransportStrings.a11y.triangleLigandStringProperty : MembraneTransportStrings.a11y.starLigandStringProperty;
+    return this.ligand.type === 'ligandA' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty;
   }
 
   /**

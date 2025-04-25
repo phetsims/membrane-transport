@@ -318,6 +318,10 @@ export default class MembraneTransportSounds {
     }
   }
 
+  public static ligandGrabbed(): void {
+    grabSoundPlayer.play();
+  }
+
   public static ligandReleased(): void {
     releaseSoundPlayer.play();
   }

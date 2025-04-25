@@ -96,9 +96,12 @@ type StringsType = {
       };
       'toolAccessibleHelpTextStringProperty': LocalizedStringProperty;
     };
-    'starLigandStringProperty': LocalizedStringProperty;
-    'triangleLigandStringProperty': LocalizedStringProperty;
-    'releasedLigandStringProperty': LocalizedStringProperty;
+    'ligandNode': {
+      'starLigandStringProperty': LocalizedStringProperty;
+      'triangleLigandStringProperty': LocalizedStringProperty;
+      'releasedLigandStringProperty': LocalizedStringProperty;
+      'grabbedLigandStringProperty': LocalizedStringProperty;
+    }
   }
 };
 
