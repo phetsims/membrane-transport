@@ -39,6 +39,7 @@ import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
 import Slot from '../model/Slot.js';
 import { LigandType } from '../model/SoluteType.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
+import getBriefProteinName from './proteins/getBriefProteinName.js';
 
 // constants
 // Vertical offset for the ligand when dragged via keyboard, similar to proteins
@@ -241,6 +242,7 @@ export default class LigandNode extends Node {
 
               const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
               this.isKeyboardGrabbed = false;
+              MembraneTransportSounds.ligandReleased();
 
               if ( this.currentTargetSlotIndex === null ) {
 
@@ -248,7 +250,7 @@ export default class LigandNode extends Node {
                 this.ligand.position.set( this.initialPositionBeforeGrab! );
 
                 this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
-                MembraneTransportSounds.ligandReleased();
+
               }
               else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
 
@@ -257,7 +259,6 @@ export default class LigandNode extends Node {
                 this.ligand.position.set( offMembranePosition );
 
                 this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
-                MembraneTransportSounds.ligandReleased();
               }
               else {
                 // Drop on a slot (0 to SLOT_COUNT-1)
@@ -267,32 +268,31 @@ export default class LigandNode extends Node {
                 this.ligand.position.set( dropPosition );
 
                 const protein = targetSlot.transportProteinProperty.value;
-                let correctDrop = false;
                 if ( protein instanceof LigandGatedChannel && this.isCompatibleLigand( protein ) ) {
-                  correctDrop = true;
 
-                  // Allow immediate binding attempt by model
-                  protein.clearRebindingCooldown();
 
-                  // TODO: https://github.com/phetsims/membrane-transport/issues/45
-                  // this.alert( MembraneTransportMessages.ligandReleasedOnProteinPatternStringProperty, {
-                  //   ligandName: this.getLigandTypeName(),
-                  //   proteinName: getBriefProteinName( protein.type ).value
-                  // } );
-                  MembraneTransportSounds.ligandBound();
-                  // Model's physics update loop will handle the actual binding and state change.
+                  if ( protein.stateProperty.value === 'closed' ) {
+
+                    // Allow immediate binding attempt by model
+                    protein.clearRebindingCooldown();
+
+                    this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty, {
+                      ligandType: this.getLigandTypeName(),
+                      proteinName: getBriefProteinName( protein.type ).value
+                    } ) );
+                  }
+                  else {
+                    this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyProteinPatternStringProperty, {
+                      ligandType: this.getLigandTypeName(),
+                      proteinName: getBriefProteinName( protein.type ).value
+                    } ) );
+                  }
                 }
+                else {
 
-                if ( !correctDrop ) {
                   // Incompatible drop (wrong LGC, non-LGC, or empty slot)
-
-                  // TODO: https://github.com/phetsims/membrane-transport/issues/45
-                  // this.alert( MembraneTransportMessages.ligandReleasedAboveSlotPatternStringProperty, {
-                  //   ligandName: this.getLigandTypeName(),
-                  //   slotNumber: this.currentTargetSlotIndex + 1 // User-facing index is 1-based
-                  // } );
-                  // MembraneTransportSounds.ligandReleased();
                   // Ligand mode is already set to random walk, starting from the dropPosition.
+                  this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
                 }
               }
 
@@ -324,27 +324,20 @@ export default class LigandNode extends Node {
 
               if ( newIndex !== this.currentTargetSlotIndex ) {
                 this.currentTargetSlotIndex = newIndex;
-                // TODO: Add distinct left/right sounds if desired. See https://github.com/phetsims/membrane-transport/issues/45
-                // TODO: https://github.com/phetsims/membrane-transport/issues/45
-                // MembraneTransportSounds.ligandMoved();
+                MembraneTransportSounds.transportProteinMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' ); // TODO: Rename method? https://github.com/phetsims/membrane-transport/issues/45
 
-                // Alert new target
-                // TODO: https://github.com/phetsims/membrane-transport/issues/45
-                // let targetDesc;
-                // if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
-                //   targetDesc = MembraneTransportMessages.offMembraneStringProperty.value;
-                // }
-                // else {
-                //   const targetSlot = this.slots[ this.currentTargetSlotIndex ];
-                //   const protein = targetSlot.transportProteinProperty.value;
-                //   const contentsDesc = protein ? getBriefProteinName( protein.type ).value : MembraneTransportMessages.emptyStringProperty.value;
-                //   targetDesc = FluentUtils.formatMessage( MembraneTransportMessages.slotDescriptionPatternStringProperty, {
-                //     slotNumber: this.currentTargetSlotIndex + 1,
-                //     slotContents: contentsDesc
-                //   } );
-                // }
-                // this.alert( targetDesc );
+                const targetSlot = this.slots[ newIndex ];
+                const protein = targetSlot.transportProteinProperty.value;
 
+                const additionalInformation = protein ?
+                                              new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringProperty, { proteinName: getBriefProteinName( protein.type ).value } ) :
+                                              MembraneTransportStrings.a11y.ligandNode.thereIsNoProteinAtThisSlotStringProperty;
+
+                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandMovedToSlotPatternStringProperty, {
+                  ligandType: this.getLigandTypeName(),
+                  slotNumber: newIndex + 1,
+                  additionalInformation: additionalInformation
+                } ) );
               }
               else {
                 MembraneTransportSounds.boundaryReached();

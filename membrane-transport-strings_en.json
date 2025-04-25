@@ -196,6 +196,21 @@
       },
       "ligandReleasedOffMembranePattern": {
         "value": "{{ligandType}} released off membrane"
+      },
+      "ligandReleasedOnProteinPattern": {
+        "value": "{{ligandType}} released on {{proteinName}}"
+      },
+      "ligandReleasedOnBusyProteinPattern": {
+        "value": "{{ligandType}} released on {{proteinName}}, but {{proteinName}} was already bound to another ligand"
+      },
+      "ligandMovedToSlotPattern": {
+        "value": "{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}"
+      },
+      "thereIsNoProteinAtThisSlot": {
+        "value": "There is no protein at this slot"
+      },
+      "thereIsProteinAtThisSlotPattern": {
+        "value": "There is a {{proteinName}} at this slot"
       }
     }
   }

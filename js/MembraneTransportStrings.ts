@@ -102,6 +102,11 @@ type StringsType = {
       'releasedLigandStringProperty': LocalizedStringProperty;
       'grabbedLigandStringProperty': LocalizedStringProperty;
       'ligandReleasedOffMembranePatternStringProperty': LocalizedStringProperty;
+      'ligandReleasedOnProteinPatternStringProperty': LocalizedStringProperty;
+      'ligandReleasedOnBusyProteinPatternStringProperty': LocalizedStringProperty;
+      'ligandMovedToSlotPatternStringProperty': LocalizedStringProperty;
+      'thereIsNoProteinAtThisSlotStringProperty': LocalizedStringProperty;
+      'thereIsProteinAtThisSlotPatternStringProperty': LocalizedStringProperty;
     }
   }
 };
