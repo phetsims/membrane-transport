@@ -452,19 +452,9 @@ export default class LigandNode extends Node {
 
   /**
    * Calculate the target model position when hovering over the off-membrane area ("slot 8").
-   * This should visually align with where proteins are dropped back in the toolbox.
-   * TODO: This position might need refinement based on visual layout. See https://github.com/phetsims/membrane-transport/issues/110
    */
   private getOffMembraneDropPosition(): Vector2 {
-    // Position it similarly to how MembraneGroupSelectView handles the toolbox drop (index SLOT_COUNT).
-    // Using a fixed position relative to the membrane for simplicity, similar to the protein example.
-    // The exact X position might depend on the last slot's position or a fixed area. Let's center it past the last slot.
-    const lastSlotX = this.slots[ SLOT_COUNT - 1 ].position;
-    const slotSpacing = ( SLOT_COUNT > 1 ) ? ( this.slots[ 1 ].position - this.slots[ 0 ].position ) : 50; // Estimate spacing
-    const targetX = lastSlotX + slotSpacing;
-
-    // Keep the same vertical offset used when dragging above slots.
-    return new Vector2( targetX, MODEL_DRAG_VERTICAL_OFFSET );
+    return new Vector2( 0, 50 );
   }
 
   /**
