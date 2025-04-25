@@ -95,16 +95,11 @@ export default class LigandNode extends Node {
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
 
-        // TODO: https://github.com/phetsims/membrane-transport/issues/45
-        // innerContent: ligandView.type === 'ligandA' ? MembraneTransportMessages.triangleLigandStringProperty : MembraneTransportMessages.starLigandStringProperty, // Use translatable strings
-        innerContent: 'Ligand',
+        innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.triangleLigandStringProperty : MembraneTransportStrings.a11y.starLigandStringProperty,
         appendDescription: true, // Append help text dynamically later if needed
 
         // TODO: https://github.com/phetsims/membrane-transport/issues/45
         // descriptionContent: MembraneTransportMessages.ligandDescriptionPatternStringProperty, // Default description
-
-        // Make focusable only if the feature is enabled
-        focusable: true
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
