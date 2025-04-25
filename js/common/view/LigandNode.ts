@@ -201,10 +201,9 @@ export default class LigandNode extends Node {
         enabled: false // Disable default keyboard drag behavior
       }
     } );
-    // Only add mouse/touch listener if focusable (implies interactive)
-    if ( focusable ) {
-      this.addInputListener( soundRichDragListener );
-    }
+
+    // All ligands can be mouse-controlled, but only one of each type can be keyboard-focused
+    this.addInputListener( soundRichDragListener );
 
     // Custom Keyboard Interaction Listener
     if ( focusable ) {
@@ -413,6 +412,14 @@ export default class LigandNode extends Node {
 
     // Initial positioning
     this.updateVisualPosition();
+
+    soundRichDragListener.dragListener.isOverOrFocusedProperty.link( isOver => {
+
+      // If the ligand is already controlled, don't start walking when the pointer goes out
+      if ( ligand.mode.type !== 'userControlled' ) {
+        ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
+      }
+    } );
   }
 
   /**
