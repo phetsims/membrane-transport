@@ -56,6 +56,7 @@ export default class LigandNode extends Node {
   private readonly modelViewTransform: ModelViewTransform2;
 
   // Keyboard interaction state
+  // private isKeyboardFocused = false;
   private isKeyboardGrabbed = false;
   private currentTargetSlotIndex: number | null = null; // 0 to SLOT_COUNT-1 for slots, SLOT_COUNT for off-membrane, null if not targeted
   private initialPositionBeforeGrab: Vector2 | null = null;
@@ -106,6 +107,18 @@ export default class LigandNode extends Node {
 
     this.alerter = new Alerter( {
       descriptionAlertNode: observationWindow
+    } );
+
+    // Scenery provides isFocused() as a method, but we must convert it to a Property so we can observe changes.
+    this.addInputListener( {
+      focus: () => {
+        this.ligand.mode = { type: 'userOver', slot: null };
+        // this.isKeyboardFocusedProperty.value = true;
+      },
+      blur: () => {
+        this.ligand.mode = Particle.createRandomWalkMode( true );
+        // this.isKeyboardFocusedProperty.value = false;
+      }
     } );
 
     this.ligand = ligand;
@@ -245,7 +258,7 @@ export default class LigandNode extends Node {
 
               const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
               this.isKeyboardGrabbed = false;
-              this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control (default)
+              // this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control (default)
 
               if ( this.currentTargetSlotIndex === null ) {
                 // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
@@ -278,6 +291,7 @@ export default class LigandNode extends Node {
                   // Allow immediate binding attempt by model
                   protein.clearRebindingCooldown();
 
+                  this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control (default), knowing it will bind in step()
 
                   // TODO: https://github.com/phetsims/membrane-transport/issues/45
                   // this.alert( MembraneTransportMessages.ligandReleasedOnProteinPatternStringProperty, {
