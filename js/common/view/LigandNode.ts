@@ -105,6 +105,9 @@ export default class LigandNode extends Node {
 
     super( options );
 
+    // Expand the hit area for touch/mouse interactions, so it is easier to grab with the mouse
+    this.mouseArea = this.touchArea = this.localBounds.dilated( 50 );
+
     this.alerter = new Alerter( {
       descriptionAlertNode: observationWindow
     } );
