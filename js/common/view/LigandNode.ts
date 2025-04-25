@@ -94,12 +94,7 @@ export default class LigandNode extends Node {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
-
-        innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty,
-        appendDescription: true // Append help text dynamically later if needed
-
-        // TODO: https://github.com/phetsims/membrane-transport/issues/45
-        // descriptionContent: MembraneTransportMessages.ligandDescriptionPatternStringProperty, // Default description
+        innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
