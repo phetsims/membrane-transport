@@ -7,7 +7,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// TODO: Add Accessible Names: https://github.com/phetsims/membrane-transport/issues/45
+// TODO (SR): The focus rectangle shows on the membrane when a ligand has focus. This is incorrect. https://github.com/phetsims/membrane-transport/issues/45
+// TODO (JG/SR): Add the type of ligand. Add i18n. * Ligand Accessible Names: https://github.com/phetsims/membrane-transport/issues/45
 // TODO: i18n https://github.com/phetsims/membrane-transport/issues/45
 // TODO: After rewriting to be discrete keyboard interaction, make sure only 2 are in the DOM https://github.com/phetsims/membrane-transport/issues/45
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
