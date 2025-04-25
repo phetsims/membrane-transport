@@ -37,6 +37,10 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     type: 'string',
     validValues: [ '1', '2', '1muffled', '2muffled' ],
     defaultValue: '1'
+  },
+
+  tsStrings: {
+    type: 'flag'
   }
 } );
 

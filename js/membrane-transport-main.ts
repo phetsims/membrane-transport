@@ -12,12 +12,14 @@ import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
+import MembraneTransportQueryParameters from './common/MembraneTransportQueryParameters.js';
 import MembraneTransportPreferencesNode from './common/view/MembraneTransportPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
 import MembraneTransportStrings from './MembraneTransportStrings.js';
 import './common/MembraneTransportQueryParameters.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
 import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
+import demoTSStrings from './ts-strings/demoTSStrings.js';
 
 // Launch the sim. Beware that scenery Image nodes created outside simLauncher.launch() will have zero bounds
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
@@ -57,3 +59,7 @@ simLauncher.launch( () => {
   const sim = new Sim( titleStringProperty, screens, options );
   sim.start();
 } );
+
+if ( MembraneTransportQueryParameters.tsStrings ) {
+  demoTSStrings();
+}
