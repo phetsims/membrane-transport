@@ -112,11 +112,12 @@ export default class LigandNode extends Node {
     // Scenery provides isFocused() as a method, but we must convert it to a Property so we can observe changes.
     this.addInputListener( {
       focus: () => {
-        this.ligand.mode = { type: 'userOver', slot: null };
+        // remain in random walk mode
+        // this.ligand.mode = { type: 'ligandKeyboardFocused' };
         // this.isKeyboardFocusedProperty.value = true;
       },
       blur: () => {
-        this.ligand.mode = Particle.createRandomWalkMode( true );
+        // this.ligand.mode = Particle.createRandomWalkMode( true );
         // this.isKeyboardFocusedProperty.value = false;
       }
     } );
@@ -287,10 +288,9 @@ export default class LigandNode extends Node {
                 let correctDrop = false;
                 if ( protein instanceof LigandGatedChannel && this.isCompatibleLigand( protein ) ) {
                   correctDrop = true;
+
                   // Allow immediate binding attempt by model
                   protein.clearRebindingCooldown();
-
-                  this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control (default), knowing it will bind in step()
 
                   // TODO: https://github.com/phetsims/membrane-transport/issues/45
                   // this.alert( MembraneTransportMessages.ligandReleasedOnProteinPatternStringProperty, {
@@ -318,6 +318,10 @@ export default class LigandNode extends Node {
               if ( wasGrabbed ) {
                 this.resetKeyboardInteractionState();
               }
+
+              // Resume random walk. If close to a target channel, it can bind.
+              this.ligand.mode = Particle.createRandomWalkMode( true );
+
               this.updateVisualPosition(); // Ensure view matches model after drop
             }
           }
@@ -368,7 +372,15 @@ export default class LigandNode extends Node {
               }
 
               // Update visual position to be centered *above* the target slot/area
-              this.updateVisualPositionDuringDrag();
+              let targetModelPosition: Vector2;
+              if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
+                targetModelPosition = this.getOffMembraneDropPosition();
+              }
+              else {
+                targetModelPosition = this.getTargetPositionForSlot( this.currentTargetSlotIndex );
+              }
+              this.ligand.position.set( targetModelPosition );
+              this.updateVisualPosition();
             }
           }
           else if ( key === 'escape' ) {
@@ -413,7 +425,7 @@ export default class LigandNode extends Node {
     // Initial positioning
     this.updateVisualPosition();
 
-    soundRichDragListener.dragListener.isOverOrFocusedProperty.link( isOver => {
+    soundRichDragListener.dragListener.isOverProperty.link( isOver => {
 
       // If the ligand is already controlled, don't start walking when the pointer goes out
       if ( ligand.mode.type !== 'userControlled' ) {
@@ -464,26 +476,6 @@ export default class LigandNode extends Node {
     const targetSlot = this.slots[ slotIndex ];
     return new Vector2( targetSlot.position, MODEL_DRAG_VERTICAL_OFFSET );
   }
-
-  /**
-   * Updates the visual position of the node based on the current keyboard drag state.
-   * Should be called during arrow key presses when grabbed.
-   */
-  private updateVisualPositionDuringDrag(): void {
-    assert && assert( this.isKeyboardGrabbed, 'Should only be called during keyboard drag' );
-    assert && assert( this.currentTargetSlotIndex !== null, 'Target slot index must be set during drag' );
-
-    let targetModelPosition: Vector2;
-    if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
-      targetModelPosition = this.getOffMembraneDropPosition();
-    }
-    else {
-      targetModelPosition = this.getTargetPositionForSlot( this.currentTargetSlotIndex! );
-    }
-    // Directly set the view center, bypassing the normal step update based on ligand.position
-    this.center = this.modelViewTransform.modelToViewPosition( targetModelPosition );
-  }
-
 
   /**
    * Update the visual position based on the ligand's actual model position.
@@ -545,13 +537,7 @@ export default class LigandNode extends Node {
    * Overrides the default step if keyboard interaction is active.
    */
   public step(): void {
-    // If grabbed via keyboard, the visual position is controlled solely by the keyboard listener.
-    // Otherwise, update based on the model particle's position.
-
-    // TODO: Is this guard necessary, see https://github.com/phetsims/membrane-transport/issues/45
-    if ( !this.isKeyboardGrabbed ) {
-      this.updateVisualPosition();
-    }
+    this.updateVisualPosition();
   }
 }
 membraneTransport.register( 'LigandNode', LigandNode );
