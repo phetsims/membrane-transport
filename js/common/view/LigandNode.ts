@@ -58,13 +58,12 @@ export default class LigandNode extends Node {
   private readonly modelViewTransform: ModelViewTransform2;
 
   // Keyboard interaction state
-  // private isKeyboardFocused = false;
   private isKeyboardGrabbed = false;
   private currentTargetSlotIndex: number | null = null; // 0 to SLOT_COUNT-1 for slots, SLOT_COUNT for off-membrane, null if not targeted
   private initialPositionBeforeGrab: Vector2 | null = null;
 
-  // Alerting dependencies (assuming passed in or globally accessible)
   private readonly utterance = new Utterance( {
+
     // This utterance is not registered to a Node, and so it will always be spoken.
     voicingCanAnnounceProperties: [ new Property( true ) ]
   } );
@@ -96,7 +95,7 @@ export default class LigandNode extends Node {
         containerTagName: 'div', // Required for labelTagName
 
         innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.triangleLigandStringProperty : MembraneTransportStrings.a11y.starLigandStringProperty,
-        appendDescription: true, // Append help text dynamically later if needed
+        appendDescription: true // Append help text dynamically later if needed
 
         // TODO: https://github.com/phetsims/membrane-transport/issues/45
         // descriptionContent: MembraneTransportMessages.ligandDescriptionPatternStringProperty, // Default description
