@@ -251,13 +251,13 @@ export default class LigandNode extends Node {
                 MembraneTransportSounds.ligandReleased();
               }
               else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
+
                 // Drop off membrane: Use calculated position above "slot 8"
                 const offMembranePosition = this.getOffMembraneDropPosition();
                 this.ligand.position.set( offMembranePosition );
 
-                // TODO: https://github.com/phetsims/membrane-transport/issues/45
-                // this.alert( MembraneTransportMessages.ligandReleasedOffMembranePatternStringProperty, { ligandName: this.getLigandTypeName() } );
-                // MembraneTransportSounds.ligandReleased();
+                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
+                MembraneTransportSounds.ligandReleased();
               }
               else {
                 // Drop on a slot (0 to SLOT_COUNT-1)

@@ -193,6 +193,9 @@
       },
       "grabbedLigand": {
         "value": "Grabbed {{ligandType}}"
+      },
+      "ligandReleasedOffMembranePattern": {
+        "value": "{{ligandType}} released off membrane"
       }
     }
   }

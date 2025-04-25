@@ -101,6 +101,7 @@ type StringsType = {
       'triangleLigandStringProperty': LocalizedStringProperty;
       'releasedLigandStringProperty': LocalizedStringProperty;
       'grabbedLigandStringProperty': LocalizedStringProperty;
+      'ligandReleasedOffMembranePatternStringProperty': LocalizedStringProperty;
     }
   }
 };
