@@ -9,7 +9,7 @@
 
 // TODO: Add Accessible Names: https://github.com/phetsims/membrane-transport/issues/45
 // TODO: i18n https://github.com/phetsims/membrane-transport/issues/45
-// TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
 // TODO: When mousing over a bound ligand, it causes unbinding, but should remain bound. https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
