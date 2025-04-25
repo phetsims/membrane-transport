@@ -324,7 +324,7 @@ export default class LigandNode extends Node {
 
               if ( newIndex !== this.currentTargetSlotIndex ) {
                 this.currentTargetSlotIndex = newIndex;
-                MembraneTransportSounds.transportProteinMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' ); // TODO: Rename method? https://github.com/phetsims/membrane-transport/issues/45
+                MembraneTransportSounds.itemMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
 
                 const targetSlot = this.slots[ newIndex ];
                 const protein = targetSlot.transportProteinProperty.value;
@@ -358,8 +358,7 @@ export default class LigandNode extends Node {
               this.ligand.position.set( this.initialPositionBeforeGrab! ); // Return to start position
               this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control
 
-              // TODO: https://github.com/phetsims/membrane-transport/issues/45
-              // this.alert( MembraneTransportMessages.ligandMoveCancelledPatternStringProperty, { ligandName: this.getLigandTypeName() } );
+              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
               MembraneTransportSounds.ligandReleased(); // Use release sound for cancel
 
               this.resetKeyboardInteractionState();

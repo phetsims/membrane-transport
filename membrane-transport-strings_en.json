@@ -211,6 +211,9 @@
       },
       "thereIsProteinAtThisSlotPattern": {
         "value": "There is a {{proteinName}} at this slot"
+      },
+      "moveCancelledPattern": {
+        "value": "Cancelled moving {{ligandType}}"
       }
     }
   }

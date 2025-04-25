@@ -302,7 +302,7 @@ export default class MembraneTransportSounds {
     shareWhooshSound.play();
   }
 
-  public static transportProteinMoved( directionToPlay: 'left' | 'right' | 'both' ): void {
+  public static itemMoved( directionToPlay: 'left' | 'right' | 'both' ): void {
     const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
 
     if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {

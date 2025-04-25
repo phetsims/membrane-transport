@@ -108,10 +108,10 @@ export default class TransportProteinDragNode extends Node {
           // the pick up sound will play in this case
         }
         else if ( newValue > oldValue ) {
-          MembraneTransportSounds.transportProteinMoved( 'right' );
+          MembraneTransportSounds.itemMoved( 'right' );
         }
         else if ( newValue < oldValue ) {
-          MembraneTransportSounds.transportProteinMoved( 'left' );
+          MembraneTransportSounds.itemMoved( 'left' );
         }
       }
     } );
