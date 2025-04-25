@@ -95,7 +95,10 @@ type StringsType = {
         'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
       };
       'toolAccessibleHelpTextStringProperty': LocalizedStringProperty;
-    }
+    };
+    'starLigandStringProperty': LocalizedStringProperty;
+    'triangleLigandStringProperty': LocalizedStringProperty;
+    'releasedLigandStringProperty': LocalizedStringProperty;
   }
 };
 

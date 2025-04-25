@@ -180,6 +180,15 @@
       "toolAccessibleHelpText": {
         "value": "Grab to pull protein to the membrane."
       }
+    },
+    "starLigand": {
+      "value": "Star Ligand"
+    },
+    "triangleLigand": {
+      "value": "Triangle Ligand"
+    },
+    "releasedLigand": {
+      "value": "Released ligand"
     }
   }
 }

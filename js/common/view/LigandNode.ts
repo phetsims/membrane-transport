@@ -11,10 +11,12 @@
 // TODO: i18n https://github.com/phetsims/membrane-transport/issues/45
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
 // TODO: When mousing over a bound ligand, it causes unbinding, but should remain bound. https://github.com/phetsims/membrane-transport/issues/45
+// TODO: When a ligand is bound, it cannot be unbound by the user, see https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
@@ -27,6 +29,7 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -260,9 +263,8 @@ export default class LigandNode extends Node {
                 // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
                 this.ligand.position.set( this.initialPositionBeforeGrab! );
 
-                // TODO: https://github.com/phetsims/membrane-transport/issues/45
-                // this.alert( MembraneTransportMessages.releasedLigandPatternStringProperty, { ligandName: this.getLigandTypeName() } );
-                // MembraneTransportSounds.ligandReleased();
+                this.alert( MembraneTransportStrings.a11y.releasedLigandStringProperty );
+                MembraneTransportSounds.ligandReleased();
               }
               else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
                 // Drop off membrane: Use calculated position above "slot 8"
@@ -427,10 +429,9 @@ export default class LigandNode extends Node {
   /**
    * Get the user-friendly name for the ligand type.
    */
-  // TODO: https://github.com/phetsims/membrane-transport/issues/45
-  // private getLigandTypeName(): string {
-  //   return this.ligand.type === 'ligandA' ? MembraneTransportMessages.triangleLigandStringProperty.value : MembraneTransportMessages.starLigandStringProperty.value;
-  // }
+  private getLigandTypeName(): TReadOnlyProperty<string> {
+    return this.ligand.type === 'ligandA' ? MembraneTransportStrings.a11y.triangleLigandStringProperty : MembraneTransportStrings.a11y.starLigandStringProperty;
+  }
 
   /**
    * Calculate the target model position when hovering over the off-membrane area ("slot 8").
@@ -484,22 +485,8 @@ export default class LigandNode extends Node {
     }
   }
 
-  /**
-   * Sends an alert message using the configured alerter.
-   */
-  private alert( message: AlertableNoUtterance, providedOptions?: Record<string, unknown> ): void {
-    const alertContent = message;
-
-    // Apply formatting if options are provided (e.g., for Fluent patterns)
-    // TODO: https://github.com/phetsims/membrane-transport/issues/45
-    // if ( providedOptions && typeof message === 'string' ) {
-    //   alertContent = FluentUtils.formatMessage( message, providedOptions );
-    // }
-    // else if ( typeof message !== 'string' && message.value && providedOptions ) {
-    //   alertContent = FluentUtils.formatMessage( message.value, providedOptions );
-    // }
-
-    this.utterance.alert = alertContent;
+  private alert( message: AlertableNoUtterance ): void {
+    this.utterance.alert = message;
     this.alerter.alert( this.utterance );
   }
 

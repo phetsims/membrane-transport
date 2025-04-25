@@ -317,6 +317,10 @@ export default class MembraneTransportSounds {
       randomClip.play();
     }
   }
+
+  public static ligandReleased(): void {
+    releaseSoundPlayer.play();
+  }
 }
 
 membraneTransport.register( 'MembraneTransportSounds', MembraneTransportSounds );
