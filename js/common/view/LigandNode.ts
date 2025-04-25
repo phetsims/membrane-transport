@@ -9,7 +9,6 @@
 
 // TODO: Add Accessible Names: https://github.com/phetsims/membrane-transport/issues/45
 // TODO: i18n https://github.com/phetsims/membrane-transport/issues/45
-// TODO: After rewriting to be discrete keyboard interaction, make sure only 2 are in the DOM https://github.com/phetsims/membrane-transport/issues/45
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/45
 // TODO: When mousing over a bound ligand, it causes unbinding, but should remain bound. https://github.com/phetsims/membrane-transport/issues/45
 
@@ -79,29 +78,32 @@ export default class LigandNode extends Node {
     observationWindow: Node
   ) {
 
-    const options = combineOptions<NodeOptions>( {
+    // Options for both focusable and non-focusable cases
+    const sharedOptions = {
       children: [ ligandView ],
       visibleProperty: areLigandsAddedProperty,
-      cursor: 'pointer',
-      tagName: 'button', // Treat as a button for focus/activation
-      labelTagName: 'p', // Contains the accessible name
-      containerTagName: 'div', // Required for labelTagName
+      cursor: 'pointer'
+    };
 
-      // TODO: https://github.com/phetsims/membrane-transport/issues/45
-      // innerContent: ligandView.type === 'ligandA' ? MembraneTransportMessages.triangleLigandStringProperty : MembraneTransportMessages.starLigandStringProperty, // Use translatable strings
-      innerContent: 'Ligand',
-      appendDescription: true, // Append help text dynamically later if needed
+    const options =
+      focusable ?
+      ( combineOptions<NodeOptions>( {
+        tagName: 'button', // Treat as a button for focus/activation
+        labelTagName: 'p', // Contains the accessible name
+        containerTagName: 'div', // Required for labelTagName
 
-      // TODO: https://github.com/phetsims/membrane-transport/issues/45
-      // descriptionContent: MembraneTransportMessages.ligandDescriptionPatternStringProperty, // Default description
+        // TODO: https://github.com/phetsims/membrane-transport/issues/45
+        // innerContent: ligandView.type === 'ligandA' ? MembraneTransportMessages.triangleLigandStringProperty : MembraneTransportMessages.starLigandStringProperty, // Use translatable strings
+        innerContent: 'Ligand',
+        appendDescription: true, // Append help text dynamically later if needed
 
-      // Make focusable only if the feature is enabled
-      pdomVisible: focusable,
-      focusable: focusable
-    }, AccessibleDraggableOptions, {
-      // Don't use accessible draggable for keyboard, implement custom logic
-      // useAccessibleDraggable: false // Override the default from AccessibleDraggableOptions
-    } );
+        // TODO: https://github.com/phetsims/membrane-transport/issues/45
+        // descriptionContent: MembraneTransportMessages.ligandDescriptionPatternStringProperty, // Default description
+
+        // Make focusable only if the feature is enabled
+        focusable: true
+      }, AccessibleDraggableOptions, sharedOptions ) ) :
+      sharedOptions;
 
     super( options );
 
