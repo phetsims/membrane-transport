@@ -220,9 +220,6 @@ export default class LigandNode extends Node {
 
           if ( [ 'space', 'enter' ].includes( key ) ) {
 
-            // TODO: https://github.com/phetsims/membrane-transport/issues/45
-            // event.handle(); // Prevent browser default actions like scrolling
-
             if ( !this.isKeyboardGrabbed ) {
               // --- Grab Logic ---
               this.isKeyboardGrabbed = true;
@@ -254,14 +251,12 @@ export default class LigandNode extends Node {
             }
             else {
               // --- Drop Logic ---
-              // TODO: https://github.com/phetsims/membrane-transport/issues/45
-              // event.handle(); // Prevent browser default actions
 
               const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
               this.isKeyboardGrabbed = false;
-              // this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control (default)
 
               if ( this.currentTargetSlotIndex === null ) {
+
                 // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
                 this.ligand.position.set( this.initialPositionBeforeGrab! );
 
@@ -329,9 +324,6 @@ export default class LigandNode extends Node {
           else if ( [ 'arrowUp', 'arrowDown', 'arrowLeft', 'arrowRight', 'w', 's', 'a', 'd' ].includes( key ) ) {
             if ( this.isKeyboardGrabbed ) {
 
-              // TODO: https://github.com/phetsims/membrane-transport/issues/45
-              // event.handle(); // Prevent browser scrolling
-
               // --- Movement Logic ---
               let newIndex: number;
               const isLeftOrDown = [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key );
@@ -386,9 +378,6 @@ export default class LigandNode extends Node {
           }
           else if ( key === 'escape' ) {
             if ( this.isKeyboardGrabbed ) {
-
-              // TODO: https://github.com/phetsims/membrane-transport/issues/45
-              // event.handle(); // Prevent closing dialogs etc.
 
               // --- Cancel Logic ---
               this.isKeyboardGrabbed = false;
