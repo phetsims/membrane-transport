@@ -7,10 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// TODO: Add Accessible Names: https://github.com/phetsims/membrane-transport/issues/45
-// TODO: i18n https://github.com/phetsims/membrane-transport/issues/45
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
-// TODO: When mousing over a bound ligand, it causes unbinding, but should remain bound. https://github.com/phetsims/membrane-transport/issues/45
 // TODO: When a ligand is bound, it cannot be unbound by the user, see https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -381,8 +378,9 @@ export default class LigandNode extends Node {
 
     soundRichDragListener.dragListener.isOverProperty.link( isOver => {
 
-      // If the ligand is already controlled, don't start walking when the pointer goes out
-      if ( ligand.mode.type !== 'userControlled' ) {
+      // If the ligand is already controlled, don't start walking when the pointer goes out.
+      // Do not release a bound ligand by mouseover
+      if ( ligand.mode.type !== 'userControlled' && ligand.mode.type !== 'ligandBound' ) {
         ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
       }
     } );
