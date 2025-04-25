@@ -397,15 +397,6 @@ export default class LigandNode extends Node {
       this.addInputListener( keyboardListener );
     }
 
-    // Link focus changes to ligand mode (like mouseover) if not user controlled
-    // TODO: https://github.com/phetsims/membrane-transport/issues/45
-    // this.focusedProperty.link( isFocused => {
-    //   // If the ligand is already controlled (by mouse or keyboard), don't change mode
-    //   if ( ligand.mode.type !== 'userControlled' ) {
-    //     ligand.mode = isFocused ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
-    //   }
-    // } );
-
     // Scale the node view based on model dimensions
     const modelWidth = this.ligand.dimension.width;
     const viewWidth = this.modelViewTransform.modelToViewDeltaX( modelWidth );
