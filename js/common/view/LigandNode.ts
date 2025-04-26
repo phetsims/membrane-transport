@@ -8,9 +8,8 @@
  */
 
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
-// TODO: Show a dashed outline when grabbed, see https://github.com/phetsims/membrane-transport/issues/45
-// TODO: Show a message that the ligand can be grabbed (once for each type), see https://github.com/phetsims/membrane-transport/issues/45
-// TODO: Rewrite to use GrabDragInteraction? see https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Improve the position of the message about grabbing the ligand. See https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Use keyboard drag listener? See https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -23,6 +22,7 @@ import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
@@ -69,6 +69,7 @@ export default class LigandNode extends Node {
     voicingCanAnnounceProperties: [ new Property( true ) ]
   } );
   private readonly alerter: Alerter;
+  private grabDragInteraction: GrabDragInteraction | null = null;
 
   public constructor(
     private readonly slots: Slot[],
@@ -219,102 +220,7 @@ export default class LigandNode extends Node {
 
           const key = keysPressed;
 
-          if ( [ 'space', 'enter' ].includes( key ) ) {
-
-            if ( !this.isKeyboardGrabbed ) {
-              // --- Grab Logic ---
-              this.isKeyboardGrabbed = true;
-              this.initialPositionBeforeGrab = this.ligand.position.copy();
-              this.ligand.mode = { type: 'userControlled', slot: null }; // Take control
-              this.currentTargetSlotIndex = null; // Reset target until first move
-
-              const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
-
-              // Alerting + Hint
-              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.grabbedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
-
-              if ( grabHintNeeded ) {
-                hasShownGrabHint[ this.ligand.type ] = false;
-              }
-
-              // const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
-              MembraneTransportSounds.ligandGrabbed();
-
-              // Stop any ongoing mouse/touch drag
-              soundRichDragListener.interrupt();
-
-            }
-            else {
-              // --- Drop Logic ---
-
-              const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
-              this.isKeyboardGrabbed = false;
-              MembraneTransportSounds.ligandReleased();
-
-              if ( this.currentTargetSlotIndex === null ) {
-
-                // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
-                this.ligand.position.set( this.initialPositionBeforeGrab! );
-
-                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
-
-              }
-              else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
-
-                // Drop off membrane: Use calculated position above "slot 8"
-                const offMembranePosition = this.getOffMembraneDropPosition();
-                this.ligand.position.set( offMembranePosition );
-
-                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
-              }
-              else {
-                // Drop on a slot (0 to SLOT_COUNT-1)
-                const targetSlot = this.slots[ this.currentTargetSlotIndex ];
-                // Drop visually centered above the slot
-                const dropPosition = new Vector2( targetSlot.position, MODEL_DRAG_VERTICAL_OFFSET );
-                this.ligand.position.set( dropPosition );
-
-                const protein = targetSlot.transportProteinProperty.value;
-                if ( protein instanceof LigandGatedChannel && this.isCompatibleLigand( protein ) ) {
-
-
-                  if ( protein.stateProperty.value === 'closed' ) {
-
-                    // Allow immediate binding attempt by model
-                    protein.clearRebindingCooldown();
-
-                    this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty, {
-                      ligandType: this.getLigandTypeName(),
-                      proteinName: getBriefProteinName( protein.type ).value
-                    } ) );
-                  }
-                  else {
-                    this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyProteinPatternStringProperty, {
-                      ligandType: this.getLigandTypeName(),
-                      proteinName: getBriefProteinName( protein.type ).value
-                    } ) );
-                  }
-                }
-                else {
-
-                  // Incompatible drop (wrong LGC, non-LGC, or empty slot)
-                  // Ligand mode is already set to random walk, starting from the dropPosition.
-                  this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
-                }
-              }
-
-              // Reset state only if it was actually grabbed before this drop action
-              if ( wasGrabbed ) {
-                this.resetKeyboardInteractionState();
-              }
-
-              // Resume random walk. If close to a target channel, it can bind.
-              this.ligand.mode = Particle.createRandomWalkMode( true );
-
-              this.updateVisualPosition(); // Ensure view matches model after drop
-            }
-          }
-          else if ( [ 'arrowUp', 'arrowDown', 'arrowLeft', 'arrowRight', 'w', 's', 'a', 'd' ].includes( key ) ) {
+          if ( [ 'arrowUp', 'arrowDown', 'arrowLeft', 'arrowRight', 'w', 's', 'a', 'd' ].includes( key ) ) {
             if ( this.isKeyboardGrabbed ) {
 
               // --- Movement Logic ---
@@ -334,7 +240,7 @@ export default class LigandNode extends Node {
                 MembraneTransportSounds.itemMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
 
                 const targetSlot = this.slots[ newIndex ];
-                const protein = targetSlot.transportProteinProperty.value;
+                const protein = targetSlot?.transportProteinProperty.value;
 
                 const additionalInformation = protein ?
                                               new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringProperty, { proteinName: getBriefProteinName( protein.type ).value } ) :
@@ -374,7 +280,107 @@ export default class LigandNode extends Node {
           }
         }
       } );
-      this.addInputListener( keyboardListener );
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      this.grabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
+        tandem: tandem.createTandem( 'grabDragInteraction' ),
+        objectToGrabString: this.getLigandTypeName(),
+
+        onGrab: () => {
+
+          // --- Grab Logic ---
+          this.isKeyboardGrabbed = true;
+          this.initialPositionBeforeGrab = this.ligand.position.copy();
+          this.ligand.mode = { type: 'userControlled', slot: null }; // Take control
+          this.currentTargetSlotIndex = null; // Reset target until first move
+
+          const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
+
+          // Alerting + Hint
+          this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.grabbedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
+
+          if ( grabHintNeeded ) {
+            hasShownGrabHint[ this.ligand.type ] = false;
+          }
+
+          // const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
+          MembraneTransportSounds.ligandGrabbed();
+
+          // Stop any ongoing mouse/touch drag
+          soundRichDragListener.interrupt();
+        },
+
+        onRelease: () => {
+          // --- Drop Logic ---
+
+          const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
+          this.isKeyboardGrabbed = false;
+          MembraneTransportSounds.ligandReleased();
+
+          if ( this.currentTargetSlotIndex === null ) {
+
+            // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
+            this.ligand.position.set( this.initialPositionBeforeGrab! );
+
+            // TODO: Some alerts are redundant with GrabDragInteraction now, see https://github.com/phetsims/membrane-transport/issues/45
+            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
+          }
+          else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
+
+            // Drop off membrane: Use calculated position above "slot 8"
+            const offMembranePosition = this.getOffMembraneDropPosition();
+            this.ligand.position.set( offMembranePosition );
+
+            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
+          }
+          else {
+            // Drop on a slot (0 to SLOT_COUNT-1)
+            const targetSlot = this.slots[ this.currentTargetSlotIndex ];
+            // Drop visually centered above the slot
+            const dropPosition = new Vector2( targetSlot.position, MODEL_DRAG_VERTICAL_OFFSET );
+            this.ligand.position.set( dropPosition );
+
+            const protein = targetSlot.transportProteinProperty.value;
+            if ( protein instanceof LigandGatedChannel && this.isCompatibleLigand( protein ) ) {
+
+
+              if ( protein.stateProperty.value === 'closed' ) {
+
+                // Allow immediate binding attempt by model
+                protein.clearRebindingCooldown();
+
+                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty, {
+                  ligandType: this.getLigandTypeName(),
+                  proteinName: getBriefProteinName( protein.type ).value
+                } ) );
+              }
+              else {
+                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyProteinPatternStringProperty, {
+                  ligandType: this.getLigandTypeName(),
+                  proteinName: getBriefProteinName( protein.type ).value
+                } ) );
+              }
+            }
+            else {
+
+              // Incompatible drop (wrong LGC, non-LGC, or empty slot)
+              // Ligand mode is already set to random walk, starting from the dropPosition.
+              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
+            }
+          }
+
+          // Reset state only if it was actually grabbed before this drop action
+          if ( wasGrabbed ) {
+            this.resetKeyboardInteractionState();
+          }
+
+          // Resume random walk. If close to a target channel, it can bind.
+          this.ligand.mode = Particle.createRandomWalkMode( true );
+
+          this.updateVisualPosition(); // Ensure view matches model after drop
+        }
+      } );
     }
 
     // Scale the node view based on model dimensions
