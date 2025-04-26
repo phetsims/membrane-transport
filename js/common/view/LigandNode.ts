@@ -9,7 +9,7 @@
 
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
 // TODO: Improve the position of the message about grabbing the ligand. See https://github.com/phetsims/membrane-transport/issues/45
-// TODO: Use keyboard drag listener? See https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Reset the positionProperty offset and grab drag interaction on reset. See https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -17,13 +17,16 @@ import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
+import { roundSymmetric } from '../../../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
+import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -69,7 +72,6 @@ export default class LigandNode extends Node {
     voicingCanAnnounceProperties: [ new Property( true ) ]
   } );
   private readonly alerter: Alerter;
-  private grabDragInteraction: GrabDragInteraction | null = null;
 
   public constructor(
     private readonly slots: Slot[],
@@ -201,89 +203,74 @@ export default class LigandNode extends Node {
     // All ligands can be mouse-controlled, but only one of each type can be keyboard-focused
     this.addInputListener( soundRichDragListener );
 
+    const positionProperty = new Vector2Property( new Vector2( -1, 0 ) );
+
+    positionProperty.lazyLink( position => {
+
+      // Fun hack, x + y = index. If the user pushes up, it should move to the right, so we add x + y.
+      const newIndex = clamp( roundSymmetric( position.x + position.y ), 0, OFF_MEMBRANE_SLOT_INDEX );
+
+      if ( newIndex !== this.currentTargetSlotIndex ) {
+        this.currentTargetSlotIndex = newIndex;
+        MembraneTransportSounds.itemMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
+
+        const targetSlot = this.slots[ newIndex ];
+        const protein = targetSlot?.transportProteinProperty.value;
+
+        const additionalInformation = protein ?
+                                      new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringProperty, { proteinName: getBriefProteinName( protein.type ).value } ) :
+                                      MembraneTransportStrings.a11y.ligandNode.thereIsNoProteinAtThisSlotStringProperty;
+
+        this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandMovedToSlotPatternStringProperty, {
+          ligandType: this.getLigandTypeName(),
+          slotNumber: newIndex + 1,
+          additionalInformation: additionalInformation
+        } ) );
+      }
+      else {
+        MembraneTransportSounds.boundaryReached();
+      }
+
+      // Update position to be centered *above* the target slot/area
+      const targetModelPosition = this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ? this.getOffMembraneDropPosition() :
+                                  this.getTargetPositionForSlot( this.currentTargetSlotIndex );
+      this.ligand.position.set( targetModelPosition );
+      this.updateVisualPosition();
+    } );
+
     // Custom Keyboard Interaction Listener
     if ( focusable ) {
-      const keyboardListener = new KeyboardListener( {
-        keys: [ 'space', 'enter', 'arrowUp', 'arrowDown', 'arrowLeft', 'arrowRight', 'w', 's', 'a', 'd', 'escape' ],
-        fireOnHold: true, // Allow holding arrow keys for movement
-        fire: ( event, keysPressed ) => {
+
+      const escListener = new KeyboardListener( {
+        keys: [ 'escape' ],
+        fire: () => {
           // Ignore if focus is lost or interaction disabled somehow
           if ( !this.focused ) { return; }
+          if ( this.isKeyboardGrabbed ) {
 
-          if ( ligand.mode.type === 'ligandBound' ) {
+            // --- Cancel Logic ---
+            this.isKeyboardGrabbed = false;
+            this.ligand.position.set( this.initialPositionBeforeGrab! ); // Return to start position
+            this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control
 
-            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.cannotInteractWhileLigandIsBoundPatternStringProperty, {
-              ligandType: this.getLigandTypeName()
-            } ) );
-            return;
-          }
+            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
+            MembraneTransportSounds.ligandReleased(); // Use release sound for cancel
 
-          const key = keysPressed;
-
-          if ( [ 'arrowUp', 'arrowDown', 'arrowLeft', 'arrowRight', 'w', 's', 'a', 'd' ].includes( key ) ) {
-            if ( this.isKeyboardGrabbed ) {
-
-              // --- Movement Logic ---
-              let newIndex: number;
-              const isLeftOrDown = [ 'arrowLeft', 'a', 'arrowDown', 's' ].includes( key );
-              const delta = isLeftOrDown ? -1 : 1;
-
-              if ( this.currentTargetSlotIndex === null ) {
-                newIndex = 0; // First move snaps to slot 0
-              }
-              else {
-                newIndex = clamp( this.currentTargetSlotIndex + delta, 0, OFF_MEMBRANE_SLOT_INDEX ); // Clamp between slot 0 and off-membrane index
-              }
-
-              if ( newIndex !== this.currentTargetSlotIndex ) {
-                this.currentTargetSlotIndex = newIndex;
-                MembraneTransportSounds.itemMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
-
-                const targetSlot = this.slots[ newIndex ];
-                const protein = targetSlot?.transportProteinProperty.value;
-
-                const additionalInformation = protein ?
-                                              new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringProperty, { proteinName: getBriefProteinName( protein.type ).value } ) :
-                                              MembraneTransportStrings.a11y.ligandNode.thereIsNoProteinAtThisSlotStringProperty;
-
-                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandMovedToSlotPatternStringProperty, {
-                  ligandType: this.getLigandTypeName(),
-                  slotNumber: newIndex + 1,
-                  additionalInformation: additionalInformation
-                } ) );
-              }
-              else {
-                MembraneTransportSounds.boundaryReached();
-              }
-
-              // Update position to be centered *above* the target slot/area
-              const targetModelPosition = this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ? this.getOffMembraneDropPosition() :
-                                          this.getTargetPositionForSlot( this.currentTargetSlotIndex );
-              this.ligand.position.set( targetModelPosition );
-              this.updateVisualPosition();
-            }
-          }
-          else if ( key === 'escape' ) {
-            if ( this.isKeyboardGrabbed ) {
-
-              // --- Cancel Logic ---
-              this.isKeyboardGrabbed = false;
-              this.ligand.position.set( this.initialPositionBeforeGrab! ); // Return to start position
-              this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control
-
-              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
-              MembraneTransportSounds.ligandReleased(); // Use release sound for cancel
-
-              this.resetKeyboardInteractionState();
-              this.updateVisualPosition(); // Ensure view matches model after cancel
-            }
+            this.resetKeyboardInteractionState();
+            this.updateVisualPosition(); // Ensure view matches model after cancel
           }
         }
       } );
+      this.addInputListener( escListener );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      this.grabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
+      const keyboardListener = new KeyboardDragListener( {
+        positionProperty: positionProperty,
+        dragDelta: 1,
+        shiftDragDelta: 1
+      } );
+
+      // eslint-disable-next-line no-new
+      new GrabDragInteraction( this, keyboardListener, observationWindow, {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
         objectToGrabString: this.getLigandTypeName(),
 
