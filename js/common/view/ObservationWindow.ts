@@ -35,9 +35,6 @@ import LigandParticleNode from './particles/LigandParticleNode.js';
 import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
-// TODO (SR): Extending InteractiveHighlightingNode means all children activate the highlight, https://github.com/phetsims/membrane-transport/issues/45
-//   even those that are not interactive. Either focus on interactive parts or make non-interactive children
-//   pickable: false.
 export default class ObservationWindow extends InteractiveHighlightingNode {
 
   public readonly ligandNodes: LigandNode[] = [];
