@@ -34,7 +34,6 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import Particle from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
@@ -85,6 +84,8 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly membraneVoltagePotentialProperty: Property<( -70 ) | -50 | 30>;
 
   public readonly solutes: Particle<SoluteType>[] = [];
+
+  // On screens that support ligands, the ligands are eagerly created and shown/hidden based on a Property. They are not cleared on reset
   public readonly ligands: Particle<LigandType>[] = [];
 
   private readonly resetEmitter = new Emitter();
@@ -176,26 +177,8 @@ export default class MembraneTransportModel extends PhetioObject {
       this.addParticles( 'ligandB', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
     }
 
-    if ( MembraneTransportQueryParameters.defaultSolutes ) {
-
-      const populateInitialSolutes = () => {
-        // A random sample of solutes in the solutes array
-        for ( let i = 0; i < 30; i++ ) {
-          this.solutes.push( new Particle( new Vector2( dotRandom.nextDoubleBetween( -50, 50 ), dotRandom.nextDoubleBetween( -50, 50 ) ), dotRandom.sample( getFeatureSetSoluteTypes( this.featureSet ) ) ) );
-        }
-      };
-
-      this.resetEmitter.addListener( () => {
-        this.solutes.length = 0;
-        populateInitialSolutes();
-      } );
-
-      populateInitialSolutes();
-    }
-
     this.resetEmitter.addListener( () => {
       this.solutes.length = 0;
-      this.ligands.length = 0;
 
       this.slots.forEach( slot => {
         slot.reset();

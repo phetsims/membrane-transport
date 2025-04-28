@@ -14,11 +14,6 @@ import membraneTransport from '../membraneTransport.js';
 
 const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
 
-  // A flag that populates the sim with a set of default solutes.
-  defaultSolutes: {
-    type: 'flag'
-  },
-
   // Causes the lipids in the membrane to randomly wiggle, can be shut off in query parameter or preferences.
   animateLipids: {
     type: 'boolean',
