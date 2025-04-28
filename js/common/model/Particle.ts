@@ -66,10 +66,9 @@ type RandomWalkMode = {
 /**
  * Particle (a ligand) is currently attached to the binding site of a LigandGatedChannel.
  */
-type BoundMode = {
+type LigandBoundMode = {
   type: 'ligandBound';
   ligandGatedChannel: LigandGatedChannel;
-  slot: null;
 };
 
 /**
@@ -184,7 +183,7 @@ type UserOverMode = {
 
 type ParticleMode =
   | RandomWalkMode
-  | BoundMode
+  | LigandBoundMode
   | MoveToCenterOfTransportProteinMode
   | EnteringTransportProteinMode
   | SheddingCagedWaterMoleculesMode
@@ -837,7 +836,12 @@ export default class Particle<T extends ParticleType> {
 
       if ( slot.transportProteinType === transportProteinType ) {
         if ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForBinding() ) {
-          const isLigandFree = model.isTransportProteinLigandFree( slot );
+
+          // see if any ligand is already bound or inbound.
+          const boundLigands = model.ligands.filter( ligand => ligand.mode.type === 'ligandBound' && ligand.mode.ligandGatedChannel === transportProtein );
+          const inboundLigands = model.ligands.filter( ligand => ligand.mode.type === 'moveToLigandBindingLocation' && ligand.mode.slot === slot );
+
+          const isLigandFree = boundLigands.length === 0 && inboundLigands.length === 0;
 
           if ( isLigandFree ) {
             this.mode = { type: 'moveToLigandBindingLocation', slot: slot };

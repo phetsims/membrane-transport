@@ -231,7 +231,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   public override releaseParticles( slot: Slot ): void {
     super.releaseParticles( slot );
-    this.model.solutes.filter( solute => solute.mode.slot === slot ).forEach( particle => {
+    this.model.solutes.filter( solute => solute.mode.type !== 'ligandBound' && solute.mode.slot === slot ).forEach( particle => {
       particle.releaseFromInteraction( particle.type === 'potassiumIon' ? 20 : -20 );
     } );
   }

@@ -118,7 +118,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
 
   public override releaseParticles( slot: Slot ): void {
     super.releaseParticles( slot );
-    this.model.solutes.filter( solute => solute.mode.slot === slot ).forEach( particle => particle.releaseFromInteraction( 20 ) );
+    this.model.solutes.filter( solute => solute.mode.type !== 'ligandBound' && solute.mode.slot === slot ).forEach( particle => particle.releaseFromInteraction( 20 ) );
   }
 
   public static getSitePositionOffset( site: 'left' | 'right' | 'center' ): Vector2 {

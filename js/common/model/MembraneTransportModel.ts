@@ -387,15 +387,7 @@ export default class MembraneTransportModel extends PhetioObject {
   ): boolean {
 
     // Check if any Particle mode has this slot and matches the predicate
-    return !this.solutes.some( solute => solute.mode.slot === slot && predicate( solute ) );
-  }
-
-  // See above
-  public isTransportProteinLigandFree(
-    slot: Slot,
-    predicate: ( ligand: Particle<LigandType> ) => boolean = ( () => true )
-  ): boolean {
-    return !this.ligands.some( ligand => ligand.mode.slot === slot && predicate( ligand ) );
+    return !this.solutes.some( solute => solute.mode.type !== 'ligandBound' && solute.mode.slot === slot && predicate( solute ) );
   }
 
   public getTimeSpeedFactor(): number {
