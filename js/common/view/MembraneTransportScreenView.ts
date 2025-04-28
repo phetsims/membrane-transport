@@ -30,7 +30,6 @@ import MembraneTransportMessages from '../../strings/MembraneTransportMessages.j
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import MembraneTransportModelTester from '../model/MembraneTransportModelTester.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
@@ -260,19 +259,6 @@ export default class MembraneTransportScreenView extends ScreenView {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );
       macroCellNode.moveToFront();
     }
-
-    // TODO (SR): These are just for debugging, remove before publication. https://github.com/phetsims/membrane-transport/issues/101
-    // Add hotkeys that let us easily test model behavior.
-    KeyboardListener.createGlobal( this, { keys: [ 'q' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', true, 'outside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'w' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', false, 'outside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'e' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', true, 'outside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'r' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', false, 'outside' ) } );
-
-    // From inside the cell
-    KeyboardListener.createGlobal( this, { keys: [ 'a' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', true, 'inside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 's' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'sodium', false, 'inside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'd' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', true, 'inside' ) } );
-    KeyboardListener.createGlobal( this, { keys: [ 'f' ], fire: () => MembraneTransportModelTester.testLigandChannel( model, 'potassium', false, 'inside' ) } );
 
     // Toggle the capture radius
     KeyboardListener.createGlobal( this, {
