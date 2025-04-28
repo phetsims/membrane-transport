@@ -305,7 +305,7 @@ export default class LigandNode extends Node {
             // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
             this.ligand.position.set( this.initialPositionBeforeGrab! );
 
-            // TODO: Some alerts are redundant with GrabDragInteraction now, see https://github.com/phetsims/membrane-transport/issues/45
+            // TODO: Some alerts are redundant with GrabDragInteraction now, see https://github.com/phetsims/membrane-transport/issues/128
             this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
           }
           else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
