@@ -340,8 +340,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
         else {
 
-          // TODO (SR): We are hitting this when you press the escape key to release a protein. Why? https://github.com/phetsims/membrane-transport/issues/107
-          console.log( 'was not dragged item, but why' );
+          // This is expected when the user presses escape to cancel the drag. No operation needed.
         }
       },
       getGroupItemToSelect: () => {
