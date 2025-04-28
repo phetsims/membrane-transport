@@ -16,6 +16,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import { roundSymmetric } from '../../../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -263,10 +264,14 @@ export default class LigandNode extends Node {
       } );
       this.addInputListener( escListener );
 
+      // Unfortunately, the KeyboardDragListener doesn't support "press up/down to move horizontally" sort of functionality. Do we need that?
+      // TODO https://github.com/phetsims/membrane-transport/issues/125
       const keyboardListener = new KeyboardDragListener( {
         positionProperty: positionProperty,
         dragDelta: 1,
-        shiftDragDelta: 1
+        shiftDragDelta: 1,
+        dragBoundsProperty: new Property( new Bounds2( 0, 0, 7, 0 ) ),
+        keyboardDragDirection: 'leftRight'
       } );
 
       // eslint-disable-next-line no-new
