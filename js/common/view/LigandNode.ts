@@ -12,6 +12,7 @@
 // TODO: Reset the positionProperty offset and grab drag interaction on reset. See https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
@@ -67,6 +68,8 @@ export default class LigandNode extends Node {
   private isKeyboardGrabbed = false;
   private currentTargetSlotIndex: number | null = null; // 0 to SLOT_COUNT-1 for slots, SLOT_COUNT for off-membrane, null if not targeted
   private initialPositionBeforeGrab: Vector2 | null = null;
+
+  public readonly resetEmitter = new Emitter();
 
   private readonly utterance = new Utterance( {
 
@@ -206,6 +209,7 @@ export default class LigandNode extends Node {
     this.addInputListener( soundRichDragListener );
 
     const positionProperty = new Vector2Property( new Vector2( -1, 0 ) );
+    this.resetEmitter.addListener( () => positionProperty.reset() );
 
     positionProperty.lazyLink( position => {
 
@@ -275,8 +279,7 @@ export default class LigandNode extends Node {
         keyboardDragDirection: 'leftRight'
       } );
 
-      // eslint-disable-next-line no-new
-      new GrabDragInteraction( this, keyboardListener, observationWindow, {
+      const grabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
         objectToGrabString: this.getLigandTypeName(),
 
@@ -374,6 +377,8 @@ export default class LigandNode extends Node {
           this.updateVisualPosition(); // Ensure view matches model after drop
         }
       } );
+
+      this.resetEmitter.addListener( () => grabDragInteraction.reset() );
     }
 
     // Scale the node view based on model dimensions

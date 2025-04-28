@@ -46,6 +46,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
+  private readonly resetEmitter = new Emitter();
   public readonly membraneGroupSelectView: MembraneGroupSelectView;
 
   private readonly transportProteinLayer: ObservationWindowTransportProteinLayer;
@@ -138,6 +139,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
           this
         );
         this.ligandNodes.push( ligandNode );
+        this.resetEmitter.addListener( () => ligandNode.resetEmitter.emit() );
       } );
 
       // Put in random z-order
@@ -205,6 +207,7 @@ export default class ObservationWindow extends InteractiveHighlightingNode {
 
   public reset(): void {
     this.membraneGroupSelectView.reset();
+    this.resetEmitter.emit();
   }
 
   public clearSlotDragIndicatorHighlights(): void {
