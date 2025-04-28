@@ -8,7 +8,7 @@
  */
 
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
-// TODO: Improve the position of the message about grabbing the ligand. See https://github.com/phetsims/membrane-transport/issues/45
+// TODO: Improve the position of the message about grabbing the ligand. See https://github.com/phetsims/membrane-transport/issues/126
 // TODO: Reset the positionProperty offset and grab drag interaction on reset. See https://github.com/phetsims/membrane-transport/issues/45
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -52,6 +52,7 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10;
 const OFF_MEMBRANE_SLOT_INDEX = SLOT_COUNT;
 
 // Track if the initial grab hint has been shown for each ligand type. Static to persist across instances.
+// TODO: This is now tracked by common code, see https://github.com/phetsims/membrane-transport/issues/45
 const hasShownGrabHint: Record<LigandType, boolean> = {
   ligandA: true, // Needs showing first time
   ligandB: true  // Needs showing first time
