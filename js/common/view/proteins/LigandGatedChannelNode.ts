@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Render a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
+ * Render a channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
  * in the membrane.
  *
  * @author Sam Reid (PhET Interactive Simulations)
