@@ -211,8 +211,7 @@ export default class LigandNode extends Node {
 
     positionProperty.lazyLink( position => {
 
-      // Fun hack, x + y = index. If the user pushes up, it should move to the right, so we add x + y.
-      const newIndex = clamp( roundSymmetric( position.x + position.y ), 0, OFF_MEMBRANE_SLOT_INDEX );
+      const newIndex = clamp( roundSymmetric( position.x ), 0, OFF_MEMBRANE_SLOT_INDEX );
 
       if ( newIndex !== this.currentTargetSlotIndex ) {
         this.currentTargetSlotIndex = newIndex;
