@@ -85,42 +85,42 @@ export default class MembraneTransportConstants {
   public static readonly IMAGE_METRICS = {
     potassiumLigandGatedChannel: {
       closed: {
-        dimension: new Dimension2( 651, 975 ),
-        ligandBindingSite: new Vector2( 132, 135 )
+        dimension: new Dimension2( 650, 900 ),
+        ligandBindingSite: new Vector2( 76, 126.1 )
       },
       open: {
-        dimension: new Dimension2( 650, 975 ),
-        ligandBindingSite: new Vector2( 132, 135 )
+        dimension: new Dimension2( 650, 900 ),
+        ligandBindingSite: new Vector2( 76, 126.1 )
       }
     },
     sodiumLigandGatedChannel: {
       closed: {
         dimension: new Dimension2( 650, 900 ),
-        ligandBindingSite: new Vector2( 187, 134 )
+        ligandBindingSite: new Vector2( 185, 148 )
       },
       open: {
         dimension: new Dimension2( 650, 900 ),
-        ligandBindingSite: new Vector2( 134, 145 )
+        ligandBindingSite: new Vector2( 129, 148 )
       }
     },
 
     sodiumGlucoseCotransporter: {
       dimension: new Dimension2( 650, 900 ),
-      sodiumSiteLeft: new Vector2( 196.7, 211.5 ),
-      sodiumSiteRight: new Vector2( 490.3, 211.5 ),
-      glucoseSiteCenter: new Vector2( 345, 369.5 )
+      sodiumSiteLeft: new Vector2( 189.5, 208.5 ),
+      sodiumSiteRight: new Vector2( 497.5, 208.5 ),
+      glucoseSiteCenter: new Vector2( 345.4, 366 )
     },
     sodiumPotassiumPump: {
       openDownDimension: new Dimension2( 650, 900 ),
       openDownWithPhosphateSiteDimension: new Dimension2( 650, 900 ),
-      openUpDimension: new Dimension2( 657, 900 ),
+      openUpDimension: new Dimension2( 650, 900 ),
 
-      sodiumSite1: new Vector2( 243.6, 619.5 ),
-      sodiumSite2: new Vector2( 408, 528.2 ),
-      sodiumSite3: new Vector2( 254.8, 449.8 ),
-      phosphateSite: new Vector2( 328, 792.7 ),
-      potassiumSite1: new Vector2( 217, 341.1 ),
-      potassiumSite2: new Vector2( 442.5, 342 )
+      sodiumSite1: new Vector2( 241, 624.5 ),
+      sodiumSite2: new Vector2( 410, 531 ),
+      sodiumSite3: new Vector2( 252, 450.5 ),
+      phosphateSite: new Vector2( 327, 800 ),
+      potassiumSite1: new Vector2( 209, 339.5 ),
+      potassiumSite2: new Vector2( 443, 339 )
     }
   };
 
