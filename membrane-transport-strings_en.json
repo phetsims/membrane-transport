@@ -186,7 +186,7 @@
         }
       },
       "toolAccessibleHelpText": {
-        "value": "Grab protein to pull to membrane."
+        "value": "Grab transporter to pull to membrane."
       }
     },
     "ligandNode": {
