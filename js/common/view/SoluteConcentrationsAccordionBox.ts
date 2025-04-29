@@ -8,6 +8,7 @@
 
 import Emitter from '../../../../axon/js/Emitter.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
@@ -71,9 +72,10 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
     contentNode.addChild( outsideText );
     contentNode.addChild( insideText );
 
+    const iconAlignGroup = new AlignGroup();
     const hbox = new HBox( {
       children: getFeatureSetSoluteTypes( model.featureSet ).filter( solute => solute !== 'atp' && solute !== 'adp' && solute !== 'phosphate' ).map( soluteType => {
-        const soluteBarChartNode = new SoluteBarChartNode( model, soluteType, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) );
+        const soluteBarChartNode = new SoluteBarChartNode( model, soluteType, iconAlignGroup, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) );
         stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
         return soluteBarChartNode;
       } ),
