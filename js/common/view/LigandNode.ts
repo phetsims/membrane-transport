@@ -267,8 +267,6 @@ export default class LigandNode extends Node {
       } );
       this.addInputListener( escListener );
 
-      // Unfortunately, the KeyboardDragListener doesn't support "press up/down to move horizontally" sort of functionality. Do we need that?
-      // TODO https://github.com/phetsims/membrane-transport/issues/125
       const keyboardListener = new KeyboardDragListener( {
         positionProperty: positionProperty,
         dragDelta: 1,
