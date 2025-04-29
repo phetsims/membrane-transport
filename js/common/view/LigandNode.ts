@@ -154,6 +154,10 @@ export default class LigandNode extends Node {
           return;
         }
 
+        if ( ligand.mode.type === 'ligandBound' ) {
+          ligand.mode.ligandGatedChannel.unbindLigand();
+        }
+
         ligand.mode = { type: 'userControlled', slot: null };
 
         // Store initial offset from pointer to ligand position
@@ -289,6 +293,10 @@ export default class LigandNode extends Node {
         objectToGrabString: this.getLigandTypeName(),
 
         onGrab: () => {
+
+          if ( ligand.mode.type === 'ligandBound' ) {
+            ligand.mode.ligandGatedChannel.unbindLigand();
+          }
 
           // --- Grab Logic ---
           this.isKeyboardGrabbed = true;

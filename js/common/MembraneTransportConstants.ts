@@ -67,8 +67,8 @@ export default class MembraneTransportConstants {
   );
 
   public static readonly FOCUSED_LIGAND_BOUNDS = new Bounds2(
-    MembraneTransportConstants.MEMBRANE_BOUNDS.minX + 20, MembraneTransportConstants.MEMBRANE_BOUNDS.minY,
-    MembraneTransportConstants.MEMBRANE_BOUNDS.maxX - 20, MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - 20
+    MembraneTransportConstants.MEMBRANE_BOUNDS.minX + 20, MembraneTransportConstants.MEMBRANE_BOUNDS.maxY,
+    MembraneTransportConstants.MEMBRANE_BOUNDS.maxX - 20, MembraneTransportConstants.MODEL_HEIGHT / 2 - 20
   );
 
   public static readonly PANEL_TITLE_FONT_SIZE = 18;
