@@ -46,7 +46,7 @@ import getBriefProteinName from './proteins/getBriefProteinName.js';
 
 // constants
 // Vertical offset for the ligand when dragged via keyboard, similar to proteins
-const MODEL_DRAG_VERTICAL_OFFSET = 10;
+const MODEL_DRAG_VERTICAL_OFFSET = 15;
 
 // Off-membrane target index, analogous to the protein toolbox drop zone
 const OFF_MEMBRANE_SLOT_INDEX = SLOT_COUNT;
