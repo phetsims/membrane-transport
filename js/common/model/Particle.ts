@@ -218,6 +218,9 @@ export default class Particle<T extends ParticleType> {
   // Keep track of how long ago the particle crossed the membrane, to show a highlight when it crosses.
   public timeSinceCrossedMembrane = Number.POSITIVE_INFINITY;
 
+  // Indicates whether the ligand has keyboard focus -- this causes a different random walk behavior.
+  public focused = false;
+
   public constructor(
     public readonly position: Vector2,
     public readonly type: T
@@ -643,8 +646,53 @@ export default class Particle<T extends ParticleType> {
     this.moveParticle( dt, direction );
 
     const boundingRegion = isOutsideCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
-    this.handleHorizontalWrap( boundingRegion );
-    this.handleVerticalBounce( boundingRegion, direction );
+
+    // Focused ligands have a different random walk behavior, so they do not get too close to the edge or teleport.
+    if ( this.focused ) {
+      console.log( boundingRegion );
+      const ligandBoundingRegion = boundingRegion.eroded( 20 );
+
+      this.handleBounceLigand( ligandBoundingRegion );
+
+    }
+    else {
+      this.handleHorizontalWrap( boundingRegion );
+      this.handleVerticalBounce( boundingRegion, direction );
+    }
+  }
+
+  private handleBounceLigand( boundingRegion: Bounds2 ): void {
+
+    // Recompute thisBounds after the move
+    const updatedBounds = this.getBounds();
+
+    const randomWalk = this.mode as RandomWalkMode;
+    const direction = randomWalk.currentDirection;
+
+    // Helper function to apply the adjustment to the specified axis
+    const applyAxisAdjustment = ( axis: 'x' | 'y', adjustment: { bounce: boolean; newPos: number; newDir: number } ) => {
+      this.position[ axis ] = adjustment.newPos;
+      direction[ axis ] = adjustment.newDir;
+      randomWalk.currentDirection[ axis ] = adjustment.newDir;
+
+      if ( adjustment.bounce ) {
+        MembraneTransportSounds.particleBounced( this );
+      }
+    };
+
+    // Adjust x-axis collision
+    const xAdjustment = Particle.adjustAxis( this.position.x, updatedBounds.minX, updatedBounds.maxX, boundingRegion.minX, boundingRegion.maxX, direction.x );
+    applyAxisAdjustment( 'x', xAdjustment );
+
+    // Adjust y-axis collision
+    const yAdjustment = Particle.adjustAxis( this.position.y, updatedBounds.minY, updatedBounds.maxY, boundingRegion.minY, boundingRegion.maxY, direction.y );
+    applyAxisAdjustment( 'y', yAdjustment );
+  }
+
+  private static adjustAxis( position: number, particleMin: number, particleMax: number, regionMin: number, regionMax: number, currentDir: number ): { bounce: boolean; newPos: number; newDir: number } {
+    return particleMin < regionMin ? ( { bounce: true, newPos: position + ( regionMin - particleMin ), newDir: Math.abs( currentDir ) } ) :
+           particleMax > regionMax ? ( { bounce: true, newPos: position - ( particleMax - regionMax ), newDir: -Math.abs( currentDir ) } ) :
+           ( { bounce: false, newPos: position, newDir: currentDir } );
   }
 
   /**
