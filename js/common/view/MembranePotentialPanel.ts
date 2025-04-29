@@ -65,7 +65,9 @@ export default class MembranePotentialPanel extends Panel {
           maxWidth: 140,
           fontSize: 14
         } ), {
-          tandem: tandem.createTandem( 'signsCheckbox' )
+          tandem: tandem.createTandem( 'signsCheckbox' ),
+          accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpTextStringProperty,
+          uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponseStringProperty
         } )
       ]
     } );

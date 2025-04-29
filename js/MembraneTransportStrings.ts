@@ -88,6 +88,10 @@ type StringsType = {
               'accessibleNameStringProperty': LocalizedStringProperty;
             }
           }
+        };
+        'signsCheckbox': {
+          'accessibleHelpTextStringProperty': LocalizedStringProperty;
+          'uncheckedContextResponseStringProperty': LocalizedStringProperty;
         }
       };
       'activeTransportProteinPanel': {

@@ -167,6 +167,14 @@
               }
             }
           }
+        },
+        "signsCheckbox": {
+          "accessibleHelpText": {
+            "value": "Explore with or without signs showing membrane voltage potential along inside and outside."
+          },
+          "uncheckedContextResponse": {
+            "value": "Voltage potential signs, hidden."
+          }
         }
       },
       "activeTransportProteinPanel": {
