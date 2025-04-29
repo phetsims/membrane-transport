@@ -277,14 +277,6 @@ export default class Particle<T extends ParticleType> {
   }
 
   /**
-   * Move directly to a position without any brownian motion.
-   */
-  public moveToPosition( targetPosition: Vector2 ): void {
-    const direction = targetPosition.minus( this.position ).normalized();
-    this.moveInDirection( direction, Number.POSITIVE_INFINITY );
-  }
-
-  /**
    * This is a finite-state-machine-like implementation of the particle's behavior. We use a lightweight approach,
    * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
    * in Projectile Data Lab's SamplingModel.launchButtonPressed
@@ -649,11 +641,7 @@ export default class Particle<T extends ParticleType> {
 
     // Focused ligands have a different random walk behavior, so they do not get too close to the edge or teleport.
     if ( this.focused ) {
-      console.log( boundingRegion );
-      const ligandBoundingRegion = boundingRegion.eroded( 20 );
-
-      this.handleBounceLigand( ligandBoundingRegion );
-
+      this.handleBounceLigand();
     }
     else {
       this.handleHorizontalWrap( boundingRegion );
@@ -661,7 +649,7 @@ export default class Particle<T extends ParticleType> {
     }
   }
 
-  private handleBounceLigand( boundingRegion: Bounds2 ): void {
+  private handleBounceLigand(): void {
 
     // Recompute thisBounds after the move
     const updatedBounds = this.getBounds();
@@ -681,11 +669,11 @@ export default class Particle<T extends ParticleType> {
     };
 
     // Adjust x-axis collision
-    const xAdjustment = Particle.adjustAxis( this.position.x, updatedBounds.minX, updatedBounds.maxX, boundingRegion.minX, boundingRegion.maxX, direction.x );
+    const xAdjustment = Particle.adjustAxis( this.position.x, updatedBounds.minX, updatedBounds.maxX, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.minX, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.maxX, direction.x );
     applyAxisAdjustment( 'x', xAdjustment );
 
     // Adjust y-axis collision
-    const yAdjustment = Particle.adjustAxis( this.position.y, updatedBounds.minY, updatedBounds.maxY, boundingRegion.minY, boundingRegion.maxY, direction.y );
+    const yAdjustment = Particle.adjustAxis( this.position.y, updatedBounds.minY, updatedBounds.maxY, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.minY, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.maxY, direction.y );
     applyAxisAdjustment( 'y', yAdjustment );
   }
 

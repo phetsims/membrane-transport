@@ -51,6 +51,16 @@ const MODEL_DRAG_VERTICAL_OFFSET = 15;
 // Off-membrane target index, analogous to the protein toolbox drop zone
 const OFF_MEMBRANE_SLOT_INDEX = SLOT_COUNT;
 
+const INITIAL_POSITION_INDEX = new Vector2( -1, 0 );
+
+class LigandIndexProperty extends Vector2Property {
+
+  // Made public so we can change the value without triggering listeners.
+  public override setPropertyValue( value: Vector2 ): void {
+    super.setPropertyValue( value );
+  }
+}
+
 export default class LigandNode extends Node {
 
   private readonly ligand: Particle<LigandType>;
@@ -206,10 +216,10 @@ export default class LigandNode extends Node {
     // All ligands can be mouse-controlled, but only one of each type can be keyboard-focused
     this.addInputListener( soundRichDragListener );
 
-    const positionProperty = new Vector2Property( new Vector2( -1, 0 ) );
-    this.resetEmitter.addListener( () => positionProperty.reset() );
+    const ligandIndexProperty = new LigandIndexProperty( INITIAL_POSITION_INDEX.copy() );
+    this.resetEmitter.addListener( () => ligandIndexProperty.reset() );
 
-    positionProperty.lazyLink( position => {
+    ligandIndexProperty.lazyLink( position => {
 
       const newIndex = clamp( roundSymmetric( position.x ), 0, OFF_MEMBRANE_SLOT_INDEX );
 
@@ -267,7 +277,7 @@ export default class LigandNode extends Node {
       this.addInputListener( escListener );
 
       const keyboardListener = new KeyboardDragListener( {
-        positionProperty: positionProperty,
+        positionProperty: ligandIndexProperty,
         dragDelta: 1,
         shiftDragDelta: 1,
         dragBoundsProperty: new Property( new Bounds2( 0, 0, 7, 0 ) ),
@@ -303,6 +313,9 @@ export default class LigandNode extends Node {
           this.isKeyboardGrabbed = false;
           MembraneTransportSounds.ligandReleased();
 
+          // Clear the position property so that on the next grab + move it will go to index 0
+          ligandIndexProperty.setPropertyValue( INITIAL_POSITION_INDEX.copy() );
+
           if ( this.currentTargetSlotIndex === null ) {
 
             // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
@@ -314,8 +327,7 @@ export default class LigandNode extends Node {
           else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
 
             // Drop off membrane: Use calculated position above "slot 8"
-            const offMembranePosition = this.getOffMembraneDropPosition();
-            this.ligand.position.set( offMembranePosition );
+            this.ligand.position.set( this.getOffMembraneDropPosition() );
 
             this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
           }
@@ -328,7 +340,6 @@ export default class LigandNode extends Node {
 
             const protein = targetSlot.transportProteinProperty.value;
             if ( protein instanceof LigandGatedChannel && this.isCompatibleLigand( protein ) ) {
-
 
               if ( protein.stateProperty.value === 'closed' ) {
 

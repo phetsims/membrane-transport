@@ -66,6 +66,11 @@ export default class MembraneTransportConstants {
     MembraneTransportConstants.MEMBRANE_BOUNDS.maxX, MembraneTransportConstants.MODEL_HEIGHT / 2
   );
 
+  public static readonly FOCUSED_LIGAND_BOUNDS = new Bounds2(
+    MembraneTransportConstants.MEMBRANE_BOUNDS.minX + 20, MembraneTransportConstants.MEMBRANE_BOUNDS.minY,
+    MembraneTransportConstants.MEMBRANE_BOUNDS.maxX - 20, MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - 20
+  );
+
   public static readonly PANEL_TITLE_FONT_SIZE = 18;
 
   public static readonly OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
