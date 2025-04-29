@@ -115,7 +115,7 @@
         "value": "Transport Proteins"
       },
       "accessibleHelpText": {
-        "value": "Grab proteins from toolboxes. Add up to 7 to membrane. Use keyboard shortcuts to grab, move, and release proteins in membrane."
+        "value": "Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort, and release proteins into membrane."
       },
       "ligandGatedChannelPanel": {
         "sodiumIonNaPlusLigandGated": {
@@ -178,7 +178,7 @@
         }
       },
       "toolAccessibleHelpText": {
-        "value": "Grab to pull protein to the membrane."
+        "value": "Grab protein to pull to membrane."
       }
     },
     "ligandNode": {
