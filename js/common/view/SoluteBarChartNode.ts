@@ -14,6 +14,8 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
+import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -35,7 +37,7 @@ export default class SoluteBarChartNode extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( model: MembraneTransportModel, soluteType: PlottableSoluteTypes, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, soluteType: PlottableSoluteTypes, iconAlignGroup: AlignGroup, tandem: Tandem ) {
 
     const outsideAmountProperty = model.outsideSoluteCountProperties[ soluteType ];
     const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
@@ -92,16 +94,22 @@ export default class SoluteBarChartNode extends Node {
                             soluteType === 'potassiumIon' ? 0.08 :
                             0.1 );
 
-    icon.centerX = BOX_WIDTH / 2;
-    icon.top = 2;
-
     const text = new RichText( getSoluteTypeString( soluteType ), {
       font: MembraneTransportConstants.FONT,
+      maxWidth: BOX_WIDTH * 0.5
+    } );
+
+    const iconWithText = new HBox( {
+
+      // Put in an alignGroup box so that we can align all text baselines and icons
+      children: [ iconAlignGroup.createBox( icon ), text ],
+      spacing: 3,
+      align: 'bottom',
+
       centerX: BOX_WIDTH / 2,
 
       // Use y instead of bottom so the text baselines will align
-      y: BOX_HEIGHT - 8,
-      maxWidth: BOX_WIDTH * 0.8
+      y: BOX_HEIGHT - 20
     } );
     const originExtent = 50;
     const origin = new Path( Shape.lineSegment( 20, BOX_HEIGHT / 2 + originExtent / 2, 20, BOX_HEIGHT / 2 - originExtent / 2 ), {
@@ -210,8 +218,8 @@ export default class SoluteBarChartNode extends Node {
 
     this.children = [
       layoutBox,
-      icon,
-      text,
+      // icon,
+      iconWithText,
       outsideBar,
       insideBar,
       // highlight stripes
