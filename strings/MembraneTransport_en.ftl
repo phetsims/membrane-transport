@@ -176,6 +176,6 @@ grabbedProteinResponsePattern = Grabbed. Above membrane. Slot {$slotIndex} of { 
 grabbedProteinResponseWithHintPattern = { grabbedProteinResponsePattern } Move protein with W, A, S, or D key. Space to release.
 
 # accessibleHelpText for the ligand control
-ligandToggleButtonAccessibleHelpText = Add two types of ligands to outside of membrane.
-ligandToggleButtonAddedContextResponse = Several ligands added to outside.
+ligandToggleButtonAccessibleHelpText = Add or remove two types of ligands to outside of membrane.
+ligandToggleButtonAddedContextResponse = Ligands flood outside area of cell membrane.
 ligandToggleButtonRemovedContextResponse = Ligands removed.
