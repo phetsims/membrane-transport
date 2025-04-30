@@ -14,7 +14,6 @@ import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
-import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 import GeneralButtonAddingMany_mp3 from '../../sounds/GeneralButtonAddingMany_mp3.js';
 import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingManyv1_mp3.js';
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
