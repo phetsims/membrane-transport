@@ -26,7 +26,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerter.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
-import SoundRichDragListener from '../../../../scenery-phet/js/SoundRichDragListener.js';
+import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
@@ -146,7 +146,7 @@ export default class LigandNode extends Node {
       }
     } );
 
-    const soundRichDragListener = new SoundRichDragListener( {
+    const soundDragListener = new SoundDragListener( {
       start: event => {
         // Prevent interaction if grabbed by keyboard
         if ( this.isKeyboardGrabbed ) {
@@ -200,7 +200,7 @@ export default class LigandNode extends Node {
           return;
         }
 
-        ligand.mode = soundRichDragListener.dragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
+        ligand.mode = soundDragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
 
         // If the ligand is release within the capture radius of a corresponding ligand gated channel, clear the ligand gated channel cooldown so it can immediately bind.
         this.checkAndClearBindingCooldown();
@@ -208,17 +208,11 @@ export default class LigandNode extends Node {
         pressOffset = null;
       },
       transform: this.modelViewTransform,
-      dragListenerOptions: {
-        tandem: tandem.createTandem( 'dragListener' )
-      },
-      keyboardDragListenerOptions: {
-        // We are implementing custom keyboard logic, disable the default
-        enabled: false // Disable default keyboard drag behavior
-      }
+      tandem: tandem.createTandem( 'soundDragListener' )
     } );
 
     // All ligands can be mouse-controlled, but only one of each type can be keyboard-focused
-    this.addInputListener( soundRichDragListener );
+    this.addInputListener( soundDragListener );
 
     const ligandIndexProperty = new LigandIndexProperty( INITIAL_POSITION_INDEX.copy() );
     this.resetEmitter.addListener( () => ligandIndexProperty.reset() );
@@ -280,12 +274,25 @@ export default class LigandNode extends Node {
       } );
       this.addInputListener( escListener );
 
+      // the GrabDragInteraction uses a KeyboardDragListener instead of a SoundKeyboardDragListener
+      // because grab/release sounds need to play on pickup and drop of the grab/drag and not on every
+      // key press.
+      const keyboardListenerBounds = new Bounds2( 0, 0, 7, 0 );
       const keyboardListener = new KeyboardDragListener( {
         positionProperty: ligandIndexProperty,
         dragDelta: 1,
         shiftDragDelta: 1,
-        dragBoundsProperty: new Property( new Bounds2( 0, 0, 7, 0 ) ),
-        keyboardDragDirection: 'leftRight'
+        dragBoundsProperty: new Property( keyboardListenerBounds ),
+        keyboardDragDirection: 'leftRight',
+        start: ( event, listener ) => {
+
+          // Play the boundary sound if on the boundary and attempting to move beyond it.
+          const atLeftEdge = ligandIndexProperty.value.x === keyboardListenerBounds.minX;
+          const atRightEdge = ligandIndexProperty.value.x === keyboardListenerBounds.maxX;
+          const movingLeft = listener.modelDelta.x < 0;
+          const movingRight = listener.modelDelta.x > 0;
+          isOnBoundaryProperty.value = ( atLeftEdge && movingLeft ) || ( atRightEdge && movingRight );
+        }
       } );
 
       const grabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
@@ -311,7 +318,7 @@ export default class LigandNode extends Node {
           MembraneTransportSounds.ligandGrabbed();
 
           // Stop any ongoing mouse/touch drag
-          soundRichDragListener.interrupt();
+          soundDragListener.interrupt();
         },
 
         onRelease: () => {
@@ -398,7 +405,7 @@ export default class LigandNode extends Node {
     // Initial positioning
     this.updateVisualPosition();
 
-    soundRichDragListener.dragListener.isOverProperty.link( isOver => {
+    soundDragListener.isOverProperty.link( isOver => {
 
       // If the ligand is already controlled, don't start walking when the pointer goes out.
       // Do not release a bound ligand by mouseover
