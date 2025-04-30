@@ -174,9 +174,6 @@ const channelSounds: ChannelSoundMap = {
   }
 };
 
-// Other sound definitions remain the same
-const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
-
 // TODO: unused? See https://github.com/phetsims/membrane-transport/issues/93
 export const GeneralButtonAddingManySoundClip = newSoundClip( GeneralButtonAddingMany_mp3, { initialOutputLevel: 0.3 } );
 export const GeneralButtonAddingOneSoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
