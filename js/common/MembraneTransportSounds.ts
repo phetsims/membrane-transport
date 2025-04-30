@@ -180,18 +180,21 @@ const mtGlucoseActivateTransponderSound = newSoundClip( mtGlucoseActivateTranspo
 
 const mtATPActivateTransponder = newSoundClip( mtATPActivateTransponder_mp3, { initialOutputLevel: 0.3 } );
 
+const G_NOTE = 1;
+const C_NOTE = Math.pow( 2, 5 / 12 );
+const E_NOTE = Math.pow( 2, 9 / 12 );
+
 export default class MembraneTransportSounds {
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
-    mtNAPlusAttachSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
-                                         numberSodiumsFilled === 2 ? Math.pow( 2, 4 / 12 ) :
-                                         Math.pow( 2, 7 / 12 ) );
+    mtNAPlusAttachSound.setPlaybackRate( numberSodiumsFilled === 1 ? G_NOTE :
+                                         numberSodiumsFilled === 2 ? C_NOTE :
+                                         E_NOTE );
     mtNAPlusAttachSound.play();
   }
 
   public static potassiumLockedInToSodiumPotassiumPump( site: string, numberPotassiumsFilled: number ): void {
-    mtKPlusAttachSound.setPlaybackRate( numberPotassiumsFilled === 1 ? 1 :
-                                        Math.pow( 2, 7 / 12 ) );
+    mtKPlusAttachSound.setPlaybackRate( numberPotassiumsFilled === 1 ? G_NOTE : E_NOTE );
     mtKPlusAttachSound.play();
   }
 
@@ -299,8 +302,7 @@ export default class MembraneTransportSounds {
 
   public static particleBoundToSodiumGlucoseTransporter( type: 'sodiumIon' | 'glucose', filledSodiumSiteCount: number ): void {
     if ( type === 'sodiumIon' ) {
-      mtNAPlusAttachSound.setPlaybackRate( filledSodiumSiteCount === 1 ? 1 :
-                                           Math.pow( 2, 7 / 12 ) );
+      mtNAPlusAttachSound.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : E_NOTE );
       mtNAPlusAttachSound.play();
     }
     else {
