@@ -79,24 +79,30 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
   /**
    * Determine if a site is available. A site may be reserved if a particle is moving toward it, or waiting in it.
    */
-  private isSiteOpen( site: 'left' | 'center' | 'right' ): boolean {
+  private isSiteAvailable( site: 'left' | 'center' | 'right' ): boolean {
     return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseCotransporter' ||
                                                 solute.mode.type === 'waitingInSodiumGlucoseCotransporter' ) &&
                                               solute.mode.slot === this.slot &&
                                               solute.mode.site === site ) === undefined;
   }
 
+  public getFilledSodiumSiteCount(): number {
+    return this.model.solutes.filter( solute => ( solute.mode.type === 'waitingInSodiumGlucoseCotransporter' ) &&
+                                                solute.mode.slot === this.slot &&
+                                                ( solute.mode.site === 'left' || solute.mode.site === 'right' ) ).length;
+  }
+
   /**
    * Determine open sites on the sodium glucose cotransporter for sodium ions
    */
-  public getOpenSodiumSites(): Array<'left' | 'right'> {
+  public getAvailableSodiumSites(): Array<'left' | 'right'> {
 
     // Sodium ions can use left or right site
     const availableSites: Array<'left' | 'right'> = [];
-    if ( this.isSiteOpen( 'left' ) ) {
+    if ( this.isSiteAvailable( 'left' ) ) {
       availableSites.push( 'left' );
     }
-    if ( this.isSiteOpen( 'right' ) ) {
+    if ( this.isSiteAvailable( 'right' ) ) {
       availableSites.push( 'right' );
     }
 
@@ -104,7 +110,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
   }
 
   public isGlucoseSiteOpen(): boolean {
-    return this.isSiteOpen( 'center' );
+    return this.isSiteAvailable( 'center' );
   }
 
   public isAvailableForPassiveTransport(): boolean {

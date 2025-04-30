@@ -29,6 +29,7 @@ import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingM
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
 import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
 import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
+import mtATPActivateTransponder_mp3 from '../../sounds/mtATPActivateTransponder_mp3.js';
 import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
 import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
 import mtChannelCloseSet1_002_mp3 from '../../sounds/mtChannelCloseSet1_002_mp3.js';
@@ -61,6 +62,7 @@ import mtChannelOpenSet2_003_mp3 from '../../sounds/mtChannelOpenSet2_003_mp3.js
 import mtChannelOpenSet2_003_muffled_mp3 from '../../sounds/mtChannelOpenSet2_003_muffled_mp3.js';
 import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js';
 import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
+import mtGlucoseActivateTransponder_mp3 from '../../sounds/mtGlucoseActivateTransponder_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
 import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
 import mtNAPlusAttach_mp3 from '../../sounds/mtNAPlusAttach_mp3.js';
@@ -174,6 +176,7 @@ const channelSounds: ChannelSoundMap = {
 // Other sound definitions remain the same
 const brightMarimbaShortSound = newSoundClip( brightMarimbaShort_mp3, { initialOutputLevel: 0.6 } );
 
+// TODO: unused? See https://github.com/phetsims/membrane-transport/issues/93
 export const GeneralButtonAddingManySoundClip = newSoundClip( GeneralButtonAddingMany_mp3, { initialOutputLevel: 0.3 } );
 export const GeneralButtonAddingOneSoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
 export const GeneralButtonRemovingManyv1SoundClip = newSoundClip( GeneralButtonRemovingManyv1_mp3, { initialOutputLevel: 0.3 } );
@@ -199,6 +202,9 @@ const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLeve
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.3 } );
 
 const mtNAPlusAttachSound = newSoundClip( mtNAPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const mtGlucoseActivateTransponderSound = newSoundClip( mtGlucoseActivateTransponder_mp3, { initialOutputLevel: 0.3 } ); // TODO: Rename transponder https://github.com/phetsims/membrane-transport/issues/93
+
+const mtATPActivateTransponder = newSoundClip( mtATPActivateTransponder_mp3, { initialOutputLevel: 0.3 } );
 
 export default class MembraneTransportSounds {
 
@@ -215,8 +221,7 @@ export default class MembraneTransportSounds {
   }
 
   public static phosphateLockedInToSodiumPotassiumPump(): void {
-    brightMarimbaShortSound.setPlaybackRate( 2 );
-    brightMarimbaShortSound.play();
+    mtATPActivateTransponder.play();
   }
 
   public static particleBounced( particle: Particle<IntentionalAny> ): void {
@@ -327,6 +332,17 @@ export default class MembraneTransportSounds {
 
   public static ligandReleased(): void {
     releaseSoundPlayer.play();
+  }
+
+  public static particleBoundToSodiumGlucoseTransporter( type: 'sodiumIon' | 'glucose', filledSodiumSiteCount: number ): void {
+    if ( type === 'sodiumIon' ) {
+      mtNAPlusAttachSound.setPlaybackRate( filledSodiumSiteCount === 1 ? 1 :
+                                           Math.pow( 2, 7 / 12 ) );
+      mtNAPlusAttachSound.play();
+    }
+    else {
+      mtGlucoseActivateTransponderSound.play();
+    }
   }
 }
 

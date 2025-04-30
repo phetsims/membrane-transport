@@ -400,6 +400,8 @@ export default class Particle<T extends ParticleType> {
     }
     else if ( this.mode.type === 'moveToSodiumGlucoseCotransporter' ) {
 
+      affirm( this.type === 'sodiumIon' || this.type === 'glucose', 'Only sodium and glucose can move to the sodium glucose cotransporter' );
+
       const currentPosition = this.position.copy();
       const targetPosition = this.mode.sodiumGlucoseCotransporter.getSitePosition( this.mode.site );
 
@@ -422,8 +424,7 @@ export default class Particle<T extends ParticleType> {
 
         this.position.set( targetPosition );
 
-        // TODO (design/sound): What sound to play here? See https://github.com/phetsims/membrane-transport/issues/93
-        MembraneTransportSounds.ligandBound();
+        MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( this.type, this.mode.sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
       }
     }
     else if ( this.mode.type === 'moveToSodiumPotassiumPump' ) {
@@ -931,7 +932,7 @@ export default class Particle<T extends ParticleType> {
       if ( this.type === 'sodiumIon' ) {
 
         // Sodium ions can use left or right site
-        const availableSites = transportProtein.getOpenSodiumSites();
+        const availableSites = transportProtein.getAvailableSodiumSites();
 
         if ( availableSites.length > 0 ) {
           const site = dotRandom.sample( availableSites );
