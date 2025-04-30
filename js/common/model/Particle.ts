@@ -36,7 +36,7 @@ import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 const ABSORB_GLUCOSE = false;
 
 // Typical speed for movement
-const typicalSpeed = 30;
+const TYPICAL_SPEED = 30;
 
 // The amount of time that must pass before a particle can cross the membrane again.
 const CROSSING_COOLDOWN = 0.5;
@@ -386,7 +386,7 @@ export default class Particle<T extends ParticleType> {
       const targetPositionX = this.mode.slot.position;
 
       // Move in the x direction toward the target.
-      const maxStepSize = typicalSpeed * dt;
+      const maxStepSize = TYPICAL_SPEED * dt;
       this.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
       // When close enough, transition to enteringTransportProtein mode.
@@ -409,7 +409,7 @@ export default class Particle<T extends ParticleType> {
       const direction = vector.normalized();
 
       // Move toward the target position at the typicalSpeed
-      const maxStepSize = typicalSpeed * dt;
+      const maxStepSize = TYPICAL_SPEED * dt;
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
@@ -436,7 +436,7 @@ export default class Particle<T extends ParticleType> {
       const direction = vector.normalized();
 
       // Move toward the target position at the typicalSpeed
-      const maxStepSize = typicalSpeed * dt;
+      const maxStepSize = TYPICAL_SPEED * dt;
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
@@ -513,7 +513,7 @@ export default class Particle<T extends ParticleType> {
                          ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2
                          : MembraneTransportConstants.MEMBRANE_BOUNDS.minY + this.dimension.height / 2;
 
-      this.position.y += direction * typicalSpeed * dt;
+      this.position.y += direction * TYPICAL_SPEED * dt;
 
       if ( ( direction === -1 && this.position.y <= thresholdY ) ||
            ( direction === 1 && this.position.y >= thresholdY ) ) {
@@ -543,7 +543,7 @@ export default class Particle<T extends ParticleType> {
       if ( ligandGatedChannel ) {
         const currentPosition = this.position;
         const targetPosition = ligandGatedChannel.getBindingPosition();
-        const maxStepSize = typicalSpeed * dt;
+        const maxStepSize = TYPICAL_SPEED * dt;
 
         // Move toward the binding position
         this.position.x += Math.sign( targetPosition.x - currentPosition.x ) * maxStepSize;
@@ -566,8 +566,8 @@ export default class Particle<T extends ParticleType> {
 
       const signBefore = this.position.y > 0;
 
-      this.position.y += sign * ( typicalSpeed / 5 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
-      this.position.x += dotRandom.nextDoubleBetween( -2, 2 ) * ( typicalSpeed / 2 ) * dt;
+      this.position.y += sign * ( TYPICAL_SPEED / 5 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+      this.position.x += dotRandom.nextDoubleBetween( -2, 2 ) * ( TYPICAL_SPEED / 2 ) * dt;
 
       const signAfter = this.position.y > 0;
 
@@ -763,8 +763,8 @@ export default class Particle<T extends ParticleType> {
    * Move the particle according to the potentially modified direction and speed.
    */
   private moveParticle( dt: number, direction: Vector2 ): void {
-    this.position.x += direction.x * dt * typicalSpeed;
-    this.position.y += direction.y * dt * typicalSpeed;
+    this.position.x += direction.x * dt * TYPICAL_SPEED;
+    this.position.y += direction.y * dt * TYPICAL_SPEED;
   }
 
   /**
