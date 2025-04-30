@@ -19,6 +19,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 
 // the model bounds are inferred from the view dimensions
@@ -636,7 +637,9 @@ export default class Particle<T extends ParticleType> {
       return;
     }
 
-    this.moveParticle( dt, direction );
+    // For debugging, make the ligands move slower so they are easy to grab and drag.
+    const moveDeltaTime = ( MembraneTransportQueryParameters.slowLigands && ( this.type === 'ligandA' || this.type === 'ligandB' ) ) ? 0.1 * dt : dt;
+    this.moveParticle( moveDeltaTime, direction );
 
     const boundingRegion = isOutsideCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
 
