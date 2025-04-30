@@ -19,6 +19,8 @@ import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingM
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
 import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
 import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
+import mtActiveTranspondersRockorOpen_mp3 from '../../sounds/mtActiveTranspondersRockorOpen_mp3.js';
+import mtActiveTranspondersSuccessChord_mp3 from '../../sounds/mtActiveTranspondersSuccessChord_mp3.js';
 import mtATPActivateTransponder_mp3 from '../../sounds/mtATPActivateTransponder_mp3.js';
 import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
 import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
@@ -180,6 +182,9 @@ const mtGlucoseActivateTransponderSound = newSoundClip( mtGlucoseActivateTranspo
 
 const mtATPActivateTransponder = newSoundClip( mtATPActivateTransponder_mp3, { initialOutputLevel: 0.3 } );
 
+const mtActiveTranspondersRockorOpenSound = newSoundClip( mtActiveTranspondersRockorOpen_mp3, { initialOutputLevel: 0.3 } );
+const mtAcitveTranspondersSuccessChord = newSoundClip( mtActiveTranspondersSuccessChord_mp3, { initialOutputLevel: 0.3 } );
+
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
 const E_NOTE = Math.pow( 2, 9 / 12 );
@@ -307,7 +312,15 @@ export default class MembraneTransportSounds {
     }
     else {
       mtGlucoseActivateTransponderSound.play();
+
+      // Happens at the same time glucose is bound, but in an upcoming issue we will add a delay, I think
+      MembraneTransportSounds.activeTransporterRockedAndSuccess();
     }
+  }
+
+  public static activeTransporterRockedAndSuccess(): void {
+    mtActiveTranspondersRockorOpenSound.play();
+    mtAcitveTranspondersSuccessChord.play();
   }
 }
 

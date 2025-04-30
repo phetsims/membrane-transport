@@ -12,6 +12,7 @@ import naKPumpState1_svg from '../../../../images/naKPumpState1_svg.js';
 import naKPumpState2_svg from '../../../../images/naKPumpState2_svg.js';
 import naKPumpState3_svg from '../../../../images/naKPumpState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import TransportProteinNode from './TransportProteinNode.js';
 
@@ -28,6 +29,13 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
                       state === 'openToInsideSodiumBound' ? naKPumpState2_svg :
                       state === 'openToOutside' ? naKPumpState3_svg :
                       ( () => { throw new Error( 'Invalid state' ); } )();
+      } );
+
+      sodiumPotassiumPump.stateProperty.lazyLink( state => {
+
+        if ( state === 'openToInsideEmpty' || state === 'openToOutside' ) {
+          MembraneTransportSounds.activeTransporterRockedAndSuccess();
+        }
       } );
     }
   }
