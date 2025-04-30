@@ -151,7 +151,7 @@ const channelSounds: ChannelSoundMap = {
   }
 };
 
-// TODO: unused? See https://github.com/phetsims/membrane-transport/issues/93
+// TODO: unused? See https://github.com/phetsims/membrane-transport/issues/111
 export const GeneralButtonAddingManySoundClip = newSoundClip( GeneralButtonAddingMany_mp3, { initialOutputLevel: 0.3 } );
 export const GeneralButtonAddingOneSoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
 export const GeneralButtonRemovingManyv1SoundClip = newSoundClip( GeneralButtonRemovingManyv1_mp3, { initialOutputLevel: 0.3 } );
