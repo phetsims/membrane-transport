@@ -63,6 +63,7 @@ import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js
 import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
 import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
+import mtNAPlusAttach_mp3 from '../../sounds/mtNAPlusAttach_mp3.js';
 import mtSoluteCrossing001_mp3 from '../../sounds/mtSoluteCrossing001_mp3.js';
 import mtSoluteCrossing002_mp3 from '../../sounds/mtSoluteCrossing002_mp3.js';
 import mtSoluteCrossing003_mp3 from '../../sounds/mtSoluteCrossing003_mp3.js';
@@ -197,13 +198,15 @@ const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLeve
 const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.3 } );
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.3 } );
 
+const mtNAPlusAttachSound = newSoundClip( mtNAPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+
 export default class MembraneTransportSounds {
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
-    brightMarimbaShortSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
-                                             numberSodiumsFilled === 2 ? 1.1 :
-                                             1.2 );
-    brightMarimbaShortSound.play();
+    mtNAPlusAttachSound.setPlaybackRate( numberSodiumsFilled === 1 ? 1 :
+                                         numberSodiumsFilled === 2 ? Math.pow( 2, 4 / 12 ) :
+                                         Math.pow( 2, 7 / 12 ) );
+    mtNAPlusAttachSound.play();
   }
 
   public static potassiumLockedInToSodiumPotassiumPump( site: string, numberPotassiumsFilled: number ): void {
