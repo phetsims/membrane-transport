@@ -194,7 +194,7 @@ export default class MembraneTransportSounds {
   }
 
   public static potassiumLockedInToSodiumPotassiumPump( site: string, numberPotassiumsFilled: number ): void {
-    mtKPlusAttachSound.setPlaybackRate( numberPotassiumsFilled === 1 ? G_NOTE : E_NOTE );
+    mtKPlusAttachSound.setPlaybackRate( numberPotassiumsFilled === 1 ? G_NOTE : C_NOTE );
     mtKPlusAttachSound.play();
   }
 
@@ -302,7 +302,7 @@ export default class MembraneTransportSounds {
 
   public static particleBoundToSodiumGlucoseTransporter( type: 'sodiumIon' | 'glucose', filledSodiumSiteCount: number ): void {
     if ( type === 'sodiumIon' ) {
-      mtNAPlusAttachSound.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : E_NOTE );
+      mtNAPlusAttachSound.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : C_NOTE );
       mtNAPlusAttachSound.play();
     }
     else {
