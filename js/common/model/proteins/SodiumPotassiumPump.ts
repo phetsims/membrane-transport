@@ -134,21 +134,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   public getNumberOfFilledPotassiumSites(): number {
 
-    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'potassium1' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'potassium2' );
-
-    let numberSitesFilled = 0;
-    if ( sodium1 ) {
-      numberSitesFilled++;
-    }
-    if ( sodium2 ) {
-      numberSitesFilled++;
-    }
-    return numberSitesFilled;
+    return this.model.solutes.filter( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                                                solute.mode.slot === this.slot &&
+                                                ( solute.mode.site === 'potassium1' || solute.mode.site === 'potassium2' ) ).length;
   }
 
 

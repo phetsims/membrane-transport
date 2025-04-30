@@ -63,6 +63,7 @@ import mtChannelOpenSet2_003_muffled_mp3 from '../../sounds/mtChannelOpenSet2_00
 import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js';
 import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
 import mtGlucoseActivateTransponder_mp3 from '../../sounds/mtGlucoseActivateTransponder_mp3.js';
+import mtKPlusAttach_mp3 from '../../sounds/mtKPlusAttach_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
 import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
 import mtNAPlusAttach_mp3 from '../../sounds/mtNAPlusAttach_mp3.js';
@@ -202,6 +203,7 @@ const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLeve
 const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.3 } );
 
 const mtNAPlusAttachSound = newSoundClip( mtNAPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const mtKPlusAttachSound = newSoundClip( mtKPlusAttach_mp3, { initialOutputLevel: 0.3 } );
 const mtGlucoseActivateTransponderSound = newSoundClip( mtGlucoseActivateTransponder_mp3, { initialOutputLevel: 0.3 } ); // TODO: Rename transponder https://github.com/phetsims/membrane-transport/issues/93
 
 const mtATPActivateTransponder = newSoundClip( mtATPActivateTransponder_mp3, { initialOutputLevel: 0.3 } );
@@ -216,8 +218,9 @@ export default class MembraneTransportSounds {
   }
 
   public static potassiumLockedInToSodiumPotassiumPump( site: string, numberPotassiumsFilled: number ): void {
-    brightMarimbaShortSound.setPlaybackRate( numberPotassiumsFilled === 1 ? 0.5 : 0.7 );
-    brightMarimbaShortSound.play();
+    mtKPlusAttachSound.setPlaybackRate( numberPotassiumsFilled === 1 ? 1 :
+                                        Math.pow( 2, 7 / 12 ) );
+    mtKPlusAttachSound.play();
   }
 
   public static phosphateLockedInToSodiumPotassiumPump(): void {
