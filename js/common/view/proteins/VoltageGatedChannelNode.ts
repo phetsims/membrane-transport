@@ -31,27 +31,35 @@ export default class VoltageGatedChannelNode extends TransportProteinNode {
     if ( channel ) {
 
       channel.model.membraneVoltagePotentialProperty.link( membraneVoltagePotential => {
-        image.image = type === 'sodiumIonVoltageGatedChannel' ?
-                      ( membraneVoltagePotential === -70 ? sodiumVoltageGatedMinus70mV_svg :
-                        membraneVoltagePotential === -50 ? sodiumVoltageGatedMinus50mV_svg :
-                        membraneVoltagePotential === 30 ? sodiumVoltageGatedPlus30mV_svg :
-                        ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() ) :
-                      type === 'potassiumIonVoltageGatedChannel' ?
-                      ( membraneVoltagePotential === -70 || membraneVoltagePotential === -50 ? potassiumVoltageGatedMinus70and50mV_svg :
-                        membraneVoltagePotential === 30 ? potassiumVoltageGatedPlus30mV_svg :
-                        ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() ) :
-                      ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
-      }, { disposer: this } );
+        const newImage = type === 'sodiumIonVoltageGatedChannel' ?
+                         ( membraneVoltagePotential === -70 ? sodiumVoltageGatedMinus70mV_svg :
+                           membraneVoltagePotential === -50 ? sodiumVoltageGatedMinus50mV_svg :
+                           membraneVoltagePotential === 30 ? sodiumVoltageGatedPlus30mV_svg :
+                           ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() ) :
+                         type === 'potassiumIonVoltageGatedChannel' ?
+                         ( membraneVoltagePotential === -70 || membraneVoltagePotential === -50 ? potassiumVoltageGatedMinus70and50mV_svg :
+                           membraneVoltagePotential === 30 ? potassiumVoltageGatedPlus30mV_svg :
+                           ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() ) :
+                         ( () => {throw new Error( 'unknown type of voltage gated channel' );} )();
 
-      // This link does not need to by disposed because the channel itself will be disposed when it is removed from the membrane.
-      channel.stateProperty.lazyLink( state => {
-        if ( state === 'open' ) {
-          MembraneTransportSounds.channelOpened( type );
+        // If the image changed, that means there was a conformation change. In that case, we play a sound, even if
+        // the state changed from closed => closed.
+        if ( image.image !== newImage ) {
+          image.setImage( newImage );
+
+          // choose open or closing sound based on the voltage
+          // Since the state is linked before the view is created, we can rely on it having the correct value during this callback.
+          // NOTE: this is a listener order dependency
+          const state = channel.stateProperty.value;
+          if ( state === 'open' ) {
+            MembraneTransportSounds.channelOpened( type );
+          }
+          else {
+            MembraneTransportSounds.channelClosed( type );
+          }
         }
-        else {
-          MembraneTransportSounds.channelClosed( type );
-        }
-      } );
+
+      }, { disposer: this } );
     }
   }
 }
