@@ -15,7 +15,6 @@ import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
-import brightMarimbaShort_mp3 from '../../../tambo/sounds/brightMarimbaShort_mp3.js';
 
 // TODO (SR): If we take these to production, factor out, fix the license entry, etc. https://github.com/phetsims/membrane-transport/issues/100
 import cardMovement1_mp3 from '../../sounds/cardMovement1_mp3.js';
