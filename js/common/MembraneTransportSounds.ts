@@ -19,9 +19,9 @@ import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingM
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
 import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
 import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
-import mtActiveTranspondersRockorOpen_mp3 from '../../sounds/mtActiveTranspondersRockorOpen_mp3.js';
-import mtActiveTranspondersSuccessChord_mp3 from '../../sounds/mtActiveTranspondersSuccessChord_mp3.js';
-import mtATPActivateTransponder_mp3 from '../../sounds/mtATPActivateTransponder_mp3.js';
+import mtActiveTransporterRockOrOpen_mp3 from '../../sounds/mtActiveTransporterRockOrOpen_mp3.js';
+import mtActiveTransporterSuccessChord_mp3 from '../../sounds/mtActiveTransporterSuccessChord_mp3.js';
+import mtATPActivateTransporter_mp3 from '../../sounds/mtATPActivateTransporter_mp3.js';
 import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
 import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
 import mtChannelCloseSet1_002_mp3 from '../../sounds/mtChannelCloseSet1_002_mp3.js';
@@ -54,7 +54,7 @@ import mtChannelOpenSet2_003_mp3 from '../../sounds/mtChannelOpenSet2_003_mp3.js
 import mtChannelOpenSet2_003_muffled_mp3 from '../../sounds/mtChannelOpenSet2_003_muffled_mp3.js';
 import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js';
 import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
-import mtGlucoseActivateTransponder_mp3 from '../../sounds/mtGlucoseActivateTransponder_mp3.js';
+import mtGlucoseActivateTransporter_mp3 from '../../sounds/mtGlucoseActivateTransporter_mp3.js';
 import mtKPlusAttach_mp3 from '../../sounds/mtKPlusAttach_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
 import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
@@ -178,12 +178,12 @@ const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutput
 
 const mtNAPlusAttachSound = newSoundClip( mtNAPlusAttach_mp3, { initialOutputLevel: 0.3 } );
 const mtKPlusAttachSound = newSoundClip( mtKPlusAttach_mp3, { initialOutputLevel: 0.3 } );
-const mtGlucoseActivateTransponderSound = newSoundClip( mtGlucoseActivateTransponder_mp3, { initialOutputLevel: 0.3 } ); // TODO: Rename transponder https://github.com/phetsims/membrane-transport/issues/93
+const mtGlucoseActivateTransporterSound = newSoundClip( mtGlucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } ); // TODO: Rename transporter https://github.com/phetsims/membrane-transport/issues/93
 
-const mtATPActivateTransponder = newSoundClip( mtATPActivateTransponder_mp3, { initialOutputLevel: 0.3 } );
+const mtATPActivateTransporter = newSoundClip( mtATPActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
-const mtActiveTranspondersRockorOpenSound = newSoundClip( mtActiveTranspondersRockorOpen_mp3, { initialOutputLevel: 0.3 } );
-const mtAcitveTranspondersSuccessChord = newSoundClip( mtActiveTranspondersSuccessChord_mp3, { initialOutputLevel: 0.3 } );
+const mtActiveTransportersRockOrOpenSound = newSoundClip( mtActiveTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
+const mtAcitveTransportersSuccessChord = newSoundClip( mtActiveTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
@@ -204,7 +204,7 @@ export default class MembraneTransportSounds {
   }
 
   public static phosphateLockedInToSodiumPotassiumPump(): void {
-    mtATPActivateTransponder.play();
+    mtATPActivateTransporter.play();
   }
 
   public static particleBounced( particle: Particle<IntentionalAny> ): void {
@@ -311,7 +311,7 @@ export default class MembraneTransportSounds {
       mtNAPlusAttachSound.play();
     }
     else {
-      mtGlucoseActivateTransponderSound.play();
+      mtGlucoseActivateTransporterSound.play();
 
       // Happens at the same time glucose is bound, but in an upcoming issue we will add a delay, I think
       MembraneTransportSounds.activeTransporterRockedAndSuccess();
@@ -319,8 +319,8 @@ export default class MembraneTransportSounds {
   }
 
   public static activeTransporterRockedAndSuccess(): void {
-    mtActiveTranspondersRockorOpenSound.play();
-    mtAcitveTranspondersSuccessChord.play();
+    mtActiveTransportersRockOrOpenSound.play();
+    mtAcitveTransportersSuccessChord.play();
   }
 }
 

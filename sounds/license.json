@@ -95,7 +95,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtATPActivateTransponder.mp3": {
+  "mtATPActivateTransporter.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -103,7 +103,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtATPActivateTransponder_mp3.js": {
+  "mtATPActivateTransporter_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -111,7 +111,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTranspondersRockorOpen.mp3": {
+  "mtActiveTransporterRockOrOpen.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -119,7 +119,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTranspondersRockorOpen_mp3.js": {
+  "mtActiveTransporterRockOrOpen_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -127,7 +127,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTranspondersSuccessChord.mp3": {
+  "mtActiveTransporterSuccessChord.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -135,7 +135,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTranspondersSuccessChord_mp3.js": {
+  "mtActiveTransporterSuccessChord_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -671,7 +671,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtGlucoseActivateTransponder.mp3": {
+  "mtGlucoseActivateTransporter.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -679,7 +679,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtGlucoseActivateTransponder_mp3.js": {
+  "mtGlucoseActivateTransporter_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
