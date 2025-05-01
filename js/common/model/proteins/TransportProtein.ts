@@ -86,7 +86,13 @@ export default abstract class TransportProtein<State extends string = Intentiona
    */
   public releaseParticles( slot: Slot ): void {
 
-    // implement in a subclass, if necessary
+    this.model.solutes.forEach( solute => {
+
+      // TODO: Solve the same way we decide for https://github.com/phetsims/membrane-transport/issues/105
+      if ( solute.mode.type !== 'ligandBound' && solute.mode.slot === slot ) {
+        solute.releaseFromInteraction( solute.position.y > 0 ? 20 : -20 );
+      }
+    } );
   }
 }
 
