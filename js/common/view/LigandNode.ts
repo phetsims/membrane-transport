@@ -27,6 +27,7 @@ import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerte
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
+import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
@@ -61,7 +62,7 @@ class LigandIndexProperty extends Vector2Property {
   }
 }
 
-export default class LigandNode extends Node {
+export default class LigandNode extends InteractiveHighlightingNode {
 
   private readonly ligand: Particle<LigandType>;
   private readonly modelViewTransform: ModelViewTransform2;

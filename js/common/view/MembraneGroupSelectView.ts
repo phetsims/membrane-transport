@@ -384,7 +384,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
     this.alerter = alerter;
 
     // Specify shape around the membrane
-    const verticalFractionalHeight = 0.3;
+    const verticalFractionalHeight = 0.4;
     const horizontalMargin = 5;
     this.groupSortGroupFocusHighlightPath.shape = Shape.rect(
       -horizontalMargin, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 - MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT * verticalFractionalHeight / 2,
