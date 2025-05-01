@@ -480,7 +480,7 @@ export default class Particle<T extends ParticleType> {
           model.addSolute( phosphate );
           model.removeSolute( this );
 
-          sodiumPotassiumPump.openUpward();
+          sodiumPotassiumPump.stateProperty.value = 'openToInsideSodiumAndPhosphateBound';
           MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
         }
         else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutside' ) {

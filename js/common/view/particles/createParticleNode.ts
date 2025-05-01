@@ -7,7 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { toRadians } from '../../../../../dot/js/util/toRadians.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import adp_svg from '../../../../images/adp_svg.js';
@@ -36,7 +35,7 @@ export default function createParticleNode( particleType: ParticleType, options?
                                                   } ) :
                        particleType === 'atp' ? new Image( atp_svg ) :
                        particleType === 'adp' ? new Image( adp_svg ) :
-                       particleType === 'phosphate' ? new Image( phosphate_svg, { rotation: toRadians( 20 ) } ) : // Rotated 20 degrees when bound
+                       particleType === 'phosphate' ? new Image( phosphate_svg ) : // Rotated 20 degrees when bound
 
                          // throw error
                        ( () => { throw new Error( `Unrecognized particle type: ${particleType}` ); } )();

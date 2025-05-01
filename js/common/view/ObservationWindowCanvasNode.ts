@@ -133,29 +133,28 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
       }
 
+      // Potassium rotates 20 degrees when it is in the sodium potassium pump, and the pump is open to the outside.
+      const rotate = solute.type === 'phosphate' && solute.mode.type === 'waitingInSodiumPotassiumPump' && solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutside';
+
       // Draw the image centered at the position.
-      context.drawImage( image, x - width / 2, y - height / 2, width, height );
+      if ( rotate ) {
+        context.save();
+
+        context.translate( x, y );
+        context.rotate( 20 * Math.PI / 180 ); // Rotate 20 degrees (convert to radians)
+        context.drawImage( image, -width / 2, -height / 2, width, height ); // Draw image at origin (since we've translated to center)
+
+        context.restore();
+      }
+      else {
+        context.drawImage( image, x - width / 2, y - height / 2, width, height );
+      }
 
       // Reset globalAlpha to prevent affecting other drawings
       if ( solute.opacity !== 1 ) {
         context.globalAlpha = 1.0;
       }
-
-      if ( phet.chipper.queryParameters.dev ) {
-
-        // Draw the solute's bounding box
-        context.strokeStyle = 'gray';
-        context.lineWidth = 0.5;
-        this.strokeRect(
-          context,
-          ( solute.position.x - solute.dimension.width / 2 ),
-          ( solute.position.y - solute.dimension.height / 2 ),
-          ( solute.dimension.width ),
-          ( solute.dimension.height )
-        );
-      }
     }
-
 
     if ( phet.chipper.queryParameters.dev ) {
 
