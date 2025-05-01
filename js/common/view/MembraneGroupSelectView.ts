@@ -282,7 +282,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
               const contentsString = getBriefProteinName( grabbedNode.type ).value;
 
-              // TODO (JG): is this the API we want? See https://github.com/phetsims/membrane-transport/issues/96
               this.alert( `Released ${contentsString} into membrane` );
 
               // Swap
