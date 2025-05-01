@@ -561,7 +561,7 @@ export default class Particle<T extends ParticleType> {
 
         // When close enough, transition to a bound mode.
         if ( targetPosition.distance( currentPosition ) <= maxStepSize && ligandGatedChannel.isAvailableForBinding() ) {
-          affirm( this.type === 'ligandA' || this.type === 'ligandB', 'ligand should be ligandA or ligandB' );
+          affirm( this.type === 'triangleLigand' || this.type === 'starLigand', 'ligand should be triangleLigand or starLigand' );
           ligandGatedChannel.bindLigand( this as Particle<LigandType> );
 
           // Set the particle positions exactly to the binding position
@@ -647,7 +647,7 @@ export default class Particle<T extends ParticleType> {
     }
 
     // For debugging, make the ligands move slower so they are easy to grab and drag.
-    const moveDeltaTime = ( MembraneTransportQueryParameters.slowLigands && ( this.type === 'ligandA' || this.type === 'ligandB' ) ) ? 0.1 * dt : dt;
+    const moveDeltaTime = ( MembraneTransportQueryParameters.slowLigands && ( this.type === 'triangleLigand' || this.type === 'starLigand' ) ) ? 0.1 * dt : dt;
     this.moveParticle( moveDeltaTime, direction );
 
     const boundingRegion = isOutsideCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
@@ -877,9 +877,9 @@ export default class Particle<T extends ParticleType> {
     model: MembraneTransportModel,
     outsideOfCell: boolean
   ): boolean {
-    if ( ( this.type === 'ligandA' || this.type === 'ligandB' ) && outsideOfCell ) {
+    if ( ( this.type === 'triangleLigand' || this.type === 'starLigand' ) && outsideOfCell ) {
 
-      const transportProteinType = this.type === 'ligandA'
+      const transportProteinType = this.type === 'triangleLigand'
                                    ? 'sodiumIonLigandGatedChannel'
                                    : 'potassiumIonLigandGatedChannel';
 

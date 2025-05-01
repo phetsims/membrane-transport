@@ -225,7 +225,7 @@ export default class MembraneTransportSounds {
   }
 
   public static soluteCrossedMembrane(
-    type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'ligandA' | 'ligandB',
+    type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'triangleLigand' | 'starLigand',
     direction: 'inward' | 'outward' ): void {
 
     const sound = type === 'oxygen' ? mtSoluteCrossing001 :

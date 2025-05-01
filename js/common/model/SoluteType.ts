@@ -16,7 +16,7 @@ import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 
 export const SoluteTypeValues = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp', 'adp', 'phosphate' ] as const;
-export const LigandTypeValues = [ 'ligandA', 'ligandB' ] as const;
+export const LigandTypeValues = [ 'triangleLigand', 'starLigand' ] as const;
 export const ParticleTypeValues = [ ...SoluteTypeValues, ...LigandTypeValues ] as const;
 
 type SoluteType = typeof SoluteTypeValues[number];

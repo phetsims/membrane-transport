@@ -105,7 +105,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
-        innerContent: ligandView.type === 'ligandA' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty
+        innerContent: ligandView.type === 'triangleLigand' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
@@ -429,7 +429,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
    * Get the user-friendly name for the ligand type.
    */
   private getLigandTypeName(): TReadOnlyProperty<string> {
-    return this.ligand.type === 'ligandA' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty;
+    return this.ligand.type === 'triangleLigand' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty;
   }
 
   /**
@@ -460,8 +460,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
    * Check if the ligand is compatible with the given LigandGatedChannel.
    */
   private isCompatibleLigand( protein: LigandGatedChannel ): boolean {
-    return ( ( protein.type === 'sodiumIonLigandGatedChannel' && this.ligand.type === 'ligandA' ) ||
-             ( protein.type === 'potassiumIonLigandGatedChannel' && this.ligand.type === 'ligandB' ) );
+    return ( ( protein.type === 'sodiumIonLigandGatedChannel' && this.ligand.type === 'triangleLigand' ) ||
+             ( protein.type === 'potassiumIonLigandGatedChannel' && this.ligand.type === 'starLigand' ) );
   }
 
   /**

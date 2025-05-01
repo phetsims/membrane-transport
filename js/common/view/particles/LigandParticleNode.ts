@@ -14,10 +14,10 @@ import membraneTransport from '../../../membraneTransport.js';
 
 export default class LigandParticleNode extends Node {
 
-  public constructor( public readonly type: 'ligandA' | 'ligandB' ) {
+  public constructor( public readonly type: 'triangleLigand' | 'starLigand' ) {
 
     super( {
-      children: [ new Image( type === 'ligandA' ? sodiumLigand_svg : potassiumLigand_svg, {
+      children: [ new Image( type === 'triangleLigand' ? sodiumLigand_svg : potassiumLigand_svg, {
         opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
       } ) ]
     } );

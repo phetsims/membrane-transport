@@ -173,8 +173,8 @@ export default class MembraneTransportModel extends PhetioObject {
     // statically preallocate the ligands, so LigandNodes can be created for them and phet-io instrumented on startup
     // areLigandsAddedProperty controls whether they interact and are displayed
     if ( getFeatureSetHasLigands( featureSet ) ) {
-      this.addParticles( 'ligandA', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
-      this.addParticles( 'ligandB', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
+      this.addParticles( 'triangleLigand', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
+      this.addParticles( 'starLigand', 'outside', MembraneTransportConstants.LIGAND_COUNT, this.ligands );
     }
 
     this.resetEmitter.addListener( () => {
