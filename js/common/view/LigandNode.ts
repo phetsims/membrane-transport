@@ -293,7 +293,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
           const movingLeft = listener.modelDelta.x < 0;
           const movingRight = listener.modelDelta.x > 0;
           isOnBoundaryProperty.value = ( atLeftEdge && movingLeft ) || ( atRightEdge && movingRight );
-        }
+        },
+        tandem: tandem.createTandem( 'keyboardListener' )
       } );
 
       const grabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
