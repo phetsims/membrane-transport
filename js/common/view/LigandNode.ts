@@ -239,9 +239,6 @@ export default class LigandNode extends InteractiveHighlightingNode {
           additionalInformation: additionalInformation
         } ) );
       }
-      else {
-        MembraneTransportSounds.boundaryReached();
-      }
 
       // Update position to be centered *above* the target slot/area
       const targetModelPosition = this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ? this.getOffMembraneDropPosition() :
