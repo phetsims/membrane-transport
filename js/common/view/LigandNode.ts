@@ -330,7 +330,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
           this.isKeyboardGrabbed = false;
           MembraneTransportSounds.ligandReleased();
 
-          // Clear the position property so that on the next grab + move it will go to index 0
+          // Clear the position property so that on the next grab + move it will start at index 0.
+          // Set without notifying listeners because we do not want the release to return the ligand
+          // to the original position.
           ligandIndexProperty.setPropertyValue( INITIAL_POSITION_INDEX.copy() );
 
           if ( this.currentTargetSlotIndex === null ) {
