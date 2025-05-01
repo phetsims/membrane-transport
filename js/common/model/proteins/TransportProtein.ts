@@ -17,7 +17,7 @@ import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js'
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import Particle from '../Particle.js';
+import Particle, { ParticleModeWithSlot } from '../Particle.js';
 import Slot from '../Slot.js';
 import { ParticleType } from '../SoluteType.js';
 import TransportProteinType from './TransportProteinType.js';
@@ -87,9 +87,7 @@ export default abstract class TransportProtein<State extends string = Intentiona
   public releaseParticles( slot: Slot ): void {
 
     this.model.solutes.forEach( solute => {
-
-      // TODO: Solve the same way we decide for https://github.com/phetsims/membrane-transport/issues/105
-      if ( solute.mode.type !== 'ligandBound' && solute.mode.slot === slot ) {
+      if ( ( solute.mode as ParticleModeWithSlot ).slot === slot ) {
         solute.releaseFromInteraction( solute.position.y > 0 ? 20 : -20 );
       }
     } );

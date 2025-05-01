@@ -34,7 +34,7 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import Particle from './Particle.js';
+import Particle, { ParticleModeWithSlot } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
@@ -387,7 +387,7 @@ export default class MembraneTransportModel extends PhetioObject {
   ): boolean {
 
     // Check if any Particle mode has this slot and matches the predicate
-    return !this.solutes.some( solute => solute.mode.type !== 'ligandBound' && solute.mode.slot === slot && predicate( solute ) );
+    return !this.solutes.some( solute => ( solute.mode as ParticleModeWithSlot ).slot === slot && predicate( solute ) );
   }
 
   public getTimeSpeedFactor(): number {

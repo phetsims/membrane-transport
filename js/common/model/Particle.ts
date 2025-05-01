@@ -198,6 +198,9 @@ type ParticleMode =
   | MoveToSodiumPotassiumPumpMode
   | WaitingInSodiumPotassiumPumpMode;
 
+// When a ligand is bound to a protein, it does not have a slot.
+export type ParticleModeWithSlot = Exclude<ParticleMode, LigandBoundMode>;
+
 /**
  * For the random walk, the brownian motion is straight lines then random angles. This function determines how long to
  * go straight before a sudden direction change.

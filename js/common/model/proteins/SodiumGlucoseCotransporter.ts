@@ -10,6 +10,7 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import { ParticleModeWithSlot } from '../Particle.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -124,7 +125,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
 
   public override releaseParticles( slot: Slot ): void {
     super.releaseParticles( slot );
-    this.model.solutes.filter( solute => solute.mode.type !== 'ligandBound' && solute.mode.slot === slot ).forEach( particle => particle.releaseFromInteraction( 20 ) );
+    this.model.solutes.filter( solute => ( solute.mode as ParticleModeWithSlot ).slot === slot ).forEach( particle => particle.releaseFromInteraction( 20 ) );
   }
 
   public static getSitePositionOffset( site: 'left' | 'right' | 'center' ): Vector2 {

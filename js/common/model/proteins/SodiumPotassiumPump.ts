@@ -23,6 +23,7 @@
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import { ParticleModeWithSlot } from '../Particle.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -240,7 +241,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   public override releaseParticles( slot: Slot ): void {
     super.releaseParticles( slot );
-    this.model.solutes.filter( solute => solute.mode.type !== 'ligandBound' && solute.mode.slot === slot ).forEach( particle => {
+    this.model.solutes.filter( solute => ( solute.mode as ParticleModeWithSlot ).slot === slot ).forEach( particle => {
       particle.releaseFromInteraction( particle.type === 'potassiumIon' ? 20 : -20 );
     } );
   }
