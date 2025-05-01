@@ -70,7 +70,8 @@ export default class SoluteControl extends Panel {
         let amountTheUserCouldRemove = countOnThisSide;
         let amountTheUserCouldAdd = MembraneTransportConstants.MAX_SOLUTE_COUNT - totalCount;
 
-        // TODO (JG): Is the total exceeding the MAX indicative of an inconsistent transient value? see https://github.com/phetsims/membrane-transport/issues/98
+        // It is possible for the totalCount to exceed the MAX_SOLUTE_COUNT since model.insideSoluteCountProperties[ soluteType ] and
+        // model.outsideSoluteCountProperties[ soluteType ] are updated sequentially.
         if ( amountTheUserCouldAdd < 0 ) {
           amountTheUserCouldAdd = 0;
         }
