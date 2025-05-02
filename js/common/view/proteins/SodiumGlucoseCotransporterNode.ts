@@ -15,6 +15,10 @@ import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotran
 import TransportProteinNode from './TransportProteinNode.js';
 
 export default class SodiumGlucoseCotransporterNode extends TransportProteinNode {
+
+  /**
+   * @param sodiumGlucoseCotransporter - Use null for static icons. Provide a channel to update the view when the channel state changes.
+   */
   public constructor( public readonly sodiumGlucoseCotransporter: SodiumGlucoseCotransporter | null ) {
 
     const image = new Image( sodiumGlucoseCotransporterState1_svg );

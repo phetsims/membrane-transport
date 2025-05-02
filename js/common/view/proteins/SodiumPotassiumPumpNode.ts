@@ -18,6 +18,9 @@ import TransportProteinNode from './TransportProteinNode.js';
 
 export default class SodiumPotassiumPumpNode extends TransportProteinNode {
 
+  /**
+   * @param sodiumPotassiumPump - Use null for static icons. Provide a channel to update the view when the channel state changes.
+   */
   public constructor( public readonly sodiumPotassiumPump: SodiumPotassiumPump | null ) {
 
     const image = new Image( naKPumpState1_svg );

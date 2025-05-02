@@ -19,6 +19,11 @@ import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import TransportProteinNode from './TransportProteinNode.js';
 
 export default class LigandGatedChannelNode extends TransportProteinNode {
+
+  /**
+   * @param type
+   * @param channel - Use null for static icons. Provide a channel to update the view when the channel state changes.
+   */
   public constructor(
     public readonly type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel',
     public readonly channel: LigandGatedChannel | null

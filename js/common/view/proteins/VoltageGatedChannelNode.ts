@@ -21,6 +21,10 @@ import TransportProteinNode from './TransportProteinNode.js';
 
 export default class VoltageGatedChannelNode extends TransportProteinNode {
 
+  /**
+   * @param type
+   * @param channel - Use null for static icons. Provide a channel to update the view when the channel state changes.
+   */
   public constructor( public readonly type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', channel: VoltageGatedChannel | null ) {
 
     const image = new Image( type === 'sodiumIonVoltageGatedChannel' ? sodiumVoltageGatedMinus70mV_svg : potassiumVoltageGatedMinus70and50mV_svg );
