@@ -42,8 +42,8 @@ simLauncher.launch( () => {
       team: 'Holly Basta, Mike Klymkowsky, Mark Nielsen, Kathy Perkins, Amy Rouinfar, Taliesin Smith',
       contributors: '',
       qualityAssurance: '',
-      graphicArts: '',
-      soundDesign: '',
+      graphicArts: 'Brett Fiedler',
+      soundDesign: 'Ashton Morris, Emily Moore',
       thanks: ''
     },
 
