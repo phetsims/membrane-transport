@@ -177,12 +177,6 @@ export default class LigandNode extends InteractiveHighlightingNode {
           return;
         }
 
-        const setConstrainedPosition = ( proposedPosition: Vector2 ) => {
-          const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
-          isOnBoundaryProperty.value = !boundModelPoint.equals( proposedPosition );
-          ligand.position.set( boundModelPoint );
-        };
-
         if ( event.isFromPDOM() ) {
           // This path should ideally not be taken if useAccessibleDraggable is false,
           // but handle defensively. We use custom keyboard controls.
@@ -192,7 +186,10 @@ export default class LigandNode extends InteractiveHighlightingNode {
           const localPoint = this.globalToParentPoint( event.pointer.point );
           const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
           const proposedPosition = modelPointerPosition.minus( pressOffset! );
-          setConstrainedPosition( proposedPosition );
+
+          const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
+          isOnBoundaryProperty.value = !boundModelPoint.equals( proposedPosition );
+          ligand.position.set( boundModelPoint );
         }
       },
       end: () => {
