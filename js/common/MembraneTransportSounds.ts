@@ -187,7 +187,7 @@ const mtGlucoseActivateTransporterSound = newSoundClip( mtGlucoseActivateTranspo
 const mtATPActivateTransporter = newSoundClip( mtATPActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
 const mtActiveTransportersRockOrOpenSound = newSoundClip( mtActiveTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
-const mtAcitveTransportersSuccessChord = newSoundClip( mtActiveTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
+const mtActiveTransportersSuccessChord = newSoundClip( mtActiveTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
@@ -324,7 +324,7 @@ export default class MembraneTransportSounds {
 
   public static activeTransporterRockedAndSuccess(): void {
     mtActiveTransportersRockOrOpenSound.play();
-    mtAcitveTransportersSuccessChord.play();
+    mtActiveTransportersSuccessChord.play();
   }
 }
 
