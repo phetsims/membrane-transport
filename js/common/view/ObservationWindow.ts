@@ -31,7 +31,6 @@ import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowTransportProteinLayer, { SlottedNode } from './ObservationWindowTransportProteinLayer.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
-import getBriefProteinName from './proteins/getBriefProteinName.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
 
 export default class ObservationWindow extends Node {
@@ -64,28 +63,6 @@ export default class ObservationWindow extends Node {
     // Clipping region that contains the background canvas and the ligand node
     const clipNode = new Node( {
       clipArea: Shape.rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT )
-    } );
-
-    // TODO (SR): This is not production worthy, needs refinement, see the design doc. Add i18n. etc. https://github.com/phetsims/membrane-transport/issues/82
-    const accessibleParagraphProperty = new StringProperty( 'Zoomed-in Membrane, no proteins in membrane' );
-
-    model.transportProteinCountProperty.link( transportProteinCount => {
-
-      const phrases = model.slots.map( ( slot, index ) => {
-
-        if ( slot.isFilled() ) {
-
-          const transportProtein = slot.transportProteinProperty.value!;
-          return `The ${index + 1} slot contains a ${getBriefProteinName( transportProtein.type ).value} transport protein.`;
-        }
-        else {
-          return null;
-        }
-      } );
-
-      const paragraph = phrases.filter( phrase => phrase !== null ).join( ' ' ); // TODO: https://github.com/phetsims/membrane-transport/issues/102
-
-      accessibleParagraphProperty.set( transportProteinCount === 0 ? 'Zoomed-in Membrane, no proteins in membrane' : 'Zoomed-in Membrane. ' + paragraph );
     } );
 
     super( {
@@ -172,8 +149,7 @@ export default class ObservationWindow extends Node {
 
       // TODO (JG): Make sure that mutating the accessibleName works on all browsers + screen readers https://github.com/phetsims/membrane-transport/issues/97
       accessibleName: new StringProperty( 'hello' ), // TODO (JG): Should be initialized blank, but the group select view is responsible for setting the accessibleName https://github.com/phetsims/membrane-transport/issues/97
-      accessibleHelpText: new StringProperty( 'Look for transport proteins.' ),
-      accessibleParagraph: accessibleParagraphProperty
+      accessibleHelpText: new StringProperty( 'Look for transport proteins.' )
     } );
     this.addChild( groupSelectContainer );
 

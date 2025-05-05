@@ -912,8 +912,9 @@ export default class Particle<T extends ParticleType> {
     const potassiumGates = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
     if ( transportProtein.isAvailableForPassiveTransport() ) {
-      if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType! ) ) ||
-           ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType! ) ) ) {
+      affirm( slot.transportProteinType, 'transportProteinType should be defined' );
+      if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType ) ) ||
+           ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType ) ) ) {
         this.mode = { type: 'moveToCenterOfChannel', slot: slot };
         return true;
       }

@@ -496,7 +496,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
    */
   private getTransportProteins(): TransportProtein[] {
     const filledSlotList = this.slots.filter( slot => slot.isFilled() );
-    return filledSlotList.map( slot => slot.transportProteinProperty.value! );
+    return filledSlotList.map( slot => {
+      affirm( slot.transportProteinProperty.value, 'A filled slot must have a transport protein.' );
+      return slot.transportProteinProperty.value;
+    } );
   }
 
   public reset(): void {

@@ -19,6 +19,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerter.js';
@@ -183,7 +184,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
         else {
           const localPoint = this.globalToParentPoint( event.pointer.point );
           const modelPointerPosition = this.modelViewTransform.viewToModelPosition( localPoint );
-          const proposedPosition = modelPointerPosition.minus( pressOffset! );
+          affirm( pressOffset, 'pressOffset should be set before the listener fires.' );
+          const proposedPosition = modelPointerPosition.minus( pressOffset );
 
           const boundModelPoint = MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.closestPointTo( proposedPosition );
           isOnBoundaryProperty.value = !boundModelPoint.equals( proposedPosition );
@@ -280,10 +282,11 @@ export default class LigandNode extends InteractiveHighlightingNode {
           // Ignore if focus is lost or interaction disabled somehow
           if ( !this.focused ) { return; }
           if ( this.isKeyboardGrabbed ) {
+            affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
 
             // --- Cancel Logic ---
             this.isKeyboardGrabbed = false;
-            this.ligand.position.set( this.initialPositionBeforeGrab! ); // Return to start position
+            this.ligand.position.set( this.initialPositionBeforeGrab ); // Return to start position
             this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control
 
             this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
@@ -359,7 +362,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
           if ( this.currentTargetSlotIndex === null ) {
 
             // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
-            this.ligand.position.set( this.initialPositionBeforeGrab! );
+            affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
+            this.ligand.position.set( this.initialPositionBeforeGrab );
 
             // TODO: Some alerts are redundant with GrabDragInteraction now, see https://github.com/phetsims/membrane-transport/issues/128
             this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
