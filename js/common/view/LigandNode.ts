@@ -17,8 +17,6 @@ import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { clamp } from '../../../../dot/js/util/clamp.js';
-import { roundSymmetric } from '../../../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
@@ -215,11 +213,37 @@ export default class LigandNode extends InteractiveHighlightingNode {
     const ligandIndexProperty = new LigandIndexProperty( INITIAL_POSITION_INDEX.copy() );
     this.resetEmitter.addListener( () => ligandIndexProperty.reset() );
 
-    ligandIndexProperty.lazyLink( position => {
+    ligandIndexProperty.lazyLink( ( position, oldPosition ) => {
 
-      const newIndex = clamp( roundSymmetric( position.x ), 0, OFF_MEMBRANE_SLOT_INDEX );
+      // Since the design is to only move to filled slots or the off-membrane area, move based on deltas only.
+      const delta = position.x - oldPosition.x;
+      if ( delta === 0 ) {
 
-      if ( newIndex !== this.currentTargetSlotIndex ) {
+        // No movement, do nothing
+        return;
+      }
+
+      // Search in the direction of delta to find the next occupied slot
+      const searchDirection = delta > 0 ? 1 : -1;
+      const searchStartIndex = ( this.currentTargetSlotIndex === null ? -1 : this.currentTargetSlotIndex ) + searchDirection;
+      let newIndex = null;
+      let foundSlot = false;
+      for ( let i = searchStartIndex; i >= 0 && i <= slots.length - 1; i += searchDirection ) {
+        const slot = this.slots[ i ];
+        if ( slot && slot.transportProteinProperty.value ) {
+          newIndex = i;
+          foundSlot = true;
+          break;
+        }
+      }
+
+      if ( !foundSlot && delta > 0 ) {
+
+        // If we are moving right and there are no slots, then we are off the membrane
+        newIndex = OFF_MEMBRANE_SLOT_INDEX;
+      }
+
+      if ( newIndex !== null && newIndex !== this.currentTargetSlotIndex ) {
         this.currentTargetSlotIndex = newIndex;
         MembraneTransportSounds.itemMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
 
@@ -237,11 +261,14 @@ export default class LigandNode extends InteractiveHighlightingNode {
         } ) );
       }
 
-      // Update position to be centered *above* the target slot/area
-      const targetModelPosition = this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ? this.getOffMembraneDropPosition() :
-                                  this.getTargetPositionForSlot( this.currentTargetSlotIndex );
-      this.ligand.position.set( targetModelPosition );
-      this.updateVisualPosition();
+      if ( this.currentTargetSlotIndex !== null ) {
+
+        // Update position to be centered *above* the target slot/area
+        const targetModelPosition = this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ? this.getOffMembraneDropPosition() :
+                                    this.getTargetPositionForSlot( this.currentTargetSlotIndex );
+        this.ligand.position.set( targetModelPosition );
+        this.updateVisualPosition();
+      }
     } );
 
     // Custom Keyboard Interaction Listener
