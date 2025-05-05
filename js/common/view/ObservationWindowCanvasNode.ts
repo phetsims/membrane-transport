@@ -14,6 +14,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CanvasNode from '../../../../scenery/js/nodes/CanvasNode.js';
 import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
@@ -23,6 +24,7 @@ import membraneTransport from '../../membraneTransport.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import Particle from '../model/Particle.js';
 import SoluteType from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
 import Phospholipid from './Phospholipid.js';
@@ -96,14 +98,22 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private drawSolutes( context: CanvasRenderingContext2D ): void {
 
-    // Draw the particles as images
-    for ( const solute of this.model.solutes ) {
+    // -------- 1. Decide which solutes belong in this pass
+    const backLayerTypes = [ 'oxygen', 'carbonDioxide' ];
+    const visibleSolutes = this.model.solutes.filter( solute => {
+      const isBack = backLayerTypes.includes( solute.type );
+      return ( this.layer === 'back' && isBack ) ||
+             ( this.layer === 'front' && !isBack );
+    } );
 
-      // Skip oxygen and carbon dioxide in the front layer, or skip everything else in the back layer
-      const isGasParticle = solute.type === 'oxygen' || solute.type === 'carbonDioxide';
-      if ( ( this.layer === 'front' && isGasParticle ) || ( this.layer === 'back' && !isGasParticle ) ) {
-        continue;
-      }
+    // -------- 2. For the front pass, draw phosphates first
+    if ( this.layer === 'front' ) {
+      const zIndex = ( s: Particle<IntentionalAny> ) => s.type === 'phosphate' ? 0 : 1; // 0 → farthest back
+      visibleSolutes.sort( ( a, b ) => zIndex( a ) - zIndex( b ) );
+    }
+
+    // Draw the particles as images
+    for ( const solute of visibleSolutes ) {
 
       // Apply opacity
       if ( solute.opacity !== 1 ) {
