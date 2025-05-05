@@ -41,6 +41,12 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
   // For development only. When provided, the ligands will slow down significantly during random walk.
   slowLigands: {
     type: 'flag'
+  },
+
+  gasCrossingSound: {
+    type: 'string',
+    validValues: [ 'fm', 'dist' ],
+    defaultValue: 'fm'
   }
 } );
 
