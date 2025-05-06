@@ -55,7 +55,7 @@ type StringsType = {
     'soluteControls': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
     };
-    'resetSolutesButton': {
+    'eraseSolutesButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };

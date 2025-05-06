@@ -102,7 +102,7 @@
         "value": "Solute Controls"
       }
     },
-    "resetSolutesButton": {
+    "eraseSolutesButton": {
       "accessibleName": {
         "value": "Reset Solutes"
       },

@@ -137,20 +137,20 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
     this.addChild( soluteControlsNode );
 
-    const resetSolutesButton = new EraserButton( {
+    const eraseSolutesButton = new EraserButton( {
       baseColor: 'rgb(239,214,147)',
-      tandem: options.tandem.createTandem( 'resetSolutesButton' ),
+      tandem: options.tandem.createTandem( 'eraseSolutesButton' ),
       right: this.observationWindow.left - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.observationWindow.bottom,
-      accessibleName: MembraneTransportStrings.a11y.resetSolutesButton.accessibleNameStringProperty,
+      accessibleName: MembraneTransportStrings.a11y.eraseSolutesButton.accessibleNameStringProperty,
       enabledProperty: hasAnySolutesProperty
     } );
 
-    resetSolutesButton.addListener( () => {
-      this.addAccessibleResponse( MembraneTransportStrings.a11y.resetSolutesButton.accessibleContextResponseStringProperty );
+    eraseSolutesButton.addListener( () => {
+      this.addAccessibleResponse( MembraneTransportStrings.a11y.eraseSolutesButton.accessibleContextResponseStringProperty );
       model.clear();
     } );
-    soluteControlsNode.addChild( resetSolutesButton );
+    soluteControlsNode.addChild( eraseSolutesButton );
 
     // Solute concentrations
     const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, {
@@ -240,7 +240,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     soluteControlsNode.pdomOrder = [
       solutesPanel,
       ...soluteControls,
-      resetSolutesButton
+      eraseSolutesButton
     ];
 
     this.pdomPlayAreaNode.pdomOrder = [
