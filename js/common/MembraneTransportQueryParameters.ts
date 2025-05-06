@@ -27,10 +27,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 50
   },
 
-  tsStrings: {
-    type: 'flag'
-  },
-
   // For development only. When provided, the ligands will slow down significantly during random walk.
   slowLigands: {
     type: 'flag'
