@@ -9,19 +9,20 @@
 
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
+import PotassiumVoltageGatedChannel from './PotassiumVoltageGatedChannel.js';
+import SodiumVoltageGatedChannel from './SodiumVoltageGatedChannel.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 import SodiumGlucoseCotransporter from './SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './SodiumPotassiumPump.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
-import VoltageGatedChannel from './VoltageGatedChannel.js';
 
 export default function createTransportProtein( model: TransportProteinModelContext, type: TransportProteinType, position: number ): TransportProtein {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 
-         type === 'sodiumIonVoltageGatedChannel' ? new VoltageGatedChannel( model, type, position ) :
-         type === 'potassiumIonVoltageGatedChannel' ? new VoltageGatedChannel( model, type, position ) :
+         type === 'sodiumIonVoltageGatedChannel' ? new SodiumVoltageGatedChannel( model, position ) :
+         type === 'potassiumIonVoltageGatedChannel' ? new PotassiumVoltageGatedChannel( model, position ) :
 
          type === 'sodiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
          type === 'potassiumIonLigandGatedChannel' ? new LigandGatedChannel( model, type, position ) :
