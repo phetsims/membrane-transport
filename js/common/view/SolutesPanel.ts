@@ -80,6 +80,7 @@ export default class SolutesPanel extends Node {
       lineSpacing: 5,
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
+      phetioVisiblePropertyInstrumented: false,
       accessibleName: MembraneTransportStrings.solutesStringProperty,
 
       // The Voicing hint for this component is the same as the help text for the entire solute controls panel.
