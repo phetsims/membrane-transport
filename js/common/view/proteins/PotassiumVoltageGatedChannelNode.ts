@@ -33,6 +33,9 @@ export default class PotassiumVoltageGatedChannelNode extends TransportProteinNo
                            ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() );
 
         image.setImage( newImage );
+      }, { disposer: this } );
+
+      channel.stateProperty.lazyLink( ( state, oldState ) => {
 
         // choose open or closing sound based on the voltage
         // Since the state is linked before the view is created, we can rely on it having the correct value during this callback.
@@ -40,7 +43,9 @@ export default class PotassiumVoltageGatedChannelNode extends TransportProteinNo
         if ( state === 'open30mV' ) {
           MembraneTransportSounds.channelOpened( 'potassiumIonVoltageGatedChannel' );
         }
-        else {
+        else if ( oldState === 'open30mV' ) {
+
+          // Only play a sound on conformation change. The closed both have the same conformation.
           MembraneTransportSounds.channelClosed( 'potassiumIonVoltageGatedChannel' );
         }
       }, { disposer: this } );
