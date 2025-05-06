@@ -39,6 +39,9 @@ export default class SodiumVoltageGatedChannelNode extends TransportProteinNode 
 
         image.setImage( newImage );
 
+      }, { disposer: this } );
+
+      channel.stateProperty.lazyLink( state => {
         // choose open or closing sound based on the voltage
         // Since the state is linked before the view is created, we can rely on it having the correct value during this callback.
         // NOTE: this is a listener order dependency
@@ -49,6 +52,7 @@ export default class SodiumVoltageGatedChannelNode extends TransportProteinNode 
           MembraneTransportSounds.channelClosed( 'sodiumIonVoltageGatedChannel' );
         }
       }, { disposer: this } );
+
     }
   }
 }

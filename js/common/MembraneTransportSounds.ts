@@ -27,14 +27,14 @@ import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingM
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
 import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
 import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
-import mtActiveTransporterRockOrOpen_mp3 from '../../sounds/mtActiveTransporterRockOrOpen_mp3.js';
-import mtActiveTransporterSuccessChord_mp3 from '../../sounds/mtActiveTransporterSuccessChord_mp3.js';
-import mtATPActivateTransporter_mp3 from '../../sounds/mtATPActivateTransporter_mp3.js';
-import mtGlucoseActivateTransporter_mp3 from '../../sounds/mtGlucoseActivateTransporter_mp3.js';
-import mtKPlusAttach_mp3 from '../../sounds/mtKPlusAttach_mp3.js';
-import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
-import mtLigandsUnstickv3_mp3 from '../../sounds/mtLigandsUnstickv3_mp3.js';
-import mtNAPlusAttach_mp3 from '../../sounds/mtNAPlusAttach_mp3.js';
+import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
+import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
+import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
+import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
+import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
+import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
+import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
+import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
 import soluteCrossing001_mp3 from '../../sounds/soluteCrossing001_mp3.js';
@@ -112,17 +112,17 @@ const soluteCrossing005 = newSoundClip(
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
-const mtLigandsStickv3 = newSoundClip( mtLigandsStickv3_mp3, { initialOutputLevel: 0.3 } );
-const mtLigandsUnstickv3 = newSoundClip( mtLigandsUnstickv3_mp3, { initialOutputLevel: 0.3 } );
+const mtLigandsStickv3 = newSoundClip( ligandsStickV3_mp3, { initialOutputLevel: 0.3 } );
+const mtLigandsUnstickv3 = newSoundClip( ligandsUnstickV3_mp3, { initialOutputLevel: 0.3 } );
 
-const mtNAPlusAttachSound = newSoundClip( mtNAPlusAttach_mp3, { initialOutputLevel: 0.3 } );
-const mtKPlusAttachSound = newSoundClip( mtKPlusAttach_mp3, { initialOutputLevel: 0.3 } );
-const mtGlucoseActivateTransporterSound = newSoundClip( mtGlucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } ); // TODO: Rename transporter https://github.com/phetsims/membrane-transport/issues/93
+const mtNAPlusAttachSound = newSoundClip( naPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const mtKPlusAttachSound = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const mtGlucoseActivateTransporterSound = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } ); // TODO: Rename transporter https://github.com/phetsims/membrane-transport/issues/93
 
-const mtATPActivateTransporter = newSoundClip( mtATPActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
+const mtATPActivateTransporter = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
-const mtActiveTransportersRockOrOpenSound = newSoundClip( mtActiveTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
-const mtActiveTransportersSuccessChord = newSoundClip( mtActiveTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
+const mtActiveTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
+const mtActiveTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );

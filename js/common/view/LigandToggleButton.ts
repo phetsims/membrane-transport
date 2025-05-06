@@ -12,20 +12,20 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
-import mtAddLigands_mp3 from '../../../sounds/mtAddLigands_mp3.js';
-import mtRemoveLigands_mp3 from '../../../sounds/mtRemoveLigands_mp3.js';
+import addLigands_mp3 from '../../../sounds/addLigands_mp3.js';
+import removeLigands_mp3 from '../../../sounds/removeLigands_mp3.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
-const addLigandSoundPlayer = new SoundClip( mtAddLigands_mp3, {
+const addLigandSoundPlayer = new SoundClip( addLigands_mp3, {
   initialOutputLevel: 0.3
 } );
 soundManager.addSoundGenerator( addLigandSoundPlayer );
 
-const removeLigandSoundPlayer = new SoundClip( mtRemoveLigands_mp3, {
+const removeLigandSoundPlayer = new SoundClip( removeLigands_mp3, {
   initialOutputLevel: 0.3
 } );
 soundManager.addSoundGenerator( removeLigandSoundPlayer );

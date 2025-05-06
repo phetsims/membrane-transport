@@ -95,6 +95,70 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
+  "activeTransporterRockOrOpen.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "activeTransporterRockOrOpen_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "activeTransporterSuccessChord.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "activeTransporterSuccessChord_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "addLigands.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "addLigands_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "atpActivateTransporter.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "atpActivateTransporter_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
   "channelCloseSet1_001.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
@@ -607,7 +671,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtATPActivateTransporter.mp3": {
+  "glucoseActivateTransporter.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -615,7 +679,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtATPActivateTransporter_mp3.js": {
+  "glucoseActivateTransporter_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -623,7 +687,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTransporterRockOrOpen.mp3": {
+  "kPlusAttach.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -631,7 +695,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTransporterRockOrOpen_mp3.js": {
+  "kPlusAttach_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -639,7 +703,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTransporterSuccessChord.mp3": {
+  "ligandsStickV3.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -647,7 +711,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtActiveTransporterSuccessChord_mp3.js": {
+  "ligandsStickV3_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -655,7 +719,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtAddLigands.mp3": {
+  "ligandsUnstickV3.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -663,7 +727,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtAddLigands_mp3.js": {
+  "ligandsUnstickV3_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -671,7 +735,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtGlucoseActivateTransporter.mp3": {
+  "naPlusAttach.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -679,87 +743,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "mtGlucoseActivateTransporter_mp3.js": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtKPlusAttach.mp3": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtKPlusAttach_mp3.js": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtLigandsStickv3.mp3": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtLigandsStickv3_mp3.js": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtLigandsUnstickv3.mp3": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtLigandsUnstickv3_mp3.js": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtNAPlusAttach.mp3": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtNAPlusAttach_mp3.js": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtRemoveLigands.mp3": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "mtRemoveLigands_mp3.js": {
+  "naPlusAttach_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -776,6 +760,22 @@
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
   "proteinReturnSound4_mp3.js": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "removeLigands.mp3": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
+  },
+  "removeLigands_mp3.js": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
