@@ -8,7 +8,6 @@
  */
 
 // TODO: Improve the API for tandems for rich drag listeners. https://github.com/phetsims/membrane-transport/issues/124
-// TODO: Improve the position of the message about grabbing the ligand. See https://github.com/phetsims/membrane-transport/issues/126
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
