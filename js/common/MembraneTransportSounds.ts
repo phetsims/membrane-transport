@@ -241,9 +241,6 @@ export default class MembraneTransportSounds {
     }
     else {
       mtGlucoseActivateTransporterSound.play();
-
-      // Happens at the same time glucose is bound, but in an upcoming issue we will add a delay, I think
-      MembraneTransportSounds.activeTransporterRockedAndSuccess();
     }
   }
 

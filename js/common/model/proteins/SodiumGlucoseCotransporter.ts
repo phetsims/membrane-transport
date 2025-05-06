@@ -16,8 +16,11 @@ import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
-// The sodium glucose cotransporter is always open to the inside or outside of the cell
-type SodiumGlucoseCotransporterState = 'openToOutside' | 'openToInside';
+// The sodium glucose cotransporter is always open to the inside or outside the cell
+type SodiumGlucoseCotransporterState = 'openToOutsideAwaitingParticles' | 'openToOutsideAllParticlesBound' | 'openToInside';
+
+// Delay for the protein to transition from bound and closed to bound and open, in seconds.
+const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
@@ -34,12 +37,19 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.glucoseSiteCenter
   );
 
+  private timeSinceStateTransition = 0;
+
   public constructor( model: TransportProteinModelContext, type: TransportProteinType, position: number ) {
-    super( model, type, position, 'openToOutside' );
+    super( model, type, position, 'openToOutsideAwaitingParticles' );
+
+    this.stateProperty.link( state => {
+      this.timeSinceStateTransition = 0;
+    } );
   }
 
   public override step( dt: number ): void {
     super.step( dt );
+    this.timeSinceStateTransition += dt;
 
     const slot = this.model.getSlotForTransportProtein( this )!;
 
@@ -56,12 +66,21 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
                                                         solute.mode.site === 'right' );
 
     if ( leftIon && glucose && rightIon ) {
-      this.stateProperty.value = 'openToInside';
 
-      // Move solutes through the open transport protein
-      leftIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
-      glucose.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward' };
-      rightIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: +5 };
+      if ( this.stateProperty.value === 'openToOutsideAwaitingParticles' ) {
+        this.stateProperty.value = 'openToOutsideAllParticlesBound';
+      }
+      else {
+        if ( this.timeSinceStateTransition > STATE_TRANSITION_INTERVAL ) {
+
+          this.stateProperty.value = 'openToInside';
+
+          // Move solutes through the open transport protein
+          leftIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
+          glucose.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward' };
+          rightIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: +5 };
+        }
+      }
     }
 
     if ( this.stateProperty.value === 'openToInside' ) {
@@ -72,7 +91,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
 
       // Once all solutes have passed through, the sodium glucose cotransporter is open to the outside
       if ( numberPassingThrough.length === 0 ) {
-        this.stateProperty.value = 'openToOutside';
+        this.stateProperty.value = 'openToOutsideAwaitingParticles';
       }
     }
   }

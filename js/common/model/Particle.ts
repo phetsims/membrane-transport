@@ -939,7 +939,7 @@ export default class Particle<T extends ParticleType> {
       model.outsideSoluteCountProperties.sodiumIon.value > model.insideSoluteCountProperties.sodiumIon.value &&
       // Only approach from extracellular side
       this.position.y > 0 &&
-      transportProtein.stateProperty.value === 'openToOutside'
+      transportProtein.stateProperty.value === 'openToOutsideAwaitingParticles'
     ) {
 
       if ( this.type === 'sodiumIon' ) {

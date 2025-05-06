@@ -11,6 +11,7 @@ import Image from '../../../../../scenery/js/nodes/Image.js';
 import sodiumGlucoseCotransporterState1_svg from '../../../../images/sodiumGlucoseCotransporterState1_svg.js';
 import sodiumGlucoseCotransporterState3_svg from '../../../../images/sodiumGlucoseCotransporterState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
 import TransportProteinNode from './TransportProteinNode.js';
 
@@ -27,10 +28,17 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
     if ( sodiumGlucoseCotransporter ) {
 
       sodiumGlucoseCotransporter.stateProperty.link( state => {
-        image.image = state === 'openToOutside' ? sodiumGlucoseCotransporterState1_svg :
+        image.image = state === 'openToOutsideAwaitingParticles' ? sodiumGlucoseCotransporterState1_svg :
+                      state === 'openToOutsideAllParticlesBound' ? sodiumGlucoseCotransporterState1_svg :
                       state === 'openToInside' ? sodiumGlucoseCotransporterState3_svg :
                       ( () => { throw new Error( 'Invalid state: ' + state ); } )();
       }, { disposer: this } );
+
+      sodiumGlucoseCotransporter.stateProperty.lazyLink( ( state, oldState ) => {
+        if ( state === 'openToInside' ) {
+          MembraneTransportSounds.activeTransporterRockedAndSuccess();
+        }
+      } );
     }
   }
 }
