@@ -101,8 +101,14 @@ const soluteCrossing002 = newSoundClip( soluteCrossing002_mp3, { initialOutputLe
 const soluteCrossing003 = newSoundClip( soluteCrossing003_mp3, { initialOutputLevel: 0.6 } );
 
 // gas particles have a different sound than other solutes, see https://github.com/phetsims/membrane-transport/issues/113
-const soluteCrossing004 = newSoundClip( MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? soluteCrossing004_fm_mp3 : soluteCrossing004_dist_mp3, { initialOutputLevel: 0.6 } );
-const soluteCrossing005 = newSoundClip( MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? soluteCrossing005_fm_mp3 : soluteCrossing005_dist_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing004 = newSoundClip(
+  MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? soluteCrossing004_fm_mp3 : soluteCrossing004_dist_mp3, {
+    initialOutputLevel: MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? 0.6 : 0.1
+  } );
+const soluteCrossing005 = newSoundClip(
+  MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? soluteCrossing005_fm_mp3 : soluteCrossing005_dist_mp3, {
+    initialOutputLevel: MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? 0.6 : 0.1
+  } );
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
