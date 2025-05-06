@@ -143,11 +143,11 @@ export default class MembraneTransportScreenView extends ScreenView {
       right: this.observationWindow.left - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.observationWindow.bottom,
       accessibleName: MembraneTransportStrings.a11y.eraseSolutesButton.accessibleNameStringProperty,
+      accessibleContextResponse: MembraneTransportStrings.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
       enabledProperty: hasAnySolutesProperty
     } );
 
     eraseSolutesButton.addListener( () => {
-      this.addAccessibleResponse( MembraneTransportStrings.a11y.eraseSolutesButton.accessibleContextResponseStringProperty );
       model.clear();
     } );
     soluteControlsNode.addChild( eraseSolutesButton );
