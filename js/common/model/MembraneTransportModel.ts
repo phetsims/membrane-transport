@@ -33,7 +33,7 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
@@ -125,7 +125,7 @@ export default class MembraneTransportModel extends PhetioObject {
     this.slots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
     this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
-      validValues: getFeatureSetSoluteTypes( this.featureSet ),
+      validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'selectedSoluteProperty' ),
       phetioFeatured: true
     } );
