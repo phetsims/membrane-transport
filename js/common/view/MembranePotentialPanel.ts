@@ -22,25 +22,25 @@ export default class MembranePotentialPanel extends Panel {
     const membraneVoltagePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
       value: -70,
       createNode: tandem => new Text( '-70' ),
-      tandemName: 'minus70RadioButton',
+      tandemName: 'negative70RadioButton',
       options: {
-        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.minus70RadioButton.accessibleNameStringProperty
+        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
       }
     },
       {
         value: -50,
         createNode: tandem => new Text( '-50' ),
-        tandemName: 'minus50RadioButton',
+        tandemName: 'negative50RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.minus50RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
         }
       },
       {
         value: 30,
         createNode: tandem => new Text( '+30' ),
-        tandemName: 'plus30RadioButton',
+        tandemName: 'positive30RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.plus30RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
         }
       } ], {
       orientation: 'horizontal',
