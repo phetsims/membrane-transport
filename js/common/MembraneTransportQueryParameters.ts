@@ -27,13 +27,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 50
   },
 
-  // For development only, and not production, choices for the open/closing sounds
-  soundChannelOpenCloseSet: {
-    type: 'string',
-    validValues: [ '1', '2', '1muffled', '2muffled' ],
-    defaultValue: '1'
-  },
-
   tsStrings: {
     type: 'flag'
   },

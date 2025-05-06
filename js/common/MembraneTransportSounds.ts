@@ -14,6 +14,14 @@ import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
+import channelCloseSet1_001_mp3 from '../../sounds/channelCloseSet1_001_mp3.js';
+import channelCloseSet1_002_mp3 from '../../sounds/channelCloseSet1_002_mp3.js';
+import channelCloseSet2_001_mp3 from '../../sounds/channelCloseSet2_001_mp3.js';
+import channelCloseSet2_003_mp3 from '../../sounds/channelCloseSet2_003_mp3.js';
+import channelOpenSet1_001_mp3 from '../../sounds/channelOpenSet1_001_mp3.js';
+import channelOpenSet1_002_mp3 from '../../sounds/channelOpenSet1_002_mp3.js';
+import channelOpenSet2_002_mp3 from '../../sounds/channelOpenSet2_002_mp3.js';
+import channelOpenSet2_003_mp3 from '../../sounds/channelOpenSet2_003_mp3.js';
 import GeneralButtonAddingMany_mp3 from '../../sounds/GeneralButtonAddingMany_mp3.js';
 import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingManyv1_mp3.js';
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
@@ -22,38 +30,6 @@ import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOn
 import mtActiveTransporterRockOrOpen_mp3 from '../../sounds/mtActiveTransporterRockOrOpen_mp3.js';
 import mtActiveTransporterSuccessChord_mp3 from '../../sounds/mtActiveTransporterSuccessChord_mp3.js';
 import mtATPActivateTransporter_mp3 from '../../sounds/mtATPActivateTransporter_mp3.js';
-import channelCloseSet1_001_mp3 from '../../sounds/channelCloseSet1_001_mp3.js';
-import channelCloseSet1_001_muffled_mp3 from '../../sounds/channelCloseSet1_001_muffled_mp3.js';
-import channelCloseSet1_002_mp3 from '../../sounds/channelCloseSet1_002_mp3.js';
-import channelCloseSet1_002_muffled_mp3 from '../../sounds/channelCloseSet1_002_muffled_mp3.js';
-import channelCloseSet1_003_mp3 from '../../sounds/channelCloseSet1_003_mp3.js';
-import channelCloseSet1_003_muffled_mp3 from '../../sounds/channelCloseSet1_003_muffled_mp3.js';
-import channelCloseSet1_004_mp3 from '../../sounds/channelCloseSet1_004_mp3.js';
-import channelCloseSet1_004_muffled_mp3 from '../../sounds/channelCloseSet1_004_muffled_mp3.js';
-import channelCloseSet2_001_mp3 from '../../sounds/channelCloseSet2_001_mp3.js';
-import channelCloseSet2_001_muffled_mp3 from '../../sounds/channelCloseSet2_001_muffled_mp3.js';
-import channelCloseSet2_002_mp3 from '../../sounds/channelCloseSet2_002_mp3.js';
-import channelCloseSet2_002_muffled_mp3 from '../../sounds/channelCloseSet2_002_muffled_mp3.js';
-import channelCloseSet2_003_mp3 from '../../sounds/channelCloseSet2_003_mp3.js';
-import channelCloseSet2_003_muffled_mp3 from '../../sounds/channelCloseSet2_003_muffled_mp3.js';
-import channelCloseSet2_004_mp3 from '../../sounds/channelCloseSet2_004_mp3.js';
-import channelCloseSet2_004_muffled_mp3 from '../../sounds/channelCloseSet2_004_muffled_mp3.js';
-import channelOpenSet1_001_mp3 from '../../sounds/channelOpenSet1_001_mp3.js';
-import channelOpenSet1_001_muffled_mp3 from '../../sounds/channelOpenSet1_001_muffled_mp3.js';
-import channelOpenSet1_002_mp3 from '../../sounds/channelOpenSet1_002_mp3.js';
-import channelOpenSet1_002_muffled_mp3 from '../../sounds/channelOpenSet1_002_muffled_mp3.js';
-import channelOpenSet1_003_mp3 from '../../sounds/channelOpenSet1_003_mp3.js';
-import channelOpenSet1_003_muffled_mp3 from '../../sounds/channelOpenSet1_003_muffled_mp3.js';
-import channelOpenSet1_004_mp3 from '../../sounds/channelOpenSet1_004_mp3.js';
-import channelOpenSet1_004_muffled_mp3 from '../../sounds/channelOpenSet1_004_muffled_mp3.js';
-import channelOpenSet2_001_mp3 from '../../sounds/channelOpenSet2_001_mp3.js';
-import channelOpenSet2_001_muffled_mp3 from '../../sounds/channelOpenSet2_001_muffled_mp3.js';
-import channelOpenSet2_002_mp3 from '../../sounds/channelOpenSet2_002_mp3.js';
-import channelOpenSet2_002_muffled_mp3 from '../../sounds/channelOpenSet2_002_muffled_mp3.js';
-import channelOpenSet2_003_mp3 from '../../sounds/channelOpenSet2_003_mp3.js';
-import channelOpenSet2_003_muffled_mp3 from '../../sounds/channelOpenSet2_003_muffled_mp3.js';
-import channelOpenSet2_004_mp3 from '../../sounds/channelOpenSet2_004_mp3.js';
-import channelOpenSet2_004_muffled_mp3 from '../../sounds/channelOpenSet2_004_muffled_mp3.js';
 import mtGlucoseActivateTransporter_mp3 from '../../sounds/mtGlucoseActivateTransporter_mp3.js';
 import mtKPlusAttach_mp3 from '../../sounds/mtKPlusAttach_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
@@ -87,68 +63,21 @@ const CHANNEL_SOUND_OPTIONS: SoundClipOptions = { initialOutputLevel: 0.18 };
 
 // Define specific types for channel identifiers and sound sets
 type ChannelType = 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel';
-type SoundSetKey = '1' | '2' | '1muffled' | '2muffled';
-type ChannelAction = 'open' | 'close';
-
-// Define the structure for the channel sounds object
-type ChannelSoundMap = Record<SoundSetKey, Record<ChannelAction, Record<ChannelType, SoundClip>>>;
 
 // Create the channel sounds object literal
-const channelSounds: ChannelSoundMap = {
+const channelSounds = {
   1: {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
-    },
-    close: {
       sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
-    }
-  },
-  2: {
-    open: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
+      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_002_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
-    }
-  },
-  '1muffled': {
-    open: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
-    },
-    close: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
-    }
-  },
-  '2muffled': {
-    open: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
-    },
-    close: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_001_mp3, CHANNEL_SOUND_OPTIONS )
     }
   }
 };
@@ -246,33 +175,29 @@ export default class MembraneTransportSounds {
 
   /**
    * Plays the sound for a channel opening.
-   * The specific sound depends on the channel type and the `soundChannelOpenCloseSet` query parameter.
    */
   public static channelOpened( type: ChannelType ): void {
 
-    const set = MembraneTransportQueryParameters.soundChannelOpenCloseSet as SoundSetKey;
-    const sound = channelSounds[ set ].open[ type ];
+    const sound = channelSounds[ '1' ].open[ type ];
 
     if ( !sound ) {
       // Should not happen if the channelSounds object is correctly defined and types match
-      throw new Error( `Sound not found for opening channel type: ${type} with set: ${set}` );
+      throw new Error( `Sound not found for opening channel type: ${type} with set: ${1}` );
     }
     sound.play();
   }
 
   /**
    * Plays the sound for a channel closing.
-   * The specific sound depends on the channel type and the `soundChannelOpenCloseSet` query parameter.
    */
   public static channelClosed( type: ChannelType ): void {
 
-    const set = MembraneTransportQueryParameters.soundChannelOpenCloseSet as SoundSetKey;
-    const sound = channelSounds[ set ].close[ type ];
+    const sound = channelSounds[ '1' ].close[ type ];
 
     if ( !sound ) {
 
       // Should not happen if the channelSounds object is correctly defined and types match
-      throw new Error( `Sound not found for closing channel type: ${type} with set: ${set}` );
+      throw new Error( `Sound not found for closing channel type: ${type} with set: ${1}` );
     }
     sound.play();
   }
