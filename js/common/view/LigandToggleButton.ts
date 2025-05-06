@@ -53,7 +53,7 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
 
     // TODO (JG): High level API for context responses? See https://github.com/phetsims/membrane-transport/issues/10
     // Add accessible responses when the button is pressed, in the same way we do for sound effects.
-    this.buttonModel.produceSoundEmitter.addListener( () => {
+    this.buttonModel.fireCompleteEmitter.addListener( () => {
       if ( model.areLigandsAddedProperty.value ) {
         this.addAccessibleResponse( MembraneTransportMessages.ligandToggleButtonAddedContextResponseMessageProperty );
       }
