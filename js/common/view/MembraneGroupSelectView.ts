@@ -158,10 +158,10 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               // Only call this method if there is a transport protein
               const getContentsString = () => {
                 const transportProteinType = this.getSlotForIndex( newIndex ).transportProteinType;
-                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType ).value; // TODO (SR): i18n "empty" https://github.com/phetsims/membrane-transport/issues/103 - notes in #103 supercede this TODO
+                const contentsString = transportProteinType === null ? 'empty' : getBriefProteinName( transportProteinType ).value; // TODO (SR): i18n "empty" https://github.com/phetsims/membrane-transport/issues/155
                 return contentsString;
               };
-              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`; // TODO (SR): i18n "Slot" https://github.com/phetsims/membrane-transport/issues/103 - notes in #103 supercede this TODO
+              const message = newIndex === SLOT_COUNT ? 'Off membrane' : `Slot ${newIndex + 1} of ${SLOT_COUNT}, ${getContentsString()}`; // TODO (SR): i18n "Slot" https://github.com/phetsims/membrane-transport/issues/155
               this.alert( message );
             }
           }
