@@ -132,6 +132,7 @@ export default class MembraneTransportModel extends PhetioObject {
     this.resetEmitter.addListener( () => this.selectedSoluteProperty.reset() );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
+      validValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],
       tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),
       phetioFeatured: true
     } );
