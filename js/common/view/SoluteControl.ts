@@ -24,6 +24,7 @@ import MembraneTransportMessages from '../../strings/MembraneTransportMessages.j
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
+import ConcentrationSliderSoundGenerator from './ConcentrationSliderSoundGenerator.js';
 import createParticleNode from './particles/createParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -89,6 +90,8 @@ export default class SoluteControl extends Panel {
         );
       } );
 
+    // Play sounds based on the userControlledCountProperty rather than the actualCountPerSideProperty, so we don't create
+    // a sound when a solute diffuses across the membrane.
     userControlledCountProperty.lazyLink( ( value, oldValue ) => {
       const difference = value - oldValue;
       assert && assert( difference !== 0, 'Difference is 0' );
@@ -96,13 +99,34 @@ export default class SoluteControl extends Panel {
 
         // We need to add solutes to the outside of the membrane
         model.addSolutes( soluteType, side, difference );
+
+        // TODO: The userControlledCount drifts, since the range mutates, see above, see https://github.com/phetsims/membrane-transport/issues/111
+        soundGenerator.playSoundForValueChange( value, oldValue );
       }
       else if ( difference < 0 ) {
 
         // We need to remove solutes from the outside of the membrane
         model.removeSolutes( soluteType, side, -difference );
+
+        soundGenerator.playSoundForValueChange( value, oldValue );
       }
     } );
+
+    // TODO: Remove for https://github.com/phetsims/membrane-transport/issues/111
+    // Sounds are based on the actual amount on the side
+    // actualCountPerSideProperty.lazyLink( ( value, oldValue ) => {
+    //   const difference = value - oldValue;
+    //   assert && assert( difference !== 0, 'Difference is 0' );
+    //   if ( difference > 0 ) {
+    //
+    //     // We need to add solutes to the outside of the membrane
+    //     soundGenerator.playSoundForValueChange( value, oldValue );
+    //   }
+    //   else if ( difference < 0 ) {
+    //
+    //     soundGenerator.playSoundForValueChange( value, oldValue );
+    //   }
+    // } );
 
     const qualitativeCountProperty = new DerivedProperty( [ actualCountPerSideProperty ], actualCount => {
       return actualCount === 0 ? 'none' :
@@ -117,6 +141,8 @@ export default class SoluteControl extends Panel {
       soluteType: model.selectedSoluteProperty
     } );
 
+    const soundGenerator = new ConcentrationSliderSoundGenerator( actualCountPerSideProperty, new Range( 0, 50 ) );
+
     const spinner = new FineCoarseSpinner( userControlledCountProperty, {
       deltaFine: fineDelta,
       deltaCoarse: coarseDelta,
@@ -125,6 +151,12 @@ export default class SoluteControl extends Panel {
         // Custom icon will be added later
         opacity: 0,
         tandem: Tandem.OPT_OUT
+      },
+
+      // Sounds played above
+      arrowsSoundPlayer: {
+        play: () => {/*no-op*/},
+        stop: () => {/*no-op*/}
       },
       accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
                       MembraneTransportMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
