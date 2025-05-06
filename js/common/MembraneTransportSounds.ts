@@ -22,38 +22,38 @@ import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOn
 import mtActiveTransporterRockOrOpen_mp3 from '../../sounds/mtActiveTransporterRockOrOpen_mp3.js';
 import mtActiveTransporterSuccessChord_mp3 from '../../sounds/mtActiveTransporterSuccessChord_mp3.js';
 import mtATPActivateTransporter_mp3 from '../../sounds/mtATPActivateTransporter_mp3.js';
-import mtChannelCloseSet1_001_mp3 from '../../sounds/mtChannelCloseSet1_001_mp3.js';
-import mtChannelCloseSet1_001_muffled_mp3 from '../../sounds/mtChannelCloseSet1_001_muffled_mp3.js';
-import mtChannelCloseSet1_002_mp3 from '../../sounds/mtChannelCloseSet1_002_mp3.js';
-import mtChannelCloseSet1_002_muffled_mp3 from '../../sounds/mtChannelCloseSet1_002_muffled_mp3.js';
-import mtChannelCloseSet1_003_mp3 from '../../sounds/mtChannelCloseSet1_003_mp3.js';
-import mtChannelCloseSet1_003_muffled_mp3 from '../../sounds/mtChannelCloseSet1_003_muffled_mp3.js';
-import mtChannelCloseSet1_004_mp3 from '../../sounds/mtChannelCloseSet1_004_mp3.js';
-import mtChannelCloseSet1_004_muffled_mp3 from '../../sounds/mtChannelCloseSet1_004_muffled_mp3.js';
-import mtChannelCloseSet2_001_mp3 from '../../sounds/mtChannelCloseSet2_001_mp3.js';
-import mtChannelCloseSet2_001_muffled_mp3 from '../../sounds/mtChannelCloseSet2_001_muffled_mp3.js';
-import mtChannelCloseSet2_002_mp3 from '../../sounds/mtChannelCloseSet2_002_mp3.js';
-import mtChannelCloseSet2_002_muffled_mp3 from '../../sounds/mtChannelCloseSet2_002_muffled_mp3.js';
-import mtChannelCloseSet2_003_mp3 from '../../sounds/mtChannelCloseSet2_003_mp3.js';
-import mtChannelCloseSet2_003_muffled_mp3 from '../../sounds/mtChannelCloseSet2_003_muffled_mp3.js';
-import mtChannelCloseSet2_004_mp3 from '../../sounds/mtChannelCloseSet2_004_mp3.js';
-import mtChannelCloseSet2_004_muffled_mp3 from '../../sounds/mtChannelCloseSet2_004_muffled_mp3.js';
-import mtChannelOpenSet1_001_mp3 from '../../sounds/mtChannelOpenSet1_001_mp3.js';
-import mtChannelOpenSet1_001_muffled_mp3 from '../../sounds/mtChannelOpenSet1_001_muffled_mp3.js';
-import mtChannelOpenSet1_002_mp3 from '../../sounds/mtChannelOpenSet1_002_mp3.js';
-import mtChannelOpenSet1_002_muffled_mp3 from '../../sounds/mtChannelOpenSet1_002_muffled_mp3.js';
-import mtChannelOpenSet1_003_mp3 from '../../sounds/mtChannelOpenSet1_003_mp3.js';
-import mtChannelOpenSet1_003_muffled_mp3 from '../../sounds/mtChannelOpenSet1_003_muffled_mp3.js';
-import mtChannelOpenSet1_004_mp3 from '../../sounds/mtChannelOpenSet1_004_mp3.js';
-import mtChannelOpenSet1_004_muffled_mp3 from '../../sounds/mtChannelOpenSet1_004_muffled_mp3.js';
-import mtChannelOpenSet2_001_mp3 from '../../sounds/mtChannelOpenSet2_001_mp3.js';
-import mtChannelOpenSet2_001_muffled_mp3 from '../../sounds/mtChannelOpenSet2_001_muffled_mp3.js';
-import mtChannelOpenSet2_002_mp3 from '../../sounds/mtChannelOpenSet2_002_mp3.js';
-import mtChannelOpenSet2_002_muffled_mp3 from '../../sounds/mtChannelOpenSet2_002_muffled_mp3.js';
-import mtChannelOpenSet2_003_mp3 from '../../sounds/mtChannelOpenSet2_003_mp3.js';
-import mtChannelOpenSet2_003_muffled_mp3 from '../../sounds/mtChannelOpenSet2_003_muffled_mp3.js';
-import mtChannelOpenSet2_004_mp3 from '../../sounds/mtChannelOpenSet2_004_mp3.js';
-import mtChannelOpenSet2_004_muffled_mp3 from '../../sounds/mtChannelOpenSet2_004_muffled_mp3.js';
+import channelCloseSet1_001_mp3 from '../../sounds/channelCloseSet1_001_mp3.js';
+import channelCloseSet1_001_muffled_mp3 from '../../sounds/channelCloseSet1_001_muffled_mp3.js';
+import channelCloseSet1_002_mp3 from '../../sounds/channelCloseSet1_002_mp3.js';
+import channelCloseSet1_002_muffled_mp3 from '../../sounds/channelCloseSet1_002_muffled_mp3.js';
+import channelCloseSet1_003_mp3 from '../../sounds/channelCloseSet1_003_mp3.js';
+import channelCloseSet1_003_muffled_mp3 from '../../sounds/channelCloseSet1_003_muffled_mp3.js';
+import channelCloseSet1_004_mp3 from '../../sounds/channelCloseSet1_004_mp3.js';
+import channelCloseSet1_004_muffled_mp3 from '../../sounds/channelCloseSet1_004_muffled_mp3.js';
+import channelCloseSet2_001_mp3 from '../../sounds/channelCloseSet2_001_mp3.js';
+import channelCloseSet2_001_muffled_mp3 from '../../sounds/channelCloseSet2_001_muffled_mp3.js';
+import channelCloseSet2_002_mp3 from '../../sounds/channelCloseSet2_002_mp3.js';
+import channelCloseSet2_002_muffled_mp3 from '../../sounds/channelCloseSet2_002_muffled_mp3.js';
+import channelCloseSet2_003_mp3 from '../../sounds/channelCloseSet2_003_mp3.js';
+import channelCloseSet2_003_muffled_mp3 from '../../sounds/channelCloseSet2_003_muffled_mp3.js';
+import channelCloseSet2_004_mp3 from '../../sounds/channelCloseSet2_004_mp3.js';
+import channelCloseSet2_004_muffled_mp3 from '../../sounds/channelCloseSet2_004_muffled_mp3.js';
+import channelOpenSet1_001_mp3 from '../../sounds/channelOpenSet1_001_mp3.js';
+import channelOpenSet1_001_muffled_mp3 from '../../sounds/channelOpenSet1_001_muffled_mp3.js';
+import channelOpenSet1_002_mp3 from '../../sounds/channelOpenSet1_002_mp3.js';
+import channelOpenSet1_002_muffled_mp3 from '../../sounds/channelOpenSet1_002_muffled_mp3.js';
+import channelOpenSet1_003_mp3 from '../../sounds/channelOpenSet1_003_mp3.js';
+import channelOpenSet1_003_muffled_mp3 from '../../sounds/channelOpenSet1_003_muffled_mp3.js';
+import channelOpenSet1_004_mp3 from '../../sounds/channelOpenSet1_004_mp3.js';
+import channelOpenSet1_004_muffled_mp3 from '../../sounds/channelOpenSet1_004_muffled_mp3.js';
+import channelOpenSet2_001_mp3 from '../../sounds/channelOpenSet2_001_mp3.js';
+import channelOpenSet2_001_muffled_mp3 from '../../sounds/channelOpenSet2_001_muffled_mp3.js';
+import channelOpenSet2_002_mp3 from '../../sounds/channelOpenSet2_002_mp3.js';
+import channelOpenSet2_002_muffled_mp3 from '../../sounds/channelOpenSet2_002_muffled_mp3.js';
+import channelOpenSet2_003_mp3 from '../../sounds/channelOpenSet2_003_mp3.js';
+import channelOpenSet2_003_muffled_mp3 from '../../sounds/channelOpenSet2_003_muffled_mp3.js';
+import channelOpenSet2_004_mp3 from '../../sounds/channelOpenSet2_004_mp3.js';
+import channelOpenSet2_004_muffled_mp3 from '../../sounds/channelOpenSet2_004_muffled_mp3.js';
 import mtGlucoseActivateTransporter_mp3 from '../../sounds/mtGlucoseActivateTransporter_mp3.js';
 import mtKPlusAttach_mp3 from '../../sounds/mtKPlusAttach_mp3.js';
 import mtLigandsStickv3_mp3 from '../../sounds/mtLigandsStickv3_mp3.js';
@@ -97,58 +97,58 @@ type ChannelSoundMap = Record<SoundSetKey, Record<ChannelAction, Record<ChannelT
 const channelSounds: ChannelSoundMap = {
   1: {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_004_mp3, CHANNEL_SOUND_OPTIONS )
     }
   },
   2: {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_001_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_002_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_004_mp3, CHANNEL_SOUND_OPTIONS )
     }
   },
   '1muffled': {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     }
   },
   '2muffled': {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelOpenSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelOpenSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( mtChannelCloseSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( mtChannelCloseSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_001_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_002_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_003_muffled_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_004_muffled_mp3, CHANNEL_SOUND_OPTIONS )
     }
   }
 };
