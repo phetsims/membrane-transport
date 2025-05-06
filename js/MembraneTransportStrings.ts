@@ -80,12 +80,15 @@ type StringsType = {
             'accessibleHelpTextStringProperty': LocalizedStringProperty;
             'negative70RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
+              'accessibleContextResponseStringProperty': LocalizedStringProperty;
             };
             'negative50RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
+              'accessibleContextResponseStringProperty': LocalizedStringProperty;
             };
             'positive30RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
+              'accessibleContextResponseStringProperty': LocalizedStringProperty;
             }
           }
         };

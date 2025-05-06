@@ -24,7 +24,8 @@ export default class MembranePotentialPanel extends Panel {
       createNode: tandem => new Text( '-70' ),
       tandemName: 'negative70RadioButton',
       options: {
-        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
+        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty,
+        accessibleContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleContextResponseStringProperty
       }
     },
       {
@@ -32,7 +33,8 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '-50' ),
         tandemName: 'negative50RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty,
+          accessibleContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleContextResponseStringProperty
         }
       },
       {
@@ -40,7 +42,8 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '+30' ),
         tandemName: 'positive30RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty,
+          accessibleContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleContextResponseStringProperty
         }
       } ], {
       orientation: 'horizontal',

@@ -154,16 +154,25 @@
             "negative70RadioButton": {
               "accessibleName": {
                 "value": "negative 70 millivolts"
+              },
+              "accessibleContextResponse": {
+                "value": "Positive outside and negative inside; signs densely packed along membrane."
               }
             },
             "negative50RadioButton": {
               "accessibleName": {
                 "value": "negative 50 millivolts"
+              },
+              "accessibleContextResponse": {
+                "value": "Positive outside and negative inside; signs lightly packed along membrane."
               }
             },
             "positive30RadioButton": {
               "accessibleName": {
                 "value": "positive 30 millivolts"
+              },
+              "accessibleContextResponse": {
+                "value": "Negative outside and positive inside; signs sparse along membrane."
               }
             }
           }
