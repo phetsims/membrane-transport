@@ -38,7 +38,7 @@ export default class SoluteControl extends Panel {
   public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside',
                       tandem: Tandem, providedOptions: SoluteControlOptions ) {
 
-    const visibleProperty = new DerivedProperty( [ model.selectedSoluteProperty ], selectedSolute => {
+    const visibleProperty = new DerivedProperty( [ model.soluteProperty ], selectedSolute => {
       return soluteType === selectedSolute;
     } );
 
@@ -138,7 +138,7 @@ export default class SoluteControl extends Panel {
 
     const objectResponseMessageProperty = new PatternMessageProperty( MembraneTransportMessages.soluteSpinnerObjectResponsePatternMessageProperty, {
       amount: qualitativeCountProperty,
-      soluteType: model.selectedSoluteProperty
+      soluteType: model.soluteProperty
     } );
 
     const soundGenerator = new ConcentrationSliderSoundGenerator( actualCountPerSideProperty, new Range( 0, 50 ) );

@@ -78,7 +78,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
   public readonly transportProteinCountProperty = new NumberProperty( 0 );
 
-  public readonly selectedSoluteProperty: StringUnionProperty<SoluteType>;
+  public readonly soluteProperty: StringUnionProperty<SoluteType>;
 
   public readonly isShowingSignsProperty: Property<boolean>;
   public readonly membraneVoltagePotentialProperty: Property<( -70 ) | -50 | 30>;
@@ -124,12 +124,12 @@ export default class MembraneTransportModel extends PhetioObject {
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
     this.slots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
-    this.selectedSoluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
+    this.soluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
-      tandem: providedOptions.tandem.createTandem( 'selectedSoluteProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'soluteProperty' ),
       phetioFeatured: true
     } );
-    this.resetEmitter.addListener( () => this.selectedSoluteProperty.reset() );
+    this.resetEmitter.addListener( () => this.soluteProperty.reset() );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       validValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],

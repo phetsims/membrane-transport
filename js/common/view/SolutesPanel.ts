@@ -25,7 +25,7 @@ import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToR
 import createParticleNode from './particles/createParticleNode.js';
 
 export default class SolutesPanel extends Node {
-  public constructor( featureSet: MembraneTransportFeatureSet, selectedSoluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+  public constructor( featureSet: MembraneTransportFeatureSet, soluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();
 
     const title = new VoicingText( MembraneTransportStrings.solutesStringProperty, {
@@ -39,7 +39,7 @@ export default class SolutesPanel extends Node {
       return soluteType !== 'phosphate' && soluteType !== 'adp';
     } );
 
-    const soluteRadioButtonGroup = new RectangularRadioButtonGroup( selectedSoluteProperty, soluteTypes.map( soluteType => {
+    const soluteRadioButtonGroup = new RectangularRadioButtonGroup( soluteProperty, soluteTypes.map( soluteType => {
       return {
         value: soluteType,
         tandemName: soluteTypeToRadioButtonTandemName( soluteType ),

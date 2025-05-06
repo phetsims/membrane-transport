@@ -167,7 +167,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const soluteControlsTandem = options.tandem.createTandem( 'soluteControls' );
 
-    const solutesPanel = new SolutesPanel( model.featureSet, model.selectedSoluteProperty, {
+    const solutesPanel = new SolutesPanel( model.featureSet, model.soluteProperty, {
       tandem: soluteControlsTandem.createTandem( 'solutesPanel' ),
       centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
       top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
