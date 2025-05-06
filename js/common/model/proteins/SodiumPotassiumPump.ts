@@ -34,7 +34,8 @@ type SodiumPotassiumPumpState =
   'openToInsideSodiumBoundPhosphateSiteClosed' |  // Got the sodium ions, waiting for the phosphate from ATP
   'openToInsideSodiumBoundPhosphateSiteOpen' |  // Got the sodium ions, waiting for the phosphate from ATP
   'openToInsideSodiumAndPhosphateBound' | // Got the sodium ions and the phosphate, a short delay before opening to the outside
-  'openToOutside'; // waiting for the potassium
+  'openToOutsideAwaitingPotassium' |
+  'openToOutsidePotassiumBound'; // waiting for the potassium
 
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
@@ -186,9 +187,10 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
         this.openUpward();
       }
     }
-    else if ( this.stateProperty.value === 'openToOutside' ) {
-
-      //
+    else if ( this.stateProperty.value === 'openToOutsidePotassiumBound' ) {
+      if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
+        this.openDownward();
+      }
     }
   }
 
@@ -204,7 +206,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
-    this.stateProperty.value = 'openToOutside';
+    this.stateProperty.value = 'openToOutsideAwaitingPotassium';
 
     // Move solutes through the open sodium potassium pump
     sodium1!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
@@ -212,7 +214,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     sodium3!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
   }
 
-  // Open upward, letting sodium go outside the cell
+  // Open downward, letting potassium go into the cell
   public openDownward(): void {
 
     const potassium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&

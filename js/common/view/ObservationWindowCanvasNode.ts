@@ -144,7 +144,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       }
 
       // Potassium rotates 20 degrees when it is in the sodium potassium pump, and the pump is open to the outside.
-      const rotate = solute.type === 'phosphate' && solute.mode.type === 'waitingInSodiumPotassiumPump' && solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutside';
+      const rotate = solute.type === 'phosphate' && solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+                     ( solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' || solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsidePotassiumBound' );
 
       // Draw the image centered at the position.
       if ( rotate ) {

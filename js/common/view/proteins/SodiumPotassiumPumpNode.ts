@@ -32,13 +32,14 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
                       state === 'openToInsideSodiumBoundPhosphateSiteClosed' ? naKPumpState1_svg :
                       state === 'openToInsideSodiumBoundPhosphateSiteOpen' ? naKPumpState2_svg :
                       state === 'openToInsideSodiumAndPhosphateBound' ? naKPumpState2_svg :
-                      state === 'openToOutside' ? naKPumpState3_svg :
+                      state === 'openToOutsideAwaitingPotassium' ? naKPumpState3_svg :
+                      state === 'openToOutsidePotassiumBound' ? naKPumpState3_svg :
                       ( () => { throw new Error( 'Invalid state' ); } )();
       } );
 
       sodiumPotassiumPump.stateProperty.lazyLink( state => {
 
-        if ( state === 'openToInsideEmpty' || state === 'openToOutside' ) {
+        if ( state === 'openToInsideEmpty' || state === 'openToOutsideAwaitingPotassium' ) {
           MembraneTransportSounds.activeTransporterRockedAndSuccess();
         }
 

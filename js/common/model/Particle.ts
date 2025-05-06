@@ -486,7 +486,7 @@ export default class Particle<T extends ParticleType> {
           sodiumPotassiumPump.stateProperty.value = 'openToInsideSodiumAndPhosphateBound';
           MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
         }
-        else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutside' ) {
+        else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ) {
           this.mode = {
             type: 'waitingInSodiumPotassiumPump',
             slot: this.mode.slot,
@@ -500,7 +500,7 @@ export default class Particle<T extends ParticleType> {
           MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
 
           if ( sodiumPotassiumPump.getNumberOfFilledPotassiumSites() === 2 ) {
-            sodiumPotassiumPump.openDownward();
+            sodiumPotassiumPump.stateProperty.value = 'openToOutsidePotassiumBound';
           }
         }
       }
@@ -1032,7 +1032,7 @@ export default class Particle<T extends ParticleType> {
       this.type === 'potassiumIon' &&
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
-      transportProtein.stateProperty.value === 'openToOutside' &&
+      transportProtein.stateProperty.value === 'openToOutsideAwaitingPotassium' &&
       this.position.y > 0 && // Only approach from extracellular side
       !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'sodiumIon' ) ) // make sure no sodium still leaving
     ) {
