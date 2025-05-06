@@ -163,6 +163,8 @@ export default class TransportProteinDragNode extends Node {
 
           // Reuse
           this.visible = false;
+          modelBoundsProperty.dispose();
+          this.dispose();
         }
         else {
 
@@ -175,7 +177,11 @@ export default class TransportProteinDragNode extends Node {
           const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
           const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-          const animation = createPositionAnimation( value => positionProperty.set( value ), positionProperty.value, modelPoint, () => {this.visible = false;} );
+          const animation = createPositionAnimation( value => positionProperty.set( value ), positionProperty.value, modelPoint, () => {
+            this.visible = false;
+            modelBoundsProperty.dispose();
+            this.dispose();
+          } );
 
           animation.start();
 
