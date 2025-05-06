@@ -197,7 +197,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
           return;
         }
 
-        ligand.mode = soundDragListener.isOverOrFocusedProperty.value ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
+        // Upon release of a mouse/touch drag, resume random walk. This also allows the ligand to bind if close to a target.
+        ligand.mode = Particle.createRandomWalkMode( true );
 
         // If the ligand is release within the capture radius of a corresponding ligand gated channel, clear the ligand gated channel cooldown so it can immediately bind.
         this.checkAndClearBindingCooldown();

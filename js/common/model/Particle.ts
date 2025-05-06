@@ -378,12 +378,6 @@ export default class Particle<T extends ParticleType> {
     if ( this.mode.type === 'randomWalk' ) {
       this.stepRandomWalk( dt, model );
     }
-    else if ( this.mode.type === 'userOver' ) {
-
-      // When the user releases a ligand near a ligand-gated channel, if the mouse is still over it, it will be in
-      // 'userOver' mode. However, we do want it to be able to bind (if within range).
-      this.attemptProteinInteraction( model, this.position.y > 0 );
-    }
     else if ( this.mode.type === 'ligandBound' ) {
 
       // The LigandGatedChannel is responsible for tracking the time bound, so it can detach after a certain amount of time.
