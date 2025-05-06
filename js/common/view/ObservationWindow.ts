@@ -75,7 +75,7 @@ export default class ObservationWindow extends Node {
     clipNode.addChild( backCanvas );
     this.stepEmitter.addListener( dt => backCanvas.step( dt ) );
 
-    this.slotDragIndicatorNodes = model.slots.map( slot => new SlotDragIndicatorNode( slot, modelViewTransform ) );
+    this.slotDragIndicatorNodes = model.membraneSlots.map( slot => new SlotDragIndicatorNode( slot, modelViewTransform ) );
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => this.addChild( slotDragIndicatorNode ) );
 
     this.transportProteinLayer = new ObservationWindowTransportProteinLayer( model, view, modelViewTransform );
@@ -100,7 +100,7 @@ export default class ObservationWindow extends Node {
         }
 
         const ligandNode = new LigandNode(
-          model.slots,
+          model.membraneSlots,
           model.areLigandsAddedProperty,
           ligand, modelViewTransform,
           ligandViewNode,
@@ -153,7 +153,7 @@ export default class ObservationWindow extends Node {
     } );
     this.addChild( groupSelectContainer );
 
-    this.membraneGroupSelectView = new MembraneGroupSelectView( model.slots, model.featureSet !== 'simpleDiffusion', view, this, groupSelectContainer );
+    this.membraneGroupSelectView = new MembraneGroupSelectView( model.membraneSlots, model.featureSet !== 'simpleDiffusion', view, this, groupSelectContainer );
   }
 
   public getTransportProteinNodes(): SlottedNode[] {

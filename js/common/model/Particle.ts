@@ -713,8 +713,8 @@ export default class Particle<T extends ParticleType> {
   private attemptProteinInteraction( model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
     const randomWalk = this.mode as RandomWalkMode;
 
-    for ( let i = 0; i < model.slots.length; i++ ) {
-      const slot = model.slots[ i ];
+    for ( let i = 0; i < model.membraneSlots.length; i++ ) {
+      const slot = model.membraneSlots[ i ];
       const transportProtein = slot.transportProteinProperty.value;
 
       // If the particle is within a certain radial distance from the center of the transport protein, it can interact

@@ -100,7 +100,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
   public readonly areLigandsAddedProperty: BooleanProperty;
 
-  public readonly slots: Slot[];
+  public readonly membraneSlots: Slot[];
   public readonly soluteCrossedMembraneEmitter = new Emitter<[ Particle<IntentionalAny>, 'outward' | 'inward' ]>( {
     parameters: [
       { valueType: Particle },
@@ -122,7 +122,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
     const parentTandem = featureSet === 'simpleDiffusion' ? Tandem.OPT_OUT : options.tandem.createTandem( 'membraneSlots' );
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
-    this.slots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
+    this.membraneSlots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
     this.soluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
       validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
@@ -181,12 +181,12 @@ export default class MembraneTransportModel extends PhetioObject {
     this.resetEmitter.addListener( () => {
       this.solutes.length = 0;
 
-      this.slots.forEach( slot => {
+      this.membraneSlots.forEach( slot => {
         slot.reset();
       } );
     } );
 
-    this.slots.forEach( slot => slot.transportProteinProperty.link( () => this.updateTransportProteinCounts() ) );
+    this.membraneSlots.forEach( slot => slot.transportProteinProperty.link( () => this.updateTransportProteinCounts() ) );
   }
 
   /**
@@ -262,7 +262,7 @@ export default class MembraneTransportModel extends PhetioObject {
       if ( this.areLigandsAddedProperty.value ) {
         this.ligands.forEach( ligand => ligand.step( dt, this ) );
       }
-      this.slots.forEach( slot => {
+      this.membraneSlots.forEach( slot => {
         if ( slot.transportProteinProperty.value ) {
           slot.transportProteinProperty.value.step( dt );
         }
@@ -348,7 +348,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * Update the transport count based on the number of filled slots.
    */
   private updateTransportProteinCounts(): void {
-    this.transportProteinCountProperty.value = this.slots.filter( slot => slot.isFilled() ).length;
+    this.transportProteinCountProperty.value = this.membraneSlots.filter( slot => slot.isFilled() ).length;
   }
 
   /**
@@ -368,11 +368,11 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   public getLeftmostEmptySlot(): Slot | null {
-    return this.slots.find( slot => !slot.isFilled() ) || null;
+    return this.membraneSlots.find( slot => !slot.isFilled() ) || null;
   }
 
   public getMiddleSlot(): Slot {
-    return this.slots[ Math.floor( this.slots.length / 2 ) ];
+    return this.membraneSlots[ Math.floor( this.membraneSlots.length / 2 ) ];
   }
 
   /**
@@ -396,7 +396,7 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   public getSlotForTransportProtein( transportProtein: TransportProtein ): Slot | null {
-    return this.slots.find( slot => slot.transportProteinProperty.value === transportProtein ) || null;
+    return this.membraneSlots.find( slot => slot.transportProteinProperty.value === transportProtein ) || null;
   }
 
   /**

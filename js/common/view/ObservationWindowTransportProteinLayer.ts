@@ -34,7 +34,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   ) {
     super();
 
-    model.slots.forEach( slot => {
+    model.membraneSlots.forEach( slot => {
       slot.transportProteinProperty.link( ( transportProtein, oldTransportProtein ) => {
 
         if ( oldTransportProtein ) {
@@ -71,7 +71,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
   public getTransportProteinNodes(): SlottedNode[] {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
-      return this.model.slots.indexOf( a.slot ) - this.model.slots.indexOf( b.slot );
+      return this.model.membraneSlots.indexOf( a.slot ) - this.model.membraneSlots.indexOf( b.slot );
     } );
   }
 
