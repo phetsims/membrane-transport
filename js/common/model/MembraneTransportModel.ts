@@ -120,7 +120,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
     super( options );
 
-    const parentTandem = options.tandem.createTandem( 'slots' );
+    const parentTandem = featureSet === 'simpleDiffusion' ? Tandem.OPT_OUT : options.tandem.createTandem( 'slots' );
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
     this.slots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
