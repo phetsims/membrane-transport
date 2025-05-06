@@ -31,7 +31,8 @@ import TransportProteinType from './TransportProteinType.js';
 
 type SodiumPotassiumPumpState =
   'openToInsideEmpty' | // Ready to get sodium ions
-  'openToInsideSodiumBound' |  // Got the sodium ions, waiting for the phosphate from ATP
+  'openToInsideSodiumBoundPhosphateSiteClosed' |  // Got the sodium ions, waiting for the phosphate from ATP
+  'openToInsideSodiumBoundPhosphateSiteOpen' |  // Got the sodium ions, waiting for the phosphate from ATP
   'openToInsideSodiumAndPhosphateBound' | // Got the sodium ions and the phosphate, a short delay before opening to the outside
   'openToOutside'; // waiting for the potassium
 
@@ -172,12 +173,13 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
     if ( this.stateProperty.value === 'openToInsideEmpty' ) {
       if ( sodium1 && sodium2 && sodium3 ) {
-        this.stateProperty.value = 'openToInsideSodiumBound';
+        this.stateProperty.value = 'openToInsideSodiumBoundPhosphateSiteClosed';
       }
     }
-    else if ( this.stateProperty.value === 'openToInsideSodiumBound' ) {
-
-      //
+    else if ( this.stateProperty.value === 'openToInsideSodiumBoundPhosphateSiteClosed' ) {
+      if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
+        this.stateProperty.value = 'openToInsideSodiumBoundPhosphateSiteOpen';
+      }
     }
     else if ( this.stateProperty.value === 'openToInsideSodiumAndPhosphateBound' ) {
       if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {

@@ -29,7 +29,8 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
     if ( sodiumPotassiumPump ) {
       sodiumPotassiumPump.stateProperty.link( state => {
         image.image = state === 'openToInsideEmpty' ? naKPumpState1_svg :
-                      state === 'openToInsideSodiumBound' ? naKPumpState2_svg :
+                      state === 'openToInsideSodiumBoundPhosphateSiteClosed' ? naKPumpState1_svg :
+                      state === 'openToInsideSodiumBoundPhosphateSiteOpen' ? naKPumpState2_svg :
                       state === 'openToInsideSodiumAndPhosphateBound' ? naKPumpState2_svg :
                       state === 'openToOutside' ? naKPumpState3_svg :
                       ( () => { throw new Error( 'Invalid state' ); } )();
@@ -39,6 +40,12 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
 
         if ( state === 'openToInsideEmpty' || state === 'openToOutside' ) {
           MembraneTransportSounds.activeTransporterRockedAndSuccess();
+        }
+
+        if ( state === 'openToInsideSodiumBoundPhosphateSiteOpen' ) {
+
+          // TODO: Pick a better sound or add a sound for this state, see https://github.com/phetsims/membrane-transport/issues/149
+          MembraneTransportSounds.channelOpened( 'sodiumIonLigandGatedChannel' );
         }
       } );
     }
