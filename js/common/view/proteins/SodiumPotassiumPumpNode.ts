@@ -45,7 +45,7 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
 
         if ( state === 'openToInsideSodiumBoundPhosphateSiteOpen' ) {
 
-          // TODO: Pick a better sound or add a sound for this state, see https://github.com/phetsims/membrane-transport/issues/149
+          // TODO: Pick a better sound or add a sound for this state, see https://github.com/phetsims/membrane-transport/issues/162
           MembraneTransportSounds.channelOpened( 'sodiumIonLigandGatedChannel' );
         }
       } );
