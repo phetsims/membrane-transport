@@ -14,6 +14,9 @@ import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
+import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
+import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
+import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
 import channelCloseSet1_001_mp3 from '../../sounds/channelCloseSet1_001_mp3.js';
 import channelCloseSet1_002_mp3 from '../../sounds/channelCloseSet1_002_mp3.js';
 import channelCloseSet2_001_mp3 from '../../sounds/channelCloseSet2_001_mp3.js';
@@ -27,9 +30,6 @@ import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingM
 import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
 import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
 import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
-import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
-import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
-import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
 import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
 import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
 import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
@@ -96,19 +96,35 @@ const proteinReturnSound = newSoundClip( proteinReturnSound4_mp3, {
 
 const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
-const soluteCrossing001 = newSoundClip( soluteCrossing001_mp3, { initialOutputLevel: 0.6 } );
-const soluteCrossing002 = newSoundClip( soluteCrossing002_mp3, { initialOutputLevel: 0.6 } );
-const soluteCrossing003 = newSoundClip( soluteCrossing003_mp3, { initialOutputLevel: 0.6 } );
-
 // gas particles have a different sound than other solutes, see https://github.com/phetsims/membrane-transport/issues/113
-const soluteCrossing004 = newSoundClip(
+const createSoluteSound004 = () => newSoundClip(
   MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? soluteCrossing004_fm_mp3 : soluteCrossing004_dist_mp3, {
     initialOutputLevel: MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? 0.6 : 0.1
   } );
-const soluteCrossing005 = newSoundClip(
+
+const createSoluteSound005 = () => newSoundClip(
   MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? soluteCrossing005_fm_mp3 : soluteCrossing005_dist_mp3, {
     initialOutputLevel: MembraneTransportQueryParameters.gasCrossingSound === 'fm' ? 0.6 : 0.1
   } );
+
+const soluteCrossing001 = newSoundClip( soluteCrossing001_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing002 = newSoundClip( soluteCrossing002_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing003 = newSoundClip( soluteCrossing003_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing004 = createSoluteSound004();
+const soluteCrossing005 = createSoluteSound005();
+
+const soluteCrossing001High = newSoundClip( soluteCrossing001_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing002High = newSoundClip( soluteCrossing002_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing003High = newSoundClip( soluteCrossing003_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing004High = createSoluteSound004();
+const soluteCrossing005High = createSoluteSound005();
+
+// Higher pitch by one octave when leaving the cell. Separate audio sound so an inward one and outward one can be played at the same time, without pitch bending.
+soluteCrossing001High.setPlaybackRate( 2 );
+soluteCrossing002High.setPlaybackRate( 2 );
+soluteCrossing003High.setPlaybackRate( 2 );
+soluteCrossing004High.setPlaybackRate( 2 );
+soluteCrossing005High.setPlaybackRate( 2 );
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
@@ -167,14 +183,17 @@ export default class MembraneTransportSounds {
     type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'triangleLigand' | 'starLigand',
     direction: 'inward' | 'outward' ): void {
 
-    const sound = type === 'oxygen' ? soluteCrossing005 :
-                  type === 'carbonDioxide' ? soluteCrossing004 :
-                  type === 'sodiumIon' ? soluteCrossing003 :
-                  type === 'potassiumIon' ? soluteCrossing002 :
-                  soluteCrossing001;
-
-    // if going outward, increase the frequency one octave
-    sound.setPlaybackRate( direction === 'outward' ? 2 : 1 );
+    const sound = direction === 'inward' ?
+                  ( type === 'oxygen' ? soluteCrossing005 :
+                    type === 'carbonDioxide' ? soluteCrossing004 :
+                    type === 'sodiumIon' ? soluteCrossing003 :
+                    type === 'potassiumIon' ? soluteCrossing002 :
+                    soluteCrossing001 ) :
+                  ( type === 'oxygen' ? soluteCrossing005High :
+                    type === 'carbonDioxide' ? soluteCrossing004High :
+                    type === 'sodiumIon' ? soluteCrossing003High :
+                    type === 'potassiumIon' ? soluteCrossing002High :
+                    soluteCrossing001High );
 
     sound.play();
   }
