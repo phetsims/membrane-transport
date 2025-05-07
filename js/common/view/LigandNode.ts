@@ -13,6 +13,8 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
+import LocalizedMessageProperty from '../../../../chipper/js/browser/LocalizedMessageProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -31,6 +33,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -84,6 +87,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     modelViewTransform: ModelViewTransform2,
     ligandView: LigandParticleNode,
     focusable: boolean,
+    transportProteinCountProperty: TProperty<number>,
     tandem: Tandem,
     observationWindow: Node
   ) {
@@ -419,7 +423,17 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
         // The grab and release alerts are handled by the logic in onGrab and onRelease.
         createReleasedResponse: () => null,
-        createGrabbedResponse: () => null
+        createGrabbedResponse: () => {
+
+          // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
+          // TODO: Why do we need to declare this type? https://github.com/phetsims/membrane-transport/issues/45
+          const patternMessageProperty: LocalizedMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportMessages.grabbedLigandResponseWithEmptyMembraneHintPatternMessageProperty :
+                                                                   grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportMessages.grabbedLigandResponsePatternMessageProperty :
+                                                                   MembraneTransportMessages.grabbedLigandResponseWithHintPatternMessageProperty;
+          return FluentUtils.formatMessage( patternMessageProperty, {
+            proteinCount: transportProteinCountProperty
+          } );
+        }
       } );
 
       // Remove the help text once there has been a successful grab.

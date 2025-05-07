@@ -132,3 +132,8 @@ grabbedProteinResponseWithHintPattern = { grabbedProteinResponsePattern } Move p
 ligandToggleButtonAccessibleHelpText = Add or remove triangle- and star-shaped ligands to outside area of cell.
 ligandToggleButtonAddedContextResponse = Ligands flood outside area.
 ligandToggleButtonRemovedContextResponse = Ligands removed.
+
+# Spoken when a ligand is grabbed.
+grabbedLigandResponsePattern = Grabbed. Outside, {$proteinCount} Proteins in Membrane.
+grabbedLigandResponseWithHintPattern = { grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release.
+grabbedLigandResponseWithEmptyMembraneHintPattern = { grabbedLigandResponsePattern } Space to release. Add transport proteins.
