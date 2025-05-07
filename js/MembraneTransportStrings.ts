@@ -47,6 +47,19 @@ type StringsType = {
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
   'soluteConcentrationsStringProperty': LocalizedStringProperty;
   'a11y': {
+    'summary': {
+      'playAreaSummaryIntroStringProperty': LocalizedStringProperty;
+      'playAreaSummarySolutesStringProperty': LocalizedStringProperty;
+      'playAreaSummaryProteinsStringProperty': LocalizedStringProperty;
+      'playAreaSummaryVoltagePotentialStringProperty': LocalizedStringProperty;
+      'playAreaSummaryBarChartsStringProperty': LocalizedStringProperty;
+      'playAreaSummaryScreen1StringProperty': LocalizedStringProperty;
+      'playAreaSummaryScreen2and4StringProperty': LocalizedStringProperty;
+      'playAreaSummaryScreen3StringProperty': LocalizedStringProperty;
+      'controlAreaSummaryStringProperty': LocalizedStringProperty;
+      'interactionHintStringProperty': LocalizedStringProperty;
+      'interactionHintWithTransportProteinsStringProperty': LocalizedStringProperty;
+    };
     'observationWindow': {
       'membrane': {
         'accessibleNameStringProperty': LocalizedStringProperty;

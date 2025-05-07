@@ -7,11 +7,13 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -79,18 +81,24 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     super( {
 
       // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in. See https://github.com/phetsims/membrane-transport/issues/91
-      playAreaContent: new PatternMessageProperty( model.featureSet === 'simpleDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen1MessageProperty :
-                                                   model.featureSet === 'facilitatedDiffusion' ? MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty :
-                                                   model.featureSet === 'activeTransport' ? MembraneTransportMessages.playAreaSummaryScreen3MessageProperty :
-                                                   MembraneTransportMessages.playAreaSummaryScreen2and4MessageProperty, {}
+      playAreaContent: new PatternStringProperty( model.featureSet === 'simpleDiffusion' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen1StringProperty :
+                                                  model.featureSet === 'facilitatedDiffusion' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen2and4StringProperty :
+                                                  model.featureSet === 'activeTransport' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen3StringProperty :
+                                                  MembraneTransportStrings.a11y.summary.playAreaSummaryScreen2and4StringProperty, {
+          playAreaSummaryIntro: MembraneTransportStrings.a11y.summary.playAreaSummaryIntroStringProperty,
+          playAreaSummarySolutes: MembraneTransportStrings.a11y.summary.playAreaSummarySolutesStringProperty,
+          playAreaSummaryProteins: MembraneTransportStrings.a11y.summary.playAreaSummaryProteinsStringProperty,
+          playAreaSummaryVoltagePotential: MembraneTransportStrings.a11y.summary.playAreaSummaryVoltagePotentialStringProperty,
+          playAreaSummaryBarCharts: MembraneTransportStrings.a11y.summary.playAreaSummaryBarChartsStringProperty
+        }
       ),
-      controlAreaContent: MembraneTransportMessages.controlAreaSummaryMessageProperty,
+      controlAreaContent: MembraneTransportStrings.a11y.summary.controlAreaSummaryStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode
       },
 
-      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportMessages.interactionHintMessageProperty :
-                              MembraneTransportMessages.interactionHintWithTransportProteinsMessageProperty
+      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportStrings.a11y.summary.interactionHintStringProperty :
+                              MembraneTransportStrings.a11y.summary.interactionHintWithTransportProteinsStringProperty
     } );
   }
 }
