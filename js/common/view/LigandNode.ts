@@ -323,8 +323,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
         objectToGrabString: this.getLigandTypeName(),
 
-        // TODO: Rename this to accessibleHelpText, https://github.com/phetsims/scenery-phet/issues/916
-        keyboardHelpText: MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty,
+        accessibleHelpText: MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty,
 
         onGrab: () => {
 
@@ -425,14 +424,14 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
       // Remove the help text once there has been a successful grab.
       grabDragInteraction.interactionStateProperty.lazyLink( () => {
-        grabDragInteraction.setKeyboardHelpText( null );
+        grabDragInteraction.setAccessibleHelpText( null );
       } );
 
       this.resetEmitter.addListener( () => {
         grabDragInteraction.reset();
 
         // Restore the help text once the ligand has been picked up.
-        grabDragInteraction.setKeyboardHelpText( MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty );
+        grabDragInteraction.setAccessibleHelpText( MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty );
       } );
     }
 
