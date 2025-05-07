@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Property from '../../../../../axon/js/Property.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
@@ -23,6 +24,9 @@ type SodiumGlucoseCotransporterState = 'openToOutsideAwaitingParticles' | 'openT
 const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
+
+  // The sodium glucose cotransporter is always considered 'closed'
+  public readonly openOrClosedProperty = new Property<'open' | 'closed'>( 'closed' );
 
   private static readonly SODIUM_SITE_LEFT = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,

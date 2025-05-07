@@ -348,8 +348,13 @@ export default class MembraneTransportModel extends PhetioObject {
    * Update the transport count based on the number of filled slots.
    */
   private updateTransportProteinCounts(): void {
-    this.transportProteinCountProperty.value = this.membraneSlots.filter( slot => slot.isFilled() ).length;
+    this.transportProteinCountProperty.value = this.getFilledSlots().length;
   }
+
+  public getFilledSlots(): Slot[] {
+    return this.membraneSlots.filter( slot => slot.isFilled() );
+  }
+
 
   /**
    * Count the number of solutes inside or outside the cell membrane.

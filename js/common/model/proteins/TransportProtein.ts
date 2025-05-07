@@ -11,6 +11,7 @@
 
 import Disposable from '../../../../../axon/js/Disposable.js';
 import Property from '../../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
@@ -31,6 +32,9 @@ export default abstract class TransportProtein<State extends string = Intentiona
 
   // Certain subtypes of TransportProtein have a specific state, such as 'open', 'closed', 'openToInsideEmpty', etc.
   public readonly stateProperty: Property<State>;
+
+  // A convenience Property that describes the overall open vs closed state of the channel.
+  public abstract readonly openOrClosedProperty: TReadOnlyProperty<'open' | 'closed'>;
 
   /**
    * @param model - reference to the containing model, so we can access information like the membrane voltage
@@ -73,6 +77,14 @@ export default abstract class TransportProtein<State extends string = Intentiona
 
   public hasSolutesMovingTowardOrThroughTransportProtein( solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true ) ): boolean {
     return !this.model.isTransportProteinSoluteFree( this.slot, solutePredicate );
+  }
+
+  public isLeakageGatedChannel(): boolean {
+    return this.type === 'potassiumIonLeakageChannel' || this.type === 'sodiumIonLeakageChannel';
+  }
+
+  public isLigandGatedChannel(): boolean {
+    return this.type === 'potassiumIonLigandGatedChannel' || this.type === 'sodiumIonLigandGatedChannel';
   }
 
   /**

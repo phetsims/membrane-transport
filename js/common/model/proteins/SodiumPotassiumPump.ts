@@ -20,6 +20,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Property from '../../../../../axon/js/Property.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
@@ -41,6 +42,9 @@ type SodiumPotassiumPumpState =
 const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
+
+  // The SodiumPotassiumPump is always considered 'closed'
+  public readonly openOrClosedProperty = new Property<'open' | 'closed'>( 'closed' );
 
   private timeSinceStateTransition = 0;
 

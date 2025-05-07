@@ -254,15 +254,41 @@ export default class LigandNode extends InteractiveHighlightingNode {
         const targetSlot = this.slots[ newIndex ];
         const protein = targetSlot?.transportProteinProperty.value;
 
-        const additionalInformation = protein ?
-                                      new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringProperty, { proteinName: getBriefProteinName( protein.type ).value } ) :
-                                      MembraneTransportStrings.a11y.ligandNode.thereIsNoProteinAtThisSlotStringProperty;
+        // The response cares about the protein type, whether the protein is open or closed, the type of binding site for the
+        // ligand (if available).
+        if ( protein ) {
+          const isLeakageChannel = protein.isLeakageGatedChannel();
+          const isLigandGatedChannel = protein.isLigandGatedChannel();
 
-        this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandMovedToSlotPatternStringProperty, {
-          ligandType: this.getLigandTypeName(),
-          slotNumber: newIndex + 1,
-          additionalInformation: additionalInformation
-        } ) );
+          const filledSlots = slots.filter( slot => slot.isFilled() );
+          const index = filledSlots.indexOf( targetSlot ) + 1;
+
+
+          if ( isLeakageChannel ) {
+            this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveLeakageChannelPatternMessageProperty, {
+              type: protein.type,
+              transportProteinCount: transportProteinCountProperty,
+              index: index
+            } ) );
+          }
+          else if ( isLigandGatedChannel ) {
+            this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveLigandGatedChannelPatternMessageProperty, {
+              openOrClosed: protein.openOrClosedProperty,
+              index: index,
+              type: protein.type,
+              ligandType: this.ligand.type,
+              transportProteinCount: transportProteinCountProperty
+            } ) );
+          }
+          else {
+            this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveOtherChannelPatternMessageProperty, {
+              openOrClosed: protein.openOrClosedProperty,
+              type: protein.type,
+              index: index,
+              transportProteinCount: transportProteinCountProperty
+            } ) );
+          }
+        }
       }
 
       if ( this.currentTargetSlotIndex !== null ) {

@@ -137,3 +137,24 @@ ligandToggleButtonRemovedContextResponse = Ligands removed.
 grabbedLigandResponsePattern = Grabbed. Outside, {$proteinCount} Proteins in Membrane.
 grabbedLigandResponseWithHintPattern = { grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release.
 grabbedLigandResponseWithEmptyMembraneHintPattern = { grabbedLigandResponsePattern } Space to release. Add transport proteins.
+
+# Spoken when the ligand moves above a protein that can open or close. Something like
+# "Above closed Sodium Ion, Ligand-Gated, Triangle Site, 1 of 4 Proteins"
+ligandMovedAboveLigandGatedChannelPattern = Above { $openOrClosed ->
+  [open] open
+  *[closed] closed
+} { transportProteinBriefName } { $ligandType ->
+  [triangleLigand] Triangle Site
+  *[starLigand] Star Site
+}, {$index} of {$transportProteinCount} Proteins.
+
+# Spoken when the ligand moves above a protein that cannot open or close (leakage channel).
+# "Above Sodium Ion, Leakage, Triangle Site, 1 of 4 Proteins"
+ligandMovedAboveLeakageChannelPattern = Above { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins.
+
+# Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
+# "Above closed Sodium Potassium Pump, 2 or 3 Proteins."
+ligandMovedAboveOtherChannelPattern = Above { $openOrClosed ->
+  [open] open
+  *[closed] closed
+} { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins.

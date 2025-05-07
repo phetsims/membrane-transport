@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import membraneTransport from '../../../membraneTransport.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
@@ -13,6 +14,11 @@ import VoltageGatedChannel from './VoltageGatedChannel.js';
 type VoltageGatedChannelState = 'closedNegative70mV' | 'closedNegative50mV' | 'open30mV'; // opens based on the voltage of the membrane
 
 export default class PotassiumVoltageGatedChannel extends VoltageGatedChannel<VoltageGatedChannelState> {
+
+  // The PotassiumVoltageGatedChannel is open at 30mV.
+  public readonly openOrClosedProperty = new DerivedProperty( [ this.stateProperty ], ( state: VoltageGatedChannelState ) => {
+    return state === 'open30mV' ? 'open' : 'closed';
+  } );
 
   public constructor( model: TransportProteinModelContext, position: number ) {
     super( model, 'potassiumIonVoltageGatedChannel', position, 'closedNegative70mV' );
