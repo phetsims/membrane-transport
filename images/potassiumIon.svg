@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="180" height="180" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="180" height="180" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
   <defs>
     <style>
-      .e {
+      .cls-1 {
         fill: #231f20;
         stroke: #231f20;
       }
 
-      .e, .f {
+      .cls-1, .cls-2 {
         stroke-miterlimit: 10;
         stroke-width: 10px;
       }
 
-      .f {
-        fill: url(#d);
+      .cls-2 {
+        fill: url(#linear-gradient);
         stroke: #010101;
       }
     </style>
-    <linearGradient id="d" x1="5" y1="90" x2="175" y2="90" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient" x1="5" y1="90" x2="175" y2="90" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#00a8d4"/>
+      <stop offset=".23" stop-color="#02a8d4"/>
+      <stop offset=".36" stop-color="#0aabd5"/>
+      <stop offset=".47" stop-color="#19b0d8"/>
+      <stop offset=".57" stop-color="#2db7db"/>
+      <stop offset=".67" stop-color="#47c0e0"/>
+      <stop offset=".75" stop-color="#68cbe5"/>
+      <stop offset=".83" stop-color="#8ed8ec"/>
+      <stop offset=".91" stop-color="#bbe7f3"/>
+      <stop offset=".98" stop-color="#ecf8fb"/>
       <stop offset="1" stop-color="#fff"/>
     </linearGradient>
   </defs>
-  <g id="c" data-name="Layer 1">
+  <g id="Layer_1-2" data-name="Layer_1">
     <g>
-      <circle class="f" cx="90" cy="90" r="85"/>
+      <circle class="cls-2" cx="90" cy="90" r="85"/>
       <g>
-        <line class="e" x1="90" y1="31.02" x2="90" y2="148.98"/>
-        <line class="e" x1="32.79" y1="90" x2="147.21" y2="90"/>
+        <line class="cls-1" x1="90" y1="31" x2="90" y2="149"/>
+        <line class="cls-1" x1="33" y1="90" x2="147" y2="90"/>
       </g>
     </g>
   </g>
