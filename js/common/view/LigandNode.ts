@@ -462,16 +462,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
         }
       } );
 
-      // Remove the help text once there has been a successful grab.
-      grabDragInteraction.interactionStateProperty.lazyLink( () => {
-        grabDragInteraction.setAccessibleHelpText( null );
-      } );
-
       this.resetEmitter.addListener( () => {
         grabDragInteraction.reset();
-
-        // Restore the help text once the ligand has been picked up.
-        grabDragInteraction.setAccessibleHelpText( MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty );
       } );
     }
 
