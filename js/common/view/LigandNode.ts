@@ -323,6 +323,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
         objectToGrabString: this.getLigandTypeName(),
 
+        // TODO: Rename this to accessibleHelpText, https://github.com/phetsims/scenery-phet/issues/916
+        keyboardHelpText: MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty,
+
         onGrab: () => {
 
           if ( ligand.mode.type === 'ligandBound' ) {
@@ -334,9 +337,6 @@ export default class LigandNode extends InteractiveHighlightingNode {
           this.initialPositionBeforeGrab = this.ligand.position.copy();
           this.ligand.mode = { type: 'userControlled', slot: null }; // Take control
           this.currentTargetSlotIndex = null; // Reset target until first move
-
-          // Alerting + Hint
-          this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.grabbedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
 
           // const grabHintNeeded = hasShownGrabHint[ this.ligand.type ];
           MembraneTransportSounds.ligandGrabbed();
@@ -363,7 +363,6 @@ export default class LigandNode extends InteractiveHighlightingNode {
             affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
             this.ligand.position.set( this.initialPositionBeforeGrab );
 
-            // TODO: Some alerts are redundant with GrabDragInteraction now, see https://github.com/phetsims/membrane-transport/issues/128
             this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
           }
           else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
@@ -417,10 +416,24 @@ export default class LigandNode extends InteractiveHighlightingNode {
           this.ligand.mode = Particle.createRandomWalkMode( true );
 
           this.updateVisualPosition(); // Ensure view matches model after drop
-        }
+        },
+
+        // The grab and release alerts are handled by the logic in onGrab and onRelease.
+        createReleasedResponse: () => null,
+        createGrabbedResponse: () => null
       } );
 
-      this.resetEmitter.addListener( () => grabDragInteraction.reset() );
+      // Remove the help text once there has been a successful grab.
+      grabDragInteraction.interactionStateProperty.lazyLink( () => {
+        grabDragInteraction.setKeyboardHelpText( null );
+      } );
+
+      this.resetEmitter.addListener( () => {
+        grabDragInteraction.reset();
+
+        // Restore the help text once the ligand has been picked up.
+        grabDragInteraction.setKeyboardHelpText( MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty );
+      } );
     }
 
     // Scale the node view based on model dimensions

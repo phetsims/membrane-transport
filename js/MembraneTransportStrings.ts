@@ -119,6 +119,7 @@ type StringsType = {
     'ligandNode': {
       'starLigandStringProperty': LocalizedStringProperty;
       'triangleLigandStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'releasedLigandStringProperty': LocalizedStringProperty;
       'grabbedLigandStringProperty': LocalizedStringProperty;
       'ligandReleasedOffMembranePatternStringProperty': LocalizedStringProperty;
