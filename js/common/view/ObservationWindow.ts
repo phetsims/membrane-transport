@@ -88,6 +88,8 @@ export default class ObservationWindow extends Node {
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
 
       const focusableLigandTypes = new Set<string>();
+      let focusableTriangleLigandNode: LigandNode | null = null;
+      let focusableStarLigandNode: LigandNode | null = null;
 
       model.ligands.forEach( ligand => {
 
@@ -113,13 +115,32 @@ export default class ObservationWindow extends Node {
 
           this
         );
+
+        // Track the focusable ligand nodes by type
+        if ( isFocusable && ligand.type === 'triangleLigand' ) {
+          focusableTriangleLigandNode = ligandNode;
+        }
+        else if ( isFocusable && ligand.type === 'starLigand' ) {
+          focusableStarLigandNode = ligandNode;
+        }
+
         this.ligandNodes.push( ligandNode );
         this.resetEmitter.addListener( () => ligandNode.resetEmitter.emit() );
       } );
 
-      // Put in random z-order
-      const shuffledLigandNodes = dotRandom.shuffle( this.ligandNodes );
-      shuffledLigandNodes.forEach( ligandNode => clipNode.addChild( ligandNode ) );
+      // Order ligand nodes with focusable ones at the front, triangle first, then star
+      const orderedLigandNodes: LigandNode[] = [];
+
+      focusableTriangleLigandNode && orderedLigandNodes.push( focusableTriangleLigandNode );
+      focusableStarLigandNode && orderedLigandNodes.push( focusableStarLigandNode );
+
+      // Add the remaining ligand nodes in random order
+      const remainingNodes = this.ligandNodes.filter( node => node !== focusableTriangleLigandNode && node !== focusableStarLigandNode );
+      const shuffledRemainingNodes = dotRandom.shuffle( remainingNodes );
+      orderedLigandNodes.push( ...shuffledRemainingNodes );
+
+      // Add all nodes to clipNode in the specified order
+      orderedLigandNodes.forEach( ligandNode => clipNode.addChild( ligandNode ) );
     }
 
     // NOTE: Duplication with SoluteConcentrationsAccordionBox
