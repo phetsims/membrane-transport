@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Property from '../../../../../axon/js/Property.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
@@ -25,9 +24,6 @@ const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
-  // The sodium glucose cotransporter is always considered 'closed'
-  public readonly openOrClosedProperty = new Property<'open' | 'closed'>( 'closed' );
-
   private static readonly SODIUM_SITE_LEFT = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.sodiumSiteLeft
@@ -44,7 +40,9 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
   private timeSinceStateTransition = 0;
 
   public constructor( model: TransportProteinModelContext, type: TransportProteinType, position: number ) {
-    super( model, type, position, 'openToOutsideAwaitingParticles' );
+
+    // This protein is always 'closed' because there are no states that allow a particle to move through it freely.
+    super( model, type, position, 'openToOutsideAwaitingParticles', [] );
 
     this.stateProperty.link( state => {
       this.timeSinceStateTransition = 0;

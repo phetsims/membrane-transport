@@ -7,8 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
@@ -37,11 +35,6 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;
 
-  // A convenience Property that describes the overall open vs closed state of the channel.
-  public readonly openOrClosedProperty: TReadOnlyProperty<'open' | 'closed'> = new DerivedProperty( [ this.stateProperty ], state => {
-    return ( state === 'closed' || state === 'ligandBoundClosed' ) ? 'closed' : 'open';
-  } );
-
   // Start ready to bind
   private timeSinceStateTransition = REBINDING_DELAY;
 
@@ -65,7 +58,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   );
 
   public constructor( model: TransportProteinModelContext, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
-    super( model, type, position, 'closed' );
+    super( model, type, position, 'closed', [ 'ligandBoundOpen', 'ligandUnboundOpen' ] );
 
     this.stateProperty.link( state => {
       this.timeSinceStateTransition = 0;

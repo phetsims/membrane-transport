@@ -13,8 +13,8 @@ import TransportProteinModelContext from './TransportProteinModelContext.js';
 export default abstract class VoltageGatedChannel<T extends string> extends TransportProtein<T> {
   private timeSinceVoltageChanged: number | null = null;
 
-  protected constructor( model: TransportProteinModelContext, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number, initialState: T ) {
-    super( model, type, position, initialState );
+  protected constructor( model: TransportProteinModelContext, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number, initialState: T, openStates: T[] ) {
+    super( model, type, position, initialState, openStates );
 
     // * 3 point control that controls the open/close states of the Na and K channels separately and possibly instantaneously.
     // * -70: resting, both closed

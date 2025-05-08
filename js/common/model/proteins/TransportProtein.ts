@@ -9,6 +9,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Disposable from '../../../../../axon/js/Disposable.js';
 import Property from '../../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
@@ -34,19 +35,21 @@ export default abstract class TransportProtein<State extends string = Intentiona
   public readonly stateProperty: Property<State>;
 
   // A convenience Property that describes the overall open vs closed state of the channel.
-  public abstract readonly openOrClosedProperty: TReadOnlyProperty<'open' | 'closed'>;
+  public readonly openOrClosedProperty: TReadOnlyProperty<'open' | 'closed'>;
 
   /**
    * @param model - reference to the containing model, so we can access information like the membrane voltage
    * @param type - the type of transport protein
    * @param position - the horizontal position of the transport protein in the membrane
    * @param initialState - transport proteins may be in one of many states, such as 'open', 'closed', 'openToInsideEmpty', 'openToInsideSodiumBound'.
+   * @param openStates - A list of states that are considered 'open' for the purposes of transport.
    */
   protected constructor(
     public readonly model: Pick<MembraneTransportModel, 'isTransportProteinSoluteFree' | 'getSlotForTransportProtein' | 'solutes' | 'membraneVoltagePotentialProperty'>,
     public readonly type: TransportProteinType,
     public readonly position: number,
-    initialState: State
+    initialState: State,
+    openStates: State[]
   ) {
     super();
     this.bounds = new Bounds2(
@@ -57,6 +60,10 @@ export default abstract class TransportProtein<State extends string = Intentiona
     );
 
     this.stateProperty = new Property( initialState );
+
+    this.openOrClosedProperty = new DerivedProperty( [ this.stateProperty ], ( state: State ) => {
+      return openStates.includes( state ) ? 'open' : 'closed';
+    } );
   }
 
   /**

@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Property from '../../../../../axon/js/Property.js';
 import membraneTransport from '../../../membraneTransport.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -16,15 +15,12 @@ type LeakageChannelState = 'open'; // leakage channel is always open
 
 export default class LeakageChannel extends TransportProtein<LeakageChannelState> {
 
-  // the leakage channel is always considered 'open'
-  public readonly openOrClosedProperty = new Property<'open' | 'closed'>( 'open' );
-
   public constructor(
     model: TransportProteinModelContext,
     type: TransportProteinType,
     position: number
   ) {
-    super( model, type, position, 'open' );
+    super( model, type, position, 'open', [ 'open' ] );
   }
 
   public override isAvailableForPassiveTransport(): boolean {
