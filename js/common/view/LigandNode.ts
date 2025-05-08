@@ -409,30 +409,24 @@ export default class LigandNode extends InteractiveHighlightingNode {
             this.ligand.position.set( dropPosition );
 
             const protein = targetSlot.transportProteinProperty.value;
-            if ( protein instanceof LigandGatedChannel && this.isCompatibleLigand( protein ) ) {
+            if ( protein instanceof LigandGatedChannel ) {
 
-              if ( protein.stateProperty.value === 'closed' ) {
+              if ( protein.stateProperty.value === 'closed' && this.isCompatibleLigand( protein ) ) {
 
                 // Allow immediate binding attempt by model
                 protein.clearRebindingCooldown();
 
-                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty, {
-                  ligandType: this.getLigandTypeName(),
-                  proteinName: getBriefProteinName( protein.type ).value
-                } ) );
+                this.alert( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty );
               }
               else {
-                this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyProteinPatternStringProperty, {
-                  ligandType: this.getLigandTypeName(),
-                  proteinName: getBriefProteinName( protein.type ).value
-                } ) );
+                this.alert( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty );
               }
             }
             else {
 
               // Incompatible drop (wrong LGC, non-LGC, or empty slot)
               // Ligand mode is already set to random walk, starting from the dropPosition.
-              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
+              this.alert( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty );
             }
           }
 

@@ -244,7 +244,7 @@
         "value": "Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to bonding site. Release to bond or let ligands bond naturally."
       },
       "releasedLigand": {
-        "value": "Released {{ligandType}}"
+        "value": "Released."
       },
       "grabbedLigand": {
         "value": "Grabbed {{ligandType}}"
@@ -253,10 +253,10 @@
         "value": "{{ligandType}} released off membrane"
       },
       "ligandReleasedOnProteinPattern": {
-        "value": "{{ligandType}} released on {{proteinName}}"
+        "value": "Released. Binding successful. Protein opens."
       },
-      "ligandReleasedOnBusyProteinPattern": {
-        "value": "{{ligandType}} released on {{proteinName}}, but {{proteinName}} was already bound to another ligand"
+      "ligandReleasedOnBusyOrIncompatibleProteinPattern": {
+        "value": "Released. Binding unsuccessful. Ligand floats away."
       },
       "ligandMovedToSlotPattern": {
         "value": "{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}"

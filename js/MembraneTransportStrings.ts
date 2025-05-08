@@ -124,7 +124,7 @@ type StringsType = {
       'grabbedLigandStringProperty': LocalizedStringProperty;
       'ligandReleasedOffMembranePatternStringProperty': LocalizedStringProperty;
       'ligandReleasedOnProteinPatternStringProperty': LocalizedStringProperty;
-      'ligandReleasedOnBusyProteinPatternStringProperty': LocalizedStringProperty;
+      'ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty': LocalizedStringProperty;
       'ligandMovedToSlotPatternStringProperty': LocalizedStringProperty;
       'thereIsNoProteinAtThisSlotStringProperty': LocalizedStringProperty;
       'thereIsProteinAtThisSlotPatternStringProperty': LocalizedStringProperty;
