@@ -112,6 +112,9 @@ export default class MembraneTransportModel extends PhetioObject {
     ]
   } );
 
+  // Updated lazily in step(), by checking the state of each ligand
+  public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
+
   public constructor(
     public readonly featureSet: MembraneTransportFeatureSet,
     providedOptions: MembraneTransportModelOptions ) {
@@ -276,6 +279,8 @@ export default class MembraneTransportModel extends PhetioObject {
     }
 
     this.updateSoluteCounts();
+
+    this.isUserDraggingLigandProperty.value = this.ligands.filter( ligand => ligand.mode.type === 'userControlled' ).length > 0;
   }
 
   private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {

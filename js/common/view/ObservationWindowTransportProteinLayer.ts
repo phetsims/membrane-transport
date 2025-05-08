@@ -16,6 +16,7 @@ import TransportProtein from '../model/proteins/TransportProtein.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
+import LigandGatedChannelNode from './proteins/LigandGatedChannelNode.js';
 import TransportProteinNode from './proteins/TransportProteinNode.js';
 
 export type SlottedNode = {
@@ -63,6 +64,12 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
           this.addChild( transportProteinNode );
           this.record.set( slot.transportProteinProperty.value!, { slot: slot, node: transportProteinNode } );
+
+          // Add the highlight after centering the node, since the highlight goes out of bounds and would throw
+          // off the centering
+          if ( transportProteinNode instanceof LigandGatedChannelNode ) {
+            transportProteinNode.addHighlightAsChild();
+          }
         }
       } );
     } );
