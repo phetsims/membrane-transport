@@ -42,7 +42,6 @@ import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
 import Slot from '../model/Slot.js';
 import { LigandType } from '../model/SoluteType.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
-import getBriefProteinName from './proteins/getBriefProteinName.js';
 
 // constants
 // Vertical offset for the ligand when dragged via keyboard, similar to proteins
