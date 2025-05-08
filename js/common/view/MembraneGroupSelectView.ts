@@ -83,6 +83,24 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       descriptionAlertNode: observationWindow
     } );
 
+    // Create and start an animation to return a grabbed protein back to the toolbox.
+    const returnToolToToolbox = ( grabbedNode: TransportProteinDragNode ) => {
+      const toolNode = view.getTransportProteinToolNode( grabbedNode.type );
+      if ( toolNode ) {
+        const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
+        const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
+
+        const animation = createPositionAnimation(
+          value => grabbedNode.setModelPosition( value ),
+          grabbedNode.getModelPosition(),
+          modelPoint,
+          () => resetState()
+        );
+
+        animation.start();
+      }
+    };
+
     const groupSelectModel = new GroupSelectModel<ItemModel>( {
 
       // This is only used in assertions, so it is ok to return a constant.
@@ -300,20 +318,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
               this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
 
               // Animate the protein back to the toolbox
-              const toolNode = view.getTransportProteinToolNode( grabbedNode.type );
-              if ( toolNode ) {
-                const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
-                const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
-
-                const animation = createPositionAnimation(
-                  value => grabbedNode.setModelPosition( value ),
-                  grabbedNode.getModelPosition(),
-                  modelPoint,
-                  () => resetState()
-                );
-
-                animation.start();
-              }
+              returnToolToToolbox( grabbedNode );
 
               MembraneTransportSounds.proteinReturnedToToolbox();
             }
@@ -421,7 +426,6 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
       keys: [ 'escape' ],
       fire: () => {
         const currentSelection = this.currentSelection;
-        resetState();
         if ( currentSelection ) {
           const grabbedNode = currentSelection.grabbedNode;
 
@@ -438,14 +442,18 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             this.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
 
             MembraneTransportSounds.transportProteinReleased();
+            resetState();
           }
           else {
 
             // Dropped into toolbox
             groupSelectModel.selectedGroupItemProperty.value = observationWindow.getTransportProteinNodes().length === 0 ? null : 0;
-            this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+
+            // Animate the protein back to the toolbox
+            returnToolToToolbox( grabbedNode );
 
             MembraneTransportSounds.proteinReturnedToToolbox();
+            this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
           }
         }
 
