@@ -87,7 +87,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     ligandView: LigandParticleNode,
     focusable: boolean,
     transportProteinCountProperty: TProperty<number>,
-    ligandUnboundDueToNaturalCausesEmitter: Emitter<[Particle<LigandType>]>,
+    ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Particle<LigandType> ]>,
     tandem: Tandem,
     observationWindow: Node
   ) {
@@ -217,6 +217,11 @@ export default class LigandNode extends InteractiveHighlightingNode {
     const ligandIndexProperty = new LigandIndexProperty( INITIAL_POSITION_INDEX.copy() );
     this.resetEmitter.addListener( () => ligandIndexProperty.reset() );
 
+    const keyboardListenerBoundsProperty = new Property( new Bounds2( 0, 0, transportProteinCountProperty.value, 0 ) );
+    transportProteinCountProperty.link( count => {
+      keyboardListenerBoundsProperty.value = new Bounds2( 0, 0, count, 0 );
+    } );
+
     ligandIndexProperty.lazyLink( ( position, oldPosition ) => {
 
       // Since the design is to only move to filled slots or the off-membrane area, move based on deltas only.
@@ -262,7 +267,6 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
           const filledSlots = slots.filter( slot => slot.isFilled() );
           const index = filledSlots.indexOf( targetSlot ) + 1;
-
 
           if ( isLeakageChannel ) {
             this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveLeakageChannelPatternMessageProperty, {
@@ -330,18 +334,17 @@ export default class LigandNode extends InteractiveHighlightingNode {
       // the GrabDragInteraction uses a KeyboardDragListener instead of a SoundKeyboardDragListener
       // because grab/release sounds need to play on pickup and drop of the grab/drag and not on every
       // key press.
-      const keyboardListenerBounds = new Bounds2( 0, 0, 7, 0 );
       const keyboardListener = new KeyboardDragListener( {
         positionProperty: ligandIndexProperty,
         dragDelta: 1,
         shiftDragDelta: 1,
-        dragBoundsProperty: new Property( keyboardListenerBounds ),
+        dragBoundsProperty: keyboardListenerBoundsProperty,
         keyboardDragDirection: 'leftRight',
         start: ( event, listener ) => {
 
           // Play the boundary sound if on the boundary and attempting to move beyond it.
-          const atLeftEdge = ligandIndexProperty.value.x === keyboardListenerBounds.minX;
-          const atRightEdge = ligandIndexProperty.value.x === keyboardListenerBounds.maxX;
+          const atLeftEdge = ligandIndexProperty.value.x === keyboardListenerBoundsProperty.value.minX;
+          const atRightEdge = ligandIndexProperty.value.x === keyboardListenerBoundsProperty.value.maxX;
           const movingLeft = listener.modelDelta.x < 0;
           const movingRight = listener.modelDelta.x > 0;
           isOnBoundaryProperty.value = ( atLeftEdge && movingLeft ) || ( atRightEdge && movingRight );
