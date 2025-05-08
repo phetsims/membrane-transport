@@ -261,6 +261,9 @@
       "ligandMovedToSlotPattern": {
         "value": "{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}"
       },
+      "ligandUnboundAlert": {
+        "value": "Ligand floats away. Protein closes."
+      },
       "thereIsNoProteinAtThisSlot": {
         "value": "There is no protein at this slot"
       },

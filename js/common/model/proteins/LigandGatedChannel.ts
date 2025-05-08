@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
@@ -38,6 +39,8 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   // Start ready to bind
   private timeSinceStateTransition = REBINDING_DELAY;
 
+  private readonly ligandUnboundDueToNaturalCausesEmitter: Emitter<[Particle<LigandType>]>;
+
   // Offsets for binding positions, relative to the center of the slot. Static so that they can be controlled from the dev tools.
   private static readonly SODIUM_BINDING_OFFSET_CLOSED = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumLigandGatedChannel.closed.dimension,
@@ -63,6 +66,8 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     this.stateProperty.link( state => {
       this.timeSinceStateTransition = 0;
     } );
+
+    this.ligandUnboundDueToNaturalCausesEmitter = model.ligandUnboundDueToNaturalCausesEmitter;
   }
 
   public clearRebindingCooldown(): void {
@@ -86,7 +91,9 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
     // After the binding duration, release the ligand
     if ( this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceStateTransition >= BINDING_DURATION && this.boundLigand && !this.hasSolutesMovingTowardOrThroughTransportProtein() ) {
+      const boundLigand = this.boundLigand;
       this.unbindLigand();
+      this.ligandUnboundDueToNaturalCausesEmitter.emit( boundLigand );
     }
   }
 

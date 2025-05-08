@@ -83,6 +83,10 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly isShowingSignsProperty: Property<boolean>;
   public readonly membraneVoltagePotentialProperty: Property<( -70 ) | -50 | 30>;
 
+  public readonly ligandUnboundDueToNaturalCausesEmitter = new Emitter<[ Particle<LigandType> ]>( {
+    parameters: [ { valueType: Particle } ]
+  } );
+
   public readonly solutes: Particle<SoluteType>[] = [];
 
   // On screens that support ligands, the ligands are eagerly created and shown/hidden based on a Property. They are not cleared on reset

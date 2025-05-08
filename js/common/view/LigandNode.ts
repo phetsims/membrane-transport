@@ -87,6 +87,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     ligandView: LigandParticleNode,
     focusable: boolean,
     transportProteinCountProperty: TProperty<number>,
+    ligandUnboundDueToNaturalCausesEmitter: Emitter<[Particle<LigandType>]>,
     tandem: Tandem,
     observationWindow: Node
   ) {
@@ -477,6 +478,12 @@ export default class LigandNode extends InteractiveHighlightingNode {
         ligand.mode = isOver ? { type: 'userOver', slot: null } : Particle.createRandomWalkMode( true );
       }
     } );
+
+    ligandUnboundDueToNaturalCausesEmitter.addListener( ligand => {
+      if ( ligand === this.ligand ) {
+        this.alert( MembraneTransportStrings.a11y.ligandNode.ligandUnboundAlertStringProperty );
+      }
+    }, { disposer: this } );
   }
 
   /**

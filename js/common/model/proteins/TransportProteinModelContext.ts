@@ -7,6 +7,6 @@
  */
 import MembraneTransportModel from '../MembraneTransportModel.js';
 
-type TransportProteinModelContext = Pick<MembraneTransportModel, 'isTransportProteinSoluteFree' | 'getSlotForTransportProtein' | 'solutes' | 'membraneVoltagePotentialProperty'>;
+type TransportProteinModelContext = Pick<MembraneTransportModel, 'isTransportProteinSoluteFree' | 'getSlotForTransportProtein' | 'solutes' | 'membraneVoltagePotentialProperty' | 'ligandUnboundDueToNaturalCausesEmitter'>;
 
 export default TransportProteinModelContext;

@@ -126,6 +126,7 @@ type StringsType = {
       'ligandReleasedOnProteinPatternStringProperty': LocalizedStringProperty;
       'ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty': LocalizedStringProperty;
       'ligandMovedToSlotPatternStringProperty': LocalizedStringProperty;
+      'ligandUnboundAlertStringProperty': LocalizedStringProperty;
       'thereIsNoProteinAtThisSlotStringProperty': LocalizedStringProperty;
       'thereIsProteinAtThisSlotPatternStringProperty': LocalizedStringProperty;
       'moveCancelledPatternStringProperty': LocalizedStringProperty;
