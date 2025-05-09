@@ -318,13 +318,13 @@
     "value": "{ $direction ->[upward] upward arrow indicates passage from outside to inside*[downward] downward arrow indicates passage from inside to outside}"
   },
   "barSizeDescription": {
-    "value": "{ $amount ->[aLittleMore] A little more[aLotMore] A lot more[aLittleLess] A little less*[aLotLess] A lot less} outside than inside"
+    "value": "{ $amount ->\n[aLittleMore] A little more\n[aLotMore] A lot more\n[aLittleLess] A little less\n*[aLotLess] A lot less\n} outside than inside"
   },
   "barChartPattern": {
     "value": "{ solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }."
   },
   "currentDetailsActivityLevel": {
-    "value": "{ $activityLevel ->*[calm] relatively calm[active] active[activeAndPaused] active and paused}"
+    "value": "{ $activityLevel ->\n*[calm] relatively calm\n[active] active\n[activeAndPaused] active and paused\n}"
   },
   "currentDetails": {
     "value": "Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:"

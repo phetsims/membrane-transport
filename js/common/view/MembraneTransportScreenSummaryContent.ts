@@ -14,7 +14,7 @@ import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -30,26 +30,26 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       accessibleName: stringProperty
     } );
 
-    // Keep in mind these are order-dependent
-    const listItemNodes = [
-      createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnOutsideMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ),
-      createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnInsideMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ) )
-    ];
-
-    if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const node = createListItemNode( MembraneTransportMessages.ligandsOnOutsideOnlyMessageProperty );
-      model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
-      listItemNodes.push( node );
-    }
-
-    // No transport proteins for simple diffusion
-    if ( model.featureSet !== 'simpleDiffusion' ) {
-      listItemNodes.push( createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinsMessageProperty, { transportProteinCount: model.transportProteinCountProperty } ) ) );
-    }
-
-    if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-      listItemNodes.push( createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } ) ) );
-    }
+    // // Keep in mind these are order-dependent
+    // const listItemNodes = [
+    //   createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnOutsideMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ),
+    //   createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnInsideMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ) )
+    // ];
+    //
+    // if ( getFeatureSetHasLigands( model.featureSet ) ) {
+    //   const node = createListItemNode( MembraneTransportMessages.ligandsOnOutsideOnlyMessageProperty );
+    //   model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
+    //   listItemNodes.push( node );
+    // }
+    //
+    // // No transport proteins for simple diffusion
+    // if ( model.featureSet !== 'simpleDiffusion' ) {
+    //   listItemNodes.push( createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinsMessageProperty, { transportProteinCount: model.transportProteinCountProperty } ) ) );
+    // }
+    //
+    // if ( getFeatureSetHasVoltages( model.featureSet ) ) {
+    //   listItemNodes.push( createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } ) ) );
+    // }
 
     // A Property that describes that activity level of the particles and transport proteins in the model.
     const activityLevelProperty = new DerivedProperty( [
@@ -69,11 +69,11 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       children: [
         new Node( {
           tagName: 'p',
-          accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { activityLevel: activityLevelProperty } )
+          // accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { activityLevel: activityLevelProperty } )
         } ),
         new Node( {
-          tagName: 'ul',
-          children: listItemNodes
+          tagName: 'ul'
+          // children: listItemNodes
         } )
       ]
     } );

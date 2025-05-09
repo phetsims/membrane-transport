@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import NumberProperty from '../../axon/js/NumberProperty.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
@@ -14,7 +15,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
 import MembraneTransportPreferencesNode from './common/view/MembraneTransportPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
-import MembraneTransportStrings from './MembraneTransportStrings.js';
+import MembraneTransportStrings, { membrane_transportStringsNewInterface } from './MembraneTransportStrings.js';
 import './common/MembraneTransportQueryParameters.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
 import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
@@ -31,6 +32,20 @@ simLauncher.launch( () => {
     new ActiveTransportScreen( Tandem.ROOT.createTandem( 'activeTransportScreen' ) ),
     new PlaygroundScreen( Tandem.ROOT.createTandem( 'playgroundScreen' ) )
   ];
+
+  // const m = membrane_transportStringsNewInterface[ 'membrane-transport.title' ];
+  // const m = membrane_transportStringsNewInterface.activeTransporters;
+
+  const memPot = new NumberProperty( 123 );
+
+  const m = membrane_transportStringsNewInterface.currentDetailsMembranePotential.toProperty( {
+    membranePotential: memPot
+  } );
+  m.link( out => {
+    console.log( out );
+  } );
+
+  memPot.value = 999;
 
   const options: SimOptions = {
 

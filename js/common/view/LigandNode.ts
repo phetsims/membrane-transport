@@ -33,7 +33,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -276,21 +276,21 @@ export default class LigandNode extends InteractiveHighlightingNode {
             } ) );
           }
           else if ( isLigandGatedChannel ) {
-            this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveLigandGatedChannelPatternMessageProperty, {
-              openOrClosed: protein.openOrClosedProperty,
-              index: index,
-              type: protein.type,
-              ligandType: this.ligand.type,
-              transportProteinCount: transportProteinCountProperty
-            } ) );
+            // this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveLigandGatedChannelPatternMessageProperty, {
+            //   openOrClosed: protein.openOrClosedProperty,
+            //   index: index,
+            //   type: protein.type,
+            //   ligandType: this.ligand.type,
+            //   transportProteinCount: transportProteinCountProperty
+            // } ) );
           }
           else {
-            this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveOtherChannelPatternMessageProperty, {
-              openOrClosed: protein.openOrClosedProperty,
-              type: protein.type,
-              index: index,
-              transportProteinCount: transportProteinCountProperty
-            } ) );
+            // this.alert( FluentUtils.formatMessage( MembraneTransportMessages.ligandMovedAboveOtherChannelPatternMessageProperty, {
+            //   openOrClosed: protein.openOrClosedProperty,
+            //   type: protein.type,
+            //   index: index,
+            //   transportProteinCount: transportProteinCountProperty
+            // } ) );
           }
         }
       }
@@ -448,14 +448,16 @@ export default class LigandNode extends InteractiveHighlightingNode {
         createReleasedResponse: () => null,
         createGrabbedResponse: () => {
 
-          // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
-          // TODO: Why do we need to declare this type? https://github.com/phetsims/membrane-transport/issues/45
-          const patternMessageProperty: LocalizedMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportMessages.grabbedLigandResponseWithEmptyMembraneHintPatternMessageProperty :
-                                                                   grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportMessages.grabbedLigandResponsePatternMessageProperty :
-                                                                   MembraneTransportMessages.grabbedLigandResponseWithHintPatternMessageProperty;
-          return FluentUtils.formatMessage( patternMessageProperty, {
-            proteinCount: transportProteinCountProperty
-          } );
+          // // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
+          // // TODO: Why do we need to declare this type? https://github.com/phetsims/membrane-transport/issues/45
+          // const patternMessageProperty: LocalizedMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportMessages.grabbedLigandResponseWithEmptyMembraneHintPatternMessageProperty :
+          //                                                          grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportMessages.grabbedLigandResponsePatternMessageProperty :
+          //                                                          MembraneTransportMessages.grabbedLigandResponseWithHintPatternMessageProperty;
+          // return FluentUtils.formatMessage( patternMessageProperty, {
+          //   proteinCount: transportProteinCountProperty
+          // } );
+
+          return 'hello  grabbed repsoens';
         }
       } );
 

@@ -20,7 +20,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
@@ -136,10 +136,10 @@ export default class SoluteControl extends Panel {
              'many';
     } );
 
-    const objectResponseMessageProperty = new PatternMessageProperty( MembraneTransportMessages.soluteSpinnerObjectResponsePatternMessageProperty, {
-      amount: qualitativeCountProperty,
-      soluteType: model.soluteProperty
-    } );
+    // const objectResponseMessageProperty = new PatternMessageProperty( MembraneTransportMessages.soluteSpinnerObjectResponsePatternMessageProperty, {
+    //   amount: qualitativeCountProperty,
+    //   soluteType: model.soluteProperty
+    // } );
 
     const soundGenerator = new ConcentrationSliderSoundGenerator( actualCountPerSideProperty, new Range( 0, 50 ) );
 
@@ -158,17 +158,17 @@ export default class SoluteControl extends Panel {
         play: () => {/*no-op*/},
         stop: () => {/*no-op*/}
       },
-      accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
-                      MembraneTransportMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
-
-      accessibleHelpText: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerHelpTextMessageProperty :
-                          MembraneTransportMessages.outsideMembraneSpinnerHelpTextMessageProperty,
-
-      accessibleRoleDescription: MembraneTransportMessages.soluteSpinnerRoleDescriptionMessageProperty,
-
-      pdomCreateAriaValueText: ( value: number ) => {
-        return objectResponseMessageProperty;
-      },
+      // accessibleName: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerAccessibleNameMessageProperty :
+      //                 MembraneTransportMessages.outsideMembraneSpinnerAccessibleNameMessageProperty,
+      //
+      // accessibleHelpText: side === 'inside' ? MembraneTransportMessages.insideMembraneSpinnerHelpTextMessageProperty :
+      //                     MembraneTransportMessages.outsideMembraneSpinnerHelpTextMessageProperty,
+      //
+      // accessibleRoleDescription: MembraneTransportMessages.soluteSpinnerRoleDescriptionMessageProperty,
+      //
+      // pdomCreateAriaValueText: ( value: number ) => {
+      //   return objectResponseMessageProperty;
+      // },
       pdomCreateContextResponseAlert: ( pdomMappedValue, newValue, valueOnStart ) => {
 
         // In this simulation, it is possible to have a keyup event that doesn't change the value. In that case,
@@ -197,20 +197,21 @@ export default class SoluteControl extends Panel {
                                  ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
                                  ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
+        return 'hello';
         // 4. Supply these to the translation message
-        return FluentUtils.formatMessage(
-          MembraneTransportMessages.soluteSpinnerContextResponsePatternMessageProperty,
-          {
-            amount: amount,                // aLittle / aLot
-            addedOrRemoved: addedOrRemoved, // added / removed
-            differenceSize: differenceSize, // aLittle / aLot
-            moreOrLessOrSame: moreOrLessOrSame, // more / less
-            soluteType: soluteType,       // e.g. 'Na⁺'
-            directionality: directionality  // insideThanOutside / outsideThanInside
-          }
-        );
+        // return FluentUtils.formatMessage(
+        //   MembraneTransportMessages.soluteSpinnerContextResponsePatternMessageProperty,
+        //   {
+        //     amount: amount,                // aLittle / aLot
+        //     addedOrRemoved: addedOrRemoved, // added / removed
+        //     differenceSize: differenceSize, // aLittle / aLot
+        //     moreOrLessOrSame: moreOrLessOrSame, // more / less
+        //     soluteType: soluteType,       // e.g. 'Na⁺'
+        //     directionality: directionality  // insideThanOutside / outsideThanInside
+        //   }
+        // );
       },
-      pdomDependencies: [ objectResponseMessageProperty ],
+      // pdomDependencies: [ objectResponseMessageProperty ],
       tandem: tandem,
       phetioVisiblePropertyInstrumented: false,
       phetioEnabledPropertyInstrumented: false,

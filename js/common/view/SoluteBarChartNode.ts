@@ -22,7 +22,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
@@ -64,12 +64,12 @@ export default class SoluteBarChartNode extends Node {
     // TODO (design): i18n https://github.com/phetsims/membrane-transport/issues/90
     const sizeDescriptionProperty = new StringProperty( 'small' );
 
-    const descriptionProperty = new PatternMessageProperty( MembraneTransportMessages.barChartPatternMessageProperty, {
-      soluteType: soluteType,
-      amount: soluteDifferenceProperty,
-      size: sizeDescriptionProperty,
-      direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up https://github.com/phetsims/membrane-transport/issues/90
-    } );
+    // const descriptionProperty = new PatternMessageProperty( MembraneTransportMessages.barChartPatternMessageProperty, {
+    //   soluteType: soluteType,
+    //   amount: soluteDifferenceProperty,
+    //   size: sizeDescriptionProperty,
+    //   direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up https://github.com/phetsims/membrane-transport/issues/90
+    // } );
 
     super( {
 
@@ -80,7 +80,7 @@ export default class SoluteBarChartNode extends Node {
 
       // pdom
       tagName: 'li',
-      accessibleName: descriptionProperty
+      // accessibleName: descriptionProperty
     } );
 
     // For layout, not just for debugging

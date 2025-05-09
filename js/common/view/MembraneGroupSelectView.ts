@@ -22,7 +22,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -265,13 +265,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
 
-        const fluentPatternMessageProperty = this.isFirstGrab ?
-                                             MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
-                                             MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
-        this.alert( FluentUtils.formatMessage( fluentPatternMessageProperty, {
-          slotIndex: this.currentSelection!.currentSlotIndex + 1,
-          slotCount: SLOT_COUNT
-        } ) );
+        // const fluentPatternMessageProperty = this.isFirstGrab ?
+        //                                      MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
+        //                                      MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
+        // this.alert( FluentUtils.formatMessage( fluentPatternMessageProperty, {
+        //   slotIndex: this.currentSelection!.currentSlotIndex + 1,
+        //   slotCount: SLOT_COUNT
+        // } ) );
 
         this.isFirstGrab = false;
 
