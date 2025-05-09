@@ -1,0 +1,123 @@
+{
+  'membrane-transport.title': 'Membrane Transport',
+  'screen.simpleDiffusion': 'Simple Diffusion',
+  'screen.facilitatedDiffusion': 'Facilitated Diffusion',
+  'screen.activeTransport': 'Active Transport',
+  'screen.playground': 'Playground',
+  solutes: 'Solutes',
+  oxygen: 'O<sub>2</sub>',
+  carbonDioxide: 'CO<sub>2</sub>',
+  sodiumIon: 'Na<sup>+</sup>',
+  potassiumIon: 'K<sup>+</sup>',
+  glucose: 'Glucose',
+  atp: 'ATP',
+  outside: 'Outside',
+  inside: 'Inside',
+  membranePotentialLabels: 'Membrane Potential Labels',
+  voltageGatedChannels: 'Voltage-gated Channels',
+  ligandGatedChannels: 'Ligand-gated Channels',
+  activeTransporters: 'Active Transporters',
+  leakageChannels: 'Leakage Channels',
+  sodiumIonNaPlus: 'Sodium Ion<br>(Na<sup>+</sup>)',
+  potassiumIonKPlus: 'Potassium Ion<br>(K<sup>+</sup>)',
+  NaPlusKPlusPump: 'Na<sup>+</sup>-K<sup>+</sup><br>Pump',
+  sodiumGlucoseCotransporter: 'Na<sup>+</sup>-Glucose<br>Cotransporter',
+  membranePotential_mV: 'Membrane Potential (mV)',
+  signs: 'Signs',
+  addLigands: 'Add Ligands',
+  removeLigands: 'Remove Ligands',
+  animateLipids: 'Animate Lipids',
+  animateLipidsDescription: 'Whether the phospholipids forming the cell membrane should be animated',
+  soluteConcentrations: 'Solute Concentrations',
+  a11y: {
+    summary: {
+      playAreaSummaryIntro: 'An observation window zooms in on a cross-section of a cell\'s membrane. The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet, that separates fluids inside and outside of cell. Added solute particles are suspended in fluid and randomly move with Brownian motion.',
+      playAreaSummarySolutes: 'You can choose from a list of solutes and add them to inside and outside.',
+      playAreaSummaryProteins: 'Transport proteins can be added directly to membrane.',
+      playAreaSummaryVoltagePotential: 'There are options to change membrane voltage potential and optionally hide visual charge labels.',
+      playAreaSummaryBarCharts: 'Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane.',
+      playAreaSummaryScreen1: '{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryBarCharts}}',
+      playAreaSummaryScreen2and4: '{{playAreaSummaryIntro}} {playAreaSummarySolutes} {{playAreaSummaryProteins}} {{playAreaSummaryVoltagePotential}} {{playAreaSummaryBarCharts}}',
+      playAreaSummaryScreen3: '{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryBarCharts}}',
+      controlAreaSummary: 'There are options for how fast the action happens in the observation window, including a button to pause. Also, you can clear the solutes from both sides of the membrane or reset the sim.',
+      interactionHint: 'Add or remove solute to inside or outside of membrane.',
+      interactionHintWithTransportProteins: 'Add or remove solutes to inside or outside of membrane, and play with transport channels.'
+    },
+    observationWindow: {
+      membrane: {
+        accessibleName: 'Zoomed-in Membrane'
+      }
+    },
+    soluteControls: {
+      accessibleHeading: 'Solute Controls'
+    },
+    eraseSolutesButton: {
+      accessibleName: 'Reset Solutes',
+      accessibleContextResponse: 'Solutes cleared. Add solutes to observe changes'
+    },
+    transportProteinPanel: {
+      transportProteins: 'Transport Proteins',
+      accessibleHelpText: 'Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort, and release proteins into membrane.',
+      ligandGatedChannelPanel: {
+        sodiumIonNaPlusLigandGated: 'Sodium Ion NA plus, Ligand-gated',
+        potassiumIonKPlusLigandGated: 'Potassium Ion K plus, Ligand-gated'
+      },
+      leakageChannelPanel: {
+        sodiumIonNaPlusLeakage: 'Sodium Ion NA plus, Leakage',
+        potassiumIonKPlusLeakage: 'Potassium Ion K plus, Leakage'
+      },
+      voltageGatedChannelPanel: {
+        sodiumIonNaPlusVoltageGated: 'Sodium Ion NA plus, Voltage-gated',
+        potassiumIonKPlusVoltageGated: 'Potassium Ion K plus, Voltage-gated',
+        membranePotential: {
+          accessibleHeading: 'Membrane Potential Options',
+          radioButtonGroup: {
+            accessibleName: 'Voltage (mV)',
+            accessibleHelpText: 'Play with membrane voltage potential and observe changes.',
+            negative70RadioButton: {
+              accessibleName: 'negative 70 millivolts',
+              accessibleContextResponse: 'Positive outside and negative inside; signs densely packed along membrane.'
+            },
+            negative50RadioButton: {
+              accessibleName: 'negative 50 millivolts',
+              accessibleContextResponse: 'Positive outside and negative inside; signs lightly packed along membrane.'
+            },
+            positive30RadioButton: {
+              accessibleName: 'positive 30 millivolts',
+              accessibleContextResponse: 'Negative outside and positive inside; signs sparse along membrane.'
+            }
+          }
+        },
+        signsCheckbox: {
+          accessibleHelpText: 'Explore with or without signs showing membrane voltage potential along inside and outside.',
+          uncheckedContextResponse: 'Voltage potential signs, hidden.'
+        }
+      },
+      activeTransportProteinPanel: {
+        sodiumPotassiumPump: 'Sodium-Potassium Pump',
+        sodiumGlucoseCotransporter: 'Sodium-Glucose Cotransporter'
+      },
+      toolAccessibleHelpText: 'Grab transporter to pull to membrane.'
+    },
+    ligandNode: {
+      starLigand: 'Star Ligand',
+      triangleLigand: 'Triangle Ligand',
+      accessibleHelpText: 'Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to bonding site. Release to bond or let ligands bond naturally.',
+      releasedLigand: 'Released.',
+      grabbedLigand: 'Grabbed {{ligandType}}',
+      ligandReleasedOffMembranePattern: '{{ligandType}} released off membrane',
+      ligandReleasedOnProteinPattern: 'Released. Binding successful. Protein opens.',
+      ligandReleasedOnBusyOrIncompatibleProteinPattern: 'Released. Binding unsuccessful. Ligand floats away.',
+      ligandMovedToSlotPattern: '{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}',
+      ligandUnboundAlert: 'Ligand floats away. Protein closes.',
+      thereIsNoProteinAtThisSlot: 'There is no protein at this slot',
+      thereIsProteinAtThisSlotPattern: 'There is a {{proteinName}} at this slot',
+      moveCancelledPattern: 'Cancelled moving {{ligandType}}',
+      cannotInteractWhileLigandIsBoundPattern: 'Cannot interact with the membrane while {{ligandType}} is bound to a protein'
+    }
+  },
+  //  'comment': 'TODO: This is just for testing, see https://github.com/phetsims/chipper/issues/1588'
+  'grabbedProteinResponsePattern': 'Grabbed. Above membrane. Slot {$slotIndex} of { $slotCount }. HELLO',
+  'secondTest': 'helloThereAgain',
+  'thirdTest': 'helloThereAgain2'
+}
