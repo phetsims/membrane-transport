@@ -116,8 +116,24 @@
       cannotInteractWhileLigandIsBoundPattern: 'Cannot interact with the membrane while {{ligandType}} is bound to a protein'
     }
   },
-  //  'comment': 'TODO: This is just for testing, see https://github.com/phetsims/chipper/issues/1588'
-  'grabbedProteinResponsePattern': 'Grabbed. Above membrane. Slot {$slotIndex} of { $slotCount }. HELLO',
-  'secondTest': 'helloThereAgain',
-  'thirdTest': 'helloThereAgain2'
+  // Transport protein brief names
+  transportProteinBriefName: '{ $type ->\
+[sodiumIonLeakageChannel] Sodium Ion, Leakage\
+[potassiumIonLeakageChannel] Potassium Ion, Leakage\
+[sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated\
+[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\
+[sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated\
+[potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated\
+[sodiumPotassiumPump] Sodium Potassium Pump\
+*[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter\
+}',
+  // Solutes radio button group - group names and help text
+  soluteControlsAccessibleHelpText: 'Choose solute then add or remove to inside or outside of membrane.',
+  outsideMembraneSpinnerAccessibleName: 'Outside Membrane',
+  outsideMembraneSpinnerHelpText: 'Add or remove chosen solute to outside of membrane.',
+  insideMembraneSpinnerAccessibleName: 'Inside Membrane',
+  insideMembraneSpinnerHelpText: 'Add or remove chosen solute to inside of membrane.',
+  soluteSpinnerRoleDescription: 'solute amount adjuster',
+
+
 }

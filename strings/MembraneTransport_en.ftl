@@ -4,36 +4,13 @@
 # accessible descriptions for both State and Responsive Descriptions.
 # ..................................................
 
-# Transport protein brief names
-transportProteinBriefName = { $type ->
-  [sodiumIonLeakageChannel] Sodium Ion, Leakage
-  [potassiumIonLeakageChannel] Potassium Ion, Leakage
-  [sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated
-  [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-  [sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated
-  [potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated
-  [sodiumPotassiumPump] Sodium Potassium Pump
-  *[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter
-}
-
-
 # END REUSABLE STRINGS .............................
 
 # ..................................................
 # State descriptions for PLAY AREA
 # ..................................................
 
-# ..
-# Solutes radio button group - group names and help text
-soluteControlsAccessibleHelpText = Choose solute then add or remove to inside or outside of membrane.
 
-outsideMembraneSpinnerAccessibleName = Outside Membrane
-outsideMembraneSpinnerHelpText = Add or remove chosen solute to outside of membrane.
-
-insideMembraneSpinnerAccessibleName = Inside Membrane
-insideMembraneSpinnerHelpText = Add or remove chosen solute to inside of membrane.
-
-soluteSpinnerRoleDescription = solute amount adjuster
 
 solute = { $soluteType ->
   [oxygen] oxygen molecules
