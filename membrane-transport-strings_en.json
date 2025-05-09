@@ -277,5 +277,9 @@
         "value": "Cannot interact with the membrane while {{ligandType}} is bound to a protein"
       }
     }
+  },
+  "grabbedProteinResponsePattern": {
+    "comment": "TODO: This is just for testing, see https://github.com/phetsims/chipper/issues/1588",
+    "value": "Grabbed. Above membrane. Slot {$slotIndex} of { $slotCount }."
   }
 }
