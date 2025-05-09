@@ -38,7 +38,7 @@ simLauncher.launch( () => {
 
   const memPot = new NumberProperty( 123 );
 
-  const m = membrane_transportStringsNewInterface.currentDetailsMembranePotential.toProperty( {
+  const m = membrane_transportStringsNewInterface.currentDetailsMembranePotential.createProperty( {
     membranePotential: memPot
   } );
   m.link( out => {

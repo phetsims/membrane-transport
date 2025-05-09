@@ -279,7 +279,7 @@
     }
   },
   "transportProteinBriefName": {
-    "value": "{ $type ->[sodiumIonLeakageChannel] Sodium Ion, Leakage[potassiumIonLeakageChannel] Potassium Ion, Leakage[sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated[sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated[potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated[sodiumPotassiumPump] Sodium Potassium Pump*[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter}"
+    "value": "{ $type ->\n[sodiumIonLeakageChannel] Sodium Ion, Leakage\n[potassiumIonLeakageChannel] Potassium Ion, Leakage\n[sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated\n[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\n[sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated\n[potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated\n[sodiumPotassiumPump] Sodium Potassium Pump\n*[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter\n}"
   },
   "soluteControlsAccessibleHelpText": {
     "value": "Choose solute then add or remove to inside or outside of membrane."
@@ -300,22 +300,22 @@
     "value": "solute amount adjuster"
   },
   "solute": {
-    "value": "{ $soluteType ->[oxygen] oxygen molecules[carbonDioxide] carbon dioxide molecules[sodiumIon] sodium ions[potassiumIon] potassium ions[glucose] glucose molecules*[atp] ATP molecules}"
+    "value": "{ $soluteType ->\n[oxygen] oxygen molecules\n[carbonDioxide] carbon dioxide molecules\n[sodiumIon] sodium ions\n[potassiumIon] potassium ions\n[glucose] glucose molecules\n*[atp] ATP molecules\n}"
   },
   "soluteSpinnerObjectResponsePattern": {
-    "value": "{ $amount ->[none] no[one] one[few] a few[some] some*[many] many} { solute }"
+    "value": "{ $amount ->\n[none] no\n[one] one\n[few] a few\n[some] some\n*[many] many\n} { solute }"
   },
   "soluteSpinnerContextResponsePattern": {
-    "value": "{ $amount ->[aLittle] A little*[aLot] A lot} { $addedOrRemoved ->[added] added*[removed] removed}. Now{ $moreOrLessOrSame ->[same] same amount of solute inside and outside.*[other] { $differenceSize ->[aLittle] a little*[aLot] a lot}{ $moreOrLessOrSame ->[more] more*[less] less}{ solute }{ $directionality ->[insideThanOutside] inside than outside*[outsideThanInside] outside than inside}.}"
+    "value": "{ $amount ->\n[aLittle] A little\n*[aLot] A lot\n} { $addedOrRemoved ->\n[added] added\n*[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n[same] same amount of solute inside and outside.\n*[other] { $differenceSize ->\n[aLittle] a little\n*[aLot] a lot\n}\n{ $moreOrLessOrSame ->\n[more] more\n*[less] less\n}\n{ solute }\n{ $directionality ->\n[insideThanOutside] inside than outside\n*[outsideThanInside] outside than inside\n}.\n}"
   },
   "soluteBarChartsDescriptionParagraph": {
     "value": "A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading."
   },
   "arrowSizeDescription": {
-    "value": "{ $size ->[small] small[medium] medium*[large] large}"
+    "value": "{ $size ->\n[small] small\n[medium] medium\n*[large] large\n}"
   },
   "arrowDirectionDescription": {
-    "value": "{ $direction ->[upward] upward arrow indicates passage from outside to inside*[downward] downward arrow indicates passage from inside to outside}"
+    "value": "{ $direction ->\n[upward] upward arrow indicates passage from outside to inside\n*[downward] downward arrow indicates passage from inside to outside\n}"
   },
   "barSizeDescription": {
     "value": "{ $amount ->\n[aLittleMore] A little more\n[aLotMore] A lot more\n[aLittleLess] A little less\n*[aLotLess] A lot less\n} outside than inside"
@@ -378,12 +378,12 @@
     "value": "{ grabbedLigandResponsePattern } Space to release. Add transport proteins."
   },
   "ligandMovedAboveLigandGatedChannelPattern": {
-    "value": "Above { $openOrClosed ->[open] open*[closed] closed} { transportProteinBriefName } { $ligandType ->[triangleLigand] Triangle Site*[starLigand] Star Site}, {$index} of {$transportProteinCount} Proteins."
+    "value": "Above { $openOrClosed ->\n[open] open\n*[closed] closed\n} { transportProteinBriefName } { $ligandType ->\n[triangleLigand] Triangle Site\n*[starLigand] Star Site\n}, {$index} of {$transportProteinCount} Proteins."
   },
   "ligandMovedAboveLeakageChannelPattern": {
     "value": "Above { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
   },
   "ligandMovedAboveOtherChannelPattern": {
-    "value": "Above { $openOrClosed ->[open] open*[closed] closed} { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
+    "value": "Above { $openOrClosed ->\n[open] open\n*[closed] closed\n} { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
   }
 }

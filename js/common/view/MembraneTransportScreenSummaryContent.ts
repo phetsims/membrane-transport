@@ -13,7 +13,7 @@ import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessag
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportStrings, { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
 // import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -31,11 +31,11 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     } );
 
     // // Keep in mind these are order-dependent
-    // const listItemNodes = [
-    //   createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnOutsideMessageProperty, { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ),
-    //   createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsSoluteTypesOnInsideMessageProperty, { insideSoluteCount: model.insideSoluteTypesCountProperty } ) )
-    // ];
-    //
+    const listItemNodes = [
+      createListItemNode( ( membrane_transportStringsNewInterface.currentDetailsSoluteTypesOnOutside.createProperty( { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ) ),
+      createListItemNode( ( membrane_transportStringsNewInterface.currentDetailsSoluteTypesOnInside.createProperty( { insideSoluteCount: model.insideSoluteTypesCountProperty } ) ) )
+    ];
+
     // if ( getFeatureSetHasLigands( model.featureSet ) ) {
     //   const node = createListItemNode( MembraneTransportMessages.ligandsOnOutsideOnlyMessageProperty );
     //   model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
@@ -72,8 +72,8 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
           // accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { activityLevel: activityLevelProperty } )
         } ),
         new Node( {
-          tagName: 'ul'
-          // children: listItemNodes
+          tagName: 'ul',
+          children: listItemNodes
         } )
       ]
     } );

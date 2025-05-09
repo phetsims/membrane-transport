@@ -117,15 +117,15 @@
     }
   },
   // Transport protein brief names
-  transportProteinBriefName: '{ $type ->\
-[sodiumIonLeakageChannel] Sodium Ion, Leakage\
-[potassiumIonLeakageChannel] Potassium Ion, Leakage\
-[sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated\
-[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\
-[sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated\
-[potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated\
-[sodiumPotassiumPump] Sodium Potassium Pump\
-*[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter\
+  transportProteinBriefName: '{ $type ->\n\
+[sodiumIonLeakageChannel] Sodium Ion, Leakage\n\
+[potassiumIonLeakageChannel] Potassium Ion, Leakage\n\
+[sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated\n\
+[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\n\
+[sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated\n\
+[potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated\n\
+[sodiumPotassiumPump] Sodium Potassium Pump\n\
+*[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter\n\
 }',
   // Solutes radio button group - group names and help text
   soluteControlsAccessibleHelpText: 'Choose solute then add or remove to inside or outside of membrane.',
@@ -136,59 +136,59 @@
   soluteSpinnerRoleDescription: 'solute amount adjuster',
 
   // Solute-related strings
-  solute: '{ $soluteType ->\
-[oxygen] oxygen molecules\
-[carbonDioxide] carbon dioxide molecules\
-[sodiumIon] sodium ions\
-[potassiumIon] potassium ions\
-[glucose] glucose molecules\
-*[atp] ATP molecules\
+  solute: '{ $soluteType ->\n\
+[oxygen] oxygen molecules\n\
+[carbonDioxide] carbon dioxide molecules\n\
+[sodiumIon] sodium ions\n\
+[potassiumIon] potassium ions\n\
+[glucose] glucose molecules\n\
+*[atp] ATP molecules\n\
 }',
 
-  soluteSpinnerObjectResponsePattern: '{ $amount ->\
-[none] no\
-[one] one\
-[few] a few\
-[some] some\
-*[many] many\
+  soluteSpinnerObjectResponsePattern: '{ $amount ->\n\
+[none] no\n\
+[one] one\n\
+[few] a few\n\
+[some] some\n\
+*[many] many\n\
 } { solute }',
 
-  soluteSpinnerContextResponsePattern: '{ $amount ->\
-[aLittle] A little\
-*[aLot] A lot\
-} { $addedOrRemoved ->\
-[added] added\
-*[removed] removed\
-}. Now\
-{ $moreOrLessOrSame ->\
-[same] same amount of solute inside and outside.\
-*[other] { $differenceSize ->\
-[aLittle] a little\
-*[aLot] a lot\
-}\
-{ $moreOrLessOrSame ->\
-[more] more\
-*[less] less\
-}\
-{ solute }\
-{ $directionality ->\
-[insideThanOutside] inside than outside\
-*[outsideThanInside] outside than inside\
-}.\
+  soluteSpinnerContextResponsePattern: '{ $amount ->\n\
+[aLittle] A little\n\
+*[aLot] A lot\n\
+} { $addedOrRemoved ->\n\
+[added] added\n\
+*[removed] removed\n\
+}. Now\n\
+{ $moreOrLessOrSame ->\n\
+[same] same amount of solute inside and outside.\n\
+*[other] { $differenceSize ->\n\
+[aLittle] a little\n\
+*[aLot] a lot\n\
+}\n\
+{ $moreOrLessOrSame ->\n\
+[more] more\n\
+*[less] less\n\
+}\n\
+{ solute }\n\
+{ $directionality ->\n\
+[insideThanOutside] inside than outside\n\
+*[outsideThanInside] outside than inside\n\
+}.\n\
 }',
 
   // Bar chart descriptions
   soluteBarChartsDescriptionParagraph: 'A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.',
 
-  arrowSizeDescription: '{ $size ->\
-[small] small\
-[medium] medium\
-*[large] large\
+  arrowSizeDescription: '{ $size ->\n\
+[small] small\n\
+[medium] medium\n\
+*[large] large\n\
 }',
 
-  arrowDirectionDescription: '{ $direction ->\
-[upward] upward arrow indicates passage from outside to inside\
-*[downward] downward arrow indicates passage from inside to outside\
+  arrowDirectionDescription: '{ $direction ->\n\
+[upward] upward arrow indicates passage from outside to inside\n\
+*[downward] downward arrow indicates passage from inside to outside\n\
 }',
 
   barSizeDescription: '{ $amount ->\n\
@@ -242,20 +242,20 @@
   grabbedLigandResponseWithEmptyMembraneHintPattern: '{ grabbedLigandResponsePattern } Space to release. Add transport proteins.',
 
   // Spoken when the ligand moves above a protein that can open or close
-  ligandMovedAboveLigandGatedChannelPattern: 'Above { $openOrClosed ->\
-[open] open\
-*[closed] closed\
-} { transportProteinBriefName } { $ligandType ->\
-[triangleLigand] Triangle Site\
-*[starLigand] Star Site\
+  ligandMovedAboveLigandGatedChannelPattern: 'Above { $openOrClosed ->\n\
+[open] open\n\
+*[closed] closed\n\
+} { transportProteinBriefName } { $ligandType ->\n\
+[triangleLigand] Triangle Site\n\
+*[starLigand] Star Site\n\
 }, {$index} of {$transportProteinCount} Proteins.',
 
   // Spoken when the ligand moves above a protein that cannot open or close (leakage channel).
   ligandMovedAboveLeakageChannelPattern: 'Above { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins.',
 
   // Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
-  ligandMovedAboveOtherChannelPattern: 'Above { $openOrClosed ->\
-[open] open\
-*[closed] closed\
+  ligandMovedAboveOtherChannelPattern: 'Above { $openOrClosed ->\n\
+[open] open\n\
+*[closed] closed\n\
 } { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins.'
 }

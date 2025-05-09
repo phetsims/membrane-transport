@@ -9,11 +9,13 @@
 
 import getStringModule from '../../chipper/js/browser/getStringModule.js';
 import type LocalizedStringProperty from '../../chipper/js/browser/LocalizedStringProperty.js';
-import type TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import PatternMessageProperty from '../../chipper/js/browser/PatternMessageProperty.js';
+import createFluentMessageProperty from '../../chipper/js/browser/createFluentMessageProperty.js';
+import LocalizedString from '../../chipper/js/browser/LocalizedString.js';
+import { FluentBundle } from '../../chipper/js/browser-and-node/FluentLibrary.js';
+import FluentUtils from '../../chipper/js/browser/FluentUtils.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import type IntentionalAny from '../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from './membraneTransport.js';
-import DerivedProperty from '../../axon/js/DerivedProperty.js';
 
 type StringsType = {
   'membrane-transport': {
@@ -173,12 +175,15 @@ type StringsType = {
   'ligandMovedAboveLigandGatedChannelPatternStringProperty': LocalizedStringProperty;
   'ligandMovedAboveLeakageChannelPatternStringProperty': LocalizedStringProperty;
   'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
+  'localizedStringMap': Record<string, LocalizedString>;
+  'fluentBundleProperty': TReadOnlyProperty<FluentBundle>;
 }
 
 const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as StringsType;
 
-
 // Interface for all strings, with special handling for parameterized patterns
+// TODO: Is this backwards compatible? Would need to work with PatternStringProperty.
+// TODO: If it is compatible, we could make MembraneTransportStrings private.
 export const membrane_transportStringsNewInterface = {
   'membrane-transport.title': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/membrane-transport.title'].property,
   'screen.simpleDiffusion': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/screen.simpleDiffusion'].property,
@@ -297,185 +302,203 @@ export const membrane_transportStringsNewInterface = {
       'cannotInteractWhileLigandIsBoundPattern': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.ligandNode.cannotInteractWhileLigandIsBoundPattern'].property
     }
   },
-  'transportProteinBriefName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/transportProteinBriefName'].property,
+  'transportProteinBriefName': {
+    format: (args: { type: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('transportProteinBriefName')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { type: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'transportProteinBriefName', args ) 
+  },
   'soluteControlsAccessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteControlsAccessibleHelpText'].property,
   'outsideMembraneSpinnerAccessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/outsideMembraneSpinnerAccessibleName'].property,
   'outsideMembraneSpinnerHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/outsideMembraneSpinnerHelpText'].property,
   'insideMembraneSpinnerAccessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/insideMembraneSpinnerAccessibleName'].property,
   'insideMembraneSpinnerHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/insideMembraneSpinnerHelpText'].property,
   'soluteSpinnerRoleDescription': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteSpinnerRoleDescription'].property,
-  'solute': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/solute'].property,
-  'soluteSpinnerObjectResponsePattern': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteSpinnerObjectResponsePattern'].property,
-  'soluteSpinnerContextResponsePattern': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteSpinnerContextResponsePattern'].property,
-  'soluteBarChartsDescriptionParagraph': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteBarChartsDescriptionParagraph'].property,
-  'arrowSizeDescription': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/arrowSizeDescription'].property,
-  'arrowDirectionDescription': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/arrowDirectionDescription'].property,
-  'barSizeDescription': {
-    format: (args: { amount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('barSizeDescription').value,
+  'solute': {
+    format: (args: { soluteType: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('solute')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { amount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/barSizeDescription'].property,
+    createProperty: (args: { soluteType: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'solute', args ) 
+  },
+  'soluteSpinnerObjectResponsePattern': {
+    format: (args: { amount: IntentionalAny, soluteType: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('soluteSpinnerObjectResponsePattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
-    )
+    ),
+    createProperty: (args: { amount: IntentionalAny, soluteType: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'soluteSpinnerObjectResponsePattern', args ) 
+  },
+  'soluteSpinnerContextResponsePattern': {
+    format: (args: { addedOrRemoved: IntentionalAny, amount: IntentionalAny, differenceSize: IntentionalAny, directionality: IntentionalAny, moreOrLessOrSame: IntentionalAny, soluteType: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('soluteSpinnerContextResponsePattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { addedOrRemoved: IntentionalAny, amount: IntentionalAny, differenceSize: IntentionalAny, directionality: IntentionalAny, moreOrLessOrSame: IntentionalAny, soluteType: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'soluteSpinnerContextResponsePattern', args ) 
+  },
+  'soluteBarChartsDescriptionParagraph': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteBarChartsDescriptionParagraph'].property,
+  'arrowSizeDescription': {
+    format: (args: { size: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('arrowSizeDescription')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { size: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'arrowSizeDescription', args ) 
+  },
+  'arrowDirectionDescription': {
+    format: (args: { direction: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('arrowDirectionDescription')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { direction: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'arrowDirectionDescription', args ) 
+  },
+  'barSizeDescription': {
+    format: (args: { amount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('barSizeDescription')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { amount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'barSizeDescription', args ) 
   },
   'barChartPattern': {
-    format: (args: { amount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('barChartPattern').value,
+    format: (args: { amount: IntentionalAny, direction: IntentionalAny, size: IntentionalAny, soluteType: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('barChartPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { amount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/barChartPattern'].property,
-      args
-    )
+    createProperty: (args: { amount: IntentionalAny, direction: IntentionalAny, size: IntentionalAny, soluteType: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'barChartPattern', args ) 
   },
   'currentDetailsActivityLevel': {
-    format: (args: { activityLevel: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsActivityLevel').value,
+    format: (args: { activityLevel: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsActivityLevel')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { activityLevel: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/currentDetailsActivityLevel'].property,
-      args
-    )
+    createProperty: (args: { activityLevel: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsActivityLevel', args ) 
   },
   'currentDetails': {
-    format: (args: { activityLevel: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetails').value,
+    format: (args: { activityLevel: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetails')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { activityLevel: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/currentDetails'].property,
-      args
-    )
+    createProperty: (args: { activityLevel: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetails', args ) 
   },
   'currentDetailsSoluteTypesOnOutside': {
-    format: (args: { outsideSoluteCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsSoluteTypesOnOutside').value,
+    format: (args: { outsideSoluteCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsSoluteTypesOnOutside')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { outsideSoluteCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/currentDetailsSoluteTypesOnOutside'].property,
-      args
-    )
+    createProperty: (args: { outsideSoluteCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsSoluteTypesOnOutside', args ) 
   },
   'currentDetailsSoluteTypesOnInside': {
-    format: (args: { insideSoluteCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsSoluteTypesOnInside').value,
+    format: (args: { insideSoluteCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsSoluteTypesOnInside')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { insideSoluteCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/currentDetailsSoluteTypesOnInside'].property,
-      args
-    )
+    createProperty: (args: { insideSoluteCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsSoluteTypesOnInside', args ) 
   },
   'currentDetailsTransportProteins': {
-    format: (args: { transportProteinCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsTransportProteins').value,
+    format: (args: { transportProteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsTransportProteins')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { transportProteinCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/currentDetailsTransportProteins'].property,
-      args
-    )
+    createProperty: (args: { transportProteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsTransportProteins', args ) 
   },
   'ligandsOnOutsideOnly': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandsOnOutsideOnly'].property,
   'currentDetailsMembranePotential': {
-    format: (args: { membranePotential: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsMembranePotential').value,
+    format: (args: { membranePotential: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('currentDetailsMembranePotential')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { membranePotential: IntentionalAny }) => {
-
-      const p = new DerivedProperty([MembraneTransportStrings.fluentBundleProperty], bundle =>{
-        return bundle.getMessage('currentDetailsMembranePotential').value
-      });
-
-      p.bundleProperty = MembraneTransportStrings.fluentBundleProperty;
-
-      return new PatternMessageProperty(
-        p,
-        args
-      );
-    }  },
+    createProperty: (args: { membranePotential: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsMembranePotential', args ) 
+  },
   'releasedBackInToolbox': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/releasedBackInToolbox'].property,
   'selectedTransportProteinInSlot': {
-    format: (args: { channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('selectedTransportProteinInSlot').value,
+    format: (args: { channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('selectedTransportProteinInSlot')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/selectedTransportProteinInSlot'].property,
-      args
-    )
+    createProperty: (args: { channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'selectedTransportProteinInSlot', args ) 
   },
   'canceledBackInMembrane': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/canceledBackInMembrane'].property,
   'grabbedProteinResponsePattern': {
-    format: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedProteinResponsePattern').value,
+    format: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedProteinResponsePattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/grabbedProteinResponsePattern'].property,
-      args
-    )
+    createProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedProteinResponsePattern', args ) 
   },
   'grabbedProteinResponseWithHintPattern': {
-    format: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedProteinResponseWithHintPattern').value,
+    format: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedProteinResponseWithHintPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/grabbedProteinResponseWithHintPattern'].property,
-      args
-    )
+    createProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedProteinResponseWithHintPattern', args ) 
   },
   'ligandToggleButtonAccessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandToggleButtonAccessibleHelpText'].property,
   'ligandToggleButtonAddedContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandToggleButtonAddedContextResponse'].property,
   'ligandToggleButtonRemovedContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandToggleButtonRemovedContextResponse'].property,
   'grabbedLigandResponsePattern': {
-    format: (args: { proteinCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedLigandResponsePattern').value,
+    format: (args: { proteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedLigandResponsePattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { proteinCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/grabbedLigandResponsePattern'].property,
-      args
-    )
+    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponsePattern', args ) 
   },
   'grabbedLigandResponseWithHintPattern': {
-    format: (args: { proteinCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedLigandResponseWithHintPattern').value,
+    format: (args: { proteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedLigandResponseWithHintPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { proteinCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/grabbedLigandResponseWithHintPattern'].property,
-      args
-    )
+    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponseWithHintPattern', args ) 
   },
   'grabbedLigandResponseWithEmptyMembraneHintPattern': {
-    format: (args: { proteinCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedLigandResponseWithEmptyMembraneHintPattern').value,
+    format: (args: { proteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('grabbedLigandResponseWithEmptyMembraneHintPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { proteinCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/grabbedLigandResponseWithEmptyMembraneHintPattern'].property,
-      args
-    )
+    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponseWithEmptyMembraneHintPattern', args ) 
   },
-  'ligandMovedAboveLigandGatedChannelPattern': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandMovedAboveLigandGatedChannelPattern'].property,
+  'ligandMovedAboveLigandGatedChannelPattern': {
+    format: (args: { index: IntentionalAny, ligandType: IntentionalAny, openOrClosed: IntentionalAny, transportProteinCount: IntentionalAny, type: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('ligandMovedAboveLigandGatedChannelPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { index: IntentionalAny, ligandType: IntentionalAny, openOrClosed: IntentionalAny, transportProteinCount: IntentionalAny, type: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveLigandGatedChannelPattern', args ) 
+  },
   'ligandMovedAboveLeakageChannelPattern': {
-    format: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny }) => MembraneTransportStrings.fluentBundleProperty.value.formatPattern(
-      MembraneTransportStrings.fluentBundleProperty.value.getMessage('ligandMovedAboveLeakageChannelPattern').value,
+    format: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny, type: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('ligandMovedAboveLeakageChannelPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    toProperty: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny }) => new PatternMessageProperty(
-      MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandMovedAboveLeakageChannelPattern'].property,
-      args
-    )
+    createProperty: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny, type: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveLeakageChannelPattern', args ) 
   },
-  'ligandMovedAboveOtherChannelPattern': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandMovedAboveOtherChannelPattern'].property
+  'ligandMovedAboveOtherChannelPattern': {
+    format: (args: { index: IntentionalAny, openOrClosed: IntentionalAny, transportProteinCount: IntentionalAny, type: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
+      MembraneTransportStrings.fluentBundleProperty.value.getMessage('ligandMovedAboveOtherChannelPattern')!.value!,
+      MembraneTransportStrings.fluentBundleProperty.value,
+      args
+    ),
+    createProperty: (args: { index: IntentionalAny, openOrClosed: IntentionalAny, transportProteinCount: IntentionalAny, type: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveOtherChannelPattern', args ) 
+  }
 };
 
 membraneTransport.register( 'MembraneTransportStrings', MembraneTransportStrings );
