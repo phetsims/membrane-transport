@@ -298,5 +298,92 @@
   },
   "soluteSpinnerRoleDescription": {
     "value": "solute amount adjuster"
+  },
+  "solute": {
+    "value": "{ $soluteType ->[oxygen] oxygen molecules[carbonDioxide] carbon dioxide molecules[sodiumIon] sodium ions[potassiumIon] potassium ions[glucose] glucose molecules*[atp] ATP molecules}"
+  },
+  "soluteSpinnerObjectResponsePattern": {
+    "value": "{ $amount ->[none] no[one] one[few] a few[some] some*[many] many} { solute }"
+  },
+  "soluteSpinnerContextResponsePattern": {
+    "value": "{ $amount ->[aLittle] A little*[aLot] A lot} { $addedOrRemoved ->[added] added*[removed] removed}. Now{ $moreOrLessOrSame ->[same] same amount of solute inside and outside.*[other] { $differenceSize ->[aLittle] a little*[aLot] a lot}{ $moreOrLessOrSame ->[more] more*[less] less}{ solute }{ $directionality ->[insideThanOutside] inside than outside*[outsideThanInside] outside than inside}.}"
+  },
+  "soluteBarChartsDescriptionParagraph": {
+    "value": "A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading."
+  },
+  "arrowSizeDescription": {
+    "value": "{ $size ->[small] small[medium] medium*[large] large}"
+  },
+  "arrowDirectionDescription": {
+    "value": "{ $direction ->[upward] upward arrow indicates passage from outside to inside*[downward] downward arrow indicates passage from inside to outside}"
+  },
+  "barSizeDescription": {
+    "value": "{ $amount ->[aLittleMore] A little more[aLotMore] A lot more[aLittleLess] A little less*[aLotLess] A lot less} outside than inside"
+  },
+  "barChartPattern": {
+    "value": "{ solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }."
+  },
+  "currentDetailsActivityLevel": {
+    "value": "{ $activityLevel ->*[calm] relatively calm[active] active[activeAndPaused] active and paused}"
+  },
+  "currentDetails": {
+    "value": "Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:"
+  },
+  "currentDetailsSoluteTypesOnOutside": {
+    "value": "{ $outsideSoluteCount } solute types on outside;"
+  },
+  "currentDetailsSoluteTypesOnInside": {
+    "value": "{ $insideSoluteCount} solute types on inside;"
+  },
+  "currentDetailsTransportProteins": {
+    "value": "{ $transportProteinCount } transport proteins in membrane;"
+  },
+  "ligandsOnOutsideOnly": {
+    "value": "Ligands on outside only."
+  },
+  "currentDetailsMembranePotential": {
+    "value": "{ $membranePotential } millivolts."
+  },
+  "releasedBackInToolbox": {
+    "value": "Released. Back in toolbox."
+  },
+  "selectedTransportProteinInSlot": {
+    "value": "Selected { $channelName } in slot { $slotIndex } of { $slotCount }."
+  },
+  "canceledBackInMembrane": {
+    "value": "Cancelled. Back in membrane."
+  },
+  "grabbedProteinResponsePattern": {
+    "value": "Grabbed. Above membrane. Slot {$slotIndex} of { $slotCount }."
+  },
+  "grabbedProteinResponseWithHintPattern": {
+    "value": "{ grabbedProteinResponsePattern } Move protein with W, A, S, or D key. Space to release."
+  },
+  "ligandToggleButtonAccessibleHelpText": {
+    "value": "Add or remove triangle- and star-shaped ligands to outside area of cell."
+  },
+  "ligandToggleButtonAddedContextResponse": {
+    "value": "Ligands flood outside area."
+  },
+  "ligandToggleButtonRemovedContextResponse": {
+    "value": "Ligands removed."
+  },
+  "grabbedLigandResponsePattern": {
+    "value": "Grabbed. Outside, {$proteinCount} Proteins in Membrane."
+  },
+  "grabbedLigandResponseWithHintPattern": {
+    "value": "{ grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release."
+  },
+  "grabbedLigandResponseWithEmptyMembraneHintPattern": {
+    "value": "{ grabbedLigandResponsePattern } Space to release. Add transport proteins."
+  },
+  "ligandMovedAboveLigandGatedChannelPattern": {
+    "value": "Above { $openOrClosed ->[open] open*[closed] closed} { transportProteinBriefName } { $ligandType ->[triangleLigand] Triangle Site*[starLigand] Star Site}, {$index} of {$transportProteinCount} Proteins."
+  },
+  "ligandMovedAboveLeakageChannelPattern": {
+    "value": "Above { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
+  },
+  "ligandMovedAboveOtherChannelPattern": {
+    "value": "Above { $openOrClosed ->[open] open*[closed] closed} { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
   }
 }
