@@ -132,7 +132,14 @@ type StringsType = {
       'moveCancelledPatternStringProperty': LocalizedStringProperty;
       'cannotInteractWhileLigandIsBoundPatternStringProperty': LocalizedStringProperty;
     }
-  }
+  };
+  'transportProteinBriefNameStringProperty': LocalizedStringProperty;
+  'soluteControlsAccessibleHelpTextStringProperty': LocalizedStringProperty;
+  'outsideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
+  'outsideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
+  'insideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
+  'insideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
+  'soluteSpinnerRoleDescriptionStringProperty': LocalizedStringProperty;
 };
 
 const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as StringsType;
