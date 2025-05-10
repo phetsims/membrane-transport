@@ -384,6 +384,6 @@
     "value": "Above { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
   },
   "ligandMovedAboveOtherChannelPattern": {
-    "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+    "value": "Above { $openOrClosed ->\n[open] open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
   }
 }
