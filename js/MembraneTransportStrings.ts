@@ -183,7 +183,7 @@ const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as Stri
 
 
 // Interface for all strings, with special handling for parameterized patterns
-export const membrane_transportStringsNewInterface = {
+export const MembraneTransportFluent = {
   'membrane-transport.title': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/membrane-transport.title'].property,
   'screen.simpleDiffusion': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/screen.simpleDiffusion'].property,
   'screen.facilitatedDiffusion': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/screen.facilitatedDiffusion'].property,

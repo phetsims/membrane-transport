@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import addLigands_mp3 from '../../../sounds/addLigands_mp3.js';
 import removeLigands_mp3 from '../../../sounds/removeLigands_mp3.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings, { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
+import MembraneTransportStrings, { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -45,7 +45,7 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
       tandem: tandem,
 
       // pdom
-      accessibleHelpText: membrane_transportStringsNewInterface.ligandToggleButtonAccessibleHelpText,
+      accessibleHelpText: MembraneTransportFluent.ligandToggleButtonAccessibleHelpText,
       valueOnSoundPlayer: addLigandSoundPlayer,
       valueOffSoundPlayer: removeLigandSoundPlayer
     } );
@@ -54,10 +54,10 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
     // Add accessible responses when the button is pressed, in the same way we do for sound effects.
     this.buttonModel.fireCompleteEmitter.addListener( () => {
       if ( model.areLigandsAddedProperty.value ) {
-        this.addAccessibleResponse( membrane_transportStringsNewInterface.ligandToggleButtonAddedContextResponse );
+        this.addAccessibleResponse( MembraneTransportFluent.ligandToggleButtonAddedContextResponse );
       }
       else {
-        this.addAccessibleResponse( membrane_transportStringsNewInterface.ligandToggleButtonRemovedContextResponse );
+        this.addAccessibleResponse( MembraneTransportFluent.ligandToggleButtonRemovedContextResponse );
       }
     } );
   }

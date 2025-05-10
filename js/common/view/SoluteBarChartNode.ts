@@ -21,7 +21,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
+import { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
@@ -65,7 +65,7 @@ export default class SoluteBarChartNode extends Node {
       validValues: [ 'small', 'medium', 'large' ]
     } );
 
-    const descriptionProperty = membrane_transportStringsNewInterface.barChartPattern.createProperty( {
+    const descriptionProperty = MembraneTransportFluent.barChartPattern.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
       size: sizeDescriptionProperty,

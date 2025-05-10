@@ -25,7 +25,7 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings, { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
+import MembraneTransportStrings, { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -131,7 +131,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
       accessibleHeading: MembraneTransportStrings.a11y.soluteControls.accessibleHeadingStringProperty,
-      accessibleHelpText: membrane_transportStringsNewInterface.soluteControlsAccessibleHelpText,
+      accessibleHelpText: MembraneTransportFluent.soluteControlsAccessibleHelpText,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
     this.addChild( soluteControlsNode );

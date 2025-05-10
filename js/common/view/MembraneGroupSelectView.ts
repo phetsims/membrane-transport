@@ -21,7 +21,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
-import { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
+import { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -265,8 +265,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
 
         const fluentPatternMessageProperty = this.isFirstGrab ?
-                                             membrane_transportStringsNewInterface.grabbedProteinResponseWithHintPattern :
-                                             membrane_transportStringsNewInterface.grabbedProteinResponsePattern;
+                                             MembraneTransportFluent.grabbedProteinResponseWithHintPattern :
+                                             MembraneTransportFluent.grabbedProteinResponsePattern;
         this.alert( fluentPatternMessageProperty.format( {
           slotIndex: this.currentSelection!.currentSlotIndex + 1,
           slotCount: SLOT_COUNT
@@ -314,7 +314,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              this.alert( membrane_transportStringsNewInterface.releasedBackInToolbox );
+              this.alert( MembraneTransportFluent.releasedBackInToolbox );
 
               // Animate the protein back to the toolbox
               returnToolToToolbox( grabbedNode );
@@ -438,7 +438,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
-            this.alert( membrane_transportStringsNewInterface.canceledBackInMembrane );
+            this.alert( MembraneTransportFluent.canceledBackInMembrane );
 
             MembraneTransportSounds.transportProteinReleased();
             resetState();
@@ -452,7 +452,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             returnToolToToolbox( grabbedNode );
 
             MembraneTransportSounds.proteinReturnedToToolbox();
-            this.alert( membrane_transportStringsNewInterface.releasedBackInToolbox );
+            this.alert( MembraneTransportFluent.releasedBackInToolbox );
           }
         }
 

@@ -18,7 +18,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
+import { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
@@ -134,7 +134,7 @@ export default class SoluteControl extends Panel {
              'many';
     } );
 
-    const objectResponseMessageProperty = membrane_transportStringsNewInterface.soluteSpinnerObjectResponsePattern.createProperty( {
+    const objectResponseMessageProperty = MembraneTransportFluent.soluteSpinnerObjectResponsePattern.createProperty( {
       amount: qualitativeCountProperty,
 
       // TODO: Refine model type, see see https://github.com/phetsims/chipper/issues/1588
@@ -160,13 +160,13 @@ export default class SoluteControl extends Panel {
         play: () => {/*no-op*/},
         stop: () => {/*no-op*/}
       },
-      accessibleName: side === 'inside' ? membrane_transportStringsNewInterface.insideMembraneSpinnerAccessibleName :
-                      membrane_transportStringsNewInterface.outsideMembraneSpinnerAccessibleName,
+      accessibleName: side === 'inside' ? MembraneTransportFluent.insideMembraneSpinnerAccessibleName :
+                      MembraneTransportFluent.outsideMembraneSpinnerAccessibleName,
 
-      accessibleHelpText: side === 'inside' ? membrane_transportStringsNewInterface.insideMembraneSpinnerHelpText :
-                          membrane_transportStringsNewInterface.outsideMembraneSpinnerHelpText,
+      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.insideMembraneSpinnerHelpText :
+                          MembraneTransportFluent.outsideMembraneSpinnerHelpText,
 
-      accessibleRoleDescription: membrane_transportStringsNewInterface.soluteSpinnerRoleDescription,
+      accessibleRoleDescription: MembraneTransportFluent.soluteSpinnerRoleDescription,
 
       pdomCreateAriaValueText: ( value: number ) => {
         return objectResponseMessageProperty;
@@ -200,7 +200,7 @@ export default class SoluteControl extends Panel {
                                  ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
         // 4. Supply these to the translation message
-        return membrane_transportStringsNewInterface.soluteSpinnerContextResponsePattern.format( {
+        return MembraneTransportFluent.soluteSpinnerContextResponsePattern.format( {
           amount: amount,                // aLittle / aLot
           addedOrRemoved: addedOrRemoved, // added / removed
           differenceSize: differenceSize, // aLittle / aLot

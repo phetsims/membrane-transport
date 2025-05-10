@@ -30,7 +30,7 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings, { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
+import MembraneTransportStrings, { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -266,14 +266,14 @@ export default class LigandNode extends InteractiveHighlightingNode {
           const index = filledSlots.indexOf( targetSlot ) + 1;
 
           if ( isLeakageChannel ) {
-            this.alert( membrane_transportStringsNewInterface.ligandMovedAboveLeakageChannelPattern.format( {
+            this.alert( MembraneTransportFluent.ligandMovedAboveLeakageChannelPattern.format( {
               type: protein.type,
               transportProteinCount: transportProteinCountProperty,
               index: index
             } ) );
           }
           else if ( isLigandGatedChannel ) {
-            this.alert( membrane_transportStringsNewInterface.ligandMovedAboveLigandGatedChannelPattern.format( {
+            this.alert( MembraneTransportFluent.ligandMovedAboveLigandGatedChannelPattern.format( {
               openOrClosed: protein.openOrClosedProperty,
               index: index,
               type: protein.type,
@@ -282,7 +282,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
             } ) );
           }
           else {
-            this.alert( membrane_transportStringsNewInterface.ligandMovedAboveOtherChannelPattern.format( {
+            this.alert( MembraneTransportFluent.ligandMovedAboveOtherChannelPattern.format( {
               openOrClosed: protein.openOrClosedProperty,
               type: protein.type,
               index: index,
@@ -455,9 +455,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
           // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error TODO: Why do we need to declare this type? https://github.com/phetsims/membrane-transport/issues/45, https://github.com/phetsims/chipper/issues/1588
-          const patternMessageProperty = transportProteinCountProperty.value === 0 ? membrane_transportStringsNewInterface.grabbedLigandResponseWithEmptyMembraneHintPattern :
-                                         grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? membrane_transportStringsNewInterface.grabbedLigandResponsePattern :
-                                         membrane_transportStringsNewInterface.grabbedLigandResponseWithHintPattern;
+          const patternMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportFluent.grabbedLigandResponseWithEmptyMembraneHintPattern :
+                                         grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportFluent.grabbedLigandResponsePattern :
+                                         MembraneTransportFluent.grabbedLigandResponseWithHintPattern;
           return patternMessageProperty.format( {
             proteinCount: transportProteinCountProperty
           } );
