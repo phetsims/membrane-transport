@@ -136,6 +136,10 @@ export default class SoluteControl extends Panel {
 
     const objectResponseMessageProperty = membrane_transportStringsNewInterface.soluteSpinnerObjectResponsePattern.createProperty( {
       amount: qualitativeCountProperty,
+
+      // TODO: Refine model type, see see https://github.com/phetsims/chipper/issues/1588
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       soluteType: model.soluteProperty
     } );
 

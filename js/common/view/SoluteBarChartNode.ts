@@ -11,7 +11,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -61,7 +61,9 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     // TODO (design): i18n https://github.com/phetsims/membrane-transport/issues/90
-    const sizeDescriptionProperty = new StringProperty( 'small' );
+    const sizeDescriptionProperty = new StringUnionProperty( 'small', {
+      validValues: [ 'small', 'medium', 'large' ]
+    } );
 
     const descriptionProperty = membrane_transportStringsNewInterface.barChartPattern.createProperty( {
       soluteType: soluteType,

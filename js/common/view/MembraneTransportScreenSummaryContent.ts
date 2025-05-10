@@ -13,7 +13,6 @@ import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings, { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
-// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -79,7 +78,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
 
     super( {
 
-      // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in. See https://github.com/phetsims/membrane-transport/issues/91
+      // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in. See https://github.com/phetsims/membrane-transport/issues/91 and https://github.com/phetsims/chipper/issues/1588
       playAreaContent: new PatternStringProperty( model.featureSet === 'simpleDiffusion' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen1StringProperty :
                                                   model.featureSet === 'facilitatedDiffusion' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen2and4StringProperty :
                                                   model.featureSet === 'activeTransport' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen3StringProperty :
