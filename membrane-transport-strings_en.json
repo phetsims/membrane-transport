@@ -92,7 +92,7 @@
   "a11y": {
     "summary": {
       "playAreaSummaryIntro": {
-        "value": "An observation window zooms in on a cross-section of a cell's membrane. The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet, that separates fluids inside and outside of cell. Added solute particles are suspended in fluid and randomly move with Brownian motion."
+        "value": "An observation window zooms in on a cross-section of a cell's membrane.\nThe membrane consists of a wiggling phospholipid bilayer, a double-layered sheet\nthat separates fluids inside and outside of cell. Added solute particles are\nsuspended in fluid and randomly move with Brownian motion."
       },
       "playAreaSummarySolutes": {
         "value": "You can choose from a list of solutes and add them to inside and outside."
@@ -110,7 +110,7 @@
         "value": "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryBarCharts}}"
       },
       "playAreaSummaryScreen2and4": {
-        "value": "{{playAreaSummaryIntro}} {playAreaSummarySolutes} {{playAreaSummaryProteins}} {{playAreaSummaryVoltagePotential}} {{playAreaSummaryBarCharts}}"
+        "value": "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryVoltagePotential}} {{playAreaSummaryBarCharts}}"
       },
       "playAreaSummaryScreen3": {
         "value": "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryBarCharts}}"
@@ -300,31 +300,31 @@
     "value": "solute amount adjuster"
   },
   "solute": {
-    "value": "{ $soluteType ->\n[oxygen] oxygen molecules\n[carbonDioxide] carbon dioxide molecules\n[sodiumIon] sodium ions\n[potassiumIon] potassium ions\n[glucose] glucose molecules\n*[atp] ATP molecules\n}"
+    "value": "{ $soluteType ->\n[oxygen]        oxygen molecules\n[carbonDioxide] carbon dioxide molecules\n[sodiumIon]     sodium ions\n[potassiumIon]  potassium ions\n[glucose]       glucose molecules\n*[atp]           ATP molecules\n}"
   },
   "soluteSpinnerObjectResponsePattern": {
-    "value": "{ $amount ->\n[none] no\n[one] one\n[few] a few\n[some] some\n*[many] many\n} { solute }"
+    "value": "{ $amount ->\n[none] no\n[one]  one\n[few]  a few\n[some] some\n*[many] many\n} { solute }"
   },
   "soluteSpinnerContextResponsePattern": {
-    "value": "{ $amount ->\n[aLittle] A little\n*[aLot] A lot\n} { $addedOrRemoved ->\n[added] added\n*[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n[same] same amount of solute inside and outside.\n*[other] { $differenceSize ->\n[aLittle] a little\n*[aLot] a lot\n}\n{ $moreOrLessOrSame ->\n[more] more\n*[less] less\n}\n{ solute }\n{ $directionality ->\n[insideThanOutside] inside than outside\n*[outsideThanInside] outside than inside\n}.\n}"
+    "value": "{ $amount ->\n[aLittle] A little\n*[aLot]   A lot\n} { $addedOrRemoved ->\n[added]   added\n*[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n[same] same amount of solute inside and outside.\n*[other] { $differenceSize ->\n[aLittle] a little\n*[aLot]   a lot\n}\n{ $moreOrLessOrSame ->\n[more] more\n*[less] less\n}\n{ solute }\n{ $directionality ->\n[insideThanOutside]  inside than outside\n*[outsideThanInside] outside than inside\n}.\n}"
   },
   "soluteBarChartsDescriptionParagraph": {
     "value": "A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading."
   },
   "arrowSizeDescription": {
-    "value": "{ $size ->\n[small] small\n[medium] medium\n*[large] large\n}"
+    "value": "{ $size ->\n[small]  small\n[medium] medium\n*[large]  large\n}"
   },
   "arrowDirectionDescription": {
-    "value": "{ $direction ->\n[upward] upward arrow indicates passage from outside to inside\n*[downward] downward arrow indicates passage from inside to outside\n}"
+    "value": "{ $direction ->\n[upward]   upward arrow indicates passage from outside to inside\n*[downward] downward arrow indicates passage from inside to outside\n}"
   },
   "barSizeDescription": {
-    "value": "{ $amount ->\n[aLittleMore] A little more\n[aLotMore] A lot more\n[aLittleLess] A little less\n*[aLotLess] A lot less\n} outside than inside"
+    "value": "{ $amount ->\n[aLittleMore]  A little more\n[aLotMore]     A lot more\n[aLittleLess]  A little less\n*[aLotLess]     A lot less\n} outside than inside"
   },
   "barChartPattern": {
     "value": "{ solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }."
   },
   "currentDetailsActivityLevel": {
-    "value": "{ $activityLevel ->\n*[calm] relatively calm\n[active] active\n[activeAndPaused] active and paused\n}"
+    "value": "{ $activityLevel ->\n*[calm]            relatively calm\n[active]          active\n[activeAndPaused] active and paused\n}"
   },
   "currentDetails": {
     "value": "Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:"
@@ -333,7 +333,7 @@
     "value": "{ $outsideSoluteCount } solute types on outside;"
   },
   "currentDetailsSoluteTypesOnInside": {
-    "value": "{ $insideSoluteCount} solute types on inside;"
+    "value": "{ $insideSoluteCount } solute types on inside;"
   },
   "currentDetailsTransportProteins": {
     "value": "{ $transportProteinCount } transport proteins in membrane;"
@@ -354,10 +354,10 @@
     "value": "Cancelled. Back in membrane."
   },
   "grabbedProteinResponsePattern": {
-    "value": "Grabbed. Above membrane. Slot {$slotIndex} of { $slotCount }."
+    "value": "Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }."
   },
   "grabbedProteinResponseWithHintPattern": {
-    "value": "{ grabbedProteinResponsePattern } Move protein with W, A, S, or D key. Space to release."
+    "value": "{ grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
   },
   "ligandToggleButtonAccessibleHelpText": {
     "value": "Add or remove triangle- and star-shaped ligands to outside area of cell."
@@ -369,7 +369,7 @@
     "value": "Ligands removed."
   },
   "grabbedLigandResponsePattern": {
-    "value": "Grabbed. Outside, {$proteinCount} Proteins in Membrane."
+    "value": "Grabbed. Outside, { $proteinCount } Proteins in Membrane."
   },
   "grabbedLigandResponseWithHintPattern": {
     "value": "{ grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release."
@@ -378,12 +378,12 @@
     "value": "{ grabbedLigandResponsePattern } Space to release. Add transport proteins."
   },
   "ligandMovedAboveLigandGatedChannelPattern": {
-    "value": "Above { $openOrClosed ->\n[open] open\n*[closed] closed\n} { transportProteinBriefName } { $ligandType ->\n[triangleLigand] Triangle Site\n*[starLigand] Star Site\n}, {$index} of {$transportProteinCount} Proteins."
+    "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { transportProteinBriefName } { $ligandType ->\n[triangleLigand] Triangle Site\n*[starLigand]     Star Site\n}, { $index } of { $transportProteinCount } Proteins."
   },
   "ligandMovedAboveLeakageChannelPattern": {
-    "value": "Above { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
+    "value": "Above { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
   },
   "ligandMovedAboveOtherChannelPattern": {
-    "value": "Above { $openOrClosed ->\n[open] open\n*[closed] closed\n} { transportProteinBriefName }, {$index} of {$transportProteinCount} Proteins."
+    "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
   }
 }

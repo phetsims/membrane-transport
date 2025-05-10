@@ -1,0 +1,295 @@
+{
+  'membrane-transport.title': Membrane Transport
+  'screen.simpleDiffusion': Simple Diffusion
+      'screen.facilitatedDiffusion': Facilitated Diffusion
+  'screen.activeTransport': Active Transport
+  'screen.playground': Playground
+
+  solutes: Solutes
+  oxygen: "O<sub>2</sub>"
+  carbonDioxide: "CO<sub>2</sub>"
+  sodiumIon: "Na<sup>+</sup>"
+  potassiumIon: "K<sup>+</sup>"
+  glucose: Glucose
+  atp: ATP
+
+  outside: Outside
+  inside: Inside
+
+  membranePotentialLabels: Membrane Potential Labels
+  voltageGatedChannels: Voltage-gated Channels
+  ligandGatedChannels: Ligand-gated Channels
+  activeTransporters: "Active Transporters"
+  leakageChannels: "Leakage Channels"
+
+  sodiumIonNaPlus: "Sodium Ion<br>(Na<sup>+</sup>)"
+  potassiumIonKPlus: "Potassium Ion<br>(K<sup>+</sup>)"
+  NaPlusKPlusPump: "Na<sup>+</sup>-K<sup>+</sup><br>Pump"
+  sodiumGlucoseCotransporter: "Na<sup>+</sup>-Glucose<br>Cotransporter"
+
+  membranePotential_mV: "Membrane Potential (mV)"
+  signs: Signs
+  addLigands: "Add Ligands"
+  removeLigands: "Remove Ligands"
+  animateLipids: "Animate Lipids"
+  animateLipidsDescription: "Whether the phospholipids forming the cell membrane should be animated"
+  soluteConcentrations: "Solute Concentrations"
+
+  a11y: {
+    summary: {
+      playAreaSummaryIntro: '''
+        An observation window zooms in on a cross-section of a cell's membrane.
+        The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet
+        that separates fluids inside and outside of cell. Added solute particles are
+        suspended in fluid and randomly move with Brownian motion.
+      '''
+      playAreaSummarySolutes: "You can choose from a list of solutes and add them to inside and outside."
+      playAreaSummaryProteins: "Transport proteins can be added directly to membrane."
+      playAreaSummaryVoltagePotential: "There are options to change membrane voltage potential and optionally hide visual charge labels."
+      playAreaSummaryBarCharts: "Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane."
+
+      playAreaSummaryScreen1: "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryBarCharts}}"
+      playAreaSummaryScreen2and4: "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryVoltagePotential}} {{playAreaSummaryBarCharts}}"
+      playAreaSummaryScreen3: "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryBarCharts}}"
+
+      controlAreaSummary: "There are options for how fast the action happens in the observation window, including a button to pause. Also, you can clear the solutes from both sides of the membrane or reset the sim."
+      interactionHint: "Add or remove solute to inside or outside of membrane."
+      interactionHintWithTransportProteins: "Add or remove solutes to inside or outside of membrane, and play with transport channels."
+    }
+    observationWindow: {
+      membrane: { accessibleName: "Zoomed-in Membrane" }
+    }
+    soluteControls: { accessibleHeading: "Solute Controls" }
+    eraseSolutesButton: {
+      accessibleName: "Reset Solutes"
+      accessibleContextResponse: "Solutes cleared. Add solutes to observe changes"
+    }
+
+    transportProteinPanel: {
+      transportProteins: "Transport Proteins"
+      accessibleHelpText: "Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort, and release proteins into membrane."
+
+      ligandGatedChannelPanel: {
+        sodiumIonNaPlusLigandGated: "Sodium Ion NA plus, Ligand-gated"
+        potassiumIonKPlusLigandGated: "Potassium Ion K plus, Ligand-gated"
+      }
+      leakageChannelPanel: {
+        sodiumIonNaPlusLeakage: "Sodium Ion NA plus, Leakage"
+        potassiumIonKPlusLeakage: "Potassium Ion K plus, Leakage"
+      }
+      voltageGatedChannelPanel: {
+        sodiumIonNaPlusVoltageGated: "Sodium Ion NA plus, Voltage-gated"
+        potassiumIonKPlusVoltageGated: "Potassium Ion K plus, Voltage-gated"
+
+        membranePotential: {
+          accessibleHeading: "Membrane Potential Options"
+          radioButtonGroup: {
+            accessibleName: "Voltage (mV)"
+            accessibleHelpText: "Play with membrane voltage potential and observe changes."
+
+            negative70RadioButton: {
+              accessibleName: "negative 70 millivolts"
+              accessibleContextResponse: "Positive outside and negative inside; signs densely packed along membrane."
+            }
+            negative50RadioButton: {
+              accessibleName: "negative 50 millivolts"
+              accessibleContextResponse: "Positive outside and negative inside; signs lightly packed along membrane."
+            }
+            positive30RadioButton: {
+              accessibleName: positive 30 millivolts
+              accessibleContextResponse: Negative outside and positive inside; signs sparse along membrane.
+            }
+          }
+        }
+        signsCheckbox: {
+          accessibleHelpText: "Explore with or without signs showing membrane voltage potential along inside and outside."
+          uncheckedContextResponse: "Voltage potential signs, hidden."
+        }
+      }
+
+      activeTransportProteinPanel: {
+        sodiumPotassiumPump: "Sodium-Potassium Pump"
+        sodiumGlucoseCotransporter: "Sodium-Glucose Cotransporter"
+      }
+
+      toolAccessibleHelpText: "Grab transporter to pull to membrane."
+    }
+
+    ligandNode: {
+      starLigand: "Star Ligand"
+      triangleLigand: "Triangle Ligand"
+      accessibleHelpText: "Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to bonding site. Release to bond or let ligands bond naturally."
+      releasedLigand: Released.
+      grabbedLigand: "Grabbed {{ligandType}}"
+      ligandReleasedOffMembranePattern: "{{ligandType}} released off membrane"
+      ligandReleasedOnProteinPattern: "Released. Binding successful. Protein opens."
+      ligandReleasedOnBusyOrIncompatibleProteinPattern: "Released. Binding unsuccessful. Ligand floats away."
+      ligandMovedToSlotPattern: "{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}"
+      ligandUnboundAlert: "Ligand floats away. Protein closes."
+      thereIsNoProteinAtThisSlot: "There is no protein at this slot"
+      thereIsProteinAtThisSlotPattern: "There is a {{proteinName}} at this slot"
+      moveCancelledPattern: "Cancelled moving {{ligandType}}"
+      cannotInteractWhileLigandIsBoundPattern: "Cannot interact with the membrane while {{ligandType}} is bound to a protein"
+    }
+  }
+
+  // Transport protein brief names
+  transportProteinBriefName: '''
+    { $type ->
+      [sodiumIonLeakageChannel] Sodium Ion, Leakage
+      [potassiumIonLeakageChannel] Potassium Ion, Leakage
+      [sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated
+      [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
+      [sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated
+      [potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated
+      [sodiumPotassiumPump] Sodium Potassium Pump
+     *[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter
+    }
+  '''
+
+  // Solutes radio button group – group names and help text
+  soluteControlsAccessibleHelpText: "Choose solute then add or remove to inside or outside of membrane."
+  outsideMembraneSpinnerAccessibleName: "Outside Membrane"
+  outsideMembraneSpinnerHelpText: "Add or remove chosen solute to outside of membrane."
+  insideMembraneSpinnerAccessibleName: "Inside Membrane"
+  insideMembraneSpinnerHelpText: "Add or remove chosen solute to inside of membrane."
+  soluteSpinnerRoleDescription: "solute amount adjuster"
+
+  // Solute-related strings
+  solute: '''
+    { $soluteType ->
+      [oxygen]        oxygen molecules
+      [carbonDioxide] carbon dioxide molecules
+      [sodiumIon]     sodium ions
+      [potassiumIon]  potassium ions
+      [glucose]       glucose molecules
+     *[atp]           ATP molecules
+    }
+  '''
+
+  soluteSpinnerObjectResponsePattern: '''
+    { $amount ->
+      [none] no
+      [one]  one
+      [few]  a few
+      [some] some
+     *[many] many
+    } { solute }
+  '''
+
+  soluteSpinnerContextResponsePattern: '''
+    { $amount ->
+      [aLittle] A little
+     *[aLot]   A lot
+    } { $addedOrRemoved ->
+      [added]   added
+     *[removed] removed
+    }. Now
+    { $moreOrLessOrSame ->
+      [same] same amount of solute inside and outside.
+     *[other] { $differenceSize ->
+        [aLittle] a little
+       *[aLot]   a lot
+      }
+      { $moreOrLessOrSame ->
+        [more] more
+       *[less] less
+      }
+      { solute }
+      { $directionality ->
+        [insideThanOutside]  inside than outside
+       *[outsideThanInside] outside than inside
+      }.
+    }
+  '''
+
+  // Bar chart descriptions
+  soluteBarChartsDescriptionParagraph: "A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading."
+
+  arrowSizeDescription: '''
+    { $size ->
+      [small]  small
+      [medium] medium
+     *[large]  large
+    }
+  '''
+
+  arrowDirectionDescription: '''
+    { $direction ->
+      [upward]   upward arrow indicates passage from outside to inside
+     *[downward] downward arrow indicates passage from inside to outside
+    }
+  '''
+
+  barSizeDescription: '''
+    { $amount ->
+      [aLittleMore]  A little more
+      [aLotMore]     A lot more
+      [aLittleLess]  A little less
+     *[aLotLess]     A lot less
+    } outside than inside
+  '''
+
+  barChartPattern: "{ solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }."
+
+  // Activity & details descriptions
+  currentDetailsActivityLevel: '''
+    { $activityLevel ->
+     *[calm]            relatively calm
+      [active]          active
+      [activeAndPaused] active and paused
+    }
+  '''
+  currentDetails: "Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:"
+  currentDetailsSoluteTypesOnOutside: "{ $outsideSoluteCount } solute types on outside;"
+  currentDetailsSoluteTypesOnInside:  "{ $insideSoluteCount } solute types on inside;"
+  currentDetailsTransportProteins:    "{ $transportProteinCount } transport proteins in membrane;"
+
+  ligandsOnOutsideOnly: "Ligands on outside only."
+  currentDetailsMembranePotential: "{ $membranePotential } millivolts."
+
+  // Protein interaction descriptions
+  releasedBackInToolbox: "Released. Back in toolbox."
+
+  // Indicate the selected membrane protein, for alerter
+  selectedTransportProteinInSlot: "Selected { $channelName } in slot { $slotIndex } of { $slotCount }."
+  canceledBackInMembrane: "Cancelled. Back in membrane."
+
+  // Spoken when the protein is grabbed.
+  grabbedProteinResponsePattern: "Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }."
+
+  // The first time the protein is grabbed, provide a hint about how to use it.
+  grabbedProteinResponseWithHintPattern: "{ grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
+
+  // accessibleHelpText for the ligand control
+  ligandToggleButtonAccessibleHelpText: "Add or remove triangle- and star-shaped ligands to outside area of cell."
+  ligandToggleButtonAddedContextResponse: "Ligands flood outside area."
+  ligandToggleButtonRemovedContextResponse: "Ligands removed."
+
+  // Spoken when a ligand is grabbed.
+  grabbedLigandResponsePattern: "Grabbed. Outside, { $proteinCount } Proteins in Membrane."
+  grabbedLigandResponseWithHintPattern: "{ grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release."
+  grabbedLigandResponseWithEmptyMembraneHintPattern: "{ grabbedLigandResponsePattern } Space to release. Add transport proteins."
+
+  // Spoken when the ligand moves above a protein that can open or close
+  ligandMovedAboveLigandGatedChannelPattern: '''
+    Above { $openOrClosed ->
+      [open]   open
+     *[closed] closed
+    } { transportProteinBriefName } { $ligandType ->
+      [triangleLigand] Triangle Site
+     *[starLigand]     Star Site
+    }, { $index } of { $transportProteinCount } Proteins.
+  '''
+
+  // Spoken when the ligand moves above a protein that cannot open or close (leakage channel).
+  ligandMovedAboveLeakageChannelPattern: Above { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+
+  // Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
+  ligandMovedAboveOtherChannelPattern: '''
+    Above { $openOrClosed ->
+      [open] open
+     *[closed] closed
+    } { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+  '''
+}
