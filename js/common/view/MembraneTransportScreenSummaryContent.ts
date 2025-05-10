@@ -9,7 +9,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PatternMessageProperty from '../../../../chipper/js/browser/PatternMessageProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -36,20 +35,20 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       createListItemNode( ( membrane_transportStringsNewInterface.currentDetailsSoluteTypesOnInside.createProperty( { insideSoluteCount: model.insideSoluteTypesCountProperty } ) ) )
     ];
 
-    // if ( getFeatureSetHasLigands( model.featureSet ) ) {
-    //   const node = createListItemNode( MembraneTransportMessages.ligandsOnOutsideOnlyMessageProperty );
-    //   model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
-    //   listItemNodes.push( node );
-    // }
-    //
-    // // No transport proteins for simple diffusion
-    // if ( model.featureSet !== 'simpleDiffusion' ) {
-    //   listItemNodes.push( createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsTransportProteinsMessageProperty, { transportProteinCount: model.transportProteinCountProperty } ) ) );
-    // }
-    //
-    // if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-    //   listItemNodes.push( createListItemNode( new PatternMessageProperty( MembraneTransportMessages.currentDetailsMembranePotentialMessageProperty, { membranePotential: model.membraneVoltagePotentialProperty } ) ) );
-    // }
+    if ( getFeatureSetHasLigands( model.featureSet ) ) {
+      const node = createListItemNode( membrane_transportStringsNewInterface.ligandsOnOutsideOnly );
+      model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
+      listItemNodes.push( node );
+    }
+
+    // No transport proteins for simple diffusion
+    if ( model.featureSet !== 'simpleDiffusion' ) {
+      listItemNodes.push( createListItemNode( membrane_transportStringsNewInterface.currentDetailsTransportProteins.createProperty( { transportProteinCount: model.transportProteinCountProperty } ) ) );
+    }
+
+    if ( getFeatureSetHasVoltages( model.featureSet ) ) {
+      listItemNodes.push( createListItemNode( membrane_transportStringsNewInterface.currentDetailsMembranePotential.createProperty( { membranePotential: model.membraneVoltagePotentialProperty } ) ) );
+    }
 
     // A Property that describes that activity level of the particles and transport proteins in the model.
     const activityLevelProperty = new DerivedProperty( [
@@ -69,7 +68,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       children: [
         new Node( {
           tagName: 'p',
-          // accessibleName: new PatternMessageProperty( MembraneTransportMessages.currentDetailsMessageProperty, { activityLevel: activityLevelProperty } )
+          accessibleName: membrane_transportStringsNewInterface.currentDetails.createProperty( { activityLevel: activityLevelProperty } )
         } ),
         new Node( {
           tagName: 'ul',

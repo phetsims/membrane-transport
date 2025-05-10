@@ -8,7 +8,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import FluentUtils from '../../../../chipper/js/browser/FluentUtils.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -22,7 +21,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
-// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -265,13 +264,13 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
           groupSelectModel.selectedGroupItemProperty.value = 'grabbedItem';
         }
 
-        // const fluentPatternMessageProperty = this.isFirstGrab ?
-        //                                      MembraneTransportMessages.grabbedProteinResponseWithHintPatternMessageProperty :
-        //                                      MembraneTransportMessages.grabbedProteinResponsePatternMessageProperty;
-        // this.alert( FluentUtils.formatMessage( fluentPatternMessageProperty, {
-        //   slotIndex: this.currentSelection!.currentSlotIndex + 1,
-        //   slotCount: SLOT_COUNT
-        // } ) );
+        const fluentPatternMessageProperty = this.isFirstGrab ?
+                                             membrane_transportStringsNewInterface.grabbedProteinResponseWithHintPattern :
+                                             membrane_transportStringsNewInterface.grabbedProteinResponsePattern;
+        this.alert( fluentPatternMessageProperty.format( {
+          slotIndex: this.currentSelection!.currentSlotIndex + 1,
+          slotCount: SLOT_COUNT
+        } ) );
 
         this.isFirstGrab = false;
 
@@ -315,7 +314,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+              this.alert( membrane_transportStringsNewInterface.releasedBackInToolbox );
 
               // Animate the protein back to the toolbox
               returnToolToToolbox( grabbedNode );
@@ -439,7 +438,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
-            this.alert( MembraneTransportMessages.canceledBackInMembraneMessageProperty );
+            this.alert( membrane_transportStringsNewInterface.canceledBackInMembrane );
 
             MembraneTransportSounds.transportProteinReleased();
             resetState();
@@ -453,7 +452,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             returnToolToToolbox( grabbedNode );
 
             MembraneTransportSounds.proteinReturnedToToolbox();
-            this.alert( MembraneTransportMessages.releasedBackInToolboxMessageProperty );
+            this.alert( membrane_transportStringsNewInterface.releasedBackInToolbox );
           }
         }
 

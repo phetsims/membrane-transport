@@ -15,8 +15,7 @@ import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
-// import MembraneTransportMessages from '../../strings/MembraneTransportMessages.js';
+import MembraneTransportStrings, { membrane_transportStringsNewInterface } from '../../MembraneTransportStrings.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
@@ -86,7 +85,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       tagName: 'ul',
 
       descriptionTagName: 'p',
-      // descriptionContent: MembraneTransportMessages.soluteBarChartsDescriptionParagraphMessageProperty
+      descriptionContent: membrane_transportStringsNewInterface.soluteBarChartsDescriptionParagraph
     } );
     contentNode.addChild( hbox );
 

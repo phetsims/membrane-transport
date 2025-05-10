@@ -181,9 +181,8 @@ type StringsType = {
 
 const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as StringsType;
 
+
 // Interface for all strings, with special handling for parameterized patterns
-// TODO: Is this backwards compatible? Would need to work with PatternStringProperty.
-// TODO: If it is compatible, we could make MembraneTransportStrings private.
 export const membrane_transportStringsNewInterface = {
   'membrane-transport.title': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/membrane-transport.title'].property,
   'screen.simpleDiffusion': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/screen.simpleDiffusion'].property,
