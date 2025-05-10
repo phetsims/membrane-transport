@@ -1,9 +1,13 @@
 {
+
+  // Title
   'membrane-transport.title': Membrane Transport
-  'screen.simpleDiffusion': Simple Diffusion
-      'screen.facilitatedDiffusion': Facilitated Diffusion
-  'screen.activeTransport': Active Transport
-  'screen.playground': Playground
+
+  // Screen names
+  'screen.simpleDiffusion':      Simple Diffusion
+  'screen.facilitatedDiffusion': Facilitated Diffusion
+  'screen.activeTransport':      Active Transport
+  'screen.playground':           Playground
 
   solutes:       Solutes
   oxygen:        O<sub>2</sub>
