@@ -5,13 +5,13 @@
   'screen.activeTransport': Active Transport
   'screen.playground': Playground
 
-  solutes: Solutes
-  oxygen: O<sub>2</sub>
+  solutes:       Solutes
+  oxygen:        O<sub>2</sub>
   carbonDioxide: CO<sub>2</sub>
-  sodiumIon: Na<sup>+</sup>
-  potassiumIon: K<sup>+</sup>
-  glucose: Glucose
-  atp: ATP
+  sodiumIon:     Na<sup>+</sup>
+  potassiumIon:  K<sup>+</sup>
+  glucose:       Glucose
+  atp:           ATP
 
   outside: Outside
   inside: Inside
@@ -136,14 +136,14 @@
   // Transport protein brief names
   transportProteinBriefName: '''
     { $type ->
-      [sodiumIonLeakageChannel] Sodium Ion, Leakage
-      [potassiumIonLeakageChannel] Potassium Ion, Leakage
-      [sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated
+      [sodiumIonLeakageChannel]         Sodium Ion, Leakage
+      [potassiumIonLeakageChannel]      Potassium Ion, Leakage
+      [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
       [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-      [sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated
-      [potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated
-      [sodiumPotassiumPump] Sodium Potassium Pump
-     *[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter
+      [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
+      [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
+      [sodiumPotassiumPump]             Sodium Potassium Pump
+     *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
     }
   '''
 
@@ -180,7 +180,7 @@
   soluteSpinnerContextResponsePattern: '''
     { $amount ->
       [aLittle] A little
-     *[aLot]   A lot
+     *[aLot]    A lot
     } { $addedOrRemoved ->
       [added]   added
      *[removed] removed
@@ -189,7 +189,7 @@
       [same] same amount of solute inside and outside.
      *[other] { $differenceSize ->
         [aLittle] a little
-       *[aLot]   a lot
+       *[aLot]    a lot
       }
       { $moreOrLessOrSame ->
         [more] more
@@ -197,7 +197,7 @@
       }
       { solute }
       { $directionality ->
-        [insideThanOutside]  inside than outside
+        [insideThanOutside] inside than outside
        *[outsideThanInside] outside than inside
       }.
     }
@@ -288,7 +288,7 @@
   // Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
   ligandMovedAboveOtherChannelPattern: '''
     Above { $openOrClosed ->
-      [open] open
+      [open]   open
      *[closed] closed
     } { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
   '''

@@ -279,7 +279,7 @@
     }
   },
   "transportProteinBriefName": {
-    "value": "{ $type ->\n[sodiumIonLeakageChannel] Sodium Ion, Leakage\n[potassiumIonLeakageChannel] Potassium Ion, Leakage\n[sodiumIonVoltageGatedChannel] Sodium Ion, Voltage-Gated\n[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\n[sodiumIonLigandGatedChannel] Sodium Ion, Ligand-Gated\n[potassiumIonLigandGatedChannel] Potassium Ion, Ligand-Gated\n[sodiumPotassiumPump] Sodium Potassium Pump\n*[sodiumGlucoseCotransporter] Sodium-Glucose Cotransporter\n}"
+    "value": "{ $type ->\n[sodiumIonLeakageChannel]         Sodium Ion, Leakage\n[potassiumIonLeakageChannel]      Potassium Ion, Leakage\n[sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated\n[potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\n[sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated\n[potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated\n[sodiumPotassiumPump]             Sodium Potassium Pump\n*[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter\n}"
   },
   "soluteControlsAccessibleHelpText": {
     "value": "Choose solute then add or remove to inside or outside of membrane."
@@ -306,7 +306,7 @@
     "value": "{ $amount ->\n[none] no\n[one]  one\n[few]  a few\n[some] some\n*[many] many\n} { solute }"
   },
   "soluteSpinnerContextResponsePattern": {
-    "value": "{ $amount ->\n[aLittle] A little\n*[aLot]   A lot\n} { $addedOrRemoved ->\n[added]   added\n*[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n[same] same amount of solute inside and outside.\n*[other] { $differenceSize ->\n[aLittle] a little\n*[aLot]   a lot\n}\n{ $moreOrLessOrSame ->\n[more] more\n*[less] less\n}\n{ solute }\n{ $directionality ->\n[insideThanOutside]  inside than outside\n*[outsideThanInside] outside than inside\n}.\n}"
+    "value": "{ $amount ->\n[aLittle] A little\n*[aLot]    A lot\n} { $addedOrRemoved ->\n[added]   added\n*[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n[same] same amount of solute inside and outside.\n*[other] { $differenceSize ->\n[aLittle] a little\n*[aLot]    a lot\n}\n{ $moreOrLessOrSame ->\n[more] more\n*[less] less\n}\n{ solute }\n{ $directionality ->\n[insideThanOutside] inside than outside\n*[outsideThanInside] outside than inside\n}.\n}"
   },
   "soluteBarChartsDescriptionParagraph": {
     "value": "A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading."
@@ -384,6 +384,6 @@
     "value": "Above { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
   },
   "ligandMovedAboveOtherChannelPattern": {
-    "value": "Above { $openOrClosed ->\n[open] open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+    "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
   }
 }
