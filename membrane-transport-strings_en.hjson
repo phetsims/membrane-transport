@@ -41,8 +41,9 @@
 
   a11y: {
     summary: {
-      playAreaSummaryIntro: '''
-        An observation window zooms in on a cross-section of a cell's membrane.
+      playAreaSummaryIntro:
+      '''
+      An observation window zooms in on a cross-section of a cell's membrane.
         The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet
         that separates fluids inside and outside of cell. Added solute particles are
         suspended in fluid and randomly move with Brownian motion.
@@ -138,7 +139,8 @@
   }
 
   // Transport protein brief names
-  transportProteinBriefName: '''
+  transportProteinBriefName:
+  '''
     { $type ->
       [sodiumIonLeakageChannel]         Sodium Ion, Leakage
       [potassiumIonLeakageChannel]      Potassium Ion, Leakage
@@ -160,7 +162,8 @@
   soluteSpinnerRoleDescription: solute amount adjuster
 
   // Solute-related strings
-  solute: '''
+  solute:
+  '''
     { $soluteType ->
       [oxygen]        oxygen molecules
       [carbonDioxide] carbon dioxide molecules
@@ -171,7 +174,8 @@
     }
   '''
 
-  soluteSpinnerObjectResponsePattern: '''
+  soluteSpinnerObjectResponsePattern:
+  '''
     { $amount ->
       [none] no
       [one]  one
@@ -181,7 +185,8 @@
     } { solute }
   '''
 
-  soluteSpinnerContextResponsePattern: '''
+  soluteSpinnerContextResponsePattern:
+  '''
     { $amount ->
       [aLittle] A little
      *[aLot]    A lot
