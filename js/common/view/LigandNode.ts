@@ -349,10 +349,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tandem: tandem.createTandem( 'keyboardListener' )
       } );
 
-      // TODO: Why the type error on this line too? Related to the one below? See https://github.com/phetsims/chipper/issues/1588
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      const grabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
+      // Declare type since it refers to itself in its own declaration
+      const grabDragInteraction: GrabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
         objectToGrabString: this.getLigandTypeName(),
 
@@ -447,14 +445,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
         // The grab and release alerts are handled by the logic in onGrab and onRelease.
         createReleasedResponse: () => null,
 
-        // TODO: Why the type error on this line too? Related to the one below? See https://github.com/phetsims/chipper/issues/1588
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         createGrabbedResponse: () => {
 
           // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error TODO: Why do we need to declare this type? https://github.com/phetsims/membrane-transport/issues/45, https://github.com/phetsims/chipper/issues/1588
           const patternMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportFluent.grabbedLigandResponseWithEmptyMembraneHintPattern :
                                          grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportFluent.grabbedLigandResponsePattern :
                                          MembraneTransportFluent.grabbedLigandResponseWithHintPattern;
