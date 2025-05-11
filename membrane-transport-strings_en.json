@@ -107,13 +107,13 @@
         "value": "Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane."
       },
       "playAreaSummaryScreen1": {
-        "value": "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryBarCharts}}"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "playAreaSummaryScreen2and4": {
-        "value": "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryVoltagePotential}} {{playAreaSummaryBarCharts}}"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryVoltagePotential } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "playAreaSummaryScreen3": {
-        "value": "{{playAreaSummaryIntro}} {{playAreaSummarySolutes}} {{playAreaSummaryProteins}} {{playAreaSummaryBarCharts}}"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "controlAreaSummary": {
         "value": "There are options for how fast the action happens in the observation window, including a button to pause. Also, you can clear the solutes from both sides of the membrane or reset the sim."

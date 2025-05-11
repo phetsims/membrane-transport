@@ -7,7 +7,6 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -79,17 +78,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     super( {
 
       // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in. See https://github.com/phetsims/membrane-transport/issues/91 and https://github.com/phetsims/chipper/issues/1588
-      playAreaContent: new PatternStringProperty( model.featureSet === 'simpleDiffusion' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen1StringProperty :
-                                                  model.featureSet === 'facilitatedDiffusion' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen2and4StringProperty :
-                                                  model.featureSet === 'activeTransport' ? MembraneTransportStrings.a11y.summary.playAreaSummaryScreen3StringProperty :
-                                                  MembraneTransportStrings.a11y.summary.playAreaSummaryScreen2and4StringProperty, {
-          playAreaSummaryIntro: MembraneTransportStrings.a11y.summary.playAreaSummaryIntroStringProperty,
-          playAreaSummarySolutes: MembraneTransportStrings.a11y.summary.playAreaSummarySolutesStringProperty,
-          playAreaSummaryProteins: MembraneTransportStrings.a11y.summary.playAreaSummaryProteinsStringProperty,
-          playAreaSummaryVoltagePotential: MembraneTransportStrings.a11y.summary.playAreaSummaryVoltagePotentialStringProperty,
-          playAreaSummaryBarCharts: MembraneTransportStrings.a11y.summary.playAreaSummaryBarChartsStringProperty
-        }
-      ),
+      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1 :
+                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4 :
+                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3 :
+                       MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4,
       controlAreaContent: MembraneTransportStrings.a11y.summary.controlAreaSummaryStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode
