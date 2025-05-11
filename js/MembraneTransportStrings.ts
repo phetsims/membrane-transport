@@ -221,9 +221,9 @@ export const MembraneTransportFluent = {
       'playAreaSummaryProteins': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryProteins'].property,
       'playAreaSummaryVoltagePotential': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryVoltagePotential'].property,
       'playAreaSummaryBarCharts': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryBarCharts'].property,
-      'playAreaSummaryScreen1': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryScreen1'].property,
-      'playAreaSummaryScreen2and4': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryScreen2and4'].property,
-      'playAreaSummaryScreen3': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryScreen3'].property,
+      'playAreaSummaryScreen1': createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
+      'playAreaSummaryScreen2and4': createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),
+      'playAreaSummaryScreen3': createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen3' ),
       'controlAreaSummary': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.controlAreaSummary'].property,
       'interactionHint': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.interactionHint'].property,
       'interactionHintWithTransportProteins': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.interactionHintWithTransportProteins'].property
@@ -307,7 +307,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'transportProteinBriefName', args ) 
+    createProperty: (args: { type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'transportProteinBriefName', args )
   },
   'soluteControlsAccessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteControlsAccessibleHelpText'].property,
   'outsideMembraneSpinnerAccessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/outsideMembraneSpinnerAccessibleName'].property,
@@ -321,7 +321,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'solute', args ) 
+    createProperty: (args: { soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'solute', args )
   },
   'soluteSpinnerObjectResponsePattern': {
     format: (args: { amount: 'none' | 'one' | 'few' | 'some' | 'many' | TReadOnlyProperty<'none' | 'one' | 'few' | 'some' | 'many'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => FluentUtils.formatMessageWithBundle(
@@ -329,7 +329,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { amount: 'none' | 'one' | 'few' | 'some' | 'many' | TReadOnlyProperty<'none' | 'one' | 'few' | 'some' | 'many'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'soluteSpinnerObjectResponsePattern', args ) 
+    createProperty: (args: { amount: 'none' | 'one' | 'few' | 'some' | 'many' | TReadOnlyProperty<'none' | 'one' | 'few' | 'some' | 'many'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'soluteSpinnerObjectResponsePattern', args )
   },
   'soluteSpinnerContextResponsePattern': {
     format: (args: { addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | 'more' | 'less' | TReadOnlyProperty<'same' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => FluentUtils.formatMessageWithBundle(
@@ -337,7 +337,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | 'more' | 'less' | TReadOnlyProperty<'same' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'soluteSpinnerContextResponsePattern', args ) 
+    createProperty: (args: { addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | 'more' | 'less' | TReadOnlyProperty<'same' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'soluteSpinnerContextResponsePattern', args )
   },
   'soluteBarChartsDescriptionParagraph': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/soluteBarChartsDescriptionParagraph'].property,
   'arrowSizeDescription': {
@@ -346,7 +346,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'arrowSizeDescription', args ) 
+    createProperty: (args: { size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'arrowSizeDescription', args )
   },
   'arrowDirectionDescription': {
     format: (args: { direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }) => FluentUtils.formatMessageWithBundle(
@@ -354,7 +354,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'arrowDirectionDescription', args ) 
+    createProperty: (args: { direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'arrowDirectionDescription', args )
   },
   'barSizeDescription': {
     format: (args: { amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }) => FluentUtils.formatMessageWithBundle(
@@ -362,7 +362,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'barSizeDescription', args ) 
+    createProperty: (args: { amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'barSizeDescription', args )
   },
   'barChartPattern': {
     format: (args: { amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => FluentUtils.formatMessageWithBundle(
@@ -370,7 +370,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'barChartPattern', args ) 
+    createProperty: (args: { amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'barChartPattern', args )
   },
   'currentDetailsActivityLevel': {
     format: (args: { activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }) => FluentUtils.formatMessageWithBundle(
@@ -378,7 +378,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsActivityLevel', args ) 
+    createProperty: (args: { activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsActivityLevel', args )
   },
   'currentDetails': {
     format: (args: { activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }) => FluentUtils.formatMessageWithBundle(
@@ -386,7 +386,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetails', args ) 
+    createProperty: (args: { activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetails', args )
   },
   'currentDetailsSoluteTypesOnOutside': {
     format: (args: { outsideSoluteCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
@@ -394,7 +394,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { outsideSoluteCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsSoluteTypesOnOutside', args ) 
+    createProperty: (args: { outsideSoluteCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsSoluteTypesOnOutside', args )
   },
   'currentDetailsSoluteTypesOnInside': {
     format: (args: { insideSoluteCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
@@ -402,7 +402,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { insideSoluteCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsSoluteTypesOnInside', args ) 
+    createProperty: (args: { insideSoluteCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsSoluteTypesOnInside', args )
   },
   'currentDetailsTransportProteins': {
     format: (args: { transportProteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
@@ -410,7 +410,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { transportProteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsTransportProteins', args ) 
+    createProperty: (args: { transportProteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsTransportProteins', args )
   },
   'ligandsOnOutsideOnly': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandsOnOutsideOnly'].property,
   'currentDetailsMembranePotential': {
@@ -419,7 +419,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { membranePotential: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsMembranePotential', args ) 
+    createProperty: (args: { membranePotential: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'currentDetailsMembranePotential', args )
   },
   'releasedBackInToolbox': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/releasedBackInToolbox'].property,
   'selectedTransportProteinInSlot': {
@@ -428,7 +428,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'selectedTransportProteinInSlot', args ) 
+    createProperty: (args: { channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'selectedTransportProteinInSlot', args )
   },
   'canceledBackInMembrane': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/canceledBackInMembrane'].property,
   'grabbedProteinResponsePattern': {
@@ -437,7 +437,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedProteinResponsePattern', args ) 
+    createProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedProteinResponsePattern', args )
   },
   'grabbedProteinResponseWithHintPattern': {
     format: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
@@ -445,7 +445,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedProteinResponseWithHintPattern', args ) 
+    createProperty: (args: { slotCount: IntentionalAny, slotIndex: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedProteinResponseWithHintPattern', args )
   },
   'ligandToggleButtonAccessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandToggleButtonAccessibleHelpText'].property,
   'ligandToggleButtonAddedContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/ligandToggleButtonAddedContextResponse'].property,
@@ -456,7 +456,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponsePattern', args ) 
+    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponsePattern', args )
   },
   'grabbedLigandResponseWithHintPattern': {
     format: (args: { proteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
@@ -464,7 +464,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponseWithHintPattern', args ) 
+    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponseWithHintPattern', args )
   },
   'grabbedLigandResponseWithEmptyMembraneHintPattern': {
     format: (args: { proteinCount: IntentionalAny }) => FluentUtils.formatMessageWithBundle(
@@ -472,7 +472,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponseWithEmptyMembraneHintPattern', args ) 
+    createProperty: (args: { proteinCount: IntentionalAny }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'grabbedLigandResponseWithEmptyMembraneHintPattern', args )
   },
   'ligandMovedAboveLigandGatedChannelPattern': {
     format: (args: { index: IntentionalAny, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => FluentUtils.formatMessageWithBundle(
@@ -480,7 +480,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { index: IntentionalAny, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveLigandGatedChannelPattern', args ) 
+    createProperty: (args: { index: IntentionalAny, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveLigandGatedChannelPattern', args )
   },
   'ligandMovedAboveLeakageChannelPattern': {
     format: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => FluentUtils.formatMessageWithBundle(
@@ -488,7 +488,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveLeakageChannelPattern', args ) 
+    createProperty: (args: { index: IntentionalAny, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveLeakageChannelPattern', args )
   },
   'ligandMovedAboveOtherChannelPattern': {
     format: (args: { index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => FluentUtils.formatMessageWithBundle(
@@ -496,7 +496,7 @@ export const MembraneTransportFluent = {
       MembraneTransportStrings.fluentBundleProperty.value,
       args
     ),
-    createProperty: (args: { index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveOtherChannelPattern', args ) 
+    createProperty: (args: { index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveOtherChannelPattern', args )
   }
 };
 
