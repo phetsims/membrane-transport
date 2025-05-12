@@ -436,6 +436,13 @@ export default class Particle<T extends ParticleType> {
       const currentPosition = this.position.copy();
       const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
 
+      // Compensate for the centroid of the ATP molecule, but only when moving to the sodium potassium pump. After locked in,
+      // the values in getSitePosition are correct for the sole phosphate
+      if ( this.mode.site === 'phosphate' ) {
+        targetPosition.y -= 17;
+        targetPosition.x += 3;
+      }
+
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
 
@@ -720,7 +727,15 @@ export default class Particle<T extends ParticleType> {
       // If the particle is within a certain radial distance from the center of the transport protein, it can interact
       const distance = this.position.distance( new Vector2( slot.position, 0 ) );
 
-      if ( transportProtein && distance < CAPTURE_RADIUS_PROPERTY.value && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
+      let captureRadius = CAPTURE_RADIUS_PROPERTY.value;
+
+      // ATP's is a tall molecule and will bounce off the membrane before interacting with the protein, so we must
+      // increase the capture radius
+      if ( this.type === 'atp' ) {
+        captureRadius = captureRadius * 2;
+      }
+
+      if ( transportProtein && distance < captureRadius && randomWalk.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
         const interactedWithProtein = this.handleProteinInteractionDuringRandomWalk( slot, transportProtein, model, outsideOfCell );
         if ( interactedWithProtein ) {
           return true;
