@@ -39,7 +39,7 @@ import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
-import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
+import SoluteType, { LigandType, ParticleType, SoluteControlSolutes } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -78,7 +78,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
   public readonly transportProteinCountProperty = new NumberProperty( 0 );
 
-  public readonly soluteProperty: StringUnionProperty<SoluteType>;
+  public readonly soluteProperty: StringUnionProperty<SoluteControlSolutes>;
 
   public readonly isShowingSignsProperty: Property<boolean>;
   public readonly membraneVoltagePotentialProperty: Property<( -70 ) | -50 | 30>;
@@ -131,7 +131,7 @@ export default class MembraneTransportModel extends PhetioObject {
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
     this.membraneSlots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
-    this.soluteProperty = new StringUnionProperty<SoluteType>( 'oxygen', {
+    this.soluteProperty = new StringUnionProperty<SoluteControlSolutes>( 'oxygen', {
       validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'soluteProperty' ),
       phetioFeatured: true
