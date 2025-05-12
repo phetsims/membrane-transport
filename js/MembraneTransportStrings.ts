@@ -179,7 +179,7 @@ type StringsType = {
   'fluentBundleProperty': TReadOnlyProperty<FluentBundle>;
 }
 
-const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as unknown as StringsType;
+const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as StringsType;
 
 
 // Interface for all strings, with special handling for parameterized patterns
