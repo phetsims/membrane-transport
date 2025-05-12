@@ -76,8 +76,6 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     } );
 
     super( {
-
-      // TODO (JG): Am I forgetting a variable passed in to the options here? It is a FluentPattern with nothing to fill in. See https://github.com/phetsims/membrane-transport/issues/91 and https://github.com/phetsims/chipper/issues/1588
       playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1 :
                        model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4 :
                        model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3 :
