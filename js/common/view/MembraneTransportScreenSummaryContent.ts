@@ -45,7 +45,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     }
 
     if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-      listItemNodes.push( createListItemNode( MembraneTransportFluent.currentDetailsMembranePotential.createProperty( { membranePotential: model.membraneVoltagePotentialProperty } ) ) );
+      listItemNodes.push( createListItemNode( MembraneTransportFluent.currentDetailsMembranePotential.createProperty( { membranePotential: model.membranePotentialProperty } ) ) );
     }
 
     // A Property that describes that activity level of the particles and transport proteins in the model.

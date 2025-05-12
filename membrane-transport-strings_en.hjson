@@ -52,11 +52,11 @@
         '''
       playAreaSummarySolutes: You can choose from a list of solutes and add them to inside and outside.
       playAreaSummaryProteins: Transport proteins can be added directly to membrane.
-      playAreaSummaryVoltagePotential: There are options to change membrane voltage potential and optionally hide visual charge labels.
+      playAreaSummaryPotential: There are options to change membrane voltage potential and optionally hide visual charge labels.
       playAreaSummaryBarCharts: Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane.
 
       playAreaSummaryScreen1: "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
-      playAreaSummaryScreen2and4: "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryVoltagePotential } { a11y_summary_playAreaSummaryBarCharts }"
+      playAreaSummaryScreen2and4: "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryPotential } { a11y_summary_playAreaSummaryBarCharts }"
       playAreaSummaryScreen3: "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts }"
 
       controlAreaSummary: There are options for how fast the action happens in the observation window, including a button to pause. Also, you can clear the solutes from both sides of the membrane or reset the sim.

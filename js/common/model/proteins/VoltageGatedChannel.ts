@@ -20,7 +20,7 @@ export default abstract class VoltageGatedChannel<T extends string> extends Tran
     // * -70: resting, both closed
     // * -50: Na open, K closed
     // * +30: Na closed, K open
-    model.membraneVoltagePotentialProperty.link( voltage => {
+    model.membranePotentialProperty.link( voltage => {
 
       this.timeSinceVoltageChanged = 0;
 
@@ -38,7 +38,7 @@ export default abstract class VoltageGatedChannel<T extends string> extends Tran
       this.timeSinceVoltageChanged += dt;
 
       if ( this.timeSinceVoltageChanged > 0.5 ) {
-        const voltage = this.model.membraneVoltagePotentialProperty.value;
+        const voltage = this.model.membranePotentialProperty.value;
         this.stateProperty.value = this.getStateForVoltage( voltage );
         this.timeSinceVoltageChanged = null;
       }

@@ -11,7 +11,7 @@ type TransportProteinModelContext = Pick<MembraneTransportModel,
   'isTransportProteinSoluteFree' |
   'getSlotForTransportProtein' |
   'solutes' |
-  'membraneVoltagePotentialProperty' |
+  'membranePotentialProperty' |
   'ligandUnboundDueToNaturalCausesEmitter' |
   'isUserDraggingLigandProperty'
 >;

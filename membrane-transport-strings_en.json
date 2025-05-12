@@ -100,7 +100,7 @@
       "playAreaSummaryProteins": {
         "value": "Transport proteins can be added directly to membrane."
       },
-      "playAreaSummaryVoltagePotential": {
+      "playAreaSummaryPotential": {
         "value": "There are options to change membrane voltage potential and optionally hide visual charge labels."
       },
       "playAreaSummaryBarCharts": {
@@ -110,7 +110,7 @@
         "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "playAreaSummaryScreen2and4": {
-        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryVoltagePotential } { a11y_summary_playAreaSummaryBarCharts }"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryPotential } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "playAreaSummaryScreen3": {
         "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts }"

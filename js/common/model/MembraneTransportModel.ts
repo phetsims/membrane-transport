@@ -81,7 +81,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly soluteProperty: StringUnionProperty<SoluteControlSolutes>;
 
   public readonly isShowingSignsProperty: Property<boolean>;
-  public readonly membraneVoltagePotentialProperty: Property<( -70 ) | -50 | 30>;
+  public readonly membranePotentialProperty: Property<( -70 ) | -50 | 30>;
 
   public readonly ligandUnboundDueToNaturalCausesEmitter = new Emitter<[ Particle<LigandType> ]>( {
     parameters: [ { valueType: Particle } ]
@@ -157,14 +157,14 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
     this.resetEmitter.addListener( () => this.isShowingSignsProperty.reset() );
 
-    this.membraneVoltagePotentialProperty = new Property<( -70 ) | -50 | 30>( -70, {
-      tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membraneVoltagePotentialProperty' ) : Tandem.OPT_OUT,
+    this.membranePotentialProperty = new Property<( -70 ) | -50 | 30>( -70, {
+      tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'membranePotentialProperty' ) : Tandem.OPT_OUT,
       validValues: [ -70, -50, 30 ],
       units: 'mV',
       phetioFeatured: true,
       phetioValueType: NumberIO
     } );
-    this.resetEmitter.addListener( () => this.membraneVoltagePotentialProperty.reset() );
+    this.resetEmitter.addListener( () => this.membranePotentialProperty.reset() );
 
     this.areLigandsAddedProperty = new BooleanProperty( false, {
       tandem: getFeatureSetHasLigands( featureSet ) ? providedOptions.tandem.createTandem( 'areLigandsAddedProperty' ) : Tandem.OPT_OUT,

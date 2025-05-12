@@ -57,7 +57,7 @@ type StringsType = {
       'playAreaSummaryIntroStringProperty': LocalizedStringProperty;
       'playAreaSummarySolutesStringProperty': LocalizedStringProperty;
       'playAreaSummaryProteinsStringProperty': LocalizedStringProperty;
-      'playAreaSummaryVoltagePotentialStringProperty': LocalizedStringProperty;
+      'playAreaSummaryPotentialStringProperty': LocalizedStringProperty;
       'playAreaSummaryBarChartsStringProperty': LocalizedStringProperty;
       'playAreaSummaryScreen1StringProperty': LocalizedStringProperty;
       'playAreaSummaryScreen2and4StringProperty': LocalizedStringProperty;
@@ -219,7 +219,7 @@ export const MembraneTransportFluent = {
       'playAreaSummaryIntro': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryIntro'].property,
       'playAreaSummarySolutes': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummarySolutes'].property,
       'playAreaSummaryProteins': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryProteins'].property,
-      'playAreaSummaryVoltagePotential': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryVoltagePotential'].property,
+      'playAreaSummaryPotential': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryPotential'].property,
       'playAreaSummaryBarCharts': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.summary.playAreaSummaryBarCharts'].property,
       'playAreaSummaryScreen1': createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
       'playAreaSummaryScreen2and4': createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),

@@ -17,9 +17,9 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembranePotentialPanel extends Panel {
-  public constructor( model: Pick<MembraneTransportModel, 'membraneVoltagePotentialProperty' | 'isShowingSignsProperty'>, tandem: Tandem ) {
+  public constructor( model: Pick<MembraneTransportModel, 'membranePotentialProperty' | 'isShowingSignsProperty'>, tandem: Tandem ) {
 
-    const membraneVoltagePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membraneVoltagePotentialProperty, [ {
+    const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
       value: -70,
       createNode: tandem => new Text( '-70' ),
       tandemName: 'negative70RadioButton',
@@ -49,7 +49,7 @@ export default class MembranePotentialPanel extends Panel {
       orientation: 'horizontal',
       accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
-      tandem: tandem.createTandem( 'membraneVoltagePotentialRadioButtonGroup' )
+      tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' )
     } );
 
     const content = new VBox( {
@@ -62,7 +62,7 @@ export default class MembranePotentialPanel extends Panel {
           fontSize: 14
         } ),
 
-        membraneVoltagePotentialRadioButtonGroup,
+        membranePotentialRadioButtonGroup,
 
         new Checkbox( model.isShowingSignsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
           maxWidth: 140,

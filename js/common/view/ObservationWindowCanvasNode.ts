@@ -198,7 +198,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
 
   private drawCharges( context: CanvasRenderingContext2D ): void {
-    const potentialNumber = this.model.membraneVoltagePotentialProperty.value;
+    const potentialNumber = this.model.membranePotentialProperty.value;
 
     const numberOfCharges = Utils.roundSymmetric( 18 * Math.abs( potentialNumber ) / 70 );
     const margin = 5;
