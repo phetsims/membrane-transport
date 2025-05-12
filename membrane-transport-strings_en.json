@@ -101,7 +101,7 @@
         "value": "Transport proteins can be added directly to membrane."
       },
       "playAreaSummaryVoltagePotential": {
-        "value": "There are options to change membrane voltage potential and optionally hide visual charge labels."
+        "value": "There are options to change membrane potential and optionally hide visual charge labels."
       },
       "playAreaSummaryBarCharts": {
         "value": "Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane."
@@ -177,14 +177,14 @@
         },
         "membranePotential": {
           "accessibleHeading": {
-            "value": "Membrane Potential Options"
+            "value": "Membrane Potential"
           },
           "radioButtonGroup": {
             "accessibleName": {
-              "value": "Voltage (mV)"
+              "value": "REMOVE ME"
             },
             "accessibleHelpText": {
-              "value": "Play with membrane voltage potential and observe changes."
+              "value": "Adjust millivolts and observe proteins."
             },
             "negative70RadioButton": {
               "accessibleName": {
@@ -214,10 +214,10 @@
         },
         "signsCheckbox": {
           "accessibleHelpText": {
-            "value": "Explore with or without signs showing membrane voltage potential along inside and outside."
+            "value": "Explore with or without signs showing membrane potential along inside and outside."
           },
           "uncheckedContextResponse": {
-            "value": "Voltage potential signs, hidden."
+            "value": "Membrane potential signs, hidden."
           }
         }
       },
