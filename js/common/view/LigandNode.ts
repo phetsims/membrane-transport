@@ -115,17 +115,11 @@ export default class LigandNode extends InteractiveHighlightingNode {
       descriptionAlertNode: observationWindow
     } );
 
-    // Scenery provides isFocused() as a method, but we must convert it to a Property so we can observe changes.
-    this.addInputListener( {
+    this.focusedProperty.lazyLink( focused => {
+      this.ligand.focused = focused;
 
-      focus: () => {
-        this.ligand.focused = true;
-      },
-      blur: () => {
-
-        this.ligand.focused = false;
-
-        // Resume brownian motion when focus is lost
+      // Resume brownian motion when focus is lost
+      if ( !focused ) {
         this.ligand.mode = Particle.createRandomWalkMode( true );
       }
     } );
