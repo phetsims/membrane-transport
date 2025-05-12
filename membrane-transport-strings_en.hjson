@@ -256,7 +256,7 @@
     [activeAndPaused] active and paused
     }
     '''
-  currentDetails: Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with
+  currentDetails: 'Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:'
   currentDetailsSoluteTypesOnOutside: "{ $outsideSoluteCount } solute types on outside;"
   currentDetailsSoluteTypesOnInside: "{ $insideSoluteCount } solute types on inside;"
   currentDetailsTransportProteins: "{ $transportProteinCount } transport proteins in membrane;"
