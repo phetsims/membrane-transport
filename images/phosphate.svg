@@ -1,37 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="193.91" height="193.91" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 193.91 193.91">
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="193.84" height="193.84" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 193.84 193.84">
   <defs>
     <style>
       .cls-1 {
-        font-family: MyriadPro-Regular, 'Myriad Pro';
-        font-size: 86.63px;
-      }
-
-      .cls-2 {
         fill: url(#linear-gradient);
         stroke: #010101;
         stroke-miterlimit: 10;
         stroke-width: 10px;
       }
     </style>
-    <linearGradient id="linear-gradient" x1="5" y1="96.95" x2="188.91" y2="96.95" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient" x1="859.25" y1="371.64" x2="1034.28" y2="413" gradientTransform="translate(-837.76 -323.38) rotate(1.7)" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#fff"/>
-      <stop offset=".01" stop-color="#f4faf7"/>
-      <stop offset=".09" stop-color="#c3e5d2"/>
-      <stop offset=".16" stop-color="#96d1b1"/>
-      <stop offset=".24" stop-color="#70c194"/>
-      <stop offset=".33" stop-color="#4fb37c"/>
-      <stop offset=".42" stop-color="#35a768"/>
-      <stop offset=".52" stop-color="#219e59"/>
-      <stop offset=".63" stop-color="#12984f"/>
-      <stop offset=".77" stop-color="#0a9548"/>
+      <stop offset=".1" stop-color="#d3ecde"/>
+      <stop offset=".23" stop-color="#9dd4b6"/>
+      <stop offset=".36" stop-color="#70c194"/>
+      <stop offset=".49" stop-color="#4ab078"/>
+      <stop offset=".62" stop-color="#2da462"/>
+      <stop offset=".75" stop-color="#189b53"/>
+      <stop offset=".88" stop-color="#0c954a"/>
       <stop offset="1" stop-color="#089447"/>
     </linearGradient>
   </defs>
   <g id="Layer_1-2" data-name="Layer_1">
-    <g>
-      <path class="cls-2" d="M82.01,177.09l-8.05-33.97c-2.72-11.48-11.69-20.45-23.17-23.17l-33.97-8.05c-15.76-3.73-15.76-26.16,0-29.89l33.97-8.05c11.48-2.72,20.45-11.69,23.17-23.17l8.05-33.97c3.73-15.76,26.16-15.76,29.89,0l8.05,33.97c2.72,11.48,11.69,20.45,23.17,23.17l33.97,8.05c15.76,3.73,15.76,26.16,0,29.89l-33.97,8.05c-11.48,2.72-20.45,11.69-23.17,23.17l-8.05,33.97c-3.73,15.76-26.16,15.76-29.89,0Z"/>
-      <text class="cls-1" transform="translate(76.59 125.89)"><tspan x="0" y="0">P</tspan></text>
-    </g>
+    <path class="cls-1" d="M79.6,176.58l-7.04-34.2c-2.38-11.56-11.07-20.79-22.47-23.85l-33.72-9.06c-15.64-4.2-14.97-26.61.89-29.88l34.2-7.04c11.56-2.38,20.79-11.07,23.85-22.47l9.06-33.72c4.2-15.64,26.61-14.97,29.88.89l7.04,34.2c2.38,11.56,11.07,20.79,22.47,23.85l33.72,9.06c15.64,4.2,14.97,26.61-.89,29.88l-34.2,7.04c-11.56,2.38-20.79,11.07-23.85,22.47l-9.06,33.72c-4.2,15.64-26.61,14.97-29.88-.89Z"/>
   </g>
 </svg>

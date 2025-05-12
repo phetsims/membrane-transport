@@ -17,7 +17,7 @@
         stroke: #010101;
       }
     </style>
-    <linearGradient id="linear-gradient" x1="5" y1="90" x2="175" y2="90" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient" x1="175" y1="90" x2="5" y2="90" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#00a8d4"/>
       <stop offset=".23" stop-color="#02a8d4"/>
       <stop offset=".36" stop-color="#0aabd5"/>
