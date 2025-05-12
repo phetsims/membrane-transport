@@ -327,7 +327,7 @@
     "value": "{ $activityLevel ->\n*[calm]            relatively calm\n[active]          active\n[activeAndPaused] active and paused\n}"
   },
   "currentDetails": {
-    "value": "Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with:"
+    "value": "Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with"
   },
   "currentDetailsSoluteTypesOnOutside": {
     "value": "{ $outsideSoluteCount } solute types on outside;"
