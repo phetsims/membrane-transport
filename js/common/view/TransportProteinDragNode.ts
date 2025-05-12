@@ -102,20 +102,6 @@ export default class TransportProteinDragNode extends Node {
       }
     } );
 
-    slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
-      if ( newValue !== null ) {
-        if ( oldValue === null ) {
-          // the pick up sound will play in this case
-        }
-        else if ( newValue > oldValue ) {
-          MembraneTransportSounds.itemMoved( 'right' );
-        }
-        else if ( newValue < oldValue ) {
-          MembraneTransportSounds.itemMoved( 'left' );
-        }
-      }
-    } );
-
     inContactWithWallProperty.lazyLink( inContactWithWall => {
       if ( inContactWithWall ) {
         MembraneTransportSounds.boundaryReached();
@@ -192,6 +178,22 @@ export default class TransportProteinDragNode extends Node {
       }
     } );
     this.addInputListener( this.dragListener );
+
+    slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
+
+      // Only play sound when the user is controlling it, not when animating.
+      if ( newValue !== null && this.dragListener.isUserControlledProperty.value ) {
+        if ( oldValue === null ) {
+          // the pick up sound will play in this case
+        }
+        else if ( newValue > oldValue ) {
+          MembraneTransportSounds.itemMoved( 'right' );
+        }
+        else if ( newValue < oldValue ) {
+          MembraneTransportSounds.itemMoved( 'left' );
+        }
+      }
+    } );
   }
 
   public press( event: PressListenerEvent ): void {
