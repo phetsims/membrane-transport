@@ -95,7 +95,7 @@
         membranePotential: {
           radioButtonGroup: {
             accessibleName: Membrane Potential
-            accessibleHelpText: Play with membrane potential and observe changes.
+            accessibleHelpText: Adjust millivolts and observe proteins.
 
             negative70RadioButton: {
               accessibleName: negative 70 millivolts
