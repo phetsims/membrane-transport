@@ -7,9 +7,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-// TODO: Remove this directive, see https://github.com/phetsims/membrane-transport/issues/113
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
 import CardSounds from '../../../tambo/js/sound-generators/CardSounds.js';
@@ -43,29 +40,10 @@ import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
 import soluteCrossing001_mp3 from '../../sounds/soluteCrossing001_mp3.js';
 import soluteCrossing002_mp3 from '../../sounds/soluteCrossing002_mp3.js';
 import soluteCrossing003_mp3 from '../../sounds/soluteCrossing003_mp3.js';
-import soluteCrossing004_dist_mp3 from '../../sounds/soluteCrossing004_dist_mp3.js';
-import soluteCrossing004_fm_mp3 from '../../sounds/soluteCrossing004_fm_mp3.js';
-import soluteCrossing005_dist_mp3 from '../../sounds/soluteCrossing005_dist_mp3.js';
-import soluteCrossing005_fm_mp3 from '../../sounds/soluteCrossing005_fm_mp3.js';
-import membraneTransport from '../membraneTransport.js';
-import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
-import Particle from './model/Particle.js';
-
-import soluteCrossing003_V4_mp3 from '../../sounds/soluteCrossing003_V4_mp3.js';
-import soluteCrossing003_V5_mp3 from '../../sounds/soluteCrossing003_V5_mp3.js';
-import soluteCrossing003_V6_mp3 from '../../sounds/soluteCrossing003_V6_mp3.js';
-import soluteCrossing003_V7_mp3 from '../../sounds/soluteCrossing003_V7_mp3.js';
-import soluteCrossing003_V8Airy_mp3 from '../../sounds/soluteCrossing003_V8Airy_mp3.js';
-import soluteCrossing004_V4_mp3 from '../../sounds/soluteCrossing004_V4_mp3.js';
 import soluteCrossing004_V5_mp3 from '../../sounds/soluteCrossing004_V5_mp3.js';
-import soluteCrossing004_V6_mp3 from '../../sounds/soluteCrossing004_V6_mp3.js';
-import soluteCrossing004_V7_mp3 from '../../sounds/soluteCrossing004_V7_mp3.js';
-import soluteCrossing004_V8Airy_mp3 from '../../sounds/soluteCrossing004_V8Airy_mp3.js';
-import soluteCrossing005_V4_mp3 from '../../sounds/soluteCrossing005_V4_mp3.js';
 import soluteCrossing005_V5_mp3 from '../../sounds/soluteCrossing005_V5_mp3.js';
-import soluteCrossing005_V6_mp3 from '../../sounds/soluteCrossing005_V6_mp3.js';
-import soluteCrossing005_V7_mp3 from '../../sounds/soluteCrossing005_V7_mp3.js';
-import soluteCrossing005_V8Airy_mp3 from '../../sounds/soluteCrossing005_V8Airy_mp3.js';
+import membraneTransport from '../membraneTransport.js';
+import Particle from './model/Particle.js';
 
 const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
 const releaseSoundPlayer = sharedSoundPlayers.get( 'release' );
@@ -136,8 +114,8 @@ const E_NOTE = Math.pow( 2, 9 / 12 );
 const sound1 = soluteCrossing001_mp3;
 const sound2 = soluteCrossing002_mp3;
 const sound3 = soluteCrossing003_mp3;
-const sound4 = soluteCrossing004_V4_mp3;
-const sound5 = soluteCrossing005_V4_mp3;
+const sound4 = soluteCrossing004_V5_mp3; // carbon dioxide
+const sound5 = soluteCrossing005_V5_mp3; // oxygen
 
 const soluteCrossing001 = newSoundClip( sound1, { initialOutputLevel: 0.6 } );
 const soluteCrossing002 = newSoundClip( sound2, { initialOutputLevel: 0.6 } );
