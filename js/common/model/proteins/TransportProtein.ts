@@ -104,12 +104,14 @@ export default abstract class TransportProtein<State extends string = Intentiona
    * Set free any ligands or particles that are interacting with the transport protein.
    */
   public releaseParticles( slot: Slot ): void {
+    const releaseParticlesWithSlot = ( particles: Particle<IntentionalAny>[] ) => {
+      particles
+        .filter( particle => ( particle.mode as ParticleModeWithSlot ).slot === slot )
+        .forEach( particle => particle.releaseFromInteraction( particle.position.y > 0 ? 20 : -20 ) );
+    };
 
-    this.model.solutes.forEach( solute => {
-      if ( ( solute.mode as ParticleModeWithSlot ).slot === slot ) {
-        solute.releaseFromInteraction( solute.position.y > 0 ? 20 : -20 );
-      }
-    } );
+    releaseParticlesWithSlot( this.model.solutes );
+    releaseParticlesWithSlot( this.model.ligands );
   }
 }
 
