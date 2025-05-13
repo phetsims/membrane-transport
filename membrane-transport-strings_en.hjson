@@ -52,7 +52,7 @@
         '''
       playAreaSummarySolutes: You can choose from a list of solutes and add them to inside and outside.
       playAreaSummaryProteins: Transport proteins can be added directly to membrane.
-      playAreaSummaryPotential: There are options to change membrane voltage potential and optionally hide visual charge labels.
+      playAreaSummaryPotential: There are options to change membrane potential and optionally hide visual charge labels.
       playAreaSummaryBarCharts: Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane.
 
       playAreaSummaryScreen1: "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
@@ -95,8 +95,7 @@
         membranePotential: {
           accessibleHeading: Membrane Potential Options
           radioButtonGroup: {
-            accessibleName: Voltage (mV)
-            accessibleHelpText: Play with membrane voltage potential and observe changes.
+            accessibleHelpText: Play with membrane potential and observe changes.
 
             negative70RadioButton: {
               accessibleName: negative 70 millivolts
@@ -113,8 +112,8 @@
           }
         }
         signsCheckbox: {
-          accessibleHelpText: Explore with or without signs showing membrane voltage potential along inside and outside.
-          uncheckedContextResponse: Voltage potential signs, hidden.
+          accessibleHelpText: Explore with or without signs showing membrane potential along inside and outside.
+          uncheckedContextResponse: Membrane potential signs, hidden.
         }
       }
 

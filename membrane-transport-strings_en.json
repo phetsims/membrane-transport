@@ -177,14 +177,11 @@
         },
         "membranePotential": {
           "accessibleHeading": {
-            "value": "Membrane Potential"
+            "value": "Membrane Potential Options"
           },
           "radioButtonGroup": {
-            "accessibleName": {
-              "value": "REMOVE ME"
-            },
             "accessibleHelpText": {
-              "value": "Adjust millivolts and observe proteins."
+              "value": "Play with membrane potential and observe changes."
             },
             "negative70RadioButton": {
               "accessibleName": {

@@ -47,7 +47,6 @@ export default class MembranePotentialPanel extends Panel {
         }
       } ], {
       orientation: 'horizontal',
-      accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' )
     } );
