@@ -176,10 +176,10 @@
           "value": "Potassium Ion K plus, Voltage-gated"
         },
         "membranePotential": {
-          "accessibleHeading": {
-            "value": "Membrane Potential"
-          },
           "radioButtonGroup": {
+            "accessibleName": {
+              "value": "Membrane Potential"
+            },
             "accessibleHelpText": {
               "value": "Play with membrane potential and observe changes."
             },

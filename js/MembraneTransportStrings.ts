@@ -93,8 +93,8 @@ type StringsType = {
         'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusVoltageGatedStringProperty': LocalizedStringProperty;
         'membranePotential': {
-          'accessibleHeadingStringProperty': LocalizedStringProperty;
           'radioButtonGroup': {
+            'accessibleNameStringProperty': LocalizedStringProperty;
             'accessibleHelpTextStringProperty': LocalizedStringProperty;
             'negative70RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
@@ -254,8 +254,8 @@ export const MembraneTransportFluent = {
         'sodiumIonNaPlusVoltageGated': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGated'].property,
         'potassiumIonKPlusVoltageGated': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGated'].property,
         'membranePotential':         {
-          'accessibleHeading': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.accessibleHeading'].property,
           'radioButtonGroup':           {
+            'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleName'].property,
             'accessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpText'].property,
             'negative70RadioButton':             {
               'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleName'].property,

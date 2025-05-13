@@ -47,6 +47,7 @@ export default class MembranePotentialPanel extends Panel {
         }
       } ], {
       orientation: 'horizontal',
+      accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' )
     } );
@@ -77,10 +78,7 @@ export default class MembranePotentialPanel extends Panel {
       cornerRadius: 4,
       stroke: null,
       fill: 'rgb(230,229,229)',
-      tandem: tandem,
-
-      // pdom
-      accessibleHeading: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.accessibleHeadingStringProperty
+      tandem: tandem
     } );
   }
 }
