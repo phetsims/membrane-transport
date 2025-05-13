@@ -39,7 +39,9 @@
       "scripts": {
         "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"npm run watch-sounds\"",
         "watch-strings": "chokidar \"membrane-transport-strings_en.json\" \"./strings/MembraneTransport_en.ftl\" -c \"grunt modulify --targets=strings\"",
-        "watch-sounds": "chokidar \"./sounds/*.mp3\" -c \"grunt modulify --targets=sounds && ../perennial-alias/bin/sage run ../perennial-alias/js/scripts/generate-license-json.ts ./sounds/ 'created by Ashton Morris (PhET Interactive Simulations)'\""
+        "watch-sounds": "chokidar \"./sounds/*.mp3\" -c \"grunt modulify --targets=sounds && ../perennial-alias/bin/sage run ../perennial-alias/js/scripts/generate-license-json.ts ./sounds/ 'created by Ashton Morris (PhET Interactive Simulations)'\"",
+        "checkout-main": "git checkout main && cd ../chipper && git checkout main && cd ../joist && git checkout main",
+        "checkout-fluent": "git checkout fluent-json-chipper-1588 && cd ../chipper && git checkout fluent-json-chipper-1588 && cd ../joist && git checkout fluent-json-chipper-1588"
       },
       "phet": {
         "requirejsNamespace": "MEMBRANE_TRANSPORT",
