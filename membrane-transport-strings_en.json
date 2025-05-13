@@ -177,7 +177,7 @@
         },
         "membranePotential": {
           "accessibleHeading": {
-            "value": "Membrane Potential Options"
+            "value": "Membrane Potential"
           },
           "radioButtonGroup": {
             "accessibleHelpText": {

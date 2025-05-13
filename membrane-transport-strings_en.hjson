@@ -93,7 +93,7 @@
         potassiumIonKPlusVoltageGated: Potassium Ion K plus, Voltage-gated
 
         membranePotential: {
-          accessibleHeading: Membrane Potential Options
+          accessibleHeading: Membrane Potential
           radioButtonGroup: {
             accessibleHelpText: Play with membrane potential and observe changes.
 
