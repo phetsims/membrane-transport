@@ -70,9 +70,9 @@ export default class MembranePotentialPanel extends Panel {
           accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpTextStringProperty,
           uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponseStringProperty,
           checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
-            '-70': MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative70StringProperty,
-            '-50': MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative50StringProperty,
-            30: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponsePositive30StringProperty
+            [ -70 ]: 'valueA',
+            [ -50 ]: 'valueB',
+            30: 'valueC'
           } )
         } )
       ]
