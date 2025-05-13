@@ -302,21 +302,16 @@ export default class LigandNode extends InteractiveHighlightingNode {
       const escListener = new KeyboardListener( {
         keys: [ 'escape' ],
         fire: () => {
+
           // Ignore if focus is lost or interaction disabled somehow
           if ( !this.focused ) { return; }
           if ( this.isKeyboardGrabbed ) {
-            affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
 
-            // --- Cancel Logic ---
-            this.isKeyboardGrabbed = false;
-            this.ligand.position.set( this.initialPositionBeforeGrab ); // Return to start position
-            this.ligand.mode = Particle.createRandomWalkMode( true ); // Release control
+            // So that the ligand always returns to where it was picked up when escape is pressed.
+            this.currentTargetSlotIndex = null;
 
-            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
-            MembraneTransportSounds.ligandReleased(); // Use release sound for cancel
-
-            this.resetKeyboardInteractionState();
-            this.updateVisualPosition(); // Ensure view matches model after cancel
+            // The GrabDragInteraction handles the cancel logic upon interruption.
+            grabDragInteraction.interrupt();
           }
         }
       } );
@@ -384,10 +379,11 @@ export default class LigandNode extends InteractiveHighlightingNode {
           if ( this.currentTargetSlotIndex === null ) {
 
             // Dropped without moving: treat as drop at original location (effectively a cancel without explicit alert)
+            // OR cancelled by pressing escape
             affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
             this.ligand.position.set( this.initialPositionBeforeGrab );
 
-            this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty, { ligandType: this.getLigandTypeName() } ) );
+            this.alert( MembraneTransportFluent.a11y.ligandNode.releasedLigand );
           }
           else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
 
