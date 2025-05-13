@@ -50,6 +50,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
         const type = slot.transportProteinType;
         if ( type !== null ) {
 
+          // Make sure only selected one is focusable
+          // Accessible names are correct...
+
           // NOTE: There is similar code in TransportProteinToolNode (which drags out of the panel).
           const transportProteinNode = createTransportProteinNode( type, slot.transportProteinProperty.value );
           transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {

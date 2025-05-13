@@ -12,14 +12,15 @@ import potassiumLeakage_svg from '../../../../images/potassiumLeakage_svg.js';
 
 import sodiumLeakage_svg from '../../../../images/sodiumLeakage_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
+import TransportProtein from '../../model/proteins/TransportProtein.js';
 import TransportProteinNode from './TransportProteinNode.js';
 
 export default class LeakageChannelNode extends TransportProteinNode {
 
-  public constructor( type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' ) {
+  public constructor( type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', transportProtein: TransportProtein | null ) {
 
     const image = new Image( type === 'sodiumIonLeakageChannel' ? sodiumLeakage_svg : potassiumLeakage_svg );
-    super( image );
+    super( image, transportProtein );
   }
 }
 

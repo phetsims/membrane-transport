@@ -166,17 +166,6 @@ export default class ObservationWindow extends Node {
     const frontCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'front' );
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
-
-    const groupSelectContainer = new Node( {
-      accessibleHeading: 'Cell Membrane',
-
-      // TODO (JG): Make sure that mutating the accessibleName works on all browsers + screen readers https://github.com/phetsims/membrane-transport/issues/97
-      accessibleName: new StringProperty( 'hello' ), // TODO (JG): Should be initialized blank, but the group select view is responsible for setting the accessibleName https://github.com/phetsims/membrane-transport/issues/97
-      accessibleHelpText: new StringProperty( 'Look for transport proteins.' )
-    } );
-    this.addChild( groupSelectContainer );
-
-    this.membraneGroupSelectView = new MembraneGroupSelectView( model.membraneSlots, model.featureSet !== 'simpleDiffusion', view, this, groupSelectContainer );
   }
 
   public getTransportProteinNodes(): SlottedNode[] {
@@ -201,7 +190,6 @@ export default class ObservationWindow extends Node {
   }
 
   public reset(): void {
-    this.membraneGroupSelectView.reset();
     this.resetEmitter.emit();
   }
 

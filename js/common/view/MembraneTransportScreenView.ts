@@ -309,12 +309,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     MembraneTransportSounds.transportProteinGrabbed();
   }
 
-  public forwardFromKeyboard( type: TransportProteinType, transportProteinToolNode: TransportProteinToolNode ): void {
-    const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
-    this.observationWindow.membraneGroupSelectView.forwardFromKeyboard( slot, type, transportProteinToolNode );
-    this.afterRelease = () => transportProteinToolNode.focus();
-  }
-
   /**
    * Called when the user presses a membrane protein in the toolbox to create one via keyboard.
    */
