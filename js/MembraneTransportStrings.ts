@@ -98,20 +98,20 @@ type StringsType = {
             'accessibleHelpTextStringProperty': LocalizedStringProperty;
             'negative70RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
-              'accessibleContextResponseStringProperty': LocalizedStringProperty;
             };
             'negative50RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
-              'accessibleContextResponseStringProperty': LocalizedStringProperty;
             };
             'positive30RadioButton': {
               'accessibleNameStringProperty': LocalizedStringProperty;
-              'accessibleContextResponseStringProperty': LocalizedStringProperty;
             }
           }
         };
         'signsCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
+          'checkedContextResponseNegative70StringProperty': LocalizedStringProperty;
+          'checkedContextResponseNegative50StringProperty': LocalizedStringProperty;
+          'checkedContextResponsePositive30StringProperty': LocalizedStringProperty;
           'uncheckedContextResponseStringProperty': LocalizedStringProperty;
         }
       };
@@ -258,21 +258,21 @@ export const MembraneTransportFluent = {
             'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleName'].property,
             'accessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpText'].property,
             'negative70RadioButton':             {
-              'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleName'].property,
-              'accessibleContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleContextResponse'].property
+              'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleName'].property
             },
             'negative50RadioButton':             {
-              'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleName'].property,
-              'accessibleContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleContextResponse'].property
+              'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleName'].property
             },
             'positive30RadioButton':             {
-              'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleName'].property,
-              'accessibleContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleContextResponse'].property
+              'accessibleName': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleName'].property
             }
           }
         },
         'signsCheckbox':         {
           'accessibleHelpText': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpText'].property,
+          'checkedContextResponseNegative70': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative70'].property,
+          'checkedContextResponseNegative50': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative50'].property,
+          'checkedContextResponsePositive30': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponsePositive30'].property,
           'uncheckedContextResponse': MembraneTransportStrings.localizedStringMap['MEMBRANE_TRANSPORT/a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponse'].property
         }
       },

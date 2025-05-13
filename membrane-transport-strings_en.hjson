@@ -99,20 +99,20 @@
 
             negative70RadioButton: {
               accessibleName: negative 70 millivolts
-              accessibleContextResponse: Positive outside and negative inside; signs densely packed along membrane.
             }
             negative50RadioButton: {
               accessibleName: negative 50 millivolts
-              accessibleContextResponse: Positive outside and negative inside; signs lightly packed along membrane.
             }
             positive30RadioButton: {
               accessibleName: positive 30 millivolts
-              accessibleContextResponse: Negative outside and positive inside; signs sparse along membrane.
             }
           }
         }
         signsCheckbox: {
           accessibleHelpText: Explore with or without signs showing membrane potential along inside and outside.
+          checkedContextResponseNegative70: Positive outside and negative inside; signs densely packed along membrane.
+          checkedContextResponseNegative50: Positive outside and negative inside; signs lightly packed along membrane.
+          checkedContextResponsePositive30: Negative outside and positive inside; signs sparse along membrane.
           uncheckedContextResponse: Membrane potential signs, hidden.
         }
       }

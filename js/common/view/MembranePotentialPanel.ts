@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
@@ -24,8 +25,7 @@ export default class MembranePotentialPanel extends Panel {
       createNode: tandem => new Text( '-70' ),
       tandemName: 'negative70RadioButton',
       options: {
-        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty,
-        accessibleContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleContextResponseStringProperty
+        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
       }
     },
       {
@@ -33,8 +33,7 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '-50' ),
         tandemName: 'negative50RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty,
-          accessibleContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleContextResponseStringProperty
+          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
         }
       },
       {
@@ -42,8 +41,7 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '+30' ),
         tandemName: 'positive30RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty,
-          accessibleContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleContextResponseStringProperty
+          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
         }
       } ], {
       orientation: 'horizontal',
@@ -70,7 +68,12 @@ export default class MembranePotentialPanel extends Panel {
         } ), {
           tandem: tandem.createTandem( 'signsCheckbox' ),
           accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpTextStringProperty,
-          uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponseStringProperty
+          uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponseStringProperty,
+          checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
+            '-70': MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative70StringProperty,
+            '-50': MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative50StringProperty,
+            30: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponsePositive30StringProperty
+          } )
         } )
       ]
     } );

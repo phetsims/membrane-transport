@@ -181,30 +181,21 @@
               "value": "Membrane Potential"
             },
             "accessibleHelpText": {
-              "value": "Play with membrane potential and observe changes."
+              "value": "Adjust millivolts and observe proteins."
             },
             "negative70RadioButton": {
               "accessibleName": {
                 "value": "negative 70 millivolts"
-              },
-              "accessibleContextResponse": {
-                "value": "Positive outside and negative inside; signs densely packed along membrane."
               }
             },
             "negative50RadioButton": {
               "accessibleName": {
                 "value": "negative 50 millivolts"
-              },
-              "accessibleContextResponse": {
-                "value": "Positive outside and negative inside; signs lightly packed along membrane."
               }
             },
             "positive30RadioButton": {
               "accessibleName": {
                 "value": "positive 30 millivolts"
-              },
-              "accessibleContextResponse": {
-                "value": "Negative outside and positive inside; signs sparse along membrane."
               }
             }
           }
@@ -212,6 +203,15 @@
         "signsCheckbox": {
           "accessibleHelpText": {
             "value": "Explore with or without signs showing membrane potential along inside and outside."
+          },
+          "checkedContextResponseNegative70": {
+            "value": "Positive outside and negative inside; signs densely packed along membrane."
+          },
+          "checkedContextResponseNegative50": {
+            "value": "Positive outside and negative inside; signs lightly packed along membrane."
+          },
+          "checkedContextResponsePositive30": {
+            "value": "Negative outside and positive inside; signs sparse along membrane."
           },
           "uncheckedContextResponse": {
             "value": "Membrane potential signs, hidden."
