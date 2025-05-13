@@ -222,6 +222,13 @@ export default class SoluteControl extends Panel {
       maxHeight: 20
     } );
 
+    // ATP is vertical in the play area but horizontal in the solute control
+    if ( soluteType === 'atp' ) {
+      icon.setRotation( Math.PI / 2 );
+      icon.scale( 2 );
+      icon.center = spinner.center;
+    }
+
     super( new Node( {
       children: [ spinner, icon ]
     } ), options );

@@ -56,6 +56,9 @@ export default class SolutesPanel extends Node {
                                   soluteType === 'glucose' ? 0.09 :
                                   0.1 );
 
+          // ATP is vertical in the play area but horizontal in the radio button icon
+          icon.setRotation( soluteType === 'atp' ? Math.PI / 2 : 0 );
+
           return alignGroup.createBox( new VBox( {
             spacing: 3,
             children: [
