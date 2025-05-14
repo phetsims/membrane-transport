@@ -134,7 +134,8 @@ export default class MembraneTransportModel extends PhetioObject {
     this.soluteProperty = new StringUnionProperty<SoluteControlSolutes>( 'oxygen', {
       validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'soluteProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'The currently selected solute'
     } );
     this.resetEmitter.addListener( () => this.soluteProperty.reset() );
 
