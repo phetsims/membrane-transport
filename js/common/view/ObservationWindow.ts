@@ -26,7 +26,6 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import LigandNode from './LigandNode.js';
-import MembraneGroupSelectView from './MembraneGroupSelectView.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowTransportProteinLayer, { SlottedNode } from './ObservationWindowTransportProteinLayer.js';
@@ -42,7 +41,6 @@ export default class ObservationWindow extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
   private readonly resetEmitter = new Emitter();
-  public readonly membraneGroupSelectView: MembraneGroupSelectView;
 
   private readonly transportProteinLayer: ObservationWindowTransportProteinLayer;
 

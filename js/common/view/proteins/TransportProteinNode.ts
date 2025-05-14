@@ -52,7 +52,6 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // pdom
     if ( transportProtein ) {
       this.tagName = 'div';
-      this.focusable = true;
       this.accessibleName = 'A Transport Protein';
     }
   }

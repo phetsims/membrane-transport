@@ -125,16 +125,16 @@ a11y:
     cannotInteractWhileLigandIsBoundPattern:          Cannot interact with the membrane while {{ligandType}} is bound to a protein
 # Transport protein brief names
 transportProteinBriefName:                         |-
-      { $type ->
-        [sodiumIonLeakageChannel]         Sodium Ion, Leakage
-        [potassiumIonLeakageChannel]      Potassium Ion, Leakage
-        [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
-        [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-        [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
-        [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
-        [sodiumPotassiumPump]             Sodium Potassium Pump
-       *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
-      }
+                                                   { $type ->
+                                                     [sodiumIonLeakageChannel]         Sodium Ion, Leakage
+                                                     [potassiumIonLeakageChannel]      Potassium Ion, Leakage
+                                                     [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
+                                                     [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
+                                                     [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
+                                                     [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
+                                                     [sodiumPotassiumPump]             Sodium Potassium Pump
+                                                    *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
+                                                   }
 soluteControlsAccessibleHelpText:                  Choose solute then add or remove to inside or outside of membrane.
 outsideMembraneSpinnerAccessibleName:              Outside Membrane
 outsideMembraneSpinnerHelpText:                    Add or remove chosen solute to outside of membrane.
@@ -142,46 +142,46 @@ insideMembraneSpinnerAccessibleName:               Inside Membrane
 insideMembraneSpinnerHelpText:                     Add or remove chosen solute to inside of membrane.
 soluteSpinnerRoleDescription:                      solute amount adjuster
 solute:                                            |-
-      { $soluteType ->
-        [oxygen]        oxygen molecules
-        [carbonDioxide] carbon dioxide molecules
-        [sodiumIon]     sodium ions
-        [potassiumIon]  potassium ions
-        [glucose]       glucose molecules
-       *[atp]           ATP molecules
-      }
+                                                   { $soluteType ->
+                                                     [oxygen]        oxygen molecules
+                                                     [carbonDioxide] carbon dioxide molecules
+                                                     [sodiumIon]     sodium ions
+                                                     [potassiumIon]  potassium ions
+                                                     [glucose]       glucose molecules
+                                                    *[atp]           ATP molecules
+                                                   }
 soluteSpinnerObjectResponsePattern:                |-
-      { $amount ->
-        [none] no
-        [one]  one
-        [few]  a few
-        [some] some
-       *[many] many
-      } { solute }
+                                                   { $amount ->
+                                                     [none] no
+                                                     [one]  one
+                                                     [few]  a few
+                                                     [some] some
+                                                    *[many] many
+                                                   } { solute }
 soluteSpinnerContextResponsePattern:               |-
-      { $amount ->
-        [aLittle] A little
-       *[aLot]    A lot
-      } { $addedOrRemoved ->
-        [added]   added
-       *[removed] removed
-      }. Now
-      { $moreOrLessOrSame ->
-        [same] same amount of solute inside and outside.
-       *[other] { $differenceSize ->
-          [aLittle] a little
-         *[aLot]    a lot
-        }
-        { $moreOrLessOrSame ->
-          [more] more
-         *[less] less
-        }
-        { solute }
-        { $directionality ->
-          [insideThanOutside] inside than outside
-         *[outsideThanInside] outside than inside
-        }.
-      }
+                                                   { $amount ->
+                                                     [aLittle] A little
+                                                    *[aLot]    A lot
+                                                   } { $addedOrRemoved ->
+                                                     [added]   added
+                                                    *[removed] removed
+                                                   }. Now
+                                                   { $moreOrLessOrSame ->
+                                                     [same] same amount of solute inside and outside.
+                                                    *[other] { $differenceSize ->
+                                                       [aLittle] a little
+                                                      *[aLot]    a lot
+                                                     }
+                                                     { $moreOrLessOrSame ->
+                                                       [more] more
+                                                      *[less] less
+                                                     }
+                                                     { solute }
+                                                     { $directionality ->
+                                                       [insideThanOutside] inside than outside
+                                                      *[outsideThanInside] outside than inside
+                                                     }.
+                                                   }
 soluteBarChartsDescriptionParagraph:               A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
 arrowSizeDescription:                              |-
                                                    { $size ->
@@ -261,3 +261,13 @@ ligandMovedAboveOtherChannelPattern:               |-
                                                    [open]   open
                                                    *[closed] closed
                                                    } { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+
+transportProtein:
+
+  # The accessible name pattern for proteins in the membrane.
+  accessibleNamePattern: |-
+                         { $proteinIndex } of { $proteinCount },
+                         { $openOrClosed ->
+                           [open]   open
+                           *[closed] closed
+                         }, { transportProteinBriefName }

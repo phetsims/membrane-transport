@@ -382,5 +382,10 @@
   },
   "ligandMovedAboveOtherChannelPattern": {
     "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+  },
+  "transportProtein": {
+    "accessibleNamePattern": {
+      "value": "{ $proteinIndex } of { $proteinCount },\n{ $openOrClosed ->\n  [open]   open\n  *[closed] closed\n}, { transportProteinBriefName }"
+    }
   }
 }

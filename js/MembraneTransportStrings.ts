@@ -174,6 +174,9 @@ type StringsType = {
   'ligandMovedAboveLigandGatedChannelPatternStringProperty': LocalizedStringProperty;
   'ligandMovedAboveLeakageChannelPatternStringProperty': LocalizedStringProperty;
   'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
+  'transportProtein': {
+    'accessibleNamePatternStringProperty': LocalizedStringProperty;
+  };
   'localizedStringMap': Record<string, LocalizedString>;
   'fluentBundleProperty': TReadOnlyProperty<FluentBundle>;
 }
@@ -495,6 +498,16 @@ export const MembraneTransportFluent = {
       args
     ),
     createProperty: (args: { index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'ligandMovedAboveOtherChannelPattern', args )
+  },
+  'transportProtein':   {
+    'accessibleNamePattern': {
+      format: (args: { openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: IntentionalAny, proteinIndex: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => FluentUtils.formatMessageWithBundle(
+        MembraneTransportStrings.fluentBundleProperty.value.getMessage('transportProtein_accessibleNamePattern')!.value!,
+        MembraneTransportStrings.fluentBundleProperty.value,
+        args
+      ),
+      createProperty: (args: { openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: IntentionalAny, proteinIndex: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }) => createFluentMessageProperty( MembraneTransportStrings.fluentBundleProperty, 'transportProtein_accessibleNamePattern', args )
+    }
   }
 };
 
