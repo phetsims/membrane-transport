@@ -121,7 +121,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           this.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
 
           // Set up listeners that update the accessible name of the transport protein
-          const accessibleNameProperty = MembraneTransportFluent.transportProtein.accessibleNamePattern.createProperty( {
+          const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNamePattern.createProperty( {
             openOrClosed: transportProtein.openOrClosedProperty,
             proteinIndex: selectedIndexProperty.value + 1, // index is the value on addition, not the current Property value
             proteinCount: model.transportProteinCountProperty,

@@ -265,8 +265,8 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
         }
 
         const fluentPatternMessageProperty = this.isFirstGrab ?
-                                             MembraneTransportFluent.grabbedProteinResponseWithHintPattern :
-                                             MembraneTransportFluent.grabbedProteinResponsePattern;
+                                             MembraneTransportFluent.a11y.grabbedProteinResponseWithHintPattern :
+                                             MembraneTransportFluent.a11y.grabbedProteinResponsePattern;
         this.alert( fluentPatternMessageProperty.format( {
           slotIndex: this.currentSelection!.currentSlotIndex + 1,
           slotCount: SLOT_COUNT
@@ -314,7 +314,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              this.alert( MembraneTransportFluent.releasedBackInToolbox );
+              this.alert( MembraneTransportFluent.a11y.releasedBackInToolbox );
 
               // Animate the protein back to the toolbox
               returnToolToToolbox( grabbedNode );
@@ -438,7 +438,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
-            this.alert( MembraneTransportFluent.canceledBackInMembrane );
+            this.alert( MembraneTransportFluent.a11y.canceledBackInMembrane );
 
             MembraneTransportSounds.transportProteinReleased();
             resetState();
@@ -452,7 +452,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             returnToolToToolbox( grabbedNode );
 
             MembraneTransportSounds.proteinReturnedToToolbox();
-            this.alert( MembraneTransportFluent.releasedBackInToolbox );
+            this.alert( MembraneTransportFluent.a11y.releasedBackInToolbox );
           }
         }
 

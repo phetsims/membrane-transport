@@ -85,7 +85,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       tagName: 'ul',
 
       descriptionTagName: 'p',
-      descriptionContent: MembraneTransportFluent.soluteBarChartsDescriptionParagraph
+      descriptionContent: MembraneTransportFluent.a11y.soluteBarChartsDescriptionParagraph
     } );
     contentNode.addChild( hbox );
 

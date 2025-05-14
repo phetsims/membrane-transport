@@ -65,7 +65,7 @@ export default class SoluteBarChartNode extends Node {
       validValues: [ 'small', 'medium', 'large' ]
     } );
 
-    const descriptionProperty = MembraneTransportFluent.barChartPattern.createProperty( {
+    const descriptionProperty = MembraneTransportFluent.a11y.barChartPattern.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
       size: sizeDescriptionProperty,

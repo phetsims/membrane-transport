@@ -29,23 +29,23 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
 
     // // Keep in mind these are order-dependent
     const listItemNodes = [
-      createListItemNode( ( MembraneTransportFluent.currentDetailsSoluteTypesOnOutside.createProperty( { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ) ),
-      createListItemNode( ( MembraneTransportFluent.currentDetailsSoluteTypesOnInside.createProperty( { insideSoluteCount: model.insideSoluteTypesCountProperty } ) ) )
+      createListItemNode( ( MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnOutside.createProperty( { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ) ),
+      createListItemNode( ( MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnInside.createProperty( { insideSoluteCount: model.insideSoluteTypesCountProperty } ) ) )
     ];
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const node = createListItemNode( MembraneTransportFluent.ligandsOnOutsideOnly );
+      const node = createListItemNode( MembraneTransportFluent.a11y.ligandsOnOutsideOnly );
       model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
       listItemNodes.push( node );
     }
 
     // No transport proteins for simple diffusion
     if ( model.featureSet !== 'simpleDiffusion' ) {
-      listItemNodes.push( createListItemNode( MembraneTransportFluent.currentDetailsTransportProteins.createProperty( { transportProteinCount: model.transportProteinCountProperty } ) ) );
+      listItemNodes.push( createListItemNode( MembraneTransportFluent.a11y.currentDetailsTransportProteins.createProperty( { transportProteinCount: model.transportProteinCountProperty } ) ) );
     }
 
     if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-      listItemNodes.push( createListItemNode( MembraneTransportFluent.currentDetailsMembranePotential.createProperty( { membranePotential: model.membranePotentialProperty } ) ) );
+      listItemNodes.push( createListItemNode( MembraneTransportFluent.a11y.currentDetailsMembranePotential.createProperty( { membranePotential: model.membranePotentialProperty } ) ) );
     }
 
     // A Property that describes that activity level of the particles and transport proteins in the model.
@@ -66,7 +66,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       children: [
         new Node( {
           tagName: 'p',
-          accessibleName: MembraneTransportFluent.currentDetails.createProperty( { activityLevel: activityLevelProperty } )
+          accessibleName: MembraneTransportFluent.a11y.currentDetails.createProperty( { activityLevel: activityLevelProperty } )
         } ),
         new Node( {
           tagName: 'ul',

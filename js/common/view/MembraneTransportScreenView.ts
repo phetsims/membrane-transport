@@ -131,7 +131,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
       accessibleHeading: MembraneTransportStrings.a11y.soluteControls.accessibleHeadingStringProperty,
-      accessibleHelpText: MembraneTransportFluent.soluteControlsAccessibleHelpText,
+      accessibleHelpText: MembraneTransportFluent.a11y.soluteControlsAccessibleHelpText,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
     this.addChild( soluteControlsNode );
