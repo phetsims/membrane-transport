@@ -1,7 +1,7 @@
 # Title
 membrane-transport.title:                          Membrane Transport
 
-# Screen names
+# Screens
 screen.simpleDiffusion:                            Simple Diffusion
 screen.facilitatedDiffusion:                       Facilitated Diffusion
 screen.activeTransport:                            Active Transport
@@ -20,6 +20,7 @@ atp:                                               ATP
 outside:                                           Outside
 inside:                                            Inside
 
+# On the Toolbox
 membranePotentialLabels:                           Membrane Potential Labels
 voltageGatedChannels:                              Voltage-gated Channels
 ligandGatedChannels:                               Ligand-gated Channels
@@ -41,24 +42,43 @@ soluteConcentrations:                              Solute Concentrations
 
 a11y:
   summary:
-    playAreaSummaryIntro:            |
-                                     An observation window zooms in on a cross-section of a cell's membrane.
-                                       The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet
-                                       that separates fluids inside and outside of cell. Added solute particles are
-                                       suspended in fluid and randomly move with Brownian motion.
-    playAreaSummarySolutes:          You can choose from a list of solutes and add them to inside and outside.
-    playAreaSummaryProteins:         Transport proteins can be added directly to membrane.
-    playAreaSummaryPotential: There are options to change membrane voltage potential and optionally hide visual charge labels.
-    playAreaSummaryBarCharts:        Solute bar charts provide a comparative summary for amount of each solute inside and outside membrane.
-    playAreaSummaryScreen1:          "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
-    playAreaSummaryScreen2and4:      "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryPotential } { a11y_summary_playAreaSummaryBarCharts }"
-observationWindow:
-  membrane:
-    accessibleName:            Zoomed-in Membrane
+    playAreaSummaryIntro:                 |-
+                                          An observation window zooms in on a cross-section of a cell's membrane.
+                                            The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet
+                                            that separates fluids inside and outside of cell. Added solute particles are
+                                            suspended in fluid and randomly move with Brownian motion.
+    playAreaSummarySolutes:               You can choose from a list of solutes and add them to inside and outside.
+    playAreaSummaryProteins:              Transport proteins can be added directly to membrane.
+    playAreaSummaryPotential:             There are options to change membrane potential and optionally hide visual
+                                          charge labels.
+    playAreaSummaryBarCharts:             Solute bar charts provide a comparative summary for amount of each solute
+                                          inside and outside membrane.
+    playAreaSummaryScreen1:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
+        } { a11y_summary_playAreaSummaryBarCharts }"
+    playAreaSummaryScreen2and4:           "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
+        } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryPotential
+        } { a11y_summary_playAreaSummaryBarCharts }"
+    playAreaSummaryScreen3:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
+        } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts
+        }"
+    controlAreaSummary:                   There are options for how fast the action happens in the observation
+                                          window, including a button to pause. Also, you can clear the solutes from
+                                          both sides of the membrane or reset the sim.
+    interactionHint:                      Add or remove solute to inside or outside of membrane.
+    interactionHintWithTransportProteins: Add or remove solutes to inside or outside of membrane, and play with
+                                          transport channels.
+  observationWindow:
+    membrane:
+      accessibleName: Zoomed-in Membrane
+  soluteControls:
+    accessibleHeading: Solute Controls
+  eraseSolutesButton:
+    accessibleName:            Reset Solutes
     accessibleContextResponse: Solutes cleared. Add solutes to observe changes
   transportProteinPanel:
     transportProteins:      Transport Proteins
-    accessibleHelpText:     Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort, and release proteins into membrane.
+    accessibleHelpText:     Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
+                            and release proteins into membrane.
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium Ion NA plus, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium Ion K plus, Ligand-gated
@@ -69,22 +89,21 @@ observationWindow:
       sodiumIonNaPlusVoltageGated:   Sodium Ion NA plus, Voltage-gated
       potassiumIonKPlusVoltageGated: Potassium Ion K plus, Voltage-gated
       membranePotential:
-        accessibleHeading: Membrane Potential Options
         radioButtonGroup:
-          accessibleName:     Voltage (mV)
-          accessibleHelpText: Play with membrane voltage potential and observe changes.
+          accessibleName:     Membrane Potential
+          accessibleHelpText: Adjust millivolts and observe proteins.
           negative70RadioButton:
-            accessibleName:            negative 70 millivolts
-            accessibleContextResponse: Positive outside and negative inside; signs densely packed along membrane.
+            accessibleName: negative 70 millivolts
           negative50RadioButton:
-            accessibleName:            negative 50 millivolts
-            accessibleContextResponse: Positive outside and negative inside; signs lightly packed along membrane.
+            accessibleName: negative 50 millivolts
           positive30RadioButton:
-            accessibleName:            positive 30 millivolts
-            accessibleContextResponse: Negative outside and positive inside; signs sparse along membrane.
+            accessibleName: positive 30 millivolts
       signsCheckbox:
-        accessibleHelpText:       Explore with or without signs showing membrane voltage potential along inside and outside.
-        uncheckedContextResponse: Voltage potential signs, hidden.
+        accessibleHelpText:               Explore with or without signs showing membrane potential along inside and outside.
+        checkedContextResponseNegative70: Positive outside and negative inside; signs densely packed along membrane.
+        checkedContextResponseNegative50: Positive outside and negative inside; signs lightly packed along membrane.
+        checkedContextResponsePositive30: Negative outside and positive inside; signs sparse along membrane.
+        uncheckedContextResponse:         Membrane potential signs, hidden.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
@@ -104,90 +123,80 @@ observationWindow:
     thereIsProteinAtThisSlotPattern:                  There is a {{proteinName}} at this slot
     moveCancelledPattern:                             Cancelled moving {{ligandType}}
     cannotInteractWhileLigandIsBoundPattern:          Cannot interact with the membrane while {{ligandType}} is bound to a protein
-
 # Transport protein brief names
-transportProteinBriefName:                         |
-                                                   { $type ->
-                                                     [sodiumIonLeakageChannel]         Sodium Ion, Leakage
-                                                     [potassiumIonLeakageChannel]      Potassium Ion, Leakage
-                                                     [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
-                                                     [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-                                                     [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
-                                                     [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
-                                                     [sodiumPotassiumPump]             Sodium Potassium Pump
-                                                    *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
-                                                   }
-
-# Solutes radio button group – group names and help text
+transportProteinBriefName:                         |-
+      { $type ->
+        [sodiumIonLeakageChannel]         Sodium Ion, Leakage
+        [potassiumIonLeakageChannel]      Potassium Ion, Leakage
+        [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
+        [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
+        [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
+        [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
+        [sodiumPotassiumPump]             Sodium Potassium Pump
+       *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
+      }
 soluteControlsAccessibleHelpText:                  Choose solute then add or remove to inside or outside of membrane.
 outsideMembraneSpinnerAccessibleName:              Outside Membrane
 outsideMembraneSpinnerHelpText:                    Add or remove chosen solute to outside of membrane.
 insideMembraneSpinnerAccessibleName:               Inside Membrane
 insideMembraneSpinnerHelpText:                     Add or remove chosen solute to inside of membrane.
 soluteSpinnerRoleDescription:                      solute amount adjuster
-
-# Solute-related strings
-solute:                                            |
-                                                   { $soluteType ->
-                                                     [oxygen]        oxygen molecules
-                                                     [carbonDioxide] carbon dioxide molecules
-                                                     [sodiumIon]     sodium ions
-                                                     [potassiumIon]  potassium ions
-                                                     [glucose]       glucose molecules
-                                                    *[atp]           ATP molecules
-                                                   }
-
-soluteSpinnerObjectResponsePattern:                |
-                                                   test = { $amount ->
-                                                     [none] no
-                                                     [one]  one
-                                                     [few]  a few
-                                                     [some] some
-                                                    *[many] many
-                                                   } { solute }
-
-soluteSpinnerContextResponsePattern:               |
-                                                   { $amount ->
-                                                     [aLittle] A little
-                                                    *[aLot]    A lot
-                                                   } { $addedOrRemoved ->
-                                                     [added]   added
-                                                    *[removed] removed
-                                                   }. Now
-                                                   { $moreOrLessOrSame ->
-                                                     [same] same amount of solute inside and outside.
-                                                    *[other] { $differenceSize ->
-                                                         [aLittle] a little
-                                                        *[aLot]    a lot
-                                                       }
-                                                       { $moreOrLessOrSame ->
-                                                         [more] more
-                                                        *[less] less
-                                                       }
-                                                       { solute }
-                                                       { $directionality ->
-                                                         [insideThanOutside] inside than outside
-                                                        *[outsideThanInside] outside than inside
-                                                       }.
-                                                   }
-
-# Bar chart descriptions
+solute:                                            |-
+      { $soluteType ->
+        [oxygen]        oxygen molecules
+        [carbonDioxide] carbon dioxide molecules
+        [sodiumIon]     sodium ions
+        [potassiumIon]  potassium ions
+        [glucose]       glucose molecules
+       *[atp]           ATP molecules
+      }
+soluteSpinnerObjectResponsePattern:                |-
+      { $amount ->
+        [none] no
+        [one]  one
+        [few]  a few
+        [some] some
+       *[many] many
+      } { solute }
+soluteSpinnerContextResponsePattern:               |-
+      { $amount ->
+        [aLittle] A little
+       *[aLot]    A lot
+      } { $addedOrRemoved ->
+        [added]   added
+       *[removed] removed
+      }. Now
+      { $moreOrLessOrSame ->
+        [same] same amount of solute inside and outside.
+       *[other] { $differenceSize ->
+          [aLittle] a little
+         *[aLot]    a lot
+        }
+        { $moreOrLessOrSame ->
+          [more] more
+         *[less] less
+        }
+        { solute }
+        { $directionality ->
+          [insideThanOutside] inside than outside
+         *[outsideThanInside] outside than inside
+        }.
+      }
 soluteBarChartsDescriptionParagraph:               A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
-
-arrowSizeDescription:                              |
+arrowSizeDescription:                              |-
                                                    { $size ->
                                                    [small]  small
                                                    [medium] medium
                                                    *[large]  large
                                                    }
 
-arrowDirectionDescription:                         |
+arrowDirectionDescription:                         |-
                                                    { $direction ->
                                                    [upward]   upward arrow indicates passage from outside to inside
                                                    *[downward] downward arrow indicates passage from inside to outside
                                                    }
 
-barSizeDescription:                                |
+barSizeDescription:                                |-
                                                    { $amount ->
                                                    [aLittleMore]  A little more
                                                    [aLotMore]     A lot more
@@ -196,15 +205,12 @@ barSizeDescription:                                |
                                                    } outside than inside
 
 barChartPattern:                                   "{ solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }."
-
-# Activity & details descriptions
-currentDetailsActivityLevel:                       |
+currentDetailsActivityLevel:                       |-
                                                    { $activityLevel ->
                                                    *[calm]            relatively calm
-                                                   [active]           active
-                                                   [activeAndPaused]  active and paused
+                                                   [active]          active
+                                                   [activeAndPaused] active and paused
                                                    }
-
 currentDetails:                                    Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with
 currentDetailsSoluteTypesOnOutside:                "{ $outsideSoluteCount } solute types on outside;"
 currentDetailsSoluteTypesOnInside:                 "{ $insideSoluteCount } solute types on inside;"
@@ -237,7 +243,7 @@ grabbedLigandResponseWithHintPattern:              "{ grabbedLigandResponsePatte
 grabbedLigandResponseWithEmptyMembraneHintPattern: "{ grabbedLigandResponsePattern } Space to release. Add transport proteins."
 
 # Spoken when the ligand moves above a protein that can open or close
-ligandMovedAboveLigandGatedChannelPattern:         |
+ligandMovedAboveLigandGatedChannelPattern:         |-
                                                    Above { $openOrClosed ->
                                                    [open]   open
                                                    *[closed] closed
@@ -250,7 +256,7 @@ ligandMovedAboveLigandGatedChannelPattern:         |
 ligandMovedAboveLeakageChannelPattern:             Above { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
 
 # Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
-ligandMovedAboveOtherChannelPattern:               |
+ligandMovedAboveOtherChannelPattern:               |-
                                                    Above { $openOrClosed ->
                                                    [open]   open
                                                    *[closed] closed
