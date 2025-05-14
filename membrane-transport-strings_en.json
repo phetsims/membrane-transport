@@ -273,6 +273,7 @@
       "cannotInteractWhileLigandIsBoundPattern": {
         "value": "Cannot interact with the membrane while {{ligandType}} is bound to a protein"
       }
+<<<<<<< HEAD
     }
   },
   "transportProteinBriefName": {
@@ -382,5 +383,121 @@
   },
   "ligandMovedAboveOtherChannelPattern": {
     "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+=======
+    },
+    "soluteControlsAccessibleHelpText": {
+      "value": "Choose solute then add or remove to inside or outside of membrane."
+    },
+    "outsideMembraneSpinnerAccessibleName": {
+      "value": "Outside Membrane"
+    },
+    "outsideMembraneSpinnerHelpText": {
+      "value": "Add or remove chosen solute to outside of membrane."
+    },
+    "insideMembraneSpinnerAccessibleName": {
+      "value": "Inside Membrane"
+    },
+    "insideMembraneSpinnerHelpText": {
+      "value": "Add or remove chosen solute to inside of membrane."
+    },
+    "soluteSpinnerRoleDescription": {
+      "value": "solute amount adjuster"
+    },
+    "solute": {
+      "value": "{ $soluteType ->\n  [oxygen]        oxygen molecules\n  [carbonDioxide] carbon dioxide molecules\n  [sodiumIon]     sodium ions\n  [potassiumIon]  potassium ions\n  [glucose]       glucose molecules\n *[atp]           ATP molecules\n}"
+    },
+    "soluteSpinnerObjectResponsePattern": {
+      "value": "{ $amount ->\n  [none] no\n  [one]  one\n  [few]  a few\n  [some] some\n *[many] many\n} { a11y_solute }"
+    },
+    "soluteSpinnerContextResponsePattern": {
+      "value": "{ $amount ->\n  [aLittle] A little\n *[aLot]    A lot\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n  [same] same amount of solute inside and outside.\n *[other] { $differenceSize ->\n    [aLittle] a little\n   *[aLot]    a lot\n  }\n  { $moreOrLessOrSame ->\n    [more] more\n   *[less] less\n  }\n  { a11y_solute }\n  { $directionality ->\n    [insideThanOutside] inside than outside\n   *[outsideThanInside] outside than inside\n  }.\n}"
+    },
+    "soluteBarChartsDescriptionParagraph": {
+      "value": "A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading."
+    },
+    "arrowSizeDescription": {
+      "value": "{ $size ->\n[small]  small\n[medium] medium\n*[large]  large\n}"
+    },
+    "arrowDirectionDescription": {
+      "value": "{ $direction ->\n[upward]   upward arrow indicates passage from outside to inside\n*[downward] downward arrow indicates passage from inside to outside\n}"
+    },
+    "barSizeDescription": {
+      "value": "{ $amount ->\n[aLittleMore]  A little more\n[aLotMore]     A lot more\n[aLittleLess]  A little less\n*[aLotLess]     A lot less\n} outside than inside"
+    },
+    "barChartPattern": {
+      "value": "{ a11y_solute }: { a11y_barSizeDescription }; { a11y_arrowSizeDescription } { a11y_arrowDirectionDescription }."
+    },
+    "currentDetailsActivityLevel": {
+      "value": "{ $activityLevel ->\n*[calm]            relatively calm\n[active]          active\n[activeAndPaused] active and paused\n}"
+    },
+    "currentDetails": {
+      "value": "Right now, zoomed-in cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with"
+    },
+    "currentDetailsSoluteTypesOnOutside": {
+      "value": "{ $outsideSoluteCount } solute types on outside;"
+    },
+    "currentDetailsSoluteTypesOnInside": {
+      "value": "{ $insideSoluteCount } solute types on inside;"
+    },
+    "currentDetailsTransportProteins": {
+      "value": "{ $transportProteinCount } transport proteins in membrane;"
+    },
+    "ligandsOnOutsideOnly": {
+      "value": "Ligands on outside only."
+    },
+    "currentDetailsMembranePotential": {
+      "value": "{ $membranePotential } millivolts."
+    },
+    "releasedBackInToolbox": {
+      "value": "Released. Back in toolbox."
+    },
+    "selectedTransportProteinInSlot": {
+      "value": "Selected { $channelName } in slot { $slotIndex } of { $slotCount }."
+    },
+    "canceledBackInMembrane": {
+      "value": "Cancelled. Back in membrane."
+    },
+    "grabbedProteinResponsePattern": {
+      "value": "Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }."
+    },
+    "grabbedProteinResponseWithHintPattern": {
+      "value": "{ a11y_grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
+    },
+    "ligandToggleButtonAccessibleHelpText": {
+      "value": "Add or remove triangle- and star-shaped ligands to outside area of cell."
+    },
+    "ligandToggleButtonAddedContextResponse": {
+      "value": "Ligands flood outside area."
+    },
+    "ligandToggleButtonRemovedContextResponse": {
+      "value": "Ligands removed."
+    },
+    "grabbedLigandResponsePattern": {
+      "value": "Grabbed. Outside, { $proteinCount } Proteins in Membrane."
+    },
+    "grabbedLigandResponseWithHintPattern": {
+      "value": "{ a11y_grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release."
+    },
+    "grabbedLigandResponseWithEmptyMembraneHintPattern": {
+      "value": "{ a11y_grabbedLigandResponsePattern } Space to release. Add transport proteins."
+    },
+    "transportProteinBriefName": {
+      "value": "{ $type ->\n  [sodiumIonLeakageChannel]         Sodium Ion, Leakage\n  [potassiumIonLeakageChannel]      Potassium Ion, Leakage\n  [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated\n  [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\n  [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated\n  [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated\n  [sodiumPotassiumPump]             Sodium Potassium Pump\n *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter\n}"
+    },
+    "ligandMovedAboveLigandGatedChannelPattern": {
+      "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProteinBriefName } { $ligandType ->\n[triangleLigand] Triangle Site\n*[starLigand]     Star Site\n}, { $index } of { $transportProteinCount } Proteins."
+    },
+    "ligandMovedAboveLeakageChannelPattern": {
+      "value": "Above { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+    },
+    "ligandMovedAboveOtherChannelPattern": {
+      "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+    },
+    "transportProtein": {
+      "accessibleNamePattern": {
+        "value": "{ $proteinIndex } of { $proteinCount },\n{ $openOrClosed ->\n  [open]   open\n  *[closed] closed\n}, { a11y_transportProteinBriefName }"
+      }
+    }
+>>>>>>> 685c512 (move fluent fragments under the a11y key in the yaml, see https://github.com/phetsims/membrane-transport/issues/177)
   }
 }

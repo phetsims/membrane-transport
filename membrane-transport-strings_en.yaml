@@ -1,44 +1,44 @@
 # Title
-membrane-transport.title:                          Membrane Transport
+membrane-transport.title:    Membrane Transport
 
 # Screens
-screen.simpleDiffusion:                            Simple Diffusion
-screen.facilitatedDiffusion:                       Facilitated Diffusion
-screen.activeTransport:                            Active Transport
-screen.playground:                                 Playground
+screen.simpleDiffusion:      Simple Diffusion
+screen.facilitatedDiffusion: Facilitated Diffusion
+screen.activeTransport:      Active Transport
+screen.playground:           Playground
 
 # Solutes
-solutes:                                           Solutes
-oxygen:                                            O<sub>2</sub>
-carbonDioxide:                                     CO<sub>2</sub>
-sodiumIon:                                         Na<sup>+</sup>
-potassiumIon:                                      K<sup>+</sup>
-glucose:                                           Glucose
-atp:                                               ATP
+solutes:                     Solutes
+oxygen:                      O<sub>2</sub>
+carbonDioxide:               CO<sub>2</sub>
+sodiumIon:                   Na<sup>+</sup>
+potassiumIon:                K<sup>+</sup>
+glucose:                     Glucose
+atp:                         ATP
 
 # Cell Regions
-outside:                                           Outside
-inside:                                            Inside
+outside:                     Outside
+inside:                      Inside
 
 # On the Toolbox
-membranePotentialLabels:                           Membrane Potential Labels
-voltageGatedChannels:                              Voltage-gated Channels
-ligandGatedChannels:                               Ligand-gated Channels
-activeTransporters:                                Active Transporters
-leakageChannels:                                   Leakage Channels
+membranePotentialLabels:     Membrane Potential Labels
+voltageGatedChannels:        Voltage-gated Channels
+ligandGatedChannels:         Ligand-gated Channels
+activeTransporters:          Active Transporters
+leakageChannels:             Leakage Channels
 
-sodiumIonNaPlus:                                   Sodium Ion<br>(Na<sup>+</sup>)
-potassiumIonKPlus:                                 Potassium Ion<br>(K<sup>+</sup>)
-NaPlusKPlusPump:                                   Na<sup>+</sup>-K<sup>+</sup><br>Pump
-sodiumGlucoseCotransporter:                        Na<sup>+</sup>-Glucose<br>Cotransporter
+sodiumIonNaPlus:             Sodium Ion<br>(Na<sup>+</sup>)
+potassiumIonKPlus:           Potassium Ion<br>(K<sup>+</sup>)
+NaPlusKPlusPump:             Na<sup>+</sup>-K<sup>+</sup><br>Pump
+sodiumGlucoseCotransporter:  Na<sup>+</sup>-Glucose<br>Cotransporter
 
-membranePotential_mV:                              Membrane Potential (mV)
-signs:                                             Signs
-addLigands:                                        Add Ligands
-removeLigands:                                     Remove Ligands
-animateLipids:                                     Animate Lipids
-animateLipidsDescription:                          Whether the phospholipids forming the cell membrane should be animated
-soluteConcentrations:                              Solute Concentrations
+membranePotential_mV:        Membrane Potential (mV)
+signs:                       Signs
+addLigands:                  Add Ligands
+removeLigands:               Remove Ligands
+animateLipids:               Animate Lipids
+animateLipidsDescription:    Whether the phospholipids forming the cell membrane should be animated
+soluteConcentrations:        Solute Concentrations
 
 a11y:
   summary:
@@ -123,141 +123,152 @@ a11y:
     thereIsProteinAtThisSlotPattern:                  There is a {{proteinName}} at this slot
     moveCancelledPattern:                             Cancelled moving {{ligandType}}
     cannotInteractWhileLigandIsBoundPattern:          Cannot interact with the membrane while {{ligandType}} is bound to a protein
-# Transport protein brief names
-transportProteinBriefName:                         |-
-      { $type ->
-        [sodiumIonLeakageChannel]         Sodium Ion, Leakage
-        [potassiumIonLeakageChannel]      Potassium Ion, Leakage
-        [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
-        [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-        [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
-        [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
-        [sodiumPotassiumPump]             Sodium Potassium Pump
-       *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
-      }
-soluteControlsAccessibleHelpText:                  Choose solute then add or remove to inside or outside of membrane.
-outsideMembraneSpinnerAccessibleName:              Outside Membrane
-outsideMembraneSpinnerHelpText:                    Add or remove chosen solute to outside of membrane.
-insideMembraneSpinnerAccessibleName:               Inside Membrane
-insideMembraneSpinnerHelpText:                     Add or remove chosen solute to inside of membrane.
-soluteSpinnerRoleDescription:                      solute amount adjuster
-solute:                                            |-
-      { $soluteType ->
-        [oxygen]        oxygen molecules
-        [carbonDioxide] carbon dioxide molecules
-        [sodiumIon]     sodium ions
-        [potassiumIon]  potassium ions
-        [glucose]       glucose molecules
-       *[atp]           ATP molecules
-      }
-soluteSpinnerObjectResponsePattern:                |-
-      { $amount ->
-        [none] no
-        [one]  one
-        [few]  a few
-        [some] some
-       *[many] many
-      } { solute }
-soluteSpinnerContextResponsePattern:               |-
-      { $amount ->
-        [aLittle] A little
-       *[aLot]    A lot
-      } { $addedOrRemoved ->
-        [added]   added
-       *[removed] removed
-      }. Now
-      { $moreOrLessOrSame ->
-        [same] same amount of solute inside and outside.
-       *[other] { $differenceSize ->
-          [aLittle] a little
-         *[aLot]    a lot
-        }
-        { $moreOrLessOrSame ->
-          [more] more
-         *[less] less
-        }
-        { solute }
-        { $directionality ->
-          [insideThanOutside] inside than outside
-         *[outsideThanInside] outside than inside
-        }.
-      }
-soluteBarChartsDescriptionParagraph:               A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
-arrowSizeDescription:                              |-
-                                                   { $size ->
-                                                   [small]  small
-                                                   [medium] medium
-                                                   *[large]  large
-                                                   }
+  soluteControlsAccessibleHelpText:                  Choose solute then add or remove to inside or outside of membrane.
+  outsideMembraneSpinnerAccessibleName:              Outside Membrane
+  outsideMembraneSpinnerHelpText:                    Add or remove chosen solute to outside of membrane.
+  insideMembraneSpinnerAccessibleName:               Inside Membrane
+  insideMembraneSpinnerHelpText:                     Add or remove chosen solute to inside of membrane.
+  soluteSpinnerRoleDescription:                      solute amount adjuster
+  solute:                                            |-
+                                                     { $soluteType ->
+                                                       [oxygen]        oxygen molecules
+                                                       [carbonDioxide] carbon dioxide molecules
+                                                       [sodiumIon]     sodium ions
+                                                       [potassiumIon]  potassium ions
+                                                       [glucose]       glucose molecules
+                                                      *[atp]           ATP molecules
+                                                     }
+  soluteSpinnerObjectResponsePattern:                |-
+                                                     { $amount ->
+                                                       [none] no
+                                                       [one]  one
+                                                       [few]  a few
+                                                       [some] some
+                                                      *[many] many
+                                                     } { a11y_solute }
+  soluteSpinnerContextResponsePattern:               |-
+                                                     { $amount ->
+                                                       [aLittle] A little
+                                                      *[aLot]    A lot
+                                                     } { $addedOrRemoved ->
+                                                       [added]   added
+                                                      *[removed] removed
+                                                     }. Now
+                                                     { $moreOrLessOrSame ->
+                                                       [same] same amount of solute inside and outside.
+                                                      *[other] { $differenceSize ->
+                                                         [aLittle] a little
+                                                        *[aLot]    a lot
+                                                       }
+                                                       { $moreOrLessOrSame ->
+                                                         [more] more
+                                                        *[less] less
+                                                       }
+                                                       { a11y_solute }
+                                                       { $directionality ->
+                                                         [insideThanOutside] inside than outside
+                                                        *[outsideThanInside] outside than inside
+                                                       }.
+                                                     }
+  soluteBarChartsDescriptionParagraph:               A barchart for each solute captures changing details. If needed, pause sim to freeze details for reading.
+  arrowSizeDescription:                              |-
+                                                     { $size ->
+                                                     [small]  small
+                                                     [medium] medium
+                                                     *[large]  large
+                                                     }
 
-arrowDirectionDescription:                         |-
-                                                   { $direction ->
-                                                   [upward]   upward arrow indicates passage from outside to inside
-                                                   *[downward] downward arrow indicates passage from inside to outside
-                                                   }
+  arrowDirectionDescription:                         |-
+                                                     { $direction ->
+                                                     [upward]   upward arrow indicates passage from outside to inside
+                                                     *[downward] downward arrow indicates passage from inside to outside
+                                                     }
 
-barSizeDescription:                                |-
-                                                   { $amount ->
-                                                   [aLittleMore]  A little more
-                                                   [aLotMore]     A lot more
-                                                   [aLittleLess]  A little less
-                                                   *[aLotLess]     A lot less
-                                                   } outside than inside
+  barSizeDescription:                                |-
+                                                     { $amount ->
+                                                     [aLittleMore]  A little more
+                                                     [aLotMore]     A lot more
+                                                     [aLittleLess]  A little less
+                                                     *[aLotLess]     A lot less
+                                                     } outside than inside
 
-barChartPattern:                                   "{ solute }: { barSizeDescription }; { arrowSizeDescription } { arrowDirectionDescription }."
-currentDetailsActivityLevel:                       |-
-                                                   { $activityLevel ->
-                                                   *[calm]            relatively calm
-                                                   [active]          active
-                                                   [activeAndPaused] active and paused
-                                                   }
-currentDetails:                                    Right now, zoomed-in cross-section of cell's membrane is { currentDetailsActivityLevel } with
-currentDetailsSoluteTypesOnOutside:                "{ $outsideSoluteCount } solute types on outside;"
-currentDetailsSoluteTypesOnInside:                 "{ $insideSoluteCount } solute types on inside;"
-currentDetailsTransportProteins:                   "{ $transportProteinCount } transport proteins in membrane;"
+  barChartPattern:                                   "{ a11y_solute }: { a11y_barSizeDescription }; { a11y_arrowSizeDescription } { a11y_arrowDirectionDescription }."
+  currentDetailsActivityLevel:                       |-
+                                                     { $activityLevel ->
+                                                     *[calm]            relatively calm
+                                                     [active]          active
+                                                     [activeAndPaused] active and paused
+                                                     }
+  currentDetails:                                    Right now, zoomed-in cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with
+  currentDetailsSoluteTypesOnOutside:                "{ $outsideSoluteCount } solute types on outside;"
+  currentDetailsSoluteTypesOnInside:                 "{ $insideSoluteCount } solute types on inside;"
+  currentDetailsTransportProteins:                   "{ $transportProteinCount } transport proteins in membrane;"
 
-ligandsOnOutsideOnly:                              Ligands on outside only.
-currentDetailsMembranePotential:                   "{ $membranePotential } millivolts."
+  ligandsOnOutsideOnly:                              Ligands on outside only.
+  currentDetailsMembranePotential:                   "{ $membranePotential } millivolts."
 
-# Protein interaction descriptions
-releasedBackInToolbox:                             Released. Back in toolbox.
+  # Protein interaction descriptions
+  releasedBackInToolbox:                             Released. Back in toolbox.
 
-# Indicate the selected membrane protein, for alerter
-selectedTransportProteinInSlot:                    Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
-canceledBackInMembrane:                            Cancelled. Back in membrane.
+  # Indicate the selected membrane protein, for alerter
+  selectedTransportProteinInSlot:                    Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
+  canceledBackInMembrane:                            Cancelled. Back in membrane.
 
-# Spoken when the protein is grabbed.
-grabbedProteinResponsePattern:                     Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }.
+  # Spoken when the protein is grabbed.
+  grabbedProteinResponsePattern:                     Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }.
 
-# The first time the protein is grabbed, provide a hint about how to use it.
-grabbedProteinResponseWithHintPattern:             "{ grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
+  # The first time the protein is grabbed, provide a hint about how to use it.
+  grabbedProteinResponseWithHintPattern:             "{ a11y_grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
 
-# accessibleHelpText for the ligand control
-ligandToggleButtonAccessibleHelpText:              Add or remove triangle- and star-shaped ligands to outside area of cell.
-ligandToggleButtonAddedContextResponse:            Ligands flood outside area.
-ligandToggleButtonRemovedContextResponse:          Ligands removed.
+  # accessibleHelpText for the ligand control
+  ligandToggleButtonAccessibleHelpText:              Add or remove triangle- and star-shaped ligands to outside area of cell.
+  ligandToggleButtonAddedContextResponse:            Ligands flood outside area.
+  ligandToggleButtonRemovedContextResponse:          Ligands removed.
 
-# Spoken when the ligand is grabbed.
-grabbedLigandResponsePattern:                      Grabbed. Outside, { $proteinCount } Proteins in Membrane.
-grabbedLigandResponseWithHintPattern:              "{ grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release."
-grabbedLigandResponseWithEmptyMembraneHintPattern: "{ grabbedLigandResponsePattern } Space to release. Add transport proteins."
+  # Spoken when the ligand is grabbed.
+  grabbedLigandResponsePattern:                      Grabbed. Outside, { $proteinCount } Proteins in Membrane.
+  grabbedLigandResponseWithHintPattern:              "{ a11y_grabbedLigandResponsePattern } Move ligand with A or D keys. Space to release."
+  grabbedLigandResponseWithEmptyMembraneHintPattern: "{ a11y_grabbedLigandResponsePattern } Space to release. Add transport proteins."
 
-# Spoken when the ligand moves above a protein that can open or close
-ligandMovedAboveLigandGatedChannelPattern:         |-
-                                                   Above { $openOrClosed ->
-                                                   [open]   open
-                                                   *[closed] closed
-                                                   } { transportProteinBriefName } { $ligandType ->
-                                                   [triangleLigand] Triangle Site
-                                                   *[starLigand]     Star Site
-                                                   }, { $index } of { $transportProteinCount } Proteins.
+  # Transport protein brief names
+  transportProteinBriefName:                         |-
+                                                     { $type ->
+                                                       [sodiumIonLeakageChannel]         Sodium Ion, Leakage
+                                                       [potassiumIonLeakageChannel]      Potassium Ion, Leakage
+                                                       [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
+                                                       [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
+                                                       [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
+                                                       [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
+                                                       [sodiumPotassiumPump]             Sodium Potassium Pump
+                                                      *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
+                                                     }
 
-# Spoken when the ligand moves above a protein that cannot open or close (leakage channel).
-ligandMovedAboveLeakageChannelPattern:             Above { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+  # Spoken when the ligand moves above a protein that can open or close
+  ligandMovedAboveLigandGatedChannelPattern:         |-
+                                                     Above { $openOrClosed ->
+                                                     [open]   open
+                                                     *[closed] closed
+                                                     } { a11y_transportProteinBriefName } { $ligandType ->
+                                                     [triangleLigand] Triangle Site
+                                                     *[starLigand]     Star Site
+                                                     }, { $index } of { $transportProteinCount } Proteins.
 
-# Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
-ligandMovedAboveOtherChannelPattern:               |-
-                                                   Above { $openOrClosed ->
-                                                   [open]   open
-                                                   *[closed] closed
-                                                   } { transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+  # Spoken when the ligand moves above a protein that cannot open or close (leakage channel).
+  ligandMovedAboveLeakageChannelPattern:             Above { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+
+  # Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.
+  ligandMovedAboveOtherChannelPattern:               |-
+                                                     Above { $openOrClosed ->
+                                                     [open]   open
+                                                     *[closed] closed
+                                                     } { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+
+  transportProtein:
+
+    # The accessible name pattern for proteins in the membrane.
+    accessibleNamePattern: |-
+                           { $proteinIndex } of { $proteinCount },
+                           { $openOrClosed ->
+                             [open]   open
+                             *[closed] closed
+                           }, { a11y_transportProteinBriefName }

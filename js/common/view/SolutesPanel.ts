@@ -86,7 +86,7 @@ export default class SolutesPanel extends Node {
       accessibleName: MembraneTransportStrings.solutesStringProperty,
 
       // The Voicing hint for this component is the same as the help text for the entire solute controls panel.
-      voicingHintResponse: MembraneTransportFluent.soluteControlsAccessibleHelpText
+      voicingHintResponse: MembraneTransportFluent.a11y.soluteControlsAccessibleHelpText
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally

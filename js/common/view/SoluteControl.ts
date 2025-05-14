@@ -134,7 +134,7 @@ export default class SoluteControl extends Panel {
              'many';
     } );
 
-    const objectResponseMessageProperty = MembraneTransportFluent.soluteSpinnerObjectResponsePattern.createProperty( {
+    const objectResponseMessageProperty = MembraneTransportFluent.a11y.soluteSpinnerObjectResponsePattern.createProperty( {
       amount: qualitativeCountProperty,
       soluteType: model.soluteProperty
     } );
@@ -156,13 +156,13 @@ export default class SoluteControl extends Panel {
         play: () => {/*no-op*/},
         stop: () => {/*no-op*/}
       },
-      accessibleName: side === 'inside' ? MembraneTransportFluent.insideMembraneSpinnerAccessibleName :
-                      MembraneTransportFluent.outsideMembraneSpinnerAccessibleName,
+      accessibleName: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerAccessibleName :
+                      MembraneTransportFluent.a11y.outsideMembraneSpinnerAccessibleName,
 
-      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.insideMembraneSpinnerHelpText :
-                          MembraneTransportFluent.outsideMembraneSpinnerHelpText,
+      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerHelpText :
+                          MembraneTransportFluent.a11y.outsideMembraneSpinnerHelpText,
 
-      accessibleRoleDescription: MembraneTransportFluent.soluteSpinnerRoleDescription,
+      accessibleRoleDescription: MembraneTransportFluent.a11y.soluteSpinnerRoleDescription,
 
       pdomCreateAriaValueText: ( value: number ) => {
         return objectResponseMessageProperty;
@@ -196,7 +196,7 @@ export default class SoluteControl extends Panel {
                                  ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
         // 4. Supply these to the translation message
-        return MembraneTransportFluent.soluteSpinnerContextResponsePattern.format( {
+        return MembraneTransportFluent.a11y.soluteSpinnerContextResponsePattern.format( {
           amount: amount,                // aLittle / aLot
           addedOrRemoved: addedOrRemoved, // added / removed
           differenceSize: differenceSize, // aLittle / aLot

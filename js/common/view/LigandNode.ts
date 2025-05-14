@@ -260,14 +260,14 @@ export default class LigandNode extends InteractiveHighlightingNode {
           const index = filledSlots.indexOf( targetSlot ) + 1;
 
           if ( isLeakageChannel ) {
-            this.alert( MembraneTransportFluent.ligandMovedAboveLeakageChannelPattern.format( {
+            this.alert( MembraneTransportFluent.a11y.ligandMovedAboveLeakageChannelPattern.format( {
               type: protein.type,
               transportProteinCount: transportProteinCountProperty,
               index: index
             } ) );
           }
           else if ( isLigandGatedChannel ) {
-            this.alert( MembraneTransportFluent.ligandMovedAboveLigandGatedChannelPattern.format( {
+            this.alert( MembraneTransportFluent.a11y.ligandMovedAboveLigandGatedChannelPattern.format( {
               openOrClosed: protein.openOrClosedProperty,
               index: index,
               type: protein.type,
@@ -276,7 +276,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
             } ) );
           }
           else {
-            this.alert( MembraneTransportFluent.ligandMovedAboveOtherChannelPattern.format( {
+            this.alert( MembraneTransportFluent.a11y.ligandMovedAboveOtherChannelPattern.format( {
               openOrClosed: protein.openOrClosedProperty,
               type: protein.type,
               index: index,
@@ -438,9 +438,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
         createGrabbedResponse: () => {
 
           // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
-          const patternMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportFluent.grabbedLigandResponseWithEmptyMembraneHintPattern :
-                                         grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportFluent.grabbedLigandResponsePattern :
-                                         MembraneTransportFluent.grabbedLigandResponseWithHintPattern;
+          const patternMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportFluent.a11y.grabbedLigandResponseWithEmptyMembraneHintPattern :
+                                         grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportFluent.a11y.grabbedLigandResponsePattern :
+                                         MembraneTransportFluent.a11y.grabbedLigandResponseWithHintPattern;
           return patternMessageProperty.format( {
             proteinCount: transportProteinCountProperty
           } );
