@@ -27,7 +27,8 @@ export default class Slot {
     this.transportProteinProperty = new Property<null | TransportProtein>( null, {
       tandem: tandem.createTandem( 'transportProteinProperty' ),
       phetioValueType: NullableIO( TransportProteinIO ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioReadOnly: true
     } );
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
