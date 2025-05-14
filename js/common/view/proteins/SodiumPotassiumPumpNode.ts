@@ -24,7 +24,7 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
   public constructor( public readonly sodiumPotassiumPump: SodiumPotassiumPump | null ) {
 
     const image = new Image( naKPumpState1_svg );
-    super( image );
+    super( image, sodiumPotassiumPump );
 
     if ( sodiumPotassiumPump ) {
       sodiumPotassiumPump.stateProperty.link( state => {

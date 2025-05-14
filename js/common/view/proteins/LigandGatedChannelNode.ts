@@ -37,7 +37,7 @@ export default class LigandGatedChannelNode extends TransportProteinNode {
   ) {
 
     const image = new Image( type === 'sodiumIonLigandGatedChannel' ? sodiumLigandGatedClosed_svg : potassiumLigandGatedClosed_svg );
-    super( image );
+    super( image, channel );
 
     if ( channel ) {
 

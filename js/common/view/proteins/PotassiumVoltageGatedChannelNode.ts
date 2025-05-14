@@ -22,7 +22,7 @@ export default class PotassiumVoltageGatedChannelNode extends TransportProteinNo
   public constructor( channel: PotassiumVoltageGatedChannel | null ) {
 
     const image = new Image( potassiumVoltageGatedMinus70and50mV_svg );
-    super( image );
+    super( image, channel );
 
     if ( channel ) {
 

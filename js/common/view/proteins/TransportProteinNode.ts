@@ -14,6 +14,7 @@ import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import TransportProtein from '../../model/proteins/TransportProtein.js';
 
 
 type SelfOptions = {
@@ -29,7 +30,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
 
   public readonly viewOffset: Vector2;
 
-  protected constructor( image: Image, providedOptions?: ProteinNodeOptions ) {
+  protected constructor( image: Image, transportProtein: TransportProtein | null, providedOptions?: ProteinNodeOptions ) {
     const options = optionize<ProteinNodeOptions, SelfOptions, NodeOptions>()( {
       viewOffset: Vector2.ZERO
     }, providedOptions );
@@ -47,6 +48,9 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     this.setScaleMagnitude( viewScale );
 
     this.addChild( image );
+
+    // pdom - If there is a model representation this Node is in the membrane and is interactive.
+    transportProtein && this.setTagName( 'div' );
   }
 
   public step( dt: number ): void {

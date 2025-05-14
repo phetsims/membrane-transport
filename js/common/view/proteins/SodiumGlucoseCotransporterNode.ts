@@ -23,7 +23,7 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
   public constructor( public readonly sodiumGlucoseCotransporter: SodiumGlucoseCotransporter | null ) {
 
     const image = new Image( sodiumGlucoseCotransporterState1_svg );
-    super( image );
+    super( image, sodiumGlucoseCotransporter );
 
     if ( sodiumGlucoseCotransporter ) {
 

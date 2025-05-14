@@ -24,10 +24,10 @@ import SodiumPotassiumPumpNode from './SodiumPotassiumPumpNode.js';
 
 export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): TransportProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
-    return new LeakageChannelNode( type );
+    return new LeakageChannelNode( type, transportProtein );
   }
   else if ( type === 'potassiumIonLeakageChannel' ) {
-    return new LeakageChannelNode( type );
+    return new LeakageChannelNode( type, transportProtein );
   }
   else if ( type === 'sodiumIonVoltageGatedChannel' ) {
     affirm( transportProtein === null || transportProtein instanceof SodiumVoltageGatedChannel, 'model for sodiumIonVoltageGatedChannel must be VoltageGatedChannel' );
