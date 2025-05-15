@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -57,6 +58,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     } );
     this.addInputListener( selectionKeyboardListener );
 
+    // A keyboard listener that puts us into the "grabbed" state.
     const grabKeyboardListener = new KeyboardListener( {
       keys: [ 'enter', 'space' ],
       fire: ( event, keysPressed, listener ) => {
@@ -65,6 +67,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     } );
     this.addInputListener( grabKeyboardListener );
 
+    // Update the focus when the selected index changes.
     selectedIndexProperty.link( selectedIndex => {
       const proteinNodes = this.getTransportProteinNodes();
 
@@ -112,23 +115,31 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           this.addChild( transportProteinNode );
           this.record.set( slot.transportProteinProperty.value!, { slot: slot, node: transportProteinNode } );
 
-          // The selected index becomes the index of the new transport protein
+          // The current index of the transport protein as it moves around in the membrane, or as others are added/removed around it.
+          const currentIndexProperty = new DerivedProperty( [ model.transportProteinCountProperty ], () => {
+            return this.getProteinNodeIndex( transportProteinNode ) + 1;
+          } );
+
+          // The index of the new Node becomes the selected index immediately.
           // Notify listeners so that we make sure that the there is at least one focusable protein.
-          selectedIndexProperty.value = _.findIndex( this.getTransportProteinNodes(), node => node.node === transportProteinNode );
+          selectedIndexProperty.value = currentIndexProperty.value;
           selectedIndexProperty.notifyListenersStatic();
 
           // Make sure that the transport proteins are in the correct reading order.
           this.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
 
           // Set up listeners that update the accessible name of the transport protein
+          // TODO: https://github.com/phetsims/membrane-transport/issues/97. There is a bug computing the new index.
+          //  I think we need recompute all indices when any protein is added/removed.
           const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNamePattern.createProperty( {
             openOrClosed: transportProtein.openOrClosedProperty,
-            proteinIndex: selectedIndexProperty.value + 1, // index is the value on addition, not the current Property value
+            proteinIndex: currentIndexProperty,
             proteinCount: model.transportProteinCountProperty,
             type: type
           } );
           transportProteinNode.accessibleName = accessibleNameProperty;
           transportProteinNode.addDisposable( accessibleNameProperty );
+          transportProteinNode.addDisposable( currentIndexProperty );
 
           // Add the highlight after centering the node, since the highlight goes out of bounds and would throw
           // off the centering
@@ -145,6 +156,16 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.membraneSlots.indexOf( a.slot ) - this.model.membraneSlots.indexOf( b.slot );
     } );
+  }
+
+  private getProteinNodeIndex( node: TransportProteinNode ): number {
+    const index = this.getTransportProteinNodes().findIndex( slottedNode => {
+      return slottedNode.node === node;
+    } );
+    if ( index === -1 ) {
+      throw new Error( 'Could not find the transport protein node in the list of transport protein nodes' );
+    }
+    return index;
   }
 
   public step( dt: number ): void {
