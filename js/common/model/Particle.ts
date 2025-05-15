@@ -17,7 +17,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
@@ -32,7 +31,7 @@ import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
-import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
+import { LigandType, ParticleType } from './SoluteType.js';
 
 // TODO (BF) can this be deleted? Brett will meet with content experts before we decide. See https://github.com/phetsims/membrane-transport/issues/92
 const ABSORB_GLUCOSE = false;
@@ -1090,32 +1089,32 @@ export default class Particle<T extends ParticleType> {
     // ligandGatedChannel: LigandGatedChannel;
 
     // eslint-disable-next-line phet/no-object-spread-on-non-literals
-    const output: IntentionalAny = { ...mode };
+    const state: IntentionalAny = { ...mode };
 
-    if ( typeof output.offset !== 'number' ) {
-      output.offset = null;
-    }
-
-    if ( typeof output.sheddingElapsed !== 'number' ) {
-      output.sheddingElapsed = null;
-    }
-    if ( output.currentDirection ) {
-      output.currentDirection = Vector2.Vector2IO.toStateObject( output.currentDirection );
-    }
-    if ( output.slot ) {
-      output.slot = output.slot.getIndex();
-    }
-    if ( output.sodiumGlucoseCotransporter ) {
-      output.sodiumGlucoseCotransporter = true;
-    }
-    if ( output.sodiumPotassiumPump ) {
-      output.sodiumPotassiumPump = true;
-    }
-    if ( output.ligandGatedChannel ) {
-      output.ligandGatedChannel = true;
+    if ( typeof state.offset !== 'number' ) {
+      state.offset = null;
     }
 
-    return output;
+    if ( typeof state.sheddingElapsed !== 'number' ) {
+      state.sheddingElapsed = null;
+    }
+    if ( state.currentDirection ) {
+      state.currentDirection = Vector2.Vector2IO.toStateObject( state.currentDirection );
+    }
+    if ( state.slot ) {
+      state.slot = state.slot.getIndex();
+    }
+    if ( state.sodiumGlucoseCotransporter ) {
+      state.sodiumGlucoseCotransporter = true;
+    }
+    if ( state.sodiumPotassiumPump ) {
+      state.sodiumPotassiumPump = true;
+    }
+    if ( state.ligandGatedChannel ) {
+      state.ligandGatedChannel = true;
+    }
+
+    return state;
   }
 
   public static stateToMode( model: MembraneTransportModel, state: Record<string, IntentionalAny> ): IntentionalAny {
@@ -1140,12 +1139,5 @@ export default class Particle<T extends ParticleType> {
     return mode;
   }
 }
-
-export type SoluteStateObject = {
-  position: Vector2;
-  type: SoluteType;
-  mode: Record<string, unknown>;
-  model: ReferenceIOState;
-};
 
 membraneTransport.register( 'Particle', Particle );

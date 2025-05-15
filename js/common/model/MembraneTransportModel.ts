@@ -34,7 +34,7 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import Particle, { ParticleModeWithSlot, SoluteStateObject } from './Particle.js';
+import Particle, { ParticleModeWithSlot } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
@@ -422,7 +422,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    * for more information on the different serialization types.
    */
-  public static readonly ParticleIO = new IOType<Particle<ParticleType>, SoluteStateObject>( 'ParticleIO', {
+  public static readonly ParticleIO = new IOType<Particle<ParticleType>, ParticleStateObject>( 'ParticleIO', {
     valueType: Particle,
     stateSchema: {
       position: Vector2.Vector2IO,
@@ -436,12 +436,11 @@ export default class MembraneTransportModel extends PhetioObject {
       return {
         position: particle.position,
         type: particle.type,
-        mode: particle.mode,
-
+        mode: Particle.modeToState( particle.mode ),
         model: ReferenceIO( IOType.ObjectIO ).toStateObject( particle.model )
       };
     },
-    fromStateObject: ( stateObject: SoluteStateObject ) => {
+    fromStateObject: ( stateObject: ParticleStateObject ) => {
 
       const model = ReferenceIO( IOType.ObjectIO ).fromStateObject( stateObject.model ) as MembraneTransportModel;
 
@@ -569,6 +568,13 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
     return transportProtein;
   }
 } );
+
+export type ParticleStateObject = {
+  position: Vector2;
+  type: SoluteType;
+  mode: Record<string, unknown>;
+  model: ReferenceIOState;
+};
 
 
 membraneTransport.register( 'MembraneTransportModel', MembraneTransportModel );
