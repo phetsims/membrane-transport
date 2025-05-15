@@ -8,6 +8,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -35,15 +36,23 @@ export default class InteractiveSlotsNode extends Node {
 
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
+
+      // Slots are persistent and this should not need to be disposed.
+      const accessibleNameProperty = new DerivedProperty( [
+        slot.transportProteinProperty
+      ], transportProtein => {
+
+        // TODO, i18n, see https://github.com/phetsims/membrane-transport/issues/97
+        return `Above slot ${index + 1} of ${slots.length}, ${transportProtein ? transportProtein.type : 'empty'}`;
+      } );
+
       const rect = new Rectangle( 0, 0, 20, 20, {
         fill: 'red',
         center: modelViewTransform.modelToViewXY( slot.position, 25 ),
 
         // pdom
         tagName: 'div',
-
-        // TODO, i18n, see https://github.com/phetsims/membrane-transport/issues/97
-        accessibleName: `Above slot ${index + 1} of ${slots.length}`
+        accessibleName: accessibleNameProperty
       } );
       rectangles.push( rect );
       this.addChild( rect );
