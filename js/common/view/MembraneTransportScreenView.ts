@@ -312,11 +312,10 @@ export default class MembraneTransportScreenView extends ScreenView {
   /**
    * Called when the user presses a membrane protein in the toolbox to create one via keyboard.
    */
-  public createFromKeyboard( type: TransportProteinType, origin: Slot | TransportProteinToolNode ): TransportProteinDragNode {
+  public createFromKeyboard( type: TransportProteinType, origin: Slot ): TransportProteinDragNode {
 
     // Move over the first available slot
-    const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
-    const slotX = slot.position;
+    const slotX = origin.position;
     const y = 10;
     const modelPoint = new Vector2( slotX, y );
 

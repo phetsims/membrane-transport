@@ -21,7 +21,6 @@ import membraneTransport from '../../membraneTransport.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
-import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 
@@ -34,7 +33,7 @@ export default class InteractiveSlotsNode extends Node {
 
   public constructor(
     private readonly slots: Slot[],
-    private readonly createDragNode: ( type: TransportProteinType, origin: Slot | TransportProteinToolNode ) => TransportProteinDragNode,
+    private readonly createDragNode: ( type: TransportProteinType, origin: Slot ) => TransportProteinDragNode,
     modelViewTransform: ModelViewTransform2
   ) {
     super( {
