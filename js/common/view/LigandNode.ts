@@ -16,6 +16,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -23,10 +24,11 @@ import Alerter from '../../../../scenery-phet/js/accessibility/describers/Alerte
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
-import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
+import HighlightPath from '../../../../scenery/js/accessibility/HighlightPath.js';
+import InteractiveHighlightingNode, { InteractiveHighlightingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
-import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -99,7 +101,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
     const options =
       focusable ?
-      ( combineOptions<NodeOptions>( {
+      ( combineOptions<InteractiveHighlightingNodeOptions>( {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
@@ -110,7 +112,10 @@ export default class LigandNode extends InteractiveHighlightingNode {
     super( options );
 
     // Expand the hit area for touch/mouse interactions, so it is easier to grab with the mouse
-    this.mouseArea = this.touchArea = this.localBounds.dilated( 50 );
+    const region = this.localBounds.dilated( 70 );
+    this.mouseArea = this.touchArea = region;
+    this.setFocusHighlight( new HighlightPath( Shape.bounds( region ) ) );
+    this.setInteractiveHighlight( new HighlightPath( Shape.bounds( region ) ) );
 
     this.alerter = new Alerter( {
       descriptionAlertNode: observationWindow
