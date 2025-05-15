@@ -41,7 +41,9 @@ export default class InteractiveSlotsNode extends Node {
 
         // pdom
         tagName: 'div',
-        accessibleName: `Above slot ${index} of ${slots.length}`
+
+        // TODO, i18n, see https://github.com/phetsims/membrane-transport/issues/97
+        accessibleName: `Above slot ${index + 1} of ${slots.length}`
       } );
       rectangles.push( rect );
       this.addChild( rect );
