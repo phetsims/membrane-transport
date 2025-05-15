@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -18,6 +19,7 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import Slot from '../model/Slot.js';
+import InteractiveSlotsNode from './InteractiveSlotsNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import LigandGatedChannelNode from './proteins/LigandGatedChannelNode.js';
@@ -44,12 +46,18 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     // The index of the selected transport protein
     const selectedIndexProperty = new Property( 0 );
 
+    // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
+    // When this has focus, the user is deciding which slot to place the protein in. When grabbed,
+    // focus is forwarded to components of this Node.
+    const interactiveSlotsNode = new InteractiveSlotsNode( model.membraneSlots, modelViewTransform );
+    this.addChild( interactiveSlotsNode );
+
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
       keys: [ 'arrowLeft', 'arrowRight' ],
+      enabledProperty: DerivedProperty.not( interactiveSlotsNode.grabbedProperty ),
       fire: ( event, keysPressed, listener ) => {
         const proteinCount = model.getFilledSlots().length;
-
         const delta = keysPressed === 'arrowLeft' ? -1 : 1;
         const nextIndex = selectedIndexProperty.value + delta;
         selectedIndexProperty.value = Math.min( Math.max( nextIndex, 0 ), proteinCount - 1 );
@@ -60,7 +68,13 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     const grabKeyboardListener = new KeyboardListener( {
       keys: [ 'enter', 'space' ],
       fire: ( event, keysPressed, listener ) => {
-        console.log( 'GRABBED PROTEIN' );
+        if ( !interactiveSlotsNode.grabbedProperty.value ) {
+          const selectedSlot = this.getTransportProteinNodes()[ selectedIndexProperty.value ].slot;
+          interactiveSlotsNode.grab( selectedSlot );
+
+          // remove the protein from the selected slot
+          selectedSlot.transportProteinType = null;
+        }
       }
     } );
     this.addInputListener( grabKeyboardListener );
