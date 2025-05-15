@@ -471,6 +471,8 @@ export default class MembraneTransportModel extends PhetioObject {
     },
     applyState: ( model: MembraneTransportModel, state: IntentionalAny ) => {
       ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.solutes, state.solutes );
+
+      // TODO: The ligands are statically preallocated, we need another way to transmit their state, see https://github.com/phetsims/membrane-transport/issues/23
       ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.ligands, state.ligands );
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
