@@ -51,7 +51,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
     // When this has focus, the user is deciding which slot to place the protein in. When grabbed,
     // focus is forwarded to components of this Node.
-    this.interactiveSlotsNode = new InteractiveSlotsNode( model.membraneSlots, modelViewTransform );
+    this.interactiveSlotsNode = new InteractiveSlotsNode( model.membraneSlots, view.createFromKeyboard.bind( view ), modelViewTransform );
     this.addChild( this.interactiveSlotsNode );
 
     // Add a keyboard listener that manages selection of the transport proteins

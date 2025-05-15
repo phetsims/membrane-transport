@@ -11,6 +11,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
@@ -19,15 +20,23 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneTransport from '../../membraneTransport.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import TransportProteinDragNode from './TransportProteinDragNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
+
+const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 
 export default class InteractiveSlotsNode extends Node {
 
-  private slots: Slot[];
   private selectedIndexProperty: Property<number>;
   public grabbedProperty: TProperty<boolean>;
   public selectedType: TransportProteinType | null;
+  private grabbedNode: TransportProteinDragNode | null = null;
 
-  public constructor( slots: Slot[], modelViewTransform: ModelViewTransform2 ) {
+  public constructor(
+    private readonly slots: Slot[],
+    private readonly createDragNode: ( type: TransportProteinType, origin: Slot | TransportProteinToolNode ) => TransportProteinDragNode,
+    modelViewTransform: ModelViewTransform2
+  ) {
     super( {
       groupFocusHighlight: true
     } );
@@ -48,7 +57,7 @@ export default class InteractiveSlotsNode extends Node {
 
       const rect = new Rectangle( 0, 0, 20, 20, {
         fill: 'red',
-        center: modelViewTransform.modelToViewXY( slot.position, 25 ),
+        center: modelViewTransform.modelToViewXY( slot.position, MODEL_DRAG_VERTICAL_OFFSET ),
 
         // pdom
         tagName: 'div',
@@ -59,7 +68,6 @@ export default class InteractiveSlotsNode extends Node {
     } );
 
     this.selectedIndexProperty = new Property( 0 );
-    this.slots = slots;
     this.grabbedProperty = new BooleanProperty( false );
     this.selectedType = null;
 
@@ -77,6 +85,12 @@ export default class InteractiveSlotsNode extends Node {
 
     // The selected index is controlled by the keyboard listener in the parent Node.
     this.selectedIndexProperty.link( selectedIndex => {
+
+      // Move the grabbedNode icon to the selected slot
+      if ( this.grabbedNode ) {
+        const selectedSlot = this.slots[ selectedIndex ];
+        this.grabbedNode.setModelPosition( new Vector2( selectedSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
+      }
 
       // Only the selected index is in the traversal order.
       rectangles.forEach( ( ( rect, index ) => {
@@ -119,6 +133,12 @@ export default class InteractiveSlotsNode extends Node {
 
           this.selectedType = null;
           this.selectedIndexProperty.value = 0;
+
+          // destroy the icon Node
+          if ( this.grabbedNode ) {
+            this.grabbedNode.dispose();
+            this.grabbedNode = null;
+          }
         }
       }
     } );
@@ -128,7 +148,8 @@ export default class InteractiveSlotsNode extends Node {
   /**
    * Begin the 'grabbed' state. The slot is the slot that the user will be "over" when they begin the operation.
    * This should be the selected slot from the select interaction.
-   * @param slot
+   *
+   * @param slot - the slot that this protein was grabbed from
    * @param type - the type of transport protein that is being grabbed since it may not always be assigned to the slot
    *               when forwarding from the toolbar.
    */
@@ -136,6 +157,8 @@ export default class InteractiveSlotsNode extends Node {
     this.grabbedProperty.value = true;
     this.selectedType = type;
     this.selectedIndexProperty.value = this.slots.indexOf( slot );
+
+    this.grabbedNode = this.createDragNode( type, slot );
   }
 }
 
