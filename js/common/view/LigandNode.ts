@@ -30,7 +30,8 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings, { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -383,7 +384,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
             affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
             this.ligand.position.set( this.initialPositionBeforeGrab );
 
-            this.alert( MembraneTransportFluent.a11y.ligandNode.releasedLigand );
+            this.alert( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty );
           }
           else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
 

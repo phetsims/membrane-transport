@@ -21,7 +21,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
-import { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -314,7 +315,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             else {
 
               // Drop the item back into the toolbox
-              this.alert( MembraneTransportFluent.a11y.releasedBackInToolbox );
+              this.alert( MembraneTransportStrings.a11y.releasedBackInToolboxStringProperty );
 
               // Animate the protein back to the toolbox
               returnToolToToolbox( grabbedNode );
@@ -438,7 +439,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
 
             // Dropped into membrane
             groupSelectModel.selectedGroupItemProperty.value = selectedIndex === -1 ? null : selectedIndex;
-            this.alert( MembraneTransportFluent.a11y.canceledBackInMembrane );
+            this.alert( MembraneTransportStrings.a11y.canceledBackInMembraneStringProperty );
 
             MembraneTransportSounds.transportProteinReleased();
             resetState();
@@ -452,7 +453,7 @@ export default class MembraneGroupSelectView extends GroupSelectView<ItemModel, 
             returnToolToToolbox( grabbedNode );
 
             MembraneTransportSounds.proteinReturnedToToolbox();
-            this.alert( MembraneTransportFluent.a11y.releasedBackInToolbox );
+            this.alert( MembraneTransportStrings.a11y.releasedBackInToolboxStringProperty );
           }
         }
 

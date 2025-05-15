@@ -7,7 +7,7 @@
  */
 
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
-import { MembraneTransportFluent } from '../../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../../MembraneTransportFluent.js';
 import TransportProteinType from '../../model/proteins/TransportProteinType.js';
 
 export default function getBriefProteinName( type: TransportProteinType ): TReadOnlyProperty<string> {

@@ -11,7 +11,8 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings, { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -34,7 +35,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     ];
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const node = createListItemNode( MembraneTransportFluent.a11y.ligandsOnOutsideOnly );
+      const node = createListItemNode( MembraneTransportStrings.a11y.ligandsOnOutsideOnlyStringProperty );
       model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
       listItemNodes.push( node );
     }
@@ -76,10 +77,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     } );
 
     super( {
-      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1 :
-                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4 :
-                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3 :
-                       MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4,
+      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1.createProperty( {} ) :
+                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4.createProperty( {} ) :
+                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3.createProperty( {} ) :
+                       MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4.createProperty( {} ),
       controlAreaContent: MembraneTransportStrings.a11y.summary.controlAreaSummaryStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode

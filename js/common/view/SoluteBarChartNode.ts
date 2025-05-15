@@ -21,7 +21,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import { MembraneTransportFluent } from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
