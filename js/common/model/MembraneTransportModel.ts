@@ -430,14 +430,16 @@ export default class MembraneTransportModel extends PhetioObject {
       mode: ObjectLiteralIO,
 
       // Necessary in order to get information from the model about the slots
-      model: ReferenceIO( IOType.ObjectIO ) // Cannot reference MembraneTransportModel.MembraneTransportModelIO because it creates a circular dependency
+      model: ReferenceIO( IOType.ObjectIO ), // Cannot reference MembraneTransportModel.MembraneTransportModelIO because it creates a circular dependency
+      opacity: NumberIO
     },
     toStateObject: ( particle: Particle<IntentionalAny> ) => {
       return {
         position: particle.position,
         type: particle.type,
         mode: Particle.modeToState( particle.mode ),
-        model: ReferenceIO( IOType.ObjectIO ).toStateObject( particle.model )
+        model: ReferenceIO( IOType.ObjectIO ).toStateObject( particle.model ),
+        opacity: particle.opacity
       };
     },
     fromStateObject: ( stateObject: ParticleStateObject ) => {
@@ -449,6 +451,7 @@ export default class MembraneTransportModel extends PhetioObject {
         stateObject.type,
         model
       );
+      particle.opacity = stateObject.opacity;
       particle.mode = Particle.stateToMode( model, stateObject.mode );
       return particle;
     }
@@ -586,6 +589,7 @@ export type ParticleStateObject = {
   type: SoluteType;
   mode: Record<string, unknown>;
   model: ReferenceIOState;
+  opacity: number;
 };
 
 
