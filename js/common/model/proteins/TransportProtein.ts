@@ -113,6 +113,14 @@ export default abstract class TransportProtein<State extends string = Intentiona
     releaseParticlesWithSlot( this.model.solutes );
     releaseParticlesWithSlot( this.model.ligands );
   }
+
+  public getAdditionalState(): Record<string, IntentionalAny> {
+    return {};
+  }
+
+  public setAdditionalState( state: Record<string, IntentionalAny> ): void {
+    // do nothing
+  }
 }
 
 membraneTransport.register( 'TransportProtein', TransportProtein );

@@ -522,12 +522,13 @@ type TransportProteinStateObject = {
   type: TransportProteinType;
   position: number;
   model: ReferenceIOState;
+  state: string;
+  additionalState: Record<string, IntentionalAny>;
 };
 
 /**
  * Ideally this would be declared in TransportProtein.ts. However, since this creates subtypes like LigandGatedChannel, that
  * would create a circular dependency. So we declare it here.
- *
  */
 export const TransportProteinIO = new IOType<TransportProtein, TransportProteinStateObject>( 'TransportProteinIO', {
   valueType: TransportProtein,
@@ -536,21 +537,32 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
     position: NumberIO,
 
     // Necessary in order to get information from the model to the TransportProtein, such as the membrane potential
-    model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO )
+    model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ),
+
+    state: StringIO,
+
+    additionalState: ObjectLiteralIO
   },
   toStateObject: ( transportProtein: TransportProtein ): TransportProteinStateObject => {
+
+    // TODO: State not appearing in get call when a ligand is bound, see https://github.com/phetsims/membrane-transport/issues/23
     return {
       type: transportProtein.type,
       position: transportProtein.position,
-      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model as MembraneTransportModel )
+      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model as MembraneTransportModel ),
+      state: transportProtein.stateProperty.value,
+      additionalState: transportProtein.getAdditionalState()
     };
   },
   fromStateObject: ( stateObject: TransportProteinStateObject ) => {
-    return createTransportProtein(
+    const transportProtein = createTransportProtein(
       ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ) as MembraneTransportModel,
       stateObject.type,
       stateObject.position
     );
+    transportProtein.stateProperty.value = stateObject.state;
+    transportProtein.setAdditionalState( stateObject.additionalState );
+    return transportProtein;
   }
 } );
 
