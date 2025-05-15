@@ -37,9 +37,6 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   // When a ligand is bound, keep track of it
   private boundLigand: Particle<LigandType> | null = null;
 
-  // Start ready to bind
-  private timeSinceStateTransition = REBINDING_DELAY;
-
   private readonly ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Particle<LigandType> ]>;
 
   // Offsets for binding positions, relative to the center of the slot. Static so that they can be controlled from the dev tools.
@@ -64,11 +61,10 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   public constructor( model: TransportProteinModelContext, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
     super( model, type, position, 'closed', [ 'ligandBoundOpen', 'ligandUnboundOpen' ] );
 
-    this.stateProperty.link( state => {
-      this.timeSinceStateTransition = 0;
-    } );
-
     this.ligandUnboundDueToNaturalCausesEmitter = model.ligandUnboundDueToNaturalCausesEmitter;
+
+    // Start ready to bind
+    this.timeSinceStateTransition = REBINDING_DELAY;
   }
 
   public clearRebindingCooldown(): void {
@@ -77,8 +73,6 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
   public override step( dt: number ): void {
     super.step( dt );
-
-    this.timeSinceStateTransition += dt;
 
     // after an interval, transitions from ligandUnboundOpen to closed
     if ( this.stateProperty.value === 'ligandUnboundOpen' && this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
@@ -166,14 +160,12 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
   public override getAdditionalState(): Record<string, unknown> {
     return {
-      boundLigand: this.boundLigand ? this.model.ligands.indexOf( this.boundLigand ) : null,
-      timeSinceStateTransition: this.timeSinceStateTransition
+      boundLigand: this.boundLigand ? this.model.ligands.indexOf( this.boundLigand ) : null
     };
   }
 
   public override setAdditionalState( state: Record<string, IntentionalAny> ): void {
     super.setAdditionalState( state );
-    this.timeSinceStateTransition = state.timeSinceStateTransition;
     this.boundLigand = state.boundLigand !== null ? this.model.ligands[ state.boundLigand ] : null;
   }
 }

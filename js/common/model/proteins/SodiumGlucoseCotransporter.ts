@@ -37,21 +37,14 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.glucoseSiteCenter
   );
 
-  private timeSinceStateTransition = 0;
-
   public constructor( model: TransportProteinModelContext, type: TransportProteinType, position: number ) {
 
     // This protein is always 'closed' because there are no states that allow a particle to move through it freely.
     super( model, type, position, 'openToOutsideAwaitingParticles', [] );
-
-    this.stateProperty.link( state => {
-      this.timeSinceStateTransition = 0;
-    } );
   }
 
   public override step( dt: number ): void {
     super.step( dt );
-    this.timeSinceStateTransition += dt;
 
     const slot = this.model.getSlotForTransportProtein( this )!;
 

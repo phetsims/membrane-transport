@@ -42,8 +42,6 @@ const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
-  private timeSinceStateTransition = 0;
-
   private static readonly SODIUM_SITE_1 = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownDimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.sodiumSite1
@@ -161,8 +159,6 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   public override step( dt: number ): void {
     super.step( dt );
-
-    this.timeSinceStateTransition += dt;
 
     const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
                                                        solute.mode.slot === this.slot &&

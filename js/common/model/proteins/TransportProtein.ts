@@ -37,6 +37,10 @@ export default abstract class TransportProtein<State extends string = Intentiona
   // A convenience Property that describes the overall open vs closed state of the channel.
   public readonly openOrClosedProperty: TReadOnlyProperty<'open' | 'closed'>;
 
+  // Track how long since the state last changed, for timing of state transitions. Used in the active transporters.
+  // Public only for PhET-iO state serialization, otherwise treat as protected.
+  public timeSinceStateTransition = 0;
+
   /**
    * @param model - reference to the containing model, so we can access information like the membrane voltage
    * @param type - the type of transport protein
@@ -64,6 +68,10 @@ export default abstract class TransportProtein<State extends string = Intentiona
     this.openOrClosedProperty = new DerivedProperty( [ this.stateProperty ], ( state: State ) => {
       return openStates.includes( state ) ? 'open' : 'closed';
     } );
+
+    this.stateProperty.link( () => {
+      this.timeSinceStateTransition = 0;
+    } );
   }
 
   /**
@@ -71,8 +79,9 @@ export default abstract class TransportProtein<State extends string = Intentiona
    * @param dt - time step in seconds
    */
   public step( dt: number ): void {
+    this.timeSinceStateTransition += dt;
 
-    // implement in a subclass, if necessary
+    // More specific details in a subclass
   }
 
   public get slot(): Slot {

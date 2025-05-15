@@ -523,6 +523,7 @@ type TransportProteinStateObject = {
   position: number;
   model: ReferenceIOState;
   state: string;
+  timeSinceStateTransition: number;
   additionalState: Record<string, IntentionalAny>;
 };
 
@@ -540,6 +541,7 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
     model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ),
 
     state: StringIO,
+    timeSinceStateTransition: NumberIO,
 
     additionalState: ObjectLiteralIO
   },
@@ -551,6 +553,7 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
       position: transportProtein.position,
       model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model as MembraneTransportModel ),
       state: transportProtein.stateProperty.value,
+      timeSinceStateTransition: transportProtein.timeSinceStateTransition,
       additionalState: transportProtein.getAdditionalState()
     };
   },
@@ -561,6 +564,7 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
       stateObject.position
     );
     transportProtein.stateProperty.value = stateObject.state;
+    transportProtein.timeSinceStateTransition = stateObject.timeSinceStateTransition;
     transportProtein.setAdditionalState( stateObject.additionalState );
     return transportProtein;
   }
