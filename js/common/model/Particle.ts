@@ -15,8 +15,9 @@ import { boxMullerTransform } from '../../../../dot/js/util/boxMullerTransform.j
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
@@ -227,7 +228,8 @@ export default class Particle<T extends ParticleType> {
 
   public constructor(
     public readonly position: Vector2,
-    public readonly type: T
+    public readonly type: T,
+    public readonly model: PhetioObject // For serialization
   ) {
     const lookup = getParticleViewDimensions()[ type ];
 
@@ -472,8 +474,8 @@ export default class Particle<T extends ParticleType> {
         else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBoundPhosphateSiteOpen' ) {
 
           // Bind, split into adp and phosphate, and move through the pump
-          model.addSolute( new Particle( currentPosition.copy(), 'adp' ) );
-          const phosphate = new Particle( currentPosition.copy(), 'phosphate' );
+          model.addSolute( new Particle( currentPosition.copy(), 'adp', this.model ) );
+          const phosphate = new Particle( currentPosition.copy(), 'phosphate', this.model );
           phosphate.mode = {
             type: 'waitingInSodiumPotassiumPump',
             slot: this.mode.slot,
@@ -1071,32 +1073,77 @@ export default class Particle<T extends ParticleType> {
     return new Vector2( Math.cos( angle ), Math.sin( angle ) );
   }
 
-  /**
-   * Individual Solute instances are not PhET-iO Instrumented. Instead, the container that contains the Solutes
-   * calls ParticleIO.toStateObject to serialize the Solute instances. MembraneTransportModel uses reference type serialization
-   * as a composite of the Solutes, which use data type serialization.
-   *
-   * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
-   * for more information on the different serialization types.
-   */
-  public static readonly ParticleIO = new IOType<Particle<ParticleType>, SoluteStateObject>( 'ParticleIO', {
-    valueType: Particle,
-    stateSchema: {
-      position: Vector2.Vector2IO,
-      type: StringIO
-    },
-    fromStateObject: ( stateObject: SoluteStateObject ) => {
-      return new Particle(
-        new Vector2( stateObject.position.x, stateObject.position.y ),
-        stateObject.type
-      );
+  public static modeToState( mode: IntentionalAny ): Record<string, IntentionalAny> {
+
+    // Here are all the things that need help serializing
+
+    // Will be nullified:
+    // offset?: number;
+    // sheddingElapsed?: number;
+    //
+    // currentDirection: Vector2; => toStateObject
+    // slot: Slot; => index
+
+    // Will be looked up from the slot.
+    // sodiumGlucoseCotransporter: SodiumGlucoseCotransporter;
+    // sodiumPotassiumPump: SodiumPotassiumPump;
+    // ligandGatedChannel: LigandGatedChannel;
+
+    // eslint-disable-next-line phet/no-object-spread-on-non-literals
+    const output: IntentionalAny = { ...mode };
+
+    if ( typeof output.offset !== 'number' ) {
+      output.offset = null;
     }
-  } );
+
+    if ( typeof output.sheddingElapsed !== 'number' ) {
+      output.sheddingElapsed = null;
+    }
+    if ( output.currentDirection ) {
+      output.currentDirection = Vector2.Vector2IO.toStateObject( output.currentDirection );
+    }
+    if ( output.slot ) {
+      output.slot = output.slot.getIndex();
+    }
+    if ( output.sodiumGlucoseCotransporter ) {
+      output.sodiumGlucoseCotransporter = true;
+    }
+    if ( output.sodiumPotassiumPump ) {
+      output.sodiumPotassiumPump = true;
+    }
+    if ( output.ligandGatedChannel ) {
+      output.ligandGatedChannel = true;
+    }
+
+    return output;
+  }
+
+  public static stateToMode( model: MembraneTransportModel, state: Record<string, IntentionalAny> ): IntentionalAny {
+    // eslint-disable-next-line phet/no-object-spread-on-non-literals
+    const mode = { ...state };
+    if ( mode.currentDirection ) {
+      mode.currentDirection = Vector2.Vector2IO.fromStateObject( mode.currentDirection );
+    }
+    if ( mode.slot ) {
+      mode.slot = model.membraneSlots[ mode.slot ];
+    }
+    if ( mode.sodiumGlucoseCotransporter ) {
+      mode.sodiumGlucoseCotransporter = mode.slot.transportProteinProperty.value;
+    }
+    if ( mode.sodiumPotassiumPump ) {
+      mode.sodiumPotassiumPump = mode.slot.transportProteinProperty.value;
+    }
+    if ( mode.ligandGatedChannel ) {
+      mode.ligandGatedChannel = mode.slot.transportProteinProperty.value;
+    }
+  }
 }
 
 export type SoluteStateObject = {
   position: Vector2;
   type: SoluteType;
+  mode: Record<string, unknown>;
+  model: ReferenceIOState;
 };
 
 membraneTransport.register( 'Particle', Particle );

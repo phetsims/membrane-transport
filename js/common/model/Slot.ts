@@ -38,7 +38,10 @@ export default class Slot {
       oldTransportProtein && oldTransportProtein.releaseParticles( this );
       oldTransportProtein && oldTransportProtein.dispose();
     } );
+  }
 
+  public getIndex(): number {
+    return this.model.membraneSlots.indexOf( this );
   }
 
   public reset(): void {

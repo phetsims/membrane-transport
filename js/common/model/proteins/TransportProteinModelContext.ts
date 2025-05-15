@@ -14,7 +14,8 @@ type TransportProteinModelContext = Pick<MembraneTransportModel,
   'ligands' |
   'membranePotentialProperty' |
   'ligandUnboundDueToNaturalCausesEmitter' |
-  'isUserDraggingLigandProperty'
+  'isUserDraggingLigandProperty' |
+  'membraneSlots'
 >;
 
 export default TransportProteinModelContext;

@@ -34,7 +34,7 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import Particle, { ParticleModeWithSlot } from './Particle.js';
+import Particle, { ParticleModeWithSlot, SoluteStateObject } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
@@ -208,7 +208,7 @@ export default class MembraneTransportModel extends PhetioObject {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneTransportConstants.INSIDE_CELL_BOUNDS.minX, MembraneTransportConstants.INSIDE_CELL_BOUNDS.maxX );
       const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY;
-      soluteArray.push( new Particle( new Vector2( x, y ), soluteType ) );
+      soluteArray.push( new Particle( new Vector2( x, y ), soluteType, this ) );
     }
   }
 
@@ -415,6 +415,47 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   /**
+   * Individual Solute instances are not PhET-iO Instrumented. Instead, the container that contains the Solutes
+   * calls ParticleIO.toStateObject to serialize the Solute instances. MembraneTransportModel uses reference type serialization
+   * as a composite of the Solutes, which use data type serialization.
+   *
+   * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
+   * for more information on the different serialization types.
+   */
+  public static readonly ParticleIO = new IOType<Particle<ParticleType>, SoluteStateObject>( 'ParticleIO', {
+    valueType: Particle,
+    stateSchema: {
+      position: Vector2.Vector2IO,
+      type: StringIO,
+      mode: ObjectLiteralIO,
+
+      // Necessary in order to get information from the model about the slots
+      model: ReferenceIO( IOType.ObjectIO ) // Cannot reference MembraneTransportModel.MembraneTransportModelIO because it creates a circular dependency
+    },
+    toStateObject: ( particle: Particle<IntentionalAny> ) => {
+      return {
+        position: particle.position,
+        type: particle.type,
+        mode: particle.mode,
+
+        model: ReferenceIO( IOType.ObjectIO ).toStateObject( particle.model )
+      };
+    },
+    fromStateObject: ( stateObject: SoluteStateObject ) => {
+
+      const model = ReferenceIO( IOType.ObjectIO ).fromStateObject( stateObject.model ) as MembraneTransportModel;
+
+      const particle = new Particle(
+        new Vector2( stateObject.position.x, stateObject.position.y ),
+        stateObject.type,
+        model
+      );
+      particle.mode = Particle.stateToMode( model, stateObject.mode );
+      return particle;
+    }
+  } );
+
+  /**
    * For serialization, the MembraneTransportModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
    */
@@ -423,15 +464,15 @@ export default class MembraneTransportModel extends PhetioObject {
     supertype: GetSetButtonsIO,
     valueType: MembraneTransportModel,
     stateSchema: {
-      solutes: ReferenceArrayIO( Particle.ParticleIO ),
-      ligands: ReferenceArrayIO( Particle.ParticleIO ),
+      solutes: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
+      ligands: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO,
       soluteTypeFlux: ObjectLiteralIO
     },
     applyState: ( model: MembraneTransportModel, state: IntentionalAny ) => {
-      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.solutes, state.solutes );
-      ReferenceArrayIO( Particle.ParticleIO ).applyState( model.ligands, state.ligands );
+      ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.solutes, state.solutes );
+      ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.ligands, state.ligands );
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
       model.soluteTypeFlux = state.soluteTypeFlux;
@@ -512,5 +553,6 @@ export const TransportProteinIO = new IOType<TransportProtein, TransportProteinS
     );
   }
 } );
+
 
 membraneTransport.register( 'MembraneTransportModel', MembraneTransportModel );
