@@ -18,6 +18,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import InteractiveSlotsNode from './InteractiveSlotsNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
@@ -33,6 +34,7 @@ export type SlottedNode = {
 export default class ObservationWindowTransportProteinLayer extends Node {
 
   private readonly record = new Map<TransportProtein, SlottedNode>();
+  private readonly interactiveSlotsNode: InteractiveSlotsNode;
 
   public constructor(
     public readonly model: MembraneTransportModel,
@@ -49,13 +51,13 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
     // When this has focus, the user is deciding which slot to place the protein in. When grabbed,
     // focus is forwarded to components of this Node.
-    const interactiveSlotsNode = new InteractiveSlotsNode( model.membraneSlots, modelViewTransform );
-    this.addChild( interactiveSlotsNode );
+    this.interactiveSlotsNode = new InteractiveSlotsNode( model.membraneSlots, modelViewTransform );
+    this.addChild( this.interactiveSlotsNode );
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
       keys: [ 'arrowLeft', 'arrowRight' ],
-      enabledProperty: DerivedProperty.not( interactiveSlotsNode.grabbedProperty ),
+      enabledProperty: DerivedProperty.not( this.interactiveSlotsNode.grabbedProperty ),
       fire: ( event, keysPressed, listener ) => {
         const proteinCount = model.getFilledSlots().length;
         const delta = keysPressed === 'arrowLeft' ? -1 : 1;
@@ -68,9 +70,10 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     const grabKeyboardListener = new KeyboardListener( {
       keys: [ 'enter', 'space' ],
       fire: ( event, keysPressed, listener ) => {
-        if ( !interactiveSlotsNode.grabbedProperty.value ) {
+        if ( !this.interactiveSlotsNode.grabbedProperty.value ) {
           const selectedSlot = this.getTransportProteinNodes()[ selectedIndexProperty.value ].slot;
-          interactiveSlotsNode.grab( selectedSlot );
+          affirm( selectedSlot.transportProteinType, 'The selected slot should have a protein type before grabbing.' );
+          this.interactiveSlotsNode.grab( selectedSlot, selectedSlot.transportProteinType );
 
           // remove the protein from the selected slot
           selectedSlot.transportProteinType = null;
@@ -159,6 +162,10 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.membraneSlots.indexOf( a.slot ) - this.model.membraneSlots.indexOf( b.slot );
     } );
+  }
+
+  public forwardFromKeyboard( slot: Slot, type: TransportProteinType ): void {
+    this.interactiveSlotsNode.grab( slot, type );
   }
 
   public step( dt: number ): void {

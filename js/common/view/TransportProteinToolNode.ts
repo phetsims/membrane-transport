@@ -52,6 +52,11 @@ export default class TransportProteinToolNode extends VBox {
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
     } ) );
 
+
+    this.addInputListener( {
+      click: () => view.forwardFromKeyboard( type )
+    } );
+
     this.transportProteinNode = transportProteinNode;
   }
 }

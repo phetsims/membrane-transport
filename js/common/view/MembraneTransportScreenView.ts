@@ -325,6 +325,11 @@ export default class MembraneTransportScreenView extends ScreenView {
     return dragNode;
   }
 
+  public forwardFromKeyboard( type: TransportProteinType ): void {
+    const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
+    this.observationWindow.forwardFromKeyboard( slot, type );
+  }
+
   /**
    * Resets the view.
    */

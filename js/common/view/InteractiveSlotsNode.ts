@@ -34,13 +34,14 @@ export default class InteractiveSlotsNode extends Node {
     const rectangles: Node[] = [];
 
     // Draw a rectangle centered at each slot, vertically above them.
-    slots.forEach( slot => {
+    slots.forEach( ( slot, index ) => {
       const rect = new Rectangle( 0, 0, 20, 20, {
         fill: 'red',
         center: modelViewTransform.modelToViewXY( slot.position, 25 ),
 
         // pdom
-        tagName: 'div'
+        tagName: 'div',
+        accessibleName: `Above slot ${index} of ${slots.length}`
       } );
       rectangles.push( rect );
       this.addChild( rect );
@@ -117,10 +118,12 @@ export default class InteractiveSlotsNode extends Node {
    * Begin the 'grabbed' state. The slot is the slot that the user will be "over" when they begin the operation.
    * This should be the selected slot from the select interaction.
    * @param slot
+   * @param type - the type of transport protein that is being grabbed since it may not always be assigned to the slot
+   *               when forwarding from the toolbar.
    */
-  public grab( slot: Slot ): void {
+  public grab( slot: Slot, type: TransportProteinType ): void {
     this.grabbedProperty.value = true;
-    this.selectedType = slot.transportProteinType;
+    this.selectedType = type;
     this.selectedIndexProperty.value = this.slots.indexOf( slot );
   }
 }

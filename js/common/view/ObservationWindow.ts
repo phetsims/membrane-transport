@@ -25,6 +25,8 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
+import Slot from '../model/Slot.js';
 import LigandNode from './LigandNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -179,6 +181,10 @@ export default class ObservationWindow extends Node {
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
       slotDragIndicatorNode.visible = visible;
     } );
+  }
+
+  public forwardFromKeyboard( slot: Slot, type: TransportProteinType ): void {
+    this.transportProteinLayer.forwardFromKeyboard( slot, type );
   }
 
   public step( dt: number ): void {
