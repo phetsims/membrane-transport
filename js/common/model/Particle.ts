@@ -1136,6 +1136,8 @@ export default class Particle<T extends ParticleType> {
     if ( mode.ligandGatedChannel ) {
       mode.ligandGatedChannel = mode.slot.transportProteinProperty.value;
     }
+
+    return mode;
   }
 }
 
