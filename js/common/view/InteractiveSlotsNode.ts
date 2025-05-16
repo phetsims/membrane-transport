@@ -49,9 +49,7 @@ export default class InteractiveSlotsNode extends Node {
     private readonly createDragNode: ( type: TransportProteinType, slot: Slot, toolNode?: TransportProteinToolNode ) => TransportProteinDragNode,
     modelViewTransform: ModelViewTransform2
   ) {
-    super( {
-      groupFocusHighlight: true
-    } );
+    super();
 
     const rectangles: Node[] = [];
 
