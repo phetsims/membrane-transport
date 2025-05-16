@@ -12,10 +12,12 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -61,11 +63,11 @@ export default class InteractiveSlotsNode extends Node {
     updateFocusForSelectables: () => void,
     modelViewTransform: ModelViewTransform2
   ) {
-    super( {
-      tagName: 'div',
-      ariaRole: 'application',
+    super( combineOptions<NodeOptions>( {}, AccessibleDraggableOptions, {
+      groupFocusHighlight: true,
+      focusable: false,
       accessibleRoleDescription: 'sortable'
-    } );
+    } ) );
 
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
@@ -279,6 +281,9 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = 0;
 
     this.grabbedProperty.value = false;
+
+    // TODO: i18n, see #97
+    this.addAccessibleResponse( 'Released' );
   }
 
   // The selected index is controlled by the keyboard listener in the parent Node.
@@ -328,6 +333,7 @@ export default class InteractiveSlotsNode extends Node {
 
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
+    // TODO: i18n, see #97
     this.addAccessibleResponse( 'Grabbed.' );
   }
 }
