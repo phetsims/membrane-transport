@@ -50,7 +50,11 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     modelViewTransform: ModelViewTransform2
   ) {
     super( {
-      groupFocusHighlight: true
+      groupFocusHighlight: true,
+
+      tagName: 'div',
+      ariaRole: 'application',
+      accessibleRoleDescription: 'navigable'
     } );
 
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.

@@ -61,7 +61,11 @@ export default class InteractiveSlotsNode extends Node {
     updateFocusForSelectables: () => void,
     modelViewTransform: ModelViewTransform2
   ) {
-    super();
+    super( {
+      tagName: 'div',
+      ariaRole: 'application',
+      accessibleRoleDescription: 'sortable'
+    } );
 
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
