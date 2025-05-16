@@ -13,6 +13,7 @@ import TProperty from '../../../../axon/js/TProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -48,12 +49,14 @@ export default class InteractiveSlotsNode extends Node {
    * @param slots - Slots available to place a protein
    * @param view - The view so that we can create new icons for dragging.
    * @param focusLeftmostProteinNode - A function that focuses the leftmost protein node, if any, or returns false
+   * @param updateFocusForSelectables - A function that updates which proteins are focusable when in the 'select' state.
    * @param modelViewTransform
    */
   public constructor(
     private readonly slots: Slot[],
     private readonly view: Pick<MembraneTransportScreenView, 'createFromKeyboard' | 'getTransportProteinToolNode'>,
     focusLeftmostProteinNode: () => boolean,
+    updateFocusForSelectables: () => void,
     modelViewTransform: ModelViewTransform2
   ) {
     super();
@@ -236,6 +239,19 @@ export default class InteractiveSlotsNode extends Node {
       }
     } );
     this.addInputListener( escapeKeyboardListener );
+
+    // If focus leaves the group because the user used a mouse, release the interaction.
+    const groupFocusListener = new GroupFocusListener( this );
+    this.addInputListener( groupFocusListener );
+    groupFocusListener.focusInGroupProperty.link( focus => {
+      if ( !focus && this.grabbedProperty.value ) {
+        this.release();
+
+        // After releasing, make sure that the correct protein is in the traversal order according to
+        // the selected index in the 'select' state.
+        updateFocusForSelectables();
+      }
+    } );
   }
 
   /**
@@ -266,16 +282,20 @@ export default class InteractiveSlotsNode extends Node {
       }
     }
 
-    // Only the selected index is in the traversal order.
+    // Only the selected index is in the traversal order. Make the next rectangle focusable before removing others
+    // from the traversal order so that this operation doesn't trigger a blur event. We need to watch for that
+    // important event to release/interrupt the interaction.
+    const removeFocusRectangles: Node[] = [];
     this.rectangles.forEach( ( ( rect, index ) => {
       if ( index === this.selectedIndex || ( this.selectedIndex === 'offMembrane' && index === this.rectangles.length - 1 ) ) {
         rect.focusable = true;
         rect.focus();
       }
       else {
-        rect.focusable = false;
+        removeFocusRectangles.push( rect );
       }
     } ) );
+    removeFocusRectangles.forEach( rect => rect.setFocusable( false ) );
   }
 
   /**

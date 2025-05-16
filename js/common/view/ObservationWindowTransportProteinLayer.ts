@@ -67,6 +67,13 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           return false;
         }
       },
+
+      // A closure that updates resets the selected index and makes sure that the correct protein is focusable,
+      // without actually changing the focus. Called on interruption.
+      () => {
+        this.selectedIndex = 0;
+        this.updateFocus( false );
+      },
       modelViewTransform
     );
     this.addChild( this.interactiveSlotsNode );
@@ -161,18 +168,18 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   }
 
   /**
-   * Place focus on the protein that matches the this.selectedIndex. Note that other proteins are made non-focusable
+   * Update the focusable proteins, and optionally place focus on the selected protein. Proteins are made non-focusable
    * so that only the selected protein is in the traversal order.  That way, pressing tab goes to the toolbox rather
    * than to the next protein.
    */
-  private updateFocus(): void {
+  private updateFocus( setFocus = true ): void {
     const proteinNodes = this.getTransportProteinNodes();
 
     // Only the selected index is in the traversal order.
     proteinNodes.forEach( ( ( node, index ) => {
       if ( index === this.selectedIndex ) {
         node.node.focusable = true;
-        node.node.focus();
+        setFocus && node.node.focus();
       }
       else {
         node.node.focusable = false;
