@@ -266,9 +266,9 @@ a11y:
   transportProtein:
 
     # The accessible name pattern for proteins in the membrane.
-    accessibleNamePattern: |-
-                           { $proteinIndex } of { $proteinCount },
-                           { $openOrClosed ->
-                             [open]   open
-                             *[closed] closed
-                           }, { a11y_transportProteinBriefName }
+    accessibleNamePattern:        |-
+                                  { $proteinIndex } of { $proteinCount },
+                                  { $openOrClosed ->
+                                    [open]   open
+                                    *[closed] closed
+                                  }, { a11y_transportProteinBriefName }

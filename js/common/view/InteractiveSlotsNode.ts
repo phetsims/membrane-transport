@@ -18,6 +18,7 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
@@ -27,6 +28,7 @@ import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
+const OFF_MEMBRANE_HORIZONTAL_OFFSET = 10;
 
 export default class InteractiveSlotsNode extends Node {
 
@@ -69,8 +71,15 @@ export default class InteractiveSlotsNode extends Node {
         slot.transportProteinProperty
       ], transportProtein => {
 
-        // TODO, i18n, see https://github.com/phetsims/membrane-transport/issues/97
-        return `Above slot ${index + 1} of ${slots.length}, ${transportProtein ? transportProtein.type : 'empty'}`;
+        let proteinName = 'empty';
+        if ( transportProtein ) {
+          proteinName = MembraneTransportFluent.a11y.transportProteinBriefName.format( {
+            type: transportProtein.type
+          } );
+        }
+
+        // TODO, i18n, see https://github.com/phetsims/membrane-transport/issues/97. I could not figure out how to use the YAML in main.
+        return `Above slot ${index + 1} of ${slots.length}, ${proteinName}`;
       } );
 
       const rect = new Rectangle( 0, 0, 20, 20, {
@@ -88,7 +97,7 @@ export default class InteractiveSlotsNode extends Node {
     // Add a rectangle for the off-membrane state
     const offMembraneRect = new Rectangle( 0, 0, 20, 20, {
       fill: 'red',
-      center: modelViewTransform.modelToViewXY( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2, OFF_MEMBRANE_VERTICAL_OFFSET ),
+      center: modelViewTransform.modelToViewXY( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET ),
 
       // pdom
       tagName: 'div',
@@ -274,7 +283,7 @@ export default class InteractiveSlotsNode extends Node {
     // Move the grabbedNode icon to the selected slot
     if ( this.grabbedNode ) {
       if ( this.selectedIndex === 'offMembrane' ) {
-        this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2, OFF_MEMBRANE_VERTICAL_OFFSET ) );
+        this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET ) );
       }
       else {
         const selectedSlot = this.slots[ this.selectedIndex ];

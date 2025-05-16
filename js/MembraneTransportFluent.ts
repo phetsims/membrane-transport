@@ -1,6 +1,6 @@
 /* eslint-disable */
 // AUTOMATICALLY GENERATED – DO NOT EDIT.
-// Generated 2025-05-15T04:35:25.818Z from membrane-transport-strings_en.yaml
+// Generated 2025-05-16T23:16:59.502Z from membrane-transport-strings_en.yaml
 
 import StringProperty from '../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
@@ -788,6 +788,10 @@ const MembraneTransportFluent = {
       accessibleNamePattern: {
         format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProtein_accessibleNamePattern', args ),
         createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProtein_accessibleNamePattern', args )
+      },
+      grabbedAccessibleNamePattern: {
+        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProtein_grabbedAccessibleNamePattern', args ),
+        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProtein_grabbedAccessibleNamePattern', args )
       }
     }
   }
