@@ -18,17 +18,20 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
+const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
 
 export default class InteractiveSlotsNode extends Node {
 
   // The index of the slot that is currently selected. If the user activates the slot, the selected protein type will be placed there.
-  private selectedIndexProperty: Property<number>;
+  private selectedIndexProperty: Property<number | 'offMembrane'>;
 
   // Is this interaction in a "grabbed" state? If so, this Node is active and the user is selecting a slot to place the protein.
   public grabbedProperty: TProperty<boolean>;
@@ -41,12 +44,14 @@ export default class InteractiveSlotsNode extends Node {
 
   /**
    * @param slots - Slots available to place a protein
-   * @param createDragNode - A function that creates the icon Node for the protein being dragged and adds it to the view.
+   * @param view - The view so that we can create new icons for dragging.
+   * @param getLeftMostProteinNode - A function that returns the left-most protein Node in the membrane.
    * @param modelViewTransform
    */
   public constructor(
     private readonly slots: Slot[],
-    private readonly createDragNode: ( type: TransportProteinType, slot: Slot, toolNode?: TransportProteinToolNode ) => TransportProteinDragNode,
+    private readonly view: Pick<MembraneTransportScreenView, 'createFromKeyboard' | 'getTransportProteinToolNode'>,
+    private readonly getLeftMostProteinNode: () => Node | null,
     modelViewTransform: ModelViewTransform2
   ) {
     super();
@@ -77,7 +82,19 @@ export default class InteractiveSlotsNode extends Node {
       this.addChild( rect );
     } );
 
-    this.selectedIndexProperty = new Property( 0 );
+    // Add a rectangle for the off-membrane state
+    const offMembraneRect = new Rectangle( 0, 0, 20, 20, {
+      fill: 'red',
+      center: modelViewTransform.modelToViewXY( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2, OFF_MEMBRANE_VERTICAL_OFFSET ),
+
+      // pdom
+      tagName: 'div',
+      accessibleName: 'Off membrane'
+    } );
+    rectangles.push( offMembraneRect );
+    this.addChild( offMembraneRect );
+
+    this.selectedIndexProperty = new Property<number | 'offMembrane'>( 0 );
     this.grabbedProperty = new BooleanProperty( false );
     this.selectedType = null;
 
@@ -87,6 +104,7 @@ export default class InteractiveSlotsNode extends Node {
     this.grabbedProperty.link( grabbed => {
       if ( grabbed ) {
         const selectedIndex = this.selectedIndexProperty.value;
+        affirm( typeof selectedIndex === 'number', 'If grabbed, selectedIndex should be a number.' );
         const rect = rectangles[ selectedIndex ];
         rect.focusable = true;
         rect.focus();
@@ -98,13 +116,18 @@ export default class InteractiveSlotsNode extends Node {
 
       // Move the grabbedNode icon to the selected slot
       if ( this.grabbedNode ) {
-        const selectedSlot = this.slots[ selectedIndex ];
-        this.grabbedNode.setModelPosition( new Vector2( selectedSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
+        if ( selectedIndex === 'offMembrane' ) {
+          this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2, OFF_MEMBRANE_VERTICAL_OFFSET ) );
+        }
+        else {
+          const selectedSlot = this.slots[ selectedIndex ];
+          this.grabbedNode.setModelPosition( new Vector2( selectedSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
+        }
       }
 
       // Only the selected index is in the traversal order.
       rectangles.forEach( ( ( rect, index ) => {
-        if ( index === selectedIndex ) {
+        if ( index === selectedIndex || ( selectedIndex === 'offMembrane' && index === rectangles.length - 1 ) ) {
           rect.focusable = true;
           rect.focus();
         }
@@ -121,14 +144,33 @@ export default class InteractiveSlotsNode extends Node {
       fire: ( event, keysPressed, listener ) => {
         const allSlotsCount = slots.length;
         const delta = keysPressed === 'arrowLeft' ? -1 : 1;
-        const nextIndex = this.selectedIndexProperty.value + delta;
-        this.selectedIndexProperty.value = Math.min( Math.max( nextIndex, 0 ), allSlotsCount - 1 );
+
+        // If off the membrane, we can only move to the left, and the next index should be slots.length;
+        if ( this.selectedIndexProperty.value === 'offMembrane' ) {
+          if ( delta < 0 ) {
+            this.selectedIndexProperty.value = allSlotsCount - 1;
+          }
+        }
+        else {
+          const nextIndex = this.selectedIndexProperty.value + delta;
+
+          // If at the right edge and trying to move further right, move off the membrane
+          if ( nextIndex === allSlotsCount ) {
+            this.selectedIndexProperty.value = 'offMembrane';
+          }
+          else {
+
+            // otherwise, bound to the left edge of the membrane
+            this.selectedIndexProperty.value = Math.max( nextIndex, 0 );
+          }
+        }
       }
     } );
     this.addInputListener( selectionKeyboardListener );
 
     const releaseKeyboardListener = new KeyboardListener( {
       keys: [ 'enter', 'space' ],
+      fireOnDown: false,
       fire: ( event, keysPressed, listener ) => {
         if ( this.grabbedProperty.value ) {
 
@@ -136,35 +178,50 @@ export default class InteractiveSlotsNode extends Node {
           // can manage focus on protein Node addition.
           this.grabbedProperty.value = false;
 
-          const selectedSlot = this.slots[ this.selectedIndexProperty.value ];
+          if ( this.selectedIndexProperty.value === 'offMembrane' ) {
 
-          // If the selected slot already has a transport protein, the proteins will be "swapped" -
-          // move the current protein to the slot that was originally selected.
-          if ( selectedSlot.isFilled() ) {
-            const currentType = selectedSlot.transportProteinType;
-            affirm( currentType, 'If filled, there must be a transport protein type.' );
-            const originSlot = this.grabbedNode!.origin;
-            affirm( originSlot, 'If grabbed, there must be an origin slot.' );
+            // NEXT STEPS: Turn this into animation
+            affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
+            const toolNode = view.getTransportProteinToolNode( this.grabbedNode.type );
+            toolNode.focus();
 
-            // If the origin is a slot, then we can swap the proteins. If the origin was the toolbar, then
-            // the protein will simply be replaced.
-            if ( originSlot instanceof Slot ) {
-              originSlot.transportProteinType = currentType;
+            // destroy the icon Node
+            if ( this.grabbedNode ) {
+              this.grabbedNode.dispose();
+              this.grabbedNode = null;
+            }
+          }
+          else {
+            const selectedSlot = this.slots[ this.selectedIndexProperty.value ];
+
+            // If the selected slot already has a transport protein, the proteins will be "swapped" -
+            // move the current protein to the slot that was originally selected.
+            if ( selectedSlot.isFilled() ) {
+              const currentType = selectedSlot.transportProteinType;
+              affirm( currentType, 'If filled, there must be a transport protein type.' );
+              const originSlot = this.grabbedNode!.origin;
+              affirm( originSlot, 'If grabbed, there must be an origin slot.' );
+
+              // If the origin is a slot, then we can swap the proteins. If the origin was the toolbar, then
+              // the protein will simply be replaced.
+              if ( originSlot instanceof Slot ) {
+                originSlot.transportProteinType = currentType;
+              }
+            }
+
+            // Place the transport protein in the selected slot
+            affirm( this.selectedType, 'If grabbed, there must be a selected type.' );
+            selectedSlot.transportProteinType = this.selectedType;
+
+            // destroy the icon Node
+            if ( this.grabbedNode ) {
+              this.grabbedNode.dispose();
+              this.grabbedNode = null;
             }
           }
 
-          // Place the transport protein in the selected slot
-          affirm( this.selectedType, 'If grabbed, there must be a selected type.' );
-          selectedSlot.transportProteinType = this.selectedType;
-
           this.selectedType = null;
           this.selectedIndexProperty.value = 0;
-
-          // destroy the icon Node
-          if ( this.grabbedNode ) {
-            this.grabbedNode.dispose();
-            this.grabbedNode = null;
-          }
         }
       }
     } );
@@ -185,7 +242,7 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedType = type;
     this.selectedIndexProperty.value = this.slots.indexOf( slot );
 
-    this.grabbedNode = this.createDragNode( type, slot, toolNode );
+    this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
   }
 }
 

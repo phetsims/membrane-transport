@@ -52,7 +52,12 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
     // When this has focus, the user is deciding which slot to place the protein in. When grabbed,
     // focus is forwarded to components of this Node.
-    this.interactiveSlotsNode = new InteractiveSlotsNode( model.membraneSlots, view.createFromKeyboard.bind( view ), modelViewTransform );
+    this.interactiveSlotsNode = new InteractiveSlotsNode(
+      model.membraneSlots,
+      view,
+      this.getLeftMostProteinNode.bind( this ),
+      modelViewTransform
+    );
     this.addChild( this.interactiveSlotsNode );
 
     // Add a keyboard listener that manages selection of the transport proteins
@@ -163,6 +168,16 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.membraneSlots.indexOf( a.slot ) - this.model.membraneSlots.indexOf( b.slot );
     } );
+  }
+
+  public getLeftMostProteinNode(): TransportProteinNode | null {
+    const transportProteinNodes = this.getTransportProteinNodes();
+    if ( transportProteinNodes.length > 0 ) {
+      return transportProteinNodes[ 0 ].node as TransportProteinNode;
+    }
+    else {
+      return null;
+    }
   }
 
   public forwardFromKeyboard( slot: Slot, type: TransportProteinType, toolNode: TransportProteinToolNode ): void {
