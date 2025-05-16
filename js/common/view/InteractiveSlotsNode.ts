@@ -9,7 +9,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -31,16 +30,19 @@ const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node
 export default class InteractiveSlotsNode extends Node {
 
   // The index of the slot that is currently selected. If the user activates the slot, the selected protein type will be placed there.
-  private selectedIndexProperty: Property<number | 'offMembrane'>;
+  private selectedIndex: number | 'offMembrane' = 0;
 
   // Is this interaction in a "grabbed" state? If so, this Node is active and the user is selecting a slot to place the protein.
-  public grabbedProperty: TProperty<boolean>;
+  public readonly grabbedProperty: TProperty<boolean>;
 
   // The protein type that was selected on grab.
   public selectedType: TransportProteinType | null;
 
   // A reference to the grabbed icon Node that indicates visually the type and position of the grabbed protein.
   private grabbedNode: TransportProteinDragNode | null = null;
+
+  // Highlight regions for the target areas, including the off-membrane site
+  private rectangles: Node[] = [];
 
   /**
    * @param slots - Slots available to place a protein
@@ -55,8 +57,6 @@ export default class InteractiveSlotsNode extends Node {
     modelViewTransform: ModelViewTransform2
   ) {
     super();
-
-    const rectangles: Node[] = [];
 
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
@@ -78,7 +78,7 @@ export default class InteractiveSlotsNode extends Node {
         tagName: 'div',
         accessibleName: accessibleNameProperty
       } );
-      rectangles.push( rect );
+      this.rectangles.push( rect );
       this.addChild( rect );
     } );
 
@@ -91,10 +91,9 @@ export default class InteractiveSlotsNode extends Node {
       tagName: 'div',
       accessibleName: 'Off membrane'
     } );
-    rectangles.push( offMembraneRect );
+    this.rectangles.push( offMembraneRect );
     this.addChild( offMembraneRect );
 
-    this.selectedIndexProperty = new Property<number | 'offMembrane'>( 0 );
     this.grabbedProperty = new BooleanProperty( false );
     this.selectedType = null;
 
@@ -103,38 +102,11 @@ export default class InteractiveSlotsNode extends Node {
     // When grabbed, move focus to the rectangle with the selected index.
     this.grabbedProperty.link( grabbed => {
       if ( grabbed ) {
-        const selectedIndex = this.selectedIndexProperty.value;
-        affirm( typeof selectedIndex === 'number', 'If grabbed, selectedIndex should be a number.' );
-        const rect = rectangles[ selectedIndex ];
+        affirm( typeof this.selectedIndex === 'number', 'If grabbed, selectedIndex should be a number.' );
+        const rect = this.rectangles[ this.selectedIndex ];
         rect.focusable = true;
         rect.focus();
       }
-    } );
-
-    // The selected index is controlled by the keyboard listener in the parent Node.
-    this.selectedIndexProperty.link( selectedIndex => {
-
-      // Move the grabbedNode icon to the selected slot
-      if ( this.grabbedNode ) {
-        if ( selectedIndex === 'offMembrane' ) {
-          this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2, OFF_MEMBRANE_VERTICAL_OFFSET ) );
-        }
-        else {
-          const selectedSlot = this.slots[ selectedIndex ];
-          this.grabbedNode.setModelPosition( new Vector2( selectedSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
-        }
-      }
-
-      // Only the selected index is in the traversal order.
-      rectangles.forEach( ( ( rect, index ) => {
-        if ( index === selectedIndex || ( selectedIndex === 'offMembrane' && index === rectangles.length - 1 ) ) {
-          rect.focusable = true;
-          rect.focus();
-        }
-        else {
-          rect.focusable = false;
-        }
-      } ) );
     } );
 
     // Add a keyboard listener that manages selection of the transport proteins
@@ -146,23 +118,29 @@ export default class InteractiveSlotsNode extends Node {
         const delta = keysPressed === 'arrowLeft' ? -1 : 1;
 
         // If off the membrane, we can only move to the left, and the next index should be slots.length;
-        if ( this.selectedIndexProperty.value === 'offMembrane' ) {
+        const originalIndex = this.selectedIndex;
+        if ( this.selectedIndex === 'offMembrane' ) {
           if ( delta < 0 ) {
-            this.selectedIndexProperty.value = allSlotsCount - 1;
+            this.selectedIndex = allSlotsCount - 1;
           }
         }
         else {
-          const nextIndex = this.selectedIndexProperty.value + delta;
+          const nextIndex = this.selectedIndex + delta;
 
           // If at the right edge and trying to move further right, move off the membrane
           if ( nextIndex === allSlotsCount ) {
-            this.selectedIndexProperty.value = 'offMembrane';
+            this.selectedIndex = 'offMembrane';
           }
           else {
 
             // otherwise, bound to the left edge of the membrane
-            this.selectedIndexProperty.value = Math.max( nextIndex, 0 );
+            this.selectedIndex = Math.max( nextIndex, 0 );
           }
+        }
+        if ( this.selectedIndex !== originalIndex ) {
+
+          // If the selected index changed, update the focus
+          this.updateFocus();
         }
       }
     } );
@@ -178,7 +156,7 @@ export default class InteractiveSlotsNode extends Node {
           // can manage focus on protein Node addition.
           this.grabbedProperty.value = false;
 
-          if ( this.selectedIndexProperty.value === 'offMembrane' ) {
+          if ( this.selectedIndex === 'offMembrane' ) {
 
             // NEXT STEPS: Turn this into animation
             affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
@@ -192,7 +170,7 @@ export default class InteractiveSlotsNode extends Node {
             }
           }
           else {
-            const selectedSlot = this.slots[ this.selectedIndexProperty.value ];
+            const selectedSlot = this.slots[ this.selectedIndex ];
 
             // If the selected slot already has a transport protein, the proteins will be "swapped" -
             // move the current protein to the slot that was originally selected.
@@ -221,11 +199,59 @@ export default class InteractiveSlotsNode extends Node {
           }
 
           this.selectedType = null;
-          this.selectedIndexProperty.value = 0;
+          this.selectedIndex = 0;
         }
       }
     } );
     this.addInputListener( releaseKeyboardListener );
+
+    const deleteKeyboardListener = new KeyboardListener( {
+      keys: [ 'backspace', 'delete' ],
+      enabledProperty: this.grabbedProperty,
+      fire: ( event, keysPressed, listener ) => {
+
+        affirm( this.grabbedNode, 'We must have a node to delete' );
+
+        const type = this.grabbedNode.type;
+        this.grabbedNode.dispose();
+        this.grabbedNode = null;
+
+        this.selectedType = null;
+        this.selectedIndex = 0;
+
+        this.grabbedProperty.value = false;
+
+        this.view.getTransportProteinToolNode( type ).focus();
+      }
+    } );
+
+    this.addInputListener( deleteKeyboardListener );
+  }
+
+  // The selected index is controlled by the keyboard listener in the parent Node.
+  private updateFocus(): void {
+
+    // Move the grabbedNode icon to the selected slot
+    if ( this.grabbedNode ) {
+      if ( this.selectedIndex === 'offMembrane' ) {
+        this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2, OFF_MEMBRANE_VERTICAL_OFFSET ) );
+      }
+      else {
+        const selectedSlot = this.slots[ this.selectedIndex ];
+        this.grabbedNode.setModelPosition( new Vector2( selectedSlot.position, MODEL_DRAG_VERTICAL_OFFSET ) );
+      }
+    }
+
+    // Only the selected index is in the traversal order.
+    this.rectangles.forEach( ( ( rect, index ) => {
+      if ( index === this.selectedIndex || ( this.selectedIndex === 'offMembrane' && index === this.rectangles.length - 1 ) ) {
+        rect.focusable = true;
+        rect.focus();
+      }
+      else {
+        rect.focusable = false;
+      }
+    } ) );
   }
 
   /**
@@ -240,7 +266,8 @@ export default class InteractiveSlotsNode extends Node {
   public grab( slot: Slot, type: TransportProteinType, toolNode?: TransportProteinToolNode ): void {
     this.grabbedProperty.value = true;
     this.selectedType = type;
-    this.selectedIndexProperty.value = this.slots.indexOf( slot );
+    this.selectedIndex = this.slots.indexOf( slot );
+    this.updateFocus();
 
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
   }
