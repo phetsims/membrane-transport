@@ -21,19 +21,32 @@ import membraneTransport from '../../membraneTransport.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 
 export default class InteractiveSlotsNode extends Node {
 
+  // The index of the slot that is currently selected. If the user activates the slot, the selected protein type will be placed there.
   private selectedIndexProperty: Property<number>;
+
+  // Is this interaction in a "grabbed" state? If so, this Node is active and the user is selecting a slot to place the protein.
   public grabbedProperty: TProperty<boolean>;
+
+  // The protein type that was selected on grab.
   public selectedType: TransportProteinType | null;
+
+  // A reference to the grabbed icon Node that indicates visually the type and position of the grabbed protein.
   private grabbedNode: TransportProteinDragNode | null = null;
 
+  /**
+   * @param slots - Slots available to place a protein
+   * @param createDragNode - A function that creates the icon Node for the protein being dragged and adds it to the view.
+   * @param modelViewTransform
+   */
   public constructor(
     private readonly slots: Slot[],
-    private readonly createDragNode: ( type: TransportProteinType, origin: Slot ) => TransportProteinDragNode,
+    private readonly createDragNode: ( type: TransportProteinType, slot: Slot, toolNode?: TransportProteinToolNode ) => TransportProteinDragNode,
     modelViewTransform: ModelViewTransform2
   ) {
     super( {
@@ -125,8 +138,24 @@ export default class InteractiveSlotsNode extends Node {
           // can manage focus on protein Node addition.
           this.grabbedProperty.value = false;
 
-          // Place the transport protein in the selected slot
           const selectedSlot = this.slots[ this.selectedIndexProperty.value ];
+
+          // If the selected slot already has a transport protein, the proteins will be "swapped" -
+          // move the current protein to the slot that was originally selected.
+          if ( selectedSlot.isFilled() ) {
+            const currentType = selectedSlot.transportProteinType;
+            affirm( currentType, 'If filled, there must be a transport protein type.' );
+            const originSlot = this.grabbedNode!.origin;
+            affirm( originSlot, 'If grabbed, there must be an origin slot.' );
+
+            // If the origin is a slot, then we can swap the proteins. If the origin was the toolbar, then
+            // the protein will simply be replaced.
+            if ( originSlot instanceof Slot ) {
+              originSlot.transportProteinType = currentType;
+            }
+          }
+
+          // Place the transport protein in the selected slot
           affirm( this.selectedType, 'If grabbed, there must be a selected type.' );
           selectedSlot.transportProteinType = this.selectedType;
 
@@ -151,13 +180,14 @@ export default class InteractiveSlotsNode extends Node {
    * @param slot - the slot that this protein was grabbed from
    * @param type - the type of transport protein that is being grabbed since it may not always be assigned to the slot
    *               when forwarding from the toolbar.
+   * @param toolNode - If the protein came from the toolbox, this is set to support swap/return operations.
    */
-  public grab( slot: Slot, type: TransportProteinType ): void {
+  public grab( slot: Slot, type: TransportProteinType, toolNode?: TransportProteinToolNode ): void {
     this.grabbedProperty.value = true;
     this.selectedType = type;
     this.selectedIndexProperty.value = this.slots.indexOf( slot );
 
-    this.grabbedNode = this.createDragNode( type, slot );
+    this.grabbedNode = this.createDragNode( type, slot, toolNode );
   }
 }
 

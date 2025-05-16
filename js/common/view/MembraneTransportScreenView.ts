@@ -311,22 +311,32 @@ export default class MembraneTransportScreenView extends ScreenView {
 
   /**
    * Called when the user presses a membrane protein in the toolbox to create one via keyboard.
+   * This just creates a drag node Icon and adds it to the view.
    */
-  public createFromKeyboard( type: TransportProteinType, origin: Slot ): TransportProteinDragNode {
+  public createFromKeyboard( type: TransportProteinType, slot: Slot, toolNode?: TransportProteinToolNode ): TransportProteinDragNode {
 
     // Move over the first available slot
-    const slotX = origin.position;
+    const slotX = slot.position;
     const y = 10;
     const modelPoint = new Vector2( slotX, y );
+
+    // There will always be a destination slot when creating with keyboard. But if it came from the toolbox, then
+    // the origin will be set to indicate that to support return/swapping purposes.
+    const origin = toolNode || slot;
 
     const dragNode = this.createTransportProteinDragNode( modelPoint, type, origin );
     dragNode.pickable = false; // keyboard only
     return dragNode;
   }
 
-  public forwardFromKeyboard( type: TransportProteinType ): void {
+  /**
+   * Called when forwarding keyboard interaction from the toolbox to the slots.
+   */
+  public forwardFromKeyboard( type: TransportProteinType, toolNode: TransportProteinToolNode ): void {
+
+    // Creating from the toolbox, find the leftmost empty slot or the middle slot if all are filled.
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
-    this.observationWindow.forwardFromKeyboard( slot, type );
+    this.observationWindow.forwardFromKeyboard( slot, type, toolNode );
   }
 
   /**

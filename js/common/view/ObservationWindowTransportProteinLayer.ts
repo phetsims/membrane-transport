@@ -25,6 +25,7 @@ import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import LigandGatedChannelNode from './proteins/LigandGatedChannelNode.js';
 import TransportProteinNode from './proteins/TransportProteinNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 export type SlottedNode = {
   slot: Slot;
@@ -164,8 +165,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     } );
   }
 
-  public forwardFromKeyboard( slot: Slot, type: TransportProteinType ): void {
-    this.interactiveSlotsNode.grab( slot, type );
+  public forwardFromKeyboard( slot: Slot, type: TransportProteinType, toolNode: TransportProteinToolNode ): void {
+    this.interactiveSlotsNode.grab( slot, type, toolNode );
   }
 
   public step( dt: number ): void {

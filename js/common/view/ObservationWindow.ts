@@ -33,6 +33,7 @@ import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
 import ObservationWindowTransportProteinLayer, { SlottedNode } from './ObservationWindowTransportProteinLayer.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
 import SlotDragIndicatorNode from './SlotDragIndicatorNode.js';
+import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 export default class ObservationWindow extends Node {
 
@@ -183,8 +184,8 @@ export default class ObservationWindow extends Node {
     } );
   }
 
-  public forwardFromKeyboard( slot: Slot, type: TransportProteinType ): void {
-    this.transportProteinLayer.forwardFromKeyboard( slot, type );
+  public forwardFromKeyboard( slot: Slot, type: TransportProteinType, toolNode: TransportProteinToolNode ): void {
+    this.transportProteinLayer.forwardFromKeyboard( slot, type, toolNode );
   }
 
   public step( dt: number ): void {

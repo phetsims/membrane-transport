@@ -54,7 +54,7 @@ export default class TransportProteinToolNode extends VBox {
 
 
     this.addInputListener( {
-      click: () => view.forwardFromKeyboard( type )
+      click: () => view.forwardFromKeyboard( type, this )
     } );
 
     this.transportProteinNode = transportProteinNode;
