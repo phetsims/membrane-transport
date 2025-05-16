@@ -8,6 +8,8 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
@@ -29,6 +31,9 @@ import TransportProteinToolNode from './TransportProteinToolNode.js';
 export type SlottedNode = {
   slot: Slot;
   node: Node;
+
+  // The index of the transport protein relative to the other proteins in the membrane (not the index of the slot).
+  indexProperty: TProperty<number>;
 };
 
 export default class ObservationWindowTransportProteinLayer extends Node {
@@ -137,7 +142,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           } );
 
           this.addChild( transportProteinNode );
-          this.record.set( slot.transportProteinProperty.value!, { slot: slot, node: transportProteinNode } );
+          const slottedNode = { slot: slot, node: transportProteinNode, indexProperty: new NumberProperty( 0 ) };
+          this.record.set( slot.transportProteinProperty.value!, slottedNode );
 
           // The selected index becomes the index of the new transport protein
           // Notify listeners so that we make sure that the there is at least one focusable protein.
@@ -150,12 +156,18 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // Set up listeners that update the accessible name of the transport protein
           const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNamePattern.createProperty( {
             openOrClosed: transportProtein.openOrClosedProperty,
-            proteinIndex: this.selectedIndex + 1, // index is the value on addition, not the current Property value
+            proteinIndex: slottedNode.indexProperty,
             proteinCount: model.transportProteinCountProperty,
             type: type
           } );
           transportProteinNode.accessibleName = accessibleNameProperty;
           transportProteinNode.addDisposable( accessibleNameProperty );
+          transportProteinNode.addDisposable( slottedNode.indexProperty );
+
+          // Make sure that the indices of all the proteins are correct after adding/removing proteins
+          this.record.forEach( collection => {
+            collection.indexProperty.value = this.getTransportProteinNodes().indexOf( collection ) + 1;
+          } );
 
           // Add the highlight after centering the node, since the highlight goes out of bounds and would throw
           // off the centering
