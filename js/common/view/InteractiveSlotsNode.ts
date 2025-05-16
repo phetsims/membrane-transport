@@ -152,32 +152,31 @@ export default class InteractiveSlotsNode extends Node {
       fire: ( event, keysPressed, listener ) => {
         if ( this.grabbedProperty.value ) {
 
+          affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
+          const grabbedType = this.grabbedNode.type;
+          const origin = this.grabbedNode.origin;
+          const selectedType = this.selectedType;
+          const selectedIndex = this.selectedIndex;
+
           // Release first to update grabbedProperty. Then add a new transport protein, so that listeners in the parent Node
           // can manage focus on protein Node addition.
-          this.grabbedProperty.value = false;
+          this.release();
 
-          if ( this.selectedIndex === 'offMembrane' ) {
+          if ( selectedIndex === 'offMembrane' ) {
 
             // NEXT STEPS: Turn this into animation
-            affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
-            const toolNode = view.getTransportProteinToolNode( this.grabbedNode.type );
+            const toolNode = view.getTransportProteinToolNode( grabbedType );
             toolNode.focus();
-
-            // destroy the icon Node
-            if ( this.grabbedNode ) {
-              this.grabbedNode.dispose();
-              this.grabbedNode = null;
-            }
           }
           else {
-            const selectedSlot = this.slots[ this.selectedIndex ];
+            const selectedSlot = this.slots[ selectedIndex ];
 
             // If the selected slot already has a transport protein, the proteins will be "swapped" -
             // move the current protein to the slot that was originally selected.
             if ( selectedSlot.isFilled() ) {
               const currentType = selectedSlot.transportProteinType;
               affirm( currentType, 'If filled, there must be a transport protein type.' );
-              const originSlot = this.grabbedNode!.origin;
+              const originSlot = origin;
               affirm( originSlot, 'If grabbed, there must be an origin slot.' );
 
               // If the origin is a slot, then we can swap the proteins. If the origin was the toolbar, then
@@ -188,18 +187,9 @@ export default class InteractiveSlotsNode extends Node {
             }
 
             // Place the transport protein in the selected slot
-            affirm( this.selectedType, 'If grabbed, there must be a selected type.' );
-            selectedSlot.transportProteinType = this.selectedType;
-
-            // destroy the icon Node
-            if ( this.grabbedNode ) {
-              this.grabbedNode.dispose();
-              this.grabbedNode = null;
-            }
+            affirm( selectedType, 'If grabbed, there must be a selected type.' );
+            selectedSlot.transportProteinType = selectedType;
           }
-
-          this.selectedType = null;
-          this.selectedIndex = 0;
         }
       }
     } );
@@ -209,27 +199,57 @@ export default class InteractiveSlotsNode extends Node {
       keys: [ 'backspace', 'delete' ],
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
-
         affirm( this.grabbedNode, 'We must have a node to delete' );
-
         const type = this.grabbedNode.type;
-        this.grabbedNode.dispose();
-        this.grabbedNode = null;
 
-        this.selectedType = null;
-        this.selectedIndex = 0;
-
-        this.grabbedProperty.value = false;
+        this.release();
 
         const success = focusLeftmostProteinNode();
-
         if ( !success ) {
           this.view.getTransportProteinToolNode( type ).focus();
         }
       }
     } );
-
     this.addInputListener( deleteKeyboardListener );
+
+    // Return the protein to its origin when pressing escape to cancel.
+    const escapeKeyboardListener = new KeyboardListener( {
+      keys: [ 'escape' ],
+      enabledProperty: this.grabbedProperty,
+      fire: () => {
+        affirm( this.grabbedNode, 'We must have a Node if this listener is firing.' );
+        const origin = this.grabbedNode.origin;
+        const selectedType = this.selectedType;
+
+        this.release();
+
+        if ( origin instanceof TransportProteinToolNode ) {
+
+          // Return focus to the toolbar
+          origin.focus();
+        }
+        else {
+
+          // Restore the selectedType to the origin slot.
+          origin.transportProteinType = selectedType;
+        }
+      }
+    } );
+    this.addInputListener( escapeKeyboardListener );
+  }
+
+  /**
+   * Releases this interaction, putting the interaction back into 'select' mode. State variables are reset.
+   */
+  private release(): void {
+    affirm( this.grabbedNode, 'grabbedNode was expected on release.' );
+    this.grabbedNode.dispose();
+    this.grabbedNode = null;
+
+    this.selectedType = null;
+    this.selectedIndex = 0;
+
+    this.grabbedProperty.value = false;
   }
 
   // The selected index is controlled by the keyboard listener in the parent Node.
