@@ -47,13 +47,13 @@ export default class InteractiveSlotsNode extends Node {
   /**
    * @param slots - Slots available to place a protein
    * @param view - The view so that we can create new icons for dragging.
-   * @param getLeftMostProteinNode - A function that returns the left-most protein Node in the membrane.
+   * @param focusLeftmostProteinNode - A function that focuses the leftmost protein node, if any, or returns false
    * @param modelViewTransform
    */
   public constructor(
     private readonly slots: Slot[],
     private readonly view: Pick<MembraneTransportScreenView, 'createFromKeyboard' | 'getTransportProteinToolNode'>,
-    private readonly getLeftMostProteinNode: () => Node | null,
+    focusLeftmostProteinNode: () => boolean,
     modelViewTransform: ModelViewTransform2
   ) {
     super();
@@ -221,7 +221,11 @@ export default class InteractiveSlotsNode extends Node {
 
         this.grabbedProperty.value = false;
 
-        this.view.getTransportProteinToolNode( type ).focus();
+        const success = focusLeftmostProteinNode();
+
+        if ( !success ) {
+          this.view.getTransportProteinToolNode( type ).focus();
+        }
       }
     } );
 

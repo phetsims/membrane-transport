@@ -8,7 +8,6 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
@@ -37,6 +36,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   private readonly record = new Map<TransportProtein, SlottedNode>();
   private readonly interactiveSlotsNode: InteractiveSlotsNode;
 
+  // The index of the selected transport protein, out of the existing transport proteins.
+  private selectedIndex = 0;
+
   public constructor(
     public readonly model: MembraneTransportModel,
     view: MembraneTransportScreenView,
@@ -46,16 +48,25 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       groupFocusHighlight: true
     } );
 
-    // The index of the selected transport protein
-    const selectedIndexProperty = new Property( 0 );
-
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
     // When this has focus, the user is deciding which slot to place the protein in. When grabbed,
     // focus is forwarded to components of this Node.
     this.interactiveSlotsNode = new InteractiveSlotsNode(
       model.membraneSlots,
       view,
-      this.getLeftMostProteinNode.bind( this ),
+
+      // A closure that focuses the leftmost protein, or returns false if there are no proteins
+      // This is called when the user deletes a protein from the membrane using the keyboard
+      () => {
+        if ( model.transportProteinCountProperty.value > 0 ) {
+          this.selectedIndex = 0;
+          this.updateFocus();
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
       modelViewTransform
     );
     this.addChild( this.interactiveSlotsNode );
@@ -67,8 +78,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       fire: ( event, keysPressed, listener ) => {
         const proteinCount = model.getFilledSlots().length;
         const delta = keysPressed === 'arrowLeft' ? -1 : 1;
-        const nextIndex = selectedIndexProperty.value + delta;
-        selectedIndexProperty.value = Math.min( Math.max( nextIndex, 0 ), proteinCount - 1 );
+        const nextIndex = this.selectedIndex + delta;
+        this.selectedIndex = Math.min( Math.max( nextIndex, 0 ), proteinCount - 1 );
+        this.updateFocus();
       }
     } );
     this.addInputListener( selectionKeyboardListener );
@@ -77,7 +89,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       keys: [ 'enter', 'space' ],
       fire: ( event, keysPressed, listener ) => {
         if ( !this.interactiveSlotsNode.grabbedProperty.value ) {
-          const selectedSlot = this.getTransportProteinNodes()[ selectedIndexProperty.value ].slot;
+          const selectedSlot = this.getTransportProteinNodes()[ this.selectedIndex ].slot;
           affirm( selectedSlot.transportProteinType, 'The selected slot should have a protein type before grabbing.' );
           this.interactiveSlotsNode.grab( selectedSlot, selectedSlot.transportProteinType );
 
@@ -87,21 +99,6 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       }
     } );
     this.addInputListener( grabKeyboardListener );
-
-    selectedIndexProperty.link( selectedIndex => {
-      const proteinNodes = this.getTransportProteinNodes();
-
-      // Only the selected index is in the traversal order.
-      proteinNodes.forEach( ( ( node, index ) => {
-        if ( index === selectedIndex ) {
-          node.node.focusable = true;
-          node.node.focus();
-        }
-        else {
-          node.node.focusable = false;
-        }
-      } ) );
-    } );
 
     model.membraneSlots.forEach( slot => {
       slot.transportProteinProperty.link( ( transportProtein, oldTransportProtein ) => {
@@ -137,8 +134,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
           // The selected index becomes the index of the new transport protein
           // Notify listeners so that we make sure that the there is at least one focusable protein.
-          selectedIndexProperty.value = _.findIndex( this.getTransportProteinNodes(), node => node.node === transportProteinNode );
-          selectedIndexProperty.notifyListenersStatic();
+          this.selectedIndex = _.findIndex( this.getTransportProteinNodes(), node => node.node === transportProteinNode );
+          this.updateFocus();
 
           // Make sure that the transport proteins are in the correct reading order.
           this.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
@@ -146,7 +143,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // Set up listeners that update the accessible name of the transport protein
           const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNamePattern.createProperty( {
             openOrClosed: transportProtein.openOrClosedProperty,
-            proteinIndex: selectedIndexProperty.value + 1, // index is the value on addition, not the current Property value
+            proteinIndex: this.selectedIndex + 1, // index is the value on addition, not the current Property value
             proteinCount: model.transportProteinCountProperty,
             type: type
           } );
@@ -163,21 +160,31 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     } );
   }
 
+  /**
+   * Place focus on the protein that matches the this.selectedIndex. Note that other proteins are made non-focusable
+   * so that only the selected protein is in the traversal order.  That way, pressing tab goes to the toolbox rather
+   * than to the next protein.
+   */
+  private updateFocus(): void {
+    const proteinNodes = this.getTransportProteinNodes();
+
+    // Only the selected index is in the traversal order.
+    proteinNodes.forEach( ( ( node, index ) => {
+      if ( index === this.selectedIndex ) {
+        node.node.focusable = true;
+        node.node.focus();
+      }
+      else {
+        node.node.focusable = false;
+      }
+    } ) );
+  }
+
   // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
   public getTransportProteinNodes(): SlottedNode[] {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.membraneSlots.indexOf( a.slot ) - this.model.membraneSlots.indexOf( b.slot );
     } );
-  }
-
-  public getLeftMostProteinNode(): TransportProteinNode | null {
-    const transportProteinNodes = this.getTransportProteinNodes();
-    if ( transportProteinNodes.length > 0 ) {
-      return transportProteinNodes[ 0 ].node as TransportProteinNode;
-    }
-    else {
-      return null;
-    }
   }
 
   public forwardFromKeyboard( slot: Slot, type: TransportProteinType, toolNode: TransportProteinToolNode ): void {
