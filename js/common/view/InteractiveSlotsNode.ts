@@ -323,6 +323,8 @@ export default class InteractiveSlotsNode extends Node {
     this.updateFocus();
 
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
+
+    this.addAccessibleResponse( 'Grabbed.' );
   }
 }
 
