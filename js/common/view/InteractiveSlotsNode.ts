@@ -111,11 +111,11 @@ export default class InteractiveSlotsNode extends Node {
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
-      keys: [ 'arrowLeft', 'arrowRight' ],
+      keys: [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const allSlotsCount = slots.length;
-        const delta = keysPressed === 'arrowLeft' ? -1 : 1;
+        const delta = [ 'arrowLeft', 'a' ].includes( keysPressed ) ? -1 : 1;
 
         // If off the membrane, we can only move to the left, and the next index should be slots.length;
         const originalIndex = this.selectedIndex;

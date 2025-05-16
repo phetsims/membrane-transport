@@ -73,11 +73,11 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
-      keys: [ 'arrowLeft', 'arrowRight' ],
+      keys: [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
       enabledProperty: DerivedProperty.not( this.interactiveSlotsNode.grabbedProperty ),
       fire: ( event, keysPressed, listener ) => {
         const proteinCount = model.getFilledSlots().length;
-        const delta = keysPressed === 'arrowLeft' ? -1 : 1;
+        const delta = [ 'arrowLeft', 'a' ].includes( keysPressed ) ? -1 : 1;
         const nextIndex = this.selectedIndex + delta;
         this.selectedIndex = Math.min( Math.max( nextIndex, 0 ), proteinCount - 1 );
         this.updateFocus();
