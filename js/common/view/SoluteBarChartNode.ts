@@ -202,7 +202,7 @@ export default class SoluteBarChartNode extends Node {
     // Keep track of which flux entries we've already processed
     let lastProcessedTime = 0;
 
-    // Update flux highlights based on direct flux entries from the model
+// Update flux highlights based on direct flux entries from the model
     this.stepEmitter.addListener( dt => {
       // Directly access model's fluxEntries property (not using getRecentSoluteFluxWithSmoothing)
       // Look for new entries in the last 1 second time window only
@@ -229,27 +229,30 @@ export default class SoluteBarChartNode extends Node {
         }
       } );
 
-      // If we have any new entries, update highlights
-      if ( inwardCount > 0 ) {
-        // Calculate highlight width for exact particle count - one-to-one correspondence
-        const highlightWidth = BAR_MULTIPLIER * inwardCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+      // Helper function to update a highlight stripe
+      const updateStripe = ( count: number, stripe: Rectangle, bar: Rectangle ) => {
+        if ( count > 0 ) {
+          // Calculate highlight width for exact particle count - one-to-one correspondence
+          const highlightWidth = BAR_MULTIPLIER * count / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
 
-        // Position the stripe to overlay the bar (at the end of the bar)
-        insideStripe.setRectWidth( highlightWidth );
-        insideStripe.left = origin.centerX + insideBar.width - highlightWidth;
-        insideStripe.visible = true;
-        insideStripeTimeRemaining = HIGHLIGHT_DURATION;
+          // Position the stripe to overlay the bar (at the end of the bar)
+          stripe.setRectWidth( highlightWidth );
+          stripe.left = origin.centerX + bar.width - highlightWidth;
+          stripe.visible = true;
+          return HIGHLIGHT_DURATION;
+        }
+        return 0;
+      };
+
+      // Update both stripes using the helper function
+      const insideTime = updateStripe( inwardCount, insideStripe, insideBar );
+      if ( insideTime > 0 ) {
+        insideStripeTimeRemaining = insideTime;
       }
 
-      if ( outwardCount > 0 ) {
-        // Calculate highlight width for exact particle count - one-to-one correspondence
-        const highlightWidth = BAR_MULTIPLIER * outwardCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
-
-        // Position the stripe to overlay the bar (at the end of the bar)
-        outsideStripe.setRectWidth( highlightWidth );
-        outsideStripe.left = origin.centerX + outsideBar.width - highlightWidth;
-        outsideStripe.visible = true;
-        outsideStripeTimeRemaining = HIGHLIGHT_DURATION;
+      const outsideTime = updateStripe( outwardCount, outsideStripe, outsideBar );
+      if ( outsideTime > 0 ) {
+        outsideStripeTimeRemaining = outsideTime;
       }
 
       // Update the last processed time
