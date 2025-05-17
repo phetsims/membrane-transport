@@ -46,16 +46,23 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   // The index of the selected transport protein, out of the existing transport proteins.
   private selectedIndex = 0;
 
+  // A parent for the proteins so that the accessibility attributes like accessibleRoleDescription
+  // do not apply to all children of this Node.
+  private readonly proteinsNodeParent: Node;
+
   public constructor(
     public readonly model: MembraneTransportModel,
     view: MembraneTransportScreenView,
     modelViewTransform: ModelViewTransform2
   ) {
-    super( combineOptions<NodeOptions>( {}, AccessibleDraggableOptions, {
+    super();
+
+    this.proteinsNodeParent = new Node( combineOptions<NodeOptions>( {}, AccessibleDraggableOptions, {
       groupFocusHighlight: true,
       focusable: false,
       accessibleRoleDescription: 'navigable'
     } ) );
+    this.addChild( this.proteinsNodeParent );
 
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
     // When this has focus, the user is deciding which slot to place the protein in. When grabbed,
@@ -122,7 +129,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
         if ( oldTransportProtein ) {
           const node = this.record.get( oldTransportProtein );
           if ( node ) {
-            this.removeChild( node.node );
+            this.proteinsNodeParent.removeChild( node.node );
             node.node.dispose();
             this.record.delete( oldTransportProtein );
           }
@@ -145,7 +152,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             cursor: 'pointer'
           } );
 
-          this.addChild( transportProteinNode );
+          this.proteinsNodeParent.addChild( transportProteinNode );
           const slottedNode = { slot: slot, node: transportProteinNode, indexProperty: new NumberProperty( 0 ) };
           this.record.set( slot.transportProteinProperty.value!, slottedNode );
 
