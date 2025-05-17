@@ -47,7 +47,7 @@ type MembraneTransportModelOptions = SelfOptions & PickRequired<PhetioObjectOpti
 
 // For the solute bar charts, keep track of how much solute has crossed at which time, so that we can keep a rolling
 // average over a given time window
-type FluxEntry = {
+export type FluxEntry = {
   soluteType: SoluteType;
   time: number;
   direction: 'inward' | 'outward';
@@ -96,8 +96,8 @@ export default class MembraneTransportModel extends PhetioObject {
 
   // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
   // The flux entries are used to track the recent flux of solutes through the membrane.
-  private readonly fluxEntries: FluxEntry[] = [];
-  private time = 0;
+  public readonly fluxEntries: FluxEntry[] = [];
+  public time = 0;
 
   // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
   private soluteTypeFlux = {} as Record<SoluteType, number>;

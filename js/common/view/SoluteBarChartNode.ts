@@ -164,14 +164,14 @@ export default class SoluteBarChartNode extends Node {
     const PADDING_FACTOR = 0.95;
     const BAR_MULTIPLIER = 2;
 
-    // Highlight stripes appear for a short duration when solutes are added
+    // Highlight stripes appear for a short duration based on aggregate flux
     const HIGHLIGHT_DURATION = 0.2; // seconds
-    let prevOutsideCount = outsideAmountProperty.value;
-    let prevInsideCount = insideAmountProperty.value;
 
     // Remaining time (in seconds) for which stripes remain visible
     let outsideStripeTimeRemaining = 0;
     let insideStripeTimeRemaining = 0;
+
+    // Create highlight stripes on top of the bars (higher z-index)
     const outsideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
       fill: 'yellow',
       visible: false,
@@ -185,45 +185,84 @@ export default class SoluteBarChartNode extends Node {
       centerY: insideBar.centerY
     } );
 
-    // Update outside bar and show stripe on additions
+    // Update outside bar width when count changes, but don't show stripe
     model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      const oldWidth = BAR_MULTIPLIER * prevOutsideCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
       const newWidth = BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
       outsideBar.setRectWidth( newWidth );
       outsideBar.left = origin.centerX;
-      if ( soluteCount > prevOutsideCount ) {
-        const deltaWidth = newWidth - oldWidth;
-        outsideStripe.setRectWidth( deltaWidth );
-        outsideStripe.left = origin.centerX + oldWidth;
-        outsideStripe.visible = true;
-        outsideStripeTimeRemaining = HIGHLIGHT_DURATION;
-      }
-      prevOutsideCount = soluteCount;
     } );
 
-    // Update inside bar and show stripe on additions
+    // Update inside bar width when count changes, but don't show stripe
     model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      const oldWidth = BAR_MULTIPLIER * prevInsideCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
       const newWidth = BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
       insideBar.setRectWidth( newWidth );
       insideBar.left = origin.centerX;
-      if ( soluteCount > prevInsideCount ) {
-        const deltaWidth = newWidth - oldWidth;
-        insideStripe.setRectWidth( deltaWidth );
-        insideStripe.left = origin.centerX + oldWidth;
+    } );
+
+    // Keep track of which flux entries we've already processed
+    let lastProcessedTime = 0;
+
+    // Update flux highlights based on direct flux entries from the model
+    this.stepEmitter.addListener( dt => {
+      // Directly access model's fluxEntries property (not using getRecentSoluteFluxWithSmoothing)
+      // Look for new entries in the last 1 second time window only
+      const currentTime = model.time;
+      const timeWindowStart = Math.max( currentTime - 1.0, lastProcessedTime );
+
+      // Get all new entries for this solute type within the time window
+      const newFluxEntries = model.fluxEntries.filter( entry =>
+        entry.soluteType === soluteType &&
+        entry.time > timeWindowStart &&
+        entry.time <= currentTime
+      );
+
+      // Count entries by direction
+      let inwardCount = 0;
+      let outwardCount = 0;
+
+      newFluxEntries.forEach( entry => {
+        if ( entry.direction === 'inward' ) {
+          inwardCount++;
+        }
+        else {
+          outwardCount++;
+        }
+      } );
+
+      // If we have any new entries, update highlights
+      if ( inwardCount > 0 ) {
+        // Calculate highlight width for exact particle count - one-to-one correspondence
+        const highlightWidth = BAR_MULTIPLIER * inwardCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+
+        // Position the stripe to overlay the bar (at the end of the bar)
+        insideStripe.setRectWidth( highlightWidth );
+        insideStripe.left = origin.centerX + insideBar.width - highlightWidth;
         insideStripe.visible = true;
         insideStripeTimeRemaining = HIGHLIGHT_DURATION;
       }
-      prevInsideCount = soluteCount;
+
+      if ( outwardCount > 0 ) {
+        // Calculate highlight width for exact particle count - one-to-one correspondence
+        const highlightWidth = BAR_MULTIPLIER * outwardCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+
+        // Position the stripe to overlay the bar (at the end of the bar)
+        outsideStripe.setRectWidth( highlightWidth );
+        outsideStripe.left = origin.centerX + outsideBar.width - highlightWidth;
+        outsideStripe.visible = true;
+        outsideStripeTimeRemaining = HIGHLIGHT_DURATION;
+      }
+
+      // Update the last processed time
+      if ( newFluxEntries.length > 0 ) {
+        lastProcessedTime = currentTime;
+      }
     } );
 
     this.children = [
       layoutBox,
-      // icon,
       iconWithText,
       outsideBar,
       insideBar,
-      // highlight stripes
       outsideStripe,
       insideStripe,
       origin
