@@ -20,6 +20,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
+import TColor from '../../../../scenery/js/util/TColor.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -119,36 +120,25 @@ export default class SoluteBarChartNode extends Node {
 
     const barLineWidth = 1;
     const BAR_WIDTH = 15;
-    const outsideBar = new Rectangle( 0, 0, 1, BAR_WIDTH, {
-      fill: fillColorProperty,
-      stroke: 'black',
-      lineWidth: barLineWidth,
-      left: origin.centerX,
-      centerY: BOX_HEIGHT / 2 - BAR_WIDTH / 2 - 5
-    } );
-    const insideBar = new Rectangle( 0, 0, 1, BAR_WIDTH, {
-      fill: fillColorProperty,
-      stroke: 'black',
-      lineWidth: barLineWidth,
-      left: origin.centerX,
-      centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
-    } );
 
-    // Render the stroke afterward as well, so it will cover the yellow highlight stripe
-    const outsideBarStroke = new Rectangle( 0, 0, 1, BAR_WIDTH, {
-      fill: null,
-      stroke: 'black',
-      lineWidth: barLineWidth,
-      left: origin.centerX,
-      centerY: BOX_HEIGHT / 2 - BAR_WIDTH / 2 - 5
-    } );
-    const insideBarStroke = new Rectangle( 0, 0, 1, BAR_WIDTH, {
-      fill: null,
-      stroke: 'black',
-      lineWidth: barLineWidth,
-      left: origin.centerX,
-      centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
-    } );
+    // Helper function to create bar rectangles with consistent parameters
+    const createBarRectangle = ( fill: TColor | null, isOutside: boolean, isStroke = false ) => {
+      return new Rectangle( 0, 0, 1, BAR_WIDTH, {
+        fill: isStroke ? null : fill,
+        stroke: 'black',
+        lineWidth: barLineWidth,
+        left: origin.centerX,
+        centerY: BOX_HEIGHT / 2 + ( isOutside ? -1 : 1 ) * ( BAR_WIDTH / 2 + 5 )
+      } );
+    };
+
+    // Create the bars with fills
+    const outsideBar = createBarRectangle( fillColorProperty, true );
+    const insideBar = createBarRectangle( fillColorProperty, false );
+
+    // Render the strokes afterward as well, so they will cover the yellow highlight stripes
+    const outsideBarStroke = createBarRectangle( fillColorProperty, true, true );
+    const insideBarStroke = createBarRectangle( fillColorProperty, false, true );
 
     const PADDING_FACTOR = 0.95;
     const BAR_MULTIPLIER = 2;
