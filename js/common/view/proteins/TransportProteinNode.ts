@@ -8,7 +8,9 @@
  */
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import optionize from '../../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../../phet-core/js/optionize.js';
+import AccessibleDraggableOptions from '../../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import { ParallelDOMOptions } from '../../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
@@ -50,7 +52,13 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     this.addChild( image );
 
     // pdom - If there is a model representation this Node is in the membrane and is interactive.
-    transportProtein && this.setTagName( 'div' );
+    // It was found that the interactive protein should have the application role so that the
+    // roledescription and accessible name are read.
+    if ( transportProtein ) {
+      this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
+        accessibleRoleDescription: 'protein'
+      } ) );
+    }
   }
 
   public step( dt: number ): void {

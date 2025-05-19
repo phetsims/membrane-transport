@@ -11,12 +11,10 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
-import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -57,11 +55,12 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   ) {
     super();
 
-    this.proteinsNodeParent = new Node( combineOptions<NodeOptions>( {}, AccessibleDraggableOptions, {
+    this.proteinsNodeParent = new Node( {
+      tagName: 'div',
       groupFocusHighlight: true,
       focusable: false,
       accessibleRoleDescription: 'navigable'
-    } ) );
+    } );
     this.addChild( this.proteinsNodeParent );
 
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.

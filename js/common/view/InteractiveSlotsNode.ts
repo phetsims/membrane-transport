@@ -9,7 +9,9 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
@@ -17,8 +19,8 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
-import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -63,11 +65,26 @@ export default class InteractiveSlotsNode extends Node {
     updateFocusForSelectables: () => void,
     modelViewTransform: ModelViewTransform2
   ) {
-    super( combineOptions<NodeOptions>( {}, AccessibleDraggableOptions, {
+    super( {
+      tagName: 'div',
       groupFocusHighlight: true,
-      focusable: false,
       accessibleRoleDescription: 'sortable'
-    } ) );
+    } );
+
+    // A focusable Node that contains the accessible content for the interaction.
+    const createTestRectangle = ( accessibleNameProperty: TReadOnlyProperty<string>, modelX: number ): Rectangle => {
+
+      // It was found that the accessible name and role information requires AccessibleDraggableOptions
+      // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
+      return new Rectangle( 0, 0, 20, 20, combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
+        fill: 'red',
+        center: modelViewTransform.modelToViewXY( modelX, MODEL_DRAG_VERTICAL_OFFSET ),
+
+        // pdom
+        accessibleRoleDescription: 'protein',
+        accessibleName: accessibleNameProperty
+      } ) );
+    };
 
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
@@ -88,27 +105,14 @@ export default class InteractiveSlotsNode extends Node {
         return `Above slot ${index + 1} of ${slots.length}, ${proteinName}`;
       } );
 
-      const rect = new Rectangle( 0, 0, 20, 20, {
-        fill: 'red',
-        center: modelViewTransform.modelToViewXY( slot.position, MODEL_DRAG_VERTICAL_OFFSET ),
+      const rect = createTestRectangle( accessibleNameProperty, slot.position );
 
-        // pdom
-        tagName: 'div',
-        accessibleName: accessibleNameProperty
-      } );
       this.rectangles.push( rect );
       this.addChild( rect );
     } );
 
     // Add a rectangle for the off-membrane state
-    const offMembraneRect = new Rectangle( 0, 0, 20, 20, {
-      fill: 'red',
-      center: modelViewTransform.modelToViewXY( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET ),
-
-      // pdom
-      tagName: 'div',
-      accessibleName: 'Off membrane'
-    } );
+    const offMembraneRect = createTestRectangle( new StringProperty( 'Off membrane' ), MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET );
     this.rectangles.push( offMembraneRect );
     this.addChild( offMembraneRect );
 
