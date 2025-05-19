@@ -42,6 +42,10 @@ import soluteCrossing002_mp3 from '../../sounds/soluteCrossing002_mp3.js';
 import soluteCrossing003_mp3 from '../../sounds/soluteCrossing003_mp3.js';
 import soluteCrossing004_V5_mp3 from '../../sounds/soluteCrossing004_V5_mp3.js';
 import soluteCrossing005_V5_mp3 from '../../sounds/soluteCrossing005_V5_mp3.js';
+
+import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward004_V5_mp3.js';
+import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
+
 import membraneTransport from '../membraneTransport.js';
 import Particle from './model/Particle.js';
 
@@ -114,27 +118,24 @@ const E_NOTE = Math.pow( 2, 9 / 12 );
 const sound1 = soluteCrossing001_mp3;
 const sound2 = soluteCrossing002_mp3;
 const sound3 = soluteCrossing003_mp3;
-const sound4 = soluteCrossing004_V5_mp3; // carbon dioxide
-const sound5 = soluteCrossing005_V5_mp3; // oxygen
 
 const soluteCrossing001 = newSoundClip( sound1, { initialOutputLevel: 0.6 } );
 const soluteCrossing002 = newSoundClip( sound2, { initialOutputLevel: 0.6 } );
 const soluteCrossing003 = newSoundClip( sound3, { initialOutputLevel: 0.6 } );
-const soluteCrossing004 = newSoundClip( sound4, { initialOutputLevel: 0.6 } );
-const soluteCrossing005 = newSoundClip( sound5, { initialOutputLevel: 0.6 } );
+const soluteCrossing004 = newSoundClip( soluteCrossing004_V5_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing005 = newSoundClip( soluteCrossing005_V5_mp3, { initialOutputLevel: 0.6 } );
 
 const soluteCrossing001High = newSoundClip( sound1, { initialOutputLevel: 0.6 } );
 const soluteCrossing002High = newSoundClip( sound2, { initialOutputLevel: 0.6 } );
 const soluteCrossing003High = newSoundClip( sound3, { initialOutputLevel: 0.6 } );
-const soluteCrossing004High = newSoundClip( sound4, { initialOutputLevel: 0.6 } );
-const soluteCrossing005High = newSoundClip( sound5, { initialOutputLevel: 0.6 } );
+const soluteCrossing004High = newSoundClip( soluteCrossingOutward004_V5_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing005High = newSoundClip( soluteCrossingOutward005_V5_mp3, { initialOutputLevel: 0.6 } );
 
 // Higher pitch by one octave when leaving the cell. Separate audio sound so an inward one and outward one can be played at the same time, without pitch bending.
+// The gas molecules have a different sound file, since changing the playback rate on the "ringing" makes it sound too fast
 soluteCrossing001High.setPlaybackRate( 2 );
 soluteCrossing002High.setPlaybackRate( 2 );
 soluteCrossing003High.setPlaybackRate( 2 );
-soluteCrossing004High.setPlaybackRate( 2 );
-soluteCrossing005High.setPlaybackRate( 2 );
 
 export default class MembraneTransportSounds {
 
