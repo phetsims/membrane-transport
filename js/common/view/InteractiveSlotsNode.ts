@@ -85,12 +85,12 @@ export default class InteractiveSlotsNode extends Node {
       // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
       return new Rectangle( 0, 0, 20, 20,
         combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
-        center: modelViewTransform.modelToViewXY( modelX, modelY ),
+          center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
-        // pdom
-        accessibleRoleDescription: 'protein',
-        accessibleName: accessibleNameProperty
-      } ) );
+          // pdom
+          accessibleRoleDescription: 'protein',
+          accessibleName: accessibleNameProperty
+        } ) );
     };
 
     // Draw a rectangle centered at each slot, vertically above them.
@@ -191,11 +191,16 @@ export default class InteractiveSlotsNode extends Node {
           // can manage focus on protein Node addition.
           this.release();
 
+          // TODO: i18n, see #97
+          let accessibleResponse;
+
           if ( selectedIndex === 'offMembrane' ) {
 
             // NEXT STEPS: Turn this into animation
             const toolNode = view.getTransportProteinToolNode( grabbedType );
             toolNode.focus();
+
+            accessibleResponse = 'Released. Back in panel.';
           }
           else {
             const selectedSlot = this.slots[ selectedIndex ];
@@ -212,13 +217,25 @@ export default class InteractiveSlotsNode extends Node {
               // the protein will simply be replaced.
               if ( originSlot instanceof Slot ) {
                 originSlot.transportProteinType = currentType;
+                accessibleResponse = 'Re-ordered.';
               }
+              else {
+
+                // TODO: What should be said in this case? See #97
+                accessibleResponse = 'Released.';
+              }
+            }
+            else {
+              accessibleResponse = 'Released.';
             }
 
             // Place the transport protein in the selected slot
             affirm( selectedType, 'If grabbed, there must be a selected type.' );
             selectedSlot.transportProteinType = selectedType;
           }
+
+          affirm( accessibleResponse, 'We should have created an accessibleResponse' );
+          this.addAccessibleResponse( accessibleResponse );
         }
       }
     } );
@@ -232,6 +249,9 @@ export default class InteractiveSlotsNode extends Node {
         const type = this.grabbedNode.type;
 
         this.release();
+
+        // TODO: What should be said in this case? See #97
+        this.addAccessibleResponse( 'Protein removed.' );
 
         const success = focusLeftmostProteinNode();
         if ( !success ) {
@@ -251,6 +271,9 @@ export default class InteractiveSlotsNode extends Node {
         const selectedType = this.selectedType;
 
         this.release();
+
+        // TODO: What should we say in this case? See #97
+        this.addAccessibleResponse( 'Released. Back to initial slot.' );
 
         if ( origin instanceof TransportProteinToolNode ) {
 
@@ -292,9 +315,6 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = 0;
 
     this.grabbedProperty.value = false;
-
-    // TODO: i18n, see #97
-    this.addAccessibleResponse( 'Released' );
   }
 
   // The selected index is controlled by the keyboard listener in the parent Node.
