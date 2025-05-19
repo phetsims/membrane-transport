@@ -51,7 +51,7 @@ export default class InteractiveSlotsNode extends Node {
   private grabbedNode: TransportProteinDragNode | null = null;
 
   // Highlight regions for the target areas, including the off-membrane site
-  private rectangles: Node[] = [];
+  private rectangles: Rectangle[] = [];
 
   /**
    * @param slots - Slots available to place a protein
@@ -73,7 +73,7 @@ export default class InteractiveSlotsNode extends Node {
       // A custom group highlight that surrounds the entire membrane and the protein when it is hovering
       // above the slots.
       groupFocusHighlight: new GroupHighlightPath( Shape.bounds(
-        modelViewTransform.modelToViewBounds( MembraneTransportConstants.MEMBRANE_BOUNDS ).dilatedXY( 10, 60 )
+        modelViewTransform.modelToViewBounds( MembraneTransportConstants.MEMBRANE_BOUNDS ).dilatedXY( 10, 70 )
       ) ),
       accessibleRoleDescription: 'sortable'
     } );
@@ -83,8 +83,8 @@ export default class InteractiveSlotsNode extends Node {
 
       // It was found that the accessible name and role information requires AccessibleDraggableOptions
       // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
-      return new Rectangle( 0, 0, 20, 20, combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
-        fill: 'red',
+      return new Rectangle( 0, 0, 20, 20,
+        combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
         center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
         // pdom
@@ -337,15 +337,32 @@ export default class InteractiveSlotsNode extends Node {
    * @param toolNode - If the protein came from the toolbox, this is set to support swap/return operations.
    */
   public grab( slot: Slot, type: TransportProteinType, toolNode?: TransportProteinToolNode ): void {
-    this.grabbedProperty.value = true;
     this.selectedType = type;
     this.selectedIndex = this.slots.indexOf( slot );
-    this.updateFocus();
-
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
+
+    // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
+    this.grabbedProperty.value = true;
+
+    this.updateGrabHighlights();
+
+    this.updateFocus();
 
     // TODO: i18n, see #97
     this.addAccessibleResponse( 'Grabbed.' );
+  }
+
+  /**
+   * Redraw the Rectangles that represent the slots so that the highlight nicely surrounds the grabbed
+   * protein Node.
+   */
+  private updateGrabHighlights(): void {
+    this.rectangles.forEach( rect => {
+      affirm( this.grabbedNode, 'grabbedNode was expected on updateRectangleSize.' );
+      const oldCenter = rect.center;
+      rect.setRectBounds( this.grabbedNode.localBounds.dilatedXY( 10, 10 ) );
+      rect.center = oldCenter;
+    } );
   }
 }
 
