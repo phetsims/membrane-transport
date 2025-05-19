@@ -360,7 +360,7 @@ export default class InteractiveSlotsNode extends Node {
     this.rectangles.forEach( rect => {
       affirm( this.grabbedNode, 'grabbedNode was expected on updateRectangleSize.' );
       const oldCenter = rect.center;
-      rect.setRectBounds( this.grabbedNode.localBounds.dilatedXY( 10, 10 ) );
+      rect.setRectBounds( this.grabbedNode.localBounds );
       rect.center = oldCenter;
     } );
   }

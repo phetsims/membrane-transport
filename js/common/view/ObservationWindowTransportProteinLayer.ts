@@ -57,6 +57,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
     this.proteinsNodeParent = new Node( {
       tagName: 'div',
+
+      // TODO: i18n, see #97
+      accessibleHeading: 'Cell Membrane',
       groupFocusHighlight: true,
       focusable: false,
       accessibleRoleDescription: 'navigable'
