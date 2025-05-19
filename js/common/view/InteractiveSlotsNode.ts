@@ -13,11 +13,13 @@ import StringProperty from '../../../../axon/js/StringProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
+import GroupHighlightPath from '../../../../scenery/js/accessibility/GroupHighlightPath.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
@@ -67,7 +69,12 @@ export default class InteractiveSlotsNode extends Node {
   ) {
     super( {
       tagName: 'div',
-      groupFocusHighlight: true,
+
+      // A custom group highlight that surrounds the entire membrane and the protein when it is hovering
+      // above the slots.
+      groupFocusHighlight: new GroupHighlightPath( Shape.bounds(
+        modelViewTransform.modelToViewBounds( MembraneTransportConstants.MEMBRANE_BOUNDS ).dilatedXY( 10, 60 )
+      ) ),
       accessibleRoleDescription: 'sortable'
     } );
 
