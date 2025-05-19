@@ -162,7 +162,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           this.updateFocus();
 
           // Make sure that the transport proteins are in the correct reading order.
-          this.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
+          this.proteinsNodeParent.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
 
           // Set up listeners that update the accessible name of the transport protein
           const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNamePattern.createProperty( {
