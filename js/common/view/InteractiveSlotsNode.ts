@@ -72,13 +72,13 @@ export default class InteractiveSlotsNode extends Node {
     } );
 
     // A focusable Node that contains the accessible content for the interaction.
-    const createTestRectangle = ( accessibleNameProperty: TReadOnlyProperty<string>, modelX: number ): Rectangle => {
+    const createTestRectangle = ( accessibleNameProperty: TReadOnlyProperty<string>, modelX: number, modelY: number ): Rectangle => {
 
       // It was found that the accessible name and role information requires AccessibleDraggableOptions
       // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
       return new Rectangle( 0, 0, 20, 20, combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
         fill: 'red',
-        center: modelViewTransform.modelToViewXY( modelX, MODEL_DRAG_VERTICAL_OFFSET ),
+        center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
         // pdom
         accessibleRoleDescription: 'protein',
@@ -105,14 +105,14 @@ export default class InteractiveSlotsNode extends Node {
         return `Above slot ${index + 1} of ${slots.length}, ${proteinName}`;
       } );
 
-      const rect = createTestRectangle( accessibleNameProperty, slot.position );
+      const rect = createTestRectangle( accessibleNameProperty, slot.position, MODEL_DRAG_VERTICAL_OFFSET );
 
       this.rectangles.push( rect );
       this.addChild( rect );
     } );
 
     // Add a rectangle for the off-membrane state
-    const offMembraneRect = createTestRectangle( new StringProperty( 'Off membrane' ), MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET );
+    const offMembraneRect = createTestRectangle( new StringProperty( 'Off membrane' ), MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET );
     this.rectangles.push( offMembraneRect );
     this.addChild( offMembraneRect );
 
