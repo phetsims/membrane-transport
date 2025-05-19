@@ -12,6 +12,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -38,12 +39,10 @@ export default class SoluteBarChartNode extends Node {
 
   public constructor( model: MembraneTransportModel, soluteType: PlottableSoluteTypes, iconAlignGroup: AlignGroup, tandem: Tandem ) {
 
-    const outsideAmountProperty = model.outsideSoluteCountProperties[ soluteType ];
-    const insideAmountProperty = model.insideSoluteCountProperties[ soluteType ];
-
-    // If time passes, the flux will change.
-    // TODO (JG): This as a Property is a workaround so that it is observable. Do we need a timeProperty to drive the description? https://github.com/phetsims/membrane-transport/issues/90
-    // const fluxValueProperty = new Property( model.getRecentSoluteFluxWithSmoothing( soluteType ) );
+    const outsideSoluteCountProperty = model.outsideSoluteCountProperties[ soluteType ];
+    const outsideAmountProperty = outsideSoluteCountProperty;
+    const insideSoluteCountProperty = model.insideSoluteCountProperties[ soluteType ];
+    const insideAmountProperty = insideSoluteCountProperty;
 
     // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference. https://github.com/phetsims/membrane-transport/issues/90
     //   What if the description simply described the magnitude of the outside bar and the inside bar?
@@ -76,7 +75,7 @@ export default class SoluteBarChartNode extends Node {
 
       tandem: tandem,
 
-      // Gracefully prevent anything from being drawn outside of the box
+      // Gracefully prevent anything from being drawn outside the box
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
 
       // pdom
@@ -135,129 +134,93 @@ export default class SoluteBarChartNode extends Node {
       centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
     } );
 
-    // TODO (JG/SR): Use or remove this code https://github.com/phetsims/membrane-transport/issues/90
-    // // Update the arrow when the passage history changes - Discrete version
-    // this.stepEmitter.addListener( dt => {
-    //   // Net positive is into the cell
-    //   const historyAccumulation = model.getNetPassageHistory( soluteType );
-    //   arrow.setTailAndTip( 80, 0, 80, historyAccumulation * 20 );
-    //   arrow.centerY = BOX_HEIGHT / 2;
-    // } );
-
-    this.stepEmitter.addListener( dt => {
-
-      // decrement highlight stripe timers and hide when expired
-      if ( outsideStripeTimeRemaining > 0 ) {
-        outsideStripeTimeRemaining -= dt;
-        if ( outsideStripeTimeRemaining <= 0 ) {
-          outsideStripe.visible = false;
-        }
-      }
-      if ( insideStripeTimeRemaining > 0 ) {
-        insideStripeTimeRemaining -= dt;
-        if ( insideStripeTimeRemaining <= 0 ) {
-          insideStripe.visible = false;
-        }
-      }
+    // Render the stroke afterward as well, so it will cover the yellow highlight stripe
+    const outsideBarStroke = new Rectangle( 0, 0, 1, BAR_WIDTH, {
+      fill: null,
+      stroke: 'black',
+      lineWidth: barLineWidth,
+      left: origin.centerX,
+      centerY: BOX_HEIGHT / 2 - BAR_WIDTH / 2 - 5
+    } );
+    const insideBarStroke = new Rectangle( 0, 0, 1, BAR_WIDTH, {
+      fill: null,
+      stroke: 'black',
+      lineWidth: barLineWidth,
+      left: origin.centerX,
+      centerY: BOX_HEIGHT / 2 + BAR_WIDTH / 2 + 5
     } );
 
     const PADDING_FACTOR = 0.95;
     const BAR_MULTIPLIER = 2;
 
-    // Highlight stripes appear for a short duration based on aggregate flux
-    const HIGHLIGHT_DURATION = 0.2; // seconds
-
-    // Remaining time (in seconds) for which stripes remain visible
-    let outsideStripeTimeRemaining = 0;
-    let insideStripeTimeRemaining = 0;
-
     // Create highlight stripes on top of the bars (higher z-index)
     const outsideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
       fill: 'yellow',
-      visible: false,
       left: origin.centerX,
       centerY: outsideBar.centerY
     } );
     const insideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
       fill: 'yellow',
-      visible: false,
       left: origin.centerX,
       centerY: insideBar.centerY
     } );
 
+    // linear function that maps a number of solutes to a width extent of the bar chart
+    const countToWidth = ( count: number ) => {
+      return BAR_MULTIPLIER * count / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
+    };
+
     // Update outside bar width when count changes, but don't show stripe
-    model.outsideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      const newWidth = BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
-      outsideBar.setRectWidth( newWidth );
+    outsideSoluteCountProperty.link( soluteCount => {
+      const width = countToWidth( soluteCount );
+
+      outsideBar.setRectWidth( width );
       outsideBar.left = origin.centerX;
+
+      outsideBarStroke.setRectWidth( width );
+      outsideBarStroke.left = origin.centerX;
     } );
 
     // Update inside bar width when count changes, but don't show stripe
-    model.insideSoluteCountProperties[ soluteType ].link( soluteCount => {
-      const newWidth = BAR_MULTIPLIER * soluteCount / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
-      insideBar.setRectWidth( newWidth );
+    insideSoluteCountProperty.link( soluteCount => {
+      const width = countToWidth( soluteCount );
+
+      insideBar.setRectWidth( width );
       insideBar.left = origin.centerX;
+
+      insideBarStroke.setRectWidth( width );
+      insideBarStroke.left = origin.centerX;
     } );
 
-    // Keep track of which flux entries we've already processed
-    let lastProcessedTime = 0;
+    // Helper function to update a highlight stripe
+    const updateStripe = ( count: number, stripe: Rectangle, bar: Rectangle, totalAmountProperty: TReadOnlyProperty<number> ) => {
 
-// Update flux highlights based on direct flux entries from the model
+      // Calculate highlight width for exact particle count - one-to-one correspondence
+      const highlightWidth = countToWidth( count );
+
+      // Position the stripe to overlay the bar (at the end of the bar)
+      stripe.setRectWidth( highlightWidth );
+
+      // stripe.right = countToWidth( totalAmountProperty.value );
+      stripe.right = bar.right - bar.lineWidth / 2;
+    };
+
+    // Update flux highlights based on direct flux entries from the model
     this.stepEmitter.addListener( dt => {
-      // Directly access model's fluxEntries property (not using getRecentSoluteFluxWithSmoothing)
-      // Look for new entries in the last 1 second time window only
-      const currentTime = model.time;
-      const timeWindowStart = Math.max( currentTime - 1.0, lastProcessedTime );
 
-      // Get all new entries for this solute type within the time window
-      const newFluxEntries = model.fluxEntries.filter( entry =>
-        entry.soluteType === soluteType &&
-        entry.time > timeWindowStart &&
-        entry.time <= currentTime
-      );
+      if ( model.isPlayingProperty.value ) {
 
-      // Count entries by direction
-      let inwardCount = 0;
-      let outwardCount = 0;
+        // Get all new entries for this solute type within the time window
+        const recentFluxEntries = model.fluxEntries.filter( entry =>
+          entry.soluteType === soluteType &&
+          entry.time > model.time - 1
+        );
 
-      newFluxEntries.forEach( entry => {
-        if ( entry.direction === 'inward' ) {
-          inwardCount++;
-        }
-        else {
-          outwardCount++;
-        }
-      } );
+        const inwardCount = recentFluxEntries.filter( entry => entry.direction === 'inward' ).length;
+        const outwardCount = recentFluxEntries.filter( entry => entry.direction === 'outward' ).length;
 
-      // Helper function to update a highlight stripe
-      const updateStripe = ( count: number, stripe: Rectangle, bar: Rectangle ) => {
-        if ( count > 0 ) {
-          // Calculate highlight width for exact particle count - one-to-one correspondence
-          const highlightWidth = BAR_MULTIPLIER * count / MembraneTransportConstants.MAX_SOLUTE_COUNT * ( BOX_HEIGHT / 2 ) * PADDING_FACTOR;
-
-          // Position the stripe to overlay the bar (at the end of the bar)
-          stripe.setRectWidth( highlightWidth );
-          stripe.left = origin.centerX + bar.width - highlightWidth;
-          stripe.visible = true;
-          return HIGHLIGHT_DURATION;
-        }
-        return 0;
-      };
-
-      // Update both stripes using the helper function
-      const insideTime = updateStripe( inwardCount, insideStripe, insideBar );
-      if ( insideTime > 0 ) {
-        insideStripeTimeRemaining = insideTime;
-      }
-
-      const outsideTime = updateStripe( outwardCount, outsideStripe, outsideBar );
-      if ( outsideTime > 0 ) {
-        outsideStripeTimeRemaining = outsideTime;
-      }
-
-      // Update the last processed time
-      if ( newFluxEntries.length > 0 ) {
-        lastProcessedTime = currentTime;
+        updateStripe( inwardCount, insideStripe, insideBar, insideSoluteCountProperty );
+        updateStripe( outwardCount, outsideStripe, outsideBar, outsideSoluteCountProperty );
       }
     } );
 
@@ -268,6 +231,8 @@ export default class SoluteBarChartNode extends Node {
       insideBar,
       outsideStripe,
       insideStripe,
+      outsideBarStroke,
+      insideBarStroke,
       origin
     ];
   }

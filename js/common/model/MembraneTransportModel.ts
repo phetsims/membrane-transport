@@ -15,6 +15,7 @@ import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -52,8 +53,6 @@ export type FluxEntry = {
   time: number;
   direction: 'inward' | 'outward';
 };
-
-const fluxSmoothingTimeConstant = 0.25;
 
 export const SLOT_COUNT = 7;
 const SLOT_MAX_X = 84;
@@ -97,10 +96,9 @@ export default class MembraneTransportModel extends PhetioObject {
   // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
   // The flux entries are used to track the recent flux of solutes through the membrane.
   public readonly fluxEntries: FluxEntry[] = [];
-  public time = 0;
 
-  // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
-  private soluteTypeFlux = {} as Record<SoluteType, number>;
+  // Total elapsed time in seconds since the simulation started.
+  public time = 0;
 
   public readonly areLigandsAddedProperty: BooleanProperty;
 
@@ -176,7 +174,6 @@ export default class MembraneTransportModel extends PhetioObject {
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
       this.insideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
-      this.soluteTypeFlux[ soluteType ] = 0;
     } );
 
     // statically preallocate the ligands, so LigandNodes can be created for them and phet-io instrumented on startup
@@ -287,15 +284,14 @@ export default class MembraneTransportModel extends PhetioObject {
   private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {
 
     // Prune any recentSoluteFlux that is more than 1000ms old.
-    this.fluxEntries.slice().forEach( fluxEntry => {
-      if ( this.time - fluxEntry.time > 0.1 ) {
-        this.fluxEntries.splice( this.fluxEntries.indexOf( fluxEntry ), 1 );
-      }
-    } );
+    const staleEntries = this.fluxEntries.filter( fluxEntry => this.time - fluxEntry.time > 1 );
+    staleEntries.forEach( fluxEntry => arrayRemove( this.fluxEntries, fluxEntry ) );
 
     // track which solutes changed sign of y value. Do this after pruning, to speed up the pruning slightly
     this.solutes.forEach( solute => {
       if ( soluteInitialYValues.has( solute ) &&
+
+           // check for a change in sign
            soluteInitialYValues.get( solute )! * solute.position.y < 0 ) {
         this.fluxEntries.push( {
           soluteType: solute.type,
@@ -304,25 +300,6 @@ export default class MembraneTransportModel extends PhetioObject {
         } );
       }
     } );
-
-    const fluxSmoothingAlpha = dt / ( fluxSmoothingTimeConstant + dt );
-
-    getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
-
-      const recentFlux = this.fluxEntries.filter( fluxEntry => fluxEntry.soluteType === soluteType ).reduce( ( sum, fluxEntry ) => {
-        return sum + ( fluxEntry.direction === 'inward' ? 1 : -1 );
-      }, 0 );
-
-      this.soluteTypeFlux[ soluteType ] = fluxSmoothingAlpha * recentFlux + ( 1 - fluxSmoothingAlpha ) * this.soluteTypeFlux[ soluteType ];
-    } );
-  }
-
-  /**
-   * Sum up all the flux history for a given solute type. Positive values indicate that the solute has passed
-   * through the membrane from the outside to the inside, and negative values indicate the opposite. TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
-   */
-  public getRecentSoluteFluxWithSmoothing( soluteType: SoluteType ): number {
-    return this.soluteTypeFlux[ soluteType ];
   }
 
   private updateSoluteCounts(): void {
@@ -469,15 +446,13 @@ export default class MembraneTransportModel extends PhetioObject {
       solutes: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
       ligands: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
-      time: NumberIO,
-      soluteTypeFlux: ObjectLiteralIO
+      time: NumberIO
     },
     applyState: ( model: MembraneTransportModel, state: IntentionalAny ) => {
       ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.solutes, state.solutes );
 
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
-      model.soluteTypeFlux = state.soluteTypeFlux;
 
       // The ligands are statically preallocated, so they we must mutate the pre-allocated ones
       // TODO: Make sure we have the proteins before restoring the particle modes. https://github.com/phetsims/membrane-transport/issues/23
