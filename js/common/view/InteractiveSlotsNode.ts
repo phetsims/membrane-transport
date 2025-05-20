@@ -29,6 +29,7 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import createPositionAnimation from './createPositionAnimation.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
@@ -70,7 +71,7 @@ export default class InteractiveSlotsNode extends Node {
    */
   public constructor(
     private readonly slots: Slot[],
-    private readonly view: Pick<MembraneTransportScreenView, 'createFromKeyboard' | 'getTransportProteinToolNode'>,
+    private readonly view: MembraneTransportScreenView,
     focusLeftmostProteinNode: () => boolean,
     updateFocusForSelectables: () => void,
     modelViewTransform: ModelViewTransform2
@@ -99,6 +100,29 @@ export default class InteractiveSlotsNode extends Node {
           accessibleRoleDescription: 'protein',
           accessibleName: accessibleNameProperty
         } ) );
+    };
+
+    // Create and start an animation to return a grabbed protein back to the toolbox.
+    const returnToolToToolbox = ( onEnd?: () => void ) => {
+      affirm( this.grabbedNode, 'A grabbedNode is expected to be defined.' );
+      const toolNode = view.getTransportProteinToolNode( this.grabbedNode.type );
+      const grabbedNode = this.grabbedNode;
+      if ( toolNode ) {
+        const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
+        const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
+
+        const animation = createPositionAnimation(
+          value => grabbedNode.setModelPosition( value ),
+          grabbedNode.getModelPosition(),
+          modelPoint,
+          () => {
+            onEnd && onEnd();
+            this.cleanAfterRelease();
+          }
+        );
+
+        animation.start();
+      }
     };
 
     // Draw a rectangle centered at each slot, vertically above them.
@@ -194,7 +218,7 @@ export default class InteractiveSlotsNode extends Node {
 
           // Release first to update grabbedProperty. Then add a new transport protein, so that listeners in the parent Node
           // can manage focus on protein Node addition.
-          this.release();
+          this.release( false );
 
           // A reason for the release will determine which sound/response to use
           // due to the release.
@@ -207,8 +231,15 @@ export default class InteractiveSlotsNode extends Node {
             toolNode.focus();
 
             releaseReason = 'return';
+
+            // Animate the tool back to the toolbox. Cleanup is done at the end of animation.
+            returnToolToToolbox();
           }
           else {
+
+            // No animations so clean up right away.
+            this.cleanAfterRelease();
+
             const selectedSlot = this.slots[ selectedIndex ];
 
             // If the selected slot already has a transport protein, the proteins will be "swapped" -
@@ -256,13 +287,16 @@ export default class InteractiveSlotsNode extends Node {
 
         this.release();
 
-        // TODO: What should be said in this case? See #97
-        this.emoteRelease( 'delete' );
+        returnToolToToolbox();
 
+        // Manage focus after animation
         const success = focusLeftmostProteinNode();
         if ( !success ) {
           this.view.getTransportProteinToolNode( type ).focus();
         }
+
+        // TODO: What should be said in this case? See #97
+        this.emoteRelease( 'delete' );
       }
     } );
     this.addInputListener( deleteKeyboardListener );
@@ -311,16 +345,27 @@ export default class InteractiveSlotsNode extends Node {
 
   /**
    * Releases this interaction, putting the interaction back into 'select' mode. State variables are reset.
+   * @param disposeIcon - If true, the icon is disposed. This may need to be deferred for animations.
    */
-  private release(): void {
-    affirm( this.grabbedNode, 'grabbedNode was expected on release.' );
-    this.grabbedNode.dispose();
-    this.grabbedNode = null;
-
+  private release( disposeIcon = true ): void {
     this.selectedType = null;
     this.selectedIndex = 0;
 
+    if ( disposeIcon ) {
+      this.cleanAfterRelease();
+    }
+
     this.grabbedProperty.value = false;
+  }
+
+  /**
+   * Clean up the grabbed Node. Seperate from release because this need to wait to be used until
+   * after animations finish.
+   */
+  private cleanAfterRelease(): void {
+    affirm( this.grabbedNode, 'grabbedNode was expected on release.' );
+    this.grabbedNode.dispose();
+    this.grabbedNode = null;
   }
 
   // The selected index is controlled by the keyboard listener in the parent Node.
