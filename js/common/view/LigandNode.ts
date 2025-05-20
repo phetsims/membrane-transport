@@ -121,7 +121,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     const highlightPath = new HighlightPath( Shape.circle( POTASSIUM_REGION_HEIGHT / 2 ).transformed( Matrix3.translation( region.centerX, region.centerY ) ), {
 
       // TODO: https://github.com/phetsims/membrane-transport/issues/130 this does nothing, but why?
-      lineDashOverride: [ 400, 2 ]
+      // lineDashOverride: [ 400, 2 ]
     } );
 
     this.setFocusHighlight( highlightPath );
