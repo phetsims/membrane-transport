@@ -7,11 +7,11 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -19,6 +19,7 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
+import InsideOutsideLabel from './InsideOutsideLabel.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -63,10 +64,9 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
     contentNode.addChild( bottomHalf );
 
     // NOTE: Duplication with ObservationWindow
-    const TEXT_MARGIN = 30;
-    const textOptions = { fontSize: 13, left: 3, maxWidth: 200 };
-    const outsideText = new Text( MembraneTransportStrings.outsideStringProperty, combineOptions<TextOptions>( { top: contentNode.top + TEXT_MARGIN }, textOptions ) );
-    const insideText = new Text( MembraneTransportStrings.insideStringProperty, combineOptions<TextOptions>( { bottom: contentNode.bottom - TEXT_MARGIN }, textOptions ) );
+    const TEXT_MARGIN = 27;
+    const outsideText = new InsideOutsideLabel( 'outside', { top: contentNode.top + TEXT_MARGIN, scale: 0.85 } );
+    const insideText = new InsideOutsideLabel( 'inside', { bottom: contentNode.bottom - TEXT_MARGIN, scale: 0.85 } );
 
     contentNode.addChild( outsideText );
     contentNode.addChild( insideText );

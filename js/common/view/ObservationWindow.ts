@@ -16,17 +16,14 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
-import Color from '../../../../scenery/js/util/Color.js';
-import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import InsideOutsideLabel from './InsideOutsideLabel.js';
 import LigandNode from './LigandNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -146,10 +143,8 @@ export default class ObservationWindow extends Node {
 
     // NOTE: Duplication with SoluteConcentrationsAccordionBox
     const TEXT_MARGIN = 3;
-    const textOptions = { fontSize: 13, maxWidth: 200 };
-    const panelOptions = { stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
-    const outsideText = new Panel( new Text( MembraneTransportStrings.outsideStringProperty, textOptions ), panelOptions );
-    const insideText = new Panel( new Text( MembraneTransportStrings.insideStringProperty, textOptions ), panelOptions );
+    const outsideText = new InsideOutsideLabel( 'outside' );
+    const insideText = new InsideOutsideLabel( 'inside' );
 
     ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
       outsideTextProxy.top = TEXT_MARGIN;
