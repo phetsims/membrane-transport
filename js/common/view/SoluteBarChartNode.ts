@@ -113,7 +113,7 @@ export default class SoluteBarChartNode extends Node {
       // Use y instead of bottom so the text baselines will align
       y: BOX_HEIGHT - 20
     } );
-    const originExtent = 60;
+    const originExtent = 54;
     const origin = new Path( Shape.lineSegment( 20, BOX_HEIGHT / 2 + originExtent / 2, 20, BOX_HEIGHT / 2 - originExtent / 2 ), {
       stroke: 'black', lineWidth: 2
     } );
