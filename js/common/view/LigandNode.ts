@@ -14,6 +14,7 @@ import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -114,8 +115,17 @@ export default class LigandNode extends InteractiveHighlightingNode {
     // Expand the hit area for touch/mouse interactions, so it is easier to grab with the mouse
     const region = this.localBounds.dilated( 70 );
     this.mouseArea = this.touchArea = region;
-    this.setFocusHighlight( new HighlightPath( Shape.bounds( region ) ) );
-    this.setInteractiveHighlight( new HighlightPath( Shape.bounds( region ) ) );
+
+    // Use the same bounds for both ligand types so they have equal focus + highlight sizes
+    const POTASSIUM_REGION_HEIGHT = 369;
+    const highlightPath = new HighlightPath( Shape.circle( POTASSIUM_REGION_HEIGHT / 2 ).transformed( Matrix3.translation( region.centerX, region.centerY ) ), {
+
+      // TODO: https://github.com/phetsims/membrane-transport/issues/130 this does nothing, but why?
+      lineDashOverride: [ 400, 2 ]
+    } );
+
+    this.setFocusHighlight( highlightPath );
+    this.setInteractiveHighlight( highlightPath );
 
     this.alerter = new Alerter( {
       descriptionAlertNode: observationWindow
