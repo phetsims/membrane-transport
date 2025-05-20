@@ -103,7 +103,7 @@ export default class InteractiveSlotsNode extends Node {
     };
 
     // Create and start an animation to return a grabbed protein back to the toolbox.
-    const returnToolToToolbox = ( onEnd?: () => void ) => {
+    const returnToolToToolbox = () => {
       affirm( this.grabbedNode, 'A grabbedNode is expected to be defined.' );
       const toolNode = view.getTransportProteinToolNode( this.grabbedNode.type );
       const grabbedNode = this.grabbedNode;
@@ -115,10 +115,7 @@ export default class InteractiveSlotsNode extends Node {
           value => grabbedNode.setModelPosition( value ),
           grabbedNode.getModelPosition(),
           modelPoint,
-          () => {
-            onEnd && onEnd();
-            this.cleanAfterRelease();
-          }
+          () => this.cleanAfterRelease()
         );
 
         animation.start();
@@ -285,7 +282,7 @@ export default class InteractiveSlotsNode extends Node {
         affirm( this.grabbedNode, 'We must have a node to delete' );
         const type = this.grabbedNode.type;
 
-        this.release();
+        this.release( false );
 
         returnToolToToolbox();
 
