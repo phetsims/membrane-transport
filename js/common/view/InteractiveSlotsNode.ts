@@ -139,10 +139,7 @@ export default class InteractiveSlotsNode extends Node {
     // When grabbed, move focus to the rectangle with the selected index.
     this.grabbedProperty.link( grabbed => {
       if ( grabbed ) {
-        affirm( typeof this.selectedIndex === 'number', 'If grabbed, selectedIndex should be a number.' );
-        const rect = this.rectangles[ this.selectedIndex ];
-        rect.focusable = true;
-        rect.focus();
+        this.updateFocus();
       }
     } );
 
