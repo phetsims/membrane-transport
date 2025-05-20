@@ -94,10 +94,7 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
 
     // Set a value for the number of playing instances of the clip at which we limit additional plays.  This helps to
     // prevent too many instances of the clip from playing simultaneously, which can sound a bit chatic.
-    const playingInstancesLimitThreshold = 10;
-
-    // Calculate a normalized value based on the range.
-    const normalizedValue = this.concentrationRange.getNormalizedValue( this.concentrationProperty.value );
+    const playingInstancesLimitThreshold = 5;
 
     // Calculate the number of times to play based on the current concentration value.  This calculation was empirically
     // determined and can be adjusted as needed to get the desired sound behavior.  There is also code to limit the
@@ -107,7 +104,7 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     const timesToPlay = Math.min( available, desiredAmount );
 
     // Calculate the minimum playback rate based on the current concentration.
-    const minPlaybackRate = 1 + normalizedValue * 2;
+    const minPlaybackRate = 1 + newValue / 20;
 
     let delayAmount = 0;
     _.times( timesToPlay, () => {
