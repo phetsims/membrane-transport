@@ -24,6 +24,7 @@ import TColor from '../../../../scenery/js/util/TColor.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
@@ -112,7 +113,7 @@ export default class SoluteBarChartNode extends Node {
       // Use y instead of bottom so the text baselines will align
       y: BOX_HEIGHT - 20
     } );
-    const originExtent = 50;
+    const originExtent = 60;
     const origin = new Path( Shape.lineSegment( 20, BOX_HEIGHT / 2 + originExtent / 2, 20, BOX_HEIGHT / 2 - originExtent / 2 ), {
       stroke: 'black', lineWidth: 2
     } );
@@ -128,7 +129,7 @@ export default class SoluteBarChartNode extends Node {
         stroke: 'black',
         lineWidth: barLineWidth,
         left: origin.centerX,
-        centerY: BOX_HEIGHT / 2 + ( isOutside ? -1 : 1 ) * ( BAR_WIDTH / 2 + 5 )
+        centerY: BOX_HEIGHT / 2 + ( isOutside ? -1 : 1 ) * ( BAR_WIDTH / 2 + 7 )
       } );
     };
 
@@ -214,9 +215,27 @@ export default class SoluteBarChartNode extends Node {
       }
     } );
 
+    // NOTE: Duplicated with MacroCellNode
+    const scale = 0.5;
+    const orangeOuterHeads = new Path( Shape.lineSegment( 0, BOX_HEIGHT / 2, BOX_WIDTH, BOX_HEIGHT / 2 ), {
+      lineWidth: 13 * scale,
+      stroke: MembraneTransportColors.phospholipidHeadColorProperty
+    } );
+    this.addChild( orangeOuterHeads );
+
+    const pinkInnerTails = new Path( Shape.lineSegment( 0, BOX_HEIGHT / 2, BOX_WIDTH, BOX_HEIGHT / 2 ), {
+      lineWidth: 4 * scale,
+      stroke: MembraneTransportColors.phospholipidTailColorProperty
+    } );
+    this.addChild( pinkInnerTails );
+
     this.children = [
       layoutBox,
       iconWithText,
+
+      orangeOuterHeads,
+      pinkInnerTails,
+
       outsideBar,
       insideBar,
       outsideStripe,

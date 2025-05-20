@@ -46,6 +46,7 @@ export default class MacroCellNode extends Node {
       stroke: null
     } ) );
 
+    // NOTE: Duplicated with SoluteBarChartNode
     // Orange outer heads
     this.addChild( new Path( shapeProperty, {
       lineWidth: 13,
