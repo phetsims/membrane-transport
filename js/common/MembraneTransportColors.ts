@@ -55,6 +55,9 @@ const MembraneTransportColors = {
   glucoseColorProperty: new ProfileColorProperty( membraneTransport, 'glucoseBarChartColor', {
     default: 'rgb(106,42,211)'
   } ),
+  fluxHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'fluxHighlightColor', {
+    default: 'yellow'
+  } ),
   lipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
   } ),

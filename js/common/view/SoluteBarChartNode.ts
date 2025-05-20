@@ -146,12 +146,12 @@ export default class SoluteBarChartNode extends Node {
 
     // Create highlight stripes on top of the bars (higher z-index)
     const outsideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
-      fill: 'yellow',
+      fill: MembraneTransportColors.fluxHighlightColorProperty,
       left: origin.centerX,
       centerY: outsideBar.centerY
     } );
     const insideStripe = new Rectangle( 0, 0, 0, BAR_WIDTH, {
-      fill: 'yellow',
+      fill: MembraneTransportColors.fluxHighlightColorProperty,
       left: origin.centerX,
       centerY: insideBar.centerY
     } );
