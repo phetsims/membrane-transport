@@ -78,7 +78,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
         stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
         return soluteBarChartNode;
       } ),
-      spacing: 12,
+      spacing: 10,
       left: 50,
       top: 5,
 
