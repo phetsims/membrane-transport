@@ -53,6 +53,7 @@ import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward0
 
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportConstants from './MembraneTransportConstants.js';
+import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import MembraneTransportModel from './model/MembraneTransportModel.js';
 import Particle from './model/Particle.js';
 
@@ -172,6 +173,10 @@ export default class MembraneTransportSounds {
   }
 
   public static updateAmbientSoluteSounds( model: MembraneTransportModel ): void {
+
+    if ( !MembraneTransportQueryParameters.ambientSound ) {
+      return;
+    }
 
     const types = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose' ] as const;
 
