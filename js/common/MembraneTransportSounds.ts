@@ -220,7 +220,6 @@ export default class MembraneTransportSounds {
       const volumeUnclamped = ( insideAmount * outsideAmount ) / ( HALF_MAX * HALF_MAX );   // 0 → 1 range
 
       const amount = Math.max( 0, Math.min( 1, volumeUnclamped ) );
-      console.log( amount );
 
       ambientSound.setOutputLevel( amount * 0.5 ); // overall normalization
 
