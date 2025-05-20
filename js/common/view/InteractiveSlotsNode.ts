@@ -26,11 +26,19 @@ import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectan
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
+
+// Describes the way that a protein may be released.
+type ReleaseReason = 'release' // basic release case
+  | 'swap' // swap slots with another protein in the membrane
+  | 'return' // return the protein to the toolbox
+  | 'cancel' // cancel the interaction
+  | 'delete'; // remove the protein from the membrane
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
@@ -191,8 +199,9 @@ export default class InteractiveSlotsNode extends Node {
           // can manage focus on protein Node addition.
           this.release();
 
-          // TODO: i18n, see #97
-          let accessibleResponse;
+          // A reason for the release will determine which sound/response to use
+          // due to the release.
+          let releaseReason: ReleaseReason;
 
           if ( selectedIndex === 'offMembrane' ) {
 
@@ -200,7 +209,7 @@ export default class InteractiveSlotsNode extends Node {
             const toolNode = view.getTransportProteinToolNode( grabbedType );
             toolNode.focus();
 
-            accessibleResponse = 'Released. Back in panel.';
+            releaseReason = 'return';
           }
           else {
             const selectedSlot = this.slots[ selectedIndex ];
@@ -217,16 +226,16 @@ export default class InteractiveSlotsNode extends Node {
               // the protein will simply be replaced.
               if ( originSlot instanceof Slot ) {
                 originSlot.transportProteinType = currentType;
-                accessibleResponse = 'Re-ordered.';
+                releaseReason = 'swap';
               }
               else {
 
                 // TODO: What should be said in this case? See #97
-                accessibleResponse = 'Released.';
+                releaseReason = 'release';
               }
             }
             else {
-              accessibleResponse = 'Released.';
+              releaseReason = 'release';
             }
 
             // Place the transport protein in the selected slot
@@ -234,8 +243,8 @@ export default class InteractiveSlotsNode extends Node {
             selectedSlot.transportProteinType = selectedType;
           }
 
-          affirm( accessibleResponse, 'We should have created an accessibleResponse' );
-          this.addAccessibleResponse( accessibleResponse );
+          affirm( releaseReason, 'We should have a reason for the release to emote.' );
+          this.emoteRelease( releaseReason );
         }
       }
     } );
@@ -251,7 +260,7 @@ export default class InteractiveSlotsNode extends Node {
         this.release();
 
         // TODO: What should be said in this case? See #97
-        this.addAccessibleResponse( 'Protein removed.' );
+        this.emoteRelease( 'delete' );
 
         const success = focusLeftmostProteinNode();
         if ( !success ) {
@@ -273,7 +282,7 @@ export default class InteractiveSlotsNode extends Node {
         this.release();
 
         // TODO: What should we say in this case? See #97
-        this.addAccessibleResponse( 'Released. Back to initial slot.' );
+        this.emoteRelease( 'cancel' );
 
         if ( origin instanceof TransportProteinToolNode ) {
 
@@ -370,6 +379,33 @@ export default class InteractiveSlotsNode extends Node {
 
     // TODO: i18n, see #97
     this.addAccessibleResponse( 'Grabbed.' );
+    MembraneTransportSounds.transportProteinGrabbed();
+  }
+
+  /**
+   * Alert a response and play a sound corresponding to the way a protein was released.
+   */
+  private emoteRelease( reason: ReleaseReason ): void {
+    if ( reason === 'return' ) {
+      MembraneTransportSounds.proteinReturnedToToolbox();
+      this.addAccessibleResponse( 'Released. Back in panel.' );
+    }
+    else if ( reason === 'swap' ) {
+      MembraneTransportSounds.transportProteinSwapped();
+      this.addAccessibleResponse( 'Re-ordered.' );
+    }
+    else if ( reason === 'delete' ) {
+      MembraneTransportSounds.proteinReturnedToToolbox();
+      this.addAccessibleResponse( 'Deleted.' );
+    }
+    else if ( reason === 'release' ) {
+      MembraneTransportSounds.transportProteinReleased();
+      this.addAccessibleResponse( 'Released.' );
+    }
+    else if ( reason === 'cancel' ) {
+      MembraneTransportSounds.transportProteinReleased();
+      this.addAccessibleResponse( 'Released. Back to initial slot.' );
+    }
   }
 
   /**
