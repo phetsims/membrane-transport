@@ -20,9 +20,11 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import GroupHighlightPath from '../../../../scenery/js/accessibility/GroupHighlightPath.js';
+import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
+import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -62,6 +64,12 @@ export default class InteractiveSlotsNode extends Node {
   // Highlight regions for the target areas, including the off-membrane site
   private rectangles: Rectangle[] = [];
 
+  // Utterances should not interrupt others so we hear the 'grabbed' response and the name of the protein.
+  private readonly grabbedUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+  private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+
+  private readonly alerter: VoicingAlerter;
+
   /**
    * @param slots - Slots available to place a protein
    * @param view - The view so that we can create new icons for dragging.
@@ -87,12 +95,14 @@ export default class InteractiveSlotsNode extends Node {
       accessibleRoleDescription: 'sortable'
     } );
 
+    this.alerter = new VoicingAlerter();
+
     // A focusable Node that contains the accessible content for the interaction.
     const createTestRectangle = ( accessibleNameProperty: TReadOnlyProperty<string>, modelX: number, modelY: number ): Rectangle => {
 
       // It was found that the accessible name and role information requires AccessibleDraggableOptions
       // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
-      return new Rectangle( 0, 0, 20, 20,
+      const rect = new Rectangle( 0, 0, 20, 20,
         combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
           center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
@@ -100,6 +110,14 @@ export default class InteractiveSlotsNode extends Node {
           accessibleRoleDescription: 'protein',
           accessibleName: accessibleNameProperty
         } ) );
+
+      rect.focusedProperty.link( focused => {
+        if ( focused ) {
+          this.alerter.alert( this.nameUtterance, accessibleNameProperty );
+        }
+      } );
+
+      return rect;
     };
 
     // Create and start an animation to return a grabbed protein back to the toolbox.
@@ -409,16 +427,18 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
+    // TODO: i18n, see #97
+    this.addAccessibleResponse( 'Grabbed.' );
+    this.alerter.alert( this.grabbedUtterance, 'Grabbed' );
+    MembraneTransportSounds.transportProteinGrabbed();
+
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
     this.grabbedProperty.value = true;
 
     this.updateGrabHighlights();
 
+    // Update focus after adding responses controlled by focus are spoken after the grabbed response.
     this.updateFocus();
-
-    // TODO: i18n, see #97
-    this.addAccessibleResponse( 'Grabbed.' );
-    MembraneTransportSounds.transportProteinGrabbed();
   }
 
   /**
@@ -458,6 +478,13 @@ export default class InteractiveSlotsNode extends Node {
       rect.setRectBounds( this.grabbedNode.localBounds );
       rect.center = oldCenter;
     } );
+  }
+}
+
+class VoicingAlerter {
+  public alert( utterance: Utterance, content: TReadOnlyProperty<string> | string ): void {
+    utterance.alert = content;
+    voicingUtteranceQueue.addToBack( utterance ); // eslint-disable-line phet/bad-sim-text
   }
 }
 
