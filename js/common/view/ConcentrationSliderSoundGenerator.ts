@@ -13,6 +13,7 @@
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import SoundGenerator, { SoundGeneratorOptions } from '../../../../tambo/js/sound-generators/SoundGenerator.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
@@ -83,7 +84,9 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
    * play.  The behavior was determined by informed trial-and-error based on an initial sound design that used a bunch
    * of separate sound clips.  See https://github.com/phetsims/greenhouse-effect/issues/28.
    */
-  public play(): void {
+  public play( newValue?: number, oldValue?: number ): void {
+
+    affirm( newValue !== undefined && oldValue !== undefined, 'newValue and oldValue should be defined' );
 
     // parameters the bound the randomization, empirically determined
     const minimumInterSoundTime = 0.06;
@@ -91,7 +94,7 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
 
     // Set a value for the number of playing instances of the clip at which we limit additional plays.  This helps to
     // prevent too many instances of the clip from playing simultaneously, which can sound a bit chatic.
-    const playingInstancesLimitThreshold = 5;
+    const playingInstancesLimitThreshold = 10;
 
     // Calculate a normalized value based on the range.
     const normalizedValue = this.concentrationRange.getNormalizedValue( this.concentrationProperty.value );
@@ -99,13 +102,9 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     // Calculate the number of times to play based on the current concentration value.  This calculation was empirically
     // determined and can be adjusted as needed to get the desired sound behavior.  There is also code to limit the
     // number of playing instance so that it doesn't get overwhelming.
-    let timesToPlay;
-    if ( this.baseSoundClip.getNumberOfPlayingInstances() < playingInstancesLimitThreshold ) {
-      timesToPlay = Math.floor( normalizedValue * 3 ) + 2;
-    }
-    else {
-      timesToPlay = 1;
-    }
+    const available = playingInstancesLimitThreshold - this.baseSoundClip.getNumberOfPlayingInstances();
+    const desiredAmount = Math.abs( newValue - oldValue );
+    const timesToPlay = Math.min( available, desiredAmount );
 
     // Calculate the minimum playback rate based on the current concentration.
     const minPlaybackRate = 1 + normalizedValue * 2;
