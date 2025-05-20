@@ -35,6 +35,7 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
@@ -279,6 +280,11 @@ export default class MembraneTransportModel extends PhetioObject {
     this.updateSoluteCounts();
 
     this.isUserDraggingLigandProperty.value = this.ligands.filter( ligand => ligand.mode.type === 'userControlled' ).length > 0;
+
+    if ( this.isPlayingProperty.value ) {
+      MembraneTransportSounds.updateAmbientSoluteSounds( this );
+    }
+
   }
 
   private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {

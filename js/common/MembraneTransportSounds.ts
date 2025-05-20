@@ -37,6 +37,11 @@ import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
 import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
+import soluteConcentrationsAmbienceLoop001_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop001_mp3.js';
+import soluteConcentrationsAmbienceLoop002_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop002_mp3.js';
+import soluteConcentrationsAmbienceLoop003_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop003_mp3.js';
+import soluteConcentrationsAmbienceLoop004_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop004_mp3.js';
+import soluteConcentrationsAmbienceLoop005_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop005_mp3.js';
 import soluteCrossing001_mp3 from '../../sounds/soluteCrossing001_mp3.js';
 import soluteCrossing002_mp3 from '../../sounds/soluteCrossing002_mp3.js';
 import soluteCrossing003_mp3 from '../../sounds/soluteCrossing003_mp3.js';
@@ -47,6 +52,8 @@ import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward0
 import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
 
 import membraneTransport from '../membraneTransport.js';
+import MembraneTransportConstants from './MembraneTransportConstants.js';
+import MembraneTransportModel from './model/MembraneTransportModel.js';
 import Particle from './model/Particle.js';
 
 const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
@@ -137,6 +144,12 @@ soluteCrossing001High.setPlaybackRate( 2 );
 soluteCrossing002High.setPlaybackRate( 2 );
 soluteCrossing003High.setPlaybackRate( 2 );
 
+const soluteConcentrationsAmbienceLoop001Sound = newSoundClip( soluteConcentrationsAmbienceLoop001_mp3, { initialOutputLevel: 0.3, loop: true } );
+const soluteConcentrationsAmbienceLoop002Sound = newSoundClip( soluteConcentrationsAmbienceLoop002_mp3, { initialOutputLevel: 0.3, loop: true } );
+const soluteConcentrationsAmbienceLoop003Sound = newSoundClip( soluteConcentrationsAmbienceLoop003_mp3, { initialOutputLevel: 0.3, loop: true } );
+const soluteConcentrationsAmbienceLoop004Sound = newSoundClip( soluteConcentrationsAmbienceLoop004_mp3, { initialOutputLevel: 0.3, loop: true } );
+const soluteConcentrationsAmbienceLoop005Sound = newSoundClip( soluteConcentrationsAmbienceLoop005_mp3, { initialOutputLevel: 0.3, loop: true } );
+
 export default class MembraneTransportSounds {
 
   public static soluteCrossedMembrane(
@@ -156,6 +169,64 @@ export default class MembraneTransportSounds {
                     soluteCrossing001High );
 
     sound.play();
+  }
+
+  public static updateAmbientSoluteSounds( model: MembraneTransportModel ): void {
+
+    const types = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose' ] as const;
+
+    types.forEach( type => {
+
+      // look up the ambient sound
+      const ambientSound = type === 'oxygen' ? soluteConcentrationsAmbienceLoop005Sound :
+                           type === 'carbonDioxide' ? soluteConcentrationsAmbienceLoop004Sound :
+                           type === 'sodiumIon' ? soluteConcentrationsAmbienceLoop003Sound :
+                           type === 'potassiumIon' ? soluteConcentrationsAmbienceLoop002Sound :
+                           soluteConcentrationsAmbienceLoop001Sound;
+
+      if ( !ambientSound.isPlaying ) {
+        ambientSound.play();
+      }
+
+      // set the volume based on the relative concentration.
+      const outsideAmount = model.outsideSoluteCountProperties[ type ].value;
+      const insideAmount = model.insideSoluteCountProperties[ type ].value;
+
+
+      /*---------------------------------------------------------------------------
+        Volume mapping rationale
+        ------------------------
+
+        We want ambience that:
+          • is silent when *either* compartment has zero solute;
+          • peaks only when the two compartments are perfectly balanced
+            (inside = outside = MAX_SOLUTE_COUNT / 2);
+          • fades smoothly the further the system is from that balance.
+
+        The product insideAmount × outsideAmount naturally satisfies those
+        constraints: it is zero at the extremes, has a single maximum at the
+        midpoint, and is symmetric.  Dividing by (MAX/2)² normalises the peak
+        to 1, after which we clamp to [0, 1] for safety.
+
+        Mathematical shape: volume(x) = 4 x (1 – x), with x = inside/MAX.
+
+        When inside and outside are equal at each MAX_SOLUTE_COUNT/2, the sound is at 1.0 volume.
+        When inside or outside is 0, the sound is at 0.0 volume.
+       -------------------------------------------------------------------------*/
+
+      const MAX_SOLUTE_COUNT = MembraneTransportConstants.MAX_SOLUTE_COUNT; // or however it’s exposed
+      const HALF_MAX = MAX_SOLUTE_COUNT / 2;
+
+      const volumeUnclamped = ( insideAmount * outsideAmount ) / ( HALF_MAX * HALF_MAX );   // 0 → 1 range
+
+      const amount = Math.max( 0, Math.min( 1, volumeUnclamped ) );
+      console.log( amount );
+
+      ambientSound.setOutputLevel( amount * 0.5 ); // overall normalization
+
+      // Set the reverb amount based on the same amount. 100% reverb at the max
+      // ambientSound.setReverb( amount );
+    } );
   }
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
