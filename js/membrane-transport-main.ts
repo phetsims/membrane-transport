@@ -55,7 +55,8 @@ simLauncher.launch( () => {
       audioOptions: {
         supportsExtraSound: true,
         customPreferences: [ {
-          createContent: tandem => new MembraneTransportSoundPreferencesNode( tandem )
+          createContent: tandem => new MembraneTransportSoundPreferencesNode( tandem ),
+          column: 'right'
         } ]
       }
     } )
