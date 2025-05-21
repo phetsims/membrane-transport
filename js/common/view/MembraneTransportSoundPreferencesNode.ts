@@ -30,6 +30,8 @@ export default class MembraneTransportSoundPreferencesNode extends VBox {
           isDisposable: false,
           labelNode: new Text( 'Stereo Sounds', PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
           controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+
+          // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/176
           descriptionNode: new RichText( 'When solutes cross the membrane, play in the right channel (outside -> inside) or left channel (inside -> outside)', PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
           tandem: tandem.createTandem( 'stereoCrossingSoundsEnabledControl' ),
           phetioFeatured: true,
