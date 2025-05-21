@@ -299,6 +299,7 @@ export default class MembraneTransportSounds {
 
       // console.log( 'inside amount', insideAmount, 'outside amount', outsideAmount, 'total amount', totalAmount, 'balance', balance, 'frequency', frequency );
 
+      ambientSound.setPlaying( totalAmount > 0 );
       ambientSound.setFrequency( frequency );
     } );
   }

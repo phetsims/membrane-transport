@@ -18,6 +18,7 @@ const TIME_CONSTANT = 0.015;
 
 class AmbientSoundGeneratorFiltered extends SoundGenerator {
   private readonly lowPassFilter: BiquadFilterNode;
+  private readonly baseSoundLoop: SoundClip;
 
   // private readonly temperatureToFilterFrequency: LinearFunction;
 
@@ -45,17 +46,16 @@ class AmbientSoundGeneratorFiltered extends SoundGenerator {
     // Send the loop into both filters.
     baseSoundLoop.connect( lowPassFilter );
 
-    // TODO: Only start sound when there are > 0 solutes, see https://github.com/phetsims/membrane-transport/issues/153
-    baseSoundLoop.play();
+    this.baseSoundLoop = baseSoundLoop;
+  }
 
-    // isSunShiningProperty.link( isSunShining => {
-    //   if ( isSunShining ) {
-    //     baseSoundLoop.play();
-    //   }
-    //   else {
-    //     baseSoundLoop.stop();
-    //   }
-    // } );
+  public setPlaying( isPlaying: boolean ): void {
+    if ( isPlaying && !this.baseSoundLoop.isPlaying ) {
+      this.baseSoundLoop.play();
+    }
+    else if ( !isPlaying && this.baseSoundLoop.isPlaying ) {
+      this.baseSoundLoop.stop();
+    }
   }
 
   public setFrequency( frequency: number ): void {
