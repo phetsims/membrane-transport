@@ -220,14 +220,16 @@ const soluteCrossing004HighSounds = createPannedSoundSet( soluteCrossingOutward0
 const soluteCrossing005HighSounds = createPannedSoundSet( soluteCrossingOutward005_V5_mp3, baseSoundClipOptions );
 
 // Helper function to create an ambient sound with a low-pass filter
-const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer ): AmbientSoundGeneratorFiltered => {
-  const ambientSoundGeneratorFiltered = new AmbientSoundGeneratorFiltered( soundFile );
+const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer, initialPlaybackRate = 1,
+                                     filterType: 'lowpass' | 'bandpass' = 'lowpass',
+                                     q = 10 ): AmbientSoundGeneratorFiltered => {
+  const ambientSoundGeneratorFiltered = new AmbientSoundGeneratorFiltered( soundFile, initialPlaybackRate, filterType, q );
   soundManager.addSoundGenerator( ambientSoundGeneratorFiltered );
   return ambientSoundGeneratorFiltered;
 };
 
 // Create ambient sounds and their filters
-const soluteConcentrationsAmbienceLoop001Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop001_mp3 );
+const soluteConcentrationsAmbienceLoop001Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop001_mp3, 0.5, 'bandpass', 1 ); // glucose
 const soluteConcentrationsAmbienceLoop002Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop002_mp3 );
 const soluteConcentrationsAmbienceLoop003Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop003_mp3 );
 const soluteConcentrationsAmbienceLoop004Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop004_mp3 );
@@ -288,14 +290,27 @@ export default class MembraneTransportSounds {
       const amount = clamp( totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT, 0, 1 );
       affirm( amount >= 0 && amount <= 1, `amount should be between 0 and 1, but got ${amount}` );
 
-      ambientSound.setOutputLevel( amount * 0.5 ); // overall normalization
+      const volumeBoost = type === 'glucose' ? 1.5 : 1;
+      ambientSound.setOutputLevel( Math.max( amount * 0.5 * volumeBoost, 1 ) ); // overall normalization
 
       // balance should be 0 if fully lopsided
       // balance should be 1 if fully balanced
       const balance = insideAmount === 0 || outsideAmount === 0 ? 0 :
                       insideAmount < outsideAmount ? insideAmount / outsideAmount : outsideAmount / insideAmount;
 
-      const frequency = linear( 0, 1, 500, 50, balance );
+      const maxFrequency = type === 'oxygen' ? 500 :
+                           type === 'carbonDioxide' ? 1200 :
+                           type === 'sodiumIon' ? 2000 : // ignore
+                           type === 'potassiumIon' ? 1200 :
+                           750;
+
+      const minFrequency = type === 'oxygen' ? 50 :
+                           type === 'carbonDioxide' ? 328 :
+                           type === 'sodiumIon' ? 50 :
+                           type === 'potassiumIon' ? 250 :
+                           50;
+
+      const frequency = linear( 0, 1, maxFrequency, minFrequency, balance );
 
       // console.log( 'inside amount', insideAmount, 'outside amount', outsideAmount, 'total amount', totalAmount, 'balance', balance, 'frequency', frequency );
 

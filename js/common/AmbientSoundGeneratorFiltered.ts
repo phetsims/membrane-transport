@@ -13,7 +13,6 @@ import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import membraneTransport from '../membraneTransport.js';
 
 // constants
-const FILTER_Q = 10; // empirically determined
 const TIME_CONSTANT = 0.015;
 
 class AmbientSoundGeneratorFiltered extends SoundGenerator {
@@ -23,7 +22,10 @@ class AmbientSoundGeneratorFiltered extends SoundGenerator {
   // private readonly temperatureToFilterFrequency: LinearFunction;
 
   public constructor(
-    wrappedAudioBuffer: WrappedAudioBuffer
+    wrappedAudioBuffer: WrappedAudioBuffer,
+    initialPlaybackRate = 1,
+    filterType: 'lowpass' | 'bandpass' = 'lowpass',
+    q = 10
   ) {
 
     super( {
@@ -32,13 +34,14 @@ class AmbientSoundGeneratorFiltered extends SoundGenerator {
 
     // loop which will be filtered to produce the sounds
     const baseSoundLoop = new SoundClip( wrappedAudioBuffer, {
-      loop: true
+      loop: true,
+      initialPlaybackRate: initialPlaybackRate
     } );
 
     // low pass filter
     const lowPassFilter = this.audioContext.createBiquadFilter();
-    lowPassFilter.type = 'lowpass';
-    lowPassFilter.Q.value = FILTER_Q;
+    lowPassFilter.type = filterType;
+    lowPassFilter.Q.value = q;
     lowPassFilter.connect( this.mainGainNode );
 
     this.lowPassFilter = lowPassFilter;
