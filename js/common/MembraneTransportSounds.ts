@@ -13,20 +13,6 @@ import CardSounds from '../../../tambo/js/sound-generators/CardSounds.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
-
-/**
- * AudioContextSoundClip is a subclass of SoundClip that makes the audioContext property public
- * so it can be accessed for creating panned sound clips.
- */
-class AudioContextSoundClip extends SoundClip {
-
-  // Make audioContext public by overriding it. Used to create the pan node for stereo
-  public override readonly audioContext!: AudioContext;
-
-  public constructor( wrappedAudioBuffer: WrappedAudioBuffer, providedOptions?: SoundClipOptions ) {
-    super( wrappedAudioBuffer, providedOptions );
-  }
-}
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
 import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
 import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
@@ -72,6 +58,20 @@ import MembraneTransportQueryParameters from './MembraneTransportQueryParameters
 import MembraneTransportModel from './model/MembraneTransportModel.js';
 import Particle from './model/Particle.js';
 
+/**
+ * AudioContextSoundClip is a subclass of SoundClip that makes the audioContext property public
+ * so it can be accessed for creating panned sound clips.
+ */
+class AudioContextSoundClip extends SoundClip {
+
+  // Make audioContext public by overriding it. Used to create the pan node for stereo
+  public override readonly audioContext!: AudioContext;
+
+  public constructor( wrappedAudioBuffer: WrappedAudioBuffer, providedOptions?: SoundClipOptions ) {
+    super( wrappedAudioBuffer, providedOptions );
+  }
+}
+
 type PannedSoundSet = {
   center: SoundClip;
   left: SoundClip;
@@ -104,7 +104,7 @@ function createPannedSoundSet(
 
   const leftPanner = centerSound.audioContext.createStereoPanner();
   leftPanner.pan.value = -0.8;
-  
+
   // Create a new options object instead of using spread operator on non-literals
   const leftOptions: SoundClipOptions = {
     initialOutputLevel: baseOptions.initialOutputLevel,
@@ -112,12 +112,12 @@ function createPannedSoundSet(
   };
   // Copy any other properties from baseOptions if they exist
   if ( baseOptions.loop !== undefined ) {leftOptions.loop = baseOptions.loop;}
-  
+
   const leftSound = newSoundClip( soundBuffer, leftOptions );
 
   const rightPanner = centerSound.audioContext.createStereoPanner();
   rightPanner.pan.value = 0.8;
-  
+
   // Create a new options object instead of using spread operator on non-literals
   const rightOptions: SoundClipOptions = {
     initialOutputLevel: baseOptions.initialOutputLevel,
@@ -125,7 +125,7 @@ function createPannedSoundSet(
   };
   // Copy any other properties from baseOptions if they exist
   if ( baseOptions.loop !== undefined ) {rightOptions.loop = baseOptions.loop;}
-  
+
   const rightSound = newSoundClip( soundBuffer, rightOptions );
 
   if ( playbackRate ) {
@@ -228,40 +228,24 @@ export default class MembraneTransportSounds {
     direction: 'inward' | 'outward' ): void {
 
     const stereoEnabled = MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty.value;
-    let soundToPlay: SoundClip; // Ensure SoundClip is imported or recognized
 
-    if ( direction === 'inward' ) {
-      if ( stereoEnabled ) {
-        soundToPlay = type === 'oxygen' ? soluteCrossing005Sounds.right :
-                      type === 'carbonDioxide' ? soluteCrossing004Sounds.right :
-                      type === 'sodiumIon' ? soluteCrossing003Sounds.right :
-                      type === 'potassiumIon' ? soluteCrossing002Sounds.right :
-                      soluteCrossing001Sounds.right; // Default for glucose, atp, etc.
-      }
-      else { // stereo disabled
-        soundToPlay = type === 'oxygen' ? soluteCrossing005Sounds.center :
-                      type === 'carbonDioxide' ? soluteCrossing004Sounds.center :
-                      type === 'sodiumIon' ? soluteCrossing003Sounds.center :
-                      type === 'potassiumIon' ? soluteCrossing002Sounds.center :
-                      soluteCrossing001Sounds.center; // Default for glucose, atp, etc.
-      }
-    }
-    else { // outward
-      if ( stereoEnabled ) {
-        soundToPlay = type === 'oxygen' ? soluteCrossing005HighSounds.left :
-                      type === 'carbonDioxide' ? soluteCrossing004HighSounds.left :
-                      type === 'sodiumIon' ? soluteCrossing003HighSounds.left :
-                      type === 'potassiumIon' ? soluteCrossing002HighSounds.left :
-                      soluteCrossing001HighSounds.left; // Default for glucose, atp, etc.
-      }
-      else { // stereo disabled
-        soundToPlay = type === 'oxygen' ? soluteCrossing005HighSounds.center :
-                      type === 'carbonDioxide' ? soluteCrossing004HighSounds.center :
-                      type === 'sodiumIon' ? soluteCrossing003HighSounds.center :
-                      type === 'potassiumIon' ? soluteCrossing002HighSounds.center :
-                      soluteCrossing001HighSounds.center; // Default for glucose, atp, etc.
-      }
-    }
+    // Determine which side to play (right, center, left) based on direction and stereo settings
+    const side = stereoEnabled ? ( direction === 'inward' ? 'right' : 'left' ) : 'center';
+
+    // Choose the sound set based on particle type and direction
+    const soundSet = direction === 'inward' ?
+                     ( type === 'oxygen' ? soluteCrossing005Sounds :
+                       type === 'carbonDioxide' ? soluteCrossing004Sounds :
+                       type === 'sodiumIon' ? soluteCrossing003Sounds :
+                       type === 'potassiumIon' ? soluteCrossing002Sounds :
+                       soluteCrossing001Sounds ) :
+                     ( type === 'oxygen' ? soluteCrossing005HighSounds :
+                       type === 'carbonDioxide' ? soluteCrossing004HighSounds :
+                       type === 'sodiumIon' ? soluteCrossing003HighSounds :
+                       type === 'potassiumIon' ? soluteCrossing002HighSounds :
+                       soluteCrossing001HighSounds );
+
+    const soundToPlay = soundSet[ side ];
     soundToPlay.play();
   }
 
