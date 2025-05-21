@@ -7,6 +7,8 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import { clamp } from '../../../dot/js/util/clamp.js';
+import { linear } from '../../../dot/js/util/linear.js';
 import affirm from '../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
@@ -53,6 +55,7 @@ import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward0
 import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
 
 import membraneTransport from '../membraneTransport.js';
+import AmbientSoundGeneratorFiltered from './AmbientSoundGeneratorFiltered.js';
 import MembraneTransportConstants from './MembraneTransportConstants.js';
 import MembraneTransportPreferences from './MembraneTransportPreferences.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
@@ -216,37 +219,19 @@ const soluteCrossing003HighSounds = createPannedSoundSet( sound3, baseSoundClipO
 const soluteCrossing004HighSounds = createPannedSoundSet( soluteCrossingOutward004_V5_mp3, baseSoundClipOptions );
 const soluteCrossing005HighSounds = createPannedSoundSet( soluteCrossingOutward005_V5_mp3, baseSoundClipOptions );
 
-// Stores the BiquadFilterNode for each ambient sound, keyed by solute type.
-const ambientSoundFilters: Record<string, BiquadFilterNode> = {};
-
 // Helper function to create an ambient sound with a low-pass filter
-const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer, soluteType: string ): AudioContextSoundClip => {
-
-  // Create the AudioContextSoundClip, passing the filter node in additionalAudioNodes
-  const soundClip = newAudioContextSoundClip( soundFile, {
-    initialOutputLevel: 0.3,
-    loop: true
-  } );
-
-  // Create the BiquadFilterNode using the global soundManager's AudioContext
-  const filterNode = soundClip.audioContext.createBiquadFilter();
-  filterNode.type = 'lowpass';
-  filterNode.frequency.value = 20000; // Default to fully open (max frequency)
-  filterNode.Q.value = 1; // Default Q value
-
-  // Store the filter node for later access (e.g., in updateAmbientSoluteSounds)
-  ambientSoundFilters[ soluteType ] = filterNode;
-
-  soundClip.connect( filterNode );
-  return soundClip;
+const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer ): AmbientSoundGeneratorFiltered => {
+  const ambientSoundGeneratorFiltered = new AmbientSoundGeneratorFiltered( soundFile );
+  soundManager.addSoundGenerator( ambientSoundGeneratorFiltered );
+  return ambientSoundGeneratorFiltered;
 };
 
 // Create ambient sounds and their filters
-const soluteConcentrationsAmbienceLoop001Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop001_mp3, 'glucose' );
-const soluteConcentrationsAmbienceLoop002Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop002_mp3, 'potassiumIon' );
-const soluteConcentrationsAmbienceLoop003Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop003_mp3, 'sodiumIon' );
-const soluteConcentrationsAmbienceLoop004Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop004_mp3, 'carbonDioxide' );
-const soluteConcentrationsAmbienceLoop005Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop005_mp3, 'oxygen' );
+const soluteConcentrationsAmbienceLoop001Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop001_mp3 );
+const soluteConcentrationsAmbienceLoop002Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop002_mp3 );
+const soluteConcentrationsAmbienceLoop003Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop003_mp3 );
+const soluteConcentrationsAmbienceLoop004Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop004_mp3 );
+const soluteConcentrationsAmbienceLoop005Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop005_mp3 );
 
 export default class MembraneTransportSounds {
 
@@ -293,30 +278,28 @@ export default class MembraneTransportSounds {
                            type === 'potassiumIon' ? soluteConcentrationsAmbienceLoop002Sound :
                            soluteConcentrationsAmbienceLoop001Sound;
 
-      if ( !ambientSound.isPlaying ) {
-        ambientSound.play();
-      }
-
       // set the volume based on the relative concentration.
       const outsideAmount = model.outsideSoluteCountProperties[ type ].value;
       const insideAmount = model.insideSoluteCountProperties[ type ].value;
 
       const totalAmount = outsideAmount + insideAmount;
-      const amount = totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT;
 
+      // TODO: See https://github.com/phetsims/membrane-transport/issues/183
+      const amount = clamp( totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT, 0, 1 );
       affirm( amount >= 0 && amount <= 1, `amount should be between 0 and 1, but got ${amount}` );
+
       ambientSound.setOutputLevel( amount * 0.5 ); // overall normalization
 
-      // Dynamically control the low-pass filter parameters
-      // const filterNode = ambientSoundFilters[ type ];
-      // if ( filterNode ) {
-      //   // Control filter frequency: 20 Hz (disequilibrium) to 20000 Hz (equilibrium)
-      //   filterNode.frequency.value = 20 + amount * ( 20000 - 20 );
-      //
-      //   // Control filter Q: 5 (disequilibrium) to 1 (equilibrium)
-      //   const maxQ = 5;
-      //   filterNode.Q.value = maxQ - amount * ( maxQ - 1 );
-      // }
+      // balance should be 0 if fully lopsided
+      // balance should be 1 if fully balanced
+      const balance = insideAmount === 0 || outsideAmount === 0 ? 0 :
+                      insideAmount < outsideAmount ? insideAmount / outsideAmount : outsideAmount / insideAmount;
+
+      const frequency = linear( 0, 1, 500, 50, balance );
+
+      // console.log( 'inside amount', insideAmount, 'outside amount', outsideAmount, 'total amount', totalAmount, 'balance', balance, 'frequency', frequency );
+
+      ambientSound.setFrequency( frequency );
     } );
   }
 
