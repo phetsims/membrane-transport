@@ -118,11 +118,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
     // Use the same bounds for both ligand types so they have equal focus + highlight sizes
     const POTASSIUM_REGION_HEIGHT = 369;
-    const highlightPath = new HighlightPath( Shape.circle( POTASSIUM_REGION_HEIGHT / 2 ).transformed( Matrix3.translation( region.centerX, region.centerY ) ), {
-
-      // TODO: https://github.com/phetsims/membrane-transport/issues/130 this does nothing, but why?
-      // lineDashOverride: [ 400, 2 ]
-    } );
+    const highlightPath = new HighlightPath( Shape.circle( POTASSIUM_REGION_HEIGHT / 2 ).transformed( Matrix3.translation( region.centerX, region.centerY ) ) );
 
     this.setFocusHighlight( highlightPath );
     this.setInteractiveHighlight( highlightPath );
