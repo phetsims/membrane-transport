@@ -13,6 +13,7 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
 import MembraneTransportPreferencesNode from './common/view/MembraneTransportPreferencesNode.js';
+import MembraneTransportSoundPreferencesNode from './common/view/MembraneTransportSoundPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
 import MembraneTransportStrings from './MembraneTransportStrings.js';
 import './common/MembraneTransportQueryParameters.js';
@@ -52,7 +53,10 @@ simLauncher.launch( () => {
         } ]
       },
       audioOptions: {
-        supportsExtraSound: true
+        supportsExtraSound: true,
+        customPreferences: [ {
+          createContent: tandem => new MembraneTransportSoundPreferencesNode( tandem )
+        } ]
       }
     } )
   };

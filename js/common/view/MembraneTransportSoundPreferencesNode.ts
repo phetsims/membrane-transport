@@ -1,10 +1,10 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * MembraneTransportPreferencesNode is the user interface for sim-specific preferences, accessed via the Preferences dialog.
+ * MembraneTransportSoundPreferencesNode is the user interface for sound-specific preferences, accessed via the Preferences dialog.
  * These preferences are global, and affect all screens.
  *
- * The Preferences dialog is created on demand by joist, using a PhetioCapsule. So MembraneTransportPreferencesNode and its
+ * The Preferences dialog is created on demand by joist, using a PhetioCapsule. So MembraneTransportSoundPreferencesNode and its
  * subcomponents must implement dispose.
  *
  * @author Sam Reid (PhET Interactive Simulations)
@@ -18,10 +18,9 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 
-export default class MembraneTransportPreferencesNode extends VBox {
+export default class MembraneTransportSoundPreferencesNode extends VBox {
 
   public constructor( tandem: Tandem ) {
 
@@ -29,10 +28,10 @@ export default class MembraneTransportPreferencesNode extends VBox {
       children: [
         new PreferencesControl( {
           isDisposable: false,
-          labelNode: new Text( MembraneTransportStrings.animateLipidsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-          descriptionNode: new RichText( MembraneTransportStrings.animateLipidsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
-          tandem: tandem.createTandem( 'animateLipidsControl' ),
+          labelNode: new Text( 'Stereo Sounds', PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+          descriptionNode: new RichText( 'When solutes cross the membrane, play in the right channel (outside -> inside) or left channel (inside -> outside)', PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+          tandem: tandem.createTandem( 'stereoCrossingSoundsEnabledControl' ),
           phetioFeatured: true,
           visiblePropertyOptions: {
             phetioFeatured: true
@@ -43,4 +42,4 @@ export default class MembraneTransportPreferencesNode extends VBox {
   }
 }
 
-membraneTransport.register( 'MembraneTransportPreferencesNode', MembraneTransportPreferencesNode );
+membraneTransport.register( 'MembraneTransportSoundPreferencesNode', MembraneTransportSoundPreferencesNode );
