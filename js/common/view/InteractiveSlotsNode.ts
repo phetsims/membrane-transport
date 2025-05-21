@@ -26,7 +26,7 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
-import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
+import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -70,8 +70,6 @@ export default class InteractiveSlotsNode extends Node {
   private readonly grabReleaseUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
-  private readonly alerter: VoicingAlerter;
-
   /**
    * @param slots - Slots available to place a protein
    * @param view - The view so that we can create new icons for dragging.
@@ -96,8 +94,6 @@ export default class InteractiveSlotsNode extends Node {
       ) ),
       accessibleRoleDescription: 'sortable'
     } );
-
-    this.alerter = new VoicingAlerter();
 
     // A focusable Node that contains the accessible content for the interaction.
     const createTestRectangle = (
@@ -125,7 +121,7 @@ export default class InteractiveSlotsNode extends Node {
             nameResponse: voicingNameResponseProperty,
             objectResponse: voicingObjectResponseProperty
           } );
-          this.alerter.alert( this.nameUtterance, responsePacket );
+          voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
         }
       } );
 
@@ -457,7 +453,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
     this.addAccessibleResponse( 'Grabbed.' ); // TODO: i18n, see #97
-    this.alerter.alert( this.grabReleaseUtterance, 'Grabbed' ); // TODO: i18n, see #97
+    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, 'Grabbed' ); // TODO: i18n, see #97
     MembraneTransportSounds.transportProteinGrabbed();
 
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -496,7 +492,7 @@ export default class InteractiveSlotsNode extends Node {
     }
 
     affirm( responseString !== null, 'We should have a response string to say.' );
-    this.alerter.alert( this.grabReleaseUtterance, responseString );
+    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, responseString );
     this.addAccessibleResponse( responseString );
   }
 
@@ -511,13 +507,6 @@ export default class InteractiveSlotsNode extends Node {
       rect.setRectBounds( this.grabbedNode.localBounds );
       rect.center = oldCenter;
     } );
-  }
-}
-
-class VoicingAlerter {
-  public alert( utterance: Utterance, content: AlertableNoUtterance ): void {
-    utterance.alert = content;
-    voicingUtteranceQueue.addToBack( utterance ); // eslint-disable-line phet/bad-sim-text
   }
 }
 
