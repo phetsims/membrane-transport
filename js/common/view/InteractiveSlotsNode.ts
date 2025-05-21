@@ -263,6 +263,9 @@ export default class InteractiveSlotsNode extends Node {
           // due to the release.
           let releaseReason: ReleaseReason;
 
+          // Work that needs to be done after we voice that the protein was released. Useful for ordering responses.
+          const afterEmoteActions: VoidFunction[] = [];
+
           if ( selectedIndex === 'offMembrane' ) {
 
             // NEXT STEPS: Turn this into animation
@@ -307,11 +310,14 @@ export default class InteractiveSlotsNode extends Node {
 
             // Place the transport protein in the selected slot
             affirm( selectedType, 'If grabbed, there must be a selected type.' );
-            selectedSlot.transportProteinType = selectedType;
+            afterEmoteActions.push( () => {
+              selectedSlot.transportProteinType = selectedType;
+            } );
           }
 
           affirm( releaseReason, 'We should have a reason for the release to emote.' );
           this.emoteRelease( releaseReason );
+          afterEmoteActions.forEach( action => action() );
         }
       }
     } );

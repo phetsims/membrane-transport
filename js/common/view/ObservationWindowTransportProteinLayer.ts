@@ -9,12 +9,17 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
+import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -40,6 +45,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
   private readonly record = new Map<TransportProtein, SlottedNode>();
   private readonly interactiveSlotsNode: InteractiveSlotsNode;
+
+  private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
   // The index of the selected transport protein, out of the existing transport proteins.
   private selectedIndex = 0;
@@ -166,16 +173,36 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // Make sure that the transport proteins are in the correct reading order.
           this.proteinsNodeParent.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
 
-          // Set up listeners that update the accessible name of the transport protein
-          const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNamePattern.createProperty( {
+          // TODO i18n, see #97 (convert to fluent/yaml)
+          const objectResponseProperty = new PatternStringProperty( new StringProperty( '{{proteinIndex}} of {{proteinCount}}, {{openOrClosed}}' ), {
             openOrClosed: transportProtein.openOrClosedProperty,
             proteinIndex: slottedNode.indexProperty,
-            proteinCount: model.transportProteinCountProperty,
+            proteinCount: model.transportProteinCountProperty
+          } );
+
+          const nameResponseProperty = MembraneTransportFluent.a11y.transportProteinBriefName.createProperty( {
             type: type
           } );
+
+          // The accessibleName for the PDOM, combine the objectResponse and nameResponse in the requested order.
+          const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{objectResponse}}, {{nameResponse}}' ), {
+            nameResponse: nameResponseProperty,
+            objectResponse: objectResponseProperty
+          } );
+
+          // Voicing - speak the appropriate response on focus.
+          transportProteinNode.focusedProperty.link( focused => {
+            if ( focused ) {
+              const responsePacket = new ResponsePacket( {
+                nameResponse: nameResponseProperty,
+                objectResponse: objectResponseProperty
+              } );
+              voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
+            }
+          }, { disposer: transportProteinNode } );
+
           transportProteinNode.accessibleName = accessibleNameProperty;
-          transportProteinNode.addDisposable( accessibleNameProperty );
-          transportProteinNode.addDisposable( slottedNode.indexProperty );
+          transportProteinNode.addDisposable( accessibleNameProperty, nameResponseProperty, objectResponseProperty, slottedNode.indexProperty );
 
           // Make sure that the indices of all the proteins are correct after adding/removing proteins
           this.record.forEach( collection => {
