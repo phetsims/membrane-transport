@@ -427,9 +427,9 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
-    // TODO: i18n, see #97
-    this.addAccessibleResponse( 'Grabbed.' );
-    this.alerter.alert( this.grabbedUtterance, 'Grabbed' );
+    // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
+    this.addAccessibleResponse( 'Grabbed.' ); // TODO: i18n, see #97
+    this.alerter.alert( this.grabbedUtterance, 'Grabbed' ); // TODO: i18n, see #97
     MembraneTransportSounds.transportProteinGrabbed();
 
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -437,7 +437,6 @@ export default class InteractiveSlotsNode extends Node {
 
     this.updateGrabHighlights();
 
-    // Update focus after adding responses controlled by focus are spoken after the grabbed response.
     this.updateFocus();
   }
 
