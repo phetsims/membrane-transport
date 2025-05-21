@@ -9,6 +9,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -24,7 +25,8 @@ import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
-import Utterance from '../../../../utterance-queue/js/Utterance.js';
+import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
+import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -65,7 +67,7 @@ export default class InteractiveSlotsNode extends Node {
   private rectangles: Rectangle[] = [];
 
   // Utterances should not interrupt others so we hear the 'grabbed' response and the name of the protein.
-  private readonly grabbedUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+  private readonly grabReleaseUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
   private readonly alerter: VoicingAlerter;
@@ -98,7 +100,13 @@ export default class InteractiveSlotsNode extends Node {
     this.alerter = new VoicingAlerter();
 
     // A focusable Node that contains the accessible content for the interaction.
-    const createTestRectangle = ( accessibleNameProperty: TReadOnlyProperty<string>, modelX: number, modelY: number ): Rectangle => {
+    const createTestRectangle = (
+      accessibleNameProperty: TReadOnlyProperty<string>,
+      voicingNameResponseProperty: TReadOnlyProperty<string>,
+      voicingObjectResponseProperty: TReadOnlyProperty<string> | null,
+      modelX: number,
+      modelY: number
+    ): Rectangle => {
 
       // It was found that the accessible name and role information requires AccessibleDraggableOptions
       // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
@@ -113,7 +121,11 @@ export default class InteractiveSlotsNode extends Node {
 
       rect.focusedProperty.link( focused => {
         if ( focused ) {
-          this.alerter.alert( this.nameUtterance, accessibleNameProperty );
+          const responsePacket = new ResponsePacket( {
+            nameResponse: voicingNameResponseProperty,
+            objectResponse: voicingObjectResponseProperty
+          } );
+          this.alerter.alert( this.nameUtterance, responsePacket );
         }
       } );
 
@@ -143,11 +155,10 @@ export default class InteractiveSlotsNode extends Node {
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
 
-      // Slots are persistent and this should not need to be disposed.
-      const accessibleNameProperty = new DerivedProperty( [
+      const objectResponseStringProperty = new StringProperty( `Above slot ${index + 1} of ${slots.length}` );
+      const nameResponseStringProperty = new DerivedProperty( [
         slot.transportProteinProperty
       ], transportProtein => {
-
         let proteinName = 'empty';
         if ( transportProtein ) {
           proteinName = MembraneTransportFluent.a11y.transportProteinBriefName.format( {
@@ -155,18 +166,35 @@ export default class InteractiveSlotsNode extends Node {
           } );
         }
 
-        // TODO, i18n, see https://github.com/phetsims/membrane-transport/issues/97. I could not figure out how to use the YAML in main.
-        return `Above slot ${index + 1} of ${slots.length}, ${proteinName}`;
+        return proteinName;
       } );
 
-      const rect = createTestRectangle( accessibleNameProperty, slot.position, MODEL_DRAG_VERTICAL_OFFSET );
+      // TODO: i18n, see #97
+      const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{objectResponse}}, {{nameResponse}}' ), {
+        objectResponse: objectResponseStringProperty,
+        nameResponse: nameResponseStringProperty
+      } );
+
+      const rect = createTestRectangle(
+        accessibleNameProperty,
+        nameResponseStringProperty,
+        objectResponseStringProperty,
+        slot.position,
+        MODEL_DRAG_VERTICAL_OFFSET
+      );
 
       this.rectangles.push( rect );
       this.addChild( rect );
     } );
 
     // Add a rectangle for the off-membrane state
-    const offMembraneRect = createTestRectangle( new StringProperty( 'Off membrane' ), MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET );
+    const offMembraneRect = createTestRectangle(
+      new StringProperty( 'Off membrane' ), // TODO i18n, see #97
+      new StringProperty( 'Off membrane' ), // TODO i18n, see #97
+      null,
+      MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
+      OFF_MEMBRANE_VERTICAL_OFFSET
+    );
     this.rectangles.push( offMembraneRect );
     this.addChild( offMembraneRect );
 
@@ -429,7 +457,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
     this.addAccessibleResponse( 'Grabbed.' ); // TODO: i18n, see #97
-    this.alerter.alert( this.grabbedUtterance, 'Grabbed' ); // TODO: i18n, see #97
+    this.alerter.alert( this.grabReleaseUtterance, 'Grabbed' ); // TODO: i18n, see #97
     MembraneTransportSounds.transportProteinGrabbed();
 
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -444,26 +472,32 @@ export default class InteractiveSlotsNode extends Node {
    * Alert a response and play a sound corresponding to the way a protein was released.
    */
   private emoteRelease( reason: ReleaseReason ): void {
+    let responseString: string | null = null;
+
     if ( reason === 'return' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();
-      this.addAccessibleResponse( 'Released. Back in panel.' );
+      responseString = 'Released. Back in panel.';
     }
     else if ( reason === 'swap' ) {
       MembraneTransportSounds.transportProteinSwapped();
-      this.addAccessibleResponse( 'Re-ordered.' );
+      responseString = 'Re-ordered.';
     }
     else if ( reason === 'delete' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();
-      this.addAccessibleResponse( 'Deleted.' );
+      responseString = 'Deleted.';
     }
     else if ( reason === 'release' ) {
       MembraneTransportSounds.transportProteinReleased();
-      this.addAccessibleResponse( 'Released.' );
+      responseString = 'Released.';
     }
     else if ( reason === 'cancel' ) {
       MembraneTransportSounds.transportProteinReleased();
-      this.addAccessibleResponse( 'Released. Back to initial slot.' );
+      responseString = 'Released. Back to initial slot.';
     }
+
+    affirm( responseString !== null, 'We should have a response string to say.' );
+    this.alerter.alert( this.grabReleaseUtterance, responseString );
+    this.addAccessibleResponse( responseString );
   }
 
   /**
@@ -481,7 +515,7 @@ export default class InteractiveSlotsNode extends Node {
 }
 
 class VoicingAlerter {
-  public alert( utterance: Utterance, content: TReadOnlyProperty<string> | string ): void {
+  public alert( utterance: Utterance, content: AlertableNoUtterance ): void {
     utterance.alert = content;
     voicingUtteranceQueue.addToBack( utterance ); // eslint-disable-line phet/bad-sim-text
   }
