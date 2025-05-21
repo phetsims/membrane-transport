@@ -18,6 +18,11 @@ export default class MembraneTransportPreferences {
     phetioFeatured: true
   } );
 
+  public readonly stereoCrossingSoundsEnabledProperty = new BooleanProperty( MembraneTransportQueryParameters.stereoCrossings, {
+    tandem: Tandem.PREFERENCES.createTandem( 'stereoCrossingSoundsEnabledProperty' ),
+    phetioFeatured: true
+  } );
+
   public static readonly instance = new MembraneTransportPreferences();
 
   private constructor() {

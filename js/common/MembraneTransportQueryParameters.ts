@@ -32,6 +32,12 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     type: 'flag'
   },
 
+  // Sound design for channel crossings uses stereo panning
+  stereoCrossings: {
+    type: 'boolean',
+    defaultValue: false
+  },
+
   gasCrossingSound: {
     type: 'string',
     validValues: [ 'fm', 'dist' ],

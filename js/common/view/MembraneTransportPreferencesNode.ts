@@ -37,6 +37,16 @@ export default class MembraneTransportPreferencesNode extends VBox {
           visiblePropertyOptions: {
             phetioFeatured: true
           }
+        } ),
+        new PreferencesControl( {
+          isDisposable: false,
+          labelNode: new Text( 'Stereo Sounds', PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+          tandem: tandem.createTandem( 'stereoCrossingSoundsEnabledControl' ),
+          phetioFeatured: true,
+          visiblePropertyOptions: {
+            phetioFeatured: true
+          }
         } )
       ]
     } );

@@ -53,9 +53,16 @@ import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward0
 
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportConstants from './MembraneTransportConstants.js';
+import MembraneTransportPreferences from './MembraneTransportPreferences.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 import MembraneTransportModel from './model/MembraneTransportModel.js';
 import Particle from './model/Particle.js';
+
+interface PannedSoundSet {
+  center: SoundClip;
+  left: SoundClip;
+  right: SoundClip;
+}
 
 const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
 const releaseSoundPlayer = sharedSoundPlayers.get( 'release' );
@@ -66,6 +73,34 @@ const newSoundClip = ( sound: WrappedAudioBuffer, options?: SoundClipOptions ): 
   soundManager.addSoundGenerator( soundClip );
   return soundClip;
 };
+
+function createPannedSoundSet(
+  soundBuffer: WrappedAudioBuffer,
+  baseOptions: SoundClipOptions,
+  playbackRate?: number
+): PannedSoundSet {
+  const centerSound = newSoundClip(soundBuffer, baseOptions); // newSoundClip is an existing helper in the file
+
+  const leftPanner = soundManager.audioContext.createStereoPanner();
+  leftPanner.pan.value = -0.8;
+  const leftSound = newSoundClip(soundBuffer, { ...baseOptions, additionalAudioNodes: [leftPanner] });
+
+  const rightPanner = soundManager.audioContext.createStereoPanner();
+  rightPanner.pan.value = 0.8;
+  const rightSound = newSoundClip(soundBuffer, { ...baseOptions, additionalAudioNodes: [rightPanner] });
+
+  if (playbackRate) {
+    centerSound.setPlaybackRate(playbackRate);
+    leftSound.setPlaybackRate(playbackRate);
+    rightSound.setPlaybackRate(playbackRate);
+  }
+
+  return {
+    center: centerSound,
+    left: leftSound,
+    right: rightSound
+  };
+}
 
 // Define constant options for consistency
 const CHANNEL_SOUND_OPTIONS: SoundClipOptions = { initialOutputLevel: 0.18 };
@@ -127,23 +162,19 @@ const sound1 = soluteCrossing001_mp3;
 const sound2 = soluteCrossing002_mp3;
 const sound3 = soluteCrossing003_mp3;
 
-const soluteCrossing001 = newSoundClip( sound1, { initialOutputLevel: 0.6 } );
-const soluteCrossing002 = newSoundClip( sound2, { initialOutputLevel: 0.6 } );
-const soluteCrossing003 = newSoundClip( sound3, { initialOutputLevel: 0.6 } );
-const soluteCrossing004 = newSoundClip( soluteCrossing004_V5_mp3, { initialOutputLevel: 0.6 } );
-const soluteCrossing005 = newSoundClip( soluteCrossing005_V5_mp3, { initialOutputLevel: 0.6 } );
+const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.6 };
 
-const soluteCrossing001High = newSoundClip( sound1, { initialOutputLevel: 0.6 } );
-const soluteCrossing002High = newSoundClip( sound2, { initialOutputLevel: 0.6 } );
-const soluteCrossing003High = newSoundClip( sound3, { initialOutputLevel: 0.6 } );
-const soluteCrossing004High = newSoundClip( soluteCrossingOutward004_V5_mp3, { initialOutputLevel: 0.6 } );
-const soluteCrossing005High = newSoundClip( soluteCrossingOutward005_V5_mp3, { initialOutputLevel: 0.6 } );
+const soluteCrossing001Sounds = createPannedSoundSet(sound1, baseSoundClipOptions);
+const soluteCrossing002Sounds = createPannedSoundSet(sound2, baseSoundClipOptions);
+const soluteCrossing003Sounds = createPannedSoundSet(sound3, baseSoundClipOptions);
+const soluteCrossing004Sounds = createPannedSoundSet(soluteCrossing004_V5_mp3, baseSoundClipOptions);
+const soluteCrossing005Sounds = createPannedSoundSet(soluteCrossing005_V5_mp3, baseSoundClipOptions);
 
-// Higher pitch by one octave when leaving the cell. Separate audio sound so an inward one and outward one can be played at the same time, without pitch bending.
-// The gas molecules have a different sound file, since changing the playback rate on the "ringing" makes it sound too fast
-soluteCrossing001High.setPlaybackRate( 2 );
-soluteCrossing002High.setPlaybackRate( 2 );
-soluteCrossing003High.setPlaybackRate( 2 );
+const soluteCrossing001HighSounds = createPannedSoundSet(sound1, baseSoundClipOptions, 2);
+const soluteCrossing002HighSounds = createPannedSoundSet(sound2, baseSoundClipOptions, 2);
+const soluteCrossing003HighSounds = createPannedSoundSet(sound3, baseSoundClipOptions, 2);
+const soluteCrossing004HighSounds = createPannedSoundSet(soluteCrossingOutward004_V5_mp3, baseSoundClipOptions);
+const soluteCrossing005HighSounds = createPannedSoundSet(soluteCrossingOutward005_V5_mp3, baseSoundClipOptions);
 
 const soluteConcentrationsAmbienceLoop001Sound = newSoundClip( soluteConcentrationsAmbienceLoop001_mp3, { initialOutputLevel: 0.3, loop: true } );
 const soluteConcentrationsAmbienceLoop002Sound = newSoundClip( soluteConcentrationsAmbienceLoop002_mp3, { initialOutputLevel: 0.3, loop: true } );
@@ -157,19 +188,39 @@ export default class MembraneTransportSounds {
     type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'triangleLigand' | 'starLigand',
     direction: 'inward' | 'outward' ): void {
 
-    const sound = direction === 'inward' ?
-                  ( type === 'oxygen' ? soluteCrossing005 :
-                    type === 'carbonDioxide' ? soluteCrossing004 :
-                    type === 'sodiumIon' ? soluteCrossing003 :
-                    type === 'potassiumIon' ? soluteCrossing002 :
-                    soluteCrossing001 ) :
-                  ( type === 'oxygen' ? soluteCrossing005High :
-                    type === 'carbonDioxide' ? soluteCrossing004High :
-                    type === 'sodiumIon' ? soluteCrossing003High :
-                    type === 'potassiumIon' ? soluteCrossing002High :
-                    soluteCrossing001High );
+    const stereoEnabled = MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty.value;
+    let soundToPlay: SoundClip; // Ensure SoundClip is imported or recognized
 
-    sound.play();
+    if (direction === 'inward') {
+      if (stereoEnabled) {
+        soundToPlay = type === 'oxygen' ? soluteCrossing005Sounds.right :
+                      type === 'carbonDioxide' ? soluteCrossing004Sounds.right :
+                      type === 'sodiumIon' ? soluteCrossing003Sounds.right :
+                      type === 'potassiumIon' ? soluteCrossing002Sounds.right :
+                      soluteCrossing001Sounds.right; // Default for glucose, atp, etc.
+      } else { // stereo disabled
+        soundToPlay = type === 'oxygen' ? soluteCrossing005Sounds.center :
+                      type === 'carbonDioxide' ? soluteCrossing004Sounds.center :
+                      type === 'sodiumIon' ? soluteCrossing003Sounds.center :
+                      type === 'potassiumIon' ? soluteCrossing002Sounds.center :
+                      soluteCrossing001Sounds.center; // Default for glucose, atp, etc.
+      }
+    } else { // outward
+      if (stereoEnabled) {
+        soundToPlay = type === 'oxygen' ? soluteCrossing005HighSounds.left :
+                      type === 'carbonDioxide' ? soluteCrossing004HighSounds.left :
+                      type === 'sodiumIon' ? soluteCrossing003HighSounds.left :
+                      type === 'potassiumIon' ? soluteCrossing002HighSounds.left :
+                      soluteCrossing001HighSounds.left; // Default for glucose, atp, etc.
+      } else { // stereo disabled
+        soundToPlay = type === 'oxygen' ? soluteCrossing005HighSounds.center :
+                      type === 'carbonDioxide' ? soluteCrossing004HighSounds.center :
+                      type === 'sodiumIon' ? soluteCrossing003HighSounds.center :
+                      type === 'potassiumIon' ? soluteCrossing002HighSounds.center :
+                      soluteCrossing001HighSounds.center; // Default for glucose, atp, etc.
+      }
+    }
+    soundToPlay.play();
   }
 
   public static updateAmbientSoluteSounds( model: MembraneTransportModel ): void {
