@@ -19,7 +19,8 @@ import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
  * so it can be accessed for creating panned sound clips.
  */
 class AudioContextSoundClip extends SoundClip {
-  // Make audioContext public by overriding it
+
+  // Make audioContext public by overriding it. Used to create the pan node for stereo
   public override readonly audioContext!: AudioContext;
 
   public constructor( wrappedAudioBuffer: WrappedAudioBuffer, providedOptions?: SoundClipOptions ) {
