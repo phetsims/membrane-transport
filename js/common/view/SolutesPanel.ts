@@ -29,7 +29,10 @@ export default class SolutesPanel extends Node {
 
     const title = new VoicingText( MembraneTransportStrings.solutesStringProperty, {
       fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
-      maxWidth: 200
+      maxWidth: 200,
+
+      // pdom - remove, this content will come from the accessibleName of the radio button group instead
+      accessibleParagraph: null
     } );
 
     const alignGroup = new AlignGroup();
