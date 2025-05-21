@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import affirm from '../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
 import CardSounds from '../../../tambo/js/sound-generators/CardSounds.js';
@@ -215,11 +216,37 @@ const soluteCrossing003HighSounds = createPannedSoundSet( sound3, baseSoundClipO
 const soluteCrossing004HighSounds = createPannedSoundSet( soluteCrossingOutward004_V5_mp3, baseSoundClipOptions );
 const soluteCrossing005HighSounds = createPannedSoundSet( soluteCrossingOutward005_V5_mp3, baseSoundClipOptions );
 
-const soluteConcentrationsAmbienceLoop001Sound = newSoundClip( soluteConcentrationsAmbienceLoop001_mp3, { initialOutputLevel: 0.3, loop: true } );
-const soluteConcentrationsAmbienceLoop002Sound = newSoundClip( soluteConcentrationsAmbienceLoop002_mp3, { initialOutputLevel: 0.3, loop: true } );
-const soluteConcentrationsAmbienceLoop003Sound = newSoundClip( soluteConcentrationsAmbienceLoop003_mp3, { initialOutputLevel: 0.3, loop: true } );
-const soluteConcentrationsAmbienceLoop004Sound = newSoundClip( soluteConcentrationsAmbienceLoop004_mp3, { initialOutputLevel: 0.3, loop: true } );
-const soluteConcentrationsAmbienceLoop005Sound = newSoundClip( soluteConcentrationsAmbienceLoop005_mp3, { initialOutputLevel: 0.3, loop: true } );
+// Stores the BiquadFilterNode for each ambient sound, keyed by solute type.
+const ambientSoundFilters: Record<string, BiquadFilterNode> = {};
+
+// Helper function to create an ambient sound with a low-pass filter
+const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer, soluteType: string ): AudioContextSoundClip => {
+
+  // Create the AudioContextSoundClip, passing the filter node in additionalAudioNodes
+  const soundClip = newAudioContextSoundClip( soundFile, {
+    initialOutputLevel: 0.3,
+    loop: true
+  } );
+
+  // Create the BiquadFilterNode using the global soundManager's AudioContext
+  const filterNode = soundClip.audioContext.createBiquadFilter();
+  filterNode.type = 'lowpass';
+  filterNode.frequency.value = 20000; // Default to fully open (max frequency)
+  filterNode.Q.value = 1; // Default Q value
+
+  // Store the filter node for later access (e.g., in updateAmbientSoluteSounds)
+  ambientSoundFilters[ soluteType ] = filterNode;
+
+  soundClip.connect( filterNode );
+  return soundClip;
+};
+
+// Create ambient sounds and their filters
+const soluteConcentrationsAmbienceLoop001Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop001_mp3, 'glucose' );
+const soluteConcentrationsAmbienceLoop002Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop002_mp3, 'potassiumIon' );
+const soluteConcentrationsAmbienceLoop003Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop003_mp3, 'sodiumIon' );
+const soluteConcentrationsAmbienceLoop004Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop004_mp3, 'carbonDioxide' );
+const soluteConcentrationsAmbienceLoop005Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop005_mp3, 'oxygen' );
 
 export default class MembraneTransportSounds {
 
@@ -274,39 +301,22 @@ export default class MembraneTransportSounds {
       const outsideAmount = model.outsideSoluteCountProperties[ type ].value;
       const insideAmount = model.insideSoluteCountProperties[ type ].value;
 
+      const totalAmount = outsideAmount + insideAmount;
+      const amount = totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT;
 
-      /*---------------------------------------------------------------------------
-        Volume mapping rationale
-        ------------------------
-
-        We want ambience that:
-          • is silent when *either* compartment has zero solute;
-          • peaks only when the two compartments are perfectly balanced
-            (inside = outside = MAX_SOLUTE_COUNT / 2);
-          • fades smoothly the further the system is from that balance.
-
-        The product insideAmount × outsideAmount naturally satisfies those
-        constraints: it is zero at the extremes, has a single maximum at the
-        midpoint, and is symmetric.  Dividing by (MAX/2)² normalises the peak
-        to 1, after which we clamp to [0, 1] for safety.
-
-        Mathematical shape: volume(x) = 4 x (1 – x), with x = inside/MAX.
-
-        When inside and outside are equal at each MAX_SOLUTE_COUNT/2, the sound is at 1.0 volume.
-        When inside or outside is 0, the sound is at 0.0 volume.
-       -------------------------------------------------------------------------*/
-
-      const MAX_SOLUTE_COUNT = MembraneTransportConstants.MAX_SOLUTE_COUNT; // or however it’s exposed
-      const HALF_MAX = MAX_SOLUTE_COUNT / 2;
-
-      const volumeUnclamped = ( insideAmount * outsideAmount ) / ( HALF_MAX * HALF_MAX );   // 0 → 1 range
-
-      const amount = Math.max( 0, Math.min( 1, volumeUnclamped ) );
-
+      affirm( amount >= 0 && amount <= 1, `amount should be between 0 and 1, but got ${amount}` );
       ambientSound.setOutputLevel( amount * 0.5 ); // overall normalization
 
-      // Set the reverb amount based on the same amount. 100% reverb at the max
-      // ambientSound.setReverb( amount );
+      // Dynamically control the low-pass filter parameters
+      // const filterNode = ambientSoundFilters[ type ];
+      // if ( filterNode ) {
+      //   // Control filter frequency: 20 Hz (disequilibrium) to 20000 Hz (equilibrium)
+      //   filterNode.frequency.value = 20 + amount * ( 20000 - 20 );
+      //
+      //   // Control filter Q: 5 (disequilibrium) to 1 (equilibrium)
+      //   const maxQ = 5;
+      //   filterNode.Q.value = maxQ - amount * ( maxQ - 1 );
+      // }
     } );
   }
 
