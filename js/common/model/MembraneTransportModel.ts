@@ -15,6 +15,7 @@ import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
@@ -207,6 +208,7 @@ export default class MembraneTransportModel extends PhetioObject {
       const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY;
       soluteArray.push( new Particle( new Vector2( x, y ), soluteType, this ) );
     }
+    this.updateSoluteCounts();
   }
 
   public addSolute( particle: Particle<IntentionalAny> ): void {
@@ -229,10 +231,14 @@ export default class MembraneTransportModel extends PhetioObject {
     // So that solutes are randomly removed instead of removing the oldest ones.
     const shuffledRemovables = dotRandom.shuffle( removableSolutes );
 
-    for ( let i = 0; i < count && i < shuffledRemovables.length; i++ ) {
+    for ( let i = 0; i < count; i++ ) {
       const index = this.solutes.indexOf( shuffledRemovables[ i ] );
+
+      affirm( index >= 0, 'Solute not found in solutes array' );
       this.solutes.splice( index, 1 );
     }
+
+    this.updateSoluteCounts();
   }
 
   public clear(): void {
@@ -443,7 +449,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * For serialization, the MembraneTransportModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
    */
-  public static readonly MembraneTransportModelIO = new IOType<Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts' >, IntentionalAny>( 'MembraneTransportModelIO', {
+  public static readonly MembraneTransportModelIO = new IOType<Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts'>, IntentionalAny>( 'MembraneTransportModelIO', {
     documentation: 'IOType for MembraneTransportModel. Note that ligands are preallocated and stored in the state, if supported.',
     supertype: GetSetButtonsIO,
     valueType: MembraneTransportModel,
@@ -453,7 +459,7 @@ export default class MembraneTransportModel extends PhetioObject {
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO
     },
-    applyState: ( model: Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts' >, state: IntentionalAny ) => {
+    applyState: ( model: Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts'>, state: IntentionalAny ) => {
       ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.solutes, state.solutes );
 
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );

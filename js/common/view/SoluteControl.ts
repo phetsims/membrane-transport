@@ -89,30 +89,44 @@ export default class SoluteControl extends Panel {
         );
       } );
 
-    // Play sounds based on the userControlledCountProperty rather than the actualCountPerSideProperty, so we don't create
+    // Add solutes and play sounds based on the userControlledCountProperty rather than the actualCountPerSideProperty, so we don't create
     // a sound when a solute diffuses across the membrane.
     userControlledCountProperty.lazyLink( ( value, oldValue ) => {
 
       // Use the userControlledProperty just to know how many the user added or removed
-      const difference = value - oldValue;
+      let difference = value - oldValue;
       assert && assert( difference !== 0, 'Difference is 0' );
 
-      // Due to listener order, the totalCountProperty hasn't been updated yet, so we must add the difference
-      const newValue = totalCountProperty.value + difference;
-
       if ( difference > 0 ) {
+
+        // don't exceed the max
+        if ( totalCountProperty.value + difference > MembraneTransportConstants.MAX_SOLUTE_COUNT ) {
+          difference = MembraneTransportConstants.MAX_SOLUTE_COUNT - totalCountProperty.value;
+        }
 
         // We need to add solutes to the outside of the membrane
         model.addSolutes( soluteType, side, difference );
 
-        soundGenerator.playSoundForValueChange( newValue, newValue - difference );
+        soundGenerator.playSoundForValueChange( totalCountProperty.value, totalCountProperty.value - difference );
       }
       else if ( difference < 0 ) {
 
-        // We need to remove solutes from the outside of the membrane
-        model.removeSolutes( soluteType, side, -difference );
+        let desiredNumberToRemove = Math.abs( difference );
+        console.log( 'desired number to remove', desiredNumberToRemove );
 
-        soundGenerator.playSoundForValueChange( newValue, newValue - difference );
+        // don't go below zero
+        if ( totalCountProperty.value - desiredNumberToRemove < 0 ) {
+
+          // If you tried to remove too many, then actually the most you can remove is just however many there were.
+          desiredNumberToRemove = totalCountProperty.value;
+
+          console.log( 'NEGATIVE CAPPED desiredNumberToRemove', desiredNumberToRemove );
+        }
+
+        // We need to remove solutes from the outside of the membrane
+        model.removeSolutes( soluteType, side, desiredNumberToRemove );
+
+        soundGenerator.playSoundForValueChange( totalCountProperty.value, totalCountProperty.value - difference );
       }
     } );
 
