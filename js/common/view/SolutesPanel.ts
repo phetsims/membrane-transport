@@ -18,6 +18,7 @@ import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularR
 import Panel from '../../../../sun/js/Panel.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
@@ -27,7 +28,7 @@ export default class SolutesPanel extends Node {
   public constructor( featureSet: MembraneTransportFeatureSet, soluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();
 
-    const title = new VoicingText( MembraneTransportStrings.solutesStringProperty, {
+    const title = new VoicingText( MembraneTransportFluent.solutes.createProperty( {} ), {
       fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
       maxWidth: 200,
 
