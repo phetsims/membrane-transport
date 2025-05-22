@@ -357,8 +357,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
         accessibleHelpText: MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty,
 
-        onGrab: () => {
-          if ( grabDragInteraction.currentInputType === 'alternative' ) {
+        onGrab: inputType => {
+          if ( inputType === 'alternative' ) {
             if ( ligand.mode.type === 'ligandBound' ) {
               ligand.mode.ligandGatedChannel.unbindLigand();
             }
@@ -377,8 +377,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
           }
         },
 
-        onRelease: () => {
-          if ( grabDragInteraction.currentInputType === 'alternative' ) {
+        onRelease: inputType => {
+          if ( inputType === 'alternative' ) {
             const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
             this.isKeyboardGrabbed = false;
             MembraneTransportSounds.ligandReleased();
