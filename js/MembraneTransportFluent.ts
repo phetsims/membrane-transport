@@ -1,6 +1,9 @@
-/* eslint-disable */
+// Copyright 2025, University of Colorado Boulder
 // AUTOMATICALLY GENERATED – DO NOT EDIT.
-// Generated 2025-05-16T23:16:59.502Z from membrane-transport-strings_en.yaml
+// Generated from membrane-transport-strings_en.yaml
+
+/* eslint-disable */
+/* @formatter:off */
 
 import StringProperty from '../../axon/js/StringProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
@@ -11,7 +14,7 @@ import membraneTransport from './membraneTransport.js';
 import MembraneTransportStrings from './MembraneTransportStrings.js';
 import { isTReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 
-const getFTL = () => {
+const getFTL = (): string => {
   const ftl = `
 membrane-transport.title = ${MembraneTransportStrings["membrane-transport"].titleStringProperty.value}
 
@@ -250,34 +253,34 @@ a11y_transportProtein_accessibleNamePattern = ${MembraneTransportStrings.a11y.tr
   return ftl;
 };
 
-const formatPattern = ( key: string, args: IntentionalAny ): string => {
-  const bundle   = new FluentBundle( 'en' );
-  const resource = new FluentResource( getFTL() );
-  const errors   = bundle.addResource( resource );
-  assert && assert( errors.length === 0, 'Errors when adding resource for locale en' );
+const formatPattern = (key: string, args: IntentionalAny): string => {
+  const bundle = new FluentBundle('en');
+  const resource = new FluentResource(getFTL());
+  const errors = bundle.addResource(resource);
+  assert && assert(errors.length === 0, 'Errors when adding resource for locale en');
 
-  const newArgs = FluentUtils.handleFluentArgs( args );
+  const newArgs = FluentUtils.handleFluentArgs(args);
 
-  const message = bundle.getMessage( key );
-  const result  = bundle.formatPattern( message!.value!, newArgs, errors );
-  assert && assert( errors.length === 0, `Fluent errors found when formatting message: ${errors}` );
+  const message = bundle.getMessage(key);
+  const result = bundle.formatPattern(message!.value!, newArgs, errors);
+  assert && assert(errors.length === 0, `Fluent errors found when formatting message: ${errors}`);
   return result;
 };
 
-const formatToProperty = ( key: string, args: IntentionalAny ): TReadOnlyProperty<string> => {
-  const initialValue = formatPattern( key, args );
-  const stringProperty = new StringProperty( initialValue );
+const formatToProperty = (key: string, args: IntentionalAny): TReadOnlyProperty<string> => {
+  const initialValue = formatPattern(key, args);
+  const stringProperty = new StringProperty(initialValue);
 
   const update = () => {
-    stringProperty.value = formatPattern( key, args );
+    stringProperty.value = formatPattern(key, args);
   };
 
   // Whenever any arg changes update the string property
-  Object.values( args ).forEach( arg => {
-    if ( isTReadOnlyProperty( arg ) ) {
-      arg.lazyLink( update )
+  Object.values(args).forEach(arg => {
+    if (isTReadOnlyProperty(arg)) {
+      arg.lazyLink(update);
     }
-  } );
+  });
 
   // TODO: When the locale changes or when a string forming the FTL changes, also update the string property, see https://github.com/phetsims/chipper/issues/1588
 
@@ -286,512 +289,508 @@ const formatToProperty = ( key: string, args: IntentionalAny ): TReadOnlyPropert
 
 const MembraneTransportFluent = {
   "membrane-transport.title": {
-    format: ( args: IntentionalAny ): string => formatPattern( 'membrane-transport.title', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'membrane-transport.title', args )
+    format: (args: IntentionalAny): string => formatPattern('membrane-transport.title', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('membrane-transport.title', args)
   },
   "screen.simpleDiffusion": {
-    format: ( args: IntentionalAny ): string => formatPattern( 'screen.simpleDiffusion', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'screen.simpleDiffusion', args )
+    format: (args: IntentionalAny): string => formatPattern('screen.simpleDiffusion', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.simpleDiffusion', args)
   },
   "screen.facilitatedDiffusion": {
-    format: ( args: IntentionalAny ): string => formatPattern( 'screen.facilitatedDiffusion', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'screen.facilitatedDiffusion', args )
+    format: (args: IntentionalAny): string => formatPattern('screen.facilitatedDiffusion', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.facilitatedDiffusion', args)
   },
   "screen.activeTransport": {
-    format: ( args: IntentionalAny ): string => formatPattern( 'screen.activeTransport', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'screen.activeTransport', args )
+    format: (args: IntentionalAny): string => formatPattern('screen.activeTransport', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.activeTransport', args)
   },
   "screen.playground": {
-    format: ( args: IntentionalAny ): string => formatPattern( 'screen.playground', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'screen.playground', args )
+    format: (args: IntentionalAny): string => formatPattern('screen.playground', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.playground', args)
   },
   solutes: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'solutes', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'solutes', args )
+    format: (args: IntentionalAny): string => formatPattern('solutes', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('solutes', args)
   },
   oxygen: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'oxygen', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'oxygen', args )
+    format: (args: IntentionalAny): string => formatPattern('oxygen', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('oxygen', args)
   },
   carbonDioxide: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'carbonDioxide', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'carbonDioxide', args )
+    format: (args: IntentionalAny): string => formatPattern('carbonDioxide', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('carbonDioxide', args)
   },
   sodiumIon: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'sodiumIon', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'sodiumIon', args )
+    format: (args: IntentionalAny): string => formatPattern('sodiumIon', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('sodiumIon', args)
   },
   potassiumIon: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'potassiumIon', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'potassiumIon', args )
+    format: (args: IntentionalAny): string => formatPattern('potassiumIon', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('potassiumIon', args)
   },
   glucose: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'glucose', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'glucose', args )
+    format: (args: IntentionalAny): string => formatPattern('glucose', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('glucose', args)
   },
   atp: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'atp', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'atp', args )
+    format: (args: IntentionalAny): string => formatPattern('atp', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('atp', args)
   },
   outside: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'outside', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'outside', args )
+    format: (args: IntentionalAny): string => formatPattern('outside', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('outside', args)
   },
   inside: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'inside', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'inside', args )
+    format: (args: IntentionalAny): string => formatPattern('inside', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('inside', args)
   },
   membranePotentialLabels: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'membranePotentialLabels', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'membranePotentialLabels', args )
+    format: (args: IntentionalAny): string => formatPattern('membranePotentialLabels', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('membranePotentialLabels', args)
   },
   voltageGatedChannels: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'voltageGatedChannels', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'voltageGatedChannels', args )
+    format: (args: IntentionalAny): string => formatPattern('voltageGatedChannels', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('voltageGatedChannels', args)
   },
   ligandGatedChannels: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'ligandGatedChannels', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'ligandGatedChannels', args )
+    format: (args: IntentionalAny): string => formatPattern('ligandGatedChannels', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('ligandGatedChannels', args)
   },
   activeTransporters: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'activeTransporters', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'activeTransporters', args )
+    format: (args: IntentionalAny): string => formatPattern('activeTransporters', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('activeTransporters', args)
   },
   leakageChannels: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'leakageChannels', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'leakageChannels', args )
+    format: (args: IntentionalAny): string => formatPattern('leakageChannels', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('leakageChannels', args)
   },
   sodiumIonNaPlus: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'sodiumIonNaPlus', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'sodiumIonNaPlus', args )
+    format: (args: IntentionalAny): string => formatPattern('sodiumIonNaPlus', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('sodiumIonNaPlus', args)
   },
   potassiumIonKPlus: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'potassiumIonKPlus', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'potassiumIonKPlus', args )
+    format: (args: IntentionalAny): string => formatPattern('potassiumIonKPlus', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('potassiumIonKPlus', args)
   },
   NaPlusKPlusPump: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'NaPlusKPlusPump', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'NaPlusKPlusPump', args )
+    format: (args: IntentionalAny): string => formatPattern('NaPlusKPlusPump', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('NaPlusKPlusPump', args)
   },
   sodiumGlucoseCotransporter: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'sodiumGlucoseCotransporter', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'sodiumGlucoseCotransporter', args )
+    format: (args: IntentionalAny): string => formatPattern('sodiumGlucoseCotransporter', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('sodiumGlucoseCotransporter', args)
   },
   membranePotential_mV: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'membranePotential_mV', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'membranePotential_mV', args )
+    format: (args: IntentionalAny): string => formatPattern('membranePotential_mV', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('membranePotential_mV', args)
   },
   signs: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'signs', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'signs', args )
+    format: (args: IntentionalAny): string => formatPattern('signs', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('signs', args)
   },
   addLigands: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'addLigands', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'addLigands', args )
+    format: (args: IntentionalAny): string => formatPattern('addLigands', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('addLigands', args)
   },
   removeLigands: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'removeLigands', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'removeLigands', args )
+    format: (args: IntentionalAny): string => formatPattern('removeLigands', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('removeLigands', args)
   },
   animateLipids: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'animateLipids', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'animateLipids', args )
+    format: (args: IntentionalAny): string => formatPattern('animateLipids', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('animateLipids', args)
   },
   animateLipidsDescription: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'animateLipidsDescription', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'animateLipidsDescription', args )
+    format: (args: IntentionalAny): string => formatPattern('animateLipidsDescription', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('animateLipidsDescription', args)
   },
   soluteConcentrations: {
-    format: ( args: IntentionalAny ): string => formatPattern( 'soluteConcentrations', args ),
-    createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'soluteConcentrations', args )
+    format: (args: IntentionalAny): string => formatPattern('soluteConcentrations', args),
+    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('soluteConcentrations', args)
   },
   a11y: {
     summary: {
       playAreaSummaryIntro: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryIntro', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryIntro', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryIntro', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryIntro', args)
       },
       playAreaSummarySolutes: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummarySolutes', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummarySolutes', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummarySolutes', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummarySolutes', args)
       },
       playAreaSummaryProteins: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryProteins', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryProteins', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryProteins', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryProteins', args)
       },
       playAreaSummaryPotential: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryPotential', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryPotential', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryPotential', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryPotential', args)
       },
       playAreaSummaryBarCharts: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryBarCharts', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryBarCharts', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryBarCharts', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryBarCharts', args)
       },
       playAreaSummaryScreen1: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryScreen1', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryScreen1', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryScreen1', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryScreen1', args)
       },
       playAreaSummaryScreen2and4: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryScreen2and4', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryScreen2and4', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryScreen2and4', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryScreen2and4', args)
       },
       playAreaSummaryScreen3: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_playAreaSummaryScreen3', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_playAreaSummaryScreen3', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryScreen3', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryScreen3', args)
       },
       controlAreaSummary: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_controlAreaSummary', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_controlAreaSummary', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_controlAreaSummary', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_controlAreaSummary', args)
       },
       interactionHint: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_interactionHint', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_interactionHint', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_interactionHint', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_interactionHint', args)
       },
       interactionHintWithTransportProteins: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_summary_interactionHintWithTransportProteins', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_summary_interactionHintWithTransportProteins', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_summary_interactionHintWithTransportProteins', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_interactionHintWithTransportProteins', args)
       }
     },
     observationWindow: {
       membrane: {
         accessibleName: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_observationWindow_membrane_accessibleName', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_observationWindow_membrane_accessibleName', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_observationWindow_membrane_accessibleName', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_observationWindow_membrane_accessibleName', args)
         }
       }
     },
     soluteControls: {
       accessibleHeading: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_soluteControls_accessibleHeading', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_soluteControls_accessibleHeading', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteControls_accessibleHeading', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteControls_accessibleHeading', args)
       }
     },
     eraseSolutesButton: {
       accessibleName: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_eraseSolutesButton_accessibleName', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_eraseSolutesButton_accessibleName', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_eraseSolutesButton_accessibleName', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_eraseSolutesButton_accessibleName', args)
       },
       accessibleContextResponse: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_eraseSolutesButton_accessibleContextResponse', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_eraseSolutesButton_accessibleContextResponse', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_eraseSolutesButton_accessibleContextResponse', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_eraseSolutesButton_accessibleContextResponse', args)
       }
     },
     transportProteinPanel: {
       transportProteins: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_transportProteins', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_transportProteins', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_transportProteins', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_transportProteins', args)
       },
       accessibleHelpText: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_accessibleHelpText', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_accessibleHelpText', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_accessibleHelpText', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_accessibleHelpText', args)
       },
       ligandGatedChannelPanel: {
         sodiumIonNaPlusLigandGated: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', args)
         },
         potassiumIonKPlusLigandGated: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', args)
         }
       },
       leakageChannelPanel: {
         sodiumIonNaPlusLeakage: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', args)
         },
         potassiumIonKPlusLeakage: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', args)
         }
       },
       voltageGatedChannelPanel: {
         sodiumIonNaPlusVoltageGated: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', args)
         },
         potassiumIonKPlusVoltageGated: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', args)
         },
         membranePotential: {
           radioButtonGroup: {
             accessibleName: {
-              format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', args ),
-              createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', args )
+              format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', args),
+              createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', args)
             },
             accessibleHelpText: {
-              format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', args ),
-              createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', args )
+              format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', args),
+              createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', args)
             },
             negative70RadioButton: {
               accessibleName: {
-                format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', args ),
-                createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', args )
+                format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', args),
+                createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', args)
               }
             },
             negative50RadioButton: {
               accessibleName: {
-                format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', args ),
-                createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', args )
+                format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', args),
+                createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', args)
               }
             },
             positive30RadioButton: {
               accessibleName: {
-                format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', args ),
-                createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', args )
+                format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', args),
+                createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', args)
               }
             }
           }
         },
         signsCheckbox: {
           accessibleHelpText: {
-            format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', args ),
-            createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', args )
+            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', args),
+            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', args)
           },
           checkedContextResponseNegative70: {
-            format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', args ),
-            createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', args )
+            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', args),
+            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', args)
           },
           checkedContextResponseNegative50: {
-            format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', args ),
-            createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', args )
+            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', args),
+            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', args)
           },
           checkedContextResponsePositive30: {
-            format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', args ),
-            createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', args )
+            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', args),
+            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', args)
           },
           uncheckedContextResponse: {
-            format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', args ),
-            createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', args )
+            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', args),
+            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', args)
           }
         }
       },
       activeTransportProteinPanel: {
         sodiumPotassiumPump: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', args)
         },
         sodiumGlucoseCotransporter: {
-          format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', args ),
-          createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', args )
+          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', args),
+          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', args)
         }
       },
       toolAccessibleHelpText: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinPanel_toolAccessibleHelpText', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinPanel_toolAccessibleHelpText', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_toolAccessibleHelpText', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_toolAccessibleHelpText', args)
       }
     },
     ligandNode: {
       starLigand: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_starLigand', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_starLigand', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_starLigand', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_starLigand', args)
       },
       triangleLigand: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_triangleLigand', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_triangleLigand', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_triangleLigand', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_triangleLigand', args)
       },
       accessibleHelpText: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_accessibleHelpText', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_accessibleHelpText', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_accessibleHelpText', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_accessibleHelpText', args)
       },
       releasedLigand: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_releasedLigand', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_releasedLigand', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_releasedLigand', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_releasedLigand', args)
       },
       grabbedLigand: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_grabbedLigand', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_grabbedLigand', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_grabbedLigand', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_grabbedLigand', args)
       },
       ligandReleasedOffMembranePattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_ligandReleasedOffMembranePattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_ligandReleasedOffMembranePattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandReleasedOffMembranePattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandReleasedOffMembranePattern', args)
       },
       ligandReleasedOnProteinPattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_ligandReleasedOnProteinPattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_ligandReleasedOnProteinPattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandReleasedOnProteinPattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandReleasedOnProteinPattern', args)
       },
       ligandReleasedOnBusyOrIncompatibleProteinPattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', args)
       },
       ligandMovedToSlotPattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_ligandMovedToSlotPattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_ligandMovedToSlotPattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandMovedToSlotPattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandMovedToSlotPattern', args)
       },
       ligandUnboundAlert: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_ligandUnboundAlert', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_ligandUnboundAlert', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandUnboundAlert', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandUnboundAlert', args)
       },
       thereIsNoProteinAtThisSlot: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_thereIsNoProteinAtThisSlot', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_thereIsNoProteinAtThisSlot', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_thereIsNoProteinAtThisSlot', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_thereIsNoProteinAtThisSlot', args)
       },
       thereIsProteinAtThisSlotPattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_thereIsProteinAtThisSlotPattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_thereIsProteinAtThisSlotPattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_thereIsProteinAtThisSlotPattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_thereIsProteinAtThisSlotPattern', args)
       },
       moveCancelledPattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_moveCancelledPattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_moveCancelledPattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_moveCancelledPattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_moveCancelledPattern', args)
       },
       cannotInteractWhileLigandIsBoundPattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern', args)
       }
     },
     soluteControlsAccessibleHelpText: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_soluteControlsAccessibleHelpText', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_soluteControlsAccessibleHelpText', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_soluteControlsAccessibleHelpText', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteControlsAccessibleHelpText', args)
     },
     outsideMembraneSpinnerAccessibleName: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_outsideMembraneSpinnerAccessibleName', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_outsideMembraneSpinnerAccessibleName', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_outsideMembraneSpinnerAccessibleName', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_outsideMembraneSpinnerAccessibleName', args)
     },
     outsideMembraneSpinnerHelpText: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_outsideMembraneSpinnerHelpText', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_outsideMembraneSpinnerHelpText', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_outsideMembraneSpinnerHelpText', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_outsideMembraneSpinnerHelpText', args)
     },
     insideMembraneSpinnerAccessibleName: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_insideMembraneSpinnerAccessibleName', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_insideMembraneSpinnerAccessibleName', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_insideMembraneSpinnerAccessibleName', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_insideMembraneSpinnerAccessibleName', args)
     },
     insideMembraneSpinnerHelpText: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_insideMembraneSpinnerHelpText', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_insideMembraneSpinnerHelpText', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_insideMembraneSpinnerHelpText', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_insideMembraneSpinnerHelpText', args)
     },
     soluteSpinnerRoleDescription: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_soluteSpinnerRoleDescription', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_soluteSpinnerRoleDescription', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_soluteSpinnerRoleDescription', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteSpinnerRoleDescription', args)
     },
     solute: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_solute', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_solute', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_solute', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_solute', args)
     },
     soluteSpinnerObjectResponsePattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_soluteSpinnerObjectResponsePattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_soluteSpinnerObjectResponsePattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_soluteSpinnerObjectResponsePattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteSpinnerObjectResponsePattern', args)
     },
     soluteSpinnerContextResponsePattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_soluteSpinnerContextResponsePattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_soluteSpinnerContextResponsePattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_soluteSpinnerContextResponsePattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteSpinnerContextResponsePattern', args)
     },
     soluteBarChartsDescriptionParagraph: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_soluteBarChartsDescriptionParagraph', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_soluteBarChartsDescriptionParagraph', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_soluteBarChartsDescriptionParagraph', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteBarChartsDescriptionParagraph', args)
     },
     arrowSizeDescription: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_arrowSizeDescription', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_arrowSizeDescription', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_arrowSizeDescription', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_arrowSizeDescription', args)
     },
     arrowDirectionDescription: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_arrowDirectionDescription', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_arrowDirectionDescription', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_arrowDirectionDescription', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_arrowDirectionDescription', args)
     },
     barSizeDescription: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_barSizeDescription', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_barSizeDescription', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_barSizeDescription', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_barSizeDescription', args)
     },
     barChartPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_barChartPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_barChartPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_barChartPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_barChartPattern', args)
     },
     currentDetailsActivityLevel: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_currentDetailsActivityLevel', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_currentDetailsActivityLevel', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsActivityLevel', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsActivityLevel', args)
     },
     currentDetails: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_currentDetails', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_currentDetails', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetails', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetails', args)
     },
     currentDetailsSoluteTypesOnOutside: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_currentDetailsSoluteTypesOnOutside', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_currentDetailsSoluteTypesOnOutside', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsSoluteTypesOnOutside', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsSoluteTypesOnOutside', args)
     },
     currentDetailsSoluteTypesOnInside: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_currentDetailsSoluteTypesOnInside', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_currentDetailsSoluteTypesOnInside', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsSoluteTypesOnInside', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsSoluteTypesOnInside', args)
     },
     currentDetailsTransportProteins: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_currentDetailsTransportProteins', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_currentDetailsTransportProteins', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsTransportProteins', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsTransportProteins', args)
     },
     ligandsOnOutsideOnly: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandsOnOutsideOnly', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandsOnOutsideOnly', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandsOnOutsideOnly', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandsOnOutsideOnly', args)
     },
     currentDetailsMembranePotential: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_currentDetailsMembranePotential', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_currentDetailsMembranePotential', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsMembranePotential', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsMembranePotential', args)
     },
     releasedBackInToolbox: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_releasedBackInToolbox', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_releasedBackInToolbox', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_releasedBackInToolbox', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_releasedBackInToolbox', args)
     },
     selectedTransportProteinInSlot: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_selectedTransportProteinInSlot', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_selectedTransportProteinInSlot', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_selectedTransportProteinInSlot', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_selectedTransportProteinInSlot', args)
     },
     canceledBackInMembrane: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_canceledBackInMembrane', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_canceledBackInMembrane', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_canceledBackInMembrane', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_canceledBackInMembrane', args)
     },
     grabbedProteinResponsePattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_grabbedProteinResponsePattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_grabbedProteinResponsePattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedProteinResponsePattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedProteinResponsePattern', args)
     },
     grabbedProteinResponseWithHintPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_grabbedProteinResponseWithHintPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_grabbedProteinResponseWithHintPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedProteinResponseWithHintPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedProteinResponseWithHintPattern', args)
     },
     ligandToggleButtonAccessibleHelpText: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandToggleButtonAccessibleHelpText', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandToggleButtonAccessibleHelpText', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandToggleButtonAccessibleHelpText', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandToggleButtonAccessibleHelpText', args)
     },
     ligandToggleButtonAddedContextResponse: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandToggleButtonAddedContextResponse', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandToggleButtonAddedContextResponse', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandToggleButtonAddedContextResponse', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandToggleButtonAddedContextResponse', args)
     },
     ligandToggleButtonRemovedContextResponse: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandToggleButtonRemovedContextResponse', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandToggleButtonRemovedContextResponse', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandToggleButtonRemovedContextResponse', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandToggleButtonRemovedContextResponse', args)
     },
     grabbedLigandResponsePattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_grabbedLigandResponsePattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_grabbedLigandResponsePattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedLigandResponsePattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedLigandResponsePattern', args)
     },
     grabbedLigandResponseWithHintPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_grabbedLigandResponseWithHintPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_grabbedLigandResponseWithHintPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedLigandResponseWithHintPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedLigandResponseWithHintPattern', args)
     },
     grabbedLigandResponseWithEmptyMembraneHintPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', args)
     },
     transportProteinBriefName: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProteinBriefName', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProteinBriefName', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinBriefName', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinBriefName', args)
     },
     ligandMovedAboveLigandGatedChannelPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandMovedAboveLigandGatedChannelPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandMovedAboveLigandGatedChannelPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandMovedAboveLigandGatedChannelPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandMovedAboveLigandGatedChannelPattern', args)
     },
     ligandMovedAboveLeakageChannelPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandMovedAboveLeakageChannelPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandMovedAboveLeakageChannelPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandMovedAboveLeakageChannelPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandMovedAboveLeakageChannelPattern', args)
     },
     ligandMovedAboveOtherChannelPattern: {
-      format: ( args: IntentionalAny ): string => formatPattern( 'a11y_ligandMovedAboveOtherChannelPattern', args ),
-      createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_ligandMovedAboveOtherChannelPattern', args )
+      format: (args: IntentionalAny): string => formatPattern('a11y_ligandMovedAboveOtherChannelPattern', args),
+      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandMovedAboveOtherChannelPattern', args)
     },
     transportProtein: {
       accessibleNamePattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProtein_accessibleNamePattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProtein_accessibleNamePattern', args )
-      },
-      grabbedAccessibleNamePattern: {
-        format: ( args: IntentionalAny ): string => formatPattern( 'a11y_transportProtein_grabbedAccessibleNamePattern', args ),
-        createProperty: ( args: IntentionalAny ): TReadOnlyProperty<string> => formatToProperty( 'a11y_transportProtein_grabbedAccessibleNamePattern', args )
+        format: (args: IntentionalAny): string => formatPattern('a11y_transportProtein_accessibleNamePattern', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProtein_accessibleNamePattern', args)
       }
     }
   }
@@ -799,4 +798,4 @@ const MembraneTransportFluent = {
 
 export default MembraneTransportFluent;
 
-membraneTransport.register( 'MembraneTransportFluent', MembraneTransportFluent );
+membraneTransport.register('MembraneTransportFluent', MembraneTransportFluent);
