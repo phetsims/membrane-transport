@@ -307,7 +307,7 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
   }
 
-  private updateSoluteCounts(): void {
+  public updateSoluteCounts(): void {
 
     // Update the solute counts after the solutes have moved
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
@@ -443,7 +443,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * For serialization, the MembraneTransportModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
    */
-  public static readonly MembraneTransportModelIO = new IOType<MembraneTransportModel, IntentionalAny>( 'MembraneTransportModelIO', {
+  public static readonly MembraneTransportModelIO = new IOType<Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts' >, IntentionalAny>( 'MembraneTransportModelIO', {
     documentation: 'IOType for MembraneTransportModel. Note that ligands are preallocated and stored in the state, if supported.',
     supertype: GetSetButtonsIO,
     valueType: MembraneTransportModel,
@@ -453,7 +453,7 @@ export default class MembraneTransportModel extends PhetioObject {
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO
     },
-    applyState: ( model: MembraneTransportModel, state: IntentionalAny ) => {
+    applyState: ( model: Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts' >, state: IntentionalAny ) => {
       ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.solutes, state.solutes );
 
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );

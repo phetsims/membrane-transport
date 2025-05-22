@@ -250,7 +250,7 @@ export default class MembraneTransportSounds {
     soundToPlay.play();
   }
 
-  public static updateAmbientSoluteSounds( model: MembraneTransportModel ): void {
+  public static updateAmbientSoluteSounds( model: Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'> ): void {
 
     if ( !MembraneTransportQueryParameters.ambientSound ) {
       return;

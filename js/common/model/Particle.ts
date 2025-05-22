@@ -286,7 +286,7 @@ export default class Particle<T extends ParticleType> {
    * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
    * in Projectile Data Lab's SamplingModel.launchButtonPressed
    */
-  public step( dt: number, model: MembraneTransportModel ): void {
+  public step( dt: number, model: Pick<MembraneTransportModel, 'removeParticle' | 'addSolute' | 'removeSolute' | 'soluteCrossedMembraneEmitter' | 'membraneSlots' | 'ligands' | 'insideSoluteCountProperties' | 'outsideSoluteCountProperties'> ): void {
 
     this.timeSinceCrossedMembrane += dt;
 
@@ -373,7 +373,7 @@ export default class Particle<T extends ParticleType> {
    * @param dt - Time step in seconds
    * @param model - The overall membrane transport model
    */
-  private updateMovement( dt: number, model: MembraneTransportModel ): void {
+  private updateMovement( dt: number, model: Pick<MembraneTransportModel, 'addSolute' | 'removeSolute' | 'soluteCrossedMembraneEmitter' | 'membraneSlots' | 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'> ): void {
 
     // --- Movement Logic (based on mode) ---
     if ( this.mode.type === 'randomWalk' ) {
@@ -632,7 +632,7 @@ export default class Particle<T extends ParticleType> {
    * Step the particle along a random walk path, including bouncing off the membrane
    * (central horizontal band) and the top/bottom walls, and wrapping around left/right walls.
    */
-  private stepRandomWalk( dt: number, model: MembraneTransportModel ): void {
+  private stepRandomWalk( dt: number, model: Pick<MembraneTransportModel, 'membraneSlots' | 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'> ): void {
     this.updateRandomWalkTimingAndDirection( dt );
 
     const randomWalk = this.mode as RandomWalkMode;
@@ -718,7 +718,7 @@ export default class Particle<T extends ParticleType> {
    * Checks for a protein interaction and handles it.
    * Returns true if an interaction occurs.
    */
-  private attemptProteinInteraction( model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+  private attemptProteinInteraction( model: Pick<MembraneTransportModel, 'membraneSlots' | 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'>, outsideOfCell: boolean ): boolean {
     const randomWalk = this.mode as RandomWalkMode;
 
     for ( let i = 0; i < model.membraneSlots.length; i++ ) {
@@ -854,7 +854,7 @@ export default class Particle<T extends ParticleType> {
   private handleProteinInteractionDuringRandomWalk(
     slot: Slot,
     transportProtein: TransportProtein,
-    model: MembraneTransportModel,
+    model: Pick<MembraneTransportModel, 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'>,
     outsideOfCell: boolean
   ): boolean {
 
@@ -884,7 +884,7 @@ export default class Particle<T extends ParticleType> {
   private handleLigandGatedChannelInteraction(
     slot: Slot,
     transportProtein: TransportProtein,
-    model: MembraneTransportModel,
+    model: Pick<MembraneTransportModel, 'ligands'>,
     outsideOfCell: boolean
   ): boolean {
     if ( ( this.type === 'triangleLigand' || this.type === 'starLigand' ) && outsideOfCell ) {
@@ -939,7 +939,7 @@ export default class Particle<T extends ParticleType> {
   private handleSodiumGlucoseCotransporterInteraction(
     slot: Slot,
     transportProtein: TransportProtein,
-    model: MembraneTransportModel
+    model: Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'>
   ): boolean {
 
     if (
@@ -1117,7 +1117,7 @@ export default class Particle<T extends ParticleType> {
     return state;
   }
 
-  public static stateToMode( model: MembraneTransportModel, state: Record<string, IntentionalAny> ): IntentionalAny {
+  public static stateToMode( model: Pick<MembraneTransportModel, 'membraneSlots'>, state: Record<string, IntentionalAny> ): IntentionalAny {
     // eslint-disable-next-line phet/no-object-spread-on-non-literals
     const mode = { ...state };
     if ( mode.currentDirection ) {
