@@ -28,11 +28,6 @@ import channelOpenSet1_001_mp3 from '../../sounds/channelOpenSet1_001_mp3.js';
 import channelOpenSet1_002_mp3 from '../../sounds/channelOpenSet1_002_mp3.js';
 import channelOpenSet2_002_mp3 from '../../sounds/channelOpenSet2_002_mp3.js';
 import channelOpenSet2_003_mp3 from '../../sounds/channelOpenSet2_003_mp3.js';
-import GeneralButtonAddingMany_mp3 from '../../sounds/GeneralButtonAddingMany_mp3.js';
-import GeneralButtonRemovingManyv1_mp3 from '../../sounds/GeneralButtonRemovingManyv1_mp3.js';
-import GeneralButtonRemovingManyv2_mp3 from '../../sounds/GeneralButtonRemovingManyv2_mp3.js';
-import GeneralButtonRemovingOnev1_mp3 from '../../sounds/GeneralButtonRemovingOnev1_mp3.js';
-import GeneralButtonRemovingOnev2_mp3 from '../../sounds/GeneralButtonRemovingOnev2_mp3.js';
 import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
 import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
 import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
@@ -168,14 +163,6 @@ const channelSounds = {
     }
   }
 };
-
-// TODO: unused? See https://github.com/phetsims/membrane-transport/issues/111
-export const GeneralButtonAddingManySoundClip = newSoundClip( GeneralButtonAddingMany_mp3, { initialOutputLevel: 0.3 } );
-export const GeneralButtonAddingOneSoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
-export const GeneralButtonRemovingManyv1SoundClip = newSoundClip( GeneralButtonRemovingManyv1_mp3, { initialOutputLevel: 0.3 } );
-export const GeneralButtonRemovingManyv2SoundClip = newSoundClip( GeneralButtonRemovingManyv2_mp3, { initialOutputLevel: 0.3 } );
-export const GeneralButtonRemovingOnev1SoundClip = newSoundClip( GeneralButtonRemovingOnev1_mp3, { initialOutputLevel: 0.3 } );
-export const GeneralButtonRemovingOnev2SoundClip = newSoundClip( GeneralButtonRemovingOnev2_mp3, { initialOutputLevel: 0.3 } );
 
 const proteinReturnSound = newSoundClip( proteinReturnSound4_mp3, {
   initialOutputLevel: 0.2
