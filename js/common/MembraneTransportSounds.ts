@@ -192,7 +192,7 @@ const sound1 = soluteCrossing001_mp3;
 const sound2 = soluteCrossing002_mp3;
 const sound3 = soluteCrossing003_mp3;
 
-const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.6 };
+const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0 };
 
 const soluteCrossing001Sounds = createPannedSoundSet( sound1, baseSoundClipOptions );
 const soluteCrossing002Sounds = createPannedSoundSet( sound2, baseSoundClipOptions );
@@ -209,7 +209,7 @@ const soluteCrossing005HighSounds = createPannedSoundSet( soluteCrossingOutward0
 // Helper function to create an ambient sound with a low-pass filter
 const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer, initialPlaybackRate = 1,
                                      filterType: 'lowpass' | 'bandpass' = 'lowpass',
-                                     q = 10 ): AmbientSoundGeneratorFiltered => {
+                                     q = 20 ): AmbientSoundGeneratorFiltered => {
   const ambientSoundGeneratorFiltered = new AmbientSoundGeneratorFiltered( soundFile, initialPlaybackRate, filterType, q );
   soundManager.addSoundGenerator( ambientSoundGeneratorFiltered );
   return ambientSoundGeneratorFiltered;
@@ -274,7 +274,7 @@ export default class MembraneTransportSounds {
       const totalAmount = outsideAmount + insideAmount;
 
       // TODO: See https://github.com/phetsims/membrane-transport/issues/183
-      const amount = clamp( totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT, 0, 1 );
+      const amount = clamp( ( totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT ) + 1, 0, 1 );
       affirm( amount >= 0 && amount <= 1, `amount should be between 0 and 1, but got ${amount}` );
 
       const volumeBoost = type === 'glucose' ? 1.5 : 1;
@@ -282,20 +282,24 @@ export default class MembraneTransportSounds {
 
       // balance should be 0 if fully lopsided
       // balance should be 1 if fully balanced
-      const balance = insideAmount === 0 || outsideAmount === 0 ? 0 :
-                      insideAmount < outsideAmount ? insideAmount / outsideAmount : outsideAmount / insideAmount;
+      // Calculate the raw balance ratio (0 when completely lopsided, 1 when perfectly balanced)
+      const rawBalance = insideAmount === 0 || outsideAmount === 0 ? 0 :
+            insideAmount < outsideAmount ? insideAmount / outsideAmount : outsideAmount / insideAmount;
+      
+      // Apply a power function to create a smoother transition with more values in the mid-range
+      const balance = Math.pow( rawBalance, 0.3 );
 
-      const maxFrequency = type === 'oxygen' ? 500 :
-                           type === 'carbonDioxide' ? 1200 :
-                           type === 'sodiumIon' ? 2000 : // ignore
-                           type === 'potassiumIon' ? 1200 :
-                           750;
+      const maxFrequency = type === 'oxygen' ? 3000 :
+                           type === 'carbonDioxide' ? 3000 :
+                           type === 'sodiumIon' ? 3000 : // ignore
+                           type === 'potassiumIon' ? 3000 :
+                           3000;
 
-      const minFrequency = type === 'oxygen' ? 50 :
-                           type === 'carbonDioxide' ? 328 :
-                           type === 'sodiumIon' ? 50 :
-                           type === 'potassiumIon' ? 250 :
-                           50;
+      const minFrequency = type === 'oxygen' ? 500 :
+                           type === 'carbonDioxide' ? 500 :
+                           type === 'sodiumIon' ? 500 :
+                           type === 'potassiumIon' ? 500 :
+                           500;
 
       const frequency = linear( 0, 1, maxFrequency, minFrequency, balance );
 

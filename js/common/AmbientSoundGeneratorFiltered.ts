@@ -25,7 +25,7 @@ class AmbientSoundGeneratorFiltered extends SoundGenerator {
     wrappedAudioBuffer: WrappedAudioBuffer,
     initialPlaybackRate = 1,
     filterType: 'lowpass' | 'bandpass' = 'lowpass',
-    q = 10
+    q = 20
   ) {
 
     super( {
