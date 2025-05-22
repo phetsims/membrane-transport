@@ -202,13 +202,10 @@ export default class SoluteBarChartNode extends Node {
       if ( model.isPlayingProperty.value ) {
 
         // Get all new entries for this solute type within the time window
-        const recentFluxEntries = model.fluxEntries.filter( entry =>
-          entry.soluteType === soluteType &&
-          entry.time > model.time - 1
-        );
+        const fluxEntries = model.fluxEntries.filter( entry => entry.soluteType === soluteType );
 
-        const inwardCount = recentFluxEntries.filter( entry => entry.direction === 'inward' ).length;
-        const outwardCount = recentFluxEntries.filter( entry => entry.direction === 'outward' ).length;
+        const inwardCount = fluxEntries.filter( entry => entry.direction === 'inward' ).length;
+        const outwardCount = fluxEntries.filter( entry => entry.direction === 'outward' ).length;
 
         updateStripe( inwardCount, insideStripe, insideBar, insideSoluteCountProperty );
         updateStripe( outwardCount, outsideStripe, outsideBar, outsideSoluteCountProperty );

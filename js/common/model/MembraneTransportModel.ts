@@ -94,7 +94,6 @@ export default class MembraneTransportModel extends PhetioObject {
 
   private readonly resetEmitter = new Emitter();
 
-  // TODO: Remove, see https://github.com/phetsims/membrane-transport/issues/70
   // The flux entries are used to track the recent flux of solutes through the membrane.
   public readonly fluxEntries: FluxEntry[] = [];
 
