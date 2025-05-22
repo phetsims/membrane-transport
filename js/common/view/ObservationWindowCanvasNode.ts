@@ -133,7 +133,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.2 ) {
 
         // draw a highlight
-        context.fillStyle = 'yellow';
+        context.fillStyle = 'white';
         context.globalAlpha = 0.5;
         context.beginPath();
         context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );

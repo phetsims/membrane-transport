@@ -23,18 +23,18 @@ const MembraneTransportColors = {
 
   // Color for the outside/extracellular fluid, also serves as the background color for the screen.
   outsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'outsideCellColor', {
-    default: 'rgb(152,205,255)'
+    default: 'rgb(135, 206, 235)'
   } ),
   insideCellColorProperty: new ProfileColorProperty( membraneTransport, 'insideCellColor', {
-    default: 'rgb(101,185,234)'
+    default: 'rgb(253, 244, 201)'
   } ),
 
   // Color for the outside/extracellular fluid, also serves as the background color for the screen.
   observationWindowOutsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'observationWindowOutsideCellColor', {
-    default: 'rgb(179, 218, 255)'
+    default: 'rgb(184, 223, 255)'
   } ),
   observationWindowInsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'observationWindowInsideCellColor', {
-    default: 'rgb(126, 189, 226)'
+    default: 'rgb(255, 249, 240)'
   } ),
 
   oxygenColorProperty: new ProfileColorProperty( membraneTransport, 'O2Color', {
@@ -47,16 +47,16 @@ const MembraneTransportColors = {
     default: 'rgb(95,80,69)'
   } ),
   sodiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'NaBarChartColor', {
-    default: 'rgb(255,255,11)'
+    default: 'rgb(255, 210, 46)'
   } ),
   potassiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'KBarChartColor', {
-    default: 'rgb(32,255,253)'
+    default: 'rgb(0, 168, 212)'
   } ),
   glucoseColorProperty: new ProfileColorProperty( membraneTransport, 'glucoseBarChartColor', {
     default: 'rgb(106,42,211)'
   } ),
   fluxHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'fluxHighlightColor', {
-    default: 'yellow'
+    default: 'white'
   } ),
   lipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
