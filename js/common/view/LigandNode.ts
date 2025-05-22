@@ -130,8 +130,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
     this.focusedProperty.lazyLink( focused => {
       this.ligand.focused = focused;
 
-      // Resume brownian motion when focus is lost
-      if ( !focused ) {
+      // Resume brownian motion when focus is lost (but not if interacting with the protein)
+      if ( !focused && this.ligand.mode.type !== 'ligandBound' && this.ligand.mode.type !== 'moveToLigandBindingLocation' ) {
         this.ligand.mode = Particle.createRandomWalkMode( true );
       }
     } );
