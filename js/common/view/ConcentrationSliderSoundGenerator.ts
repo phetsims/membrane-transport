@@ -88,6 +88,10 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
 
     affirm( newValue !== undefined && oldValue !== undefined, 'newValue and oldValue should be defined' );
 
+    // parameters the bound the randomization, empirically determined
+    const minimumInterSoundTime = 0.06;
+    const maximumInterSoundTime = minimumInterSoundTime * 1.5;
+
     // Set a value for the number of playing instances of the clip at which we limit additional plays.  This helps to
     // prevent too many instances of the clip from playing simultaneously, which can sound a bit chatic.
     const playingInstancesLimitThreshold = 5;
@@ -102,6 +106,7 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     // Calculate the minimum playback rate based on the current concentration.
     const minPlaybackRate = 1 + newValue / 20;
 
+    let delayAmount = 0;
     _.times( timesToPlay, () => {
 
       // Set the playback rate with some randomization.
@@ -109,9 +114,8 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
 
       // Put some spacing between each playing of the clip.  The parameters of the calculation are broken out to make
       // experimentation and adjustment easier.
-      const GAUSSIAN_WIDTH = 0.2;
-      const MAXIMUM_DELAY = 0.2;
-      this.baseSoundClip.play( Math.min( Math.abs( dotRandom.nextGaussian() ) * GAUSSIAN_WIDTH, MAXIMUM_DELAY ) );
+      this.baseSoundClip.play( delayAmount );
+      delayAmount = delayAmount + minimumInterSoundTime + dotRandom.nextDouble() * ( maximumInterSoundTime - minimumInterSoundTime );
     } );
     this.baseSoundClip.setPlaybackRate( 1, 0 );
   }
