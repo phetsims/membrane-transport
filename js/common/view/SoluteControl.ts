@@ -130,22 +130,6 @@ export default class SoluteControl extends Panel {
       }
     } );
 
-    // TODO: Remove for https://github.com/phetsims/membrane-transport/issues/111
-    // Sounds are based on the actual amount on the side
-    // actualCountPerSideProperty.lazyLink( ( value, oldValue ) => {
-    //   const difference = value - oldValue;
-    //   assert && assert( difference !== 0, 'Difference is 0' );
-    //   if ( difference > 0 ) {
-    //
-    //     // We need to add solutes to the outside of the membrane
-    //     soundGenerator.playSoundForValueChange( value, oldValue );
-    //   }
-    //   else if ( difference < 0 ) {
-    //
-    //     soundGenerator.playSoundForValueChange( value, oldValue );
-    //   }
-    // } );
-
     const qualitativeCountProperty = new DerivedProperty( [ actualCountPerSideProperty ], actualCount => {
       return actualCount === 0 ? 'none' :
              actualCount === 1 ? 'one' :
