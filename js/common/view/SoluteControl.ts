@@ -92,22 +92,27 @@ export default class SoluteControl extends Panel {
     // Play sounds based on the userControlledCountProperty rather than the actualCountPerSideProperty, so we don't create
     // a sound when a solute diffuses across the membrane.
     userControlledCountProperty.lazyLink( ( value, oldValue ) => {
+
+      // Use the userControlledProperty just to know how many the user added or removed
       const difference = value - oldValue;
       assert && assert( difference !== 0, 'Difference is 0' );
+
+      // Due to listener order, the totalCountProperty hasn't been updated yet, so we must add the difference
+      const newValue = totalCountProperty.value + difference;
+
       if ( difference > 0 ) {
 
         // We need to add solutes to the outside of the membrane
         model.addSolutes( soluteType, side, difference );
 
-        // TODO: The userControlledCount drifts, since the range mutates, see above, see https://github.com/phetsims/membrane-transport/issues/111
-        soundGenerator.playSoundForValueChange( value, oldValue );
+        soundGenerator.playSoundForValueChange( newValue, newValue - difference );
       }
       else if ( difference < 0 ) {
 
         // We need to remove solutes from the outside of the membrane
         model.removeSolutes( soluteType, side, -difference );
 
-        soundGenerator.playSoundForValueChange( value, oldValue );
+        soundGenerator.playSoundForValueChange( newValue, newValue - difference );
       }
     } );
 
