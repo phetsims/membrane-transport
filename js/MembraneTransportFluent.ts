@@ -5,12 +5,9 @@
 /* eslint-disable */
 /* @formatter:off */
 
-import Multilink from '../../axon/js/Multilink.js';
-import Property from '../../axon/js/Property.js';
-import localeProperty from '../../joist/js/i18n/localeProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import FluentPattern from '../../chipper/js/browser/FluentPattern.js';
-import { FluentBundle, FluentResource } from '../../chipper/js/browser-and-node/FluentLibrary.js';
+import FluentContainer from '../../chipper/js/browser/FluentContainer.js';
 import IntentionalAny from '../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from './membraneTransport.js';
 import MembraneTransportStrings from './MembraneTransportStrings.js';
@@ -270,35 +267,7 @@ MembraneTransportStrings.a11y.ligandMovedAboveOtherChannelPatternStringProperty,
 MembraneTransportStrings.a11y.transportProtein.accessibleNamePatternStringProperty
 ];
 
-let isLocaleChanging = false;
-
-localeProperty.lazyLink( () => {
-  isLocaleChanging = true;
-} );
-
-const createFluentBundle = () => {
-  const bundle = new FluentBundle('en');
-  const resource = new FluentResource(getFTL());
-  const errors = bundle.addResource(resource);
-  assert && assert(errors.length === 0, 'Errors when adding resource for locale en');
-  
-  return bundle;
-};
-
-// Initial compute of the bundle
-const fluentBundleProperty = new Property<FluentBundle>( createFluentBundle() );
-
-Multilink.multilinkAny( allStringProperties, () => {
-  if ( !isLocaleChanging ) {
-    fluentBundleProperty.value = createFluentBundle();
-  }
-} );
-
-// When all strings change due to a locale change, update the bundle once
-localeProperty.lazyLink( () => {
-  isLocaleChanging = false;
-  fluentBundleProperty.value = createFluentBundle();
-} );
+const fluentSupport = new FluentContainer( getFTL, allStringProperties );
 
 const MembraneTransportFluent = {
   "membrane-transport.titleStringProperty": MembraneTransportStrings["membrane-transport"].titleStringProperty,
@@ -430,38 +399,38 @@ const MembraneTransportFluent = {
     insideMembraneSpinnerAccessibleNameStringProperty: MembraneTransportStrings.a11y.insideMembraneSpinnerAccessibleNameStringProperty,
     insideMembraneSpinnerHelpTextStringProperty: MembraneTransportStrings.a11y.insideMembraneSpinnerHelpTextStringProperty,
     soluteSpinnerRoleDescriptionStringProperty: MembraneTransportStrings.a11y.soluteSpinnerRoleDescriptionStringProperty,
-    solute: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_solute' ),
-    soluteSpinnerObjectResponsePattern: new FluentPattern<{ amount: 'none' | 'one' | 'few' | 'some' | 'many' | TReadOnlyProperty<'none' | 'one' | 'few' | 'some' | 'many'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_soluteSpinnerObjectResponsePattern' ),
-    soluteSpinnerContextResponsePattern: new FluentPattern<{ addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | '*' | 'more' | 'less' | TReadOnlyProperty<'same' | '*' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_soluteSpinnerContextResponsePattern' ),
+    solute: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solute' ),
+    soluteSpinnerObjectResponsePattern: new FluentPattern<{ amount: 'none' | 'one' | 'few' | 'some' | 'many' | TReadOnlyProperty<'none' | 'one' | 'few' | 'some' | 'many'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteSpinnerObjectResponsePattern' ),
+    soluteSpinnerContextResponsePattern: new FluentPattern<{ addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | '*' | 'more' | 'less' | TReadOnlyProperty<'same' | '*' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteSpinnerContextResponsePattern' ),
     soluteBarChartsDescriptionParagraphStringProperty: MembraneTransportStrings.a11y.soluteBarChartsDescriptionParagraphStringProperty,
-    arrowSizeDescription: new FluentPattern<{ size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'> }>( fluentBundleProperty, 'a11y_arrowSizeDescription' ),
-    arrowDirectionDescription: new FluentPattern<{ direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }>( fluentBundleProperty, 'a11y_arrowDirectionDescription' ),
-    barSizeDescription: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }>( fluentBundleProperty, 'a11y_barSizeDescription' ),
-    barChartPattern: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_barChartPattern' ),
-    currentDetailsActivityLevel: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentBundleProperty, 'a11y_currentDetailsActivityLevel' ),
-    currentDetails: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentBundleProperty, 'a11y_currentDetails' ),
-    currentDetailsSoluteTypesOnOutside: new FluentPattern<{ outsideSoluteCount: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
-    currentDetailsSoluteTypesOnInside: new FluentPattern<{ insideSoluteCount: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
-    currentDetailsTransportProteins: new FluentPattern<{ transportProteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsTransportProteins' ),
+    arrowSizeDescription: new FluentPattern<{ size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'> }>( fluentSupport.bundleProperty, 'a11y_arrowSizeDescription' ),
+    arrowDirectionDescription: new FluentPattern<{ direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }>( fluentSupport.bundleProperty, 'a11y_arrowDirectionDescription' ),
+    barSizeDescription: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }>( fluentSupport.bundleProperty, 'a11y_barSizeDescription' ),
+    barChartPattern: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_barChartPattern' ),
+    currentDetailsActivityLevel: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsActivityLevel' ),
+    currentDetails: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentSupport.bundleProperty, 'a11y_currentDetails' ),
+    currentDetailsSoluteTypesOnOutside: new FluentPattern<{ outsideSoluteCount: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
+    currentDetailsSoluteTypesOnInside: new FluentPattern<{ insideSoluteCount: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
+    currentDetailsTransportProteins: new FluentPattern<{ transportProteinCount: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_currentDetailsTransportProteins' ),
     ligandsOnOutsideOnlyStringProperty: MembraneTransportStrings.a11y.ligandsOnOutsideOnlyStringProperty,
-    currentDetailsMembranePotential: new FluentPattern<{ membranePotential: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsMembranePotential' ),
+    currentDetailsMembranePotential: new FluentPattern<{ membranePotential: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_currentDetailsMembranePotential' ),
     releasedBackInToolboxStringProperty: MembraneTransportStrings.a11y.releasedBackInToolboxStringProperty,
-    selectedTransportProteinInSlot: new FluentPattern<{ channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentBundleProperty, 'a11y_selectedTransportProteinInSlot' ),
+    selectedTransportProteinInSlot: new FluentPattern<{ channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_selectedTransportProteinInSlot' ),
     canceledBackInMembraneStringProperty: MembraneTransportStrings.a11y.canceledBackInMembraneStringProperty,
-    grabbedProteinResponsePattern: new FluentPattern<{ slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedProteinResponsePattern' ),
-    grabbedProteinResponseWithHintPattern: new FluentPattern<{ slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedProteinResponseWithHintPattern' ),
+    grabbedProteinResponsePattern: new FluentPattern<{ slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_grabbedProteinResponsePattern' ),
+    grabbedProteinResponseWithHintPattern: new FluentPattern<{ slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_grabbedProteinResponseWithHintPattern' ),
     ligandToggleButtonAccessibleHelpTextStringProperty: MembraneTransportStrings.a11y.ligandToggleButtonAccessibleHelpTextStringProperty,
     ligandToggleButtonAddedContextResponseStringProperty: MembraneTransportStrings.a11y.ligandToggleButtonAddedContextResponseStringProperty,
     ligandToggleButtonRemovedContextResponseStringProperty: MembraneTransportStrings.a11y.ligandToggleButtonRemovedContextResponseStringProperty,
-    grabbedLigandResponsePattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedLigandResponsePattern' ),
-    grabbedLigandResponseWithHintPattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedLigandResponseWithHintPattern' ),
-    grabbedLigandResponseWithEmptyMembraneHintPattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern' ),
-    transportProteinBriefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_transportProteinBriefName' ),
-    ligandMovedAboveLigandGatedChannelPattern: new FluentPattern<{ index: IntentionalAny, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern' ),
-    ligandMovedAboveLeakageChannelPattern: new FluentPattern<{ index: IntentionalAny, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern' ),
-    ligandMovedAboveOtherChannelPattern: new FluentPattern<{ index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern' ),
+    grabbedLigandResponsePattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_grabbedLigandResponsePattern' ),
+    grabbedLigandResponseWithHintPattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_grabbedLigandResponseWithHintPattern' ),
+    grabbedLigandResponseWithEmptyMembraneHintPattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern' ),
+    transportProteinBriefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProteinBriefName' ),
+    ligandMovedAboveLigandGatedChannelPattern: new FluentPattern<{ index: IntentionalAny, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern' ),
+    ligandMovedAboveLeakageChannelPattern: new FluentPattern<{ index: IntentionalAny, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern' ),
+    ligandMovedAboveOtherChannelPattern: new FluentPattern<{ index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern' ),
     transportProtein: {
-      accessibleNamePattern: new FluentPattern<{ openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: IntentionalAny, proteinIndex: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_transportProtein_accessibleNamePattern' )
+      accessibleNamePattern: new FluentPattern<{ openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: IntentionalAny, proteinIndex: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleNamePattern' )
     }
   }
 };

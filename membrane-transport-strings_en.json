@@ -271,7 +271,7 @@
         "value": "Cancelled moving {{ligandType}}"
       },
       "cannotInteractWhileLigandIsBoundPattern": {
-        "value": "Cannot interact with the membrane while {{ligandType}} is bound to a protein" 
+        "value": "Cannot interact with the membrane while {{ligandType}} is bound to a protein"
       }
     },
     "soluteControlsAccessibleHelpText": {
@@ -325,10 +325,10 @@
       "value": "A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading."
     },
     "arrowSizeDescription": {
-      "value": "TODO: Get rid of arrow description code"
+      "value": "{ $size ->\n[small]  small\n[medium] medium\n*[large]  large\n}"
     },
     "arrowDirectionDescription": {
-      "value": "TODO: Get rid of arrow description code"
+      "value": "{ $direction ->\n[upward]   upward arrow indicates passage from outside to inside\n*[downward] downward arrow indicates passage from inside to outside\n}"
     },
     "barSizeDescription": {
       "value": "{ $amount ->\n[aLittleMore]  A little more\n[aLotMore]     A lot more\n[aLittleLess]  A little less\n*[aLotLess]     A lot less\n} outside than inside"
