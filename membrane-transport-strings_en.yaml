@@ -124,6 +124,15 @@ a11y:
     moveCancelledPattern:                             Cancelled moving {{ligandType}}
     cannotInteractWhileLigandIsBoundPattern:          Cannot interact with the membrane while {{ligandType}} is bound to a protein
   soluteControlsAccessibleHelpText:                  Choose solute then add or remove to inside or outside of membrane.
+  
+  # Accessible names for solute radio buttons
+  soluteAccessibleNames:
+    oxygen:       Oxygen, O2, nonpolar, small
+    carbonDioxide: Carbon Dioxide, CO2, nonpolar, small
+    sodiumIon:    Sodium Ion, Na, positive, small
+    potassiumIon: Potassium Ion, K, positive, small
+    glucose:      Glucose, hexagonal ring, large
+    atp:          Adenosine Triphosphate, ATP, complex, large
   outsideMembraneSpinnerAccessibleName:              Outside Membrane
   outsideMembraneSpinnerHelpText:                    Add or remove chosen solute to outside of membrane.
   insideMembraneSpinnerAccessibleName:               Inside Membrane

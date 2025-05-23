@@ -54,11 +54,11 @@ export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): str
 
 export const getSoluteSpinnerTandemName = ( soluteType: SoluteType ): string => `${soluteType}Spinner`;
 
-export const getSoluteAccessibleName = ( soluteType: SoluteType ): string => {
-  return soluteType === 'oxygen' ? 'Oxygen, O2, nonpolar, small' :
-         soluteType === 'carbonDioxide' ? 'Carbon Dioxide, CO2, nonpolar, small' :
-         soluteType === 'sodiumIon' ? 'Sodium Ion, Na, positive, small' :
-         soluteType === 'potassiumIon' ? 'Potassium Ion, K, positive, small' :
-         soluteType === 'glucose' ? 'Glucose, hexagonal ring, large' :
-         'Adenosine Triphosphate, ATP, complex, large';
+export const getSoluteAccessibleName = ( soluteType: SoluteType ): LocalizedStringProperty => {
+  return soluteType === 'oxygen' ? MembraneTransportStrings.a11y.soluteAccessibleNames.oxygenStringProperty :
+         soluteType === 'carbonDioxide' ? MembraneTransportStrings.a11y.soluteAccessibleNames.carbonDioxideStringProperty :
+         soluteType === 'sodiumIon' ? MembraneTransportStrings.a11y.soluteAccessibleNames.sodiumIonStringProperty :
+         soluteType === 'potassiumIon' ? MembraneTransportStrings.a11y.soluteAccessibleNames.potassiumIonStringProperty :
+         soluteType === 'glucose' ? MembraneTransportStrings.a11y.soluteAccessibleNames.glucoseStringProperty :
+         MembraneTransportStrings.a11y.soluteAccessibleNames.atpStringProperty;
 };

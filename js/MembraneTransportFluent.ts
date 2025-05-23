@@ -100,6 +100,12 @@ a11y_ligandNode_thereIsProteinAtThisSlotPattern = ${MembraneTransportStrings.a11
 a11y_ligandNode_moveCancelledPattern = ${MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty.value}
 a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern = ${MembraneTransportStrings.a11y.ligandNode.cannotInteractWhileLigandIsBoundPatternStringProperty.value}
 a11y_soluteControlsAccessibleHelpText = ${MembraneTransportStrings.a11y.soluteControlsAccessibleHelpTextStringProperty.value}
+a11y_soluteAccessibleNames_oxygen = ${MembraneTransportStrings.a11y.soluteAccessibleNames.oxygenStringProperty.value}
+a11y_soluteAccessibleNames_carbonDioxide = ${MembraneTransportStrings.a11y.soluteAccessibleNames.carbonDioxideStringProperty.value}
+a11y_soluteAccessibleNames_sodiumIon = ${MembraneTransportStrings.a11y.soluteAccessibleNames.sodiumIonStringProperty.value}
+a11y_soluteAccessibleNames_potassiumIon = ${MembraneTransportStrings.a11y.soluteAccessibleNames.potassiumIonStringProperty.value}
+a11y_soluteAccessibleNames_glucose = ${MembraneTransportStrings.a11y.soluteAccessibleNames.glucoseStringProperty.value}
+a11y_soluteAccessibleNames_atp = ${MembraneTransportStrings.a11y.soluteAccessibleNames.atpStringProperty.value}
 a11y_outsideMembraneSpinnerAccessibleName = ${MembraneTransportStrings.a11y.outsideMembraneSpinnerAccessibleNameStringProperty.value}
 a11y_outsideMembraneSpinnerHelpText = ${MembraneTransportStrings.a11y.outsideMembraneSpinnerHelpTextStringProperty.value}
 a11y_insideMembraneSpinnerAccessibleName = ${MembraneTransportStrings.a11y.insideMembraneSpinnerAccessibleNameStringProperty.value}
@@ -222,6 +228,12 @@ MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringPr
 MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty,
 MembraneTransportStrings.a11y.ligandNode.cannotInteractWhileLigandIsBoundPatternStringProperty,
 MembraneTransportStrings.a11y.soluteControlsAccessibleHelpTextStringProperty,
+MembraneTransportStrings.a11y.soluteAccessibleNames.oxygenStringProperty,
+MembraneTransportStrings.a11y.soluteAccessibleNames.carbonDioxideStringProperty,
+MembraneTransportStrings.a11y.soluteAccessibleNames.sodiumIonStringProperty,
+MembraneTransportStrings.a11y.soluteAccessibleNames.potassiumIonStringProperty,
+MembraneTransportStrings.a11y.soluteAccessibleNames.glucoseStringProperty,
+MembraneTransportStrings.a11y.soluteAccessibleNames.atpStringProperty,
 MembraneTransportStrings.a11y.outsideMembraneSpinnerAccessibleNameStringProperty,
 MembraneTransportStrings.a11y.outsideMembraneSpinnerHelpTextStringProperty,
 MembraneTransportStrings.a11y.insideMembraneSpinnerAccessibleNameStringProperty,
@@ -684,6 +696,32 @@ const MembraneTransportFluent = {
     soluteControlsAccessibleHelpText: {
       format: (args: IntentionalAny): string => formatPattern('a11y_soluteControlsAccessibleHelpText', args),
       createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteControlsAccessibleHelpText', args)
+    },
+    soluteAccessibleNames: {
+      oxygen: {
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_oxygen', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_oxygen', args)
+      },
+      carbonDioxide: {
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_carbonDioxide', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_carbonDioxide', args)
+      },
+      sodiumIon: {
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_sodiumIon', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_sodiumIon', args)
+      },
+      potassiumIon: {
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_potassiumIon', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_potassiumIon', args)
+      },
+      glucose: {
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_glucose', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_glucose', args)
+      },
+      atp: {
+        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_atp', args),
+        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_atp', args)
+      }
     },
     outsideMembraneSpinnerAccessibleName: {
       format: (args: IntentionalAny): string => formatPattern('a11y_outsideMembraneSpinnerAccessibleName', args),

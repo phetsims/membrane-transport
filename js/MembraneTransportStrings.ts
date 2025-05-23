@@ -132,6 +132,14 @@ type StringsType = {
       'cannotInteractWhileLigandIsBoundPatternStringProperty': LocalizedStringProperty;
     };
     'soluteControlsAccessibleHelpTextStringProperty': LocalizedStringProperty;
+    'soluteAccessibleNames': {
+      'oxygenStringProperty': LocalizedStringProperty;
+      'carbonDioxideStringProperty': LocalizedStringProperty;
+      'sodiumIonStringProperty': LocalizedStringProperty;
+      'potassiumIonStringProperty': LocalizedStringProperty;
+      'glucoseStringProperty': LocalizedStringProperty;
+      'atpStringProperty': LocalizedStringProperty;
+    };
     'outsideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
     'outsideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
     'insideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;

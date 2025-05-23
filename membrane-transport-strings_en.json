@@ -277,6 +277,26 @@
     "soluteControlsAccessibleHelpText": {
       "value": "Choose solute then add or remove to inside or outside of membrane."
     },
+    "soluteAccessibleNames": {
+      "oxygen": {
+        "value": "Oxygen, O2, nonpolar, small"
+      },
+      "carbonDioxide": {
+        "value": "Carbon Dioxide, CO2, nonpolar, small"
+      },
+      "sodiumIon": {
+        "value": "Sodium Ion, Na, positive, small"
+      },
+      "potassiumIon": {
+        "value": "Potassium Ion, K, positive, small"
+      },
+      "glucose": {
+        "value": "Glucose, hexagonal ring, large"
+      },
+      "atp": {
+        "value": "Adenosine Triphosphate, ATP, complex, large"
+      }
+    },
     "outsideMembraneSpinnerAccessibleName": {
       "value": "Outside Membrane"
     },
