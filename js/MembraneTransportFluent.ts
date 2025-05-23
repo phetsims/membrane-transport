@@ -303,41 +303,6 @@ localeProperty.lazyLink( () => {
   fluentBundleProperty.value = createFluentBundle();
 } );
 
-const formatPattern = (key: string, args: IntentionalAny): string => {
-  const bundle = fluentBundleProperty.value;
-
-  const newArgs = FluentUtils.handleFluentArgs(args);
-
-  const message = bundle.getMessage(key);
-
-  const errors: Array<Error> = [];
-  const result = bundle.formatPattern(message!.value!, newArgs, errors);
-  assert && assert(errors.length === 0, `Fluent errors found when formatting message: ${errors}`);
-  return result;
-};
-
-const formatToProperty = (key: string, args: IntentionalAny): TReadOnlyProperty<string> => {
-  const initialValue = formatPattern(key, args);
-  const stringProperty = new StringProperty(initialValue);
-
-  const update = () => {
-    stringProperty.value = formatPattern(key, args);
-  };
-
-  // Whenever any arg changes update the string property
-  Object.values(args).forEach(arg => {
-    if (isTReadOnlyProperty(arg)) {
-      arg.lazyLink(update);
-    }
-  });
-
-  fluentBundleProperty.lazyLink( () => {
-    update();
-  } );
-
-  return stringProperty;
-};
-
 const MembraneTransportFluent = {
   "membrane-transport.title": new FluentPattern( fluentBundleProperty, 'membrane-transport.title' ),
   "screen.simpleDiffusion": new FluentPattern( fluentBundleProperty, 'screen.simpleDiffusion' ),
