@@ -23,7 +23,7 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
-import ConcentrationSliderSoundGenerator from './ConcentrationSliderSoundGenerator.js';
+import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 import createParticleNode from './particles/createParticleNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -143,7 +143,7 @@ export default class SoluteControl extends Panel {
       soluteType: model.soluteProperty
     } );
 
-    const soundGenerator = new ConcentrationSliderSoundGenerator( actualCountPerSideProperty, new Range( 0, 50 ) );
+    const soundGenerator = new SoluteSpinnerSoundGenerator( new Range( 0, 50 ) );
 
     const spinner = new FineCoarseSpinner( userControlledCountProperty, {
       deltaFine: fineDelta,

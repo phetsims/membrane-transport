@@ -1,8 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Plays the "bubbling" sound when solutes are added via the Solute Spinners. This was adapted from the ConcentrationSliderSoundGenerator
- * in the Greenhouse Effect simulation.
+ * Plays the "bubbling" sound when solutes are added via the Solute Spinners. This was adapted from the SoluteSpinnerSoundGenerator
+ * in the Greenhouse Effect simulation. See https://github.com/phetsims/greenhouse-effect/issues/28.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -18,7 +18,7 @@ import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import sliderMovement_mp3 from '../../../sounds/sliderMovement_mp3.js';
 import membraneTransport from '../../membraneTransport.js';
 
-class ConcentrationSliderSoundGenerator extends ValueChangeSoundPlayer {
+export default class SoluteSpinnerSoundGenerator extends ValueChangeSoundPlayer {
 
   public constructor( range: Range ) {
 
@@ -66,9 +66,6 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     this.baseSoundClip.connect( dynamicsCompressorNode );
   }
 
-  /**
-   * Adapted from ConcentrationSliderSoundGenerator in the Greenhouse Effect simulation, see https://github.com/phetsims/greenhouse-effect/issues/28.
-   */
   public play( newValue?: number, oldValue?: number ): void {
 
     affirm( newValue !== undefined && oldValue !== undefined, 'newValue and oldValue should be defined' );
@@ -107,6 +104,4 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
   }
 }
 
-membraneTransport.register( 'ConcentrationSliderSoundGenerator', ConcentrationSliderSoundGenerator );
-
-export default ConcentrationSliderSoundGenerator;
+membraneTransport.register( 'SoluteSpinnerSoundGenerator', SoluteSpinnerSoundGenerator );
