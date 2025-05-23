@@ -28,7 +28,7 @@ export default class SolutesPanel extends Node {
   public constructor( featureSet: MembraneTransportFeatureSet, soluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super();
 
-    const title = new VoicingText( MembraneTransportFluent.solutes.createProperty( {} ), {
+    const title = new VoicingText( MembraneTransportFluent.solutesStringProperty, {
       fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
       maxWidth: 200,
 

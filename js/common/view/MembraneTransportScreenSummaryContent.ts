@@ -77,10 +77,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     } );
 
     super( {
-      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1.createProperty( {} ) :
-                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4.createProperty( {} ) :
-                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3.createProperty( {} ) :
-                       MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4.createProperty( {} ),
+      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1StringProperty :
+                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4StringProperty :
+                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3StringProperty :
+                       MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4StringProperty,
       controlAreaContent: MembraneTransportStrings.a11y.summary.controlAreaSummaryStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode
