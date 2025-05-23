@@ -7,7 +7,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import { clamp } from '../../../dot/js/util/clamp.js';
 import { linear } from '../../../dot/js/util/linear.js';
 import affirm from '../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
@@ -273,8 +272,7 @@ export default class MembraneTransportSounds {
 
       const totalAmount = outsideAmount + insideAmount;
 
-      // TODO: See https://github.com/phetsims/membrane-transport/issues/183
-      const amount = clamp( totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT, 0, 1 );
+      const amount = totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT;
       affirm( amount >= 0 && amount <= 1, `amount should be between 0 and 1, but got ${amount}` );
 
       const volumeBoost = type === 'glucose' ? 1.5 : 1;
