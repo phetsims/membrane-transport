@@ -11,6 +11,7 @@ import StringProperty from '../../axon/js/StringProperty.js';
 import localeProperty from '../../joist/js/i18n/localeProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import FluentUtils from '../../chipper/js/browser/FluentUtils.js';
+import FluentPattern from '../../chipper/js/browser/FluentPattern.js';
 import { FluentBundle, FluentResource } from '../../chipper/js/browser-and-node/FluentLibrary.js';
 import IntentionalAny from '../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from './membraneTransport.js';
@@ -278,7 +279,7 @@ localeProperty.lazyLink( () => {
   isLocaleChanging = true;
 } );
 
-const rebuildFluentBundle = () => {
+const createFluentBundle = () => {
   const bundle = new FluentBundle('en');
   const resource = new FluentResource(getFTL());
   const errors = bundle.addResource(resource);
@@ -288,18 +289,18 @@ const rebuildFluentBundle = () => {
 };
 
 // Initial compute of the bundle
-const fluentBundleProperty = new Property<FluentBundle>( rebuildFluentBundle() );
+const fluentBundleProperty = new Property<FluentBundle>( createFluentBundle() );
 
 Multilink.multilinkAny( allStringProperties, () => {
   if ( !isLocaleChanging ) {
-    fluentBundleProperty.value = rebuildFluentBundle();
+    fluentBundleProperty.value = createFluentBundle();
   }
 } );
 
 // When all strings change due to a locale change, update the bundle once
 localeProperty.lazyLink( () => {
   isLocaleChanging = false;
-  fluentBundleProperty.value = rebuildFluentBundle();
+  fluentBundleProperty.value = createFluentBundle();
 } );
 
 const formatPattern = (key: string, args: IntentionalAny): string => {
@@ -338,536 +339,167 @@ const formatToProperty = (key: string, args: IntentionalAny): TReadOnlyProperty<
 };
 
 const MembraneTransportFluent = {
-  "membrane-transport.title": {
-    format: (args: IntentionalAny): string => formatPattern('membrane-transport.title', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('membrane-transport.title', args)
-  },
-  "screen.simpleDiffusion": {
-    format: (args: IntentionalAny): string => formatPattern('screen.simpleDiffusion', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.simpleDiffusion', args)
-  },
-  "screen.facilitatedDiffusion": {
-    format: (args: IntentionalAny): string => formatPattern('screen.facilitatedDiffusion', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.facilitatedDiffusion', args)
-  },
-  "screen.activeTransport": {
-    format: (args: IntentionalAny): string => formatPattern('screen.activeTransport', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.activeTransport', args)
-  },
-  "screen.playground": {
-    format: (args: IntentionalAny): string => formatPattern('screen.playground', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('screen.playground', args)
-  },
-  solutes: {
-    format: (args: IntentionalAny): string => formatPattern('solutes', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('solutes', args)
-  },
-  oxygen: {
-    format: (args: IntentionalAny): string => formatPattern('oxygen', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('oxygen', args)
-  },
-  carbonDioxide: {
-    format: (args: IntentionalAny): string => formatPattern('carbonDioxide', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('carbonDioxide', args)
-  },
-  sodiumIon: {
-    format: (args: IntentionalAny): string => formatPattern('sodiumIon', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('sodiumIon', args)
-  },
-  potassiumIon: {
-    format: (args: IntentionalAny): string => formatPattern('potassiumIon', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('potassiumIon', args)
-  },
-  glucose: {
-    format: (args: IntentionalAny): string => formatPattern('glucose', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('glucose', args)
-  },
-  atp: {
-    format: (args: IntentionalAny): string => formatPattern('atp', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('atp', args)
-  },
-  outside: {
-    format: (args: IntentionalAny): string => formatPattern('outside', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('outside', args)
-  },
-  inside: {
-    format: (args: IntentionalAny): string => formatPattern('inside', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('inside', args)
-  },
-  membranePotentialLabels: {
-    format: (args: IntentionalAny): string => formatPattern('membranePotentialLabels', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('membranePotentialLabels', args)
-  },
-  voltageGatedChannels: {
-    format: (args: IntentionalAny): string => formatPattern('voltageGatedChannels', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('voltageGatedChannels', args)
-  },
-  ligandGatedChannels: {
-    format: (args: IntentionalAny): string => formatPattern('ligandGatedChannels', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('ligandGatedChannels', args)
-  },
-  activeTransporters: {
-    format: (args: IntentionalAny): string => formatPattern('activeTransporters', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('activeTransporters', args)
-  },
-  leakageChannels: {
-    format: (args: IntentionalAny): string => formatPattern('leakageChannels', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('leakageChannels', args)
-  },
-  sodiumIonNaPlus: {
-    format: (args: IntentionalAny): string => formatPattern('sodiumIonNaPlus', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('sodiumIonNaPlus', args)
-  },
-  potassiumIonKPlus: {
-    format: (args: IntentionalAny): string => formatPattern('potassiumIonKPlus', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('potassiumIonKPlus', args)
-  },
-  NaPlusKPlusPump: {
-    format: (args: IntentionalAny): string => formatPattern('NaPlusKPlusPump', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('NaPlusKPlusPump', args)
-  },
-  sodiumGlucoseCotransporter: {
-    format: (args: IntentionalAny): string => formatPattern('sodiumGlucoseCotransporter', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('sodiumGlucoseCotransporter', args)
-  },
-  membranePotential_mV: {
-    format: (args: IntentionalAny): string => formatPattern('membranePotential_mV', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('membranePotential_mV', args)
-  },
-  signs: {
-    format: (args: IntentionalAny): string => formatPattern('signs', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('signs', args)
-  },
-  addLigands: {
-    format: (args: IntentionalAny): string => formatPattern('addLigands', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('addLigands', args)
-  },
-  removeLigands: {
-    format: (args: IntentionalAny): string => formatPattern('removeLigands', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('removeLigands', args)
-  },
-  animateLipids: {
-    format: (args: IntentionalAny): string => formatPattern('animateLipids', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('animateLipids', args)
-  },
-  animateLipidsDescription: {
-    format: (args: IntentionalAny): string => formatPattern('animateLipidsDescription', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('animateLipidsDescription', args)
-  },
-  soluteConcentrations: {
-    format: (args: IntentionalAny): string => formatPattern('soluteConcentrations', args),
-    createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('soluteConcentrations', args)
-  },
+  "membrane-transport.title": new FluentPattern( fluentBundleProperty, 'membrane-transport.title' ),
+  "screen.simpleDiffusion": new FluentPattern( fluentBundleProperty, 'screen.simpleDiffusion' ),
+  "screen.facilitatedDiffusion": new FluentPattern( fluentBundleProperty, 'screen.facilitatedDiffusion' ),
+  "screen.activeTransport": new FluentPattern( fluentBundleProperty, 'screen.activeTransport' ),
+  "screen.playground": new FluentPattern( fluentBundleProperty, 'screen.playground' ),
+  solutes: new FluentPattern( fluentBundleProperty, 'solutes' ),
+  oxygen: new FluentPattern( fluentBundleProperty, 'oxygen' ),
+  carbonDioxide: new FluentPattern( fluentBundleProperty, 'carbonDioxide' ),
+  sodiumIon: new FluentPattern( fluentBundleProperty, 'sodiumIon' ),
+  potassiumIon: new FluentPattern( fluentBundleProperty, 'potassiumIon' ),
+  glucose: new FluentPattern( fluentBundleProperty, 'glucose' ),
+  atp: new FluentPattern( fluentBundleProperty, 'atp' ),
+  outside: new FluentPattern( fluentBundleProperty, 'outside' ),
+  inside: new FluentPattern( fluentBundleProperty, 'inside' ),
+  membranePotentialLabels: new FluentPattern( fluentBundleProperty, 'membranePotentialLabels' ),
+  voltageGatedChannels: new FluentPattern( fluentBundleProperty, 'voltageGatedChannels' ),
+  ligandGatedChannels: new FluentPattern( fluentBundleProperty, 'ligandGatedChannels' ),
+  activeTransporters: new FluentPattern( fluentBundleProperty, 'activeTransporters' ),
+  leakageChannels: new FluentPattern( fluentBundleProperty, 'leakageChannels' ),
+  sodiumIonNaPlus: new FluentPattern( fluentBundleProperty, 'sodiumIonNaPlus' ),
+  potassiumIonKPlus: new FluentPattern( fluentBundleProperty, 'potassiumIonKPlus' ),
+  NaPlusKPlusPump: new FluentPattern( fluentBundleProperty, 'NaPlusKPlusPump' ),
+  sodiumGlucoseCotransporter: new FluentPattern( fluentBundleProperty, 'sodiumGlucoseCotransporter' ),
+  membranePotential_mV: new FluentPattern( fluentBundleProperty, 'membranePotential_mV' ),
+  signs: new FluentPattern( fluentBundleProperty, 'signs' ),
+  addLigands: new FluentPattern( fluentBundleProperty, 'addLigands' ),
+  removeLigands: new FluentPattern( fluentBundleProperty, 'removeLigands' ),
+  animateLipids: new FluentPattern( fluentBundleProperty, 'animateLipids' ),
+  animateLipidsDescription: new FluentPattern( fluentBundleProperty, 'animateLipidsDescription' ),
+  soluteConcentrations: new FluentPattern( fluentBundleProperty, 'soluteConcentrations' ),
   a11y: {
     summary: {
-      playAreaSummaryIntro: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryIntro', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryIntro', args)
-      },
-      playAreaSummarySolutes: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummarySolutes', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummarySolutes', args)
-      },
-      playAreaSummaryProteins: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryProteins', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryProteins', args)
-      },
-      playAreaSummaryPotential: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryPotential', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryPotential', args)
-      },
-      playAreaSummaryBarCharts: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryBarCharts', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryBarCharts', args)
-      },
-      playAreaSummaryScreen1: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryScreen1', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryScreen1', args)
-      },
-      playAreaSummaryScreen2and4: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryScreen2and4', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryScreen2and4', args)
-      },
-      playAreaSummaryScreen3: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_playAreaSummaryScreen3', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_playAreaSummaryScreen3', args)
-      },
-      controlAreaSummary: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_controlAreaSummary', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_controlAreaSummary', args)
-      },
-      interactionHint: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_interactionHint', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_interactionHint', args)
-      },
-      interactionHintWithTransportProteins: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_summary_interactionHintWithTransportProteins', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_summary_interactionHintWithTransportProteins', args)
-      }
+      playAreaSummaryIntro: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryIntro' ),
+      playAreaSummarySolutes: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummarySolutes' ),
+      playAreaSummaryProteins: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryProteins' ),
+      playAreaSummaryPotential: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryPotential' ),
+      playAreaSummaryBarCharts: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryBarCharts' ),
+      playAreaSummaryScreen1: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
+      playAreaSummaryScreen2and4: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),
+      playAreaSummaryScreen3: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen3' ),
+      controlAreaSummary: new FluentPattern( fluentBundleProperty, 'a11y_summary_controlAreaSummary' ),
+      interactionHint: new FluentPattern( fluentBundleProperty, 'a11y_summary_interactionHint' ),
+      interactionHintWithTransportProteins: new FluentPattern( fluentBundleProperty, 'a11y_summary_interactionHintWithTransportProteins' )
     },
     observationWindow: {
       membrane: {
-        accessibleName: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_observationWindow_membrane_accessibleName', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_observationWindow_membrane_accessibleName', args)
-        }
+        accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_observationWindow_membrane_accessibleName' )
       }
     },
     soluteControls: {
-      accessibleHeading: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteControls_accessibleHeading', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteControls_accessibleHeading', args)
-      }
+      accessibleHeading: new FluentPattern( fluentBundleProperty, 'a11y_soluteControls_accessibleHeading' )
     },
     eraseSolutesButton: {
-      accessibleName: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_eraseSolutesButton_accessibleName', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_eraseSolutesButton_accessibleName', args)
-      },
-      accessibleContextResponse: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_eraseSolutesButton_accessibleContextResponse', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_eraseSolutesButton_accessibleContextResponse', args)
-      }
+      accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_eraseSolutesButton_accessibleName' ),
+      accessibleContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse' )
     },
     transportProteinPanel: {
-      transportProteins: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_transportProteins', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_transportProteins', args)
-      },
-      accessibleHelpText: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_accessibleHelpText', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_accessibleHelpText', args)
-      },
+      transportProteins: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_transportProteins' ),
+      accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_accessibleHelpText' ),
       ligandGatedChannelPanel: {
-        sodiumIonNaPlusLigandGated: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', args)
-        },
-        potassiumIonKPlusLigandGated: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', args)
-        }
+        sodiumIonNaPlusLigandGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated' ),
+        potassiumIonKPlusLigandGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated' )
       },
       leakageChannelPanel: {
-        sodiumIonNaPlusLeakage: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', args)
-        },
-        potassiumIonKPlusLeakage: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', args)
-        }
+        sodiumIonNaPlusLeakage: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage' ),
+        potassiumIonKPlusLeakage: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage' )
       },
       voltageGatedChannelPanel: {
-        sodiumIonNaPlusVoltageGated: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', args)
-        },
-        potassiumIonKPlusVoltageGated: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', args)
-        },
+        sodiumIonNaPlusVoltageGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated' ),
+        potassiumIonKPlusVoltageGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated' ),
         membranePotential: {
           radioButtonGroup: {
-            accessibleName: {
-              format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', args),
-              createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', args)
-            },
-            accessibleHelpText: {
-              format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', args),
-              createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', args)
-            },
+            accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName' ),
+            accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText' ),
             negative70RadioButton: {
-              accessibleName: {
-                format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', args),
-                createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', args)
-              }
+              accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName' )
             },
             negative50RadioButton: {
-              accessibleName: {
-                format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', args),
-                createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', args)
-              }
+              accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName' )
             },
             positive30RadioButton: {
-              accessibleName: {
-                format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', args),
-                createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', args)
-              }
+              accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName' )
             }
           }
         },
         signsCheckbox: {
-          accessibleHelpText: {
-            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', args),
-            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', args)
-          },
-          checkedContextResponseNegative70: {
-            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', args),
-            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', args)
-          },
-          checkedContextResponseNegative50: {
-            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', args),
-            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', args)
-          },
-          checkedContextResponsePositive30: {
-            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', args),
-            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', args)
-          },
-          uncheckedContextResponse: {
-            format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', args),
-            createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', args)
-          }
+          accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText' ),
+          checkedContextResponseNegative70: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70' ),
+          checkedContextResponseNegative50: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50' ),
+          checkedContextResponsePositive30: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30' ),
+          uncheckedContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse' )
         }
       },
       activeTransportProteinPanel: {
-        sodiumPotassiumPump: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', args)
-        },
-        sodiumGlucoseCotransporter: {
-          format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', args),
-          createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', args)
-        }
+        sodiumPotassiumPump: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump' ),
+        sodiumGlucoseCotransporter: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter' )
       },
-      toolAccessibleHelpText: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinPanel_toolAccessibleHelpText', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinPanel_toolAccessibleHelpText', args)
-      }
+      toolAccessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_toolAccessibleHelpText' )
     },
     ligandNode: {
-      starLigand: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_starLigand', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_starLigand', args)
-      },
-      triangleLigand: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_triangleLigand', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_triangleLigand', args)
-      },
-      accessibleHelpText: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_accessibleHelpText', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_accessibleHelpText', args)
-      },
-      releasedLigand: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_releasedLigand', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_releasedLigand', args)
-      },
-      grabbedLigand: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_grabbedLigand', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_grabbedLigand', args)
-      },
-      ligandReleasedOffMembranePattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandReleasedOffMembranePattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandReleasedOffMembranePattern', args)
-      },
-      ligandReleasedOnProteinPattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandReleasedOnProteinPattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandReleasedOnProteinPattern', args)
-      },
-      ligandReleasedOnBusyOrIncompatibleProteinPattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', args)
-      },
-      ligandMovedToSlotPattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandMovedToSlotPattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandMovedToSlotPattern', args)
-      },
-      ligandUnboundAlert: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_ligandUnboundAlert', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_ligandUnboundAlert', args)
-      },
-      thereIsNoProteinAtThisSlot: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_thereIsNoProteinAtThisSlot', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_thereIsNoProteinAtThisSlot', args)
-      },
-      thereIsProteinAtThisSlotPattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_thereIsProteinAtThisSlotPattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_thereIsProteinAtThisSlotPattern', args)
-      },
-      moveCancelledPattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_moveCancelledPattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_moveCancelledPattern', args)
-      },
-      cannotInteractWhileLigandIsBoundPattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern', args)
-      }
+      starLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_starLigand' ),
+      triangleLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_triangleLigand' ),
+      accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_accessibleHelpText' ),
+      releasedLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_releasedLigand' ),
+      grabbedLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_grabbedLigand' ),
+      ligandReleasedOffMembranePattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOffMembranePattern' ),
+      ligandReleasedOnProteinPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOnProteinPattern' ),
+      ligandReleasedOnBusyOrIncompatibleProteinPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern' ),
+      ligandMovedToSlotPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandMovedToSlotPattern' ),
+      ligandUnboundAlert: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandUnboundAlert' ),
+      thereIsNoProteinAtThisSlot: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_thereIsNoProteinAtThisSlot' ),
+      thereIsProteinAtThisSlotPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_thereIsProteinAtThisSlotPattern' ),
+      moveCancelledPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_moveCancelledPattern' ),
+      cannotInteractWhileLigandIsBoundPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern' )
     },
-    soluteControlsAccessibleHelpText: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_soluteControlsAccessibleHelpText', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteControlsAccessibleHelpText', args)
-    },
+    soluteControlsAccessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_soluteControlsAccessibleHelpText' ),
     soluteAccessibleNames: {
-      oxygen: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_oxygen', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_oxygen', args)
-      },
-      carbonDioxide: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_carbonDioxide', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_carbonDioxide', args)
-      },
-      sodiumIon: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_sodiumIon', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_sodiumIon', args)
-      },
-      potassiumIon: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_potassiumIon', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_potassiumIon', args)
-      },
-      glucose: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_glucose', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_glucose', args)
-      },
-      atp: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_soluteAccessibleNames_atp', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteAccessibleNames_atp', args)
-      }
+      oxygen: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_oxygen' ),
+      carbonDioxide: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_carbonDioxide' ),
+      sodiumIon: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_sodiumIon' ),
+      potassiumIon: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_potassiumIon' ),
+      glucose: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_glucose' ),
+      atp: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_atp' )
     },
-    outsideMembraneSpinnerAccessibleName: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_outsideMembraneSpinnerAccessibleName', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_outsideMembraneSpinnerAccessibleName', args)
-    },
-    outsideMembraneSpinnerHelpText: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_outsideMembraneSpinnerHelpText', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_outsideMembraneSpinnerHelpText', args)
-    },
-    insideMembraneSpinnerAccessibleName: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_insideMembraneSpinnerAccessibleName', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_insideMembraneSpinnerAccessibleName', args)
-    },
-    insideMembraneSpinnerHelpText: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_insideMembraneSpinnerHelpText', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_insideMembraneSpinnerHelpText', args)
-    },
-    soluteSpinnerRoleDescription: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_soluteSpinnerRoleDescription', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteSpinnerRoleDescription', args)
-    },
-    solute: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_solute', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_solute', args)
-    },
-    soluteSpinnerObjectResponsePattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_soluteSpinnerObjectResponsePattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteSpinnerObjectResponsePattern', args)
-    },
-    soluteSpinnerContextResponsePattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_soluteSpinnerContextResponsePattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteSpinnerContextResponsePattern', args)
-    },
-    soluteBarChartsDescriptionParagraph: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_soluteBarChartsDescriptionParagraph', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_soluteBarChartsDescriptionParagraph', args)
-    },
-    arrowSizeDescription: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_arrowSizeDescription', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_arrowSizeDescription', args)
-    },
-    arrowDirectionDescription: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_arrowDirectionDescription', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_arrowDirectionDescription', args)
-    },
-    barSizeDescription: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_barSizeDescription', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_barSizeDescription', args)
-    },
-    barChartPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_barChartPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_barChartPattern', args)
-    },
-    currentDetailsActivityLevel: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsActivityLevel', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsActivityLevel', args)
-    },
-    currentDetails: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetails', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetails', args)
-    },
-    currentDetailsSoluteTypesOnOutside: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsSoluteTypesOnOutside', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsSoluteTypesOnOutside', args)
-    },
-    currentDetailsSoluteTypesOnInside: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsSoluteTypesOnInside', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsSoluteTypesOnInside', args)
-    },
-    currentDetailsTransportProteins: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsTransportProteins', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsTransportProteins', args)
-    },
-    ligandsOnOutsideOnly: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandsOnOutsideOnly', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandsOnOutsideOnly', args)
-    },
-    currentDetailsMembranePotential: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_currentDetailsMembranePotential', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_currentDetailsMembranePotential', args)
-    },
-    releasedBackInToolbox: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_releasedBackInToolbox', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_releasedBackInToolbox', args)
-    },
-    selectedTransportProteinInSlot: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_selectedTransportProteinInSlot', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_selectedTransportProteinInSlot', args)
-    },
-    canceledBackInMembrane: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_canceledBackInMembrane', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_canceledBackInMembrane', args)
-    },
-    grabbedProteinResponsePattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedProteinResponsePattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedProteinResponsePattern', args)
-    },
-    grabbedProteinResponseWithHintPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedProteinResponseWithHintPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedProteinResponseWithHintPattern', args)
-    },
-    ligandToggleButtonAccessibleHelpText: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandToggleButtonAccessibleHelpText', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandToggleButtonAccessibleHelpText', args)
-    },
-    ligandToggleButtonAddedContextResponse: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandToggleButtonAddedContextResponse', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandToggleButtonAddedContextResponse', args)
-    },
-    ligandToggleButtonRemovedContextResponse: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandToggleButtonRemovedContextResponse', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandToggleButtonRemovedContextResponse', args)
-    },
-    grabbedLigandResponsePattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedLigandResponsePattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedLigandResponsePattern', args)
-    },
-    grabbedLigandResponseWithHintPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedLigandResponseWithHintPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedLigandResponseWithHintPattern', args)
-    },
-    grabbedLigandResponseWithEmptyMembraneHintPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', args)
-    },
-    transportProteinBriefName: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_transportProteinBriefName', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProteinBriefName', args)
-    },
-    ligandMovedAboveLigandGatedChannelPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandMovedAboveLigandGatedChannelPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandMovedAboveLigandGatedChannelPattern', args)
-    },
-    ligandMovedAboveLeakageChannelPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandMovedAboveLeakageChannelPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandMovedAboveLeakageChannelPattern', args)
-    },
-    ligandMovedAboveOtherChannelPattern: {
-      format: (args: IntentionalAny): string => formatPattern('a11y_ligandMovedAboveOtherChannelPattern', args),
-      createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_ligandMovedAboveOtherChannelPattern', args)
-    },
+    outsideMembraneSpinnerAccessibleName: new FluentPattern( fluentBundleProperty, 'a11y_outsideMembraneSpinnerAccessibleName' ),
+    outsideMembraneSpinnerHelpText: new FluentPattern( fluentBundleProperty, 'a11y_outsideMembraneSpinnerHelpText' ),
+    insideMembraneSpinnerAccessibleName: new FluentPattern( fluentBundleProperty, 'a11y_insideMembraneSpinnerAccessibleName' ),
+    insideMembraneSpinnerHelpText: new FluentPattern( fluentBundleProperty, 'a11y_insideMembraneSpinnerHelpText' ),
+    soluteSpinnerRoleDescription: new FluentPattern( fluentBundleProperty, 'a11y_soluteSpinnerRoleDescription' ),
+    solute: new FluentPattern( fluentBundleProperty, 'a11y_solute' ),
+    soluteSpinnerObjectResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_soluteSpinnerObjectResponsePattern' ),
+    soluteSpinnerContextResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_soluteSpinnerContextResponsePattern' ),
+    soluteBarChartsDescriptionParagraph: new FluentPattern( fluentBundleProperty, 'a11y_soluteBarChartsDescriptionParagraph' ),
+    arrowSizeDescription: new FluentPattern( fluentBundleProperty, 'a11y_arrowSizeDescription' ),
+    arrowDirectionDescription: new FluentPattern( fluentBundleProperty, 'a11y_arrowDirectionDescription' ),
+    barSizeDescription: new FluentPattern( fluentBundleProperty, 'a11y_barSizeDescription' ),
+    barChartPattern: new FluentPattern( fluentBundleProperty, 'a11y_barChartPattern' ),
+    currentDetailsActivityLevel: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsActivityLevel' ),
+    currentDetails: new FluentPattern( fluentBundleProperty, 'a11y_currentDetails' ),
+    currentDetailsSoluteTypesOnOutside: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
+    currentDetailsSoluteTypesOnInside: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
+    currentDetailsTransportProteins: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsTransportProteins' ),
+    ligandsOnOutsideOnly: new FluentPattern( fluentBundleProperty, 'a11y_ligandsOnOutsideOnly' ),
+    currentDetailsMembranePotential: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsMembranePotential' ),
+    releasedBackInToolbox: new FluentPattern( fluentBundleProperty, 'a11y_releasedBackInToolbox' ),
+    selectedTransportProteinInSlot: new FluentPattern( fluentBundleProperty, 'a11y_selectedTransportProteinInSlot' ),
+    canceledBackInMembrane: new FluentPattern( fluentBundleProperty, 'a11y_canceledBackInMembrane' ),
+    grabbedProteinResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedProteinResponsePattern' ),
+    grabbedProteinResponseWithHintPattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedProteinResponseWithHintPattern' ),
+    ligandToggleButtonAccessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText' ),
+    ligandToggleButtonAddedContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_ligandToggleButtonAddedContextResponse' ),
+    ligandToggleButtonRemovedContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_ligandToggleButtonRemovedContextResponse' ),
+    grabbedLigandResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedLigandResponsePattern' ),
+    grabbedLigandResponseWithHintPattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedLigandResponseWithHintPattern' ),
+    grabbedLigandResponseWithEmptyMembraneHintPattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern' ),
+    transportProteinBriefName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinBriefName' ),
+    ligandMovedAboveLigandGatedChannelPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern' ),
+    ligandMovedAboveLeakageChannelPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern' ),
+    ligandMovedAboveOtherChannelPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern' ),
     transportProtein: {
-      accessibleNamePattern: {
-        format: (args: IntentionalAny): string => formatPattern('a11y_transportProtein_accessibleNamePattern', args),
-        createProperty: (args: IntentionalAny): TReadOnlyProperty<string> => formatToProperty('a11y_transportProtein_accessibleNamePattern', args)
-      }
+      accessibleNamePattern: new FluentPattern( fluentBundleProperty, 'a11y_transportProtein_accessibleNamePattern' )
     }
   }
 };
