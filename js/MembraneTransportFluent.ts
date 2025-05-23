@@ -338,9 +338,9 @@ const MembraneTransportFluent = {
       playAreaSummaryProteins: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryProteins' ),
       playAreaSummaryPotential: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryPotential' ),
       playAreaSummaryBarCharts: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryBarCharts' ),
-      playAreaSummaryScreen1: new FluentPattern<{ __hasReferences: IntentionalAny }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
-      playAreaSummaryScreen2and4: new FluentPattern<{ __hasReferences: IntentionalAny }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),
-      playAreaSummaryScreen3: new FluentPattern<{ __hasReferences: IntentionalAny }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen3' ),
+      playAreaSummaryScreen1: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
+      playAreaSummaryScreen2and4: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),
+      playAreaSummaryScreen3: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen3' ),
       controlAreaSummary: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_controlAreaSummary' ),
       interactionHint: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_interactionHint' ),
       interactionHintWithTransportProteins: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_interactionHintWithTransportProteins' )
