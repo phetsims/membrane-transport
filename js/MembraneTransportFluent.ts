@@ -7,16 +7,13 @@
 
 import Multilink from '../../axon/js/Multilink.js';
 import Property from '../../axon/js/Property.js';
-import StringProperty from '../../axon/js/StringProperty.js';
 import localeProperty from '../../joist/js/i18n/localeProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import FluentUtils from '../../chipper/js/browser/FluentUtils.js';
 import FluentPattern from '../../chipper/js/browser/FluentPattern.js';
 import { FluentBundle, FluentResource } from '../../chipper/js/browser-and-node/FluentLibrary.js';
 import IntentionalAny from '../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from './membraneTransport.js';
 import MembraneTransportStrings from './MembraneTransportStrings.js';
-import { isTReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 
 const getFTL = (): string => {
   const ftl = `
@@ -304,167 +301,167 @@ localeProperty.lazyLink( () => {
 } );
 
 const MembraneTransportFluent = {
-  "membrane-transport.title": new FluentPattern( fluentBundleProperty, 'membrane-transport.title' ),
-  "screen.simpleDiffusion": new FluentPattern( fluentBundleProperty, 'screen.simpleDiffusion' ),
-  "screen.facilitatedDiffusion": new FluentPattern( fluentBundleProperty, 'screen.facilitatedDiffusion' ),
-  "screen.activeTransport": new FluentPattern( fluentBundleProperty, 'screen.activeTransport' ),
-  "screen.playground": new FluentPattern( fluentBundleProperty, 'screen.playground' ),
-  solutes: new FluentPattern( fluentBundleProperty, 'solutes' ),
-  oxygen: new FluentPattern( fluentBundleProperty, 'oxygen' ),
-  carbonDioxide: new FluentPattern( fluentBundleProperty, 'carbonDioxide' ),
-  sodiumIon: new FluentPattern( fluentBundleProperty, 'sodiumIon' ),
-  potassiumIon: new FluentPattern( fluentBundleProperty, 'potassiumIon' ),
-  glucose: new FluentPattern( fluentBundleProperty, 'glucose' ),
-  atp: new FluentPattern( fluentBundleProperty, 'atp' ),
-  outside: new FluentPattern( fluentBundleProperty, 'outside' ),
-  inside: new FluentPattern( fluentBundleProperty, 'inside' ),
-  membranePotentialLabels: new FluentPattern( fluentBundleProperty, 'membranePotentialLabels' ),
-  voltageGatedChannels: new FluentPattern( fluentBundleProperty, 'voltageGatedChannels' ),
-  ligandGatedChannels: new FluentPattern( fluentBundleProperty, 'ligandGatedChannels' ),
-  activeTransporters: new FluentPattern( fluentBundleProperty, 'activeTransporters' ),
-  leakageChannels: new FluentPattern( fluentBundleProperty, 'leakageChannels' ),
-  sodiumIonNaPlus: new FluentPattern( fluentBundleProperty, 'sodiumIonNaPlus' ),
-  potassiumIonKPlus: new FluentPattern( fluentBundleProperty, 'potassiumIonKPlus' ),
-  NaPlusKPlusPump: new FluentPattern( fluentBundleProperty, 'NaPlusKPlusPump' ),
-  sodiumGlucoseCotransporter: new FluentPattern( fluentBundleProperty, 'sodiumGlucoseCotransporter' ),
-  membranePotential_mV: new FluentPattern( fluentBundleProperty, 'membranePotential_mV' ),
-  signs: new FluentPattern( fluentBundleProperty, 'signs' ),
-  addLigands: new FluentPattern( fluentBundleProperty, 'addLigands' ),
-  removeLigands: new FluentPattern( fluentBundleProperty, 'removeLigands' ),
-  animateLipids: new FluentPattern( fluentBundleProperty, 'animateLipids' ),
-  animateLipidsDescription: new FluentPattern( fluentBundleProperty, 'animateLipidsDescription' ),
-  soluteConcentrations: new FluentPattern( fluentBundleProperty, 'soluteConcentrations' ),
+  "membrane-transport.title": new FluentPattern<{  }>( fluentBundleProperty, 'membrane-transport.title' ),
+  "screen.simpleDiffusion": new FluentPattern<{  }>( fluentBundleProperty, 'screen.simpleDiffusion' ),
+  "screen.facilitatedDiffusion": new FluentPattern<{  }>( fluentBundleProperty, 'screen.facilitatedDiffusion' ),
+  "screen.activeTransport": new FluentPattern<{  }>( fluentBundleProperty, 'screen.activeTransport' ),
+  "screen.playground": new FluentPattern<{  }>( fluentBundleProperty, 'screen.playground' ),
+  solutes: new FluentPattern<{  }>( fluentBundleProperty, 'solutes' ),
+  oxygen: new FluentPattern<{  }>( fluentBundleProperty, 'oxygen' ),
+  carbonDioxide: new FluentPattern<{  }>( fluentBundleProperty, 'carbonDioxide' ),
+  sodiumIon: new FluentPattern<{  }>( fluentBundleProperty, 'sodiumIon' ),
+  potassiumIon: new FluentPattern<{  }>( fluentBundleProperty, 'potassiumIon' ),
+  glucose: new FluentPattern<{  }>( fluentBundleProperty, 'glucose' ),
+  atp: new FluentPattern<{  }>( fluentBundleProperty, 'atp' ),
+  outside: new FluentPattern<{  }>( fluentBundleProperty, 'outside' ),
+  inside: new FluentPattern<{  }>( fluentBundleProperty, 'inside' ),
+  membranePotentialLabels: new FluentPattern<{  }>( fluentBundleProperty, 'membranePotentialLabels' ),
+  voltageGatedChannels: new FluentPattern<{  }>( fluentBundleProperty, 'voltageGatedChannels' ),
+  ligandGatedChannels: new FluentPattern<{  }>( fluentBundleProperty, 'ligandGatedChannels' ),
+  activeTransporters: new FluentPattern<{  }>( fluentBundleProperty, 'activeTransporters' ),
+  leakageChannels: new FluentPattern<{  }>( fluentBundleProperty, 'leakageChannels' ),
+  sodiumIonNaPlus: new FluentPattern<{  }>( fluentBundleProperty, 'sodiumIonNaPlus' ),
+  potassiumIonKPlus: new FluentPattern<{  }>( fluentBundleProperty, 'potassiumIonKPlus' ),
+  NaPlusKPlusPump: new FluentPattern<{  }>( fluentBundleProperty, 'NaPlusKPlusPump' ),
+  sodiumGlucoseCotransporter: new FluentPattern<{  }>( fluentBundleProperty, 'sodiumGlucoseCotransporter' ),
+  membranePotential_mV: new FluentPattern<{  }>( fluentBundleProperty, 'membranePotential_mV' ),
+  signs: new FluentPattern<{  }>( fluentBundleProperty, 'signs' ),
+  addLigands: new FluentPattern<{  }>( fluentBundleProperty, 'addLigands' ),
+  removeLigands: new FluentPattern<{  }>( fluentBundleProperty, 'removeLigands' ),
+  animateLipids: new FluentPattern<{  }>( fluentBundleProperty, 'animateLipids' ),
+  animateLipidsDescription: new FluentPattern<{  }>( fluentBundleProperty, 'animateLipidsDescription' ),
+  soluteConcentrations: new FluentPattern<{  }>( fluentBundleProperty, 'soluteConcentrations' ),
   a11y: {
     summary: {
-      playAreaSummaryIntro: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryIntro' ),
-      playAreaSummarySolutes: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummarySolutes' ),
-      playAreaSummaryProteins: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryProteins' ),
-      playAreaSummaryPotential: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryPotential' ),
-      playAreaSummaryBarCharts: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryBarCharts' ),
-      playAreaSummaryScreen1: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
-      playAreaSummaryScreen2and4: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),
-      playAreaSummaryScreen3: new FluentPattern( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen3' ),
-      controlAreaSummary: new FluentPattern( fluentBundleProperty, 'a11y_summary_controlAreaSummary' ),
-      interactionHint: new FluentPattern( fluentBundleProperty, 'a11y_summary_interactionHint' ),
-      interactionHintWithTransportProteins: new FluentPattern( fluentBundleProperty, 'a11y_summary_interactionHintWithTransportProteins' )
+      playAreaSummaryIntro: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryIntro' ),
+      playAreaSummarySolutes: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummarySolutes' ),
+      playAreaSummaryProteins: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryProteins' ),
+      playAreaSummaryPotential: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryPotential' ),
+      playAreaSummaryBarCharts: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryBarCharts' ),
+      playAreaSummaryScreen1: new FluentPattern<{ __hasReferences: IntentionalAny }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen1' ),
+      playAreaSummaryScreen2and4: new FluentPattern<{ __hasReferences: IntentionalAny }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen2and4' ),
+      playAreaSummaryScreen3: new FluentPattern<{ __hasReferences: IntentionalAny }>( fluentBundleProperty, 'a11y_summary_playAreaSummaryScreen3' ),
+      controlAreaSummary: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_controlAreaSummary' ),
+      interactionHint: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_interactionHint' ),
+      interactionHintWithTransportProteins: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_summary_interactionHintWithTransportProteins' )
     },
     observationWindow: {
       membrane: {
-        accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_observationWindow_membrane_accessibleName' )
+        accessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_observationWindow_membrane_accessibleName' )
       }
     },
     soluteControls: {
-      accessibleHeading: new FluentPattern( fluentBundleProperty, 'a11y_soluteControls_accessibleHeading' )
+      accessibleHeading: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteControls_accessibleHeading' )
     },
     eraseSolutesButton: {
-      accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_eraseSolutesButton_accessibleName' ),
-      accessibleContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse' )
+      accessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_eraseSolutesButton_accessibleName' ),
+      accessibleContextResponse: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse' )
     },
     transportProteinPanel: {
-      transportProteins: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_transportProteins' ),
-      accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_accessibleHelpText' ),
+      transportProteins: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_transportProteins' ),
+      accessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_accessibleHelpText' ),
       ligandGatedChannelPanel: {
-        sodiumIonNaPlusLigandGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated' ),
-        potassiumIonKPlusLigandGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated' )
+        sodiumIonNaPlusLigandGated: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated' ),
+        potassiumIonKPlusLigandGated: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated' )
       },
       leakageChannelPanel: {
-        sodiumIonNaPlusLeakage: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage' ),
-        potassiumIonKPlusLeakage: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage' )
+        sodiumIonNaPlusLeakage: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage' ),
+        potassiumIonKPlusLeakage: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage' )
       },
       voltageGatedChannelPanel: {
-        sodiumIonNaPlusVoltageGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated' ),
-        potassiumIonKPlusVoltageGated: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated' ),
+        sodiumIonNaPlusVoltageGated: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated' ),
+        potassiumIonKPlusVoltageGated: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated' ),
         membranePotential: {
           radioButtonGroup: {
-            accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName' ),
-            accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText' ),
+            accessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName' ),
+            accessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText' ),
             negative70RadioButton: {
-              accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName' )
+              accessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName' )
             },
             negative50RadioButton: {
-              accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName' )
+              accessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName' )
             },
             positive30RadioButton: {
-              accessibleName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName' )
+              accessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName' )
             }
           }
         },
         signsCheckbox: {
-          accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText' ),
-          checkedContextResponseNegative70: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70' ),
-          checkedContextResponseNegative50: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50' ),
-          checkedContextResponsePositive30: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30' ),
-          uncheckedContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse' )
+          accessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText' ),
+          checkedContextResponseNegative70: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70' ),
+          checkedContextResponseNegative50: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50' ),
+          checkedContextResponsePositive30: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30' ),
+          uncheckedContextResponse: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse' )
         }
       },
       activeTransportProteinPanel: {
-        sodiumPotassiumPump: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump' ),
-        sodiumGlucoseCotransporter: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter' )
+        sodiumPotassiumPump: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump' ),
+        sodiumGlucoseCotransporter: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter' )
       },
-      toolAccessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinPanel_toolAccessibleHelpText' )
+      toolAccessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_transportProteinPanel_toolAccessibleHelpText' )
     },
     ligandNode: {
-      starLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_starLigand' ),
-      triangleLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_triangleLigand' ),
-      accessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_accessibleHelpText' ),
-      releasedLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_releasedLigand' ),
-      grabbedLigand: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_grabbedLigand' ),
-      ligandReleasedOffMembranePattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOffMembranePattern' ),
-      ligandReleasedOnProteinPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOnProteinPattern' ),
-      ligandReleasedOnBusyOrIncompatibleProteinPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern' ),
-      ligandMovedToSlotPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandMovedToSlotPattern' ),
-      ligandUnboundAlert: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_ligandUnboundAlert' ),
-      thereIsNoProteinAtThisSlot: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_thereIsNoProteinAtThisSlot' ),
-      thereIsProteinAtThisSlotPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_thereIsProteinAtThisSlotPattern' ),
-      moveCancelledPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_moveCancelledPattern' ),
-      cannotInteractWhileLigandIsBoundPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern' )
+      starLigand: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_starLigand' ),
+      triangleLigand: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_triangleLigand' ),
+      accessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_accessibleHelpText' ),
+      releasedLigand: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_releasedLigand' ),
+      grabbedLigand: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_grabbedLigand' ),
+      ligandReleasedOffMembranePattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOffMembranePattern' ),
+      ligandReleasedOnProteinPattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOnProteinPattern' ),
+      ligandReleasedOnBusyOrIncompatibleProteinPattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern' ),
+      ligandMovedToSlotPattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_ligandMovedToSlotPattern' ),
+      ligandUnboundAlert: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_ligandUnboundAlert' ),
+      thereIsNoProteinAtThisSlot: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_thereIsNoProteinAtThisSlot' ),
+      thereIsProteinAtThisSlotPattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_thereIsProteinAtThisSlotPattern' ),
+      moveCancelledPattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_moveCancelledPattern' ),
+      cannotInteractWhileLigandIsBoundPattern: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandNode_cannotInteractWhileLigandIsBoundPattern' )
     },
-    soluteControlsAccessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_soluteControlsAccessibleHelpText' ),
+    soluteControlsAccessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteControlsAccessibleHelpText' ),
     soluteAccessibleNames: {
-      oxygen: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_oxygen' ),
-      carbonDioxide: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_carbonDioxide' ),
-      sodiumIon: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_sodiumIon' ),
-      potassiumIon: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_potassiumIon' ),
-      glucose: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_glucose' ),
-      atp: new FluentPattern( fluentBundleProperty, 'a11y_soluteAccessibleNames_atp' )
+      oxygen: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteAccessibleNames_oxygen' ),
+      carbonDioxide: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteAccessibleNames_carbonDioxide' ),
+      sodiumIon: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteAccessibleNames_sodiumIon' ),
+      potassiumIon: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteAccessibleNames_potassiumIon' ),
+      glucose: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteAccessibleNames_glucose' ),
+      atp: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteAccessibleNames_atp' )
     },
-    outsideMembraneSpinnerAccessibleName: new FluentPattern( fluentBundleProperty, 'a11y_outsideMembraneSpinnerAccessibleName' ),
-    outsideMembraneSpinnerHelpText: new FluentPattern( fluentBundleProperty, 'a11y_outsideMembraneSpinnerHelpText' ),
-    insideMembraneSpinnerAccessibleName: new FluentPattern( fluentBundleProperty, 'a11y_insideMembraneSpinnerAccessibleName' ),
-    insideMembraneSpinnerHelpText: new FluentPattern( fluentBundleProperty, 'a11y_insideMembraneSpinnerHelpText' ),
-    soluteSpinnerRoleDescription: new FluentPattern( fluentBundleProperty, 'a11y_soluteSpinnerRoleDescription' ),
-    solute: new FluentPattern( fluentBundleProperty, 'a11y_solute' ),
-    soluteSpinnerObjectResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_soluteSpinnerObjectResponsePattern' ),
-    soluteSpinnerContextResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_soluteSpinnerContextResponsePattern' ),
-    soluteBarChartsDescriptionParagraph: new FluentPattern( fluentBundleProperty, 'a11y_soluteBarChartsDescriptionParagraph' ),
-    arrowSizeDescription: new FluentPattern( fluentBundleProperty, 'a11y_arrowSizeDescription' ),
-    arrowDirectionDescription: new FluentPattern( fluentBundleProperty, 'a11y_arrowDirectionDescription' ),
-    barSizeDescription: new FluentPattern( fluentBundleProperty, 'a11y_barSizeDescription' ),
-    barChartPattern: new FluentPattern( fluentBundleProperty, 'a11y_barChartPattern' ),
-    currentDetailsActivityLevel: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsActivityLevel' ),
-    currentDetails: new FluentPattern( fluentBundleProperty, 'a11y_currentDetails' ),
-    currentDetailsSoluteTypesOnOutside: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
-    currentDetailsSoluteTypesOnInside: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
-    currentDetailsTransportProteins: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsTransportProteins' ),
-    ligandsOnOutsideOnly: new FluentPattern( fluentBundleProperty, 'a11y_ligandsOnOutsideOnly' ),
-    currentDetailsMembranePotential: new FluentPattern( fluentBundleProperty, 'a11y_currentDetailsMembranePotential' ),
-    releasedBackInToolbox: new FluentPattern( fluentBundleProperty, 'a11y_releasedBackInToolbox' ),
-    selectedTransportProteinInSlot: new FluentPattern( fluentBundleProperty, 'a11y_selectedTransportProteinInSlot' ),
-    canceledBackInMembrane: new FluentPattern( fluentBundleProperty, 'a11y_canceledBackInMembrane' ),
-    grabbedProteinResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedProteinResponsePattern' ),
-    grabbedProteinResponseWithHintPattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedProteinResponseWithHintPattern' ),
-    ligandToggleButtonAccessibleHelpText: new FluentPattern( fluentBundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText' ),
-    ligandToggleButtonAddedContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_ligandToggleButtonAddedContextResponse' ),
-    ligandToggleButtonRemovedContextResponse: new FluentPattern( fluentBundleProperty, 'a11y_ligandToggleButtonRemovedContextResponse' ),
-    grabbedLigandResponsePattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedLigandResponsePattern' ),
-    grabbedLigandResponseWithHintPattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedLigandResponseWithHintPattern' ),
-    grabbedLigandResponseWithEmptyMembraneHintPattern: new FluentPattern( fluentBundleProperty, 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern' ),
-    transportProteinBriefName: new FluentPattern( fluentBundleProperty, 'a11y_transportProteinBriefName' ),
-    ligandMovedAboveLigandGatedChannelPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern' ),
-    ligandMovedAboveLeakageChannelPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern' ),
-    ligandMovedAboveOtherChannelPattern: new FluentPattern( fluentBundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern' ),
+    outsideMembraneSpinnerAccessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_outsideMembraneSpinnerAccessibleName' ),
+    outsideMembraneSpinnerHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_outsideMembraneSpinnerHelpText' ),
+    insideMembraneSpinnerAccessibleName: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_insideMembraneSpinnerAccessibleName' ),
+    insideMembraneSpinnerHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_insideMembraneSpinnerHelpText' ),
+    soluteSpinnerRoleDescription: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteSpinnerRoleDescription' ),
+    solute: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_solute' ),
+    soluteSpinnerObjectResponsePattern: new FluentPattern<{ amount: 'none' | 'one' | 'few' | 'some' | 'many' | TReadOnlyProperty<'none' | 'one' | 'few' | 'some' | 'many'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_soluteSpinnerObjectResponsePattern' ),
+    soluteSpinnerContextResponsePattern: new FluentPattern<{ addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | '*' | 'more' | 'less' | TReadOnlyProperty<'same' | '*' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_soluteSpinnerContextResponsePattern' ),
+    soluteBarChartsDescriptionParagraph: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_soluteBarChartsDescriptionParagraph' ),
+    arrowSizeDescription: new FluentPattern<{ size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'> }>( fluentBundleProperty, 'a11y_arrowSizeDescription' ),
+    arrowDirectionDescription: new FluentPattern<{ direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }>( fluentBundleProperty, 'a11y_arrowDirectionDescription' ),
+    barSizeDescription: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }>( fluentBundleProperty, 'a11y_barSizeDescription' ),
+    barChartPattern: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentBundleProperty, 'a11y_barChartPattern' ),
+    currentDetailsActivityLevel: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentBundleProperty, 'a11y_currentDetailsActivityLevel' ),
+    currentDetails: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentBundleProperty, 'a11y_currentDetails' ),
+    currentDetailsSoluteTypesOnOutside: new FluentPattern<{ outsideSoluteCount: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
+    currentDetailsSoluteTypesOnInside: new FluentPattern<{ insideSoluteCount: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
+    currentDetailsTransportProteins: new FluentPattern<{ transportProteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsTransportProteins' ),
+    ligandsOnOutsideOnly: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandsOnOutsideOnly' ),
+    currentDetailsMembranePotential: new FluentPattern<{ membranePotential: IntentionalAny }>( fluentBundleProperty, 'a11y_currentDetailsMembranePotential' ),
+    releasedBackInToolbox: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_releasedBackInToolbox' ),
+    selectedTransportProteinInSlot: new FluentPattern<{ channelName: IntentionalAny, slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentBundleProperty, 'a11y_selectedTransportProteinInSlot' ),
+    canceledBackInMembrane: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_canceledBackInMembrane' ),
+    grabbedProteinResponsePattern: new FluentPattern<{ slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedProteinResponsePattern' ),
+    grabbedProteinResponseWithHintPattern: new FluentPattern<{ slotCount: IntentionalAny, slotIndex: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedProteinResponseWithHintPattern' ),
+    ligandToggleButtonAccessibleHelpText: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText' ),
+    ligandToggleButtonAddedContextResponse: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandToggleButtonAddedContextResponse' ),
+    ligandToggleButtonRemovedContextResponse: new FluentPattern<{  }>( fluentBundleProperty, 'a11y_ligandToggleButtonRemovedContextResponse' ),
+    grabbedLigandResponsePattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedLigandResponsePattern' ),
+    grabbedLigandResponseWithHintPattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedLigandResponseWithHintPattern' ),
+    grabbedLigandResponseWithEmptyMembraneHintPattern: new FluentPattern<{ proteinCount: IntentionalAny }>( fluentBundleProperty, 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern' ),
+    transportProteinBriefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_transportProteinBriefName' ),
+    ligandMovedAboveLigandGatedChannelPattern: new FluentPattern<{ index: IntentionalAny, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern' ),
+    ligandMovedAboveLeakageChannelPattern: new FluentPattern<{ index: IntentionalAny, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern' ),
+    ligandMovedAboveOtherChannelPattern: new FluentPattern<{ index: IntentionalAny, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern' ),
     transportProtein: {
-      accessibleNamePattern: new FluentPattern( fluentBundleProperty, 'a11y_transportProtein_accessibleNamePattern' )
+      accessibleNamePattern: new FluentPattern<{ openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: IntentionalAny, proteinIndex: IntentionalAny, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentBundleProperty, 'a11y_transportProtein_accessibleNamePattern' )
     }
   }
 };
