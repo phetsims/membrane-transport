@@ -208,7 +208,7 @@ a11y:
                                                      [active]          active
                                                      [activeAndPaused] active and paused
                                                      }
-  currentDetails:                                    Right now, zoomed-in cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with
+  currentDetails:                                    Right now, local cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with
   currentDetailsSoluteTypesOnOutside:                "{ $outsideSoluteCount } solute types on outside;"
   currentDetailsSoluteTypesOnInside:                 "{ $insideSoluteCount } solute types on inside;"
   currentDetailsTransportProteins:                   "{ $transportProteinCount } transport proteins in membrane;"
