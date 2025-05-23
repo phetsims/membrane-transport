@@ -107,6 +107,7 @@ export default class MembranePotentialPanel extends Panel {
     const tickNegative50 = new Line( 0, 0, 0, 0, lineOptions );
     const linePositive30 = new Line( 0, 0, 0, 0, lineOptions );
     const tickPositive30 = new Line( 0, 0, 0, 0, lineOptions );
+    const tickZero = new Line( 0, 0, 0, 0, lineOptions );
 
     const content = new Node( {
       children: [
@@ -116,6 +117,7 @@ export default class MembranePotentialPanel extends Panel {
         tickNegative70,
         tickNegative50,
         tickPositive30,
+        tickZero,
         vbox
       ]
     } );
@@ -134,10 +136,11 @@ export default class MembranePotentialPanel extends Panel {
 
       const INSET = 30;
 
-      // linear map to find positions along the arrow.
-      const a = linear( -70, 30, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, -70 );
-      const b = linear( -70, 30, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, -50 );
-      const c = linear( -70, 30, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, 30 );
+      // linear map to find positions along the arrow, extending range to -70 to +70
+      const a = linear( -70, 70, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, -70 );
+      const b = linear( -70, 70, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, -50 );
+      const c = linear( -70, 70, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, 30 );
+      const zeroPosition = linear( -70, 70, arrowNode.globalBounds.left + INSET, arrowNode.globalBounds.right - INSET, 0 );
 
       lineNegative70.setPoint1( lineNegative70.globalToParentPoint( button1.globalBounds.centerTop ) );
       lineNegative70.setPoint2( lineNegative70.globalToParentPoint( new Vector2( a, arrowNode.globalBounds.centerY ) ) );
@@ -156,6 +159,11 @@ export default class MembranePotentialPanel extends Panel {
 
       tickPositive30.setPoint1( linePositive30.p2 );
       tickPositive30.setPoint2( linePositive30.p2.plusXY( 0, -5 ) );
+
+      // Add zero tickmark at center without text label
+      const zeroPoint = tickZero.globalToParentPoint( new Vector2( zeroPosition, arrowNode.globalBounds.centerY ) );
+      tickZero.setPoint1( zeroPoint.plusXY( 0, 5 ) );
+      tickZero.setPoint2( zeroPoint.plusXY( 0, -5 ) );
     } );
   }
 }
