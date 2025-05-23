@@ -1,16 +1,12 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * ConcentrationSliderSoundGenerator is a sound generator specifically designed to produce sounds for the concentration
- * slider that controls the greenhouse gas levels in the Greenhouse Effect simulation.
+ * Plays the "bubbling" sound when solutes are added via the Solute Spinners. This was adapted from the ConcentrationSliderSoundGenerator
+ * in the Greenhouse Effect simulation.
  *
- * COPIED this and sliderMovement.mp3 from greenhouse-effect for testing. If it sounds good, we will move it to tambo. See https://github.com/phetsims/membrane-transport/issues/111
- * TODO: https://github.com/phetsims/membrane-transport/issues/111 delete or factor out
- *
- * @author John Blanco (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Range from '../../../../dot/js/Range.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
@@ -24,15 +20,14 @@ import membraneTransport from '../../membraneTransport.js';
 
 class ConcentrationSliderSoundGenerator extends ValueChangeSoundPlayer {
 
-  public constructor( concentrationProperty: TReadOnlyProperty<number>, valueRange: Range ) {
+  public constructor( range: Range ) {
 
-    // sound generator for the middle range of the slider's movement
-    const sliderMiddleSoundGenerator = new SliderMiddleRangeSoundGenerator( concentrationProperty, valueRange, {
+    const sliderMiddleSoundGenerator = new SliderMiddleRangeSoundGenerator( {
       initialOutputLevel: 0.1
     } );
     soundManager.addSoundGenerator( sliderMiddleSoundGenerator );
 
-    super( valueRange, {
+    super( range, {
 
       numberOfMiddleThresholds: 9,
       middleMovingUpSoundPlayer: sliderMiddleSoundGenerator,
@@ -46,12 +41,8 @@ class ConcentrationSliderSoundGenerator extends ValueChangeSoundPlayer {
  */
 class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPlayer {
   private readonly baseSoundClip: SoundClip;
-  private readonly concentrationProperty: TReadOnlyProperty<number>;
-  private readonly concentrationRange: Range;
 
-  public constructor( concentrationProperty: TReadOnlyProperty<number>,
-                      concentrationRange: Range,
-                      options?: Partial<SoundGeneratorOptions> ) {
+  public constructor( options?: Partial<SoundGeneratorOptions> ) {
 
     super( options );
 
@@ -73,16 +64,10 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
       rateChangesAffectPlayingSounds: false
     } );
     this.baseSoundClip.connect( dynamicsCompressorNode );
-
-    // variables used by the methods below
-    this.concentrationProperty = concentrationProperty;
-    this.concentrationRange = concentrationRange;
   }
 
   /**
-   * Play the main sound clip multiple times with some randomization around the center pitch and the delay between each
-   * play.  The behavior was determined by informed trial-and-error based on an initial sound design that used a bunch
-   * of separate sound clips.  See https://github.com/phetsims/greenhouse-effect/issues/28.
+   * Adapted from ConcentrationSliderSoundGenerator in the Greenhouse Effect simulation, see https://github.com/phetsims/greenhouse-effect/issues/28.
    */
   public play( newValue?: number, oldValue?: number ): void {
 
@@ -93,12 +78,9 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     const maximumInterSoundTime = minimumInterSoundTime * 1.5;
 
     // Set a value for the number of playing instances of the clip at which we limit additional plays.  This helps to
-    // prevent too many instances of the clip from playing simultaneously, which can sound a bit chatic.
+    // prevent too many instances of the clip from playing simultaneously, which can sound a bit chaotic.
     const playingInstancesLimitThreshold = 5;
 
-    // Calculate the number of times to play based on the current concentration value.  This calculation was empirically
-    // determined and can be adjusted as needed to get the desired sound behavior.  There is also code to limit the
-    // number of playing instance so that it doesn't get overwhelming.
     const available = playingInstancesLimitThreshold - this.baseSoundClip.getNumberOfPlayingInstances();
     const desiredAmount = Math.abs( newValue - oldValue );
     const timesToPlay = Math.min( available, desiredAmount );
