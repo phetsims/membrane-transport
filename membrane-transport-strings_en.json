@@ -340,13 +340,13 @@
       "value": "{ $activityLevel ->\n*[calm]            relatively calm\n[active]          active\n[activeAndPaused] active and paused\n}"
     },
     "currentDetails": {
-      "value": "Right now, zoomed-in cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with"
+      "value": "Right now, local cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with"
     },
     "currentDetailsSoluteTypesOnOutside": {
-      "value": "{ $outsideSoluteCount } solute types outside;"
+      "value": "{ $outsideSoluteCount } solute types on outside;"
     },
     "currentDetailsSoluteTypesOnInside": {
-      "value": "{ $insideSoluteCount } solute types inside;"
+      "value": "{ $insideSoluteCount } solute types on inside;"
     },
     "currentDetailsTransportProteins": {
       "value": "{ $transportProteinCount } transport proteins in membrane;"
