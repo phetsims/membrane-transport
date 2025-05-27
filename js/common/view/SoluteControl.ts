@@ -23,8 +23,8 @@ import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
-import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 import createParticleNode from './particles/createParticleNode.js';
+import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & StrictOmit<PanelOptions, 'tandem'>;
@@ -97,6 +97,8 @@ export default class SoluteControl extends Panel {
       let difference = value - oldValue;
       assert && assert( difference !== 0, 'Difference is 0' );
 
+      const originalCount = totalCountProperty.value;
+
       if ( difference > 0 ) {
 
         // don't exceed the max
@@ -106,28 +108,23 @@ export default class SoluteControl extends Panel {
 
         // We need to add solutes to the outside of the membrane
         model.addSolutes( soluteType, side, difference );
-
-        soundGenerator.playSoundForValueChange( totalCountProperty.value, totalCountProperty.value - difference );
       }
       else if ( difference < 0 ) {
 
-        let desiredNumberToRemove = Math.abs( difference );
-        console.log( 'desired number to remove', desiredNumberToRemove );
+        const desiredNumberToRemove = Math.abs( difference );
 
-        // don't go below zero
-        if ( totalCountProperty.value - desiredNumberToRemove < 0 ) {
+        // If you tried to remove too many, then actually the most you can remove is just however many there were on that side.
+        const maxNumberToRemove = side === 'inside' ? model.insideSoluteCountProperties[ soluteType ].value : model.outsideSoluteCountProperties[ soluteType ].value;
 
-          // If you tried to remove too many, then actually the most you can remove is just however many there were.
-          desiredNumberToRemove = totalCountProperty.value;
-
-          console.log( 'NEGATIVE CAPPED desiredNumberToRemove', desiredNumberToRemove );
-        }
+        const numberToRemove = Math.min( desiredNumberToRemove, maxNumberToRemove );
 
         // We need to remove solutes from the outside of the membrane
-        model.removeSolutes( soluteType, side, desiredNumberToRemove );
-
-        soundGenerator.playSoundForValueChange( totalCountProperty.value, totalCountProperty.value - difference );
+        model.removeSolutes( soluteType, side, numberToRemove );
       }
+
+      const newCount = totalCountProperty.value;
+
+      soundGenerator.playSoundForValueChange( newCount, originalCount );
     } );
 
     const qualitativeCountProperty = new DerivedProperty( [ actualCountPerSideProperty ], actualCount => {
