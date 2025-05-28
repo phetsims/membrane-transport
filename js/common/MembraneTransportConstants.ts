@@ -71,7 +71,7 @@ export default class MembraneTransportConstants {
     MembraneTransportConstants.MEMBRANE_BOUNDS.maxX - 20, MembraneTransportConstants.MODEL_HEIGHT / 2 - 20
   );
 
-  public static readonly PANEL_TITLE_FONT_SIZE = 18;
+  public static readonly PANEL_TITLE_FONT_SIZE = 16;
 
   public static readonly OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     new Vector2( 0, 0 ),

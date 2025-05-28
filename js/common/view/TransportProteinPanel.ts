@@ -20,6 +20,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import LigandToggleButton from './LigandToggleButton.js';
@@ -50,8 +51,6 @@ export default class TransportProteinPanel extends Panel {
 
   public constructor( model: Pick<MembraneTransportModel, 'featureSet' | 'isShowingSignsProperty' | 'membranePotentialProperty' | 'areLigandsAddedProperty'>, tandem: Tandem, view: MembraneTransportScreenView ) {
 
-    const fontSize = 16;
-
     const panels: Panel[] = [];
 
     // put all titles in an align box so they take up the same amount of space
@@ -81,13 +80,16 @@ export default class TransportProteinPanel extends Panel {
       return new Panel( new VBox( {
         spacing: 5, // spacing between the title and the content
         children: [
-          titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: fontSize, maxWidth: 150 } ), { xAlign: 'left' } ),
+          titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE, maxWidth: 175 } ), { xAlign: 'center' } ),
           content,
           ...additionalControls
         ]
       } ), {
         cornerRadius: 0,
         stroke: null,
+
+        // Expand the width of these panels so that they are about the same width as the solutes controls.
+        minWidth: 200,
 
         // pdom
         accessibleHeading: config.titleProperty
