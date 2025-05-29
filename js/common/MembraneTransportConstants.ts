@@ -80,6 +80,7 @@ export default class MembraneTransportConstants {
   );
 
   public static readonly FONT = new PhetFont( 14 );
+  public static readonly TEXT_OPTIONS = { font: MembraneTransportConstants.FONT };
 
   // Track some image metrics in the constants since they are used interaction coordinates in the model
   public static readonly IMAGE_METRICS = {

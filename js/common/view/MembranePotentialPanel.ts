@@ -29,7 +29,7 @@ export default class MembranePotentialPanel extends Panel {
 
     const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
       value: -70,
-      createNode: tandem => new Text( '-70' ),
+      createNode: tandem => new Text( '-70', MembraneTransportConstants.TEXT_OPTIONS ),
       tandemName: 'negative70RadioButton',
       options: {
         accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
@@ -37,7 +37,7 @@ export default class MembranePotentialPanel extends Panel {
     },
       {
         value: -50,
-        createNode: tandem => new Text( '-50' ),
+        createNode: tandem => new Text( '-50', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'negative50RadioButton',
         options: {
           accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
@@ -45,7 +45,7 @@ export default class MembranePotentialPanel extends Panel {
       },
       {
         value: 30,
-        createNode: tandem => new Text( '+30' ),
+        createNode: tandem => new Text( '+30', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'positive30RadioButton',
         options: {
           accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
@@ -55,7 +55,12 @@ export default class MembranePotentialPanel extends Panel {
       accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' ),
-      spacing: 35
+      spacing: 35,
+      layoutOptions: {
+
+        // A margin so that there is extra space between the radio button group and the arrow line
+        topMargin: 6
+      }
     } );
 
 
@@ -73,7 +78,7 @@ export default class MembranePotentialPanel extends Panel {
 
         new Text( MembraneTransportStrings.membranePotential_mVStringProperty, {
           maxWidth: 160,
-          fontSize: 14
+          font: MembraneTransportConstants.FONT
         } ),
 
         arrowNode,
@@ -82,7 +87,7 @@ export default class MembranePotentialPanel extends Panel {
 
         new Checkbox( model.isShowingSignsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
           maxWidth: 140,
-          fontSize: 14
+          font: MembraneTransportConstants.FONT
         } ), {
           tandem: tandem.createTandem( 'signsCheckbox' ),
           accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpTextStringProperty,
@@ -91,7 +96,8 @@ export default class MembranePotentialPanel extends Panel {
             [ -70 ]: 'valueA',
             [ -50 ]: 'valueB',
             30: 'valueC'
-          } )
+          } ),
+          boxWidth: MembraneTransportConstants.FONT.getNumericSize()
         } )
       ]
     } );
