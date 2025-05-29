@@ -232,7 +232,7 @@ export default class SoluteControl extends Panel {
     }
 
     super( new Node( {
-      children: [ spinner, icon ],
+      children: [ spinner, icon ]
     } ), options );
   }
 }
