@@ -24,7 +24,7 @@ export default class SodiumVoltageGatedChannelNode extends TransportProteinNode 
    */
   public constructor( channel: SodiumVoltageGatedChannel | null ) {
 
-    const image = new Image( sodiumVoltageGatedMinus70mV_svg );
+    const image = new Image( sodiumVoltageGatedPlus30mV_svg );
     super( image, channel, {
       viewOffset: new Vector2( 0, 15 )
     } );
