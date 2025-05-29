@@ -139,8 +139,7 @@ const fluentKeyToStringPropertyMap = new Map( [
 const createFluentFile = (): string => {
   let ftl = '';
   for (const [key, stringProperty] of fluentKeyToStringPropertyMap.entries()) {
-    ftl += `${key} = ${stringProperty.value}
-`;
+    ftl += `${key} = ${stringProperty.value}\n`;
   }
   return ftl;
 };
