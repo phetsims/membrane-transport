@@ -105,7 +105,9 @@ export default class SolutesPanel extends Node {
       ],
       spacing: 5
     } );
-    const panel = new Panel( content );
+    const panel = new Panel( content, {
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
+    } );
     this.addChild( panel );
 
     this.mutate( providedOptions );

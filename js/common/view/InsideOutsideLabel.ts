@@ -12,9 +12,10 @@ import Color from '../../../../scenery/js/util/Color.js';
 import Panel from '../../../../sun/js/Panel.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
 const textOptions = { fontSize: 13, maxWidth: 200 };
-const panelOptions = { stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
+const panelOptions = { cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
 
 export default class InsideOutsideLabel extends Panel {
   public constructor( side: 'inside' | 'outside', options?: LayoutNodeOptions ) {

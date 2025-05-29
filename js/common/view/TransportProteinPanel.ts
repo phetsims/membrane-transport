@@ -205,7 +205,8 @@ export default class TransportProteinPanel extends Panel {
     super( vbox, {
       accessibleHeading: MembraneTransportStrings.a11y.transportProteinPanel.transportProteinsStringProperty,
       accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
-      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
+      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
     } );
 
     this.mutate( { left: 20, top: 20 } );

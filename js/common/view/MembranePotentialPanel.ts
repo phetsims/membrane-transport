@@ -21,6 +21,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembranePotentialPanel extends Panel {
@@ -123,7 +124,7 @@ export default class MembranePotentialPanel extends Panel {
     } );
 
     super( content, {
-      cornerRadius: 4,
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
       stroke: null,
       fill: 'rgb(230,229,229)',
       tandem: tandem

@@ -124,6 +124,7 @@ export default class MembraneTransportConstants {
       potassiumSite2: new Vector2( 443, 339 )
     }
   };
+  public static readonly PANEL_CORNER_RADIUS = 5;
 
   /**
    * Compute the model coordinates of the binding site, given its coordinates in the image.

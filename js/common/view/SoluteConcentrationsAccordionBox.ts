@@ -16,6 +16,7 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
@@ -39,7 +40,8 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
       titleAlignX: 'left',
       fill: 'white',
-      expandedDefaultValue: true
+      expandedDefaultValue: true,
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
     }, providedOptions );
 
     const contentWidth = 720;

@@ -42,7 +42,8 @@ export default class SoluteControl extends Panel {
     } );
 
     const options = optionize<SoluteControlOptions, SelfOptions, PanelOptions>()( {
-      visibleProperty: visibleProperty
+      visibleProperty: visibleProperty,
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
     }, providedOptions );
 
     // Create a proxy property for the FineCoarseSpinner
@@ -231,7 +232,7 @@ export default class SoluteControl extends Panel {
     }
 
     super( new Node( {
-      children: [ spinner, icon ]
+      children: [ spinner, icon ],
     } ), options );
   }
 }
