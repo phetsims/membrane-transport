@@ -33,7 +33,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
   public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
-      titleNode: new Text( MembraneTransportStrings.soluteConcentrationsStringProperty, { fontSize: 20 } ),
+      titleNode: new Text( MembraneTransportStrings.soluteConcentrationsStringProperty, { fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE } ),
 
       // Makes it easy to position the collapsed accordion box so that when it expands it has the correct layout.
       useExpandedBoundsWhenCollapsed: true,
