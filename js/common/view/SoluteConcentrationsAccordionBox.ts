@@ -41,7 +41,8 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       titleAlignX: 'left',
       fill: 'white',
       expandedDefaultValue: true,
-      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
+      buttonXMargin: 8
     }, providedOptions );
 
     const contentWidth = 720;
