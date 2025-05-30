@@ -9,6 +9,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { linear } from '../../../../dot/js/util/linear.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -114,7 +115,9 @@ export default class MembranePotentialPanel extends Panel {
     const tickNegative50 = new Line( 0, 0, 0, 0, lineOptions );
     const linePositive30 = new Line( 0, 0, 0, 0, lineOptions );
     const tickPositive30 = new Line( 0, 0, 0, 0, lineOptions );
-    const tickZero = new Line( 0, 0, 0, 0, lineOptions );
+
+    // The zero tick mark has a lineWidth of 2 so that it does not look like it is pointing to the -50 mV button.
+    const tickZero = new Line( 0, 0, 0, 0, combineOptions<LineOptions>( {}, lineOptions, { lineWidth: 2 } ) );
 
     const content = new Node( {
       children: [
