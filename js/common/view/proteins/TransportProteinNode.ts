@@ -56,7 +56,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // roledescription and accessible name are read.
     if ( transportProtein ) {
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
-        accessibleRoleDescription: 'protein'
+        accessibleRoleDescription: 'navigable'
       } ) );
     }
   }

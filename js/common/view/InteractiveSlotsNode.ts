@@ -91,8 +91,7 @@ export default class InteractiveSlotsNode extends Node {
       // above the slots.
       groupFocusHighlight: new GroupHighlightPath( Shape.bounds(
         modelViewTransform.modelToViewBounds( MembraneTransportConstants.MEMBRANE_BOUNDS ).dilatedXY( 10, 70 )
-      ) ),
-      accessibleRoleDescription: 'sortable'
+      ) )
     } );
 
     // A focusable Node that contains the accessible content for the interaction.
@@ -111,7 +110,7 @@ export default class InteractiveSlotsNode extends Node {
           center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
           // pdom
-          accessibleRoleDescription: 'protein',
+          accessibleRoleDescription: 'sortable',
           accessibleName: accessibleNameProperty
         } ) );
 

@@ -68,8 +68,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       // TODO: i18n, see #97
       accessibleHeading: 'Cell Membrane',
       groupFocusHighlight: true,
-      focusable: false,
-      accessibleRoleDescription: 'navigable'
+      focusable: false
     } );
     this.addChild( this.proteinsNodeParent );
 
