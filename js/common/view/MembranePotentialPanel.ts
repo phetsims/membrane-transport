@@ -25,7 +25,7 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembranePotentialPanel extends Panel {
-  public constructor( model: Pick<MembraneTransportModel, 'membranePotentialProperty' | 'isShowingSignsProperty'>, tandem: Tandem ) {
+  public constructor( model: Pick<MembraneTransportModel, 'membranePotentialProperty' | 'isShowingChargesProperty'>, tandem: Tandem ) {
 
     const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
       value: -70,
@@ -85,13 +85,13 @@ export default class MembranePotentialPanel extends Panel {
 
         membranePotentialRadioButtonGroup,
 
-        new Checkbox( model.isShowingSignsProperty, new Text( MembraneTransportStrings.signsStringProperty, {
+        new Checkbox( model.isShowingChargesProperty, new Text( MembraneTransportStrings.chargesStringProperty, {
           maxWidth: 140,
           font: MembraneTransportConstants.FONT
         } ), {
-          tandem: tandem.createTandem( 'signsCheckbox' ),
-          accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpTextStringProperty,
-          uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponseStringProperty,
+          tandem: tandem.createTandem( 'chargesCheckbox' ),
+          accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
+          uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty,
           checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
             [ -70 ]: 'valueA',
             [ -50 ]: 'valueB',

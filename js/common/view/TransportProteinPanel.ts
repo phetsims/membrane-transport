@@ -49,7 +49,7 @@ export default class TransportProteinPanel extends Panel {
   // So we can return TransportProteinDragNode instances to their corresponding TransportProteinToolNode icons
   private readonly transportProteinToolNodes: Map<TransportProteinType, TransportProteinToolNode>;
 
-  public constructor( model: Pick<MembraneTransportModel, 'featureSet' | 'isShowingSignsProperty' | 'membranePotentialProperty' | 'areLigandsAddedProperty'>, tandem: Tandem, view: MembraneTransportScreenView ) {
+  public constructor( model: Pick<MembraneTransportModel, 'featureSet' | 'isShowingChargesProperty' | 'membranePotentialProperty' | 'areLigandsAddedProperty'>, tandem: Tandem, view: MembraneTransportScreenView ) {
 
     const panels: Panel[] = [];
 

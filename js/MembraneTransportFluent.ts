@@ -40,7 +40,7 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['NaPlusKPlusPump', MembraneTransportStrings.NaPlusKPlusPumpStringProperty],
   ['sodiumGlucoseCotransporter', MembraneTransportStrings.sodiumGlucoseCotransporterStringProperty],
   ['membranePotential_mV', MembraneTransportStrings.membranePotential_mVStringProperty],
-  ['signs', MembraneTransportStrings.signsStringProperty],
+  ['charges', MembraneTransportStrings.chargesStringProperty],
   ['addLigands', MembraneTransportStrings.addLigandsStringProperty],
   ['removeLigands', MembraneTransportStrings.removeLigandsStringProperty],
   ['animateLipids', MembraneTransportStrings.animateLipidsStringProperty],
@@ -74,11 +74,11 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty],
   ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty],
   ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.accessibleHelpTextStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative70StringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponseNegative50StringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.checkedContextResponsePositive30StringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.signsCheckbox.uncheckedContextResponseStringProperty],
+  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative70StringProperty],
+  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative50StringProperty],
+  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponsePositive30StringProperty],
+  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty],
   ['a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', MembraneTransportStrings.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty],
   ['a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', MembraneTransportStrings.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty],
   ['a11y_transportProteinPanel_toolAccessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty],
@@ -171,7 +171,7 @@ const MembraneTransportFluent = {
   NaPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'NaPlusKPlusPump' ),
   sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumGlucoseCotransporter' ),
   membranePotential_mVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotential_mV' ),
-  signsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'signs' ),
+  chargesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'charges' ),
   addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'addLigands' ),
   removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'removeLigands' ),
   animateLipidsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids' ),
@@ -232,12 +232,12 @@ const MembraneTransportFluent = {
             }
           }
         },
-        signsCheckbox: {
-          accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_accessibleHelpText' ),
-          checkedContextResponseNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative70' ),
-          checkedContextResponseNegative50StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponseNegative50' ),
-          checkedContextResponsePositive30StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_checkedContextResponsePositive30' ),
-          uncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_signsCheckbox_uncheckedContextResponse' )
+        chargesCheckbox: {
+          accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText' ),
+          checkedContextResponseNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70' ),
+          checkedContextResponseNegative50StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50' ),
+          checkedContextResponsePositive30StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30' ),
+          uncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse' )
         }
       },
       activeTransportProteinPanel: {

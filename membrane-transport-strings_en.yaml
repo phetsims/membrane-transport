@@ -33,7 +33,7 @@ NaPlusKPlusPump:             Na<sup>+</sup>/K<sup>+</sup><br>Pump
 sodiumGlucoseCotransporter:  Na<sup>+</sup>/Glucose<br>Cotransporter
 
 membranePotential_mV:        Membrane Potential (mV)
-signs:                       Signs
+charges:                     Charges
 addLigands:                  Add Ligands
 removeLigands:               Remove Ligands
 animateLipids:               Animate Lipids
@@ -96,12 +96,12 @@ a11y:
             accessibleName: negative 50 millivolts
           positive30RadioButton:
             accessibleName: positive 30 millivolts
-      signsCheckbox:
-        accessibleHelpText:               Explore with or without signs showing membrane potential along inside and outside.
-        checkedContextResponseNegative70: Positive outside and negative inside; signs densely packed along membrane.
-        checkedContextResponseNegative50: Positive outside and negative inside; signs lightly packed along membrane.
-        checkedContextResponsePositive30: Negative outside and positive inside; signs sparse along membrane.
-        uncheckedContextResponse:         Membrane potential signs, hidden.
+      chargesCheckbox:
+        accessibleHelpText:               Explore with or without charges showing membrane potential along inside and outside.
+        checkedContextResponseNegative70: Positive outside and negative inside; charges densely packed along membrane.
+        checkedContextResponseNegative50: Positive outside and negative inside; charges lightly packed along membrane.
+        checkedContextResponsePositive30: Negative outside and positive inside; charges sparse along membrane.
+        uncheckedContextResponse:         Membrane potential charges, hidden.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter

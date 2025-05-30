@@ -40,7 +40,7 @@ type StringsType = {
   'NaPlusKPlusPumpStringProperty': LocalizedStringProperty;
   'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
   'membranePotential_mVStringProperty': LocalizedStringProperty;
-  'signsStringProperty': LocalizedStringProperty;
+  'chargesStringProperty': LocalizedStringProperty;
   'addLigandsStringProperty': LocalizedStringProperty;
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;
@@ -101,7 +101,7 @@ type StringsType = {
             }
           }
         };
-        'signsCheckbox': {
+        'chargesCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
           'checkedContextResponseNegative70StringProperty': LocalizedStringProperty;
           'checkedContextResponseNegative50StringProperty': LocalizedStringProperty;

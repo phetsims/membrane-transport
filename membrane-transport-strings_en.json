@@ -71,8 +71,8 @@
   "membranePotential_mV": {
     "value": "Membrane Potential (mV)"
   },
-  "signs": {
-    "value": "Signs"
+  "charges": {
+    "value": "Charges"
   },
   "addLigands": {
     "value": "Add Ligands"
@@ -200,21 +200,21 @@
             }
           }
         },
-        "signsCheckbox": {
+        "chargesCheckbox": {
           "accessibleHelpText": {
-            "value": "Explore with or without signs showing membrane potential along inside and outside."
+            "value": "Explore with or without charges showing membrane potential along inside and outside."
           },
           "checkedContextResponseNegative70": {
-            "value": "Positive outside and negative inside; signs densely packed along membrane."
+            "value": "Positive outside and negative inside; charges densely packed along membrane."
           },
           "checkedContextResponseNegative50": {
-            "value": "Positive outside and negative inside; signs lightly packed along membrane."
+            "value": "Positive outside and negative inside; charges lightly packed along membrane."
           },
           "checkedContextResponsePositive30": {
-            "value": "Negative outside and positive inside; signs sparse along membrane."
+            "value": "Negative outside and positive inside; charges sparse along membrane."
           },
           "uncheckedContextResponse": {
-            "value": "Membrane potential signs, hidden."
+            "value": "Membrane potential charges, hidden."
           }
         }
       },
