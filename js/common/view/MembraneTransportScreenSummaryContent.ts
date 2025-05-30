@@ -12,7 +12,6 @@ import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -35,7 +34,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     ];
 
     if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const node = createListItemNode( MembraneTransportStrings.a11y.ligandsOnOutsideOnlyStringProperty );
+      const node = createListItemNode( MembraneTransportFluent.a11y.ligandsOnOutsideOnlyStringProperty );
       model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
       listItemNodes.push( node );
     }
@@ -81,13 +80,13 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
                        model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4StringProperty :
                        model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3StringProperty :
                        MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4StringProperty,
-      controlAreaContent: MembraneTransportStrings.a11y.summary.controlAreaSummaryStringProperty,
+      controlAreaContent: MembraneTransportFluent.a11y.summary.controlAreaSummaryStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode
       },
 
-      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportStrings.a11y.summary.interactionHintStringProperty :
-                              MembraneTransportStrings.a11y.summary.interactionHintWithTransportProteinsStringProperty
+      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.interactionHintStringProperty :
+                              MembraneTransportFluent.a11y.summary.interactionHintWithTransportProteinsStringProperty
     } );
   }
 }

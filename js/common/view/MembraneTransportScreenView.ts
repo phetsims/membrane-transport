@@ -25,7 +25,7 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
@@ -134,8 +134,8 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
-      accessibleHeading: MembraneTransportStrings.a11y.soluteControls.accessibleHeadingStringProperty,
-      accessibleHelpText: MembraneTransportStrings.a11y.soluteControlsAccessibleHelpTextStringProperty,
+      accessibleHeading: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.soluteControlsAccessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
     this.addChild( soluteControlsNode );
@@ -145,8 +145,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'eraseSolutesButton' ),
       right: this.observationWindow.left - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.observationWindow.bottom,
-      accessibleName: MembraneTransportStrings.a11y.eraseSolutesButton.accessibleNameStringProperty,
-      accessibleContextResponse: MembraneTransportStrings.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
+      accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
+      accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
       enabledProperty: hasAnySolutesProperty
     } );
 

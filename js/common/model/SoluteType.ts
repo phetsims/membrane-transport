@@ -10,10 +10,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 
 export const SoluteTypeValues = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose', 'atp', 'adp', 'phosphate' ] as const;
 export const LigandTypeValues = [ 'triangleLigand', 'starLigand' ] as const;
@@ -31,14 +31,14 @@ type ParticleType = typeof ParticleTypeValues[number];
 
 export type { LigandType, ParticleType };
 
-export const getSoluteTypeString = ( soluteType: SoluteType ): LocalizedStringProperty =>
+export const getSoluteTypeString = ( soluteType: SoluteType ): TReadOnlyProperty<string> =>
 
-  soluteType === 'oxygen' ? MembraneTransportStrings.oxygenStringProperty :
-  soluteType === 'carbonDioxide' ? MembraneTransportStrings.carbonDioxideStringProperty :
-  soluteType === 'sodiumIon' ? MembraneTransportStrings.sodiumIonStringProperty :
-  soluteType === 'potassiumIon' ? MembraneTransportStrings.potassiumIonStringProperty :
-  soluteType === 'glucose' ? MembraneTransportStrings.glucoseStringProperty :
-  MembraneTransportStrings.atpStringProperty;
+  soluteType === 'oxygen' ? MembraneTransportFluent.oxygenStringProperty :
+  soluteType === 'carbonDioxide' ? MembraneTransportFluent.carbonDioxideStringProperty :
+  soluteType === 'sodiumIon' ? MembraneTransportFluent.sodiumIonStringProperty :
+  soluteType === 'potassiumIon' ? MembraneTransportFluent.potassiumIonStringProperty :
+  soluteType === 'glucose' ? MembraneTransportFluent.glucoseStringProperty :
+  MembraneTransportFluent.atpStringProperty;
 
 export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes ): ProfileColorProperty =>
   soluteType === 'oxygen' ? MembraneTransportColors.oxygenColorProperty :
@@ -54,11 +54,11 @@ export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): str
 
 export const getSoluteSpinnerTandemName = ( soluteType: SoluteType ): string => `${soluteType}Spinner`;
 
-export const getSoluteAccessibleName = ( soluteType: SoluteType ): LocalizedStringProperty => {
-  return soluteType === 'oxygen' ? MembraneTransportStrings.a11y.soluteAccessibleNames.oxygenStringProperty :
-         soluteType === 'carbonDioxide' ? MembraneTransportStrings.a11y.soluteAccessibleNames.carbonDioxideStringProperty :
-         soluteType === 'sodiumIon' ? MembraneTransportStrings.a11y.soluteAccessibleNames.sodiumIonStringProperty :
-         soluteType === 'potassiumIon' ? MembraneTransportStrings.a11y.soluteAccessibleNames.potassiumIonStringProperty :
-         soluteType === 'glucose' ? MembraneTransportStrings.a11y.soluteAccessibleNames.glucoseStringProperty :
-         MembraneTransportStrings.a11y.soluteAccessibleNames.atpStringProperty;
+export const getSoluteAccessibleName = ( soluteType: SoluteType ): TReadOnlyProperty<string> => {
+  return soluteType === 'oxygen' ? MembraneTransportFluent.a11y.soluteAccessibleNames.oxygenStringProperty :
+         soluteType === 'carbonDioxide' ? MembraneTransportFluent.a11y.soluteAccessibleNames.carbonDioxideStringProperty :
+         soluteType === 'sodiumIon' ? MembraneTransportFluent.a11y.soluteAccessibleNames.sodiumIonStringProperty :
+         soluteType === 'potassiumIon' ? MembraneTransportFluent.a11y.soluteAccessibleNames.potassiumIonStringProperty :
+         soluteType === 'glucose' ? MembraneTransportFluent.a11y.soluteAccessibleNames.glucoseStringProperty :
+         MembraneTransportFluent.a11y.soluteAccessibleNames.atpStringProperty;
 };

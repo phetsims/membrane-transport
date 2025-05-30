@@ -13,7 +13,7 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
@@ -49,7 +49,7 @@ export default class TransportProteinToolNode extends VBox {
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: accessibleName,
-      accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
+      accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
     } ) );
 
 

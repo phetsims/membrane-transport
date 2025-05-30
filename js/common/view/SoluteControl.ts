@@ -19,7 +19,6 @@ import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
@@ -158,13 +157,13 @@ export default class SoluteControl extends Panel {
         play: () => {/*no-op*/},
         stop: () => {/*no-op*/}
       },
-      accessibleName: side === 'inside' ? MembraneTransportStrings.a11y.insideMembraneSpinnerAccessibleNameStringProperty :
-                      MembraneTransportStrings.a11y.outsideMembraneSpinnerAccessibleNameStringProperty,
+      accessibleName: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerAccessibleNameStringProperty :
+                      MembraneTransportFluent.a11y.outsideMembraneSpinnerAccessibleNameStringProperty,
 
-      accessibleHelpText: side === 'inside' ? MembraneTransportStrings.a11y.insideMembraneSpinnerHelpTextStringProperty :
-                          MembraneTransportStrings.a11y.outsideMembraneSpinnerHelpTextStringProperty,
+      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerHelpTextStringProperty :
+                          MembraneTransportFluent.a11y.outsideMembraneSpinnerHelpTextStringProperty,
 
-      accessibleRoleDescription: MembraneTransportStrings.a11y.soluteSpinnerRoleDescriptionStringProperty,
+      accessibleRoleDescription: MembraneTransportFluent.a11y.soluteSpinnerRoleDescriptionStringProperty,
 
       pdomCreateAriaValueText: ( value: number ) => {
         return objectResponseMessageProperty;

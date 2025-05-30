@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import addLigands_mp3 from '../../../sounds/addLigands_mp3.js';
 import removeLigands_mp3 from '../../../sounds/removeLigands_mp3.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -37,15 +37,15 @@ const TEXT_OPTIONS = {
 export default class LigandToggleButton extends BooleanRectangularToggleButton {
   public constructor( model: Pick<MembraneTransportModel, 'areLigandsAddedProperty'>, tandem: Tandem ) {
 
-    const trueNode = new Text( MembraneTransportStrings.removeLigandsStringProperty, TEXT_OPTIONS );
-    const falseNode = new Text( MembraneTransportStrings.addLigandsStringProperty, TEXT_OPTIONS );
+    const trueNode = new Text( MembraneTransportFluent.removeLigandsStringProperty, TEXT_OPTIONS );
+    const falseNode = new Text( MembraneTransportFluent.addLigandsStringProperty, TEXT_OPTIONS );
 
     super( model.areLigandsAddedProperty, trueNode, falseNode, {
       baseColor: MembraneTransportColors.ligandButtonColorProperty,
       tandem: tandem,
 
       // pdom
-      accessibleHelpText: MembraneTransportStrings.a11y.ligandToggleButtonAccessibleHelpTextStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.ligandToggleButtonAccessibleHelpTextStringProperty,
       valueOnSoundPlayer: addLigandSoundPlayer,
       valueOffSoundPlayer: removeLigandSoundPlayer
     } );
@@ -54,10 +54,10 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
     // Add accessible responses when the button is pressed, in the same way we do for sound effects.
     this.buttonModel.fireCompleteEmitter.addListener( () => {
       if ( model.areLigandsAddedProperty.value ) {
-        this.addAccessibleResponse( MembraneTransportStrings.a11y.ligandToggleButtonAddedContextResponseStringProperty );
+        this.addAccessibleResponse( MembraneTransportFluent.a11y.ligandToggleButtonAddedContextResponseStringProperty );
       }
       else {
-        this.addAccessibleResponse( MembraneTransportStrings.a11y.ligandToggleButtonRemovedContextResponseStringProperty );
+        this.addAccessibleResponse( MembraneTransportFluent.a11y.ligandToggleButtonRemovedContextResponseStringProperty );
       }
     } );
   }

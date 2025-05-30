@@ -15,7 +15,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -33,7 +33,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
   public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
-      titleNode: new Text( MembraneTransportStrings.soluteConcentrationsStringProperty, { fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE } ),
+      titleNode: new Text( MembraneTransportFluent.soluteConcentrationsStringProperty, { fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE } ),
 
       // Makes it easy to position the collapsed accordion box so that when it expands it has the correct layout.
       useExpandedBoundsWhenCollapsed: true,
@@ -88,7 +88,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       tagName: 'ul',
 
       descriptionTagName: 'p',
-      descriptionContent: MembraneTransportStrings.a11y.soluteBarChartsDescriptionParagraphStringProperty
+      descriptionContent: MembraneTransportFluent.a11y.soluteBarChartsDescriptionParagraphStringProperty
     } );
     contentNode.addChild( hbox );
 

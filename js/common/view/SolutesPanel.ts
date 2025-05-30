@@ -19,7 +19,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
@@ -87,10 +86,10 @@ export default class SolutesPanel extends Node {
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,
-      accessibleName: MembraneTransportStrings.solutesStringProperty,
+      accessibleName: MembraneTransportFluent.solutesStringProperty,
 
       // The Voicing hint for this component is the same as the help text for the entire solute controls panel.
-      voicingHintResponse: MembraneTransportStrings.a11y.soluteControlsAccessibleHelpTextStringProperty
+      voicingHintResponse: MembraneTransportFluent.a11y.soluteControlsAccessibleHelpTextStringProperty
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally

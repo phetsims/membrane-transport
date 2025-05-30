@@ -15,7 +15,7 @@ import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
 import MembraneTransportPreferencesNode from './common/view/MembraneTransportPreferencesNode.js';
 import MembraneTransportSoundPreferencesNode from './common/view/MembraneTransportSoundPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
-import MembraneTransportStrings from './MembraneTransportStrings.js';
+import MembraneTransportFluent from './MembraneTransportFluent.js';
 import './common/MembraneTransportQueryParameters.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
 import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
@@ -24,7 +24,7 @@ import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
 simLauncher.launch( () => {
 
-  const titleStringProperty = MembraneTransportStrings[ 'membrane-transport' ].titleStringProperty;
+  const titleStringProperty = MembraneTransportFluent[ 'membrane-transport' ].titleStringProperty;
 
   const screens = [
     new SimpleDiffusionScreen( Tandem.ROOT.createTandem( 'simpleDiffusionScreen' ) ),

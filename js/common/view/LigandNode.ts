@@ -34,7 +34,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -106,7 +105,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
-        innerContent: ligandView.type === 'triangleLigand' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty
+        innerContent: ligandView.type === 'triangleLigand' ? MembraneTransportFluent.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportFluent.a11y.ligandNode.starLigandStringProperty
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
@@ -355,7 +354,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
         objectToGrabString: this.getLigandTypeName(),
 
-        accessibleHelpText: MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty,
+        accessibleHelpText: MembraneTransportFluent.a11y.ligandNode.accessibleHelpTextStringProperty,
 
         onGrab: inputType => {
           if ( inputType === 'alternative' ) {
@@ -395,14 +394,14 @@ export default class LigandNode extends InteractiveHighlightingNode {
               affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
               this.ligand.position.set( this.initialPositionBeforeGrab );
 
-              this.alert( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty );
+              this.alert( MembraneTransportFluent.a11y.ligandNode.releasedLigandStringProperty );
             }
             else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
 
               // Drop off membrane: Use calculated position above "slot 8"
               this.ligand.position.set( this.getOffMembraneDropPosition() );
 
-              this.alert( new PatternStringProperty( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
+              this.alert( new PatternStringProperty( MembraneTransportFluent.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty, { ligandType: this.getLigandTypeName() } ) );
             }
             else {
               // Drop on a slot (0 to SLOT_COUNT-1)
@@ -419,17 +418,17 @@ export default class LigandNode extends InteractiveHighlightingNode {
                   // Allow immediate binding attempt by model
                   protein.clearRebindingCooldown();
 
-                  this.alert( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty );
+                  this.alert( MembraneTransportFluent.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty );
                 }
                 else {
-                  this.alert( MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty );
+                  this.alert( MembraneTransportFluent.a11y.ligandNode.ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty );
                 }
               }
               else {
 
                 // Incompatible drop (wrong LGC, non-LGC, or empty slot)
                 // Ligand mode is already set to random walk, starting from the dropPosition.
-                this.alert( MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty );
+                this.alert( MembraneTransportFluent.a11y.ligandNode.releasedLigandStringProperty );
               }
             }
 
@@ -485,7 +484,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
     ligandUnboundDueToNaturalCausesEmitter.addListener( ligand => {
       if ( ligand === this.ligand ) {
-        this.alert( MembraneTransportStrings.a11y.ligandNode.ligandUnboundAlertStringProperty );
+        this.alert( MembraneTransportFluent.a11y.ligandNode.ligandUnboundAlertStringProperty );
       }
     }, { disposer: this } );
   }
@@ -503,7 +502,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
    * Get the user-friendly name for the ligand type.
    */
   private getLigandTypeName(): TReadOnlyProperty<string> {
-    return this.ligand.type === 'triangleLigand' ? MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty;
+    return this.ligand.type === 'triangleLigand' ? MembraneTransportFluent.a11y.ligandNode.triangleLigandStringProperty : MembraneTransportFluent.a11y.ligandNode.starLigandStringProperty;
   }
 
   /**

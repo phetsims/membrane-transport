@@ -20,7 +20,7 @@ import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
@@ -32,7 +32,7 @@ export default class MembranePotentialPanel extends Panel {
       createNode: tandem => new Text( '-70', MembraneTransportConstants.TEXT_OPTIONS ),
       tandemName: 'negative70RadioButton',
       options: {
-        accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
+        accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
       }
     },
       {
@@ -40,7 +40,7 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '-50', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'negative50RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
         }
       },
       {
@@ -48,12 +48,12 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '+30', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'positive30RadioButton',
         options: {
-          accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
         }
       } ], {
       orientation: 'horizontal',
-      accessibleName: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
-      accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
+      accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' ),
       spacing: 35,
       layoutOptions: {
@@ -76,7 +76,7 @@ export default class MembranePotentialPanel extends Panel {
       align: 'left',
       children: [
 
-        new Text( MembraneTransportStrings.membranePotential_mVStringProperty, {
+        new Text( MembraneTransportFluent.membranePotential_mVStringProperty, {
           maxWidth: 160,
           font: MembraneTransportConstants.FONT
         } ),
@@ -85,13 +85,13 @@ export default class MembranePotentialPanel extends Panel {
 
         membranePotentialRadioButtonGroup,
 
-        new Checkbox( model.isShowingChargesProperty, new Text( MembraneTransportStrings.chargesStringProperty, {
+        new Checkbox( model.isShowingChargesProperty, new Text( MembraneTransportFluent.chargesStringProperty, {
           maxWidth: 140,
           font: MembraneTransportConstants.FONT
         } ), {
           tandem: tandem.createTandem( 'chargesCheckbox' ),
-          accessibleHelpText: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
-          uncheckedContextResponse: MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty,
+          accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
+          uncheckedContextResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty,
           checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
             [ -70 ]: 'valueA',
             [ -50 ]: 'valueB',

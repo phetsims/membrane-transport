@@ -11,7 +11,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Panel from '../../../../sun/js/Panel.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
 const textOptions = { fontSize: 13, maxWidth: 200 };
@@ -19,7 +19,7 @@ const panelOptions = { cornerRadius: MembraneTransportConstants.PANEL_CORNER_RAD
 
 export default class InsideOutsideLabel extends Panel {
   public constructor( side: 'inside' | 'outside', options?: LayoutNodeOptions ) {
-    super( new Text( side === 'outside' ? MembraneTransportStrings.outsideStringProperty : MembraneTransportStrings.insideStringProperty, textOptions ), panelOptions );
+    super( new Text( side === 'outside' ? MembraneTransportFluent.outsideStringProperty : MembraneTransportFluent.insideStringProperty, textOptions ), panelOptions );
 
     options && this.mutate( options );
   }
