@@ -48,6 +48,9 @@ type SelfOptions = EmptySelfOptions;
 
 type MembraneTransportScreenViewOptions = SelfOptions & ScreenViewOptions;
 
+// Spacing between solute spinners and solute radio buttons.
+const SOLUTE_CONTROLS_SPACING = 12;
+
 export default class MembraneTransportScreenView extends ScreenView {
 
   private readonly observationWindow: ObservationWindow;
@@ -175,7 +178,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const solutesPanel = new SolutesPanel( model.featureSet, model.soluteProperty, {
       tandem: soluteControlsTandem.createTandem( 'solutesPanel' ),
       centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-      top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
+      centerY: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.centerY )
     } );
     soluteControlsNode.addChild( solutesPanel );
 
@@ -206,7 +209,7 @@ export default class MembraneTransportScreenView extends ScreenView {
         const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside',
           outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
             centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-            bottom: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ),
+            bottom: solutesPanel.top - SOLUTE_CONTROLS_SPACING,
             preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
           } );
         outsideSoluteControlNode.addChild( outsideSoluteControl );
@@ -216,7 +219,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside',
         insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
           centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
-          top: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.minY ),
+          top: solutesPanel.bottom + SOLUTE_CONTROLS_SPACING,
           preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
         } );
       insideSoluteControlNode.addChild( insideSoluteControl );
