@@ -49,6 +49,10 @@ export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportCons
 // Epsilon value for nudging the particle into bounds after teleporting so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
 
+const GLUCOSE_FADE_TIME = 7; // in seconds, how long it takes for glucose to fade out if glucose absorption is enabled
+const ADP_FADE_TIME = 16; // in seconds
+const PHOSPHATE_FADE_TIME = 2; // in seconds
+
 /**
  * Particle is moving randomly in Brownian motion within the cell or extracellular space.
  */
@@ -316,11 +320,9 @@ export default class Particle<T extends ParticleType> {
   private updateAbsorption( dt: number, removeParticle: ( particle: Particle<T> ) => void ): boolean {
 
     // Incorporate dt into opacity deltas for consistent behavior on varying frame rates
-    const FRAME_RATE = 60;
-    const frameFactor = dt * FRAME_RATE;
-    const fadeRateGlucose = 0.01 * frameFactor;
-    const fadeRatePhosphate = 0.01 * frameFactor;
-    const fadeRateAdp = 0.001 * frameFactor;
+    const fadeRateGlucose = dt / GLUCOSE_FADE_TIME;
+    const fadeRatePhosphate = dt / PHOSPHATE_FADE_TIME;
+    const fadeRateAdp = dt / ADP_FADE_TIME;
 
     if ( this.type === 'glucose' ) {
 
