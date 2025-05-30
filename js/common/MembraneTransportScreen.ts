@@ -7,7 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import PhetioProperty from '../../../axon/js/PhetioProperty.js';
+import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import MembraneTransportColors from '../common/MembraneTransportColors.js';
@@ -19,7 +19,7 @@ import MembraneTransportScreenView from './view/MembraneTransportScreenView.js';
 
 export default class MembraneTransportScreen extends Screen<MembraneTransportModel, MembraneTransportScreenView> {
 
-  public constructor( nameProperty: PhetioProperty<string>, tandem: Tandem, featureSet: MembraneTransportFeatureSet ) {
+  public constructor( nameProperty: ReadOnlyProperty<string>, tandem: Tandem, featureSet: MembraneTransportFeatureSet ) {
 
     super(
       () => new MembraneTransportModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),
