@@ -173,19 +173,20 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // Make sure that the transport proteins are in the correct reading order.
           this.proteinsNodeParent.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
 
+          const nameResponseProperty = MembraneTransportFluent.a11y.transportProteinBriefName.createProperty( {
+            type: type
+          } );
+
           // TODO i18n, see #97 (convert to fluent/yaml)
-          const objectResponseProperty = new PatternStringProperty( new StringProperty( '{{proteinIndex}} of {{proteinCount}}, {{openOrClosed}}' ), {
+          const objectResponseProperty = new PatternStringProperty( new StringProperty( '{{openOrClosed}}, {{proteinIndex}} of {{proteinCount}} Proteins in Membrane' ), {
             openOrClosed: transportProtein.openOrClosedProperty,
             proteinIndex: slottedNode.indexProperty,
             proteinCount: model.transportProteinCountProperty
           } );
 
-          const nameResponseProperty = MembraneTransportFluent.a11y.transportProteinBriefName.createProperty( {
-            type: type
-          } );
-
-          // The accessibleName for the PDOM, combine the objectResponse and nameResponse in the requested order.
-          const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{objectResponse}}, {{nameResponse}}' ), {
+          // The accessibleName for the PDOM, combine the name response and object response in the requested order.
+          // TODO: i18n, see #97 (convert to fluent/yaml)
+          const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{nameResponse}}, {{objectResponse}}' ), {
             nameResponse: nameResponseProperty,
             objectResponse: objectResponseProperty
           } );
