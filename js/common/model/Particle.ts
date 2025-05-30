@@ -325,22 +325,13 @@ export default class Particle<T extends ParticleType> {
     const fadeRateAdp = 0.001 * frameFactor;
 
     if ( this.type === 'glucose' ) {
+
+      // If absorb feature is enabled, glucose inside the cell will fade out over time.
       if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
         this.opacity -= fadeRateGlucose;
         if ( this.opacity <= 0 ) {
           removeParticle( this );
           return true; // Particle removed
-        }
-      }
-      else {
-
-        if ( this.position.y > MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
-          this.opacity = 1; // Full opacity outside the cell
-        }
-        else {
-
-          // Gradual fade over time after moving inside the cell.
-          this.opacity = clamp( this.opacity - fadeRateGlucose, 0.5, 1 );
         }
       }
     }
