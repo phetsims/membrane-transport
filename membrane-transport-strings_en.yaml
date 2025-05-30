@@ -48,9 +48,8 @@ a11y:
                                             that separates fluids inside and outside of cell. Added solute particles are
                                             suspended in fluid and randomly move with Brownian motion.
     playAreaSummarySolutes:               You can choose from a list of solutes and add them to inside or outside.
-    playAreaSummaryProteins:              Transport proteins can be added directly to membrane.
-    playAreaSummaryPotential:             There are options to change membrane potential and optionally hide visual
-                                          charge labels.
+    playAreaSummaryProteins:              Transport proteins of different types can be added directly to membrane. 
+    playAreaSummaryPotential:             Choose from several options to change the cell environment that may affect the proteins.
     playAreaSummaryBarCharts:             Solute bar charts provide a comparative summary for amount of each solute inside and outside of cell.
     playAreaSummaryScreen1:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
         } { a11y_summary_playAreaSummaryBarCharts }"
@@ -60,9 +59,8 @@ a11y:
     playAreaSummaryScreen3:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
         } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts
         }"
-    controlAreaSummary:                   There are options for how fast the action happens in the observation
-                                          window, including a button to pause. Also, you can clear the solutes from
-                                          both sides of the membrane or reset the sim.
+    controlAreaSummary:                   There is an option to slow the action to hear more details, including a button to pause. 
+                                            Also, you can reset the sim.
     interactionHint:                      Add or remove solute to inside or outside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to inside or outside of cell, and play with transport channels.
   observationWindow:
