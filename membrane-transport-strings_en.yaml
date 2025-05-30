@@ -279,3 +279,6 @@ a11y:
                              [open]   open
                              *[closed] closed
                            }, { a11y_transportProteinBriefName }
+
+    grabbedPattern:        |-
+                           Grabbed { a11y_transportProteinBriefName }.

@@ -457,8 +457,12 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
+    const grabbedResponse = MembraneTransportFluent.a11y.transportProtein.grabbedPattern.format( {
+      type: type
+    } );
+
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
-    this.addAccessibleResponse( 'Grabbed.' ); // TODO: i18n, see #97
+    this.addAccessibleResponse( grabbedResponse );
     voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, 'Grabbed' ); // TODO: i18n, see #97
     MembraneTransportSounds.transportProteinGrabbed();
 
