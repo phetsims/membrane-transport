@@ -463,7 +463,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
     this.addAccessibleResponse( grabbedResponse );
-    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, 'Grabbed' ); // TODO: i18n, see #97
+    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, grabbedResponse );
     MembraneTransportSounds.transportProteinGrabbed();
 
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
