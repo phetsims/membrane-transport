@@ -26,6 +26,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportStrings from '../../MembraneTransportStrings.js';
+import MembraneTransportColors from '../MembraneTransportColors.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -208,6 +209,9 @@ export default class MembraneTransportScreenView extends ScreenView {
       if ( soluteType !== 'atp' ) {
         const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside',
           outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
+
+            // So it is very clear that this is associated with the outside of the cell
+            fill: MembraneTransportColors.observationWindowOutsideCellColorProperty,
             centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
             bottom: solutesPanel.top - SOLUTE_CONTROLS_SPACING,
             preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
@@ -218,6 +222,9 @@ export default class MembraneTransportScreenView extends ScreenView {
 
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside',
         insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
+
+          // So it is very clear that this is associated with the inside of the cell
+          fill: MembraneTransportColors.observationWindowInsideCellColorProperty,
           centerX: ( this.observationWindow.left - this.layoutBounds.left ) / 2,
           top: solutesPanel.bottom + SOLUTE_CONTROLS_SPACING,
           preferredWidth: solutesPanel.width // Match the width with the solutesPanel above
