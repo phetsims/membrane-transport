@@ -148,11 +148,15 @@ const createFluentFile = (): string => {
 const fluentSupport = new FluentContainer( createFluentFile, Array.from(fluentKeyToStringPropertyMap.values()) );
 
 const MembraneTransportFluent = {
-  "membrane-transport.titleStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'membrane_transport_title' ),
-  "screen.simpleDiffusionStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_simpleDiffusion' ),
-  "screen.facilitatedDiffusionStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_facilitatedDiffusion' ),
-  "screen.activeTransportStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_activeTransport' ),
-  "screen.playgroundStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_playground' ),
+  "membrane-transport": {
+    titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membrane_transport_title' )
+  },
+  screen: {
+    simpleDiffusionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_simpleDiffusion' ),
+    facilitatedDiffusionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_facilitatedDiffusion' ),
+    activeTransportStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_activeTransport' ),
+    playgroundStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_playground' )
+  },
   solutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'solutes' ),
   oxygenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'oxygen' ),
   carbonDioxideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'carbonDioxide' ),
