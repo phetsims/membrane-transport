@@ -45,6 +45,8 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['removeLigands', MembraneTransportStrings.removeLigandsStringProperty],
   ['animateLipids', MembraneTransportStrings.animateLipidsStringProperty],
   ['animateLipidsDescription', MembraneTransportStrings.animateLipidsDescriptionStringProperty],
+  ['absorbGlucose', MembraneTransportStrings.absorbGlucoseStringProperty],
+  ['absorbGlucoseDescription', MembraneTransportStrings.absorbGlucoseDescriptionStringProperty],
   ['soluteConcentrations', MembraneTransportStrings.soluteConcentrationsStringProperty],
   ['a11y_summary_playAreaSummaryIntro', MembraneTransportStrings.a11y.summary.playAreaSummaryIntroStringProperty],
   ['a11y_summary_playAreaSummarySolutes', MembraneTransportStrings.a11y.summary.playAreaSummarySolutesStringProperty],
@@ -181,6 +183,8 @@ const MembraneTransportFluent = {
   removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'removeLigands' ),
   animateLipidsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids' ),
   animateLipidsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipidsDescription' ),
+  absorbGlucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'absorbGlucose' ),
+  absorbGlucoseDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'absorbGlucoseDescription' ),
   soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations' ),
   a11y: {
     summary: {

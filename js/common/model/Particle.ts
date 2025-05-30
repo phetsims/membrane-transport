@@ -19,6 +19,7 @@ import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportQueryParameters from '../MembraneTransportQueryParameters.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 
@@ -32,9 +33,6 @@ import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import { LigandType, ParticleType } from './SoluteType.js';
-
-// TODO (BF) can this be deleted? Brett will meet with content experts before we decide. See https://github.com/phetsims/membrane-transport/issues/92
-const ABSORB_GLUCOSE = false;
 
 // Typical speed for movement
 const TYPICAL_SPEED = 30;
@@ -327,7 +325,7 @@ export default class Particle<T extends ParticleType> {
     if ( this.type === 'glucose' ) {
 
       // If absorb feature is enabled, glucose inside the cell will fade out over time.
-      if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && ABSORB_GLUCOSE ) {
+      if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && MembraneTransportPreferences.instance.absorbGlucoseProperty.value ) {
         this.opacity -= fadeRateGlucose;
         if ( this.opacity <= 0 ) {
           removeParticle( this );

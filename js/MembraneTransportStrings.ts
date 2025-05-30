@@ -45,6 +45,8 @@ type StringsType = {
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
+  'absorbGlucoseStringProperty': LocalizedStringProperty;
+  'absorbGlucoseDescriptionStringProperty': LocalizedStringProperty;
   'soluteConcentrationsStringProperty': LocalizedStringProperty;
   'a11y': {
     'summary': {

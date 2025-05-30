@@ -26,6 +26,7 @@ export default class MembraneTransportPreferencesNode extends VBox {
   public constructor( tandem: Tandem ) {
 
     super( {
+      spacing: PreferencesDialogConstants.VERTICAL_CONTENT_SPACING,
       children: [
         new PreferencesControl( {
           isDisposable: false,
@@ -33,6 +34,17 @@ export default class MembraneTransportPreferencesNode extends VBox {
           descriptionNode: new RichText( MembraneTransportFluent.animateLipidsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
           controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
           tandem: tandem.createTandem( 'animateLipidsControl' ),
+          phetioFeatured: true,
+          visiblePropertyOptions: {
+            phetioFeatured: true
+          }
+        } ),
+        new PreferencesControl( {
+          isDisposable: false,
+          labelNode: new Text( MembraneTransportFluent.absorbGlucoseStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          descriptionNode: new RichText( MembraneTransportFluent.absorbGlucoseDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.absorbGlucoseProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+          tandem: tandem.createTandem( 'absorbGlucoseControl' ),
           phetioFeatured: true,
           visiblePropertyOptions: {
             phetioFeatured: true

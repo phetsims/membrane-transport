@@ -38,6 +38,8 @@ addLigands:                  Add Ligands
 removeLigands:               Remove Ligands
 animateLipids:               Animate Lipids
 animateLipidsDescription:    Whether the phospholipids forming the cell membrane should be animated
+absorbGlucose:               Absorb Glucose
+absorbGlucoseDescription:    Whether the cell should absorb glucose when it is present in the intracellular fluid
 soluteConcentrations:        Solute Concentrations
 
 a11y:

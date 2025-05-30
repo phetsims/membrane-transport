@@ -18,6 +18,12 @@ export default class MembraneTransportPreferences {
     phetioFeatured: true
   } );
 
+  // When true, glucose in the intracellular area will quickly fade out and be removed from the mmodel.
+  public readonly absorbGlucoseProperty = new BooleanProperty( MembraneTransportQueryParameters.absorbGlucose, {
+    tandem: Tandem.PREFERENCES.createTandem( 'absorbGlucoseProperty' ),
+    phetioFeatured: true
+  } );
+
   public readonly stereoCrossingSoundsEnabledProperty = new BooleanProperty( MembraneTransportQueryParameters.stereoCrossings, {
     tandem: Tandem.PREFERENCES.createTandem( 'stereoCrossingSoundsEnabledProperty' ),
     phetioFeatured: true
