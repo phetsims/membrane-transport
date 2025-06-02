@@ -42,6 +42,10 @@ absorbGlucose:               Absorb Glucose
 absorbGlucoseDescription:    Whether the cell should absorb glucose when it is present in the intracellular fluid
 soluteConcentrations:        Solute Concentrations
 
+preferencesDialog.audio.sounds.stereoSounds: Stereo Sounds
+preferencesDialog.audio.sounds.stereoSoundsDescription: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
+  
+
 a11y:
   summary:
     playAreaSummaryIntro:                 |-
@@ -50,7 +54,7 @@ a11y:
                                             that separates fluids inside and outside of cell. Added solute particles are
                                             suspended in fluid and randomly move with Brownian motion.
     playAreaSummarySolutes:               You can choose from a list of solutes and add them to inside or outside.
-    playAreaSummaryProteins:              Transport proteins of different types can be added directly to membrane. 
+    playAreaSummaryProteins:              Transport proteins of different types can be added directly to membrane.
     playAreaSummaryPotential:             Choose from several options to change the cell environment that may affect the proteins.
     playAreaSummaryBarCharts:             Solute bar charts provide a comparative summary for amount of each solute inside and outside of cell.
     playAreaSummaryScreen1:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes

@@ -48,6 +48,14 @@ type StringsType = {
   'absorbGlucoseStringProperty': LocalizedStringProperty;
   'absorbGlucoseDescriptionStringProperty': LocalizedStringProperty;
   'soluteConcentrationsStringProperty': LocalizedStringProperty;
+  'preferencesDialog': {
+    'audio': {
+      'sounds': {
+        'stereoSoundsStringProperty': LocalizedStringProperty;
+        'stereoSoundsDescriptionStringProperty': LocalizedStringProperty;
+      }
+    }
+  };
   'a11y': {
     'summary': {
       'playAreaSummaryIntroStringProperty': LocalizedStringProperty;

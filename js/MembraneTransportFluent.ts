@@ -48,6 +48,8 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['absorbGlucose', MembraneTransportStrings.absorbGlucoseStringProperty],
   ['absorbGlucoseDescription', MembraneTransportStrings.absorbGlucoseDescriptionStringProperty],
   ['soluteConcentrations', MembraneTransportStrings.soluteConcentrationsStringProperty],
+  ['preferencesDialog_audio_sounds_stereoSounds', MembraneTransportStrings.preferencesDialog.audio.sounds.stereoSoundsStringProperty],
+  ['preferencesDialog_audio_sounds_stereoSoundsDescription', MembraneTransportStrings.preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty],
   ['a11y_summary_playAreaSummaryIntro', MembraneTransportStrings.a11y.summary.playAreaSummaryIntroStringProperty],
   ['a11y_summary_playAreaSummarySolutes', MembraneTransportStrings.a11y.summary.playAreaSummarySolutesStringProperty],
   ['a11y_summary_playAreaSummaryProteins', MembraneTransportStrings.a11y.summary.playAreaSummaryProteinsStringProperty],
@@ -186,6 +188,14 @@ const MembraneTransportFluent = {
   absorbGlucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'absorbGlucose' ),
   absorbGlucoseDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'absorbGlucoseDescription' ),
   soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations' ),
+  preferencesDialog: {
+    audio: {
+      sounds: {
+        stereoSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSounds' ),
+        stereoSoundsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSoundsDescription' )
+      }
+    }
+  },
   a11y: {
     summary: {
       playAreaSummaryIntroStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummaryIntro' ),

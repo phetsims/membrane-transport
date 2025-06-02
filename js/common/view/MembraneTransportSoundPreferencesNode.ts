@@ -18,6 +18,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 
 export default class MembraneTransportSoundPreferencesNode extends VBox {
@@ -28,11 +29,9 @@ export default class MembraneTransportSoundPreferencesNode extends VBox {
       children: [
         new PreferencesControl( {
           isDisposable: false,
-          labelNode: new Text( 'Stereo Sounds', PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          labelNode: new Text( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoSoundsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
           controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
-
-          // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/176
-          descriptionNode: new RichText( 'When solutes cross the membrane, play in the right channel (outside -> inside) or left channel (inside -> outside)', PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+          descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
           tandem: tandem.createTandem( 'stereoCrossingSoundsEnabledControl' ),
           phetioFeatured: true,
           visiblePropertyOptions: {
