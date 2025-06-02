@@ -11,6 +11,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -26,6 +27,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
@@ -172,9 +174,15 @@ export default class SoluteBarChartNode extends Node {
       outsideBarStroke.left = origin.centerX;
     } );
 
-    // Update inside bar width when count changes, but don't show stripe
-    insideSoluteCountProperty.link( soluteCount => {
-      const width = countToWidth( soluteCount );
+    // Update inside bar width when count changes, but don't show stripe. If absorbing glucose, then it was requested to show the maximum solute count
+    // and adjust the bar color and stroke. See https://github.com/phetsims/membrane-transport/issues/187
+    Multilink.multilink( [ insideSoluteCountProperty, MembraneTransportPreferences.instance.absorbGlucoseProperty ], ( soluteCount, absorbGlucose ) => {
+      const glucoseAndAbsorbing = soluteType === 'glucose' && absorbGlucose;
+
+      const countToUse = glucoseAndAbsorbing ? MembraneTransportConstants.MAX_SOLUTE_COUNT : soluteCount;
+      const width = countToWidth( countToUse );
+
+      insideBar.fill = glucoseAndAbsorbing ? MembraneTransportColors.absorbingGlucoseColorProperty : fillColorProperty;
 
       insideBar.setRectWidth( width );
       insideBar.left = origin.centerX;
