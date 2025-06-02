@@ -334,6 +334,11 @@ export default class Particle<T extends ParticleType> {
           return true; // Particle removed
         }
       }
+      else {
+
+        // It is important to reset the opacity if the preferences Property changes.
+        this.opacity = 1;
+      }
     }
 
     // Free phosphate molecules move normally for a while, then are absorbed
