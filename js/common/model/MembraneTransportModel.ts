@@ -70,7 +70,7 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
 //  The two knobs below let us probabilistically veto hops that go *against* the concentration gradient so
 //  the macroscopic behavior students see is “downhill overall, uphill leaks still possible”.
 //
-//  BIAS_THRESHOLD (0–1) Minimum fractional difference before *any* bias is considered.
+//  BIAS_THRESHOLD (0–1) Minimum fractional difference between concentrations before *any* bias is considered.
 //      0 - always consider bias.
 //      0.10 - need ≥10 % difference to start biasing.
 //      1 - bias is never applied (pure diffusion).
