@@ -99,8 +99,8 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   public override isAvailableForPassiveTransport( soluteType: SoluteType, location: 'inside' | 'outside' ): boolean {
     return this.stateProperty.value === 'ligandBoundOpen' &&
            this.timeSinceStateTransition < BINDING_DURATION &&
-           !this.hasSolutesMovingTowardOrThroughTransportProtein()
-           && this.model.checkGradientForCrossing( soluteType, location );
+           !this.hasSolutesMovingTowardOrThroughTransportProtein() &&
+           this.model.checkGradientForCrossing( soluteType, location );
   }
 
   /**
