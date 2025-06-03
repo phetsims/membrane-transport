@@ -32,7 +32,7 @@ import SodiumPotassiumPump from './proteins/SodiumPotassiumPump.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
-import { LigandType, ParticleType } from './SoluteType.js';
+import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 // Typical speed for movement
 const TYPICAL_SPEED = 30;
@@ -288,7 +288,7 @@ export default class Particle<T extends ParticleType> {
    * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
    * in Projectile Data Lab's SamplingModel.launchButtonPressed
    */
-  public step( dt: number, model: Pick<MembraneTransportModel, 'removeParticle' | 'addSolute' | 'removeSolute' | 'soluteCrossedMembraneEmitter' | 'membraneSlots' | 'ligands' | 'insideSoluteCountProperties' | 'outsideSoluteCountProperties'> ): void {
+  public step( dt: number, model: MembraneTransportModel ): void {
 
     this.timeSinceCrossedMembrane += dt;
 
@@ -369,7 +369,7 @@ export default class Particle<T extends ParticleType> {
    * @param dt - Time step in seconds
    * @param model - The overall membrane transport model
    */
-  private updateMovement( dt: number, model: Pick<MembraneTransportModel, 'addSolute' | 'removeSolute' | 'soluteCrossedMembraneEmitter' | 'membraneSlots' | 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'> ): void {
+  private updateMovement( dt: number, model: MembraneTransportModel ): void {
 
     // --- Movement Logic (based on mode) ---
     if ( this.mode.type === 'randomWalk' ) {
@@ -628,7 +628,7 @@ export default class Particle<T extends ParticleType> {
    * Step the particle along a random walk path, including bouncing off the membrane
    * (central horizontal band) and the top/bottom walls, and wrapping around left/right walls.
    */
-  private stepRandomWalk( dt: number, model: Pick<MembraneTransportModel, 'membraneSlots' | 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'> ): void {
+  private stepRandomWalk( dt: number, model: MembraneTransportModel ): void {
     this.updateRandomWalkTimingAndDirection( dt );
 
     const randomWalk = this.mode as RandomWalkMode;
@@ -640,7 +640,7 @@ export default class Particle<T extends ParticleType> {
       return;
     }
 
-    if ( this.attemptMembraneInteraction( thisBounds, isOutsideCell, direction ) ) {
+    if ( this.attemptMembraneInteraction( model, thisBounds, isOutsideCell, direction ) ) {
       return;
     }
 
@@ -746,11 +746,12 @@ export default class Particle<T extends ParticleType> {
    * Checks for membrane interactions, handling passive diffusion or bounce if necessary.
    * Returns true if passive diffusion occurs.
    */
-  private attemptMembraneInteraction( thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
+  private attemptMembraneInteraction( membraneTransportModel: MembraneTransportModel, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
     if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       // Check for passive diffusion first, might change mode
-      if ( ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 ) {
+      const location = outsideOfCell ? 'outside' : 'inside';
+      if ( ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 && membraneTransportModel.checkGradientForCrossing( this.type, location ) ) {
         this.mode = {
           type: 'passiveDiffusion',
           direction: outsideOfCell ? 'inward' : 'outward',
@@ -857,7 +858,7 @@ export default class Particle<T extends ParticleType> {
     // Chain of responsibility pattern to check for interactions. Once we have completed one interaction, we can stop.
     const handlers = [
       () => this.handleLigandGatedChannelInteraction( slot, transportProtein, model, outsideOfCell ),
-      () => this.handleLeakageChannelInteraction( slot, transportProtein ),
+      () => this.handleLeakageChannelInteraction( slot, transportProtein, outsideOfCell ),
       () => this.handleSodiumGlucoseCotransporterInteraction( slot, transportProtein, model ),
       () => this.handleSodiumPotassiumPumpSodiumIntracellularInteraction( slot, transportProtein ),
       () => this.handleSodiumPotassiumPumpATPIntracellularInteraction( slot, transportProtein ),
@@ -912,12 +913,14 @@ export default class Particle<T extends ParticleType> {
    * Check for sodium and potassium ions interacting with leakage channels.
    * @returns true if an interaction occurred
    */
-  private handleLeakageChannelInteraction( slot: Slot, transportProtein: TransportProtein ): boolean {
+  private handleLeakageChannelInteraction( slot: Slot, transportProtein: TransportProtein, outsideOfCell: boolean ): boolean {
 
     const sodiumGates = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
 
-    if ( transportProtein.isAvailableForPassiveTransport() ) {
+    const location = outsideOfCell ? 'outside' : 'inside';
+
+    if ( MembraneTransportModel.canSoluteTypeMoveThroughPassiveTransport( this.type ) && transportProtein.isAvailableForPassiveTransport( this.type as SoluteType, location ) ) {
       affirm( slot.transportProteinType, 'transportProteinType should be defined' );
       if ( ( this.type === 'sodiumIon' && sodiumGates.includes( slot.transportProteinType ) ) ||
            ( this.type === 'potassiumIon' && potassiumGates.includes( slot.transportProteinType ) ) ) {

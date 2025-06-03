@@ -64,6 +64,24 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
   SLOT_POSITIONS.push( i * SLOT_SPACING - SLOT_MAX_X );
 }
 
+// “Hollywood” bias parameters for passive membrane transport.
+//
+//  With only a small number of particles on-screen, pure Brownian motion produces large, counter-intuitive fluctuations.
+//  The two knobs below let us probabilistically veto hops that go *against* the concentration gradient so
+//  the macroscopic behavior students see is “downhill overall, uphill leaks still possible”.
+//
+//  BIAS_THRESHOLD (0–1) Minimum fractional difference before *any* bias is considered.
+//      0 - always consider bias.
+//      0.10 - need ≥10 % difference to start biasing.
+//      1 - bias is never applied (pure diffusion).
+//
+//  GRADIENT_BIAS_STRENGTH (0–1) Probability of vetoing moves against the gradient, once we reach the BIAS_THRESHOLD.
+//      0 - No bias even past the threshold.
+//      0.5 - half of moves against the gradient are blocked.
+//      1 - All moves against the gradient are blocked.
+const BIAS_THRESHOLD = 0.1;
+const GRADIENT_BIAS_STRENGTH = 1;
+
 export default class MembraneTransportModel extends PhetioObject {
 
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -343,6 +361,43 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   /**
+   * Returns a signed gradient value for the specified solute type. Value is normalized to be between -1 and 1.
+   * If the value is positive, there is a higher concentration inside the cell.
+   * If the value is negative, there is a higher concentration outside the cell.
+   */
+  public getSignedGradient( soluteType: SoluteType ): number {
+    const insideCount = this.countSolutes( soluteType, 'inside' );
+    const outsideCount = this.countSolutes( soluteType, 'outside' );
+    const totalCount = insideCount + outsideCount;
+    return totalCount === 0 ? 0 : ( insideCount - outsideCount ) / totalCount;
+  }
+
+  /**
+   * See documentation for BIAS_THRESHOLD and GRADIENT_BIAS_STRENGTH.
+   *
+   * Stochastic check to see if a solute can cross the membrane, based on the gradient of the specified solute type.
+   * This creates a "hollywood" bias so that crossings are more likely to occur in the direction of lower concentration.
+   *
+   * This is used for passive diffusion and passive transport proteins.
+   */
+  public checkGradientForCrossing( soluteType: SoluteType, location: 'outside' | 'inside' ): boolean {
+    const gradient = this.getSignedGradient( soluteType );
+    const movingAgainstGradient = ( location === 'outside' && gradient > 0 ) || // higher inside
+                                  ( location === 'inside' && gradient < 0 ); // higher outside
+
+    // If the gradiant is small, allow crossing without any bias.
+    let allowCrossing = true;
+
+    // If the gradient is large enough, stochastic veto crossing against the gradient.
+    const absoluteGradient = Math.abs( gradient );
+    if ( movingAgainstGradient && absoluteGradient > BIAS_THRESHOLD ) {
+      allowCrossing = dotRandom.nextDouble() > GRADIENT_BIAS_STRENGTH;
+    }
+
+    return allowCrossing;
+  }
+
+  /**
    * Update the transport count based on the number of filled slots.
    */
   private updateTransportProteinCounts(): void {
@@ -400,6 +455,16 @@ export default class MembraneTransportModel extends PhetioObject {
 
   public getSlotForTransportProtein( transportProtein: TransportProtein ): Slot | null {
     return this.membraneSlots.find( slot => slot.transportProteinProperty.value === transportProtein ) || null;
+  }
+
+  /**
+   * Only these particle types can move through passive transport proteins.
+   */
+  public static canSoluteTypeMoveThroughPassiveTransport( particleType: ParticleType ): boolean {
+    return particleType === 'oxygen' ||
+           particleType === 'carbonDioxide' ||
+           particleType === 'sodiumIon' ||
+           particleType === 'potassiumIon';
   }
 
   /**

@@ -7,6 +7,7 @@
  */
 
 import membraneTransport from '../../../membraneTransport.js';
+import SoluteType from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 
@@ -48,8 +49,10 @@ export default abstract class VoltageGatedChannel<T extends string> extends Tran
   /**
    * A voltage gated channel is only available for transport if in the correct state.
    */
-  public override isAvailableForPassiveTransport(): boolean {
-    return this.isStateOpen( this.stateProperty.value ) && !this.hasSolutesMovingTowardOrThroughTransportProtein();
+  public override isAvailableForPassiveTransport( soluteType: SoluteType, location: 'inside' | 'outside' ): boolean {
+    return this.isStateOpen( this.stateProperty.value ) &&
+           !this.hasSolutesMovingTowardOrThroughTransportProtein() &&
+           this.model.checkGradientForCrossing( soluteType, location );
   }
 }
 

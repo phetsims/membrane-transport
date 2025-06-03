@@ -128,7 +128,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     return this.isSiteAvailable( 'center' );
   }
 
-  public isAvailableForPassiveTransport(): boolean {
+  public override isAvailableForPassiveTransport(): boolean {
     return false;
   }
 

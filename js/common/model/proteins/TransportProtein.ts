@@ -20,7 +20,7 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Particle, { ParticleModeWithSlot } from '../Particle.js';
 import Slot from '../Slot.js';
-import { ParticleType } from '../SoluteType.js';
+import SoluteType, { ParticleType } from '../SoluteType.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
@@ -104,10 +104,10 @@ export default abstract class TransportProtein<State extends string = Intentiona
   }
 
   /**
-   * A transport protein is available for transport if there are no solutes moving toward or through it. Subclasses may
-   * have additional criteria for availability.
+   * A transport protein is available for transport if there are no solutes moving toward or through it with some
+   * biasing depending on the concentration gradient. Subclasses may have additional criteria for availability.
    */
-  public abstract isAvailableForPassiveTransport(): boolean;
+  public abstract isAvailableForPassiveTransport( soluteType: SoluteType, location: 'outside' | 'inside' ): boolean;
 
   /**
    * Set free any ligands or particles that are interacting with the transport protein.

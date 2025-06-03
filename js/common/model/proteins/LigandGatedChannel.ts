@@ -14,7 +14,7 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Particle from '../Particle.js';
 import Slot from '../Slot.js';
-import { LigandType } from '../SoluteType.js';
+import SoluteType, { LigandType } from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 
@@ -96,8 +96,11 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
    * The ligand remains attached while solutes are passing through, so we must prevent new solutes from passing through
    * if this.timeSinceLigandBound >= this.BINDING_DURATION, so that we don't end up in an infinite loop.
    */
-  public override isAvailableForPassiveTransport(): boolean {
-    return this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceStateTransition < BINDING_DURATION && !this.hasSolutesMovingTowardOrThroughTransportProtein();
+  public override isAvailableForPassiveTransport( soluteType: SoluteType, location: 'inside' | 'outside' ): boolean {
+    return this.stateProperty.value === 'ligandBoundOpen' &&
+           this.timeSinceStateTransition < BINDING_DURATION &&
+           !this.hasSolutesMovingTowardOrThroughTransportProtein()
+           && this.model.checkGradientForCrossing( soluteType, location );
   }
 
   /**
