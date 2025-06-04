@@ -125,7 +125,7 @@ a11y:
     thereIsProteinAtThisSlotPattern:                  There is a {{proteinName}} at this slot
     moveCancelledPattern:                             Cancelled moving {{ligandType}}
     cannotInteractWhileLigandIsBoundPattern:          Cannot interact with the membrane while {{ligandType}} is bound to a protein
-  soluteControlsAccessibleHelpText:                  Choose solute then add or remove to inside or outside of cell.
+  soluteControlsAccessibleHelpText:                  Choose solute for adding or removing with Solute Adjusters.
   
   # Accessible names for solute radio buttons
   soluteAccessibleNames:
