@@ -77,12 +77,7 @@ export default class SolutesPanel extends Node {
         }
       };
     } ), {
-      orientation: 'horizontal',
-      wrap: true,
-      justifyLines: 'top',
-      preferredWidth: 200,
-      justify: 'left',
-      lineSpacing: 5,
+      orientation: 'vertical',
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,

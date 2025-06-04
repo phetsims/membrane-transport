@@ -22,7 +22,6 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
-import createParticleNode from './particles/createParticleNode.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -41,6 +40,7 @@ export default class SoluteControl extends Panel {
     } );
 
     const options = optionize<SoluteControlOptions, SelfOptions, PanelOptions>()( {
+      align: 'center',
       visibleProperty: visibleProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
     }, providedOptions );
@@ -147,8 +147,8 @@ export default class SoluteControl extends Panel {
       deltaCoarse: coarseDelta,
       numberDisplayOptions: {
 
-        // Custom icon will be added later
-        opacity: 0,
+        // The design hides the number display entirely.
+        visible: false,
         tandem: Tandem.OPT_OUT
       },
 
@@ -211,27 +211,17 @@ export default class SoluteControl extends Panel {
       phetioVisiblePropertyInstrumented: false,
       phetioEnabledPropertyInstrumented: false,
       arrowButtonOptions: {
+
+        // Make smaller so there is enough space between the observation window and the solute radio buttons.
+        arrowWidth: 8,
+        arrowHeight: 10,
+
         phetioVisiblePropertyInstrumented: false
       }
     } );
 
-    const icon = createParticleNode( soluteType, {
-      center: spinner.center,
-
-      // Chosen by inspection to make the icons small enough for the largest icon fit between spinner buttons.
-      maxWidth: 40,
-      maxHeight: 20
-    } );
-
-    // ATP is vertical in the play area but horizontal in the solute control
-    if ( soluteType === 'atp' ) {
-      icon.setRotation( Math.PI / 2 );
-      icon.scale( 2 );
-      icon.center = spinner.center;
-    }
-
     super( new Node( {
-      children: [ spinner, icon ]
+      children: [ spinner ]
     } ), options );
   }
 }
