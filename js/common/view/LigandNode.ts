@@ -74,6 +74,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
   private readonly utterance = new Utterance( {
 
+    // A longer delay to prevent this content from being spoken too frequently.
+    alertStableDelay: 500,
+
     // This utterance is not registered to a Node, and so it will always be spoken.
     voicingCanAnnounceProperties: [ new Property( true ) ]
   } );
