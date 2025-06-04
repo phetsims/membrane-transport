@@ -287,7 +287,7 @@
       }
     },
     "soluteControlsAccessibleHelpText": {
-      "value": "Choose solute then add or remove to inside or outside of cell."
+      "value": "Choose solute for adding or removing with Solute Adjusters."
     },
     "soluteAccessibleNames": {
       "oxygen": {
