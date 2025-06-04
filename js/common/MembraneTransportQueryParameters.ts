@@ -25,7 +25,7 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
   // TODO: Should this be a query parameter? Should it be public? https://github.com/phetsims/membrane-transport/issues/187.
   absorbGlucose: {
     type: 'boolean',
-    defaultValue: true,
+    defaultValue: false,
     public: true
   },
 
