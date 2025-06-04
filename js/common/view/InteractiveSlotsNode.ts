@@ -25,6 +25,7 @@ import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
+import { AriaLive } from '../../../../utterance-queue/js/AriaLiveAnnouncer.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -67,7 +68,15 @@ export default class InteractiveSlotsNode extends Node {
   private rectangles: Rectangle[] = [];
 
   // Utterances should not interrupt others so we hear the 'grabbed' response and the name of the protein.
-  private readonly grabReleaseUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+  private readonly grabReleaseUtterance = new Utterance( {
+    announcerOptions: {
+
+      // So that we do not interrupt the name response when the protein is grabbed.
+      cancelOther: false,
+
+      ariaLivePriority: AriaLive.ASSERTIVE
+    }
+  } );
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
   /**
@@ -456,13 +465,13 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
-    const grabbedResponse = MembraneTransportFluent.a11y.transportProtein.grabbedPattern.format( {
+    this.grabReleaseUtterance.alert = MembraneTransportFluent.a11y.transportProtein.grabbedPattern.format( {
       type: type
     } );
 
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
-    this.addAccessibleResponse( grabbedResponse );
-    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, grabbedResponse );
+    this.addAccessibleResponse( this.grabReleaseUtterance );
+    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance );
     MembraneTransportSounds.transportProteinGrabbed();
 
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -501,8 +510,10 @@ export default class InteractiveSlotsNode extends Node {
     }
 
     affirm( responseString !== null, 'We should have a response string to say.' );
-    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, responseString );
-    this.addAccessibleResponse( responseString );
+    this.grabReleaseUtterance.alert = responseString;
+
+    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance );
+    this.addAccessibleResponse( this.grabReleaseUtterance );
   }
 
   /**
