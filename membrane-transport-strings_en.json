@@ -418,8 +418,8 @@
       "accessibleNamePattern": {
         "value": "{ $proteinIndex } of { $proteinCount },\n{ $openOrClosed ->\n  [open]   open\n  *[closed] closed\n}, { a11y_transportProteinBriefName }"
       },
-      "grabbedPattern": {
-        "value": "Grabbed { a11y_transportProteinBriefName }."
+      "grabbed": {
+        "value": "Grabbed."
       }
     }
   }

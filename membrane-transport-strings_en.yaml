@@ -284,5 +284,4 @@ a11y:
                              *[closed] closed
                            }, { a11y_transportProteinBriefName }
 
-    grabbedPattern:        |-
-                           Grabbed { a11y_transportProteinBriefName }.
+    grabbed:               Grabbed.

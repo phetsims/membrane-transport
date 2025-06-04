@@ -187,7 +187,7 @@ type StringsType = {
     'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
     'transportProtein': {
       'accessibleNamePatternStringProperty': LocalizedStringProperty;
-      'grabbedPatternStringProperty': LocalizedStringProperty;
+      'grabbedStringProperty': LocalizedStringProperty;
     }
   }
 };
