@@ -15,130 +15,138 @@ import MembraneTransportStrings from './MembraneTransportStrings.js';
 
 // This map is used to create the fluent file and link to all StringProperties.
 // Accessing StringProperties is also critical for including them in the built sim.
-const fluentKeyToStringPropertyMap = new Map( [
-  ['membrane_transport_title', MembraneTransportStrings["membrane-transport"].titleStringProperty],
-  ['screen_simpleDiffusion', MembraneTransportStrings.screen.simpleDiffusionStringProperty],
-  ['screen_facilitatedDiffusion', MembraneTransportStrings.screen.facilitatedDiffusionStringProperty],
-  ['screen_activeTransport', MembraneTransportStrings.screen.activeTransportStringProperty],
-  ['screen_playground', MembraneTransportStrings.screen.playgroundStringProperty],
-  ['solutes', MembraneTransportStrings.solutesStringProperty],
-  ['oxygen', MembraneTransportStrings.oxygenStringProperty],
-  ['carbonDioxide', MembraneTransportStrings.carbonDioxideStringProperty],
-  ['sodiumIon', MembraneTransportStrings.sodiumIonStringProperty],
-  ['potassiumIon', MembraneTransportStrings.potassiumIonStringProperty],
-  ['glucose', MembraneTransportStrings.glucoseStringProperty],
-  ['atp', MembraneTransportStrings.atpStringProperty],
-  ['outside', MembraneTransportStrings.outsideStringProperty],
-  ['inside', MembraneTransportStrings.insideStringProperty],
-  ['membranePotentialLabels', MembraneTransportStrings.membranePotentialLabelsStringProperty],
-  ['voltageGatedChannels', MembraneTransportStrings.voltageGatedChannelsStringProperty],
-  ['ligandGatedChannels', MembraneTransportStrings.ligandGatedChannelsStringProperty],
-  ['activeTransporters', MembraneTransportStrings.activeTransportersStringProperty],
-  ['leakageChannels', MembraneTransportStrings.leakageChannelsStringProperty],
-  ['sodiumIonNaPlus', MembraneTransportStrings.sodiumIonNaPlusStringProperty],
-  ['potassiumIonKPlus', MembraneTransportStrings.potassiumIonKPlusStringProperty],
-  ['NaPlusKPlusPump', MembraneTransportStrings.NaPlusKPlusPumpStringProperty],
-  ['sodiumGlucoseCotransporter', MembraneTransportStrings.sodiumGlucoseCotransporterStringProperty],
-  ['membranePotential_mV', MembraneTransportStrings.membranePotential_mVStringProperty],
-  ['charges', MembraneTransportStrings.chargesStringProperty],
-  ['addLigands', MembraneTransportStrings.addLigandsStringProperty],
-  ['removeLigands', MembraneTransportStrings.removeLigandsStringProperty],
-  ['animateLipids', MembraneTransportStrings.animateLipidsStringProperty],
-  ['animateLipidsDescription', MembraneTransportStrings.animateLipidsDescriptionStringProperty],
-  ['absorbGlucose', MembraneTransportStrings.absorbGlucoseStringProperty],
-  ['absorbGlucoseDescription', MembraneTransportStrings.absorbGlucoseDescriptionStringProperty],
-  ['soluteConcentrations', MembraneTransportStrings.soluteConcentrationsStringProperty],
-  ['preferencesDialog_audio_sounds_stereoSounds', MembraneTransportStrings.preferencesDialog.audio.sounds.stereoSoundsStringProperty],
-  ['preferencesDialog_audio_sounds_stereoSoundsDescription', MembraneTransportStrings.preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty],
-  ['a11y_summary_playAreaSummaryIntro', MembraneTransportStrings.a11y.summary.playAreaSummaryIntroStringProperty],
-  ['a11y_summary_playAreaSummarySolutes', MembraneTransportStrings.a11y.summary.playAreaSummarySolutesStringProperty],
-  ['a11y_summary_playAreaSummaryProteins', MembraneTransportStrings.a11y.summary.playAreaSummaryProteinsStringProperty],
-  ['a11y_summary_playAreaSummaryPotential', MembraneTransportStrings.a11y.summary.playAreaSummaryPotentialStringProperty],
-  ['a11y_summary_playAreaSummaryBarCharts', MembraneTransportStrings.a11y.summary.playAreaSummaryBarChartsStringProperty],
-  ['a11y_summary_playAreaSummaryScreen1', MembraneTransportStrings.a11y.summary.playAreaSummaryScreen1StringProperty],
-  ['a11y_summary_playAreaSummaryScreen2and4', MembraneTransportStrings.a11y.summary.playAreaSummaryScreen2and4StringProperty],
-  ['a11y_summary_playAreaSummaryScreen3', MembraneTransportStrings.a11y.summary.playAreaSummaryScreen3StringProperty],
-  ['a11y_summary_controlAreaSummary', MembraneTransportStrings.a11y.summary.controlAreaSummaryStringProperty],
-  ['a11y_summary_interactionHint', MembraneTransportStrings.a11y.summary.interactionHintStringProperty],
-  ['a11y_summary_interactionHintWithTransportProteins', MembraneTransportStrings.a11y.summary.interactionHintWithTransportProteinsStringProperty],
-  ['a11y_observationWindow_membrane_accessibleName', MembraneTransportStrings.a11y.observationWindow.membrane.accessibleNameStringProperty],
-  ['a11y_soluteControls_accessibleHeading', MembraneTransportStrings.a11y.soluteControls.accessibleHeadingStringProperty],
-  ['a11y_eraseSolutesButton_accessibleName', MembraneTransportStrings.a11y.eraseSolutesButton.accessibleNameStringProperty],
-  ['a11y_eraseSolutesButton_accessibleContextResponse', MembraneTransportStrings.a11y.eraseSolutesButton.accessibleContextResponseStringProperty],
-  ['a11y_transportProteinPanel_transportProteins', MembraneTransportStrings.a11y.transportProteinPanel.transportProteinsStringProperty],
-  ['a11y_transportProteinPanel_accessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.accessibleHelpTextStringProperty],
-  ['a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', MembraneTransportStrings.a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty],
-  ['a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', MembraneTransportStrings.a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty],
-  ['a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', MembraneTransportStrings.a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty],
-  ['a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', MembraneTransportStrings.a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative70StringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative50StringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponsePositive30StringProperty],
-  ['a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse', MembraneTransportStrings.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty],
-  ['a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', MembraneTransportStrings.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty],
-  ['a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', MembraneTransportStrings.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty],
-  ['a11y_transportProteinPanel_toolAccessibleHelpText', MembraneTransportStrings.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty],
-  ['a11y_ligandNode_starLigand', MembraneTransportStrings.a11y.ligandNode.starLigandStringProperty],
-  ['a11y_ligandNode_triangleLigand', MembraneTransportStrings.a11y.ligandNode.triangleLigandStringProperty],
-  ['a11y_ligandNode_accessibleHelpText', MembraneTransportStrings.a11y.ligandNode.accessibleHelpTextStringProperty],
-  ['a11y_ligandNode_releasedLigand', MembraneTransportStrings.a11y.ligandNode.releasedLigandStringProperty],
-  ['a11y_ligandNode_ligandReleasedOnProteinPattern', MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnProteinPatternStringProperty],
-  ['a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', MembraneTransportStrings.a11y.ligandNode.ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty],
-  ['a11y_ligandNode_ligandUnboundAlert', MembraneTransportStrings.a11y.ligandNode.ligandUnboundAlertStringProperty],
-  ['a11y_ligandNode_thereIsNoProteinAtThisSlot', MembraneTransportStrings.a11y.ligandNode.thereIsNoProteinAtThisSlotStringProperty],
-  ['a11y_soluteControlsAccessibleHelpText', MembraneTransportStrings.a11y.soluteControlsAccessibleHelpTextStringProperty],
-  ['a11y_soluteAccessibleNames_oxygen', MembraneTransportStrings.a11y.soluteAccessibleNames.oxygenStringProperty],
-  ['a11y_soluteAccessibleNames_carbonDioxide', MembraneTransportStrings.a11y.soluteAccessibleNames.carbonDioxideStringProperty],
-  ['a11y_soluteAccessibleNames_sodiumIon', MembraneTransportStrings.a11y.soluteAccessibleNames.sodiumIonStringProperty],
-  ['a11y_soluteAccessibleNames_potassiumIon', MembraneTransportStrings.a11y.soluteAccessibleNames.potassiumIonStringProperty],
-  ['a11y_soluteAccessibleNames_glucose', MembraneTransportStrings.a11y.soluteAccessibleNames.glucoseStringProperty],
-  ['a11y_soluteAccessibleNames_atp', MembraneTransportStrings.a11y.soluteAccessibleNames.atpStringProperty],
-  ['a11y_outsideMembraneSpinnerAccessibleName', MembraneTransportStrings.a11y.outsideMembraneSpinnerAccessibleNameStringProperty],
-  ['a11y_outsideMembraneSpinnerHelpText', MembraneTransportStrings.a11y.outsideMembraneSpinnerHelpTextStringProperty],
-  ['a11y_insideMembraneSpinnerAccessibleName', MembraneTransportStrings.a11y.insideMembraneSpinnerAccessibleNameStringProperty],
-  ['a11y_insideMembraneSpinnerHelpText', MembraneTransportStrings.a11y.insideMembraneSpinnerHelpTextStringProperty],
-  ['a11y_soluteSpinnerRoleDescription', MembraneTransportStrings.a11y.soluteSpinnerRoleDescriptionStringProperty],
-  ['a11y_solute', MembraneTransportStrings.a11y.soluteStringProperty],
-  ['a11y_soluteSpinnerObjectResponsePattern', MembraneTransportStrings.a11y.soluteSpinnerObjectResponsePatternStringProperty],
-  ['a11y_soluteSpinnerContextResponsePattern', MembraneTransportStrings.a11y.soluteSpinnerContextResponsePatternStringProperty],
-  ['a11y_soluteBarChartsDescriptionParagraph', MembraneTransportStrings.a11y.soluteBarChartsDescriptionParagraphStringProperty],
-  ['a11y_arrowSizeDescription', MembraneTransportStrings.a11y.arrowSizeDescriptionStringProperty],
-  ['a11y_arrowDirectionDescription', MembraneTransportStrings.a11y.arrowDirectionDescriptionStringProperty],
-  ['a11y_barSizeDescription', MembraneTransportStrings.a11y.barSizeDescriptionStringProperty],
-  ['a11y_barChartPattern', MembraneTransportStrings.a11y.barChartPatternStringProperty],
-  ['a11y_currentDetailsActivityLevel', MembraneTransportStrings.a11y.currentDetailsActivityLevelStringProperty],
-  ['a11y_currentDetails', MembraneTransportStrings.a11y.currentDetailsStringProperty],
-  ['a11y_currentDetailsSoluteTypesOnOutside', MembraneTransportStrings.a11y.currentDetailsSoluteTypesOnOutsideStringProperty],
-  ['a11y_currentDetailsSoluteTypesOnInside', MembraneTransportStrings.a11y.currentDetailsSoluteTypesOnInsideStringProperty],
-  ['a11y_currentDetailsTransportProteins', MembraneTransportStrings.a11y.currentDetailsTransportProteinsStringProperty],
-  ['a11y_ligandsOnOutsideOnly', MembraneTransportStrings.a11y.ligandsOnOutsideOnlyStringProperty],
-  ['a11y_currentDetailsMembranePotential', MembraneTransportStrings.a11y.currentDetailsMembranePotentialStringProperty],
-  ['a11y_releasedBackInToolbox', MembraneTransportStrings.a11y.releasedBackInToolboxStringProperty],
-  ['a11y_selectedTransportProteinInSlot', MembraneTransportStrings.a11y.selectedTransportProteinInSlotStringProperty],
-  ['a11y_canceledBackInMembrane', MembraneTransportStrings.a11y.canceledBackInMembraneStringProperty],
-  ['a11y_grabbedProteinResponsePattern', MembraneTransportStrings.a11y.grabbedProteinResponsePatternStringProperty],
-  ['a11y_grabbedProteinResponseWithHintPattern', MembraneTransportStrings.a11y.grabbedProteinResponseWithHintPatternStringProperty],
-  ['a11y_ligandToggleButtonAccessibleHelpText', MembraneTransportStrings.a11y.ligandToggleButtonAccessibleHelpTextStringProperty],
-  ['a11y_ligandToggleButtonAddedContextResponse', MembraneTransportStrings.a11y.ligandToggleButtonAddedContextResponseStringProperty],
-  ['a11y_ligandToggleButtonRemovedContextResponse', MembraneTransportStrings.a11y.ligandToggleButtonRemovedContextResponseStringProperty],
-  ['a11y_grabbedLigandResponsePattern', MembraneTransportStrings.a11y.grabbedLigandResponsePatternStringProperty],
-  ['a11y_grabbedLigandResponseWithHintPattern', MembraneTransportStrings.a11y.grabbedLigandResponseWithHintPatternStringProperty],
-  ['a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', MembraneTransportStrings.a11y.grabbedLigandResponseWithEmptyMembraneHintPatternStringProperty],
-  ['a11y_transportProteinBriefName', MembraneTransportStrings.a11y.transportProteinBriefNameStringProperty],
-  ['a11y_ligandMovedAboveLigandGatedChannelPattern', MembraneTransportStrings.a11y.ligandMovedAboveLigandGatedChannelPatternStringProperty],
-  ['a11y_ligandMovedAboveLeakageChannelPattern', MembraneTransportStrings.a11y.ligandMovedAboveLeakageChannelPatternStringProperty],
-  ['a11y_ligandMovedAboveOtherChannelPattern', MembraneTransportStrings.a11y.ligandMovedAboveOtherChannelPatternStringProperty],
-  ['a11y_transportProtein_accessibleNamePattern', MembraneTransportStrings.a11y.transportProtein.accessibleNamePatternStringProperty],
-  ['a11y_transportProtein_grabbed', MembraneTransportStrings.a11y.transportProtein.grabbedStringProperty]
-] );
+// However, if strings are unused in Fluent system too, they will be fully excluded from
+// the build. So we need to only add actually used strings.
+const fluentKeyToStringPropertyMap = new Map();
+
+const addToMapIfDefined = ( key: string, sp: TReadOnlyProperty<string> | undefined ) => {
+  if ( sp ) {
+    fluentKeyToStringPropertyMap.set( key, sp );
+  }
+};
+
+addToMapIfDefined( 'membrane_transport_title', MembraneTransportStrings?.["membrane-transport"]?.["titleStringProperty"] );
+addToMapIfDefined( 'screen_simpleDiffusion', MembraneTransportStrings?.["screen"]?.["simpleDiffusionStringProperty"] );
+addToMapIfDefined( 'screen_facilitatedDiffusion', MembraneTransportStrings?.["screen"]?.["facilitatedDiffusionStringProperty"] );
+addToMapIfDefined( 'screen_activeTransport', MembraneTransportStrings?.["screen"]?.["activeTransportStringProperty"] );
+addToMapIfDefined( 'screen_playground', MembraneTransportStrings?.["screen"]?.["playgroundStringProperty"] );
+addToMapIfDefined( 'solutes', MembraneTransportStrings?.["solutesStringProperty"] );
+addToMapIfDefined( 'oxygen', MembraneTransportStrings?.["oxygenStringProperty"] );
+addToMapIfDefined( 'carbonDioxide', MembraneTransportStrings?.["carbonDioxideStringProperty"] );
+addToMapIfDefined( 'sodiumIon', MembraneTransportStrings?.["sodiumIonStringProperty"] );
+addToMapIfDefined( 'potassiumIon', MembraneTransportStrings?.["potassiumIonStringProperty"] );
+addToMapIfDefined( 'glucose', MembraneTransportStrings?.["glucoseStringProperty"] );
+addToMapIfDefined( 'atp', MembraneTransportStrings?.["atpStringProperty"] );
+addToMapIfDefined( 'outside', MembraneTransportStrings?.["outsideStringProperty"] );
+addToMapIfDefined( 'inside', MembraneTransportStrings?.["insideStringProperty"] );
+addToMapIfDefined( 'membranePotentialLabels', MembraneTransportStrings?.["membranePotentialLabelsStringProperty"] );
+addToMapIfDefined( 'voltageGatedChannels', MembraneTransportStrings?.["voltageGatedChannelsStringProperty"] );
+addToMapIfDefined( 'ligandGatedChannels', MembraneTransportStrings?.["ligandGatedChannelsStringProperty"] );
+addToMapIfDefined( 'activeTransporters', MembraneTransportStrings?.["activeTransportersStringProperty"] );
+addToMapIfDefined( 'leakageChannels', MembraneTransportStrings?.["leakageChannelsStringProperty"] );
+addToMapIfDefined( 'sodiumIonNaPlus', MembraneTransportStrings?.["sodiumIonNaPlusStringProperty"] );
+addToMapIfDefined( 'potassiumIonKPlus', MembraneTransportStrings?.["potassiumIonKPlusStringProperty"] );
+addToMapIfDefined( 'NaPlusKPlusPump', MembraneTransportStrings?.["NaPlusKPlusPumpStringProperty"] );
+addToMapIfDefined( 'sodiumGlucoseCotransporter', MembraneTransportStrings?.["sodiumGlucoseCotransporterStringProperty"] );
+addToMapIfDefined( 'membranePotential_mV', MembraneTransportStrings?.["membranePotential_mVStringProperty"] );
+addToMapIfDefined( 'charges', MembraneTransportStrings?.["chargesStringProperty"] );
+addToMapIfDefined( 'addLigands', MembraneTransportStrings?.["addLigandsStringProperty"] );
+addToMapIfDefined( 'removeLigands', MembraneTransportStrings?.["removeLigandsStringProperty"] );
+addToMapIfDefined( 'animateLipids', MembraneTransportStrings?.["animateLipidsStringProperty"] );
+addToMapIfDefined( 'animateLipidsDescription', MembraneTransportStrings?.["animateLipidsDescriptionStringProperty"] );
+addToMapIfDefined( 'absorbGlucose', MembraneTransportStrings?.["absorbGlucoseStringProperty"] );
+addToMapIfDefined( 'absorbGlucoseDescription', MembraneTransportStrings?.["absorbGlucoseDescriptionStringProperty"] );
+addToMapIfDefined( 'soluteConcentrations', MembraneTransportStrings?.["soluteConcentrationsStringProperty"] );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsStringProperty"] );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsDescriptionStringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryIntro', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryIntroStringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummarySolutes', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummarySolutesStringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryProteins', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryProteinsStringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryPotential', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryPotentialStringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryBarCharts', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryBarChartsStringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryScreen1', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryScreen1StringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryScreen2and4', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryScreen2and4StringProperty"] );
+addToMapIfDefined( 'a11y_summary_playAreaSummaryScreen3', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryScreen3StringProperty"] );
+addToMapIfDefined( 'a11y_summary_controlAreaSummary', MembraneTransportStrings?.["a11y"]?.["summary"]?.["controlAreaSummaryStringProperty"] );
+addToMapIfDefined( 'a11y_summary_interactionHint', MembraneTransportStrings?.["a11y"]?.["summary"]?.["interactionHintStringProperty"] );
+addToMapIfDefined( 'a11y_summary_interactionHintWithTransportProteins', MembraneTransportStrings?.["a11y"]?.["summary"]?.["interactionHintWithTransportProteinsStringProperty"] );
+addToMapIfDefined( 'a11y_observationWindow_membrane_accessibleName', MembraneTransportStrings?.["a11y"]?.["observationWindow"]?.["membrane"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', MembraneTransportStrings?.["a11y"]?.["soluteControls"]?.["accessibleHeadingStringProperty"] );
+addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["eraseSolutesButton"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', MembraneTransportStrings?.["a11y"]?.["eraseSolutesButton"]?.["accessibleContextResponseStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_transportProteins', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["transportProteinsStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHelpText', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["ligandGatedChannelPanel"]?.["sodiumIonNaPlusLigandGatedStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["ligandGatedChannelPanel"]?.["potassiumIonKPlusLigandGatedStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["leakageChannelPanel"]?.["sodiumIonNaPlusLeakageStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["leakageChannelPanel"]?.["potassiumIonKPlusLeakageStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["sodiumIonNaPlusVoltageGatedStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["potassiumIonKPlusVoltageGatedStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["negative70RadioButton"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["negative50RadioButton"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["positive30RadioButton"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["checkedContextResponseNegative70StringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["checkedContextResponseNegative50StringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["checkedContextResponsePositive30StringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["uncheckedContextResponseStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["activeTransportProteinPanel"]?.["sodiumPotassiumPumpStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["activeTransportProteinPanel"]?.["sodiumGlucoseCotransporterStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinPanel_toolAccessibleHelpText', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["toolAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_starLigand', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["starLigandStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_triangleLigand', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["triangleLigandStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_accessibleHelpText', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_releasedLigand', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["releasedLigandStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_ligandReleasedOnProteinPattern', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandReleasedOnProteinPatternStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_ligandUnboundAlert', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandUnboundAlertStringProperty"] );
+addToMapIfDefined( 'a11y_ligandNode_thereIsNoProteinAtThisSlot', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["thereIsNoProteinAtThisSlotStringProperty"] );
+addToMapIfDefined( 'a11y_soluteControlsAccessibleHelpText', MembraneTransportStrings?.["a11y"]?.["soluteControlsAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_soluteAccessibleNames_oxygen', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["oxygenStringProperty"] );
+addToMapIfDefined( 'a11y_soluteAccessibleNames_carbonDioxide', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["carbonDioxideStringProperty"] );
+addToMapIfDefined( 'a11y_soluteAccessibleNames_sodiumIon', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["sodiumIonStringProperty"] );
+addToMapIfDefined( 'a11y_soluteAccessibleNames_potassiumIon', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["potassiumIonStringProperty"] );
+addToMapIfDefined( 'a11y_soluteAccessibleNames_glucose', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["glucoseStringProperty"] );
+addToMapIfDefined( 'a11y_soluteAccessibleNames_atp', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["atpStringProperty"] );
+addToMapIfDefined( 'a11y_outsideMembraneSpinnerAccessibleName', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_outsideMembraneSpinnerHelpText', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_insideMembraneSpinnerAccessibleName', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_insideMembraneSpinnerHelpText', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_soluteSpinnerRoleDescription', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerRoleDescriptionStringProperty"] );
+addToMapIfDefined( 'a11y_solute', MembraneTransportStrings?.["a11y"]?.["soluteStringProperty"] );
+addToMapIfDefined( 'a11y_soluteSpinnerObjectResponsePattern', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerObjectResponsePatternStringProperty"] );
+addToMapIfDefined( 'a11y_soluteSpinnerContextResponsePattern', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerContextResponsePatternStringProperty"] );
+addToMapIfDefined( 'a11y_soluteBarChartsDescriptionParagraph', MembraneTransportStrings?.["a11y"]?.["soluteBarChartsDescriptionParagraphStringProperty"] );
+addToMapIfDefined( 'a11y_arrowSizeDescription', MembraneTransportStrings?.["a11y"]?.["arrowSizeDescriptionStringProperty"] );
+addToMapIfDefined( 'a11y_arrowDirectionDescription', MembraneTransportStrings?.["a11y"]?.["arrowDirectionDescriptionStringProperty"] );
+addToMapIfDefined( 'a11y_barSizeDescription', MembraneTransportStrings?.["a11y"]?.["barSizeDescriptionStringProperty"] );
+addToMapIfDefined( 'a11y_barChartPattern', MembraneTransportStrings?.["a11y"]?.["barChartPatternStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsActivityLevel', MembraneTransportStrings?.["a11y"]?.["currentDetailsActivityLevelStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetails', MembraneTransportStrings?.["a11y"]?.["currentDetailsStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnOutside', MembraneTransportStrings?.["a11y"]?.["currentDetailsSoluteTypesOnOutsideStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnInside', MembraneTransportStrings?.["a11y"]?.["currentDetailsSoluteTypesOnInsideStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsTransportProteins', MembraneTransportStrings?.["a11y"]?.["currentDetailsTransportProteinsStringProperty"] );
+addToMapIfDefined( 'a11y_ligandsOnOutsideOnly', MembraneTransportStrings?.["a11y"]?.["ligandsOnOutsideOnlyStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsMembranePotential', MembraneTransportStrings?.["a11y"]?.["currentDetailsMembranePotentialStringProperty"] );
+addToMapIfDefined( 'a11y_releasedBackInToolbox', MembraneTransportStrings?.["a11y"]?.["releasedBackInToolboxStringProperty"] );
+addToMapIfDefined( 'a11y_selectedTransportProteinInSlot', MembraneTransportStrings?.["a11y"]?.["selectedTransportProteinInSlotStringProperty"] );
+addToMapIfDefined( 'a11y_canceledBackInMembrane', MembraneTransportStrings?.["a11y"]?.["canceledBackInMembraneStringProperty"] );
+addToMapIfDefined( 'a11y_grabbedProteinResponsePattern', MembraneTransportStrings?.["a11y"]?.["grabbedProteinResponsePatternStringProperty"] );
+addToMapIfDefined( 'a11y_grabbedProteinResponseWithHintPattern', MembraneTransportStrings?.["a11y"]?.["grabbedProteinResponseWithHintPatternStringProperty"] );
+addToMapIfDefined( 'a11y_ligandToggleButtonAccessibleHelpText', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_ligandToggleButtonAddedContextResponse', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonAddedContextResponseStringProperty"] );
+addToMapIfDefined( 'a11y_ligandToggleButtonRemovedContextResponse', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonRemovedContextResponseStringProperty"] );
+addToMapIfDefined( 'a11y_grabbedLigandResponsePattern', MembraneTransportStrings?.["a11y"]?.["grabbedLigandResponsePatternStringProperty"] );
+addToMapIfDefined( 'a11y_grabbedLigandResponseWithHintPattern', MembraneTransportStrings?.["a11y"]?.["grabbedLigandResponseWithHintPatternStringProperty"] );
+addToMapIfDefined( 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', MembraneTransportStrings?.["a11y"]?.["grabbedLigandResponseWithEmptyMembraneHintPatternStringProperty"] );
+addToMapIfDefined( 'a11y_transportProteinBriefName', MembraneTransportStrings?.["a11y"]?.["transportProteinBriefNameStringProperty"] );
+addToMapIfDefined( 'a11y_ligandMovedAboveLigandGatedChannelPattern', MembraneTransportStrings?.["a11y"]?.["ligandMovedAboveLigandGatedChannelPatternStringProperty"] );
+addToMapIfDefined( 'a11y_ligandMovedAboveLeakageChannelPattern', MembraneTransportStrings?.["a11y"]?.["ligandMovedAboveLeakageChannelPatternStringProperty"] );
+addToMapIfDefined( 'a11y_ligandMovedAboveOtherChannelPattern', MembraneTransportStrings?.["a11y"]?.["ligandMovedAboveOtherChannelPatternStringProperty"] );
+addToMapIfDefined( 'a11y_transportProtein_accessibleNamePattern', MembraneTransportStrings?.["a11y"]?.["transportProtein"]?.["accessibleNamePatternStringProperty"] );
+addToMapIfDefined( 'a11y_transportProtein_grabbed', MembraneTransportStrings?.["a11y"]?.["transportProtein"]?.["grabbedStringProperty"] );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -270,16 +278,16 @@ const MembraneTransportFluent = {
       triangleLigandStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_triangleLigand' ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_accessibleHelpText' ),
       releasedLigandStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedLigand' ),
-      grabbedLigandStringProperty: MembraneTransportStrings.a11y.ligandNode.grabbedLigandStringProperty,
-      ligandReleasedOffMembranePatternStringProperty: MembraneTransportStrings.a11y.ligandNode.ligandReleasedOffMembranePatternStringProperty,
+      grabbedLigandStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["grabbedLigandStringProperty"],
+      ligandReleasedOffMembranePatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandReleasedOffMembranePatternStringProperty"],
       ligandReleasedOnProteinPatternStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandReleasedOnProteinPattern' ),
       ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern' ),
-      ligandMovedToSlotPatternStringProperty: MembraneTransportStrings.a11y.ligandNode.ligandMovedToSlotPatternStringProperty,
+      ligandMovedToSlotPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandMovedToSlotPatternStringProperty"],
       ligandUnboundAlertStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandUnboundAlert' ),
       thereIsNoProteinAtThisSlotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_thereIsNoProteinAtThisSlot' ),
-      thereIsProteinAtThisSlotPatternStringProperty: MembraneTransportStrings.a11y.ligandNode.thereIsProteinAtThisSlotPatternStringProperty,
-      moveCancelledPatternStringProperty: MembraneTransportStrings.a11y.ligandNode.moveCancelledPatternStringProperty,
-      cannotInteractWhileLigandIsBoundPatternStringProperty: MembraneTransportStrings.a11y.ligandNode.cannotInteractWhileLigandIsBoundPatternStringProperty
+      thereIsProteinAtThisSlotPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["thereIsProteinAtThisSlotPatternStringProperty"],
+      moveCancelledPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["moveCancelledPatternStringProperty"],
+      cannotInteractWhileLigandIsBoundPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["cannotInteractWhileLigandIsBoundPatternStringProperty"]
     },
     soluteControlsAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControlsAccessibleHelpText' ),
     soluteAccessibleNames: {
