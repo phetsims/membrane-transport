@@ -2,7 +2,6 @@
 
 /**
  * LigandNode is a node that represents a ligand in the simulation.
- * Added keyboard interaction following the pattern of MembraneGroupSelectView.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

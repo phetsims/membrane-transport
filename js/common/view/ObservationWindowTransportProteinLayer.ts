@@ -239,7 +239,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     } ) );
   }
 
-  // Return in the order of the slots, so that the MembraneGroupSelectView will select them in the correct order
+  // Return the Nodes in the order that they appear in the slots.
   public getTransportProteinNodes(): SlottedNode[] {
     return Array.from( this.record.values() ).sort( ( a, b ) => {
       return this.model.membraneSlots.indexOf( a.slot ) - this.model.membraneSlots.indexOf( b.slot );

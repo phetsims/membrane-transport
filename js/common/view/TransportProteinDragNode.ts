@@ -110,7 +110,7 @@ export default class TransportProteinDragNode extends Node {
 
     // Mouse drag listener while dragging a transport protein with mouse/touch.
     // Do not use RichDragListener or SoundRichDragListener because the keyboard
-    // interaction is mediated by the MembraneGroupSelectView
+    // interaction is mediated by the InteractiveSlotsNode and ObservationWindowProteinLayer
     this.dragListener = new DragListener( {
       useParentOffset: true,
       dragBoundsProperty: modelBoundsProperty,
