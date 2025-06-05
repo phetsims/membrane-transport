@@ -21,14 +21,11 @@ outside:                                                Outside
 inside:                                                 Inside
 
 # On the Toolbox
-membranePotentialLabels:                                Membrane Potential Labels
 voltageGatedChannels:                                   Voltage-gated Channels
 ligandGatedChannels:                                    Ligand-gated Channels
 activeTransporters:                                     Active Transporters
 leakageChannels:                                        Leakage Channels
 
-sodiumIonNaPlus:                                        Sodium Ion<br>(Na<sup>+</sup>)
-potassiumIonKPlus:                                      Potassium Ion<br>(K<sup>+</sup>)
 NaPlusKPlusPump:                                        Na<sup>+</sup>/K<sup>+</sup><br>Pump
 sodiumGlucoseCotransporter:                             Na<sup>+</sup>/Glucose<br>Cotransporter
 
@@ -69,9 +66,6 @@ a11y:
                                           Also, you can reset the sim.
     interactionHint:                      Add or remove solute to inside or outside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to inside or outside of cell, and play with transport channels.
-  observationWindow:
-    membrane:
-      accessibleName: Zoomed-in Membrane
   soluteControls:
     accessibleHeading: Solute Controls
   eraseSolutesButton:
@@ -101,11 +95,8 @@ a11y:
           positive30RadioButton:
             accessibleName: positive 30 millivolts
       chargesCheckbox:
-        accessibleHelpText:               Explore with or without charges showing membrane potential along inside and outside.
-        checkedContextResponseNegative70: Positive outside and negative inside; charges densely packed along membrane.
-        checkedContextResponseNegative50: Positive outside and negative inside; charges lightly packed along membrane.
-        checkedContextResponsePositive30: Negative outside and positive inside; charges sparse along membrane.
-        uncheckedContextResponse:         Membrane potential charges, hidden.
+        accessibleHelpText:       Explore with or without charges showing membrane potential along inside and outside.
+        uncheckedContextResponse: Membrane potential charges, hidden.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
@@ -115,16 +106,10 @@ a11y:
     triangleLigand:                                   Triangle Ligand
     accessibleHelpText:                               Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally.
     releasedLigand:                                   Released.
-    grabbedLigand:                                    Grabbed {{ligandType}}
     ligandReleasedOffMembranePattern:                 "{{ligandType}} released off membrane"
     ligandReleasedOnProteinPattern:                   Released. Binding successful. Protein opens.
     ligandReleasedOnBusyOrIncompatibleProteinPattern: Released. Binding unsuccessful. Ligand floats away.
-    ligandMovedToSlotPattern:                         "{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}"
     ligandUnboundAlert:                               Ligand floats away. Protein closes.
-    thereIsNoProteinAtThisSlot:                       There is no protein at this slot
-    thereIsProteinAtThisSlotPattern:                  There is a {{proteinName}} at this slot
-    moveCancelledPattern:                             Cancelled moving {{ligandType}}
-    cannotInteractWhileLigandIsBoundPattern:          Cannot interact with the membrane while {{ligandType}} is bound to a protein
   soluteControlsAccessibleHelpText:                  Choose solute for adding or removing with Solute Adjusters.
   
   # Accessible names for solute radio buttons
@@ -218,19 +203,6 @@ a11y:
   ligandsOnOutsideOnly:                              Ligands on outside only.
   currentDetailsMembranePotential:                   "{ $membranePotential } millivolts."
 
-  # Protein interaction descriptions
-  releasedBackInToolbox:                             Released. Back in toolbox.
-
-  # Indicate the selected membrane protein, for alerter
-  selectedTransportProteinInSlot:                    Selected { $channelName } in slot { $slotIndex } of { $slotCount }.
-  canceledBackInMembrane:                            Cancelled. Back in membrane.
-
-  # Spoken when the protein is grabbed.
-  grabbedProteinResponsePattern:                     Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }.
-
-  # The first time the protein is grabbed, provide a hint about how to use it.
-  grabbedProteinResponseWithHintPattern:             "{ a11y_grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
-
   # accessibleHelpText for the ligand control
   ligandToggleButtonAccessibleHelpText:              Add or remove triangle- and star-shaped ligands to outside of cell.
   ligandToggleButtonAddedContextResponse:            Outside flooded with ligands.
@@ -275,13 +247,4 @@ a11y:
                                                      } { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
 
   transportProtein:
-
-    # The accessible name pattern for proteins in the membrane.
-    accessibleNamePattern: |-
-                           { $proteinIndex } of { $proteinCount },
-                           { $openOrClosed ->
-                             [open]   open
-                             *[closed] closed
-                           }, { a11y_transportProteinBriefName }
-
-    grabbed:               Grabbed.
+    grabbed: Grabbed.

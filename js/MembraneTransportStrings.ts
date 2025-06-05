@@ -30,13 +30,10 @@ type StringsType = {
   'atpStringProperty': LocalizedStringProperty;
   'outsideStringProperty': LocalizedStringProperty;
   'insideStringProperty': LocalizedStringProperty;
-  'membranePotentialLabelsStringProperty': LocalizedStringProperty;
   'voltageGatedChannelsStringProperty': LocalizedStringProperty;
   'ligandGatedChannelsStringProperty': LocalizedStringProperty;
   'activeTransportersStringProperty': LocalizedStringProperty;
   'leakageChannelsStringProperty': LocalizedStringProperty;
-  'sodiumIonNaPlusStringProperty': LocalizedStringProperty;
-  'potassiumIonKPlusStringProperty': LocalizedStringProperty;
   'NaPlusKPlusPumpStringProperty': LocalizedStringProperty;
   'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
   'membranePotential_mVStringProperty': LocalizedStringProperty;
@@ -69,11 +66,6 @@ type StringsType = {
       'controlAreaSummaryStringProperty': LocalizedStringProperty;
       'interactionHintStringProperty': LocalizedStringProperty;
       'interactionHintWithTransportProteinsStringProperty': LocalizedStringProperty;
-    };
-    'observationWindow': {
-      'membrane': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-      }
     };
     'soluteControls': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
@@ -113,9 +105,6 @@ type StringsType = {
         };
         'chargesCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
-          'checkedContextResponseNegative70StringProperty': LocalizedStringProperty;
-          'checkedContextResponseNegative50StringProperty': LocalizedStringProperty;
-          'checkedContextResponsePositive30StringProperty': LocalizedStringProperty;
           'uncheckedContextResponseStringProperty': LocalizedStringProperty;
         }
       };
@@ -130,16 +119,10 @@ type StringsType = {
       'triangleLigandStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'releasedLigandStringProperty': LocalizedStringProperty;
-      'grabbedLigandStringProperty': LocalizedStringProperty;
       'ligandReleasedOffMembranePatternStringProperty': LocalizedStringProperty;
       'ligandReleasedOnProteinPatternStringProperty': LocalizedStringProperty;
       'ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty': LocalizedStringProperty;
-      'ligandMovedToSlotPatternStringProperty': LocalizedStringProperty;
       'ligandUnboundAlertStringProperty': LocalizedStringProperty;
-      'thereIsNoProteinAtThisSlotStringProperty': LocalizedStringProperty;
-      'thereIsProteinAtThisSlotPatternStringProperty': LocalizedStringProperty;
-      'moveCancelledPatternStringProperty': LocalizedStringProperty;
-      'cannotInteractWhileLigandIsBoundPatternStringProperty': LocalizedStringProperty;
     };
     'soluteControlsAccessibleHelpTextStringProperty': LocalizedStringProperty;
     'soluteAccessibleNames': {
@@ -170,11 +153,6 @@ type StringsType = {
     'currentDetailsTransportProteinsStringProperty': LocalizedStringProperty;
     'ligandsOnOutsideOnlyStringProperty': LocalizedStringProperty;
     'currentDetailsMembranePotentialStringProperty': LocalizedStringProperty;
-    'releasedBackInToolboxStringProperty': LocalizedStringProperty;
-    'selectedTransportProteinInSlotStringProperty': LocalizedStringProperty;
-    'canceledBackInMembraneStringProperty': LocalizedStringProperty;
-    'grabbedProteinResponsePatternStringProperty': LocalizedStringProperty;
-    'grabbedProteinResponseWithHintPatternStringProperty': LocalizedStringProperty;
     'ligandToggleButtonAccessibleHelpTextStringProperty': LocalizedStringProperty;
     'ligandToggleButtonAddedContextResponseStringProperty': LocalizedStringProperty;
     'ligandToggleButtonRemovedContextResponseStringProperty': LocalizedStringProperty;
@@ -186,7 +164,6 @@ type StringsType = {
     'ligandMovedAboveLeakageChannelPatternStringProperty': LocalizedStringProperty;
     'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
     'transportProtein': {
-      'accessibleNamePatternStringProperty': LocalizedStringProperty;
       'grabbedStringProperty': LocalizedStringProperty;
     }
   }

@@ -41,9 +41,6 @@
   "inside": {
     "value": "Inside"
   },
-  "membranePotentialLabels": {
-    "value": "Membrane Potential Labels"
-  },
   "voltageGatedChannels": {
     "value": "Voltage-gated Channels"
   },
@@ -55,12 +52,6 @@
   },
   "leakageChannels": {
     "value": "Leakage Channels"
-  },
-  "sodiumIonNaPlus": {
-    "value": "Sodium Ion<br>(Na<sup>+</sup>)"
-  },
-  "potassiumIonKPlus": {
-    "value": "Potassium Ion<br>(K<sup>+</sup>)"
   },
   "NaPlusKPlusPump": {
     "value": "Na<sup>+</sup>/K<sup>+</sup><br>Pump"
@@ -137,13 +128,6 @@
         "value": "Add or remove solutes to inside or outside of cell, and play with transport channels."
       }
     },
-    "observationWindow": {
-      "membrane": {
-        "accessibleName": {
-          "value": "Zoomed-in Membrane"
-        }
-      }
-    },
     "soluteControls": {
       "accessibleHeading": {
         "value": "Solute Controls"
@@ -216,15 +200,6 @@
           "accessibleHelpText": {
             "value": "Explore with or without charges showing membrane potential along inside and outside."
           },
-          "checkedContextResponseNegative70": {
-            "value": "Positive outside and negative inside; charges densely packed along membrane."
-          },
-          "checkedContextResponseNegative50": {
-            "value": "Positive outside and negative inside; charges lightly packed along membrane."
-          },
-          "checkedContextResponsePositive30": {
-            "value": "Negative outside and positive inside; charges sparse along membrane."
-          },
           "uncheckedContextResponse": {
             "value": "Membrane potential charges, hidden."
           }
@@ -255,9 +230,6 @@
       "releasedLigand": {
         "value": "Released."
       },
-      "grabbedLigand": {
-        "value": "Grabbed {{ligandType}}"
-      },
       "ligandReleasedOffMembranePattern": {
         "value": "{{ligandType}} released off membrane"
       },
@@ -267,23 +239,8 @@
       "ligandReleasedOnBusyOrIncompatibleProteinPattern": {
         "value": "Released. Binding unsuccessful. Ligand floats away."
       },
-      "ligandMovedToSlotPattern": {
-        "value": "{{ligandType}} moved to slot {{slotNumber}}. {{additionalInformation}}"
-      },
       "ligandUnboundAlert": {
         "value": "Ligand floats away. Protein closes."
-      },
-      "thereIsNoProteinAtThisSlot": {
-        "value": "There is no protein at this slot"
-      },
-      "thereIsProteinAtThisSlotPattern": {
-        "value": "There is a {{proteinName}} at this slot"
-      },
-      "moveCancelledPattern": {
-        "value": "Cancelled moving {{ligandType}}"
-      },
-      "cannotInteractWhileLigandIsBoundPattern": {
-        "value": "Cannot interact with the membrane while {{ligandType}} is bound to a protein"
       }
     },
     "soluteControlsAccessibleHelpText": {
@@ -369,21 +326,6 @@
     "currentDetailsMembranePotential": {
       "value": "{ $membranePotential } millivolts."
     },
-    "releasedBackInToolbox": {
-      "value": "Released. Back in toolbox."
-    },
-    "selectedTransportProteinInSlot": {
-      "value": "Selected { $channelName } in slot { $slotIndex } of { $slotCount }."
-    },
-    "canceledBackInMembrane": {
-      "value": "Cancelled. Back in membrane."
-    },
-    "grabbedProteinResponsePattern": {
-      "value": "Grabbed. Above membrane. Slot { $slotIndex } of { $slotCount }."
-    },
-    "grabbedProteinResponseWithHintPattern": {
-      "value": "{ a11y_grabbedProteinResponsePattern } Move protein with W, A, S or D key. Space to release."
-    },
     "ligandToggleButtonAccessibleHelpText": {
       "value": "Add or remove triangle- and star-shaped ligands to outside of cell."
     },
@@ -415,9 +357,6 @@
       "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
     },
     "transportProtein": {
-      "accessibleNamePattern": {
-        "value": "{ $proteinIndex } of { $proteinCount },\n{ $openOrClosed ->\n  [open]   open\n  *[closed] closed\n}, { a11y_transportProteinBriefName }"
-      },
       "grabbed": {
         "value": "Grabbed."
       }

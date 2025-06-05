@@ -39,13 +39,10 @@ addToMapIfDefined( 'glucose', MembraneTransportStrings?.["glucoseStringProperty"
 addToMapIfDefined( 'atp', MembraneTransportStrings?.["atpStringProperty"] );
 addToMapIfDefined( 'outside', MembraneTransportStrings?.["outsideStringProperty"] );
 addToMapIfDefined( 'inside', MembraneTransportStrings?.["insideStringProperty"] );
-addToMapIfDefined( 'membranePotentialLabels', MembraneTransportStrings?.["membranePotentialLabelsStringProperty"] );
 addToMapIfDefined( 'voltageGatedChannels', MembraneTransportStrings?.["voltageGatedChannelsStringProperty"] );
 addToMapIfDefined( 'ligandGatedChannels', MembraneTransportStrings?.["ligandGatedChannelsStringProperty"] );
 addToMapIfDefined( 'activeTransporters', MembraneTransportStrings?.["activeTransportersStringProperty"] );
 addToMapIfDefined( 'leakageChannels', MembraneTransportStrings?.["leakageChannelsStringProperty"] );
-addToMapIfDefined( 'sodiumIonNaPlus', MembraneTransportStrings?.["sodiumIonNaPlusStringProperty"] );
-addToMapIfDefined( 'potassiumIonKPlus', MembraneTransportStrings?.["potassiumIonKPlusStringProperty"] );
 addToMapIfDefined( 'NaPlusKPlusPump', MembraneTransportStrings?.["NaPlusKPlusPumpStringProperty"] );
 addToMapIfDefined( 'sodiumGlucoseCotransporter', MembraneTransportStrings?.["sodiumGlucoseCotransporterStringProperty"] );
 addToMapIfDefined( 'membranePotential_mV', MembraneTransportStrings?.["membranePotential_mVStringProperty"] );
@@ -70,7 +67,6 @@ addToMapIfDefined( 'a11y_summary_playAreaSummaryScreen3', MembraneTransportStrin
 addToMapIfDefined( 'a11y_summary_controlAreaSummary', MembraneTransportStrings?.["a11y"]?.["summary"]?.["controlAreaSummaryStringProperty"] );
 addToMapIfDefined( 'a11y_summary_interactionHint', MembraneTransportStrings?.["a11y"]?.["summary"]?.["interactionHintStringProperty"] );
 addToMapIfDefined( 'a11y_summary_interactionHintWithTransportProteins', MembraneTransportStrings?.["a11y"]?.["summary"]?.["interactionHintWithTransportProteinsStringProperty"] );
-addToMapIfDefined( 'a11y_observationWindow_membrane_accessibleName', MembraneTransportStrings?.["a11y"]?.["observationWindow"]?.["membrane"]?.["accessibleNameStringProperty"] );
 addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', MembraneTransportStrings?.["a11y"]?.["soluteControls"]?.["accessibleHeadingStringProperty"] );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["eraseSolutesButton"]?.["accessibleNameStringProperty"] );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', MembraneTransportStrings?.["a11y"]?.["eraseSolutesButton"]?.["accessibleContextResponseStringProperty"] );
@@ -88,9 +84,6 @@ addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membrane
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["negative50RadioButton"]?.["accessibleNameStringProperty"] );
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["membranePotential"]?.["radioButtonGroup"]?.["positive30RadioButton"]?.["accessibleNameStringProperty"] );
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["accessibleHelpTextStringProperty"] );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["checkedContextResponseNegative70StringProperty"] );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["checkedContextResponseNegative50StringProperty"] );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["checkedContextResponsePositive30StringProperty"] );
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["voltageGatedChannelPanel"]?.["chargesCheckbox"]?.["uncheckedContextResponseStringProperty"] );
 addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["activeTransportProteinPanel"]?.["sodiumPotassiumPumpStringProperty"] );
 addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', MembraneTransportStrings?.["a11y"]?.["transportProteinPanel"]?.["activeTransportProteinPanel"]?.["sodiumGlucoseCotransporterStringProperty"] );
@@ -102,7 +95,6 @@ addToMapIfDefined( 'a11y_ligandNode_releasedLigand', MembraneTransportStrings?.[
 addToMapIfDefined( 'a11y_ligandNode_ligandReleasedOnProteinPattern', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandReleasedOnProteinPatternStringProperty"] );
 addToMapIfDefined( 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty"] );
 addToMapIfDefined( 'a11y_ligandNode_ligandUnboundAlert', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandUnboundAlertStringProperty"] );
-addToMapIfDefined( 'a11y_ligandNode_thereIsNoProteinAtThisSlot', MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["thereIsNoProteinAtThisSlotStringProperty"] );
 addToMapIfDefined( 'a11y_soluteControlsAccessibleHelpText', MembraneTransportStrings?.["a11y"]?.["soluteControlsAccessibleHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_soluteAccessibleNames_oxygen', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["oxygenStringProperty"] );
 addToMapIfDefined( 'a11y_soluteAccessibleNames_carbonDioxide', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["carbonDioxideStringProperty"] );
@@ -130,11 +122,6 @@ addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnInside', MembraneTransportSt
 addToMapIfDefined( 'a11y_currentDetailsTransportProteins', MembraneTransportStrings?.["a11y"]?.["currentDetailsTransportProteinsStringProperty"] );
 addToMapIfDefined( 'a11y_ligandsOnOutsideOnly', MembraneTransportStrings?.["a11y"]?.["ligandsOnOutsideOnlyStringProperty"] );
 addToMapIfDefined( 'a11y_currentDetailsMembranePotential', MembraneTransportStrings?.["a11y"]?.["currentDetailsMembranePotentialStringProperty"] );
-addToMapIfDefined( 'a11y_releasedBackInToolbox', MembraneTransportStrings?.["a11y"]?.["releasedBackInToolboxStringProperty"] );
-addToMapIfDefined( 'a11y_selectedTransportProteinInSlot', MembraneTransportStrings?.["a11y"]?.["selectedTransportProteinInSlotStringProperty"] );
-addToMapIfDefined( 'a11y_canceledBackInMembrane', MembraneTransportStrings?.["a11y"]?.["canceledBackInMembraneStringProperty"] );
-addToMapIfDefined( 'a11y_grabbedProteinResponsePattern', MembraneTransportStrings?.["a11y"]?.["grabbedProteinResponsePatternStringProperty"] );
-addToMapIfDefined( 'a11y_grabbedProteinResponseWithHintPattern', MembraneTransportStrings?.["a11y"]?.["grabbedProteinResponseWithHintPatternStringProperty"] );
 addToMapIfDefined( 'a11y_ligandToggleButtonAccessibleHelpText', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonAccessibleHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_ligandToggleButtonAddedContextResponse', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonAddedContextResponseStringProperty"] );
 addToMapIfDefined( 'a11y_ligandToggleButtonRemovedContextResponse', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonRemovedContextResponseStringProperty"] );
@@ -145,7 +132,6 @@ addToMapIfDefined( 'a11y_transportProteinBriefName', MembraneTransportStrings?.[
 addToMapIfDefined( 'a11y_ligandMovedAboveLigandGatedChannelPattern', MembraneTransportStrings?.["a11y"]?.["ligandMovedAboveLigandGatedChannelPatternStringProperty"] );
 addToMapIfDefined( 'a11y_ligandMovedAboveLeakageChannelPattern', MembraneTransportStrings?.["a11y"]?.["ligandMovedAboveLeakageChannelPatternStringProperty"] );
 addToMapIfDefined( 'a11y_ligandMovedAboveOtherChannelPattern', MembraneTransportStrings?.["a11y"]?.["ligandMovedAboveOtherChannelPatternStringProperty"] );
-addToMapIfDefined( 'a11y_transportProtein_accessibleNamePattern', MembraneTransportStrings?.["a11y"]?.["transportProtein"]?.["accessibleNamePatternStringProperty"] );
 addToMapIfDefined( 'a11y_transportProtein_grabbed', MembraneTransportStrings?.["a11y"]?.["transportProtein"]?.["grabbedStringProperty"] );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
@@ -178,13 +164,10 @@ const MembraneTransportFluent = {
   atpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'atp' ),
   outsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'outside' ),
   insideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'inside' ),
-  membranePotentialLabelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotentialLabels' ),
   voltageGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'voltageGatedChannels' ),
   ligandGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'ligandGatedChannels' ),
   activeTransportersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'activeTransporters' ),
   leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'leakageChannels' ),
-  sodiumIonNaPlusStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumIonNaPlus' ),
-  potassiumIonKPlusStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'potassiumIonKPlus' ),
   NaPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'NaPlusKPlusPump' ),
   sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumGlucoseCotransporter' ),
   membranePotential_mVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotential_mV' ),
@@ -217,11 +200,6 @@ const MembraneTransportFluent = {
       controlAreaSummaryStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_controlAreaSummary' ),
       interactionHintStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_interactionHint' ),
       interactionHintWithTransportProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_interactionHintWithTransportProteins' )
-    },
-    observationWindow: {
-      membrane: {
-        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_observationWindow_membrane_accessibleName' )
-      }
     },
     soluteControls: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControls_accessibleHeading' )
@@ -261,9 +239,6 @@ const MembraneTransportFluent = {
         },
         chargesCheckbox: {
           accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText' ),
-          checkedContextResponseNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70' ),
-          checkedContextResponseNegative50StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50' ),
-          checkedContextResponsePositive30StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30' ),
           uncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse' )
         }
       },
@@ -278,16 +253,10 @@ const MembraneTransportFluent = {
       triangleLigandStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_triangleLigand' ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_accessibleHelpText' ),
       releasedLigandStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedLigand' ),
-      grabbedLigandStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["grabbedLigandStringProperty"],
       ligandReleasedOffMembranePatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandReleasedOffMembranePatternStringProperty"],
       ligandReleasedOnProteinPatternStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandReleasedOnProteinPattern' ),
       ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandReleasedOnBusyOrIncompatibleProteinPattern' ),
-      ligandMovedToSlotPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["ligandMovedToSlotPatternStringProperty"],
-      ligandUnboundAlertStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandUnboundAlert' ),
-      thereIsNoProteinAtThisSlotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_thereIsNoProteinAtThisSlot' ),
-      thereIsProteinAtThisSlotPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["thereIsProteinAtThisSlotPatternStringProperty"],
-      moveCancelledPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["moveCancelledPatternStringProperty"],
-      cannotInteractWhileLigandIsBoundPatternStringProperty: MembraneTransportStrings?.["a11y"]?.["ligandNode"]?.["cannotInteractWhileLigandIsBoundPatternStringProperty"]
+      ligandUnboundAlertStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandUnboundAlert' )
     },
     soluteControlsAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControlsAccessibleHelpText' ),
     soluteAccessibleNames: {
@@ -318,11 +287,6 @@ const MembraneTransportFluent = {
     currentDetailsTransportProteins: new FluentPattern<{ transportProteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsTransportProteins' ),
     ligandsOnOutsideOnlyStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandsOnOutsideOnly' ),
     currentDetailsMembranePotential: new FluentPattern<{ membranePotential: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsMembranePotential' ),
-    releasedBackInToolboxStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_releasedBackInToolbox' ),
-    selectedTransportProteinInSlot: new FluentPattern<{ channelName: FluentVariable, slotCount: FluentVariable, slotIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_selectedTransportProteinInSlot' ),
-    canceledBackInMembraneStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_canceledBackInMembrane' ),
-    grabbedProteinResponsePattern: new FluentPattern<{ slotCount: FluentVariable, slotIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_grabbedProteinResponsePattern' ),
-    grabbedProteinResponseWithHintPattern: new FluentPattern<{ slotCount: FluentVariable, slotIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_grabbedProteinResponseWithHintPattern' ),
     ligandToggleButtonAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText' ),
     ligandToggleButtonAddedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAddedContextResponse' ),
     ligandToggleButtonRemovedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonRemovedContextResponse' ),
@@ -334,7 +298,6 @@ const MembraneTransportFluent = {
     ligandMovedAboveLeakageChannelPattern: new FluentPattern<{ index: FluentVariable, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern' ),
     ligandMovedAboveOtherChannelPattern: new FluentPattern<{ index: FluentVariable, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern' ),
     transportProtein: {
-      accessibleNamePattern: new FluentPattern<{ openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: FluentVariable, proteinIndex: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleNamePattern' ),
       grabbedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_grabbed' )
     }
   }
