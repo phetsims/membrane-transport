@@ -13,7 +13,6 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneTransport from '../../membraneTransport.js';
-import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
@@ -33,7 +32,13 @@ export default class TransportProteinToolNode extends VBox {
   // So we can return ChannelDragNodes to its exact location
   public readonly transportProteinNode: Node;
 
-  public constructor( type: TransportProteinType, label: TReadOnlyProperty<string>, accessibleName: TReadOnlyProperty<string>, view: MembraneTransportScreenView ) {
+  public constructor(
+    type: TransportProteinType,
+    label: TReadOnlyProperty<string>,
+    accessibleName: TReadOnlyProperty<string>,
+    accessibleHelpText: TReadOnlyProperty<string> | undefined,
+    view: MembraneTransportScreenView
+  ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const transportProteinNode = createTransportProteinNode( type, null );
@@ -49,7 +54,7 @@ export default class TransportProteinToolNode extends VBox {
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: accessibleName,
-      accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
+      accessibleHelpText: accessibleHelpText
     } ) );
 
 
