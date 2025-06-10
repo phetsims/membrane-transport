@@ -119,10 +119,10 @@ a11y:
     glucose:       Glucose, hexagonal ring, large
     atp:           Adenosine Triphosphate, ATP, complex, large
   outsideMembraneSpinnerAccessibleName:              Outside Cell
-  outsideMembraneSpinnerHelpText:                    Add or remove chosen solute to outside of cell.
+  outsideMembraneSpinnerHelpText:                    Adjust chosen solute amount on outside.
   insideMembraneSpinnerAccessibleName:               Inside Cell
-  insideMembraneSpinnerHelpText:                     Add or remove chosen solute to inside of cell.
-  soluteSpinnerRoleDescription:                      solute amount adjuster
+  insideMembraneSpinnerHelpText:                     Adjust chosen solute amount on inside.
+  soluteSpinnerRoleDescription:                      solute adjuster
   solute:                                            |-
                                                      { $soluteType ->
                                                        [oxygen]        oxygen molecules
