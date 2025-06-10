@@ -47,12 +47,12 @@ a11y:
     playAreaSummaryIntro:                 |-
                                           An observation window zooms in on a cross-section of a cell's membrane.
                                             The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet
-                                            that separates fluids inside and outside of cell. Added solute particles are
-                                            suspended in fluid and randomly move with Brownian motion.
+                                            that separates fluids inside and outside of cell. When added to outside or inside,
+                                            solute particles are suspended in fluid and randomly move with Brownian motion.
     playAreaSummarySolutes:               You can choose from a list of solutes and add them to inside or outside.
     playAreaSummaryProteins:              Transport proteins of different types can be added directly to membrane.
-    playAreaSummaryPotential:             Choose from several options to change the cell environment that may affect the proteins.
-    playAreaSummaryBarCharts:             Solute bar charts provide a comparative summary for amount of each solute inside and outside of cell.
+    playAreaSummaryPotential:             There are options to change cell environment and affect added proteins.
+    playAreaSummaryBarCharts:             Bar charts of solute concentrations dynamically compare solute amounts outside and inside cell.
     playAreaSummaryScreen1:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
         } { a11y_summary_playAreaSummaryBarCharts }"
     playAreaSummaryScreen2and4:           "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
@@ -61,8 +61,7 @@ a11y:
     playAreaSummaryScreen3:               "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes
         } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts
         }"
-    controlAreaSummary:                   There is an option to slow the action to hear more details, including a button to pause.
-                                          Also, you can reset the sim.
+    controlAreaSummary:                   You can pause action or slow it down to hear more details. Also, you can reset everything to start over.
     interactionHint:                      Add or remove solute to inside or outside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to inside or outside of cell, and play with transport channels.
   soluteControls:

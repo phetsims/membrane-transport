@@ -95,7 +95,7 @@
   "a11y": {
     "summary": {
       "playAreaSummaryIntro": {
-        "value": "An observation window zooms in on a cross-section of a cell's membrane.\n  The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet\n  that separates fluids inside and outside of cell. Added solute particles are\n  suspended in fluid and randomly move with Brownian motion."
+        "value": "An observation window zooms in on a cross-section of a cell's membrane.\n  The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet\n  that separates fluids inside and outside of cell. When added to outside or inside,\n  solute particles are suspended in fluid and randomly move with Brownian motion."
       },
       "playAreaSummarySolutes": {
         "value": "You can choose from a list of solutes and add them to inside or outside."
@@ -104,10 +104,10 @@
         "value": "Transport proteins of different types can be added directly to membrane."
       },
       "playAreaSummaryPotential": {
-        "value": "Choose from several options to change the cell environment that may affect the proteins."
+        "value": "There are options to change cell environment and affect added proteins."
       },
       "playAreaSummaryBarCharts": {
-        "value": "Solute bar charts provide a comparative summary for amount of each solute inside and outside of cell."
+        "value": "Bar charts of solute concentrations dynamically compare solute amounts outside and inside cell."
       },
       "playAreaSummaryScreen1": {
         "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
@@ -119,7 +119,7 @@
         "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "controlAreaSummary": {
-        "value": "There is an option to slow the action to hear more details, including a button to pause. Also, you can reset the sim."
+        "value": "You can pause action or slow it down to hear more details. Also, you can reset everything to start over."
       },
       "interactionHint": {
         "value": "Add or remove solute to inside or outside of cell."
