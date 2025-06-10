@@ -110,13 +110,13 @@
         "value": "Bar charts of solute concentrations dynamically compare solute amounts outside and inside cell."
       },
       "playAreaSummaryScreen1": {
-        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryBarCharts }"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "playAreaSummaryScreen2and4": {
-        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryPotential } { a11y_summary_playAreaSummaryBarCharts }"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryPotential } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "playAreaSummaryScreen3": {
-        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummarySolutes } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts }"
+        "value": "{ a11y_summary_playAreaSummaryIntro } { a11y_summary_playAreaSummaryProteins } { a11y_summary_playAreaSummaryBarCharts }"
       },
       "controlAreaSummary": {
         "value": "You can pause action or slow it down to hear more details. Also, you can reset everything to start over."
