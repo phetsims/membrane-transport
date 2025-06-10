@@ -146,12 +146,12 @@ type StringsType = {
     'arrowDirectionDescriptionStringProperty': LocalizedStringProperty;
     'barSizeDescriptionStringProperty': LocalizedStringProperty;
     'barChartPatternStringProperty': LocalizedStringProperty;
-    'currentDetailsActivityLevelStringProperty': LocalizedStringProperty;
-    'currentDetailsStringProperty': LocalizedStringProperty;
+    'currentDetailsLeadingParagraphStringProperty': LocalizedStringProperty;
+    'currentDetailsNoAddedSolutesStringProperty': LocalizedStringProperty;
     'currentDetailsSoluteTypesOnOutsideStringProperty': LocalizedStringProperty;
     'currentDetailsSoluteTypesOnInsideStringProperty': LocalizedStringProperty;
     'currentDetailsTransportProteinsStringProperty': LocalizedStringProperty;
-    'ligandsOnOutsideOnlyStringProperty': LocalizedStringProperty;
+    'currentDetailsLigandsStringProperty': LocalizedStringProperty;
     'currentDetailsMembranePotentialStringProperty': LocalizedStringProperty;
     'ligandToggleButtonAccessibleHelpTextStringProperty': LocalizedStringProperty;
     'ligandToggleButtonAddedContextResponseStringProperty': LocalizedStringProperty;

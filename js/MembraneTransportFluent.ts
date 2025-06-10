@@ -115,12 +115,12 @@ addToMapIfDefined( 'a11y_arrowSizeDescription', MembraneTransportStrings?.["a11y
 addToMapIfDefined( 'a11y_arrowDirectionDescription', MembraneTransportStrings?.["a11y"]?.["arrowDirectionDescriptionStringProperty"] );
 addToMapIfDefined( 'a11y_barSizeDescription', MembraneTransportStrings?.["a11y"]?.["barSizeDescriptionStringProperty"] );
 addToMapIfDefined( 'a11y_barChartPattern', MembraneTransportStrings?.["a11y"]?.["barChartPatternStringProperty"] );
-addToMapIfDefined( 'a11y_currentDetailsActivityLevel', MembraneTransportStrings?.["a11y"]?.["currentDetailsActivityLevelStringProperty"] );
-addToMapIfDefined( 'a11y_currentDetails', MembraneTransportStrings?.["a11y"]?.["currentDetailsStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsLeadingParagraph', MembraneTransportStrings?.["a11y"]?.["currentDetailsLeadingParagraphStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsNoAddedSolutes', MembraneTransportStrings?.["a11y"]?.["currentDetailsNoAddedSolutesStringProperty"] );
 addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnOutside', MembraneTransportStrings?.["a11y"]?.["currentDetailsSoluteTypesOnOutsideStringProperty"] );
 addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnInside', MembraneTransportStrings?.["a11y"]?.["currentDetailsSoluteTypesOnInsideStringProperty"] );
 addToMapIfDefined( 'a11y_currentDetailsTransportProteins', MembraneTransportStrings?.["a11y"]?.["currentDetailsTransportProteinsStringProperty"] );
-addToMapIfDefined( 'a11y_ligandsOnOutsideOnly', MembraneTransportStrings?.["a11y"]?.["ligandsOnOutsideOnlyStringProperty"] );
+addToMapIfDefined( 'a11y_currentDetailsLigands', MembraneTransportStrings?.["a11y"]?.["currentDetailsLigandsStringProperty"] );
 addToMapIfDefined( 'a11y_currentDetailsMembranePotential', MembraneTransportStrings?.["a11y"]?.["currentDetailsMembranePotentialStringProperty"] );
 addToMapIfDefined( 'a11y_ligandToggleButtonAccessibleHelpText', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonAccessibleHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_ligandToggleButtonAddedContextResponse', MembraneTransportStrings?.["a11y"]?.["ligandToggleButtonAddedContextResponseStringProperty"] );
@@ -280,12 +280,12 @@ const MembraneTransportFluent = {
     arrowDirectionDescription: new FluentPattern<{ direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'> }>( fluentSupport.bundleProperty, 'a11y_arrowDirectionDescription' ),
     barSizeDescription: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'> }>( fluentSupport.bundleProperty, 'a11y_barSizeDescription' ),
     barChartPattern: new FluentPattern<{ amount: 'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess' | TReadOnlyProperty<'aLittleMore' | 'aLotMore' | 'aLittleLess' | 'aLotLess'>, direction: 'upward' | 'downward' | TReadOnlyProperty<'upward' | 'downward'>, size: 'small' | 'medium' | 'large' | TReadOnlyProperty<'small' | 'medium' | 'large'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_barChartPattern' ),
-    currentDetailsActivityLevel: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsActivityLevel' ),
-    currentDetails: new FluentPattern<{ activityLevel: 'calm' | 'active' | 'activeAndPaused' | TReadOnlyProperty<'calm' | 'active' | 'activeAndPaused'> }>( fluentSupport.bundleProperty, 'a11y_currentDetails' ),
-    currentDetailsSoluteTypesOnOutside: new FluentPattern<{ outsideSoluteCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
-    currentDetailsSoluteTypesOnInside: new FluentPattern<{ insideSoluteCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
-    currentDetailsTransportProteins: new FluentPattern<{ transportProteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsTransportProteins' ),
-    ligandsOnOutsideOnlyStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandsOnOutsideOnly' ),
+    currentDetailsLeadingParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_currentDetailsLeadingParagraph' ),
+    currentDetailsNoAddedSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_currentDetailsNoAddedSolutes' ),
+    currentDetailsSoluteTypesOnOutside: new FluentPattern<{ count: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnOutside' ),
+    currentDetailsSoluteTypesOnInside: new FluentPattern<{ count: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnInside' ),
+    currentDetailsTransportProteins: new FluentPattern<{ proteinCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'>, proteinTypeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsTransportProteins' ),
+    currentDetailsLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_currentDetailsLigands' ),
     currentDetailsMembranePotential: new FluentPattern<{ membranePotential: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsMembranePotential' ),
     ligandToggleButtonAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText' ),
     ligandToggleButtonAddedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAddedContextResponse' ),

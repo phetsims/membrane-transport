@@ -40,7 +40,7 @@ import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
-import TransportProteinType from './proteins/TransportProteinType.js';
+import TransportProteinType, { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType, SoluteControlSolutes } from './SoluteType.js';
 
@@ -95,7 +95,12 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
   public readonly insideSoluteTypesCountProperty = new NumberProperty( 0 );
   public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
+
   public readonly transportProteinCountProperty = new NumberProperty( 0 );
+  public readonly transportProteinTypesCountProperty = new NumberProperty( 0 );
+
+  // True when the model has any solutes inside or outside the membrane.
+  public readonly hasAnySolutesProperty = new BooleanProperty( false );
 
   public readonly soluteProperty: StringUnionProperty<SoluteControlSolutes>;
 
@@ -358,6 +363,8 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
 
     this.insideSoluteTypesCountProperty.value = insideNumberOfTypes;
+
+    this.hasAnySolutesProperty.value = this.outsideSoluteTypesCountProperty.value > 0 || this.insideSoluteTypesCountProperty.value > 0;
   }
 
   /**
@@ -401,7 +408,17 @@ export default class MembraneTransportModel extends PhetioObject {
    * Update the transport count based on the number of filled slots.
    */
   private updateTransportProteinCounts(): void {
-    this.transportProteinCountProperty.value = this.getFilledSlots().length;
+
+    const filledSlots = this.getFilledSlots();
+    this.transportProteinCountProperty.value = filledSlots.length;
+
+    let proteinTypesCount = 0;
+    TransportProteinTypeValues.forEach( type => {
+      if ( filledSlots.some( slot => slot.transportProteinType === type ) ) {
+        proteinTypesCount++;
+      }
+    } );
+    this.transportProteinTypesCountProperty.value = proteinTypesCount;
   }
 
   public getFilledSlots(): Slot[] {

@@ -9,17 +9,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type TransportProteinType =
-  'sodiumIonLeakageChannel' |
-  'potassiumIonLeakageChannel' |
+export const TransportProteinTypeValues = [
+  'sodiumIonLeakageChannel',
+  'potassiumIonLeakageChannel',
 
-  'sodiumIonVoltageGatedChannel' |
-  'potassiumIonVoltageGatedChannel' |
+  'sodiumIonVoltageGatedChannel',
+  'potassiumIonVoltageGatedChannel',
 
-  'sodiumIonLigandGatedChannel' |
-  'potassiumIonLigandGatedChannel' |
+  'sodiumIonLigandGatedChannel',
+  'potassiumIonLigandGatedChannel',
 
-  'sodiumPotassiumPump' |
-  'sodiumGlucoseCotransporter';
+  'sodiumPotassiumPump',
+  'sodiumGlucoseCotransporter'
+] as const;
+
+type TransportProteinType = typeof TransportProteinTypeValues[number];
 
 export default TransportProteinType;

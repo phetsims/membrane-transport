@@ -305,26 +305,26 @@
     "barChartPattern": {
       "value": "{ a11y_solute }: { a11y_barSizeDescription }; { a11y_arrowSizeDescription } { a11y_arrowDirectionDescription }."
     },
-    "currentDetailsActivityLevel": {
-      "value": "{ $activityLevel ->\n*[calm]            relatively calm\n[active]          active\n[activeAndPaused] active and paused\n}"
+    "currentDetailsLeadingParagraph": {
+      "value": "Right now, zoomed-in cross section of cell has:"
     },
-    "currentDetails": {
-      "value": "Right now, local cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with"
+    "currentDetailsNoAddedSolutes": {
+      "value": "no added solutes"
     },
     "currentDetailsSoluteTypesOnOutside": {
-      "value": "{ $outsideSoluteCount } solute types on outside;"
+      "value": "{ $count ->\n  [one] { $count } added solute type on outside\n *[other] { $count } added solute types on outside\n}"
     },
     "currentDetailsSoluteTypesOnInside": {
-      "value": "{ $insideSoluteCount } solute types on inside;"
+      "value": "{ $count ->\n  [one] { $count } added solute type on inside\n *[other] { $count } added solute types on inside\n}"
     },
     "currentDetailsTransportProteins": {
-      "value": "{ $transportProteinCount } transport proteins in membrane;"
+      "value": "{ $proteinCount ->\n  [one] { $proteinCount} transport protein\n  *[other] { $proteinCount} transport proteins\n} of { $proteinTypeCount ->\n  [one] { $proteinTypeCount } type\n *[other] { $proteinTypeCount} types\n}, in membrane"
     },
-    "ligandsOnOutsideOnly": {
-      "value": "Ligands on outside only."
+    "currentDetailsLigands": {
+      "value": "2 added ligand types on outside only"
     },
     "currentDetailsMembranePotential": {
-      "value": "{ $membranePotential } millivolts."
+      "value": "membrane potential of { $membranePotential } millivolts"
     },
     "ligandToggleButtonAccessibleHelpText": {
       "value": "Add or remove triangle- and star-shaped ligands to outside of cell."

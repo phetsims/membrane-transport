@@ -8,7 +8,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
@@ -125,10 +124,6 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.addChild( timeControlNode );
 
-    const hasAnySolutesProperty = new DerivedProperty( [ model.insideSoluteTypesCountProperty, model.outsideSoluteTypesCountProperty ], ( inside, outside ) => {
-      return inside > 0 || outside > 0;
-    } );
-
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
       accessibleHeading: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty,
@@ -144,7 +139,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       bottom: this.observationWindow.bottom,
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
-      enabledProperty: hasAnySolutesProperty
+      enabledProperty: model.hasAnySolutesProperty
     } );
 
     eraseSolutesButton.addListener( () => {

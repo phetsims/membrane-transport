@@ -42,7 +42,6 @@ soluteConcentrations:                                   Solute Concentrations
 preferencesDialog.audio.sounds.stereoSounds:            Stereo Sounds
 preferencesDialog.audio.sounds.stereoSoundsDescription: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 
-
 a11y:
   summary:
     playAreaSummaryIntro:                 |-
@@ -189,19 +188,30 @@ a11y:
                                                      } outside than inside
 
   barChartPattern:                                   "{ a11y_solute }: { a11y_barSizeDescription }; { a11y_arrowSizeDescription } { a11y_arrowDirectionDescription }."
-  currentDetailsActivityLevel:                       |-
-                                                     { $activityLevel ->
-                                                     *[calm]            relatively calm
-                                                     [active]          active
-                                                     [activeAndPaused] active and paused
-                                                     }
-  currentDetails:                                    Right now, local cross-section of cell's membrane is { a11y_currentDetailsActivityLevel } with
-  currentDetailsSoluteTypesOnOutside:                "{ $outsideSoluteCount } solute types on outside;"
-  currentDetailsSoluteTypesOnInside:                 "{ $insideSoluteCount } solute types on inside;"
-  currentDetailsTransportProteins:                   "{ $transportProteinCount } transport proteins in membrane;"
 
-  ligandsOnOutsideOnly:                              Ligands on outside only.
-  currentDetailsMembranePotential:                   "{ $membranePotential } millivolts."
+  currentDetailsLeadingParagraph:                    "Right now, zoomed-in cross section of cell has:"
+  currentDetailsNoAddedSolutes:                      no added solutes
+  currentDetailsSoluteTypesOnOutside:                |-
+                                                     { $count ->
+                                                       [one] { $count } added solute type on outside
+                                                      *[other] { $count } added solute types on outside
+                                                     }
+  currentDetailsSoluteTypesOnInside:                 |-
+                                                     { $count ->
+                                                       [one] { $count } added solute type on inside
+                                                      *[other] { $count } added solute types on inside
+                                                     }
+  currentDetailsTransportProteins:                   |-
+                                                     { $proteinCount ->
+                                                       [one] { $proteinCount} transport protein
+                                                       *[other] { $proteinCount} transport proteins
+                                                     } of { $proteinTypeCount ->
+                                                       [one] { $proteinTypeCount } type
+                                                      *[other] { $proteinTypeCount} types
+                                                     }, in membrane
+
+  currentDetailsLigands:                              2 added ligand types on outside only
+  currentDetailsMembranePotential:                   "membrane potential of { $membranePotential } millivolts"
 
   # accessibleHelpText for the ligand control
   ligandToggleButtonAccessibleHelpText:              Add or remove triangle- and star-shaped ligands to outside of cell.

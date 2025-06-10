@@ -6,13 +6,13 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
-import { getFeatureSetHasLigands, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
+import { getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembraneTransportScreenSummaryContent extends ScreenSummaryContent {
@@ -22,57 +22,43 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
    */
   public constructor( model: MembraneTransportModel ) {
 
-    const createListItemNode = ( stringProperty: TReadOnlyProperty<string> ) => new Node( {
-      tagName: 'li',
-      accessibleName: stringProperty
-    } );
-
-    // // Keep in mind these are order-dependent
-    const listItemNodes = [
-      createListItemNode( ( MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnOutside.createProperty( { outsideSoluteCount: model.outsideSoluteTypesCountProperty } ) ) ),
-      createListItemNode( ( MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnInside.createProperty( { insideSoluteCount: model.insideSoluteTypesCountProperty } ) ) )
-    ];
-
-    if ( getFeatureSetHasLigands( model.featureSet ) ) {
-      const node = createListItemNode( MembraneTransportFluent.a11y.ligandsOnOutsideOnlyStringProperty );
-      model.areLigandsAddedProperty.link( areLigandsAdded => node.setPDOMVisible( areLigandsAdded ) );
-      listItemNodes.push( node );
-    }
-
-    // No transport proteins for simple diffusion
-    if ( model.featureSet !== 'simpleDiffusion' ) {
-      listItemNodes.push( createListItemNode( MembraneTransportFluent.a11y.currentDetailsTransportProteins.createProperty( { transportProteinCount: model.transportProteinCountProperty } ) ) );
-    }
-
-    if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-      listItemNodes.push( createListItemNode( MembraneTransportFluent.a11y.currentDetailsMembranePotential.createProperty( { membranePotential: model.membranePotentialProperty } ) ) );
-    }
-
-    // A Property that describes that activity level of the particles and transport proteins in the model.
-    const activityLevelProperty = new DerivedProperty( [
-      model.outsideSoluteTypesCountProperty,
-      model.insideSoluteTypesCountProperty,
-      model.transportProteinCountProperty,
-      model.areLigandsAddedProperty,
-      model.isPlayingProperty
-    ], ( outsideSoluteCount, insideSoluteCount, transportProteinCount, areLigandsAdded, isPlaying ) => {
-      const isCalm = outsideSoluteCount === 0 && insideSoluteCount === 0 && transportProteinCount === 0 && !areLigandsAdded;
-      return isCalm ? 'calm' :
-             isPlaying ? 'active' :
-             'activeAndPaused';
-    } );
-
-    const currentDetailsNode = new Node( {
-      children: [
-        new Node( {
-          tagName: 'p',
-          accessibleName: MembraneTransportFluent.a11y.currentDetails.createProperty( { activityLevel: activityLevelProperty } )
+    const currentDetailsNode = new AccessibleListNode( [
+      {
+        stringProperty: MembraneTransportFluent.a11y.currentDetailsNoAddedSolutesStringProperty,
+        visibleProperty: DerivedProperty.not( model.hasAnySolutesProperty )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnOutside.createProperty( {
+          count: model.outsideSoluteTypesCountProperty
         } ),
-        new Node( {
-          tagName: 'ul',
-          children: listItemNodes
-        } )
-      ]
+        visibleProperty: model.hasAnySolutesProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnInside.createProperty( {
+          count: model.insideSoluteTypesCountProperty
+        } ),
+        visibleProperty: model.hasAnySolutesProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.currentDetailsTransportProteins.createProperty( {
+          proteinCount: model.transportProteinCountProperty,
+          proteinTypeCount: model.transportProteinTypesCountProperty
+        } ),
+        visibleProperty: new DerivedProperty( [ model.transportProteinCountProperty ], count => count > 0 )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.currentDetailsLigandsStringProperty,
+        visibleProperty: model.areLigandsAddedProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.currentDetailsMembranePotential.createProperty( {
+          membranePotential: model.membranePotentialProperty
+        } ),
+        visibleProperty: new BooleanProperty( getFeatureSetHasVoltages( model.featureSet ) )
+      }
+    ], {
+      leadingParagraphStringProperty: MembraneTransportFluent.a11y.currentDetailsLeadingParagraphStringProperty,
+      punctuationStyle: 'semicolon'
     } );
 
     super( {
