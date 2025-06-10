@@ -137,10 +137,10 @@ export default class InteractiveSlotsNode extends Node {
     };
 
     // Create and start an animation to return a grabbed protein back to the toolbox.
-    const returnToolToToolbox = () => {
-      affirm( this.grabbedNode, 'A grabbedNode is expected to be defined.' );
-      const toolNode = view.getTransportProteinToolNode( this.grabbedNode.type );
-      const grabbedNode = this.grabbedNode;
+    // @param grabbedNode - Note this is a reference to the Node to dispose, NOT this.grabbedNode, because this.grabbedNode
+    // may change from other interaction before the animation completes.
+    const returnToolToToolbox = ( grabbedNode: TransportProteinDragNode ) => {
+      const toolNode = view.getTransportProteinToolNode( grabbedNode.type );
       if ( toolNode ) {
         const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
         const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
@@ -149,7 +149,9 @@ export default class InteractiveSlotsNode extends Node {
           value => grabbedNode.setModelPosition( value ),
           grabbedNode.getModelPosition(),
           modelPoint,
-          () => this.cleanAfterRelease()
+          () => {
+            grabbedNode.dispose();
+          }
         );
 
         animation.start();
@@ -258,6 +260,7 @@ export default class InteractiveSlotsNode extends Node {
         if ( this.grabbedProperty.value ) {
 
           affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
+          const grabbedNode = this.grabbedNode;
           const grabbedType = this.grabbedNode.type;
           const origin = this.grabbedNode.origin;
           const selectedType = this.selectedType;
@@ -283,12 +286,12 @@ export default class InteractiveSlotsNode extends Node {
             releaseReason = 'return';
 
             // Animate the tool back to the toolbox. Cleanup is done at the end of animation.
-            returnToolToToolbox();
+            returnToolToToolbox( grabbedNode );
           }
           else {
 
             // No animations so clean up right away.
-            this.cleanAfterRelease();
+            grabbedNode.dispose();
 
             const selectedSlot = this.slots[ selectedIndex ];
 
@@ -335,12 +338,14 @@ export default class InteractiveSlotsNode extends Node {
       keys: [ 'backspace', 'delete' ],
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
-        affirm( this.grabbedNode, 'We must have a node to delete' );
-        const type = this.grabbedNode.type;
+        const grabbedNode = this.grabbedNode;
+        affirm( grabbedNode, 'We must have a node to delete' );
+
+        const type = grabbedNode.type;
 
         this.release( false );
 
-        returnToolToToolbox();
+        returnToolToToolbox( grabbedNode );
 
         // Manage focus after animation
         const success = focusLeftmostProteinNode();
@@ -404,21 +409,12 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedType = null;
     this.selectedIndex = 0;
 
-    if ( disposeIcon ) {
-      this.cleanAfterRelease();
+    if ( disposeIcon && this.grabbedNode ) {
+      this.grabbedNode.dispose();
     }
+    this.grabbedNode = null;
 
     this.grabbedProperty.value = false;
-  }
-
-  /**
-   * Clean up the grabbed Node. Seperate from release because this need to wait to be used until
-   * after animations finish.
-   */
-  private cleanAfterRelease(): void {
-    affirm( this.grabbedNode, 'grabbedNode was expected on release.' );
-    this.grabbedNode.dispose();
-    this.grabbedNode = null;
   }
 
   // The selected index is controlled by the keyboard listener in the parent Node.
