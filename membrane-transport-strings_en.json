@@ -122,10 +122,10 @@
         "value": "You can pause action or slow it down to hear more details. Also, you can reset everything to start over."
       },
       "interactionHint": {
-        "value": "Add or remove solute to inside or outside of cell."
+        "value": "Add or remove solute to outside or inside of cell."
       },
       "interactionHintWithTransportProteins": {
-        "value": "Add or remove solutes to inside or outside of cell, and play with transport channels."
+        "value": "Add or remove solutes to ouside or inside of cell, and play with transport channels."
       }
     },
     "soluteControls": {
@@ -270,16 +270,16 @@
       "value": "Outside Cell"
     },
     "outsideMembraneSpinnerHelpText": {
-      "value": "Add or remove chosen solute to outside of cell."
+      "value": "Adjust chosen solute amount on outside."
     },
     "insideMembraneSpinnerAccessibleName": {
       "value": "Inside Cell"
     },
     "insideMembraneSpinnerHelpText": {
-      "value": "Add or remove chosen solute to inside of cell."
+      "value": "Adjust chosen solute amount on inside."
     },
     "soluteSpinnerRoleDescription": {
-      "value": "solute amount adjuster"
+      "value": "solute adjuster"
     },
     "solute": {
       "value": "{ $soluteType ->\n  [oxygen]        oxygen molecules\n  [carbonDioxide] carbon dioxide molecules\n  [sodiumIon]     sodium ions\n  [potassiumIon]  potassium ions\n  [glucose]       glucose molecules\n *[atp]           ATP molecules\n}"
