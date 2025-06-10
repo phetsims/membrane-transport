@@ -215,6 +215,13 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             transportProteinNode.addHighlightAsChild();
           }
         }
+        else {
+
+          // When a protein is removed, reset the selected index to 0. This ensures that when the selected protein is removed,
+          // the left most protein will still be in the traversal order.
+          this.selectedIndex = 0;
+          this.updateFocus( false );
+        }
       } );
     } );
   }
