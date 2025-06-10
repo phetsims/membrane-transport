@@ -163,6 +163,10 @@ export default class SoluteControl extends Panel {
       accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerHelpTextStringProperty :
                           MembraneTransportFluent.a11y.outsideMembraneSpinnerHelpTextStringProperty,
 
+      // A custom shorter voicingHintResponse was requested for this control, see
+      // https://github.com/phetsims/membrane-transport/issues/219
+      voicingHintResponse: MembraneTransportFluent.a11y.soluteSpinnerVoicingHintResponseStringProperty,
+
       accessibleRoleDescription: MembraneTransportFluent.a11y.soluteSpinnerRoleDescriptionStringProperty,
 
       pdomCreateAriaValueText: ( value: number ) => {

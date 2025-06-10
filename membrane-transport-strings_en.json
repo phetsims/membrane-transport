@@ -97,9 +97,6 @@
       "playAreaSummaryIntro": {
         "value": "An observation window zooms in on a cross-section of a cell's membrane.\n  The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet\n  that separates fluids inside and outside of cell. When added to outside or inside,\n  solute particles are suspended in fluid and randomly move with Brownian motion."
       },
-      "playAreaSummarySolutes": {
-        "value": "You can choose from a list of solutes and add them to inside or outside."
-      },
       "playAreaSummaryProteins": {
         "value": "Transport proteins of different types can be added directly to membrane."
       },
@@ -272,6 +269,9 @@
     "outsideMembraneSpinnerHelpText": {
       "value": "Adjust chosen solute amount on outside."
     },
+    "soluteSpinnerVoicingHintResponse": {
+      "value": "Adjust chosen solute amount."
+    },
     "insideMembraneSpinnerAccessibleName": {
       "value": "Inside Cell"
     },
@@ -288,7 +288,7 @@
       "value": "{ $amount ->\n  [none] no\n  [one]  one\n  [few]  a few\n  [some] some\n *[many] many\n} { a11y_solute }"
     },
     "soluteSpinnerContextResponsePattern": {
-      "value": "{ $amount ->\n  [aLittle] A little\n *[aLot]    A lot\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n  [same] same amount of solute inside and outside.\n *[other] { $differenceSize ->\n    [aLittle] a little\n   *[aLot]    a lot\n  }\n  { $moreOrLessOrSame ->\n    [more] more\n   *[less] less\n  }\n  { a11y_solute }\n  { $directionality ->\n    [insideThanOutside] inside than outside\n   *[outsideThanInside] outside than inside\n  }.\n}"
+      "value": "{ $amount ->\n\n  [aLittle] A little\n *[aLot]    A lot\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n  [same] same amount of solute inside and outside.\n *[other] { $differenceSize ->\n    [aLittle] a little\n   *[aLot]    a lot\n  }\n  { $moreOrLessOrSame ->\n    [more] more\n   *[less] less\n  }\n  { a11y_solute }\n  { $directionality ->\n    [insideThanOutside] inside than outside\n   *[outsideThanInside] outside than inside\n  }.\n}"
     },
     "soluteBarChartsDescriptionParagraph": {
       "value": "A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading."

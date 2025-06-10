@@ -57,7 +57,6 @@ addToMapIfDefined( 'soluteConcentrations', MembraneTransportStrings?.["soluteCon
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsStringProperty"] );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsDescriptionStringProperty"] );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryIntro', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryIntroStringProperty"] );
-addToMapIfDefined( 'a11y_summary_playAreaSummarySolutes', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummarySolutesStringProperty"] );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryProteins', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryProteinsStringProperty"] );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryPotential', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryPotentialStringProperty"] );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryBarCharts', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryBarChartsStringProperty"] );
@@ -104,6 +103,7 @@ addToMapIfDefined( 'a11y_soluteAccessibleNames_glucose', MembraneTransportString
 addToMapIfDefined( 'a11y_soluteAccessibleNames_atp', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["atpStringProperty"] );
 addToMapIfDefined( 'a11y_outsideMembraneSpinnerAccessibleName', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerAccessibleNameStringProperty"] );
 addToMapIfDefined( 'a11y_outsideMembraneSpinnerHelpText', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_soluteSpinnerVoicingHintResponse', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerVoicingHintResponseStringProperty"] );
 addToMapIfDefined( 'a11y_insideMembraneSpinnerAccessibleName', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerAccessibleNameStringProperty"] );
 addToMapIfDefined( 'a11y_insideMembraneSpinnerHelpText', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_soluteSpinnerRoleDescription', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerRoleDescriptionStringProperty"] );
@@ -190,7 +190,6 @@ const MembraneTransportFluent = {
   a11y: {
     summary: {
       playAreaSummaryIntroStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummaryIntro' ),
-      playAreaSummarySolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummarySolutes' ),
       playAreaSummaryProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummaryProteins' ),
       playAreaSummaryPotentialStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummaryPotential' ),
       playAreaSummaryBarChartsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummaryBarCharts' ),
@@ -269,6 +268,7 @@ const MembraneTransportFluent = {
     },
     outsideMembraneSpinnerAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_outsideMembraneSpinnerAccessibleName' ),
     outsideMembraneSpinnerHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_outsideMembraneSpinnerHelpText' ),
+    soluteSpinnerVoicingHintResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteSpinnerVoicingHintResponse' ),
     insideMembraneSpinnerAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_insideMembraneSpinnerAccessibleName' ),
     insideMembraneSpinnerHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_insideMembraneSpinnerHelpText' ),
     soluteSpinnerRoleDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteSpinnerRoleDescription' ),

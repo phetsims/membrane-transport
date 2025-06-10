@@ -114,6 +114,7 @@ a11y:
     atp:           Adenosine Triphosphate, ATP, complex, large
   outsideMembraneSpinnerAccessibleName:              Outside Cell
   outsideMembraneSpinnerHelpText:                    Adjust chosen solute amount on outside.
+  soluteSpinnerVoicingHintResponse:                  Adjust chosen solute amount.
   insideMembraneSpinnerAccessibleName:               Inside Cell
   insideMembraneSpinnerHelpText:                     Adjust chosen solute amount on inside.
   soluteSpinnerRoleDescription:                      solute adjuster
@@ -136,6 +137,7 @@ a11y:
                                                      } { a11y_solute }
   soluteSpinnerContextResponsePattern:               |-
                                                      { $amount ->
+                                                     
                                                        [aLittle] A little
                                                       *[aLot]    A lot
                                                      } { $addedOrRemoved ->

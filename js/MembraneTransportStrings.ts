@@ -56,7 +56,6 @@ type StringsType = {
   'a11y': {
     'summary': {
       'playAreaSummaryIntroStringProperty': LocalizedStringProperty;
-      'playAreaSummarySolutesStringProperty': LocalizedStringProperty;
       'playAreaSummaryProteinsStringProperty': LocalizedStringProperty;
       'playAreaSummaryPotentialStringProperty': LocalizedStringProperty;
       'playAreaSummaryBarChartsStringProperty': LocalizedStringProperty;
@@ -135,6 +134,7 @@ type StringsType = {
     };
     'outsideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
     'outsideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
+    'soluteSpinnerVoicingHintResponseStringProperty': LocalizedStringProperty;
     'insideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
     'insideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
     'soluteSpinnerRoleDescriptionStringProperty': LocalizedStringProperty;
