@@ -30,6 +30,20 @@ type SoluteControlOptions = SelfOptions & StrictOmit<PanelOptions, 'tandem'>;
 const fineDelta = 2;
 const coarseDelta = 10;
 
+// Qualitative descriptions for the amount of a solute type on one side of the membrane.
+// Max values are relative to the maximum number of solutes that can be added.
+const DESCRIBED_THRESHOLDS = [
+  { label: 'none', max: 0 },
+  { label: 'few', max: 0.03 },
+  { label: 'some', max: 0.10 },
+  { label: 'smallAmount', max: 0.25 },
+  { label: 'several', max: 0.40 },
+  { label: 'many', max: 0.60 },
+  { label: 'largeAmount', max: 0.80 },
+  { label: 'hugeAmount', max: 0.99 },
+  { label: 'maxAmount', max: 1 }
+] as const;
+
 export default class SoluteControl extends Panel {
 
   public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside',
@@ -127,16 +141,8 @@ export default class SoluteControl extends Panel {
       soundGenerator.playSoundForValueChange( newCount, originalCount );
     } );
 
-    const qualitativeCountProperty = new DerivedProperty( [ actualCountPerSideProperty ], actualCount => {
-      return actualCount === 0 ? 'none' :
-             actualCount === 1 ? 'one' :
-             actualCount < 10 ? 'few' :
-             actualCount < 20 ? 'some' :
-             'many';
-    } );
-
     const objectResponseMessageProperty = MembraneTransportFluent.a11y.soluteSpinnerObjectResponsePattern.createProperty( {
-      amount: qualitativeCountProperty,
+      amount: DerivedProperty.fromThresholds( actualCountPerSideProperty, new Range( 0, MembraneTransportConstants.MAX_SOLUTE_COUNT ), DESCRIBED_THRESHOLDS ),
       soluteType: model.soluteProperty
     } );
 

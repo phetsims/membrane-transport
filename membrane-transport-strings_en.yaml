@@ -130,10 +130,14 @@ a11y:
   soluteSpinnerObjectResponsePattern:                |-
                                                      { $amount ->
                                                        [none] no
-                                                       [one]  one
                                                        [few]  a few
                                                        [some] some
-                                                      *[many] many
+                                                       [smallAmount] small amount of
+                                                       [several] several
+                                                       [many] many
+                                                       [largeAmount] large amount of
+                                                       [hugeAmount] huge amount of
+                                                      *[maxAmount] max amount of
                                                      } { a11y_solute }
   soluteSpinnerContextResponsePattern:               |-
                                                      { $amount ->
