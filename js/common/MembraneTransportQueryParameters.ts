@@ -21,8 +21,8 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     public: true
   },
 
-
-  // TODO: Should this be a query parameter? Should it be public? https://github.com/phetsims/membrane-transport/issues/187.
+  // Causes glucose in the intracellular area to be "absorbed" - they will automatically be removed from the sim
+  // after a while.
   absorbGlucose: {
     type: 'boolean',
     defaultValue: false,
