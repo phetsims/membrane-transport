@@ -118,8 +118,8 @@ export default class MembraneTransportScreenView extends ScreenView {
         }
       },
       tandem: options.tandem.createTandem( 'timeControlNode' ),
-      left: this.observationWindow.right + 36,
-      bottom: this.layoutBounds.maxY - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
+      centerX: this.observationWindow.centerX,
+      top: this.observationWindow.bottom + MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     this.addChild( timeControlNode );
