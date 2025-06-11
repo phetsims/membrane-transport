@@ -136,7 +136,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       baseColor: 'rgb(239,214,147)',
       tandem: options.tandem.createTandem( 'eraseSolutesButton' ),
       right: this.observationWindow.left - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.observationWindow.bottom,
+      centerY: this.observationWindow.centerY,
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
       enabledProperty: model.hasAnySolutesProperty
