@@ -51,8 +51,8 @@ addToMapIfDefined( 'addLigands', MembraneTransportStrings?.["addLigandsStringPro
 addToMapIfDefined( 'removeLigands', MembraneTransportStrings?.["removeLigandsStringProperty"] );
 addToMapIfDefined( 'animateLipids', MembraneTransportStrings?.["animateLipidsStringProperty"] );
 addToMapIfDefined( 'animateLipidsDescription', MembraneTransportStrings?.["animateLipidsDescriptionStringProperty"] );
-addToMapIfDefined( 'absorbGlucose', MembraneTransportStrings?.["absorbGlucoseStringProperty"] );
-addToMapIfDefined( 'absorbGlucoseDescription', MembraneTransportStrings?.["absorbGlucoseDescriptionStringProperty"] );
+addToMapIfDefined( 'glucoseDrain', MembraneTransportStrings?.["glucoseDrainStringProperty"] );
+addToMapIfDefined( 'glucoseDrainDescription', MembraneTransportStrings?.["glucoseDrainDescriptionStringProperty"] );
 addToMapIfDefined( 'soluteConcentrations', MembraneTransportStrings?.["soluteConcentrationsStringProperty"] );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsStringProperty"] );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsDescriptionStringProperty"] );
@@ -176,8 +176,8 @@ const MembraneTransportFluent = {
   removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'removeLigands' ),
   animateLipidsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids' ),
   animateLipidsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipidsDescription' ),
-  absorbGlucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'absorbGlucose' ),
-  absorbGlucoseDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'absorbGlucoseDescription' ),
+  glucoseDrainStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrain' ),
+  glucoseDrainDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrainDescription' ),
   soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations' ),
   preferencesDialog: {
     audio: {

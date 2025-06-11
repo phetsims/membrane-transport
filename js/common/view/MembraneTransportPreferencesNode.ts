@@ -41,8 +41,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
         } ),
         new PreferencesControl( {
           isDisposable: false,
-          labelNode: new Text( MembraneTransportFluent.absorbGlucoseStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-          descriptionNode: new RichText( MembraneTransportFluent.absorbGlucoseDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+          labelNode: new Text( MembraneTransportFluent.glucoseDrainStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          descriptionNode: new RichText( MembraneTransportFluent.glucoseDrainDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
           controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.absorbGlucoseProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
           tandem: tandem.createTandem( 'absorbGlucoseControl' ),
           phetioFeatured: true,
