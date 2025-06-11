@@ -26,7 +26,7 @@ export default class MembraneTransportConstants {
 
   // Size of the observation window in view coordinates
   public static readonly OBSERVATION_WINDOW_WIDTH = 534;
-  public static readonly OBSERVATION_WINDOW_HEIGHT = 448;
+  public static readonly OBSERVATION_WINDOW_HEIGHT = 400;
 
   public static readonly OBSERVATION_WINDOW_BOUNDS = new Bounds2(
     0, 0,
