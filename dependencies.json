@@ -1,11 +1,11 @@
 {
-  "comment": "# membrane-transport 1.0.0-dev.11 Thu Jun 05 2025 12:47:36 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# membrane-transport 1.0.0-dev.12 Thu Jun 12 2025 12:25:26 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "main"
   },
   "axon": {
-    "sha": "4a01f3ec5fdfbe422bd9e4ecc6bef533b68f48c4",
+    "sha": "b6c0434ad3ed779be6569c6994c604b44a99dfa8",
     "branch": "main"
   },
   "brand": {
@@ -13,7 +13,7 @@
     "branch": "main"
   },
   "chipper": {
-    "sha": "084910271ac72174f5fcf56be29a5202503697c0",
+    "sha": "4a30c85261eb7d15eeaaeb3a3974e1235d475aa5",
     "branch": "main"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "main"
   },
   "joist": {
-    "sha": "6ec96d19f45878313e5f206e627bfda4867ffdcb",
+    "sha": "d3e24d8f5e0197d9428493162b571d5b17ffcd1f",
     "branch": "main"
   },
   "kite": {
@@ -29,11 +29,11 @@
     "branch": "main"
   },
   "membrane-transport": {
-    "sha": "421afe87eb30a5d6e96c0eecac9e509431474b3a",
+    "sha": "f383fcf4fe27aaf8bdb0fc52ef1a07fe72240528",
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "ebdc0b56cc7752c314998308d67c9dd1d4fc92ae",
+    "sha": "2c9c43bc87065be118f772eef4a977fb9b0f20ac",
     "branch": "main"
   },
   "phet-core": {
@@ -45,7 +45,7 @@
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "fed4c75a2a987aa4fa7f4f6afb330337c42052e3",
+    "sha": "fcb8c4b6eaa3e33253ad66548564e0bacd5226c7",
     "branch": "main"
   },
   "phet-io-wrappers": {
@@ -53,7 +53,7 @@
     "branch": "main"
   },
   "phetcommon": {
-    "sha": "4bb9f68c868ce36c5bfefadb79ed60389acc8864",
+    "sha": "d92cb505450612d29e7364e9013f4d7a7a68a735",
     "branch": "main"
   },
   "phetmarks": {
@@ -69,11 +69,11 @@
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "9be5261f470dbd505bc53b310c8dc359e78de458",
+    "sha": "b3e384128e0be394e81673c43dcbc5bc3ce8f004",
     "branch": "main"
   },
   "sherpa": {
-    "sha": "2d6a22df1aa16ee3a962064bf445b9db40d6b852",
+    "sha": "ded571a0b6cba87a042548476560f9f7656b4b4a",
     "branch": "main"
   },
   "studio": {
