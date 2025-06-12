@@ -163,8 +163,8 @@ export default class SoluteControl extends Panel {
         play: () => {/*no-op*/},
         stop: () => {/*no-op*/}
       },
-      accessibleName: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerAccessibleNameStringProperty :
-                      MembraneTransportFluent.a11y.outsideMembraneSpinnerAccessibleNameStringProperty,
+      accessibleName: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerAccessibleNamePattern.format( { soluteType: soluteType } ) :
+                      MembraneTransportFluent.a11y.outsideMembraneSpinnerAccessibleNamePattern.format( { soluteType: soluteType } ),
 
       accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerHelpTextStringProperty :
                           MembraneTransportFluent.a11y.outsideMembraneSpinnerHelpTextStringProperty,

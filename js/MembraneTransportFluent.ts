@@ -101,13 +101,14 @@ addToMapIfDefined( 'a11y_soluteAccessibleNames_sodiumIon', MembraneTransportStri
 addToMapIfDefined( 'a11y_soluteAccessibleNames_potassiumIon', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["potassiumIonStringProperty"] );
 addToMapIfDefined( 'a11y_soluteAccessibleNames_glucose', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["glucoseStringProperty"] );
 addToMapIfDefined( 'a11y_soluteAccessibleNames_atp', MembraneTransportStrings?.["a11y"]?.["soluteAccessibleNames"]?.["atpStringProperty"] );
-addToMapIfDefined( 'a11y_outsideMembraneSpinnerAccessibleName', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_outsideMembraneSpinnerAccessibleNamePattern', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerAccessibleNamePatternStringProperty"] );
 addToMapIfDefined( 'a11y_outsideMembraneSpinnerHelpText', MembraneTransportStrings?.["a11y"]?.["outsideMembraneSpinnerHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_soluteSpinnerVoicingHintResponse', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerVoicingHintResponseStringProperty"] );
-addToMapIfDefined( 'a11y_insideMembraneSpinnerAccessibleName', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_insideMembraneSpinnerAccessibleNamePattern', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerAccessibleNamePatternStringProperty"] );
 addToMapIfDefined( 'a11y_insideMembraneSpinnerHelpText', MembraneTransportStrings?.["a11y"]?.["insideMembraneSpinnerHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_soluteSpinnerRoleDescription', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerRoleDescriptionStringProperty"] );
 addToMapIfDefined( 'a11y_solute', MembraneTransportStrings?.["a11y"]?.["soluteStringProperty"] );
+addToMapIfDefined( 'a11y_soluteCapitalized', MembraneTransportStrings?.["a11y"]?.["soluteCapitalizedStringProperty"] );
 addToMapIfDefined( 'a11y_soluteSpinnerObjectResponsePattern', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerObjectResponsePatternStringProperty"] );
 addToMapIfDefined( 'a11y_soluteSpinnerContextResponsePattern', MembraneTransportStrings?.["a11y"]?.["soluteSpinnerContextResponsePatternStringProperty"] );
 addToMapIfDefined( 'a11y_soluteBarChartsDescriptionParagraph', MembraneTransportStrings?.["a11y"]?.["soluteBarChartsDescriptionParagraphStringProperty"] );
@@ -266,13 +267,14 @@ const MembraneTransportFluent = {
       glucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_glucose' ),
       atpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_atp' )
     },
-    outsideMembraneSpinnerAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_outsideMembraneSpinnerAccessibleName' ),
+    outsideMembraneSpinnerAccessibleNamePattern: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_outsideMembraneSpinnerAccessibleNamePattern' ),
     outsideMembraneSpinnerHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_outsideMembraneSpinnerHelpText' ),
     soluteSpinnerVoicingHintResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteSpinnerVoicingHintResponse' ),
-    insideMembraneSpinnerAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_insideMembraneSpinnerAccessibleName' ),
+    insideMembraneSpinnerAccessibleNamePattern: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_insideMembraneSpinnerAccessibleNamePattern' ),
     insideMembraneSpinnerHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_insideMembraneSpinnerHelpText' ),
     soluteSpinnerRoleDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteSpinnerRoleDescription' ),
     solute: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solute' ),
+    soluteCapitalized: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteCapitalized' ),
     soluteSpinnerObjectResponsePattern: new FluentPattern<{ amount: 'none' | number | 'few' | 'some' | 'smallAmount' | 'several' | number | 'many' | 'largeAmount' | 'hugeAmount' | 'maxAmount' | TReadOnlyProperty<'none' | number | 'few' | 'some' | 'smallAmount' | 'several' | number | 'many' | 'largeAmount' | 'hugeAmount' | 'maxAmount'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteSpinnerObjectResponsePattern' ),
     soluteSpinnerContextResponsePattern: new FluentPattern<{ addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, differenceSize: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'>, directionality: 'insideThanOutside' | 'outsideThanInside' | TReadOnlyProperty<'insideThanOutside' | 'outsideThanInside'>, moreOrLessOrSame: 'same' | number | 'other' | 'more' | 'less' | TReadOnlyProperty<'same' | number | 'other' | 'more' | 'less'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteSpinnerContextResponsePattern' ),
     soluteBarChartsDescriptionParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteBarChartsDescriptionParagraph' ),

@@ -263,8 +263,8 @@
         "value": "Adenosine Triphosphate, ATP, complex, large"
       }
     },
-    "outsideMembraneSpinnerAccessibleName": {
-      "value": "Outside Cell"
+    "outsideMembraneSpinnerAccessibleNamePattern": {
+      "value": "{ a11y_soluteCapitalized } Outside Cell"
     },
     "outsideMembraneSpinnerHelpText": {
       "value": "Adjust chosen solute amount on outside."
@@ -272,8 +272,8 @@
     "soluteSpinnerVoicingHintResponse": {
       "value": "Adjust chosen solute amount."
     },
-    "insideMembraneSpinnerAccessibleName": {
-      "value": "Inside Cell"
+    "insideMembraneSpinnerAccessibleNamePattern": {
+      "value": "{ a11y_soluteCapitalized } Inside Cell"
     },
     "insideMembraneSpinnerHelpText": {
       "value": "Adjust chosen solute amount on inside."
@@ -283,6 +283,9 @@
     },
     "solute": {
       "value": "{ $soluteType ->\n  [oxygen]        oxygen molecules\n  [carbonDioxide] carbon dioxide molecules\n  [sodiumIon]     sodium ions\n  [potassiumIon]  potassium ions\n  [glucose]       glucose molecules\n *[atp]           ATP molecules\n}"
+    },
+    "soluteCapitalized": {
+      "value": "{ $soluteType ->\n  [oxygen]        Oxygen Molecules\n  [carbonDioxide] Carbon Dioxide molecules\n  [sodiumIon]     Sodium Ions\n  [potassiumIon]  Potassium Ions\n  [glucose]       Glucose Molecules\n *[atp]           Atp Molecules\n}"
     },
     "soluteSpinnerObjectResponsePattern": {
       "value": "{ $amount ->\n  [none] no\n  [few]  a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} { a11y_solute }"

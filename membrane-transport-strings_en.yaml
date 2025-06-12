@@ -112,10 +112,11 @@ a11y:
     potassiumIon:  Potassium Ion, K, positive, small
     glucose:       Glucose, hexagonal ring, large
     atp:           Adenosine Triphosphate, ATP, complex, large
-  outsideMembraneSpinnerAccessibleName:              Outside Cell
+
+  outsideMembraneSpinnerAccessibleNamePattern:       "{ a11y_soluteCapitalized } Outside Cell"
   outsideMembraneSpinnerHelpText:                    Adjust chosen solute amount on outside.
   soluteSpinnerVoicingHintResponse:                  Adjust chosen solute amount.
-  insideMembraneSpinnerAccessibleName:               Inside Cell
+  insideMembraneSpinnerAccessibleNamePattern:        "{ a11y_soluteCapitalized } Inside Cell"
   insideMembraneSpinnerHelpText:                     Adjust chosen solute amount on inside.
   soluteSpinnerRoleDescription:                      solute adjuster
   solute:                                            |-
@@ -126,6 +127,15 @@ a11y:
                                                        [potassiumIon]  potassium ions
                                                        [glucose]       glucose molecules
                                                       *[atp]           ATP molecules
+                                                     }
+  soluteCapitalized:                                 |-
+                                                     { $soluteType ->
+                                                       [oxygen]        Oxygen Molecules
+                                                       [carbonDioxide] Carbon Dioxide molecules
+                                                       [sodiumIon]     Sodium Ions
+                                                       [potassiumIon]  Potassium Ions
+                                                       [glucose]       Glucose Molecules
+                                                      *[atp]           Atp Molecules
                                                      }
   soluteSpinnerObjectResponsePattern:                |-
                                                      { $amount ->

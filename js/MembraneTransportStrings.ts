@@ -132,13 +132,14 @@ type StringsType = {
       'glucoseStringProperty': LocalizedStringProperty;
       'atpStringProperty': LocalizedStringProperty;
     };
-    'outsideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
+    'outsideMembraneSpinnerAccessibleNamePatternStringProperty': LocalizedStringProperty;
     'outsideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
     'soluteSpinnerVoicingHintResponseStringProperty': LocalizedStringProperty;
-    'insideMembraneSpinnerAccessibleNameStringProperty': LocalizedStringProperty;
+    'insideMembraneSpinnerAccessibleNamePatternStringProperty': LocalizedStringProperty;
     'insideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
     'soluteSpinnerRoleDescriptionStringProperty': LocalizedStringProperty;
     'soluteStringProperty': LocalizedStringProperty;
+    'soluteCapitalizedStringProperty': LocalizedStringProperty;
     'soluteSpinnerObjectResponsePatternStringProperty': LocalizedStringProperty;
     'soluteSpinnerContextResponsePatternStringProperty': LocalizedStringProperty;
     'soluteBarChartsDescriptionParagraphStringProperty': LocalizedStringProperty;
