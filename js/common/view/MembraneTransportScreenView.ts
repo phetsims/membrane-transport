@@ -16,6 +16,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import Checkbox from '../../../../scenery-phet/js/Checkbox.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
@@ -123,6 +124,13 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
 
     this.addChild( timeControlNode );
+
+    const highlightCrossingCheckbox = new Checkbox( this.model.highlightCrossingProperty, MembraneTransportFluent.highlightCrossingStringProperty, {
+      tandem: options.tandem.createTandem( 'highlightCrossingCheckbox' ),
+      left: timeControlNode.left,
+      top: timeControlNode.bottom + MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
+    } );
+    this.addChild( highlightCrossingCheckbox );
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
@@ -259,6 +267,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.pdomControlAreaNode.pdomOrder = [
       timeControlNode,
+      highlightCrossingCheckbox,
       resetAllButton
     ];
 

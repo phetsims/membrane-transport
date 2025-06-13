@@ -137,6 +137,8 @@ export default class MembraneTransportModel extends PhetioObject {
   // Updated lazily in step(), by checking the state of each ligand
   public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
 
+  public readonly highlightCrossingProperty: Property<boolean>;
+
   public constructor(
     public readonly featureSet: MembraneTransportFeatureSet,
     providedOptions: MembraneTransportModelOptions ) {
@@ -194,6 +196,12 @@ export default class MembraneTransportModel extends PhetioObject {
       phetioFeatured: true
     } );
     this.resetEmitter.addListener( () => this.areLigandsAddedProperty.reset() );
+
+    this.highlightCrossingProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'highlightCrossingProperty' )
+      // phetioFeatured: true // Not specified for model properties unless they are part of preferences.
+    } );
+    this.resetEmitter.addListener( () => this.highlightCrossingProperty.reset() );
 
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );

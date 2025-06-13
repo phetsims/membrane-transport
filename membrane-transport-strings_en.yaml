@@ -38,6 +38,7 @@ animateLipidsDescription:                               Whether the phospholipid
 glucoseDrain:                                           Glucose Drain
 glucoseDrainDescription:                                Simulate phosphorylation of glucose in the cell after transport. Simulation assumes a high concentration of glucose inside the cell.
 soluteConcentrations:                                   Solute Concentrations
+highlightCrossing: Highlight Crossing
 
 preferencesDialog.audio.sounds.stereoSounds:            Stereo Sounds
 preferencesDialog.audio.sounds.stereoSoundsDescription: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
