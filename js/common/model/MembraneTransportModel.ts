@@ -198,8 +198,9 @@ export default class MembraneTransportModel extends PhetioObject {
     this.resetEmitter.addListener( () => this.areLigandsAddedProperty.reset() );
 
     this.highlightCrossingProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'highlightCrossingProperty' )
-      // phetioFeatured: true // Not specified for model properties unless they are part of preferences.
+      tandem: options.tandem.createTandem( 'highlightCrossingProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'Whether to visually highlight the solute that just crossed the membrane'
     } );
     this.resetEmitter.addListener( () => this.highlightCrossingProperty.reset() );
 
