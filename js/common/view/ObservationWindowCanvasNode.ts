@@ -136,10 +136,11 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       const width = this.modelViewTransform.modelToViewDeltaX( solute.dimension.width );
       const height = this.modelViewTransform.modelToViewDeltaY( solute.dimension.height );
 
-      if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.2 ) {
+      if ( this.model.highlightCrossingProperty.value ) {
+        if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.2 ) {
 
-        // draw a highlight
-        context.fillStyle = 'white';
+          // draw a highlight
+          context.fillStyle = 'white';
         context.globalAlpha = 0.5;
         context.beginPath();
         context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );
@@ -147,6 +148,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         context.globalAlpha = 1.0;
         context.fillStyle = 'black';
 
+        }
       }
 
       // Potassium rotates 20 degrees when it is in the sodium potassium pump, and the pump is open to the outside.
