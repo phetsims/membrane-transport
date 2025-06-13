@@ -58,7 +58,7 @@ a11y:
     playAreaSummaryScreen3:               "{ a11y.summary.playAreaSummaryIntro } { a11y.summary.playAreaSummaryProteins } { a11y.summary.playAreaSummaryBarCharts }"
     controlAreaSummary:                   You can pause action or slow it down to hear more details. Also, you can reset everything to start over.
     interactionHint:                      Add or remove solute to outside or inside of cell.
-    interactionHintWithTransportProteins: Add or remove solutes to ouside or inside of cell, and play with transport channels.
+    interactionHintWithTransportProteins: Add or remove solutes to ouside or inside of cell, and play with transport proteins.
   soluteControls:
     accessibleHeading: Solute Controls
   eraseSolutesButton:
