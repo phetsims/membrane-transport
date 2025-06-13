@@ -7,8 +7,8 @@
  */
 
 import Image from '../../../../../scenery/js/nodes/Image.js';
+import naKPumpState1_svg from '../../../../images/naKPumpState1_svg.js';
 import naKPumpState2_svg from '../../../../images/naKPumpState2_svg.js';
-import naKPumpState3_svg from '../../../../images/naKPumpState3_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
@@ -21,16 +21,16 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
    */
   public constructor( public readonly sodiumPotassiumPump: SodiumPotassiumPump | null ) {
 
-    const image = new Image( naKPumpState2_svg );
+    const image = new Image( naKPumpState1_svg );
     super( image, sodiumPotassiumPump );
 
     if ( sodiumPotassiumPump ) {
       sodiumPotassiumPump.stateProperty.link( state => {
-        image.image = state === 'openToInsideEmpty' ? naKPumpState2_svg :
-                      state === 'openToInsideSodiumBound' ? naKPumpState2_svg :
-                      state === 'openToInsideSodiumAndPhosphateBound' ? naKPumpState2_svg :
-                      state === 'openToOutsideAwaitingPotassium' ? naKPumpState3_svg :
-                      state === 'openToOutsidePotassiumBound' ? naKPumpState3_svg :
+        image.image = state === 'openToInsideEmpty' ? naKPumpState1_svg :
+                      state === 'openToInsideSodiumBound' ? naKPumpState1_svg :
+                      state === 'openToInsideSodiumAndPhosphateBound' ? naKPumpState1_svg :
+                      state === 'openToOutsideAwaitingPotassium' ? naKPumpState2_svg :
+                      state === 'openToOutsidePotassiumBound' ? naKPumpState2_svg :
                       ( () => { throw new Error( 'Invalid state' ); } )();
       } );
 
