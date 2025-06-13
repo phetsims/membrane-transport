@@ -466,7 +466,7 @@ export default class Particle<T extends ParticleType> {
 
           MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( this.mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
         }
-        else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBoundPhosphateSiteOpen' ) {
+        else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp', this.model ) );
@@ -1017,7 +1017,7 @@ export default class Particle<T extends ParticleType> {
       slot.transportProteinType === 'sodiumPotassiumPump' &&
       transportProtein instanceof SodiumPotassiumPump &&
       this.position.y < 0 && // Only approach from intracellular side
-      transportProtein.stateProperty.value === 'openToInsideSodiumBoundPhosphateSiteOpen' &&
+      transportProtein.stateProperty.value === 'openToInsideSodiumBound' &&
       !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'atp' ) ) // make sure no sodium still leaving
     ) {
 
