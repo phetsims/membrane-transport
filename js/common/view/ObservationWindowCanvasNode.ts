@@ -141,12 +141,12 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
           // draw a highlight
           context.fillStyle = 'white';
-        context.globalAlpha = 0.5;
-        context.beginPath();
-        context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );
-        context.fill();
-        context.globalAlpha = 1.0;
-        context.fillStyle = 'black';
+          context.globalAlpha = 0.5;
+          context.beginPath();
+          context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );
+          context.fill();
+          context.globalAlpha = 1.0;
+          context.fillStyle = 'black';
 
         }
       }

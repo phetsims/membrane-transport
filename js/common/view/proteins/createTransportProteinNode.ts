@@ -7,20 +7,20 @@
  */
 
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
+import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
 import PotassiumVoltageGatedChannel from '../../model/proteins/PotassiumVoltageGatedChannel.js';
+import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
+import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import SodiumVoltageGatedChannel from '../../model/proteins/SodiumVoltageGatedChannel.js';
 import TransportProtein from '../../model/proteins/TransportProtein.js';
 import TransportProteinType from '../../model/proteins/TransportProteinType.js';
-import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
-import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
-import SodiumPotassiumPump from '../../model/proteins/SodiumPotassiumPump.js';
 import LeakageChannelNode from './LeakageChannelNode.js';
 import LigandGatedChannelNode from './LigandGatedChannelNode.js';
 import PotassiumVoltageGatedChannelNode from './PotassiumVoltageGatedChannelNode.js';
-import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
-import TransportProteinNode from './TransportProteinNode.js';
 import SodiumGlucoseCotransporterNode from './SodiumGlucoseCotransporterNode.js';
 import SodiumPotassiumPumpNode from './SodiumPotassiumPumpNode.js';
+import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
+import TransportProteinNode from './TransportProteinNode.js';
 
 export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): TransportProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {

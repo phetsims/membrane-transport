@@ -45,6 +45,7 @@ type StringsType = {
   'glucoseDrainStringProperty': LocalizedStringProperty;
   'glucoseDrainDescriptionStringProperty': LocalizedStringProperty;
   'soluteConcentrationsStringProperty': LocalizedStringProperty;
+  'highlightCrossingStringProperty': LocalizedStringProperty;
   'preferencesDialog': {
     'audio': {
       'sounds': {

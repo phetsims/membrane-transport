@@ -28,11 +28,11 @@ export default function createParticleNode( particleType: ParticleType, options?
                        particleType === 'potassiumIon' ? new Image( potassiumIon_svg ) :
                        particleType === 'glucose' ? new Image( glucose_svg ) :
                        particleType === 'triangleLigand' ? new Image( sodiumLigand_svg, {
-                                                    opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
-                                                  } ) :
+                                                           opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
+                                                         } ) :
                        particleType === 'starLigand' ? new Image( potassiumLigand_svg, {
-                                                    opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
-                                                  } ) :
+                                                       opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
+                                                     } ) :
                        particleType === 'atp' ? new Image( atp_svg ) :
                        particleType === 'adp' ? new Image( adp_svg ) :
                        particleType === 'phosphate' ? new Image( phosphate_svg ) : // Rotated 20 degrees when bound

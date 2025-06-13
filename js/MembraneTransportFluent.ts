@@ -54,6 +54,7 @@ addToMapIfDefined( 'animateLipidsDescription', MembraneTransportStrings?.["anima
 addToMapIfDefined( 'glucoseDrain', MembraneTransportStrings?.["glucoseDrainStringProperty"] );
 addToMapIfDefined( 'glucoseDrainDescription', MembraneTransportStrings?.["glucoseDrainDescriptionStringProperty"] );
 addToMapIfDefined( 'soluteConcentrations', MembraneTransportStrings?.["soluteConcentrationsStringProperty"] );
+addToMapIfDefined( 'highlightCrossing', MembraneTransportStrings?.["highlightCrossingStringProperty"] );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsStringProperty"] );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', MembraneTransportStrings?.["preferencesDialog"]?.["audio"]?.["sounds"]?.["stereoSoundsDescriptionStringProperty"] );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryIntro', MembraneTransportStrings?.["a11y"]?.["summary"]?.["playAreaSummaryIntroStringProperty"] );
@@ -180,6 +181,7 @@ const MembraneTransportFluent = {
   glucoseDrainStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrain' ),
   glucoseDrainDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrainDescription' ),
   soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations' ),
+  highlightCrossingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'highlightCrossing' ),
   preferencesDialog: {
     audio: {
       sounds: {

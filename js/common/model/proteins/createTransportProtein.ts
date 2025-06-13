@@ -10,11 +10,11 @@
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
 import PotassiumVoltageGatedChannel from './PotassiumVoltageGatedChannel.js';
-import SodiumVoltageGatedChannel from './SodiumVoltageGatedChannel.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import SodiumGlucoseCotransporter from './SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './SodiumPotassiumPump.js';
+import SodiumVoltageGatedChannel from './SodiumVoltageGatedChannel.js';
 import TransportProtein from './TransportProtein.js';
+import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
 export default function createTransportProtein( model: TransportProteinModelContext, type: TransportProteinType, position: number ): TransportProtein {

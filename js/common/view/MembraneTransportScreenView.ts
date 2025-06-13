@@ -16,13 +16,14 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import Checkbox from '../../../../scenery-phet/js/Checkbox.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -125,10 +126,13 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.addChild( timeControlNode );
 
-    const highlightCrossingCheckbox = new Checkbox( this.model.highlightCrossingProperty, MembraneTransportFluent.highlightCrossingStringProperty, {
+    const highlightCrossingCheckbox = new Checkbox( this.model.highlightCrossingProperty, new Text( MembraneTransportFluent.highlightCrossingStringProperty, {
+      font: MembraneTransportConstants.FONT,
+      maxWidth: 160
+    } ), {
       tandem: options.tandem.createTandem( 'highlightCrossingCheckbox' ),
-      left: timeControlNode.left,
-      top: timeControlNode.bottom + MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN
+      left: this.observationWindow.left,
+      centerY: timeControlNode.centerY
     } );
     this.addChild( highlightCrossingCheckbox );
 
