@@ -125,7 +125,7 @@
         "value": "Add or remove solute to outside or inside of cell."
       },
       "interactionHintWithTransportProteins": {
-        "value": "Add or remove solutes to ouside or inside of cell, and play with transport channels."
+        "value": "Add or remove solutes to outside or inside of cell, and play with transport proteins."
       }
     },
     "soluteControls": {
