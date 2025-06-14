@@ -6,10 +6,10 @@
 /* @formatter:off */
 
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import FluentConstant from '../../chipper/js/browser/FluentConstant.js';
-import FluentContainer from '../../chipper/js/browser/FluentContainer.js';
-import type {FluentVariable} from '../../chipper/js/browser/FluentPattern.js';
+import type { FluentVariable } from '../../chipper/js/browser/FluentPattern.js';
 import FluentPattern from '../../chipper/js/browser/FluentPattern.js';
+import FluentContainer from '../../chipper/js/browser/FluentContainer.js';
+import FluentConstant from '../../chipper/js/browser/FluentConstant.js';
 import membraneTransport from './membraneTransport.js';
 import MembraneTransportStrings from './MembraneTransportStrings.js';
 
