@@ -249,7 +249,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       context.fillStyle = MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS();
       context.fillRect( 0, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
 
-      if ( this.model.isShowingChargesProperty.value ) {
+      if ( this.model.chargesVisibleProperty.value ) {
         this.drawCharges( context );
       }
 
