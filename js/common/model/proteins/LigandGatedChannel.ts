@@ -9,7 +9,6 @@
 
 import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
-import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Particle from '../Particle.js';
@@ -33,9 +32,6 @@ type LigandGatedChannelState = 'closed' | // idle state, not bound to a ligand
   'ligandUnboundOpen';  // ligand has bound and the channel has opened
 
 export default class LigandGatedChannel extends TransportProtein<LigandGatedChannelState> {
-
-  // When a ligand is bound, keep track of it
-  private boundLigand: Particle<LigandType> | null = null;
 
   private readonly ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Particle<LigandType> ]>;
 
@@ -86,10 +82,19 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
     // After the binding duration, release the ligand
     if ( this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceStateTransition >= BINDING_DURATION && this.boundLigand && !this.hasSolutesMovingTowardOrThroughTransportProtein() ) {
-      const boundLigand = this.boundLigand;
+      const ligand = this.boundLigand;
       this.unbindLigand();
-      this.ligandUnboundDueToNaturalCausesEmitter.emit( boundLigand );
+      this.ligandUnboundDueToNaturalCausesEmitter.emit( ligand );
     }
+  }
+
+  /**
+   * Look up the ligand bounds to this protein. This is not a instance variable because
+   * we need this to be on the Particle to make it easier to control
+   * deserializing from PhET-iO state.
+   */
+  private get boundLigand(): Particle<LigandType> | null {
+    return this.model.ligands.find( ligand => ligand.mode.type === 'ligandBound' && ligand.mode.ligandGatedChannel === this ) || null;
   }
 
   /**
@@ -118,10 +123,9 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     // Only bind if not already bound and past the rebinding delay
     if ( this.isAvailableForBinding() ) {
       this.stateProperty.value = 'ligandBoundClosed';
-      this.boundLigand = ligand;
 
-      // Set the ligand to 'bound' mode to pause its motion. The slot is null because a solute has not reserved it.
-      ligand.mode = { type: 'ligandBound', ligandGatedChannel: this };
+      // Set the ligand to 'bound' mode to pause its motion.
+      ligand.mode = { type: 'ligandBound', ligandGatedChannel: this, slot: this.slot };
     }
   }
 
@@ -136,7 +140,6 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
       // Clear the bound state
       this.stateProperty.value = 'ligandUnboundOpen';
-      this.boundLigand = null;
     }
   }
 
@@ -159,17 +162,6 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     if ( this.boundLigand ) {
       this.unbindLigand();
     }
-  }
-
-  public override getAdditionalState(): Record<string, unknown> {
-    return {
-      boundLigand: this.boundLigand ? this.model.ligands.indexOf( this.boundLigand ) : null
-    };
-  }
-
-  public override setAdditionalState( state: Record<string, IntentionalAny> ): void {
-    super.setAdditionalState( state );
-    this.boundLigand = state.boundLigand !== null ? this.model.ligands[ state.boundLigand ] : null;
   }
 }
 

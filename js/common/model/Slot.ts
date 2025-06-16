@@ -10,9 +10,7 @@
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import membraneTransport from '../../membraneTransport.js';
-import { TransportProteinIO } from './MembraneTransportModel.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import TransportProteinModelContext from './proteins/TransportProteinModelContext.js';
@@ -24,12 +22,11 @@ export default class Slot {
   public readonly transportProteinProperty: Property<null | TransportProtein>;
 
   public constructor( private readonly model: TransportProteinModelContext, public readonly position: number, tandem: Tandem ) {
-    this.transportProteinProperty = new Property<null | TransportProtein>( null, {
-      tandem: tandem.createTandem( 'transportProteinProperty' ),
-      phetioValueType: NullableIO( TransportProteinIO ),
-      phetioFeatured: true,
-      phetioReadOnly: true
-    } );
+
+    // TODO: The user needs some way to determine what proteins are in what slots.
+    //   We removed instrumentation from this to better support PhET-iO state.
+    //   See https://github.com/phetsims/membrane-transport/issues/23.
+    this.transportProteinProperty = new Property<null | TransportProtein>( null );
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
 

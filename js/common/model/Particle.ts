@@ -72,6 +72,7 @@ type RandomWalkMode = {
 type LigandBoundMode = {
   type: 'ligandBound';
   ligandGatedChannel: LigandGatedChannel;
+  slot: Slot;
 };
 
 /**

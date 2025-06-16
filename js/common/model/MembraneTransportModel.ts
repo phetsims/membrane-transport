@@ -24,11 +24,12 @@ import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import type { PhetioState } from '../../../../tandem/js/phet-io-types.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import GetSetButtonsIO from '../../../../tandem/js/types/GetSetButtonsIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
+import ObjectLiteralIO, { ObjectIOState } from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
@@ -540,17 +541,65 @@ export default class MembraneTransportModel extends PhetioObject {
    * For serialization, the MembraneTransportModel uses reference type serialization, following the pattern in Field.FieldIO.
    * Please see that documentation for more information.
    */
-  public static readonly MembraneTransportModelIO = new IOType<Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts'>, IntentionalAny>( 'MembraneTransportModelIO', {
+  public static readonly MembraneTransportModelIO = new IOType<MembraneTransportModel, MembraneTransportModelStateObject>( 'MembraneTransportModelIO', {
     documentation: 'IOType for MembraneTransportModel. Note that ligands are preallocated and stored in the state, if supported.',
     supertype: GetSetButtonsIO,
     valueType: MembraneTransportModel,
     stateSchema: {
       solutes: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
       ligands: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
+
+      // TODO: Can we improve on these IOTypes? See https://github.com/phetsims/membrane-transport/issues/23.
+      slots: ArrayIO( NullableIO( ObjectLiteralIO ) ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO
     },
-    applyState: ( model: Pick<MembraneTransportModel, 'fluxEntries' | 'solutes' | 'ligands' | 'time' | 'updateSoluteCounts'>, state: IntentionalAny ) => {
+    toStateObject: ( model: MembraneTransportModel ): MembraneTransportModelStateObject => {
+      const slotObjects = model.membraneSlots.map( slot => {
+        if ( slot.isFilled() ) {
+          const transportProtein = slot.transportProteinProperty.value!;
+          return {
+            type: slot.transportProteinType,
+            position: transportProtein.position,
+            state: transportProtein.stateProperty.value,
+            timeSinceStateTransition: transportProtein.timeSinceStateTransition
+          };
+        }
+        else {
+          return null; // If the slot is not filled, we return null
+        }
+      } );
+
+      return {
+        time: model.time,
+        fluxEntries: ReferenceArrayIO( ObjectLiteralIO ).toStateObject( model.fluxEntries ),
+        solutes: ReferenceArrayIO( MembraneTransportModel.ParticleIO ).toStateObject( model.solutes ),
+        ligands: ReferenceArrayIO( MembraneTransportModel.ParticleIO ).toStateObject( model.ligands ),
+        slots: slotObjects
+      };
+    },
+    applyState: ( model: MembraneTransportModel, state: MembraneTransportModelStateObject ) => {
+
+      // Must set protein state first since the particles will refer to them.
+      state.slots.forEach( ( slotObject, index ) => {
+        if ( slotObject ) {
+          const transportProtein = createTransportProtein(
+            model,
+            slotObject.type,
+            slotObject.position
+          );
+          transportProtein.stateProperty.value = slotObject.state;
+          transportProtein.timeSinceStateTransition = slotObject.timeSinceStateTransition;
+
+          model.membraneSlots[ index ].transportProteinProperty.value = transportProtein;
+        }
+        else {
+
+          // If the slot is not filled, we set the transport protein to null
+          model.membraneSlots[ index ].transportProteinProperty.value = null;
+        }
+      } );
+
       ReferenceArrayIO( MembraneTransportModel.ParticleIO ).applyState( model.solutes, state.solutes );
 
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
@@ -609,57 +658,14 @@ export default class MembraneTransportModel extends PhetioObject {
   } );
 }
 
-type TransportProteinStateObject = {
-  type: TransportProteinType;
-  position: number;
-  model: ReferenceIOState;
-  state: string;
-  timeSinceStateTransition: number;
-  additionalState: Record<string, IntentionalAny>;
+type MembraneTransportModelStateObject = {
+  time: number;
+
+  fluxEntries: ObjectIOState[];
+  solutes: ParticleStateObject[];
+  ligands: ParticleStateObject[];
+  slots: ( ObjectIOState | null )[];
 };
-
-/**
- * Ideally this would be declared in TransportProtein.ts. However, since this creates subtypes like LigandGatedChannel, that
- * would create a circular dependency. So we declare it here.
- */
-export const TransportProteinIO = new IOType<TransportProtein, TransportProteinStateObject>( 'TransportProteinIO', {
-  valueType: TransportProtein,
-  stateSchema: {
-    type: StringIO,
-    position: NumberIO,
-
-    // Necessary in order to get information from the model to the TransportProtein, such as the membrane potential
-    model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ),
-
-    state: StringIO,
-    timeSinceStateTransition: NumberIO,
-
-    additionalState: ObjectLiteralIO
-  },
-  toStateObject: ( transportProtein: TransportProtein ): TransportProteinStateObject => {
-
-    // TODO: State not appearing in get call when a ligand is bound, see https://github.com/phetsims/membrane-transport/issues/23
-    return {
-      type: transportProtein.type,
-      position: transportProtein.position,
-      model: ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).toStateObject( transportProtein.model as MembraneTransportModel ),
-      state: transportProtein.stateProperty.value,
-      timeSinceStateTransition: transportProtein.timeSinceStateTransition,
-      additionalState: transportProtein.getAdditionalState()
-    };
-  },
-  fromStateObject: ( stateObject: TransportProteinStateObject ) => {
-    const transportProtein = createTransportProtein(
-      ReferenceIO( MembraneTransportModel.MembraneTransportModelIO ).fromStateObject( stateObject.model ) as MembraneTransportModel,
-      stateObject.type,
-      stateObject.position
-    );
-    transportProtein.stateProperty.value = stateObject.state;
-    transportProtein.timeSinceStateTransition = stateObject.timeSinceStateTransition;
-    transportProtein.setAdditionalState( stateObject.additionalState );
-    return transportProtein;
-  }
-} );
 
 export type ParticleStateObject = {
   position: Vector2;
