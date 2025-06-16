@@ -7,9 +7,13 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
 import membraneTransport from '../../membraneTransport.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
@@ -20,13 +24,21 @@ export default class Slot {
 
   // The type of transport protein that is currently in this slot.
   public readonly transportProteinProperty: Property<null | TransportProtein>;
+  private readonly transportProteinTypeProperty: DerivedProperty<TransportProteinType | null, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny>;
 
   public constructor( private readonly model: TransportProteinModelContext, public readonly position: number, tandem: Tandem ) {
 
-    // TODO: The user needs some way to determine what proteins are in what slots.
-    //   We removed instrumentation from this to better support PhET-iO state.
-    //   See https://github.com/phetsims/membrane-transport/issues/23.
     this.transportProteinProperty = new Property<null | TransportProtein>( null );
+
+    // Just for PhET-iO, indicate what kind of protein is in the slot, if any.
+    this.transportProteinTypeProperty = new DerivedProperty( [ this.transportProteinProperty ], transportProtein => {
+      return transportProtein ? transportProtein.type : null;
+    }, {
+      tandem: tandem.createTandem( 'transportProteinTypeProperty' ),
+      phetioValueType: NullableIO( StringIO ),
+      phetioFeatured: true,
+      phetioDocumentation: 'The type of transport protein in this slot, or null if the slot is empty.'
+    } );
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
 
