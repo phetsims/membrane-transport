@@ -32,7 +32,11 @@ export default class SolutesPanel extends Node {
       maxWidth: 200,
 
       // pdom - remove, this content will come from the accessibleName of the radio button group instead
-      accessibleParagraph: null
+      accessibleParagraph: null,
+
+      // The Voicing Hint Response for this reading block is the same as the accessibleHelpText
+      // for the entire panel.
+      readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControlsAccessibleHelpTextStringProperty
     } );
 
     const alignGroup = new AlignGroup();
@@ -81,10 +85,7 @@ export default class SolutesPanel extends Node {
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,
-      accessibleName: MembraneTransportFluent.solutesStringProperty,
-
-      // The Voicing hint for this component is the same as the help text for the entire solute controls panel.
-      voicingHintResponse: MembraneTransportFluent.a11y.soluteControlsAccessibleHelpTextStringProperty
+      accessibleName: MembraneTransportFluent.solutesStringProperty
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally
