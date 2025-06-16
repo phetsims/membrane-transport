@@ -12,6 +12,7 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Particle from '../Particle.js';
+import LigandBoundMode from '../particleModes/LigandBoundMode.js';
 import Slot from '../Slot.js';
 import SoluteType, { LigandType } from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
@@ -94,7 +95,8 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
    * deserializing from PhET-iO state.
    */
   private get boundLigand(): Particle<LigandType> | null {
-    return this.model.ligands.find( ligand => ligand.mode.type === 'ligandBound' && ligand.mode.ligandGatedChannel === this ) || null;
+    // TODO: Prefer instanceof for this check, see https://github.com/phetsims/membrane-transport/issues/23
+    return this.model.ligands.find( ligand => ligand.mode.type === 'ligandBound' && ( ligand.mode as LigandBoundMode ).ligandGatedChannel === this ) || null;
   }
 
   /**
@@ -125,7 +127,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
       this.stateProperty.value = 'ligandBoundClosed';
 
       // Set the ligand to 'bound' mode to pause its motion.
-      ligand.mode = { type: 'ligandBound', ligandGatedChannel: this, slot: this.slot };
+      ligand.mode = new LigandBoundMode( this, this.slot );
     }
   }
 

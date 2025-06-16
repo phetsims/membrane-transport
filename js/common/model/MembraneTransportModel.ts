@@ -517,7 +517,7 @@ export default class MembraneTransportModel extends PhetioObject {
       return {
         position: particle.position,
         type: particle.type,
-        mode: Particle.modeToState( particle.mode ),
+        mode: particle.mode.toStateObject(), // TODO: Remove the other entry point for this, see https://github.com/phetsims/membrane-transport/issues/23
         model: ReferenceIO( IOType.ObjectIO ).toStateObject( particle.model ),
         opacity: particle.opacity
       };

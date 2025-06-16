@@ -11,6 +11,8 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import { ParticleModeWithSlot } from '../Particle.js';
+import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
+import WaitingInSodiumGlucoseCotransporterMode from '../particleModes/WaitingInSodiumGlucoseCotransporterMode.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -51,12 +53,15 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     affirm( slot, 'Slot should be non-null' );
 
     const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
+                                                       solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'left' );
     const glucose = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
+                                                       solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'center' );
     const rightIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
+                                                        solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                         solute.mode.slot === slot &&
                                                         solute.mode.site === 'right' );
 
@@ -71,9 +76,9 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
           this.stateProperty.value = 'openToInside';
 
           // Move solutes through the open transport protein
-          leftIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
-          glucose.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward' };
-          rightIon.mode = { type: 'movingThroughTransportProtein', slot: slot, transportProteinType: this.type, direction: 'inward', offset: +5 };
+          leftIon.mode = new MovingThroughTransportProteinMode( slot, this.type, 'inward', -5 );
+          glucose.mode = new MovingThroughTransportProteinMode( slot, this.type, 'inward' );
+          rightIon.mode = new MovingThroughTransportProteinMode( slot, this.type, 'inward', +5 );
         }
       }
     }
@@ -81,7 +86,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     if ( this.stateProperty.value === 'openToInside' ) {
 
       // Check to see if the sodium ions or glucose is still passing through
-      const numberPassingThrough = this.model.solutes.filter( solute => solute.mode.type === 'movingThroughTransportProtein' &&
+      const numberPassingThrough = this.model.solutes.filter( solute => solute.mode instanceof MovingThroughTransportProteinMode &&
                                                                         solute.mode.slot === slot );
 
       // Once all solutes have passed through, the sodium glucose cotransporter is open to the outside
@@ -95,14 +100,19 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
    * Determine if a site is available. A site may be reserved if a particle is moving toward it, or waiting in it.
    */
   private isSiteAvailable( site: 'left' | 'center' | 'right' ): boolean {
+
     return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseCotransporter' ||
                                                 solute.mode.type === 'waitingInSodiumGlucoseCotransporter' ) &&
+                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
                                               solute.mode.slot === this.slot &&
+                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
                                               solute.mode.site === site ) === undefined;
   }
 
   public getFilledSodiumSiteCount(): number {
-    return this.model.solutes.filter( solute => ( solute.mode.type === 'waitingInSodiumGlucoseCotransporter' ) &&
+    return this.model.solutes.filter( solute => solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                 solute.mode.slot === this.slot &&
                                                 ( solute.mode.site === 'left' || solute.mode.site === 'right' ) ).length;
   }

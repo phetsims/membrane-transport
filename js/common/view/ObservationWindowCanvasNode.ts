@@ -25,6 +25,7 @@ import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Particle from '../model/Particle.js';
+import WaitingInSodiumPotassiumPumpMode from '../model/particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import SoluteType from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
 import Phospholipid from './Phospholipid.js';
@@ -153,7 +154,10 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
       // Potassium rotates 20 degrees when it is in the sodium potassium pump, and the pump is open to the outside.
       const rotate = solute.type === 'phosphate' && solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                     ( solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' || solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsidePotassiumBound' );
+
+                     // TODO: Prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
+                     ( ( solute.mode as WaitingInSodiumPotassiumPumpMode ).sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ||
+                       ( solute.mode as WaitingInSodiumPotassiumPumpMode ).sodiumPotassiumPump.stateProperty.value === 'openToOutsidePotassiumBound' );
 
       // Draw the image centered at the position.
       if ( rotate ) {

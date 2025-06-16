@@ -24,6 +24,8 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import { ParticleModeWithSlot } from '../Particle.js';
+import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
+import WaitingInSodiumPotassiumPumpMode from '../particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
@@ -87,7 +89,11 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   private isSiteOpen( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' ): boolean {
     return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
                                                 solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
+                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
                                               solute.mode.slot === this.slot &&
+                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
                                               solute.mode.site === site ) === undefined;
   }
 
@@ -124,13 +130,13 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   public getNumberOfFilledSodiumSites(): number {
 
-    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    const sodium1 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium1' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    const sodium2 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium2' );
-    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    const sodium3 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
 
@@ -150,7 +156,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
   public getNumberOfFilledPotassiumSites(): number {
 
-    return this.model.solutes.filter( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    return this.model.solutes.filter( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                 solute.mode.slot === this.slot &&
                                                 ( solute.mode.site === 'potassium1' || solute.mode.site === 'potassium2' ) ).length;
   }
@@ -159,13 +165,13 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   public override step( dt: number ): void {
     super.step( dt );
 
-    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    const sodium1 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium1' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    const sodium2 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium2' );
-    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+    const sodium3 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                                        solute.mode.slot === this.slot &&
                                                        solute.mode.site === 'sodium3' );
 
@@ -189,42 +195,72 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   // Open upward, letting sodium go outside the cell
   public openUpward(): void {
 
-    const sodium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium1' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium2' );
-    const sodium3 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium3' );
+    const sodium1 = this.model.solutes.find( solute => {
+
+      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
+      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
+      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+             mode.slot === this.slot &&
+             mode.site === 'sodium1';
+    } );
+    const sodium2 = this.model.solutes.find( solute => {
+
+      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
+      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
+      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+             mode.slot === this.slot &&
+             mode.site === 'sodium2';
+    } );
+    const sodium3 = this.model.solutes.find( solute => {
+
+      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
+      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
+      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+             mode.slot === this.slot &&
+             mode.site === 'sodium3';
+    } );
     this.stateProperty.value = 'openToOutsideAwaitingPotassium';
 
     // Move solutes through the open sodium potassium pump
-    sodium1!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: -5 };
-    sodium2!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward' };
-    sodium3!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'outward', offset: +5 };
+    sodium1!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'outward', -5 );
+    sodium2!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'outward' );
+    sodium3!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'outward', +5 );
   }
 
   // Open downward, letting potassium go into the cell
   public openDownward(): void {
 
-    const potassium1 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                          solute.mode.slot === this.slot &&
-                                                          solute.mode.site === 'potassium1' );
-    const potassium2 = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                          solute.mode.slot === this.slot &&
-                                                          solute.mode.site === 'potassium2' );
+    const potassium1 = this.model.solutes.find( solute => {
+
+      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
+      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
+      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+             mode.slot === this.slot &&
+             mode.site === 'potassium1';
+    } );
+    const potassium2 = this.model.solutes.find( solute => {
+
+      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
+      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
+      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+             mode.slot === this.slot &&
+             mode.site === 'potassium2';
+    } );
     this.stateProperty.value = 'openToInsideEmpty';
 
     // Move solutes through the open sodium potassium pump
-    potassium1!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'inward', offset: -5 };
-    potassium2!.mode = { type: 'movingThroughTransportProtein', slot: this.slot, transportProteinType: this.type, direction: 'inward' };
+    potassium1!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward', -5 );
+    potassium2!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward' );
 
     // release the phosphate
-    const phosphate = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-                                                         solute.mode.slot === this.slot &&
-                                                         solute.mode.site === 'phosphate' );
+    const phosphate = this.model.solutes.find( solute => {
+
+      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
+      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
+      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
+             mode.slot === this.slot &&
+             mode.site === 'phosphate';
+    } );
     if ( phosphate ) {
       phosphate.moveInDirection( new Vector2( 0, -1 ), 0.5 );
     }
