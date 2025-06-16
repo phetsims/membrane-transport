@@ -18,6 +18,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
+import { GatedVisibleProperty } from '../../../../axon/js/GatedBooleanProperty.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -48,13 +49,15 @@ export default class SoluteControl extends Panel {
   public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside',
                       tandem: Tandem, providedOptions: SoluteControlOptions ) {
 
-    const visibleProperty = new DerivedProperty( [ model.soluteProperty ], selectedSolute => {
+    // PhET-iO clients can hide individual solute controls.
+    const simControlledVisibleProperty = new DerivedProperty( [ model.soluteProperty ], selectedSolute => {
       return soluteType === selectedSolute;
     } );
+    const gatedVisibleProperty = new GatedVisibleProperty( simControlledVisibleProperty, tandem );
 
     const options = optionize<SoluteControlOptions, SelfOptions, PanelOptions>()( {
       align: 'center',
-      visibleProperty: visibleProperty,
+      visibleProperty: gatedVisibleProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
     }, providedOptions );
 
