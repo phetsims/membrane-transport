@@ -159,7 +159,7 @@ export default class MembraneTransportModel extends PhetioObject {
       validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'soluteProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'The currently selected solute'
+      phetioDocumentation: 'Currently selected solute'
     } );
     this.resetEmitter.addListener( () => this.soluteProperty.reset() );
 
