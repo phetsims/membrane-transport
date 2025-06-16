@@ -41,7 +41,7 @@ import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
-import TransportProteinType, { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
+import { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import SoluteType, { LigandType, ParticleType, SoluteControlSolutes } from './SoluteType.js';
 
