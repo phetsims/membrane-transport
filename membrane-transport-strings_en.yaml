@@ -220,7 +220,13 @@ a11y:
                                                      }, in membrane
 
   currentDetailsLigands:                             2 added ligand types on outside only
-  currentDetailsMembranePotential:                   "membrane potential of { $membranePotential } millivolts"
+  membranePotentialValue:                            |-
+                                                     { $membranePotential ->
+                                                       [-70] negative 70
+                                                       [-50] negative 50
+                                                       *[30] positive 30
+                                                     } millivolts
+  currentDetailsMembranePotential:                   "membrane potential of { a11y.membranePotentialValue }"
 
   # accessibleHelpText for the ligand control
   ligandToggleButtonAccessibleHelpText:              Add or remove triangle- and star-shaped ligands to outside of cell.

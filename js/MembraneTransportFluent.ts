@@ -124,6 +124,7 @@ addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnOutside', 'a11y.currentDetai
 addToMapIfDefined( 'a11y_currentDetailsSoluteTypesOnInside', 'a11y.currentDetailsSoluteTypesOnInsideStringProperty' );
 addToMapIfDefined( 'a11y_currentDetailsTransportProteins', 'a11y.currentDetailsTransportProteinsStringProperty' );
 addToMapIfDefined( 'a11y_currentDetailsLigands', 'a11y.currentDetailsLigandsStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialValue', 'a11y.membranePotentialValueStringProperty' );
 addToMapIfDefined( 'a11y_currentDetailsMembranePotential', 'a11y.currentDetailsMembranePotentialStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButtonAccessibleHelpText', 'a11y.ligandToggleButtonAccessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButtonAddedContextResponse', 'a11y.ligandToggleButtonAddedContextResponseStringProperty' );
@@ -291,7 +292,8 @@ const MembraneTransportFluent = {
     currentDetailsSoluteTypesOnInside: new FluentPattern<{ count: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsSoluteTypesOnInside', _.get( MembraneTransportStrings, 'a11y.currentDetailsSoluteTypesOnInsideStringProperty' ) ),
     currentDetailsTransportProteins: new FluentPattern<{ proteinCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'>, proteinTypeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsTransportProteins', _.get( MembraneTransportStrings, 'a11y.currentDetailsTransportProteinsStringProperty' ) ),
     currentDetailsLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_currentDetailsLigands', _.get( MembraneTransportStrings, 'a11y.currentDetailsLigandsStringProperty' ) ),
-    currentDetailsMembranePotential: new FluentPattern<{ membranePotential: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_currentDetailsMembranePotential', _.get( MembraneTransportStrings, 'a11y.currentDetailsMembranePotentialStringProperty' ) ),
+    membranePotentialValue: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_membranePotentialValue', _.get( MembraneTransportStrings, 'a11y.membranePotentialValueStringProperty' ) ),
+    currentDetailsMembranePotential: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsMembranePotential', _.get( MembraneTransportStrings, 'a11y.currentDetailsMembranePotentialStringProperty' ) ),
     ligandToggleButtonAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText', _.get( MembraneTransportStrings, 'a11y.ligandToggleButtonAccessibleHelpTextStringProperty' ) ),
     ligandToggleButtonAddedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAddedContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButtonAddedContextResponseStringProperty' ) ),
     ligandToggleButtonRemovedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonRemovedContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButtonRemovedContextResponseStringProperty' ) ),

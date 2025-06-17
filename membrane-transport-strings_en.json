@@ -329,8 +329,11 @@
     "currentDetailsLigands": {
       "value": "2 added ligand types on outside only"
     },
+    "membranePotentialValue": {
+      "value": "{ $membranePotential ->\n  [-70] negative 70\n  [-50] negative 50\n  *[30] positive 30\n} millivolts"
+    },
     "currentDetailsMembranePotential": {
-      "value": "membrane potential of { $membranePotential } millivolts"
+      "value": "membrane potential of { a11y_membranePotentialValue }"
     },
     "ligandToggleButtonAccessibleHelpText": {
       "value": "Add or remove triangle- and star-shaped ligands to outside of cell."

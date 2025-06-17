@@ -154,6 +154,7 @@ type StringsType = {
     'currentDetailsSoluteTypesOnInsideStringProperty': LocalizedStringProperty;
     'currentDetailsTransportProteinsStringProperty': LocalizedStringProperty;
     'currentDetailsLigandsStringProperty': LocalizedStringProperty;
+    'membranePotentialValueStringProperty': LocalizedStringProperty;
     'currentDetailsMembranePotentialStringProperty': LocalizedStringProperty;
     'ligandToggleButtonAccessibleHelpTextStringProperty': LocalizedStringProperty;
     'ligandToggleButtonAddedContextResponseStringProperty': LocalizedStringProperty;
