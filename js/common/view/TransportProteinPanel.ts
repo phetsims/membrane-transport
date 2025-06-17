@@ -94,7 +94,9 @@ export default class TransportProteinPanel extends Panel {
         minWidth: 200,
 
         // pdom
-        accessibleHeading: config.titleProperty
+        accessibleHeading: config.titleProperty,
+
+        tandem: tandem.createTandem( config.tandemName )
       } );
     };
 
@@ -212,7 +214,8 @@ export default class TransportProteinPanel extends Panel {
       accessibleHeading: MembraneTransportFluent.a11y.transportProteinPanel.transportProteinsStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
-      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
+      tandem: tandem
     } );
 
     this.mutate( { left: 20, top: 20 } );

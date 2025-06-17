@@ -159,19 +159,41 @@ export default class TransportProteinDragNode extends Node {
           myself.pickable = false; // Prevent being grabbed on the way home
 
           const toolNode = view.getTransportProteinToolNode( this.type );
-          assert && assert( toolNode, `toolNode should be defined, type = ${this.type}` ); // This was failing on CT
-          const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
-          const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-          const animation = createPositionAnimation( value => positionProperty.set( value ), positionProperty.value, modelPoint, () => {
-            this.visible = false;
-            modelBoundsProperty.dispose();
-            this.dispose();
-          } );
+          // If it can animate back to the toolbox, do so. May not be possible if the toolbox is hidden via phet-io.
+          if ( toolNode.wasVisuallyDisplayed() ) {
+            assert && assert( toolNode, `toolNode should be defined, type = ${this.type}` ); // This was failing on CT
+            const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
+            const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-          animation.start();
+            const animation = createPositionAnimation( value => positionProperty.set( value ), positionProperty.value, modelPoint, () => {
+              this.visible = false;
+              modelBoundsProperty.dispose();
+              this.dispose();
+            } );
 
-          MembraneTransportSounds.proteinReturnedToToolbox();
+            animation.start();
+
+            MembraneTransportSounds.proteinReturnedToToolbox();
+          }
+          else {
+
+            if ( this.origin instanceof Slot ) {
+
+              // If it was dragged from a slot, return it to the slot
+              this.origin.transportProteinType = this.type;
+              this.visible = false;
+              modelBoundsProperty.dispose();
+              this.dispose();
+            }
+            else {
+
+              // Toolbox hidden while dragging from the toolbox, so just dispose of it
+              this.visible = false;
+              modelBoundsProperty.dispose();
+              this.dispose();
+            }
+          }
         }
 
         observationWindow.clearSlotDragIndicatorHighlights();
