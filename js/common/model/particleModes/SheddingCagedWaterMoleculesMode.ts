@@ -11,6 +11,9 @@ import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js'
 import membraneTransport from '../../../membraneTransport.js';
 import Slot from '../Slot.js';
 import BaseParticleMode from './BaseParticleMode.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
+import MovingThroughTransportProteinMode from './MovingThroughTransportProteinMode.js';
 
 export default class SheddingCagedWaterMoleculesMode extends BaseParticleMode {
 
@@ -25,6 +28,23 @@ export default class SheddingCagedWaterMoleculesMode extends BaseParticleMode {
       slot: this.slot.getIndex(),
       sheddingElapsed: this.sheddingElapsed || null
     };
+  }
+
+  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+    const sheddingDuration = 0.1;
+    const newSheddingElapsed = ( this.sheddingElapsed || 0 ) + dt;
+
+    if ( newSheddingElapsed >= sheddingDuration ) {
+      const outsideOfCell = particle.position.y > 0;
+      particle.mode = new MovingThroughTransportProteinMode(
+        this.slot,
+        this.slot.transportProteinType!,
+        outsideOfCell ? 'inward' : 'outward'
+      );
+    }
+    else {
+      particle.mode = new SheddingCagedWaterMoleculesMode( this.slot, newSheddingElapsed );
+    }
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): SheddingCagedWaterMoleculesMode {

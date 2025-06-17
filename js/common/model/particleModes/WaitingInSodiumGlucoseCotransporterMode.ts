@@ -12,6 +12,8 @@ import membraneTransport from '../../../membraneTransport.js';
 import SodiumGlucoseCotransporter from '../proteins/SodiumGlucoseCotransporter.js';
 import Slot from '../Slot.js';
 import BaseParticleMode from './BaseParticleMode.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
 
 export default class WaitingInSodiumGlucoseCotransporterMode extends BaseParticleMode {
 
@@ -28,6 +30,13 @@ export default class WaitingInSodiumGlucoseCotransporterMode extends BaseParticl
       sodiumGlucoseCotransporter: true,
       site: this.site
     };
+  }
+
+  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+    if ( phet.chipper.queryParameters.dev ) {
+      const targetPosition = this.sodiumGlucoseCotransporter.getSitePosition( this.site );
+      particle.position.set( targetPosition );
+    }
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): WaitingInSodiumGlucoseCotransporterMode {

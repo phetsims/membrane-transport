@@ -12,6 +12,11 @@ import membraneTransport from '../../../membraneTransport.js';
 import SodiumGlucoseCotransporter from '../proteins/SodiumGlucoseCotransporter.js';
 import Slot from '../Slot.js';
 import BaseParticleMode from './BaseParticleMode.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
+import WaitingInSodiumGlucoseCotransporterMode from './WaitingInSodiumGlucoseCotransporterMode.js';
+import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 
 export default class MoveToSodiumGlucoseTransporterMode extends BaseParticleMode {
 
@@ -28,6 +33,33 @@ export default class MoveToSodiumGlucoseTransporterMode extends BaseParticleMode
       sodiumGlucoseCotransporter: true,
       site: this.site
     };
+  }
+
+  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+    affirm( particle.type === 'sodiumIon' || particle.type === 'glucose', 'Only sodium and glucose can move to the sodium glucose cotransporter' );
+
+    const currentPosition = particle.position.copy();
+    const targetPosition = this.sodiumGlucoseCotransporter.getSitePosition( this.site );
+    const vector = targetPosition.minus( currentPosition );
+    const direction = vector.normalized();
+    const TYPICAL_SPEED = 30;
+
+    const maxStepSize = TYPICAL_SPEED * dt;
+    particle.position.x += direction.x * maxStepSize;
+    particle.position.y += direction.y * maxStepSize;
+
+    if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
+      const newMode = new WaitingInSodiumGlucoseCotransporterMode(
+        this.slot,
+        this.sodiumGlucoseCotransporter,
+        this.site
+      );
+      particle.mode = newMode;
+
+      particle.position.set( targetPosition );
+
+      MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( particle.type, newMode.sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
+    }
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): MoveToSodiumGlucoseTransporterMode {

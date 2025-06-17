@@ -9,6 +9,8 @@
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
 
 type ParticleModeType = 'randomWalk' |
   'ligandBound' |
@@ -37,6 +39,8 @@ export default abstract class BaseParticleMode {
   }
 
   public abstract toStateObject(): IntentionalAny;
+
+  public abstract step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void;
 
   public static fromStateObject( stateObject: IntentionalAny, ...args: IntentionalAny[] ): BaseParticleMode {
     throw new Error( 'fromStateObject must be implemented by subclasses' );

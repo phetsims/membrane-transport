@@ -12,6 +12,8 @@ import membraneTransport from '../../../membraneTransport.js';
 import LigandGatedChannel from '../proteins/LigandGatedChannel.js';
 import Slot from '../Slot.js';
 import BaseParticleMode from './BaseParticleMode.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
 
 export default class LigandBoundMode extends BaseParticleMode {
 
@@ -26,6 +28,10 @@ export default class LigandBoundMode extends BaseParticleMode {
       slot: this.slot.getIndex(),
       ligandGatedChannel: true
     };
+  }
+
+  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+    particle.position.set( this.ligandGatedChannel.getBindingPosition() );
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): LigandBoundMode {

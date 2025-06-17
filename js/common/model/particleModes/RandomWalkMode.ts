@@ -11,6 +11,8 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import BaseParticleMode from './BaseParticleMode.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
 
 export default class RandomWalkMode extends BaseParticleMode {
 
@@ -31,6 +33,10 @@ export default class RandomWalkMode extends BaseParticleMode {
       timeUntilNextDirection: this.timeUntilNextDirection,
       timeElapsedSinceMembraneCrossing: this.timeElapsedSinceMembraneCrossing
     };
+  }
+
+  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+    particle.stepRandomWalk( dt, model );
   }
 
   public static override fromStateObject( stateObject: IntentionalAny ): RandomWalkMode {
