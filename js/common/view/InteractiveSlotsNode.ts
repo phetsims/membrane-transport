@@ -141,7 +141,9 @@ export default class InteractiveSlotsNode extends Node {
     // may change from other interaction before the animation completes.
     const returnToolToToolbox = ( grabbedNode: TransportProteinDragNode ) => {
       const toolNode = view.getTransportProteinToolNode( grabbedNode.type );
-      if ( toolNode ) {
+
+      // May have been hidden by phet-io
+      if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
         const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
         const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
@@ -155,6 +157,11 @@ export default class InteractiveSlotsNode extends Node {
         );
 
         animation.start();
+      }
+      else {
+
+        // Tool node is not visually displayed, just dispose without animation
+        grabbedNode.dispose();
       }
     };
 
@@ -235,8 +242,17 @@ export default class InteractiveSlotsNode extends Node {
           const nextIndex = this.selectedIndex + delta;
 
           // If at the right edge and trying to move further right, move off the membrane
+          // but only if the corresponding tool node is visually displayed (not hidden via phet-io)
           if ( nextIndex === allSlotsCount ) {
-            this.selectedIndex = 'offMembrane';
+            affirm( this.selectedType, 'selectedType should be defined when grabbed' );
+            const toolNode = this.view.getTransportProteinToolNode( this.selectedType );
+            if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
+              this.selectedIndex = 'offMembrane';
+            }
+            else {
+              // Cannot move off membrane, stay at the rightmost slot
+              this.selectedIndex = allSlotsCount - 1;
+            }
           }
           else {
 
@@ -281,12 +297,31 @@ export default class InteractiveSlotsNode extends Node {
 
             // NEXT STEPS: Turn this into animation
             const toolNode = view.getTransportProteinToolNode( grabbedType );
-            toolNode.focus();
 
-            releaseReason = 'return';
+            // Check if the tool node is visually displayed before returning to toolbox
+            if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
+              toolNode.focus();
 
-            // Animate the tool back to the toolbox. Cleanup is done at the end of animation.
-            returnToolToToolbox( grabbedNode );
+              releaseReason = 'return';
+
+              // Animate the tool back to the toolbox. Cleanup is done at the end of animation.
+              returnToolToToolbox( grabbedNode );
+            }
+            else {
+
+              // Tool node is hidden, so we need to handle this differently
+              // If it came from a slot, return it to the original slot
+              if ( origin instanceof Slot ) {
+                origin.transportProteinType = grabbedType;
+                releaseReason = 'cancel';
+                grabbedNode.dispose();
+              }
+              else {
+                // Came from toolbox but toolbox is now hidden, just dispose
+                releaseReason = 'delete';
+                grabbedNode.dispose();
+              }
+            }
           }
           else {
 
