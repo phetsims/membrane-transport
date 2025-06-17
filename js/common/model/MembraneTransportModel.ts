@@ -550,7 +550,8 @@ export default class MembraneTransportModel extends PhetioObject {
       solutes: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
       ligands: ReferenceArrayIO( MembraneTransportModel.ParticleIO ),
 
-      // TODO: Can we improve on these IOTypes? See https://github.com/phetsims/membrane-transport/issues/23.
+      // In consultation with Michael K, we determined that ObjectLiteralIO is appropriate here, despite not being trackable
+      // by migration compatibility checkers.
       slots: ArrayIO( NullableIO( ObjectLiteralIO ) ),
       fluxEntries: ReferenceArrayIO( ObjectLiteralIO ),
       time: NumberIO
