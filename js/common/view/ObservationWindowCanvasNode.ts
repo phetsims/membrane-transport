@@ -153,11 +153,9 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       }
 
       // Potassium rotates 20 degrees when it is in the sodium potassium pump, and the pump is open to the outside.
-      const rotate = solute.type === 'phosphate' && solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-
-                     // TODO: Prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-                     ( ( solute.mode as WaitingInSodiumPotassiumPumpMode ).sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ||
-                       ( solute.mode as WaitingInSodiumPotassiumPumpMode ).sodiumPotassiumPump.stateProperty.value === 'openToOutsidePotassiumBound' );
+      const rotate = solute.type === 'phosphate' && solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+                     ( solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ||
+                       solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsidePotassiumBound' );
 
       // Draw the image centered at the position.
       if ( rotate ) {

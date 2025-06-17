@@ -52,16 +52,13 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
 
     affirm( slot, 'Slot should be non-null' );
 
-    const leftIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
-                                                       solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
+    const leftIon = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'left' );
-    const glucose = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
-                                                       solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
+    const glucose = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                        solute.mode.slot === slot &&
                                                        solute.mode.site === 'center' );
-    const rightIon = this.model.solutes.find( solute => solute.mode.type === 'waitingInSodiumGlucoseCotransporter' &&
-                                                        solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
+    const rightIon = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                         solute.mode.slot === slot &&
                                                         solute.mode.site === 'right' );
 

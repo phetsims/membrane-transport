@@ -39,6 +39,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
+import UserControlledMode from './particleModes/UserControlledMode.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
@@ -317,7 +318,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
     this.updateSoluteCounts();
 
-    this.isUserDraggingLigandProperty.value = this.ligands.filter( ligand => ligand.mode.type === 'userControlled' ).length > 0;
+    this.isUserDraggingLigandProperty.value = this.ligands.filter( ligand => ligand.mode instanceof UserControlledMode ).length > 0;
 
     if ( this.isPlayingProperty.value ) {
       MembraneTransportSounds.updateAmbientSoluteSounds( this );

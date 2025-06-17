@@ -196,28 +196,19 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   public openUpward(): void {
 
     const sodium1 = this.model.solutes.find( solute => {
-
-      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
-      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
-      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-             mode.slot === this.slot &&
-             mode.site === 'sodium1';
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'sodium1';
     } );
     const sodium2 = this.model.solutes.find( solute => {
-
-      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
-      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
-      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-             mode.slot === this.slot &&
-             mode.site === 'sodium2';
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'sodium2';
     } );
     const sodium3 = this.model.solutes.find( solute => {
-
-      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
-      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
-      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-             mode.slot === this.slot &&
-             mode.site === 'sodium3';
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'sodium3';
     } );
     this.stateProperty.value = 'openToOutsideAwaitingPotassium';
 
@@ -232,19 +223,14 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
     const potassium1 = this.model.solutes.find( solute => {
 
-      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
-      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
-      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-             mode.slot === this.slot &&
-             mode.site === 'potassium1';
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'potassium1';
     } );
     const potassium2 = this.model.solutes.find( solute => {
-
-      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
-      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
-      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-             mode.slot === this.slot &&
-             mode.site === 'potassium2';
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'potassium2';
     } );
     this.stateProperty.value = 'openToInsideEmpty';
 
@@ -254,12 +240,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
 
     // release the phosphate
     const phosphate = this.model.solutes.find( solute => {
-
-      // TODO: We don't need 'type' === check and type assertion, see https://github.com/phetsims/membrane-transport/issues/23
-      const mode = solute.mode as WaitingInSodiumPotassiumPumpMode;
-      return solute.mode.type === 'waitingInSodiumPotassiumPump' &&
-             mode.slot === this.slot &&
-             mode.site === 'phosphate';
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'phosphate';
     } );
     if ( phosphate ) {
       phosphate.moveInDirection( new Vector2( 0, -1 ), 0.5 );

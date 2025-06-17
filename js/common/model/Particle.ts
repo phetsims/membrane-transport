@@ -201,8 +201,7 @@ export default class Particle<T extends ParticleType> {
     }
 
     // Free phosphate molecules move normally for a while, then are absorbed
-    // TODO: Use instanceof RandomWalkMode style, here and everywhere https://github.com/phetsims/membrane-transport/issues/23
-    if ( this.type === 'phosphate' && this.mode.type === 'randomWalk' && ( this.mode as RandomWalkMode ).timeElapsedSinceMembraneCrossing > 3 ) {
+    if ( this.type === 'phosphate' && this.mode instanceof RandomWalkMode && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
       this.opacity -= fadeRatePhosphate;
       if ( this.opacity <= 0 ) {
         removeParticle( this );
@@ -211,7 +210,7 @@ export default class Particle<T extends ParticleType> {
     }
 
     // Free ADP molecules move normally for a while, then are absorbed
-    if ( this.type === 'adp' && this.mode.type === 'randomWalk' ) {
+    if ( this.type === 'adp' && this.mode instanceof RandomWalkMode ) {
       this.opacity -= fadeRateAdp;
       if ( this.opacity <= 0 ) {
         removeParticle( this );
@@ -231,23 +230,22 @@ export default class Particle<T extends ParticleType> {
    */
   private updateMovement( dt: number, model: MembraneTransportModel ): void {
 
+    // TODO: Delegate to step in mode? See https://github.com/phetsims/membrane-transport/issues/23
     // --- Movement Logic (based on mode) ---
-    if ( this.mode.type === 'randomWalk' ) {
+    if ( this.mode instanceof RandomWalkMode ) {
       this.stepRandomWalk( dt, model );
     }
-    else if ( this.mode.type === 'ligandBound' ) {
+    else if ( this.mode instanceof LigandBoundMode ) {
 
       // The LigandGatedChannel is responsible for tracking the time bound, so it can detach after a certain amount of time.
       // Update the position because the binding site changes when the channel opens.
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      this.position.set( ( this.mode as LigandBoundMode ).ligandGatedChannel.getBindingPosition() );
+      this.position.set( this.mode.ligandGatedChannel.getBindingPosition() );
     }
-    else if ( this.mode.type === 'moveToCenterOfChannel' ) {
+    else if ( this.mode instanceof MoveToCenterOfChannelMode ) {
 
       const currentPositionX = this.position.x;
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const targetPositionX = ( this.mode as MoveToCenterOfChannelMode ).slot.position;
+      const targetPositionX = this.mode.slot.position;
 
       // Move in the x direction toward the target.
       const maxStepSize = TYPICAL_SPEED * dt;
@@ -256,21 +254,18 @@ export default class Particle<T extends ParticleType> {
       // When close enough, transition to enteringTransportProtein mode.
       if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
         this.mode = new EnteringTransportProteinMode(
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          ( this.mode as MoveToCenterOfChannelMode ).slot,
+          this.mode.slot,
           this.position.y > 0 ? 'inward' : 'outward'
         );
       }
     }
-    else if ( this.mode.type === 'moveToSodiumGlucoseCotransporter' ) {
+    else if ( this.mode instanceof MoveToSodiumGlucoseTransporterMode ) {
 
       affirm( this.type === 'sodiumIon' || this.type === 'glucose', 'Only sodium and glucose can move to the sodium glucose cotransporter' );
 
       const currentPosition = this.position.copy();
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as MoveToSodiumGlucoseTransporterMode;
-      const targetPosition = currentMode.sodiumGlucoseCotransporter.getSitePosition( currentMode.site );
+      const targetPosition = this.mode.sodiumGlucoseCotransporter.getSitePosition( this.mode.site );
 
       const vector = targetPosition.minus( currentPosition );
       const direction = vector.normalized();
@@ -283,31 +278,27 @@ export default class Particle<T extends ParticleType> {
       // When close enough, transition to waitingInSodiumGlucoseCotransporter mode.
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
 
-        // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-        const currentMode = this.mode as MoveToSodiumGlucoseTransporterMode;
-        this.mode = new WaitingInSodiumGlucoseCotransporterMode(
-          currentMode.slot,
-          currentMode.sodiumGlucoseCotransporter,
-          currentMode.site
+        const newMode = new WaitingInSodiumGlucoseCotransporterMode(
+          this.mode.slot,
+          this.mode.sodiumGlucoseCotransporter,
+          this.mode.site
         );
+        this.mode = newMode;
 
         this.position.set( targetPosition );
 
-        // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-        MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( this.type, ( this.mode as WaitingInSodiumGlucoseCotransporterMode ).sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
+        MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( this.type, newMode.sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
       }
     }
-    else if ( this.mode.type === 'moveToSodiumPotassiumPump' ) {
+    else if ( this.mode instanceof MoveToSodiumPotassiumPumpMode ) {
 
       const currentPosition = this.position.copy();
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as MoveToSodiumPotassiumPumpMode;
-      const targetPosition = currentMode.sodiumPotassiumPump.getSitePosition( currentMode.site );
+      const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
 
       // Compensate for the centroid of the ATP molecule, but only when moving to the sodium potassium pump. After locked in,
       // the values in getSitePosition are correct for the sole phosphate
-      if ( currentMode.site === 'phosphate' ) {
+      if ( this.mode.site === 'phosphate' ) {
         targetPosition.y -= 17;
         targetPosition.x += 3;
       }
@@ -320,37 +311,33 @@ export default class Particle<T extends ParticleType> {
       this.position.x += direction.x * maxStepSize;
       this.position.y += direction.y * maxStepSize;
 
-      const sodiumPotassiumPump = currentMode.slot.transportProteinProperty.value as SodiumPotassiumPump;
+      const sodiumPotassiumPump = this.mode.slot.transportProteinProperty.value as SodiumPotassiumPump;
 
       if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
 
         if ( this.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToInsideEmpty' ) {
 
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          const currentMode = this.mode as MoveToSodiumPotassiumPumpMode;
-          this.mode = new WaitingInSodiumPotassiumPumpMode(
-            currentMode.slot,
+          const mode = new WaitingInSodiumPotassiumPumpMode(
+            this.mode.slot,
             sodiumPotassiumPump,
-            currentMode.site
+            this.mode.site
           );
+          this.mode = mode;
 
           // Set to the exact target position now that it is inside the pump.
           this.position.set( targetPosition );
 
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( ( this.mode as WaitingInSodiumPotassiumPumpMode ).site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
+          MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
         }
         else if ( this.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
           // Bind, split into adp and phosphate, and move through the pump
           model.addSolute( new Particle( currentPosition.copy(), 'adp', this.model ) );
           const phosphate = new Particle( currentPosition.copy(), 'phosphate', this.model );
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          const currentMode = this.mode as MoveToSodiumPotassiumPumpMode;
           phosphate.mode = new WaitingInSodiumPotassiumPumpMode(
-            currentMode.slot,
+            this.mode.slot,
             sodiumPotassiumPump,
-            currentMode.site
+            this.mode.site
           );
 
           model.addSolute( phosphate );
@@ -361,19 +348,17 @@ export default class Particle<T extends ParticleType> {
         }
         else if ( this.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ) {
 
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          const currentMode = this.mode as MoveToSodiumPotassiumPumpMode;
-          this.mode = new WaitingInSodiumPotassiumPumpMode(
-            currentMode.slot,
+          const mode = new WaitingInSodiumPotassiumPumpMode(
+            this.mode.slot,
             sodiumPotassiumPump,
-            currentMode.site
+            this.mode.site
           );
+          this.mode = mode;
 
           // Set to the exact target position now that it is inside the pump.
           this.position.set( targetPosition );
 
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( ( this.mode as WaitingInSodiumPotassiumPumpMode ).site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
+          MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( mode.site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
 
           if ( sodiumPotassiumPump.getNumberOfFilledPotassiumSites() === 2 ) {
             sodiumPotassiumPump.stateProperty.value = 'openToOutsidePotassiumBound';
@@ -381,23 +366,19 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
-    else if ( this.mode.type === 'waitingInSodiumPotassiumPump' ) {
+    else if ( this.mode instanceof WaitingInSodiumPotassiumPumpMode ) {
 
       // The phosphate binding site moves, so we must update this every frame
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as WaitingInSodiumPotassiumPumpMode;
-      const targetPosition = currentMode.sodiumPotassiumPump.getSitePosition( currentMode.site );
+      const targetPosition = this.mode.sodiumPotassiumPump.getSitePosition( this.mode.site );
       this.position.set( targetPosition );
     }
-    else if ( this.mode.type === 'waitingInSodiumGlucoseCotransporter' && phet.chipper.queryParameters.dev ) {
+    else if ( this.mode instanceof WaitingInSodiumGlucoseCotransporterMode && phet.chipper.queryParameters.dev ) {
 
       // For debugging only, so that the site positions can be adjusted
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as WaitingInSodiumGlucoseCotransporterMode;
-      const targetPosition = currentMode.sodiumGlucoseCotransporter.getSitePosition( currentMode.site );
+      const targetPosition = this.mode.sodiumGlucoseCotransporter.getSitePosition( this.mode.site );
       this.position.set( targetPosition );
     }
-    else if ( this.mode.type === 'enteringTransportProtein' ) {
+    else if ( this.mode instanceof EnteringTransportProteinMode ) {
       const direction = this.position.y > 0 ? -1 : 1;
       const thresholdY = direction === -1
                          ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - this.dimension.height / 2
@@ -408,36 +389,31 @@ export default class Particle<T extends ParticleType> {
       if ( ( direction === -1 && this.position.y <= thresholdY ) ||
            ( direction === 1 && this.position.y >= thresholdY ) ) {
         this.mode = new SheddingCagedWaterMoleculesMode(
-          // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-          ( this.mode as EnteringTransportProteinMode ).slot
+          this.mode.slot
         );
       }
     }
-    else if ( this.mode.type === 'sheddingCagedWaterMolecules' ) {
+    else if ( this.mode instanceof SheddingCagedWaterMoleculesMode ) {
       const sheddingDuration = 0.1; // adjust as needed
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as SheddingCagedWaterMoleculesMode;
-      const newSheddingElapsed = ( currentMode.sheddingElapsed || 0 ) + dt;
+      const newSheddingElapsed = ( this.mode.sheddingElapsed || 0 ) + dt;
 
       if ( newSheddingElapsed >= sheddingDuration ) {
         const outsideOfCell = this.position.y > 0;
         this.mode = new MovingThroughTransportProteinMode(
-          currentMode.slot,
-          currentMode.slot.transportProteinType!,
+          this.mode.slot,
+          this.mode.slot.transportProteinType!,
           outsideOfCell ? 'inward' : 'outward'
         );
       }
       else {
         // Update the mode with new elapsed time
-        this.mode = new SheddingCagedWaterMoleculesMode( currentMode.slot, newSheddingElapsed );
+        this.mode = new SheddingCagedWaterMoleculesMode( this.mode.slot, newSheddingElapsed );
       }
     }
-    else if ( this.mode.type === 'moveToLigandBindingLocation' ) {
+    else if ( this.mode instanceof MoveToLigandBindingLocationMode ) {
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as MoveToLigandBindingLocationMode;
-      const ligandGatedChannel = currentMode.slot.transportProteinProperty.value as LigandGatedChannel;
+      const ligandGatedChannel = this.mode.slot.transportProteinProperty.value as LigandGatedChannel;
       if ( ligandGatedChannel ) {
         const currentPosition = this.position;
         const targetPosition = ligandGatedChannel.getBindingPosition();
@@ -457,12 +433,10 @@ export default class Particle<T extends ParticleType> {
         }
       }
     }
-    else if ( this.mode.type === 'passiveDiffusion' || this.mode.type === 'movingThroughTransportProtein' ) {
+    else if ( this.mode instanceof PassiveDiffusionMode || this.mode instanceof MovingThroughTransportProteinMode ) {
 
       // For both passive diffusion and moving through, use similar movement logic.
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const currentMode = this.mode as PassiveDiffusionMode | MovingThroughTransportProteinMode;
-      const sign = currentMode.direction === 'inward' ? -1 : 1;
+      const sign = this.mode.direction === 'inward' ? -1 : 1;
 
       const signBefore = this.position.y > 0;
 
@@ -477,22 +451,20 @@ export default class Particle<T extends ParticleType> {
 
       // If moving through, don't let the position get very far from the center. Allow a little movement
       // so that it looks like it "struggles" to get through.
-      if ( this.mode.type === 'movingThroughTransportProtein' ) {
+      if ( this.mode instanceof MovingThroughTransportProteinMode ) {
 
-        // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-        const currentMode = this.mode as MovingThroughTransportProteinMode;
-        const center = currentMode.slot.position + ( currentMode.offset || 0 );
+        const center = this.mode.slot.position + ( this.mode.offset || 0 );
         const maxDistanceFromCenter = 0.8;
         if ( Math.abs( this.position.x - center ) > maxDistanceFromCenter ) {
           this.position.x = center + maxDistanceFromCenter * Math.sign( this.position.x - center );
         }
 
-        const crossedOver = currentMode.direction === 'inward' && this.position.y < 0 ||
-                            currentMode.direction === 'outward' && this.position.y > 0;
+        const crossedOver = this.mode.direction === 'inward' && this.position.y < 0 ||
+                            this.mode.direction === 'outward' && this.position.y > 0;
 
         // If the particle has moved through, potentially update transport protein state
         if ( crossedOver && Math.abs( this.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
-          const transportProtein = currentMode.slot.transportProteinProperty.value;
+          const transportProtein = this.mode.slot.transportProteinProperty.value;
 
           // If fully moved through a SodiumGlucoseCotransporter, close
           if ( transportProtein instanceof SodiumGlucoseCotransporter ) {
@@ -502,14 +474,14 @@ export default class Particle<T extends ParticleType> {
       }
 
       // Once the particle has moved sufficiently far from the membrane, resume random walk.
-      if ( currentMode.direction === 'inward' && ( this.position.y + this.dimension.height / 2 ) < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
+      if ( this.mode.direction === 'inward' && ( this.position.y + this.dimension.height / 2 ) < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
         const downwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( -1, 0 )
         ).normalize();
         this.moveInDirection( downwardDirection, sampleValueHowLongToGoStraight() );
       }
-      if ( currentMode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ) {
+      if ( this.mode.direction === 'outward' && ( this.position.y - this.dimension.height / 2 ) > MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ) {
         const upwardDirection = new Vector2(
           dotRandom.nextDoubleBetween( -1, 1 ),
           dotRandom.nextDoubleBetween( 0, 1 )
@@ -670,10 +642,10 @@ export default class Particle<T extends ParticleType> {
       // Check for passive diffusion first, might change mode
       const location = outsideOfCell ? 'outside' : 'inside';
       if ( ( this.type === 'oxygen' || this.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 && membraneTransportModel.checkGradientForCrossing( this.type, location ) ) {
-        this.mode = new PassiveDiffusionMode( outsideOfCell ? 'inward' : 'outward' );
+        const newMode = new PassiveDiffusionMode( outsideOfCell ? 'inward' : 'outward' );
+        this.mode = newMode;
 
-        // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-        MembraneTransportSounds.gasMoleculeEnteredMembrane( this, ( this.mode as PassiveDiffusionMode ).direction );
+        MembraneTransportSounds.gasMoleculeEnteredMembrane( this, newMode.direction );
         return true;
       }
 
@@ -689,12 +661,12 @@ export default class Particle<T extends ParticleType> {
       // Reflect the vertical motion
       direction.y = sign * Math.abs( direction.y );
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const randomWalk = this.mode as RandomWalkMode;
+      const currentMode = this.mode as RandomWalkMode;
+
       this.mode = new RandomWalkMode(
-        new Vector2( randomWalk.currentDirection.x, direction.y ),
-        randomWalk.timeUntilNextDirection,
-        randomWalk.timeElapsedSinceMembraneCrossing
+        new Vector2( currentMode.currentDirection.x, direction.y ),
+        currentMode.timeUntilNextDirection,
+        currentMode.timeElapsedSinceMembraneCrossing
       );
     }
     return false;
@@ -759,12 +731,12 @@ export default class Particle<T extends ParticleType> {
     if ( bounce ) {
       this.position.y = newPositionY;
 
-      // TODO: prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-      const randomWalk = this.mode as RandomWalkMode;
+      const currentMode = this.mode as RandomWalkMode;
+
       this.mode = new RandomWalkMode(
-        new Vector2( randomWalk.currentDirection.x, newDirectionY ),
-        randomWalk.timeUntilNextDirection,
-        randomWalk.timeElapsedSinceMembraneCrossing
+        new Vector2( currentMode.currentDirection.x, newDirectionY ),
+        currentMode.timeUntilNextDirection,
+        currentMode.timeElapsedSinceMembraneCrossing
       );
 
       // Teleport to give the sense that one particle left at once coordinate and another entered at the same time
@@ -823,8 +795,8 @@ export default class Particle<T extends ParticleType> {
         if ( transportProtein instanceof LigandGatedChannel && transportProtein.isAvailableForBinding() ) {
 
           // see if any ligand is already bound or inbound.
-          const boundLigands = model.ligands.filter( ligand => ligand.mode.type === 'ligandBound' && ( ligand.mode as LigandBoundMode ).ligandGatedChannel === transportProtein );
-          const inboundLigands = model.ligands.filter( ligand => ligand.mode.type === 'moveToLigandBindingLocation' && ( ligand.mode as MoveToLigandBindingLocationMode ).slot === slot );
+          const boundLigands = model.ligands.filter( ligand => ligand.mode instanceof LigandBoundMode && ligand.mode.ligandGatedChannel === transportProtein );
+          const inboundLigands = model.ligands.filter( ligand => ligand.mode instanceof MoveToLigandBindingLocationMode && ligand.mode.slot === slot );
 
           const isLigandFree = boundLigands.length === 0 && inboundLigands.length === 0;
 

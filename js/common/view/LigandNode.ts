@@ -38,11 +38,11 @@ import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
 import Particle, { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import LigandBoundMode from '../model/particleModes/LigandBoundMode.js';
+import UserControlledMode from '../model/particleModes/UserControlledMode.js';
+import UserOverMode from '../model/particleModes/UserOverMode.js';
 import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
 import Slot from '../model/Slot.js';
 import { LigandType } from '../model/SoluteType.js';
-import UserControlledMode from '../model/particleModes/UserControlledMode.js';
-import UserOverMode from '../model/particleModes/UserOverMode.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
 
 // constants
@@ -162,9 +162,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
           return;
         }
 
-        if ( ligand.mode.type === 'ligandBound' ) {
-          const boundMode = ligand.mode as LigandBoundMode;
-          boundMode.ligandGatedChannel.unbindLigand();
+        if ( ligand.mode instanceof LigandBoundMode ) {
+          ligand.mode.ligandGatedChannel.unbindLigand();
         }
 
         ligand.mode = new UserControlledMode();
@@ -364,11 +363,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
         onGrab: inputType => {
           if ( inputType === 'alternative' ) {
-            if ( ligand.mode.type === 'ligandBound' ) {
-
-              // TODO: Prefer instanceof https://github.com/phetsims/membrane-transport/issues/23
-              const boundMode = ligand.mode as LigandBoundMode;
-              boundMode.ligandGatedChannel.unbindLigand();
+            if ( ligand.mode instanceof LigandBoundMode ) {
+              ligand.mode.ligandGatedChannel.unbindLigand();
             }
 
             // --- Grab Logic ---

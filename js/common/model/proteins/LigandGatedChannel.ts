@@ -95,8 +95,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
    * deserializing from PhET-iO state.
    */
   private get boundLigand(): Particle<LigandType> | null {
-    // TODO: Prefer instanceof for this check, see https://github.com/phetsims/membrane-transport/issues/23
-    return this.model.ligands.find( ligand => ligand.mode.type === 'ligandBound' && ( ligand.mode as LigandBoundMode ).ligandGatedChannel === this ) || null;
+    return this.model.ligands.find( ligand => ligand.mode instanceof LigandBoundMode && ligand.mode.ligandGatedChannel === this ) || null;
   }
 
   /**
