@@ -11,6 +11,7 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import { ParticleModeWithSlot } from '../Particle.js';
+import MoveToSodiumGlucoseTransporterMode from '../particleModes/MoveToSodiumGlucoseTransporterMode.js';
 import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
 import WaitingInSodiumGlucoseCotransporterMode from '../particleModes/WaitingInSodiumGlucoseCotransporterMode.js';
 import Slot from '../Slot.js';
@@ -98,13 +99,9 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
    */
   private isSiteAvailable( site: 'left' | 'center' | 'right' ): boolean {
 
-    return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumGlucoseCotransporter' ||
-                                                solute.mode.type === 'waitingInSodiumGlucoseCotransporter' ) &&
-                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
+    return this.model.solutes.find( solute => ( solute.mode instanceof MoveToSodiumGlucoseTransporterMode ||
+                                                solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode ) &&
                                               solute.mode.slot === this.slot &&
-                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
                                               solute.mode.site === site ) === undefined;
   }
 

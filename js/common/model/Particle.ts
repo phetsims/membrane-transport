@@ -972,11 +972,6 @@ export default class Particle<T extends ParticleType> {
     return new Vector2( Math.cos( angle ), Math.sin( angle ) );
   }
 
-  // TODO: Unused? see https://github.com/phetsims/membrane-transport/issues/23
-  public static modeToState( mode: BaseParticleMode ): Record<string, IntentionalAny> {
-    return mode.toStateObject();
-  }
-
   public static stateToMode( model: Pick<MembraneTransportModel, 'membraneSlots'>, state: Record<string, IntentionalAny> ): BaseParticleMode {
     const slot = state.slot !== null && state.slot !== undefined ? model.membraneSlots[ state.slot ] : null;
 

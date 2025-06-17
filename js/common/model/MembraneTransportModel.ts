@@ -518,7 +518,7 @@ export default class MembraneTransportModel extends PhetioObject {
       return {
         position: particle.position,
         type: particle.type,
-        mode: particle.mode.toStateObject(), // TODO: Remove the other entry point for this, see https://github.com/phetsims/membrane-transport/issues/23
+        mode: particle.mode.toStateObject(),
         model: ReferenceIO( IOType.ObjectIO ).toStateObject( particle.model ),
         opacity: particle.opacity
       };
@@ -606,16 +606,12 @@ export default class MembraneTransportModel extends PhetioObject {
       ReferenceArrayIO( ObjectLiteralIO ).applyState( model.fluxEntries, state.fluxEntries );
       model.time = state.time;
 
-      // The ligands are statically preallocated, so they we must mutate the pre-allocated ones
-      // TODO: Make sure we have the proteins before restoring the particle modes. https://github.com/phetsims/membrane-transport/issues/23
-      // TODO: There is a cycle, LigandGatedChannel refers to the particle and the particle refers to the ligand gated channel https://github.com/phetsims/membrane-transport/issues/23
+      // The ligands are statically preallocated, so we must mutate the pre-allocated ones
       state.ligands.forEach( ( ligandState: IntentionalAny, index: IntentionalAny ) => {
         const ligand = MembraneTransportModel.ParticleIO.fromStateObject( ligandState );
         model.ligands[ index ].position.x = ligand.position.x;
         model.ligands[ index ].position.y = ligand.position.y;
         model.ligands[ index ].mode = ligand.mode;
-
-        // types already match
       } );
 
       model.updateSoluteCounts();

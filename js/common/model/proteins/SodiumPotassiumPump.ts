@@ -24,6 +24,7 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import { ParticleModeWithSlot } from '../Particle.js';
+import MoveToSodiumPotassiumPumpMode from '../particleModes/MoveToSodiumPotassiumPumpMode.js';
 import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
 import WaitingInSodiumPotassiumPumpMode from '../particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import Slot from '../Slot.js';
@@ -87,13 +88,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   }
 
   private isSiteOpen( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' ): boolean {
-    return this.model.solutes.find( solute => ( solute.mode.type === 'moveToSodiumPotassiumPump' ||
-                                                solute.mode.type === 'waitingInSodiumPotassiumPump' ) &&
-                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
+    return this.model.solutes.find( solute => ( solute.mode instanceof MoveToSodiumPotassiumPumpMode ||
+                                                solute.mode instanceof WaitingInSodiumPotassiumPumpMode ) &&
                                               solute.mode.slot === this.slot &&
-                                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                              // @ts-expect-error TODO: see https://github.com/phetsims/membrane-transport/issues/23
                                               solute.mode.site === site ) === undefined;
   }
 
