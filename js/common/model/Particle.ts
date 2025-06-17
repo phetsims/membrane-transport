@@ -230,7 +230,7 @@ export default class Particle<T extends ParticleType> {
    */
   private updateMovement( dt: number, model: MembraneTransportModel ): void {
 
-    // TODO: Delegate to step in mode? See https://github.com/phetsims/membrane-transport/issues/23
+    // TODO: Delegate to step in mode? See https://github.com/phetsims/membrane-transport/issues/236
     // --- Movement Logic (based on mode) ---
     if ( this.mode instanceof RandomWalkMode ) {
       this.stepRandomWalk( dt, model );
