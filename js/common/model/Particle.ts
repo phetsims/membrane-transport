@@ -581,6 +581,7 @@ export default class Particle<T extends ParticleType> {
 
     const newTimeUntilNextDirection = randomWalk.timeUntilNextDirection - dt;
     const newTimeElapsedSinceMembraneCrossing = randomWalk.timeElapsedSinceMembraneCrossing + dt;
+    console.log( 'here' );
 
     // Time for a new direction
     if ( newTimeUntilNextDirection <= 0 ) {
@@ -636,7 +637,7 @@ export default class Particle<T extends ParticleType> {
    * Checks for membrane interactions, handling passive diffusion or bounce if necessary.
    * Returns true if passive diffusion occurs.
    */
-  private attemptMembraneInteraction( membraneTransportModel: MembraneTransportModel, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
+  private attemptMembraneInteraction( membraneTransportModel: Pick<MembraneTransportModel, 'checkGradientForCrossing'>, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
     if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       // Check for passive diffusion first, might change mode
@@ -846,6 +847,7 @@ export default class Particle<T extends ParticleType> {
       ( this.type === 'sodiumIon' || this.type === 'glucose' ) &&
       slot.transportProteinType === 'sodiumGlucoseCotransporter' &&
       transportProtein instanceof SodiumGlucoseCotransporter &&
+      // Requires a greater number of sodium outside than inside for interaction
       model.outsideSoluteCountProperties.sodiumIon.value > model.insideSoluteCountProperties.sodiumIon.value &&
       // Only approach from extracellular side
       this.position.y > 0 &&

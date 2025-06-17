@@ -7,6 +7,7 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
@@ -18,7 +19,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
-import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -46,8 +46,12 @@ const DESCRIBED_THRESHOLDS = [
 
 export default class SoluteControl extends Panel {
 
-  public constructor( model: MembraneTransportModel, soluteType: SoluteControlSolutes, side: 'outside' | 'inside',
-                      tandem: Tandem, providedOptions: SoluteControlOptions ) {
+  public constructor( model: Pick<MembraneTransportModel, 'soluteProperty' | 'insideSoluteCountProperties' | 'outsideSoluteCountProperties' | 'addSolutes' | 'removeSolutes'>,
+                      soluteType: SoluteControlSolutes,
+                      side: 'outside' | 'inside',
+                      tandem: Tandem,
+                      providedOptions: SoluteControlOptions
+  ) {
 
     // PhET-iO clients can hide individual solute controls.
     const simControlledVisibleProperty = new DerivedProperty( [ model.soluteProperty ], selectedSolute => {

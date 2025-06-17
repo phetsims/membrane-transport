@@ -36,12 +36,17 @@ import createParticleNode from './particles/createParticleNode.js';
 const BOX_WIDTH = 124;
 const BOX_HEIGHT = 92;
 
+export type BarChartModelType = Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties' | 'fluxEntries' | 'isPlayingProperty'>;
+
 export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( model: MembraneTransportModel, soluteType: PlottableSoluteTypes, iconAlignGroup: AlignGroup, tandem: Tandem ) {
+  public constructor( model: BarChartModelType,
+                      soluteType: PlottableSoluteTypes,
+                      iconAlignGroup: AlignGroup,
+                      tandem: Tandem ) {
 
     const outsideSoluteCountProperty = model.outsideSoluteCountProperties[ soluteType ];
     const outsideAmountProperty = outsideSoluteCountProperty;
