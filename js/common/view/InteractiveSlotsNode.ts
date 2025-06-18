@@ -375,21 +375,25 @@ export default class InteractiveSlotsNode extends Node {
       fire: ( event, keysPressed, listener ) => {
         const grabbedNode = this.grabbedNode;
         affirm( grabbedNode, 'We must have a node to delete' );
-
         const type = grabbedNode.type;
+        const toolNode = this.view.getTransportProteinToolNode( type );
 
-        this.release( false );
+        // You can only delete a protein if the tool node is visually displayed,
+        // it can be hidden by phet-io.
+        if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
+          this.release( false );
 
-        returnToolToToolbox( grabbedNode );
+          returnToolToToolbox( grabbedNode );
 
-        // Manage focus after animation
-        const success = focusLeftmostProteinNode();
-        if ( !success ) {
-          this.view.getTransportProteinToolNode( type ).focus();
+          // Manage focus after animation
+          const success = focusLeftmostProteinNode();
+          if ( !success ) {
+            this.view.getTransportProteinToolNode( type ).focus();
+          }
+
+          // TODO: What should be said in this case? See #97
+          this.emoteRelease( 'delete' );
         }
-
-        // TODO: What should be said in this case? See #97
-        this.emoteRelease( 'delete' );
       }
     } );
     this.addInputListener( deleteKeyboardListener );
