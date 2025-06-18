@@ -291,7 +291,7 @@
       "value": "{ $soluteType ->\n  [oxygen]        Oxygen Molecules\n  [carbonDioxide] Carbon Dioxide molecules\n  [sodiumIon]     Sodium Ions\n  [potassiumIon]  Potassium Ions\n  [glucose]       Glucose Molecules\n *[atp]           Atp Molecules\n}"
     },
     "soluteSpinnerObjectResponsePattern": {
-      "value": "{ $amount ->\n  [none] no\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} { a11y_solute }"
+      "value": "{ $amount ->\n  [none] no\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} { a11y_solute }"
     },
     "soluteSpinnerContextResponsePattern": {
       "value": "{ $amount ->\n\n  [aLittle] A little\n *[aLot]    A lot\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n  [same] same amount of solute inside and outside.\n *[other] { $differenceSize ->\n    [aLittle] a little\n   *[aLot]    a lot\n  }\n  { $moreOrLessOrSame ->\n    [more] more\n   *[less] less\n  }\n  { a11y_solute }\n  { $directionality ->\n    [insideThanOutside] inside than outside\n   *[outsideThanInside] outside than inside\n  }.\n}"

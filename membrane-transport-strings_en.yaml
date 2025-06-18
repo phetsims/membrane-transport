@@ -141,6 +141,7 @@ a11y:
   soluteSpinnerObjectResponsePattern:                |-
                                                      { $amount ->
                                                        [none] no
+                                                       [few] a few
                                                        [some] some
                                                        [smallAmount] small amount of
                                                        [several] several
