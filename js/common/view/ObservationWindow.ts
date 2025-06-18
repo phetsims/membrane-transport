@@ -108,7 +108,8 @@ export default class ObservationWindow extends Node {
           model.transportProteinCountProperty,
           model.ligandUnboundDueToNaturalCausesEmitter,
 
-          // TODO (phet-io/design) instrument all LigandNodes, since they can all be dragged with mouse? See https://github.com/phetsims/membrane-transport/issues/32
+          // NOTE: In phet-io, we used to instrument all interactive objects, but in this case, that seems like overinstrumentation. Instead,
+          // just instrument the one focusable ligand of each type. See https://github.com/phetsims/membrane-transport/issues/32
           isFocusable ? tandem.createTandem( ligand.type === 'triangleLigand' ? 'triangleLigandNode' : 'starLigandNode' ) : Tandem.OPT_OUT,
 
           this
