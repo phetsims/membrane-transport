@@ -35,7 +35,7 @@
       "supportsDynamicLocale": true,
       "supportsInteractiveDescription": true,
       "supportsSound": true,
-      "supportsVoicing": true,
+      "supportsTier1Voicing": true,
       "supportsPhetioInstrumentedA11yStrings": true
     },
     "screenNameKeys": [
