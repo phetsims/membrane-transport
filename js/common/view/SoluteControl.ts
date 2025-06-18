@@ -35,7 +35,7 @@ const coarseDelta = 10;
 // Max values are relative to the maximum number of solutes that can be added.
 const DESCRIBED_THRESHOLDS = [
   { label: 'none', max: 0 },
-  { label: 'few', max: 0.03 },
+  { label: 'few', max: 0.05 },
   { label: 'some', max: 0.10 },
   { label: 'smallAmount', max: 0.25 },
   { label: 'several', max: 0.40 },
