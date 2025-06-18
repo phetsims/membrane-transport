@@ -3,6 +3,8 @@
 /**
  * Base class for all particle modes in membrane transport.
  *
+ * BaseParticleModes are generally immutable so as state changes, new instances are created.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */

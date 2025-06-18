@@ -43,6 +43,8 @@ export default class SheddingCagedWaterMoleculesMode extends BaseParticleMode {
       );
     }
     else {
+
+      // Modes are immutable, create a new instance with updated sheddingElapsed
       particle.mode = new SheddingCagedWaterMoleculesMode( this.slot, newSheddingElapsed );
     }
   }

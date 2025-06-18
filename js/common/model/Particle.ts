@@ -49,14 +49,12 @@ const CROSSING_COOLDOWN = 0.5;
 // half the height of a particle, it will never be captured.
 export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 2.5 );
 
-
 const GLUCOSE_FADE_TIME = 7; // in seconds, how long it takes for glucose to fade out if glucose absorption is enabled
 const ADP_FADE_TIME = 16; // in seconds
 const PHOSPHATE_FADE_TIME = 2; // in seconds
 
 // When a ligand is bound to a protein, it does not have a slot.
 export type ParticleModeWithSlot = BaseParticleMode & { slot: Slot };
-
 
 export default class Particle<T extends ParticleType> {
 
