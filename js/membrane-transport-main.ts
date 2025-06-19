@@ -13,7 +13,6 @@ import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ActiveTransportScreen from './active-transport/ActiveTransportScreen.js';
-import MembraneTransportQueryParameters from './common/MembraneTransportQueryParameters.js';
 import MembraneTransportPreferencesNode from './common/view/MembraneTransportPreferencesNode.js';
 import MembraneTransportSoundPreferencesNode from './common/view/MembraneTransportSoundPreferencesNode.js';
 import FacilitatedDiffusionScreen from './facilitated-diffusion/FacilitatedDiffusionScreen.js';
@@ -26,16 +25,8 @@ import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
 simLauncher.launch( () => {
 
-  if ( MembraneTransportQueryParameters.showFluent ) {
-
-    console.log( 'hello from membrane-transport-main.ts' );
-    window.phetSplashScreen.dispose();
-
-    // We have <body style="background-color:black;">, but delete that attribute or clear it:
-    document.body.removeAttribute( 'style' );
-
-    showFluent( MembraneTransportFluent );
-
+  if ( phet.chipper.queryParameters.fluentTable !== 'none' ) {
+    showFluent( MembraneTransportFluent, phet.chipper.queryParameters.fluentTable );
     return;
   }
 
