@@ -130,11 +130,24 @@ export default class MembraneTransportScreenView extends ScreenView {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
-      tandem: options.tandem.createTandem( 'highlightCrossingCheckbox' ),
+      tandem: options.tandem.createTandem( 'highlightCrossingCheckbox' )
+    } );
+
+    const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.crossingSoundsStringProperty, {
+      font: MembraneTransportConstants.FONT,
+      maxWidth: 160
+    } ), {
+      tandem: options.tandem.createTandem( 'crossingSoundsCheckbox' )
+    } );
+
+    const checkboxVBox = new VBox( {
+      children: [ highlightCrossingCheckbox, crossingSoundsCheckbox ],
+      spacing: 5,
+      align: 'left',
       left: this.observationWindow.left,
       centerY: timeControlNode.centerY
     } );
-    this.addChild( highlightCrossingCheckbox );
+    this.addChild( checkboxVBox );
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
@@ -306,7 +319,9 @@ export default class MembraneTransportScreenView extends ScreenView {
         equilibriumRatio = balance; // balance is 0 to 1, where 1 is perfect equilibrium
       }
       
-      MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction, equilibriumRatio );
+      if ( this.model.crossingSoundsEnabledProperty.value ) {
+        MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction, equilibriumRatio );
+      }
     } );
   }
 

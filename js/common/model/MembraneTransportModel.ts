@@ -140,6 +140,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
 
   public readonly highlightCrossingProperty: Property<boolean>;
+  public readonly crossingSoundsEnabledProperty: Property<boolean>;
 
   public constructor(
     public readonly featureSet: MembraneTransportFeatureSet,
@@ -205,6 +206,13 @@ export default class MembraneTransportModel extends PhetioObject {
       phetioDocumentation: 'Whether to visually highlight the solute that just crossed the membrane'
     } );
     this.resetEmitter.addListener( () => this.highlightCrossingProperty.reset() );
+
+    this.crossingSoundsEnabledProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'crossingSoundsEnabledProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'Whether to play sound effects when particles cross the membrane'
+    } );
+    this.resetEmitter.addListener( () => this.crossingSoundsEnabledProperty.reset() );
 
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
       this.outsideSoluteCountProperties[ soluteType ] = new NumberProperty( 0 );
