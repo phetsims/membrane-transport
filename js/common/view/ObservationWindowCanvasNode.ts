@@ -147,7 +147,6 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
           context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );
           context.fill();
           context.globalAlpha = 1.0;
-          context.fillStyle = MembraneTransportColors.crossingHighlightStrokeColorProperty.value.toCSS();
         }
       }
 

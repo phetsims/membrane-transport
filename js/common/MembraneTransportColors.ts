@@ -64,9 +64,6 @@ const MembraneTransportColors = {
   crossingHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'crossingHighlightColor', {
     default: 'white'
   } ),
-  crossingHighlightStrokeColorProperty: new ProfileColorProperty( membraneTransport, 'crossingHighlightStrokeColor', {
-    default: 'black'
-  } ),
   lipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
   } ),
