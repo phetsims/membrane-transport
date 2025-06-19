@@ -54,6 +54,10 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
 
   ambientSound: {
     type: 'flag'
+  },
+
+  showFluent: {
+    type: 'flag'
   }
 } );
 
