@@ -225,6 +225,9 @@
           "accessibleHelpText": {
             "value": "Explore with or without charges showing membrane potential along inside and outside."
           },
+          "voicingHelpText": {
+            "value": "Explore with or without charge signs along membrane."
+          },
           "uncheckedContextResponse": {
             "value": "Membrane potential charges, hidden."
           }

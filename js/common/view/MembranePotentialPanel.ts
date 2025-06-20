@@ -98,6 +98,7 @@ export default class MembranePotentialPanel extends Panel {
             [ -50 ]: 'valueB',
             30: 'valueC'
           } ),
+          voicingHintResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty,
           boxWidth: MembraneTransportConstants.FONT.getNumericSize()
         } )
       ]
