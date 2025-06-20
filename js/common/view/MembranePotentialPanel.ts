@@ -11,6 +11,7 @@ import { linear } from '../../../../dot/js/util/linear.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import VoicingText from '../../../../scenery/js/accessibility/voicing/nodes/VoicingText.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Line, { LineOptions } from '../../../../scenery/js/nodes/Line.js';
@@ -77,9 +78,20 @@ export default class MembranePotentialPanel extends Panel {
       align: 'left',
       children: [
 
-        new Text( MembraneTransportFluent.membranePotential_mVStringProperty, {
+        new VoicingText( MembraneTransportFluent.membranePotential_mVStringProperty, {
           maxWidth: 160,
-          font: MembraneTransportConstants.FONT
+          font: MembraneTransportConstants.FONT,
+
+          // This is a "mouse only" reading block. It is clickable but not in the traversal order. See
+          // https://github.com/phetsims/membrane-transport/issues/240.
+          readingBlockTagName: null,
+
+          // The PDOM content for this text is covered by the accessibleName of the radio button group.
+          accessibleParagraph: null,
+
+          // This reading block uses a different name response that does not include the units.
+          readingBlockNameResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
+          readingBlockHintResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty
         } ),
 
         arrowNode,
