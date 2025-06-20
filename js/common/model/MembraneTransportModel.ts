@@ -139,7 +139,7 @@ export default class MembraneTransportModel extends PhetioObject {
   // Updated lazily in step(), by checking the state of each ligand
   public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
 
-  public readonly highlightCrossingProperty: Property<boolean>;
+  public readonly crossingHighlightsEnabledProperty: Property<boolean>;
   public readonly crossingSoundsEnabledProperty: Property<boolean>;
 
   public constructor(
@@ -200,12 +200,12 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
     this.resetEmitter.addListener( () => this.areLigandsAddedProperty.reset() );
 
-    this.highlightCrossingProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'highlightCrossingProperty' ),
+    this.crossingHighlightsEnabledProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'crossingHighlightsEnabledProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'Whether to visually highlight the solute that just crossed the membrane'
     } );
-    this.resetEmitter.addListener( () => this.highlightCrossingProperty.reset() );
+    this.resetEmitter.addListener( () => this.crossingHighlightsEnabledProperty.reset() );
 
     this.crossingSoundsEnabledProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'crossingSoundsEnabledProperty' ),

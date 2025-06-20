@@ -137,7 +137,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       const width = this.modelViewTransform.modelToViewDeltaX( solute.dimension.width );
       const height = this.modelViewTransform.modelToViewDeltaY( solute.dimension.height );
 
-      if ( this.model.highlightCrossingProperty.value ) {
+      if ( this.model.crossingHighlightsEnabledProperty.value ) {
         if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.2 ) {
 
           // draw a highlight

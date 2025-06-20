@@ -126,11 +126,11 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.addChild( timeControlNode );
 
-    const highlightCrossingCheckbox = new Checkbox( this.model.highlightCrossingProperty, new Text( MembraneTransportFluent.highlightCrossingStringProperty, {
+    const crossingHighlightsCheckbox = new Checkbox( this.model.crossingHighlightsEnabledProperty, new Text( MembraneTransportFluent.crossingHighlightsStringProperty, {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
-      tandem: options.tandem.createTandem( 'highlightCrossingCheckbox' )
+      tandem: options.tandem.createTandem( 'crossingHighlightsCheckbox' )
     } );
 
     const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.crossingSoundsStringProperty, {
@@ -141,7 +141,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
 
     const checkboxVBox = new VBox( {
-      children: [ highlightCrossingCheckbox, crossingSoundsCheckbox ],
+      children: [ crossingHighlightsCheckbox, crossingSoundsCheckbox ],
       spacing: 5,
       align: 'left',
       left: this.observationWindow.left,
@@ -284,7 +284,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.pdomControlAreaNode.pdomOrder = [
       timeControlNode,
-      highlightCrossingCheckbox,
+      crossingHighlightsCheckbox,
       resetAllButton
     ];
 
