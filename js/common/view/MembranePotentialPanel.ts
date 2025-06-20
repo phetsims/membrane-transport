@@ -94,9 +94,9 @@ export default class MembranePotentialPanel extends Panel {
           accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
           uncheckedContextResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty,
           checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
-            [ -70 ]: 'valueA',
-            [ -50 ]: 'valueB',
-            30: 'valueC'
+            [ -70 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative70StringProperty,
+            [ -50 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative50StringProperty,
+            30: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponsePositive30StringProperty
           } ),
 
           // The Voicing hint response is requested to be less verbose than the accessibleHelpText, see https://github.com/phetsims/membrane-transport/issues/254.

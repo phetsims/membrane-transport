@@ -117,6 +117,9 @@ type StringsType = {
         'chargesCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
           'voicingHelpTextStringProperty': LocalizedStringProperty;
+          'checkedContextResponseNegative70StringProperty': LocalizedStringProperty;
+          'checkedContextResponseNegative50StringProperty': LocalizedStringProperty;
+          'checkedContextResponsePositive30StringProperty': LocalizedStringProperty;
           'uncheckedContextResponseStringProperty': LocalizedStringProperty;
         }
       };

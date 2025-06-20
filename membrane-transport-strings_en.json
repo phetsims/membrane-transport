@@ -228,6 +228,15 @@
           "voicingHelpText": {
             "value": "Explore with or without charge signs along membrane."
           },
+          "checkedContextResponseNegative70": {
+            "value": "Positive outside and negative inside; signs densely packed along membrane."
+          },
+          "checkedContextResponseNegative50": {
+            "value": "Positive outside and negative inside; signs lightly packed along membrane."
+          },
+          "checkedContextResponsePositive30": {
+            "value": "Negative outside and positive inside; signs sparse along membrane."
+          },
           "uncheckedContextResponse": {
             "value": "Membrane potential charges, hidden."
           }
