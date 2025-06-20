@@ -10,12 +10,12 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
+import VoicingText from '../../../../scenery/js/accessibility/voicing/nodes/VoicingText.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -82,7 +82,17 @@ export default class TransportProteinPanel extends Panel {
       return new Panel( new VBox( {
         spacing: 5, // spacing between the title and the content
         children: [
-          titleAlignGroup.createBox( new Text( config.titleProperty, { fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE, maxWidth: 175 } ), { xAlign: 'center' } ),
+          titleAlignGroup.createBox( new VoicingText( config.titleProperty, {
+            fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
+            maxWidth: 175,
+
+            // Setting this removes it from the tab focus order
+            readingBlockTagName: null,
+
+            // Setting this removes an unnecessary duplicate from the PDOM
+            accessibleParagraph: null
+
+          } ), { xAlign: 'center' } ),
           content,
           ...additionalControls
         ]
