@@ -98,6 +98,8 @@ export default class MembranePotentialPanel extends Panel {
             [ -50 ]: 'valueB',
             30: 'valueC'
           } ),
+
+          // The Voicing hint response is requested to be less verbose than the accessibleHelpText, see https://github.com/phetsims/membrane-transport/issues/254.
           voicingHintResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty,
           boxWidth: MembraneTransportConstants.FONT.getNumericSize()
         } )
