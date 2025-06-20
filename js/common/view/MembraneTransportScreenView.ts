@@ -291,6 +291,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomControlAreaNode.pdomOrder = [
       timeControlNode,
       crossingHighlightsCheckbox,
+      crossingSoundsCheckbox,
       resetAllButton
     ];
 
