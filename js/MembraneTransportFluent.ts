@@ -72,6 +72,12 @@ addToMapIfDefined( 'a11y_summary_interactionHintWithTransportProteins', 'a11y.su
 addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', 'a11y.soluteControls.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', 'a11y.eraseSolutesButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleHelpText', 'a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleCheckedContextResponse', 'a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleUncheckedContextResponse', 'a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleHelpText', 'a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleCheckedContextResponse', 'a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleUncheckedContextResponse', 'a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_transportProteins', 'a11y.transportProteinPanel.transportProteinsStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHelpText', 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', 'a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' );
@@ -213,6 +219,16 @@ const MembraneTransportFluent = {
     eraseSolutesButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleNameStringProperty' ) ),
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' ) )
+    },
+    crossingHighlightsCheckbox: {
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' ) ),
+      accessibleCheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleCheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty' ) ),
+      accessibleUncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleUncheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty' ) )
+    },
+    crossingSoundsCheckbox: {
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty' ) ),
+      accessibleCheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleCheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty' ) ),
+      accessibleUncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleUncheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty' ) )
     },
     transportProteinPanel: {
       transportProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_transportProteins', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.transportProteinsStringProperty' ) ),

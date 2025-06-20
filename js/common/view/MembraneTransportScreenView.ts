@@ -130,6 +130,9 @@ export default class MembraneTransportScreenView extends ScreenView {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
+      accessibleHelpText: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
+      checkedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty,
+      uncheckedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty,
       tandem: options.tandem.createTandem( 'crossingHighlightsCheckbox' )
     } );
 
@@ -137,6 +140,9 @@ export default class MembraneTransportScreenView extends ScreenView {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
+      accessibleHelpText: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
+      checkedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty,
+      uncheckedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty,
       tandem: options.tandem.createTandem( 'crossingSoundsCheckbox' )
     } );
 

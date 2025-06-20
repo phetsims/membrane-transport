@@ -144,6 +144,28 @@
         "value": "Solutes cleared. Add solutes to observe changes"
       }
     },
+    "crossingHighlightsCheckbox": {
+      "accessibleHelpText": {
+        "value": "Explore with or without visual highlights for solute crossings."
+      },
+      "accessibleCheckedContextResponse": {
+        "value": "Visual highlights for solute crossings, on."
+      },
+      "accessibleUncheckedContextResponse": {
+        "value": "Visual highlights for solute crossings, off."
+      }
+    },
+    "crossingSoundsCheckbox": {
+      "accessibleHelpText": {
+        "value": "Explore with or without unique sounds for solute crossings."
+      },
+      "accessibleCheckedContextResponse": {
+        "value": "Solute crossing sounds on."
+      },
+      "accessibleUncheckedContextResponse": {
+        "value": "Solute crossing sounds off."
+      }
+    },
     "transportProteinPanel": {
       "transportProteins": {
         "value": "Transport Proteins"

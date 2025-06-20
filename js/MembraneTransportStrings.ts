@@ -75,6 +75,16 @@ type StringsType = {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };
+    'crossingHighlightsCheckbox': {
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'accessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
+    };
+    'crossingSoundsCheckbox': {
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'accessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
+    };
     'transportProteinPanel': {
       'transportProteinsStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;

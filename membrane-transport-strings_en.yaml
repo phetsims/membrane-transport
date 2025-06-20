@@ -65,6 +65,14 @@ a11y:
   eraseSolutesButton:
     accessibleName:            Reset Solutes
     accessibleContextResponse: Solutes cleared. Add solutes to observe changes
+  crossingHighlightsCheckbox:
+    accessibleHelpText: Explore with or without visual highlights for solute crossings.
+    accessibleCheckedContextResponse: Visual highlights for solute crossings, on.
+    accessibleUncheckedContextResponse: Visual highlights for solute crossings, off.
+  crossingSoundsCheckbox:
+    accessibleHelpText: Explore with or without unique sounds for solute crossings.
+    accessibleCheckedContextResponse: Solute crossing sounds on.
+    accessibleUncheckedContextResponse: Solute crossing sounds off.
   transportProteinPanel:
     transportProteins:      Transport Proteins
     accessibleHelpText:     Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
