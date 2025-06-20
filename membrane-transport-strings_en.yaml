@@ -99,9 +99,9 @@ a11y:
       chargesCheckbox:
         accessibleHelpText:               Explore with or without charge signs showing membrane potential along inside and outside.
         voicingHelpText:                  Explore with or without charge signs along membrane.
-        checkedContextResponseNegative70: Positive outside and negative inside; signs densely packed along membrane.
-        checkedContextResponseNegative50: Positive outside and negative inside; signs lightly packed along membrane.
-        checkedContextResponsePositive30: Negative outside and positive inside; signs sparse along membrane.
+        checkedContextResponseNegative70: Positive outside and negative inside; charge signs densely packed along membrane.
+        checkedContextResponseNegative50: Positive outside and negative inside; charge signs lightly packed along membrane.
+        checkedContextResponsePositive30: Negative outside and positive inside; charge signs sparse along membrane.
         uncheckedContextResponse:         Membrane potential charge signs, hidden.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
