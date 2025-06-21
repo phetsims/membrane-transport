@@ -223,22 +223,22 @@
         },
         "chargesCheckbox": {
           "accessibleHelpText": {
-            "value": "Explore with or without charges showing membrane potential along inside and outside."
+            "value": "Explore with or without charge signs showing membrane potential along inside and outside."
           },
           "voicingHelpText": {
             "value": "Explore with or without charge signs along membrane."
           },
           "checkedContextResponseNegative70": {
-            "value": "Positive outside and negative inside; signs densely packed along membrane."
+            "value": "Positive outside and negative inside; charge signs densely packed along membrane."
           },
           "checkedContextResponseNegative50": {
-            "value": "Positive outside and negative inside; signs lightly packed along membrane."
+            "value": "Positive outside and negative inside; charge signs lightly packed along membrane."
           },
           "checkedContextResponsePositive30": {
-            "value": "Negative outside and positive inside; signs sparse along membrane."
+            "value": "Negative outside and positive inside; charge signs sparse along membrane."
           },
           "uncheckedContextResponse": {
-            "value": "Membrane potential charges, hidden."
+            "value": "Membrane potential charge signs, hidden."
           }
         }
       },
