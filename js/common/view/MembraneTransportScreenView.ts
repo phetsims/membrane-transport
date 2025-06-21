@@ -60,7 +60,6 @@ export default class MembraneTransportScreenView extends ScreenView {
   } );
 
   public readonly screenViewModelViewTransform: ModelViewTransform2;
-  private afterRelease: ( () => void ) | null = null;
   private readonly transportProteinPanel?: TransportProteinPanel;
 
   public constructor(
@@ -316,16 +315,16 @@ export default class MembraneTransportScreenView extends ScreenView {
       const insideCount = model.countSolutes( particle.type, 'inside' );
       const outsideCount = model.countSolutes( particle.type, 'outside' );
       const totalCount = insideCount + outsideCount;
-      
+
       // Calculate equilibrium ratio: 1 = full equilibrium, 0 = no equilibrium
       let equilibriumRatio = 0.5; // default to halfway
       if ( totalCount > 0 ) {
         // Calculate how balanced the concentrations are
         const balance = insideCount === 0 || outsideCount === 0 ? 0 :
-                       insideCount < outsideCount ? insideCount / outsideCount : outsideCount / insideCount;
+                        insideCount < outsideCount ? insideCount / outsideCount : outsideCount / insideCount;
         equilibriumRatio = balance; // balance is 0 to 1, where 1 is perfect equilibrium
       }
-      
+
       if ( this.model.crossingSoundsEnabledProperty.value ) {
         MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction, equilibriumRatio );
       }
@@ -411,11 +410,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     super.step( dt );
     dt *= this.model.getTimeSpeedFactor();
     this.stepEmitter.emit( dt );
-  }
-
-  public keyboardDroppedOrDeletedTransportProtein(): void {
-    this.afterRelease && this.afterRelease();
-    this.afterRelease = null;
   }
 
   public getTransportProteinToolNode( type: TransportProteinType ): TransportProteinToolNode {
