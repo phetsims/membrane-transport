@@ -181,6 +181,17 @@ type StringsType = {
     'ligandMovedAboveLigandGatedChannelPatternStringProperty': LocalizedStringProperty;
     'ligandMovedAboveLeakageChannelPatternStringProperty': LocalizedStringProperty;
     'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
+    'membranePotentialChanges': {
+      'sodiumVoltageGatedOpenedStringProperty': LocalizedStringProperty;
+      'sodiumVoltageGatedClosedStringProperty': LocalizedStringProperty;
+      'potassiumVoltageGatedOpenedStringProperty': LocalizedStringProperty;
+      'potassiumVoltageGatedClosedStringProperty': LocalizedStringProperty;
+      'sodiumOpenedPotassiumOpenedStringProperty': LocalizedStringProperty;
+      'sodiumOpenedPotassiumClosedStringProperty': LocalizedStringProperty;
+      'sodiumClosedPotassiumOpenedStringProperty': LocalizedStringProperty;
+      'sodiumClosedPotassiumClosedStringProperty': LocalizedStringProperty;
+      'noChangeStringProperty': LocalizedStringProperty;
+    };
     'transportProtein': {
       'grabbedStringProperty': LocalizedStringProperty;
     }

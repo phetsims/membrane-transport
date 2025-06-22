@@ -1,3 +1,6 @@
+# Strings for the Membrane Transport simulation
+# After changing this file, run `grunt modulify --targets=strings` to regenerate the appropriate files, including type definitions.
+
 # Title
 membrane-transport.title:                               Membrane Transport
 
@@ -284,6 +287,18 @@ a11y:
                                                      [open]   open
                                                      *[closed] closed
                                                      } { a11y.transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+
+  # Membrane potential change responses for voltage-gated channels
+  membranePotentialChanges:
+    sodiumVoltageGatedOpened: Sodium Ion Voltage-gated, opened.
+    sodiumVoltageGatedClosed: Sodium Ion Voltage-gated, closed.
+    potassiumVoltageGatedOpened: Potassium Ion Voltage-gated, opened.
+    potassiumVoltageGatedClosed: Potassium Ion Voltage-gated, closed.
+    sodiumOpenedPotassiumOpened: "{ a11y.membranePotentialChanges.sodiumVoltageGatedOpened } { a11y.membranePotentialChanges.potassiumVoltageGatedOpened }"
+    sodiumOpenedPotassiumClosed: "{ a11y.membranePotentialChanges.sodiumVoltageGatedOpened } { a11y.membranePotentialChanges.potassiumVoltageGatedClosed }"
+    sodiumClosedPotassiumOpened: "{ a11y.membranePotentialChanges.sodiumVoltageGatedClosed } { a11y.membranePotentialChanges.potassiumVoltageGatedOpened }"
+    sodiumClosedPotassiumClosed: "{ a11y.membranePotentialChanges.sodiumVoltageGatedClosed } { a11y.membranePotentialChanges.potassiumVoltageGatedClosed }"
+    noChange: No change in transport proteins.
 
   transportProtein:
     grabbed: Grabbed.

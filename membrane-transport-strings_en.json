@@ -402,6 +402,35 @@
     "ligandMovedAboveOtherChannelPattern": {
       "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
     },
+    "membranePotentialChanges": {
+      "sodiumVoltageGatedOpened": {
+        "value": "Sodium Ion Voltage-gated opened."
+      },
+      "sodiumVoltageGatedClosed": {
+        "value": "Sodium Ion Voltage-gated closed."
+      },
+      "potassiumVoltageGatedOpened": {
+        "value": "Potassium Ion Voltage-gated opened."
+      },
+      "potassiumVoltageGatedClosed": {
+        "value": "Potassium Ion Voltage-gated closed."
+      },
+      "sodiumOpenedPotassiumOpened": {
+        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedOpened } { a11y_membranePotentialChanges_potassiumVoltageGatedOpened }"
+      },
+      "sodiumOpenedPotassiumClosed": {
+        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedOpened } { a11y_membranePotentialChanges_potassiumVoltageGatedClosed }"
+      },
+      "sodiumClosedPotassiumOpened": {
+        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedClosed } { a11y_membranePotentialChanges_potassiumVoltageGatedOpened }"
+      },
+      "sodiumClosedPotassiumClosed": {
+        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedClosed } { a11y_membranePotentialChanges_potassiumVoltageGatedClosed }"
+      },
+      "noChange": {
+        "value": "No change in transport proteins."
+      }
+    },
     "transportProtein": {
       "grabbed": {
         "value": "Grabbed."
