@@ -269,102 +269,108 @@ export default class InteractiveSlotsNode extends Node {
     } );
     this.addInputListener( selectionKeyboardListener );
 
+    /**
+     * When the user releases the protein OR the protein loses focus, this function is called to handle the release.
+     */
+    const fireReleased = () => {
+      if ( this.grabbedProperty.value ) {
+
+        affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
+        const grabbedNode = this.grabbedNode;
+        const grabbedType = this.grabbedNode.type;
+        const origin = this.grabbedNode.origin;
+        const selectedType = this.selectedType;
+        const selectedIndex = this.selectedIndex;
+
+        // Release first to update grabbedProperty. Then add a new transport protein, so that listeners in the parent Node
+        // can manage focus on protein Node addition.
+        this.release( false );
+
+        // A reason for the release will determine which sound/response to use
+        // due to the release.
+        let releaseReason: ReleaseReason;
+
+        // Work that needs to be done after we voice that the protein was released. Useful for ordering responses.
+        const afterEmoteActions: VoidFunction[] = [];
+
+        if ( selectedIndex === 'offMembrane' ) {
+
+          // NEXT STEPS: Turn this into animation
+          const toolNode = view.getTransportProteinToolNode( grabbedType );
+
+          // Check if the tool node is visually displayed before returning to toolbox
+          if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
+            toolNode.focus();
+
+            releaseReason = 'return';
+
+            // Animate the tool back to the toolbox. Cleanup is done at the end of animation.
+            returnToolToToolbox( grabbedNode );
+          }
+          else {
+
+            // Tool node is hidden, so we need to handle this differently
+            // If it came from a slot, return it to the original slot
+            if ( origin instanceof Slot ) {
+              origin.transportProteinType = grabbedType;
+              releaseReason = 'cancel';
+              grabbedNode.dispose();
+            }
+            else {
+              // Came from toolbox but toolbox is now hidden, just dispose
+              releaseReason = 'delete';
+              grabbedNode.dispose();
+            }
+          }
+        }
+        else {
+
+          // No animations so clean up right away.
+          grabbedNode.dispose();
+
+          const selectedSlot = this.slots[ selectedIndex ];
+
+          // If the selected slot already has a transport protein, the proteins will be "swapped" -
+          // move the current protein to the slot that was originally selected.
+          if ( selectedSlot.isFilled() ) {
+            const currentType = selectedSlot.transportProteinType;
+            affirm( currentType, 'If filled, there must be a transport protein type.' );
+            const originSlot = origin;
+            affirm( originSlot, 'If grabbed, there must be an origin slot.' );
+
+            // If the origin is a slot, then we can swap the proteins. If the origin was the toolbar, then
+            // the protein will simply be replaced.
+            if ( originSlot instanceof Slot ) {
+              originSlot.transportProteinType = currentType;
+              releaseReason = 'swap';
+            }
+            else {
+
+              // TODO: What should be said in this case? See #97
+              releaseReason = 'release';
+            }
+          }
+          else {
+            releaseReason = 'release';
+          }
+
+          // Place the transport protein in the selected slot
+          affirm( selectedType, 'If grabbed, there must be a selected type.' );
+          afterEmoteActions.push( () => {
+            selectedSlot.transportProteinType = selectedType;
+          } );
+        }
+
+        affirm( releaseReason, 'We should have a reason for the release to emote.' );
+        this.emoteRelease( releaseReason );
+        afterEmoteActions.forEach( action => action() );
+      }
+    };
     const releaseKeyboardListener = new KeyboardListener( {
       keys: [ 'enter', 'space' ],
       fireOnDown: false,
       fire: ( event, keysPressed, listener ) => {
-        if ( this.grabbedProperty.value ) {
-
-          affirm( this.grabbedNode, 'There needs to be a grabbedNode when releasing.' );
-          const grabbedNode = this.grabbedNode;
-          const grabbedType = this.grabbedNode.type;
-          const origin = this.grabbedNode.origin;
-          const selectedType = this.selectedType;
-          const selectedIndex = this.selectedIndex;
-
-          // Release first to update grabbedProperty. Then add a new transport protein, so that listeners in the parent Node
-          // can manage focus on protein Node addition.
-          this.release( false );
-
-          // A reason for the release will determine which sound/response to use
-          // due to the release.
-          let releaseReason: ReleaseReason;
-
-          // Work that needs to be done after we voice that the protein was released. Useful for ordering responses.
-          const afterEmoteActions: VoidFunction[] = [];
-
-          if ( selectedIndex === 'offMembrane' ) {
-
-            // NEXT STEPS: Turn this into animation
-            const toolNode = view.getTransportProteinToolNode( grabbedType );
-
-            // Check if the tool node is visually displayed before returning to toolbox
-            if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
-              toolNode.focus();
-
-              releaseReason = 'return';
-
-              // Animate the tool back to the toolbox. Cleanup is done at the end of animation.
-              returnToolToToolbox( grabbedNode );
-            }
-            else {
-
-              // Tool node is hidden, so we need to handle this differently
-              // If it came from a slot, return it to the original slot
-              if ( origin instanceof Slot ) {
-                origin.transportProteinType = grabbedType;
-                releaseReason = 'cancel';
-                grabbedNode.dispose();
-              }
-              else {
-                // Came from toolbox but toolbox is now hidden, just dispose
-                releaseReason = 'delete';
-                grabbedNode.dispose();
-              }
-            }
-          }
-          else {
-
-            // No animations so clean up right away.
-            grabbedNode.dispose();
-
-            const selectedSlot = this.slots[ selectedIndex ];
-
-            // If the selected slot already has a transport protein, the proteins will be "swapped" -
-            // move the current protein to the slot that was originally selected.
-            if ( selectedSlot.isFilled() ) {
-              const currentType = selectedSlot.transportProteinType;
-              affirm( currentType, 'If filled, there must be a transport protein type.' );
-              const originSlot = origin;
-              affirm( originSlot, 'If grabbed, there must be an origin slot.' );
-
-              // If the origin is a slot, then we can swap the proteins. If the origin was the toolbar, then
-              // the protein will simply be replaced.
-              if ( originSlot instanceof Slot ) {
-                originSlot.transportProteinType = currentType;
-                releaseReason = 'swap';
-              }
-              else {
-
-                // TODO: What should be said in this case? See #97
-                releaseReason = 'release';
-              }
-            }
-            else {
-              releaseReason = 'release';
-            }
-
-            // Place the transport protein in the selected slot
-            affirm( selectedType, 'If grabbed, there must be a selected type.' );
-            afterEmoteActions.push( () => {
-              selectedSlot.transportProteinType = selectedType;
-            } );
-          }
-
-          affirm( releaseReason, 'We should have a reason for the release to emote.' );
-          this.emoteRelease( releaseReason );
-          afterEmoteActions.forEach( action => action() );
-        }
+        fireReleased();
       }
     } );
     this.addInputListener( releaseKeyboardListener );
@@ -431,7 +437,7 @@ export default class InteractiveSlotsNode extends Node {
     this.addInputListener( groupFocusListener );
     groupFocusListener.focusInGroupProperty.link( focus => {
       if ( !focus && this.grabbedProperty.value ) {
-        this.release();
+        fireReleased();
 
         // After releasing, make sure that the correct protein is in the traversal order according to
         // the selected index in the 'select' state.
