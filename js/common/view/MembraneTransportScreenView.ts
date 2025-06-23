@@ -36,6 +36,7 @@ import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
+import MembranePotentialDescriber from './MembranePotentialDescriber.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
 import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox.js';
@@ -60,7 +61,6 @@ export default class MembraneTransportScreenView extends ScreenView {
   } );
 
   public readonly screenViewModelViewTransform: ModelViewTransform2;
-  private afterRelease: ( () => void ) | null = null;
   private readonly transportProteinPanel?: TransportProteinPanel;
 
   public constructor(
@@ -126,15 +126,34 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.addChild( timeControlNode );
 
-    const highlightCrossingCheckbox = new Checkbox( this.model.highlightCrossingProperty, new Text( MembraneTransportFluent.highlightCrossingStringProperty, {
+    const crossingHighlightsCheckbox = new Checkbox( this.model.crossingHighlightsEnabledProperty, new Text( MembraneTransportFluent.crossingHighlightsStringProperty, {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
-      tandem: options.tandem.createTandem( 'highlightCrossingCheckbox' ),
+      accessibleHelpText: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
+      checkedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty,
+      uncheckedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty,
+      tandem: options.tandem.createTandem( 'crossingHighlightsCheckbox' )
+    } );
+
+    const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.crossingSoundsStringProperty, {
+      font: MembraneTransportConstants.FONT,
+      maxWidth: 160
+    } ), {
+      accessibleHelpText: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
+      checkedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty,
+      uncheckedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty,
+      tandem: options.tandem.createTandem( 'crossingSoundsCheckbox' )
+    } );
+
+    const checkboxVBox = new VBox( {
+      children: [ crossingHighlightsCheckbox, crossingSoundsCheckbox ],
+      spacing: 5,
+      align: 'left',
       left: this.observationWindow.left,
       centerY: timeControlNode.centerY
     } );
-    this.addChild( highlightCrossingCheckbox );
+    this.addChild( checkboxVBox );
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
     const soluteControlsNode = new Node( {
@@ -271,7 +290,8 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.pdomControlAreaNode.pdomOrder = [
       timeControlNode,
-      highlightCrossingCheckbox,
+      crossingHighlightsCheckbox,
+      crossingSoundsCheckbox,
       resetAllButton
     ];
 
@@ -296,18 +316,22 @@ export default class MembraneTransportScreenView extends ScreenView {
       const insideCount = model.countSolutes( particle.type, 'inside' );
       const outsideCount = model.countSolutes( particle.type, 'outside' );
       const totalCount = insideCount + outsideCount;
-      
+
       // Calculate equilibrium ratio: 1 = full equilibrium, 0 = no equilibrium
       let equilibriumRatio = 0.5; // default to halfway
       if ( totalCount > 0 ) {
         // Calculate how balanced the concentrations are
         const balance = insideCount === 0 || outsideCount === 0 ? 0 :
-                       insideCount < outsideCount ? insideCount / outsideCount : outsideCount / insideCount;
+                        insideCount < outsideCount ? insideCount / outsideCount : outsideCount / insideCount;
         equilibriumRatio = balance; // balance is 0 to 1, where 1 is perfect equilibrium
       }
-      
-      MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction, equilibriumRatio );
+
+      if ( this.model.crossingSoundsEnabledProperty.value ) {
+        MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction, equilibriumRatio );
+      }
     } );
+
+    this.model.membranePotentialProperty.lazyLink( MembranePotentialDescriber.createListener( model, this ) );
   }
 
   /**
@@ -389,11 +413,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     super.step( dt );
     dt *= this.model.getTimeSpeedFactor();
     this.stepEmitter.emit( dt );
-  }
-
-  public keyboardDroppedOrDeletedTransportProtein(): void {
-    this.afterRelease && this.afterRelease();
-    this.afterRelease = null;
   }
 
   public getTransportProteinToolNode( type: TransportProteinType ): TransportProteinToolNode {

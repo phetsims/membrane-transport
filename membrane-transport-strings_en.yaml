@@ -1,3 +1,6 @@
+# Strings for the Membrane Transport simulation
+# After changing this file, run `grunt modulify --targets=strings` to regenerate the appropriate files, including type definitions.
+
 # Title
 membrane-transport.title:                               Membrane Transport
 
@@ -38,7 +41,8 @@ animateLipidsDescription:                               Whether the phospholipid
 glucoseDrain:                                           Glucose Drain
 glucoseDrainDescription:                                Simulate phosphorylation of glucose in the cell after transport. Simulation assumes a high concentration of glucose inside the cell.
 soluteConcentrations:                                   Solute Concentrations
-highlightCrossing:                                      Highlight Crossing
+crossingHighlights:                                     Crossing Highlights
+crossingSounds:                                         Crossing Sounds
 
 preferencesDialog.audio.sounds.stereoSounds:            Stereo Sounds
 preferencesDialog.audio.sounds.stereoSoundsDescription: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
@@ -64,6 +68,14 @@ a11y:
   eraseSolutesButton:
     accessibleName:            Reset Solutes
     accessibleContextResponse: Solutes cleared. Add solutes to observe changes
+  crossingHighlightsCheckbox:
+    accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
+    accessibleCheckedContextResponse:   Visual highlights for solute crossings, on.
+    accessibleUncheckedContextResponse: Visual highlights for solute crossings, off.
+  crossingSoundsCheckbox:
+    accessibleHelpText:                 Explore with or without unique sounds for solute crossings.
+    accessibleCheckedContextResponse:   Solute crossing sounds on.
+    accessibleUncheckedContextResponse: Solute crossing sounds off.
   transportProteinPanel:
     transportProteins:      Transport Proteins
     accessibleHelpText:     Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
@@ -88,8 +100,12 @@ a11y:
           positive30RadioButton:
             accessibleName: positive 30 millivolts
       chargesCheckbox:
-        accessibleHelpText:       Explore with or without charges showing membrane potential along inside and outside.
-        uncheckedContextResponse: Membrane potential charges, hidden.
+        accessibleHelpText:               Explore with or without charge signs showing membrane potential along inside and outside.
+        voicingHelpText:                  Explore with or without charge signs along membrane.
+        checkedContextResponseNegative70: Positive outside and negative inside; charge signs densely packed along membrane.
+        checkedContextResponseNegative50: Positive outside and negative inside; charge signs lightly packed along membrane.
+        checkedContextResponsePositive30: Negative outside and positive inside; charge signs sparse along membrane.
+        uncheckedContextResponse:         Membrane potential charge signs, hidden.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
@@ -271,6 +287,20 @@ a11y:
                                                      [open]   open
                                                      *[closed] closed
                                                      } { a11y.transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins.
+
+  # Membrane potential change responses for voltage-gated channels
+  membranePotentialChanges:
+    sodiumVoltageGatedOpened:    Sodium Ion Voltage-gated, open.
+    sodiumVoltageGatedClosed:    Sodium Ion Voltage-gated, closed.
+    potassiumVoltageGatedOpened: Potassium Ion Voltage-gated, open.
+    potassiumVoltageGatedClosed: Potassium Ion Voltage-gated, closed.
+    sodiumOpenedPotassiumOpened: "{ a11y.membranePotentialChanges.sodiumVoltageGatedOpened } { a11y.membranePotentialChanges.potassiumVoltageGatedOpened }"
+    sodiumOpenedPotassiumClosed: "{ a11y.membranePotentialChanges.sodiumVoltageGatedOpened } { a11y.membranePotentialChanges.potassiumVoltageGatedClosed }"
+
+    # We like to say opening first, since users are more interested to hear what just opened.
+    sodiumClosedPotassiumOpened: "{ a11y.membranePotentialChanges.potassiumVoltageGatedOpened } { a11y.membranePotentialChanges.sodiumVoltageGatedClosed } "
+    sodiumClosedPotassiumClosed: "Voltage-gated channels closed."
+    noChange:                    No change in transport proteins.
 
   transportProtein:
     grabbed: Grabbed.

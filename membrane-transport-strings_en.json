@@ -86,8 +86,11 @@
   "soluteConcentrations": {
     "value": "Solute Concentrations"
   },
-  "highlightCrossing": {
-    "value": "Highlight Crossing"
+  "crossingHighlights": {
+    "value": "Crossing Highlights"
+  },
+  "crossingSounds": {
+    "value": "Crossing Sounds"
   },
   "preferencesDialog.audio.sounds.stereoSounds": {
     "value": "Stereo Sounds"
@@ -139,6 +142,28 @@
       },
       "accessibleContextResponse": {
         "value": "Solutes cleared. Add solutes to observe changes"
+      }
+    },
+    "crossingHighlightsCheckbox": {
+      "accessibleHelpText": {
+        "value": "Explore with or without visual highlights for solute crossings."
+      },
+      "accessibleCheckedContextResponse": {
+        "value": "Visual highlights for solute crossings, on."
+      },
+      "accessibleUncheckedContextResponse": {
+        "value": "Visual highlights for solute crossings, off."
+      }
+    },
+    "crossingSoundsCheckbox": {
+      "accessibleHelpText": {
+        "value": "Explore with or without unique sounds for solute crossings."
+      },
+      "accessibleCheckedContextResponse": {
+        "value": "Solute crossing sounds on."
+      },
+      "accessibleUncheckedContextResponse": {
+        "value": "Solute crossing sounds off."
       }
     },
     "transportProteinPanel": {
@@ -198,10 +223,22 @@
         },
         "chargesCheckbox": {
           "accessibleHelpText": {
-            "value": "Explore with or without charges showing membrane potential along inside and outside."
+            "value": "Explore with or without charge signs showing membrane potential along inside and outside."
+          },
+          "voicingHelpText": {
+            "value": "Explore with or without charge signs along membrane."
+          },
+          "checkedContextResponseNegative70": {
+            "value": "Positive outside and negative inside; charge signs densely packed along membrane."
+          },
+          "checkedContextResponseNegative50": {
+            "value": "Positive outside and negative inside; charge signs lightly packed along membrane."
+          },
+          "checkedContextResponsePositive30": {
+            "value": "Negative outside and positive inside; charge signs sparse along membrane."
           },
           "uncheckedContextResponse": {
-            "value": "Membrane potential charges, hidden."
+            "value": "Membrane potential charge signs, hidden."
           }
         }
       },
@@ -364,6 +401,35 @@
     },
     "ligandMovedAboveOtherChannelPattern": {
       "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProteinBriefName }, { $index } of { $transportProteinCount } Proteins."
+    },
+    "membranePotentialChanges": {
+      "sodiumVoltageGatedOpened": {
+        "value": "Sodium Ion Voltage-gated, open."
+      },
+      "sodiumVoltageGatedClosed": {
+        "value": "Sodium Ion Voltage-gated, closed."
+      },
+      "potassiumVoltageGatedOpened": {
+        "value": "Potassium Ion Voltage-gated, open."
+      },
+      "potassiumVoltageGatedClosed": {
+        "value": "Potassium Ion Voltage-gated, closed."
+      },
+      "sodiumOpenedPotassiumOpened": {
+        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedOpened } { a11y_membranePotentialChanges_potassiumVoltageGatedOpened }"
+      },
+      "sodiumOpenedPotassiumClosed": {
+        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedOpened } { a11y_membranePotentialChanges_potassiumVoltageGatedClosed }"
+      },
+      "sodiumClosedPotassiumOpened": {
+        "value": "{ a11y_membranePotentialChanges_potassiumVoltageGatedOpened } { a11y_membranePotentialChanges_sodiumVoltageGatedClosed } "
+      },
+      "sodiumClosedPotassiumClosed": {
+        "value": "Voltage-gated channels closed."
+      },
+      "noChange": {
+        "value": "No change in transport proteins."
+      }
     },
     "transportProtein": {
       "grabbed": {

@@ -55,7 +55,8 @@ addToMapIfDefined( 'animateLipidsDescription', 'animateLipidsDescriptionStringPr
 addToMapIfDefined( 'glucoseDrain', 'glucoseDrainStringProperty' );
 addToMapIfDefined( 'glucoseDrainDescription', 'glucoseDrainDescriptionStringProperty' );
 addToMapIfDefined( 'soluteConcentrations', 'soluteConcentrationsStringProperty' );
-addToMapIfDefined( 'highlightCrossing', 'highlightCrossingStringProperty' );
+addToMapIfDefined( 'crossingHighlights', 'crossingHighlightsStringProperty' );
+addToMapIfDefined( 'crossingSounds', 'crossingSoundsStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', 'preferencesDialog.audio.sounds.stereoSoundsStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', 'preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryIntro', 'a11y.summary.playAreaSummaryIntroStringProperty' );
@@ -71,6 +72,12 @@ addToMapIfDefined( 'a11y_summary_interactionHintWithTransportProteins', 'a11y.su
 addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', 'a11y.soluteControls.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', 'a11y.eraseSolutesButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleHelpText', 'a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleCheckedContextResponse', 'a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleUncheckedContextResponse', 'a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleHelpText', 'a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleCheckedContextResponse', 'a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleUncheckedContextResponse', 'a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_transportProteins', 'a11y.transportProteinPanel.transportProteinsStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHelpText', 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', 'a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' );
@@ -85,6 +92,10 @@ addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membrane
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative70StringProperty' );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative50StringProperty' );
+addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponsePositive30StringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty' );
@@ -136,6 +147,15 @@ addToMapIfDefined( 'a11y_transportProteinBriefName', 'a11y.transportProteinBrief
 addToMapIfDefined( 'a11y_ligandMovedAboveLigandGatedChannelPattern', 'a11y.ligandMovedAboveLigandGatedChannelPatternStringProperty' );
 addToMapIfDefined( 'a11y_ligandMovedAboveLeakageChannelPattern', 'a11y.ligandMovedAboveLeakageChannelPatternStringProperty' );
 addToMapIfDefined( 'a11y_ligandMovedAboveOtherChannelPattern', 'a11y.ligandMovedAboveOtherChannelPatternStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_sodiumVoltageGatedOpened', 'a11y.membranePotentialChanges.sodiumVoltageGatedOpenedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_sodiumVoltageGatedClosed', 'a11y.membranePotentialChanges.sodiumVoltageGatedClosedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_potassiumVoltageGatedOpened', 'a11y.membranePotentialChanges.potassiumVoltageGatedOpenedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_potassiumVoltageGatedClosed', 'a11y.membranePotentialChanges.potassiumVoltageGatedClosedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_sodiumOpenedPotassiumOpened', 'a11y.membranePotentialChanges.sodiumOpenedPotassiumOpenedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_sodiumOpenedPotassiumClosed', 'a11y.membranePotentialChanges.sodiumOpenedPotassiumClosedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_sodiumClosedPotassiumOpened', 'a11y.membranePotentialChanges.sodiumClosedPotassiumOpenedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_sodiumClosedPotassiumClosed', 'a11y.membranePotentialChanges.sodiumClosedPotassiumClosedStringProperty' );
+addToMapIfDefined( 'a11y_membranePotentialChanges_noChange', 'a11y.membranePotentialChanges.noChangeStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_grabbed', 'a11y.transportProtein.grabbedStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
@@ -183,7 +203,8 @@ const MembraneTransportFluent = {
   glucoseDrainStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrain', _.get( MembraneTransportStrings, 'glucoseDrainStringProperty' ) ),
   glucoseDrainDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrainDescription', _.get( MembraneTransportStrings, 'glucoseDrainDescriptionStringProperty' ) ),
   soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations', _.get( MembraneTransportStrings, 'soluteConcentrationsStringProperty' ) ),
-  highlightCrossingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'highlightCrossing', _.get( MembraneTransportStrings, 'highlightCrossingStringProperty' ) ),
+  crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingHighlights', _.get( MembraneTransportStrings, 'crossingHighlightsStringProperty' ) ),
+  crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingSounds', _.get( MembraneTransportStrings, 'crossingSoundsStringProperty' ) ),
   preferencesDialog: {
     audio: {
       sounds: {
@@ -211,6 +232,16 @@ const MembraneTransportFluent = {
     eraseSolutesButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleNameStringProperty' ) ),
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' ) )
+    },
+    crossingHighlightsCheckbox: {
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' ) ),
+      accessibleCheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleCheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty' ) ),
+      accessibleUncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleUncheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty' ) )
+    },
+    crossingSoundsCheckbox: {
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty' ) ),
+      accessibleCheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleCheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty' ) ),
+      accessibleUncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleUncheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty' ) )
     },
     transportProteinPanel: {
       transportProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_transportProteins', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.transportProteinsStringProperty' ) ),
@@ -243,6 +274,10 @@ const MembraneTransportFluent = {
         },
         chargesCheckbox: {
           accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' ) ),
+          voicingHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' ) ),
+          checkedContextResponseNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative70', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative70StringProperty' ) ),
+          checkedContextResponseNegative50StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponseNegative50', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative50StringProperty' ) ),
+          checkedContextResponsePositive30StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_checkedContextResponsePositive30', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponsePositive30StringProperty' ) ),
           uncheckedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_uncheckedContextResponse', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty' ) )
         }
       },
@@ -304,6 +339,17 @@ const MembraneTransportFluent = {
     ligandMovedAboveLigandGatedChannelPattern: new FluentPattern<{ index: FluentVariable, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern', _.get( MembraneTransportStrings, 'a11y.ligandMovedAboveLigandGatedChannelPatternStringProperty' ), [{"name":"index"},{"name":"ligandType","variants":["triangleLigand","starLigand"]},{"name":"openOrClosed","variants":["open","closed"]},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
     ligandMovedAboveLeakageChannelPattern: new FluentPattern<{ index: FluentVariable, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern', _.get( MembraneTransportStrings, 'a11y.ligandMovedAboveLeakageChannelPatternStringProperty' ), [{"name":"index"},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
     ligandMovedAboveOtherChannelPattern: new FluentPattern<{ index: FluentVariable, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern', _.get( MembraneTransportStrings, 'a11y.ligandMovedAboveOtherChannelPatternStringProperty' ), [{"name":"index"},{"name":"openOrClosed","variants":["open","closed"]},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
+    membranePotentialChanges: {
+      sodiumVoltageGatedOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumVoltageGatedOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumVoltageGatedOpenedStringProperty' ) ),
+      sodiumVoltageGatedClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumVoltageGatedClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumVoltageGatedClosedStringProperty' ) ),
+      potassiumVoltageGatedOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_potassiumVoltageGatedOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.potassiumVoltageGatedOpenedStringProperty' ) ),
+      potassiumVoltageGatedClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_potassiumVoltageGatedClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.potassiumVoltageGatedClosedStringProperty' ) ),
+      sodiumOpenedPotassiumOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumOpenedPotassiumOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumOpenedPotassiumOpenedStringProperty' ) ),
+      sodiumOpenedPotassiumClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumOpenedPotassiumClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumOpenedPotassiumClosedStringProperty' ) ),
+      sodiumClosedPotassiumOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumClosedPotassiumOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumClosedPotassiumOpenedStringProperty' ) ),
+      sodiumClosedPotassiumClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumClosedPotassiumClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumClosedPotassiumClosedStringProperty' ) ),
+      noChangeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_noChange', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.noChangeStringProperty' ) )
+    },
     transportProtein: {
       grabbedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_grabbed', _.get( MembraneTransportStrings, 'a11y.transportProtein.grabbedStringProperty' ) )
     }

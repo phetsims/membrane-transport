@@ -45,7 +45,8 @@ type StringsType = {
   'glucoseDrainStringProperty': LocalizedStringProperty;
   'glucoseDrainDescriptionStringProperty': LocalizedStringProperty;
   'soluteConcentrationsStringProperty': LocalizedStringProperty;
-  'highlightCrossingStringProperty': LocalizedStringProperty;
+  'crossingHighlightsStringProperty': LocalizedStringProperty;
+  'crossingSoundsStringProperty': LocalizedStringProperty;
   'preferencesDialog': {
     'audio': {
       'sounds': {
@@ -73,6 +74,16 @@ type StringsType = {
     'eraseSolutesButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
+    };
+    'crossingHighlightsCheckbox': {
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'accessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
+    };
+    'crossingSoundsCheckbox': {
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'accessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
     };
     'transportProteinPanel': {
       'transportProteinsStringProperty': LocalizedStringProperty;
@@ -105,6 +116,10 @@ type StringsType = {
         };
         'chargesCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
+          'voicingHelpTextStringProperty': LocalizedStringProperty;
+          'checkedContextResponseNegative70StringProperty': LocalizedStringProperty;
+          'checkedContextResponseNegative50StringProperty': LocalizedStringProperty;
+          'checkedContextResponsePositive30StringProperty': LocalizedStringProperty;
           'uncheckedContextResponseStringProperty': LocalizedStringProperty;
         }
       };
@@ -166,6 +181,17 @@ type StringsType = {
     'ligandMovedAboveLigandGatedChannelPatternStringProperty': LocalizedStringProperty;
     'ligandMovedAboveLeakageChannelPatternStringProperty': LocalizedStringProperty;
     'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
+    'membranePotentialChanges': {
+      'sodiumVoltageGatedOpenedStringProperty': LocalizedStringProperty;
+      'sodiumVoltageGatedClosedStringProperty': LocalizedStringProperty;
+      'potassiumVoltageGatedOpenedStringProperty': LocalizedStringProperty;
+      'potassiumVoltageGatedClosedStringProperty': LocalizedStringProperty;
+      'sodiumOpenedPotassiumOpenedStringProperty': LocalizedStringProperty;
+      'sodiumOpenedPotassiumClosedStringProperty': LocalizedStringProperty;
+      'sodiumClosedPotassiumOpenedStringProperty': LocalizedStringProperty;
+      'sodiumClosedPotassiumClosedStringProperty': LocalizedStringProperty;
+      'noChangeStringProperty': LocalizedStringProperty;
+    };
     'transportProtein': {
       'grabbedStringProperty': LocalizedStringProperty;
     }
