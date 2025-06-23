@@ -59,10 +59,10 @@ const MembraneTransportColors = {
     default: 'rgb(46, 13, 98)'
   } ),
   fluxHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'fluxHighlightColor', {
-    default: 'white'
+    default: 'yellow'
   } ),
   crossingHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'crossingHighlightColor', {
-    default: 'white'
+    default: 'yellow'
   } ),
   lipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
@@ -80,7 +80,7 @@ const MembraneTransportColors = {
     default: 'rgb(234,144,255)'
   } ),
   ligandButtonColorProperty: new ProfileColorProperty( membraneTransport, 'ligandButtonColor', {
-    default: 'rgb(224,200,88)'
+    default: 'rgb(153,206,255)'
   } )
 };
 
