@@ -85,7 +85,10 @@ export default class SolutesPanel extends Node {
       spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,
-      accessibleName: MembraneTransportFluent.solutesStringProperty
+      accessibleName: MembraneTransportFluent.solutesStringProperty,
+
+      // Not supposed to be read on focus, see https://github.com/phetsims/membrane-transport/issues/240#issuecomment-2992343983
+      speakVoicingNameResponseOnFocus: false
     } );
 
     // Must be wrapped in an intermediate node to allow the wrap: true to work. Otherwise, the vbox squeezes it horizontally
