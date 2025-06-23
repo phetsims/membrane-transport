@@ -404,16 +404,16 @@
     },
     "membranePotentialChanges": {
       "sodiumVoltageGatedOpened": {
-        "value": "Sodium Ion Voltage-gated opened."
+        "value": "Sodium Ion Voltage-gated, opened."
       },
       "sodiumVoltageGatedClosed": {
-        "value": "Sodium Ion Voltage-gated closed."
+        "value": "Sodium Ion Voltage-gated, closed."
       },
       "potassiumVoltageGatedOpened": {
-        "value": "Potassium Ion Voltage-gated opened."
+        "value": "Potassium Ion Voltage-gated, opened."
       },
       "potassiumVoltageGatedClosed": {
-        "value": "Potassium Ion Voltage-gated closed."
+        "value": "Potassium Ion Voltage-gated, closed."
       },
       "sodiumOpenedPotassiumOpened": {
         "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedOpened } { a11y_membranePotentialChanges_potassiumVoltageGatedOpened }"
