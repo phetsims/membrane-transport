@@ -404,13 +404,13 @@
     },
     "membranePotentialChanges": {
       "sodiumVoltageGatedOpened": {
-        "value": "Sodium Ion Voltage-gated, opened."
+        "value": "Sodium Ion Voltage-gated, open."
       },
       "sodiumVoltageGatedClosed": {
         "value": "Sodium Ion Voltage-gated, closed."
       },
       "potassiumVoltageGatedOpened": {
-        "value": "Potassium Ion Voltage-gated, opened."
+        "value": "Potassium Ion Voltage-gated, open."
       },
       "potassiumVoltageGatedClosed": {
         "value": "Potassium Ion Voltage-gated, closed."
@@ -422,10 +422,10 @@
         "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedOpened } { a11y_membranePotentialChanges_potassiumVoltageGatedClosed }"
       },
       "sodiumClosedPotassiumOpened": {
-        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedClosed } { a11y_membranePotentialChanges_potassiumVoltageGatedOpened }"
+        "value": "{ a11y_membranePotentialChanges_potassiumVoltageGatedOpened } { a11y_membranePotentialChanges_sodiumVoltageGatedClosed } "
       },
       "sodiumClosedPotassiumClosed": {
-        "value": "{ a11y_membranePotentialChanges_sodiumVoltageGatedClosed } { a11y_membranePotentialChanges_potassiumVoltageGatedClosed }"
+        "value": "Voltage-gated channels closed."
       },
       "noChange": {
         "value": "No change in transport proteins."

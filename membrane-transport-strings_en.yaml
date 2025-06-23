@@ -290,15 +290,17 @@ a11y:
 
   # Membrane potential change responses for voltage-gated channels
   membranePotentialChanges:
-    sodiumVoltageGatedOpened: Sodium Ion Voltage-gated, opened.
-    sodiumVoltageGatedClosed: Sodium Ion Voltage-gated, closed.
-    potassiumVoltageGatedOpened: Potassium Ion Voltage-gated, opened.
+    sodiumVoltageGatedOpened:    Sodium Ion Voltage-gated, open.
+    sodiumVoltageGatedClosed:    Sodium Ion Voltage-gated, closed.
+    potassiumVoltageGatedOpened: Potassium Ion Voltage-gated, open.
     potassiumVoltageGatedClosed: Potassium Ion Voltage-gated, closed.
     sodiumOpenedPotassiumOpened: "{ a11y.membranePotentialChanges.sodiumVoltageGatedOpened } { a11y.membranePotentialChanges.potassiumVoltageGatedOpened }"
     sodiumOpenedPotassiumClosed: "{ a11y.membranePotentialChanges.sodiumVoltageGatedOpened } { a11y.membranePotentialChanges.potassiumVoltageGatedClosed }"
-    sodiumClosedPotassiumOpened: "{ a11y.membranePotentialChanges.sodiumVoltageGatedClosed } { a11y.membranePotentialChanges.potassiumVoltageGatedOpened }"
-    sodiumClosedPotassiumClosed: "{ a11y.membranePotentialChanges.sodiumVoltageGatedClosed } { a11y.membranePotentialChanges.potassiumVoltageGatedClosed }"
-    noChange: No change in transport proteins.
+
+    # We like to say opening first, since users are more interested to hear what just opened.
+    sodiumClosedPotassiumOpened: "{ a11y.membranePotentialChanges.potassiumVoltageGatedOpened } { a11y.membranePotentialChanges.sodiumVoltageGatedClosed } "
+    sodiumClosedPotassiumClosed: "Voltage-gated channels closed."
+    noChange:                    No change in transport proteins.
 
   transportProtein:
     grabbed: Grabbed.
