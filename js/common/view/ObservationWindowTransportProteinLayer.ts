@@ -197,6 +197,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
                 nameResponse: nameResponseProperty,
                 objectResponse: objectResponseProperty
               } );
+
+              // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
+              // Node is focused.
               voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
             }
           }, { disposer: transportProteinNode } );

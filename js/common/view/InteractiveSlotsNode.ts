@@ -27,7 +27,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
 import { AriaLive } from '../../../../utterance-queue/js/AriaLiveAnnouncer.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
-import Utterance from '../../../../utterance-queue/js/Utterance.js';
+import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -129,6 +129,9 @@ export default class InteractiveSlotsNode extends Node {
             nameResponse: voicingNameResponseProperty,
             objectResponse: voicingObjectResponseProperty
           } );
+
+          // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
+          // Node is focused.
           voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
         }
       } );
@@ -506,11 +509,9 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
-    this.grabReleaseUtterance.alert = MembraneTransportFluent.a11y.transportProtein.grabbedStringProperty;
-
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
-    this.addAccessibleResponse( this.grabReleaseUtterance );
-    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance );
+    this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedStringProperty );
+
     MembraneTransportSounds.transportProteinGrabbed();
 
     // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -549,10 +550,16 @@ export default class InteractiveSlotsNode extends Node {
     }
 
     affirm( responseString !== null, 'We should have a response string to say.' );
-    this.grabReleaseUtterance.alert = responseString;
+    this.alert( this.grabReleaseUtterance, responseString );
+  }
 
-    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance );
-    this.addAccessibleResponse( this.grabReleaseUtterance );
+  /**
+   * A convenience method to alert an accessible response for both Interactive Description and Voicing.
+   */
+  private alert( utterance: Utterance, response: AlertableNoUtterance ): void {
+    utterance.alert = response;
+    this.addAccessibleResponse( utterance );
+    voicingUtteranceQueue.addToBack( utterance );
   }
 
   /**

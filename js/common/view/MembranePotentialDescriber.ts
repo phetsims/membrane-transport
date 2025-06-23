@@ -113,8 +113,6 @@ export default class MembranePotentialDescriber {
         view.addAccessibleResponse( response );
       }
     };
-
-
   }
 }
 
