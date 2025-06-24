@@ -185,7 +185,7 @@ export default class InteractiveSlotsNode extends Node {
         return proteinName;
       } );
 
-      // TODO: i18n, see #97
+      // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/97
       const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{objectResponse}}, {{nameResponse}}' ), {
         objectResponse: objectResponseStringProperty,
         nameResponse: nameResponseStringProperty
@@ -205,8 +205,8 @@ export default class InteractiveSlotsNode extends Node {
 
     // Add a rectangle for the off-membrane state
     const offMembraneRect = createTestRectangle(
-      new StringProperty( 'Off membrane' ), // TODO i18n, see #97
-      new StringProperty( 'Off membrane' ), // TODO i18n, see #97
+      new StringProperty( 'Off membrane' ), // TODO i18n, see https://github.com/phetsims/membrane-transport/issues/97
+      new StringProperty( 'Off membrane' ), // TODO i18n, see https://github.com/phetsims/membrane-transport/issues/97
       null,
       MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
       OFF_MEMBRANE_VERTICAL_OFFSET
@@ -349,7 +349,7 @@ export default class InteractiveSlotsNode extends Node {
             }
             else {
 
-              // TODO: What should be said in this case? See #97
+              // TODO: What should be said in this case? See https://github.com/phetsims/membrane-transport/issues/97
               releaseReason = 'release';
             }
           }
@@ -400,7 +400,7 @@ export default class InteractiveSlotsNode extends Node {
             this.view.getTransportProteinToolNode( type ).focus();
           }
 
-          // TODO: What should be said in this case? See #97
+          // TODO: What should be said in this case? See https://github.com/phetsims/membrane-transport/issues/97
           this.emoteRelease( 'delete' );
         }
       }
@@ -418,7 +418,7 @@ export default class InteractiveSlotsNode extends Node {
 
         this.release();
 
-        // TODO: What should we say in this case? See #97
+        // TODO: What should we say in this case? See https://github.com/phetsims/membrane-transport/issues/97
         this.emoteRelease( 'cancel' );
 
         if ( origin instanceof TransportProteinToolNode ) {

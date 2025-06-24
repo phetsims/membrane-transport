@@ -65,7 +65,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     this.proteinsNodeParent = new Node( {
       tagName: 'div',
 
-      // TODO: i18n, see #97
+      // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/97
       accessibleHeading: 'Cell Membrane',
       groupFocusHighlight: true,
       focusable: false
@@ -176,7 +176,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             type: type
           } );
 
-          // TODO i18n, see #97 (convert to fluent/yaml)
+          // TODO i18n, see https://github.com/phetsims/membrane-transport/issues/97 (convert to fluent/yaml)
           const objectResponseProperty = new PatternStringProperty( new StringProperty( '{{openOrClosed}}, {{proteinIndex}} of {{proteinCount}} Proteins in Membrane' ), {
             openOrClosed: transportProtein.openOrClosedProperty,
             proteinIndex: slottedNode.indexProperty,
@@ -184,7 +184,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           } );
 
           // The accessibleName for the PDOM, combine the name response and object response in the requested order.
-          // TODO: i18n, see #97 (convert to fluent/yaml)
+          // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/97 (convert to fluent/yaml)
           const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{nameResponse}}, {{objectResponse}}' ), {
             nameResponse: nameResponseProperty,
             objectResponse: objectResponseProperty
