@@ -37,6 +37,12 @@ import createParticleNode from './particles/createParticleNode.js';
 const BOX_WIDTH = 124;
 const BOX_HEIGHT = 92;
 
+// Thresholds describing the ratio of solute counts inside and outside.
+const MANY_MORE = 2.09;
+const ABOUT_TWICE = 1.9;
+const SOME_MORE = 1.11;
+const ROUGHLY_EQUAL = 1;
+
 export type BarChartModelType = Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties' | 'fluxEntries' | 'isPlayingProperty'>;
 
 export default class SoluteBarChartNode extends Node {
@@ -54,19 +60,28 @@ export default class SoluteBarChartNode extends Node {
     const insideSoluteCountProperty = model.insideSoluteCountProperties[ soluteType ];
     const insideAmountProperty = insideSoluteCountProperty;
 
-    // TODO (design): The visual only shows the magnitude of particles inside and outside. The description directly calls out the difference. https://github.com/phetsims/membrane-transport/issues/90
-    //   What if the description simply described the magnitude of the outside bar and the inside bar?
-    //   "A lot of CO2 outside, a little inside"
-    //   "A little CO2 outside, a lot inside"
-    //   "A little CO2 outside, a little inside"
-    //   In the original design, we need special cases for when there is no solute on one side. If the descriptions always directly described that,
-
     const soluteDifferenceProperty = new DerivedProperty( [ outsideAmountProperty, insideAmountProperty ], ( outsideAmount, insideAmount ) => {
-      const difference = outsideAmount - insideAmount;
-      return difference > 10 ? 'aLotMore' :
-             difference > 5 ? 'aLittleMore' :
-             difference > -5 ? 'aLittleLess' :
-             'aLotLess';
+
+      // These could be dividing by zero, but it is handled in the table below.
+      const outsideToInside = outsideAmount / insideAmount;
+      const insideToOutside = insideAmount / outsideAmount;
+
+      // Equality cases first because otherwise ratios are infinite and exact equality is important to describe.
+      return ( outsideAmount === 0 && insideAmount === 0 ) ? 'none' :
+             ( outsideAmount === insideAmount ) ? 'equal' :
+
+               // More outside than inside
+             outsideToInside >= MANY_MORE ? 'manyMoreOutside' :
+             outsideToInside >= ABOUT_TWICE ? 'aboutTwiceAsManyOutside' :
+             outsideToInside >= SOME_MORE ? 'someMoreOutside' :
+             outsideToInside > ROUGHLY_EQUAL ? 'roughlyEqualOutside' :
+
+               // More inside than outside
+             insideToOutside >= MANY_MORE ? 'manyMoreInside' :
+             insideToOutside >= ABOUT_TWICE ? 'aboutTwiceAsManyInside' :
+             insideToOutside >= SOME_MORE ? 'someMoreInside' :
+             insideToOutside > ROUGHLY_EQUAL ? 'roughlyEqualInside' :
+             ( () => { throw new Error( 'Undescribed counts' ); } )(); // IIFE to throw error
     } );
 
     // These are updated in stepEmitter, and used to add description for the accessible name.

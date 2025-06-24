@@ -195,14 +195,20 @@ a11y:
   soluteConcentrationsAccordionBox:
     accessibleParagraph: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
-      accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteConcentrationsAccordionBox.barChart.comparison } { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
+      accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteConcentrationsAccordionBox.barChart.comparison }; { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
       comparison:     |-
                       { $amount ->
-                        [aLittleMore]  A little more
-                        [aLotMore]     A lot more
-                        [aLittleLess]  A little less
-                        *[aLotLess]     A lot less
-                      } outside than inside
+                        *[none]  none
+                        [equal] Amounts exactly equal outside and inside
+                        [manyMoreOutside] many more outside than inside 
+                        [aboutTwiceAsManyOutside] about twice as many outside as inside
+                        [someMoreOutside] some more outside than inside
+                        [roughlyEqualOutside] roughly equal, more outside than inside
+                        [manyMoreInside] many more inside than outside
+                        [aboutTwiceAsManyInside] about twice as many inside as outside
+                        [someMoreInside] some more inside than outside
+                        [roughlyEqualInside] roughly equal, more inside than outside
+                      }
       crossing:       |-
                       { $crossing ->
                         *[none] no crossings
