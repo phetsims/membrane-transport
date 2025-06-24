@@ -191,29 +191,25 @@ a11y:
                                                         *[outsideThanInside] outside than inside
                                                        }.
                                                      }
-  soluteBarChartsDescriptionParagraph:               A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
-  arrowSizeDescription:                              |-
-                                                     { $size ->
-                                                     [small]  small
-                                                     [medium] medium
-                                                     *[large]  large
-                                                     }
 
-  arrowDirectionDescription:                         |-
-                                                     { $direction ->
-                                                     [upward]   upward arrow indicates passage from outside to inside
-                                                     *[downward] downward arrow indicates passage from inside to outside
-                                                     }
-
-  barSizeDescription:                                |-
-                                                     { $amount ->
-                                                     [aLittleMore]  A little more
-                                                     [aLotMore]     A lot more
-                                                     [aLittleLess]  A little less
-                                                     *[aLotLess]     A lot less
-                                                     } outside than inside
-
-  barChartPattern:                                   "{ a11y.solute }: { a11y.barSizeDescription }; { a11y.arrowSizeDescription } { a11y.arrowDirectionDescription }."
+  soluteConcentrationsAccordionBox:
+    accessibleParagraph: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
+    barChart:
+      accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteConcentrationsAccordionBox.barChart.comparison } { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
+      comparison:     |-
+                      { $amount ->
+                        [aLittleMore]  A little more
+                        [aLotMore]     A lot more
+                        [aLittleLess]  A little less
+                        *[aLotLess]     A lot less
+                      } outside than inside
+      crossing:       |-
+                      { $crossing ->
+                        *[none] no crossings
+                        [inside] crossings in
+                        [outside] crossings out
+                        [both] crossings in and out
+                      }
 
   currentDetailsLeadingParagraph:                    "Right now, zoomed-in cross section of cell has:"
   currentDetailsNoAddedSolutes:                      no added solutes

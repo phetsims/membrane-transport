@@ -12,9 +12,10 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -68,16 +69,24 @@ export default class SoluteBarChartNode extends Node {
              'aLotLess';
     } );
 
-    // TODO (design): i18n https://github.com/phetsims/membrane-transport/issues/90
-    const sizeDescriptionProperty = new StringUnionProperty( 'small', {
-      validValues: [ 'small', 'medium', 'large' ]
+    // These are updated in stepEmitter, and used to add description for the accessible name.
+    const inwardCountProperty = new NumberProperty( 0 );
+    const outwardCountProperty = new NumberProperty( 0 );
+
+    const crossingProperty = new DerivedProperty( [ inwardCountProperty, outwardCountProperty ], ( inwardCount, outwardCount ) => {
+
+      affirm( inwardCount >= 0 && outwardCount >= 0, 'counts should be non-negative' );
+
+      return inwardCount === 0 && outwardCount === 0 ? 'none' :
+             inwardCount > 0 && outwardCount === 0 ? 'inside' :
+             inwardCount === 0 && outwardCount > 0 ? 'outside' :
+             'both';
     } );
 
-    const descriptionProperty = MembraneTransportFluent.a11y.barChartPattern.createProperty( {
+    const accessibleNameProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleName.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
-      size: sizeDescriptionProperty,
-      direction: 'upward' // TODO (design): This is a placeholder, but we need a design for equal amounts before finishing this up https://github.com/phetsims/membrane-transport/issues/90
+      crossing: crossingProperty
     } );
 
     super( {
@@ -89,7 +98,7 @@ export default class SoluteBarChartNode extends Node {
 
       // pdom
       tagName: 'li',
-      accessibleName: descriptionProperty
+      accessibleName: accessibleNameProperty
     } );
 
     // For layout, not just for debugging
@@ -220,8 +229,12 @@ export default class SoluteBarChartNode extends Node {
         const inwardCount = fluxEntries.filter( entry => entry.direction === 'inward' ).length;
         const outwardCount = fluxEntries.filter( entry => entry.direction === 'outward' ).length;
 
+        // TODO: Should updateStripe listen to the inwardCountProperty? See https://github.com/phetsims/membrane-transport/issues/88
         updateStripe( inwardCount, insideStripe, insideBar, insideSoluteCountProperty );
         updateStripe( outwardCount, outsideStripe, outsideBar, outsideSoluteCountProperty );
+
+        inwardCountProperty.value = inwardCount;
+        outwardCountProperty.value = outwardCount;
       }
     } );
 

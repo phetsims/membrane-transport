@@ -158,11 +158,14 @@ type StringsType = {
     'soluteCapitalizedStringProperty': LocalizedStringProperty;
     'soluteSpinnerObjectResponsePatternStringProperty': LocalizedStringProperty;
     'soluteSpinnerContextResponsePatternStringProperty': LocalizedStringProperty;
-    'soluteBarChartsDescriptionParagraphStringProperty': LocalizedStringProperty;
-    'arrowSizeDescriptionStringProperty': LocalizedStringProperty;
-    'arrowDirectionDescriptionStringProperty': LocalizedStringProperty;
-    'barSizeDescriptionStringProperty': LocalizedStringProperty;
-    'barChartPatternStringProperty': LocalizedStringProperty;
+    'soluteConcentrationsAccordionBox': {
+      'accessibleParagraphStringProperty': LocalizedStringProperty;
+      'barChart': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'comparisonStringProperty': LocalizedStringProperty;
+        'crossingStringProperty': LocalizedStringProperty;
+      }
+    };
     'currentDetailsLeadingParagraphStringProperty': LocalizedStringProperty;
     'currentDetailsNoAddedSolutesStringProperty': LocalizedStringProperty;
     'currentDetailsSoluteTypesOnOutsideStringProperty': LocalizedStringProperty;

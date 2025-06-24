@@ -333,20 +333,21 @@
     "soluteSpinnerContextResponsePattern": {
       "value": "{ $amount ->\n\n  [aLittle] A little\n *[aLot]    A lot\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n  [same] same amount of solute inside and outside.\n *[other] { $differenceSize ->\n    [aLittle] a little\n   *[aLot]    a lot\n  }\n  { $moreOrLessOrSame ->\n    [more] more\n   *[less] less\n  }\n  { a11y_solute }\n  { $directionality ->\n    [insideThanOutside] inside than outside\n   *[outsideThanInside] outside than inside\n  }.\n}"
     },
-    "soluteBarChartsDescriptionParagraph": {
-      "value": "A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading."
-    },
-    "arrowSizeDescription": {
-      "value": "{ $size ->\n[small]  small\n[medium] medium\n*[large]  large\n}"
-    },
-    "arrowDirectionDescription": {
-      "value": "{ $direction ->\n[upward]   upward arrow indicates passage from outside to inside\n*[downward] downward arrow indicates passage from inside to outside\n}"
-    },
-    "barSizeDescription": {
-      "value": "{ $amount ->\n[aLittleMore]  A little more\n[aLotMore]     A lot more\n[aLittleLess]  A little less\n*[aLotLess]     A lot less\n} outside than inside"
-    },
-    "barChartPattern": {
-      "value": "{ a11y_solute }: { a11y_barSizeDescription }; { a11y_arrowSizeDescription } { a11y_arrowDirectionDescription }."
+    "soluteConcentrationsAccordionBox": {
+      "accessibleParagraph": {
+        "value": "A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading."
+      },
+      "barChart": {
+        "accessibleName": {
+          "value": "{ a11y_soluteCapitalized }: { a11y_soluteConcentrationsAccordionBox_barChart_comparison } { a11y_soluteConcentrationsAccordionBox_barChart_crossing }."
+        },
+        "comparison": {
+          "value": "{ $amount ->\n  [aLittleMore]  A little more\n  [aLotMore]     A lot more\n  [aLittleLess]  A little less\n  *[aLotLess]     A lot less\n} outside than inside"
+        },
+        "crossing": {
+          "value": "{ $crossing ->\n  *[none] no crossings\n  [inside] crossings in\n  [outside] crossings out\n  [both] crossings in and out\n}"
+        }
+      }
     },
     "currentDetailsLeadingParagraph": {
       "value": "Right now, zoomed-in cross section of cell has:"
