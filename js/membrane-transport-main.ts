@@ -7,7 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import showFluent from '../../chipper/js/browser/showFluent.js';
+import showFluentTable from '../../chipper/js/browser/showFluentTable.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
@@ -26,7 +26,7 @@ import SimpleDiffusionScreen from './simple-diffusion/SimpleDiffusionScreen.js';
 simLauncher.launch( () => {
 
   if ( phet.chipper.queryParameters.fluentTable !== 'none' ) {
-    showFluent( MembraneTransportFluent, phet.chipper.queryParameters.fluentTable );
+    showFluentTable( MembraneTransportFluent, phet.chipper.queryParameters.fluentTable );
     return;
   }
 
