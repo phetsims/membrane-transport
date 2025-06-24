@@ -243,8 +243,7 @@ export default class SoluteBarChartNode extends Node {
 
         const inwardCount = fluxEntries.filter( entry => entry.direction === 'inward' ).length;
         const outwardCount = fluxEntries.filter( entry => entry.direction === 'outward' ).length;
-
-        // TODO: Should updateStripe listen to the inwardCountProperty? See https://github.com/phetsims/membrane-transport/issues/88
+        
         updateStripe( inwardCount, insideStripe, insideBar, insideSoluteCountProperty );
         updateStripe( outwardCount, outsideStripe, outsideBar, outsideSoluteCountProperty );
 
