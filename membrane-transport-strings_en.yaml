@@ -1,5 +1,4 @@
 # Strings for the Membrane Transport simulation
-# After changing this file, run `grunt modulify --targets=strings` to regenerate the appropriate files, including type definitions.
 
 # Title
 membrane-transport.title:                               Membrane Transport
@@ -89,6 +88,8 @@ a11y:
     voltageGatedChannelPanel:
       sodiumIonNaPlusVoltageGated:   Sodium Ion NA plus, Voltage-gated
       potassiumIonKPlusVoltageGated: Potassium Ion K plus, Voltage-gated
+
+      # For the Membrane Potential radio buttons
       membranePotential:
         radioButtonGroup:
           accessibleName:     Membrane Potential
