@@ -201,6 +201,12 @@ export default class SoluteBarChartNode extends Node {
 
       outsideBarStroke.setRectWidth( width );
       outsideBarStroke.left = origin.centerX;
+
+      // When the amounts change and the sim is paused, we must clear the highlight stripes so they don't remain stale
+      if ( !model.isPlayingProperty.value ) {
+        outsideStripe.setRectWidth( 0 );
+        insideStripe.setRectWidth( 0 );
+      }
     } );
 
     // Update inside bar width when count changes, but don't show stripe. If absorbing glucose, then it was requested to show the maximum solute count
@@ -218,6 +224,12 @@ export default class SoluteBarChartNode extends Node {
 
       insideBarStroke.setRectWidth( width );
       insideBarStroke.left = origin.centerX;
+
+      // When the amounts change and the sim is paused, we must clear the highlight stripes so they don't remain stale
+      if ( !model.isPlayingProperty.value ) {
+        outsideStripe.setRectWidth( 0 );
+        insideStripe.setRectWidth( 0 );
+      }
     } );
 
     // Helper function to update a highlight stripe
@@ -243,7 +255,7 @@ export default class SoluteBarChartNode extends Node {
 
         const inwardCount = fluxEntries.filter( entry => entry.direction === 'inward' ).length;
         const outwardCount = fluxEntries.filter( entry => entry.direction === 'outward' ).length;
-        
+
         updateStripe( inwardCount, insideStripe, insideBar, insideSoluteCountProperty );
         updateStripe( outwardCount, outsideStripe, outsideBar, outsideSoluteCountProperty );
 
