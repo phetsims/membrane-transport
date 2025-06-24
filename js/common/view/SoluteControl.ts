@@ -31,20 +31,6 @@ type SoluteControlOptions = SelfOptions & StrictOmit<PanelOptions, 'tandem'>;
 const fineDelta = 2;
 const coarseDelta = 10;
 
-// Qualitative descriptions for the amount of a solute type on one side of the membrane.
-// Max values are relative to the maximum number of solutes that can be added.
-const DESCRIBED_THRESHOLDS = [
-  { label: 'none', max: 0 },
-  { label: 'few', max: 0.05 },
-  { label: 'some', max: 0.10 },
-  { label: 'smallAmount', max: 0.25 },
-  { label: 'several', max: 0.40 },
-  { label: 'many', max: 0.60 },
-  { label: 'largeAmount', max: 0.80 },
-  { label: 'hugeAmount', max: 0.99 },
-  { label: 'maxAmount', max: 1 }
-] as const;
-
 export default class SoluteControl extends Panel {
 
   public constructor( model: Pick<MembraneTransportModel, 'soluteProperty' | 'insideSoluteCountProperties' | 'outsideSoluteCountProperties' | 'addSolutes' | 'removeSolutes'>,
@@ -149,7 +135,21 @@ export default class SoluteControl extends Panel {
     } );
 
     const objectResponseMessageProperty = MembraneTransportFluent.a11y.soluteSpinnerObjectResponsePattern.createProperty( {
-      amount: DerivedProperty.fromThresholds( actualCountPerSideProperty, new Range( 0, MembraneTransportConstants.MAX_SOLUTE_COUNT ), DESCRIBED_THRESHOLDS ),
+
+      // Qualitative descriptions for the amount of a solute, as described in
+      // https://github.com/phetsims/membrane-transport/issues/242
+      amount: new DerivedProperty( [ actualCountPerSideProperty ], count => {
+        const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
+        return count === 0 ? 'none' :
+               count <= 3 ? 'few' :
+               countAsFraction <= 0.10 ? 'some' :
+               countAsFraction <= 0.25 ? 'smallAmount' :
+               countAsFraction <= 0.40 ? 'several' :
+               countAsFraction <= 0.60 ? 'many' :
+               countAsFraction <= 0.80 ? 'largeAmount' :
+               countAsFraction < 1 ? 'hugeAmount' :
+               'maxAmount';
+      } ),
       soluteType: model.soluteProperty
     } );
 
