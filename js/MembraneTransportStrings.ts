@@ -159,7 +159,7 @@ type StringsType = {
     'soluteSpinnerObjectResponsePatternStringProperty': LocalizedStringProperty;
     'soluteSpinnerContextResponsePatternStringProperty': LocalizedStringProperty;
     'soluteConcentrationsAccordionBox': {
-      'accessibleParagraphStringProperty': LocalizedStringProperty;
+      'descriptionContentStringProperty': LocalizedStringProperty;
       'barChart': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'comparisonStringProperty': LocalizedStringProperty;

@@ -193,7 +193,7 @@ a11y:
                                                      }
 
   soluteConcentrationsAccordionBox:
-    accessibleParagraph: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
+    descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
       accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteConcentrationsAccordionBox.barChart.comparison }; { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
       comparison:     |-

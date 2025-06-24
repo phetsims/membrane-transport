@@ -87,7 +87,9 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
       tagName: 'ul',
 
-      accessibleParagraph: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.accessibleParagraphStringProperty
+      // Use descriptionContent because it should come before the list of solute bar charts in the PDOM.
+      descriptionTagName: 'p',
+      descriptionContent: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.descriptionContentStringProperty
     } );
     contentNode.addChild( hbox );
 

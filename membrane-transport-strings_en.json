@@ -334,7 +334,7 @@
       "value": "{ $amount ->\n\n  [aLittle] A little\n *[aLot]    A lot\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now\n{ $moreOrLessOrSame ->\n  [same] same amount of solute inside and outside.\n *[other] { $differenceSize ->\n    [aLittle] a little\n   *[aLot]    a lot\n  }\n  { $moreOrLessOrSame ->\n    [more] more\n   *[less] less\n  }\n  { a11y_solute }\n  { $directionality ->\n    [insideThanOutside] inside than outside\n   *[outsideThanInside] outside than inside\n  }.\n}"
     },
     "soluteConcentrationsAccordionBox": {
-      "accessibleParagraph": {
+      "descriptionContent": {
         "value": "A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading."
       },
       "barChart": {
