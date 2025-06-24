@@ -31,20 +31,28 @@ leakageChannels:                                        Leakage Channels
 NaPlusKPlusPump:                                        Na<sup>+</sup>/K<sup>+</sup><br>Pump
 sodiumGlucoseCotransporter:                             Na<sup>+</sup>/Glucose<br>Cotransporter
 
+# Membrane Potential Section
 membranePotential_mV:                                   Membrane Potential (mV)
 charges:                                                Charges
+
+# Ligands Section
 addLigands:                                             Add Ligands
 removeLigands:                                          Remove Ligands
+
+# Preferences Dialog
 animateLipids:                                          Animate Lipids
 animateLipidsDescription:                               Whether the phospholipids forming the cell membrane should be animated.
 glucoseDrain:                                           Glucose Drain
 glucoseDrainDescription:                                Simulate phosphorylation of glucose in the cell after transport. Simulation assumes a high concentration of glucose inside the cell.
-soluteConcentrations:                                   Solute Concentrations
-crossingHighlights:                                     Crossing Highlights
-crossingSounds:                                         Crossing Sounds
-
 preferencesDialog.audio.sounds.stereoSounds:            Stereo Sounds
 preferencesDialog.audio.sounds.stereoSoundsDescription: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
+
+# Solute Concentration Bar Charts
+soluteConcentrations:                                   Solute Concentrations
+
+# Checkboxes below the play area
+crossingHighlights:                                     Crossing Highlights
+crossingSounds:                                         Crossing Sounds
 
 a11y:
   summary:
