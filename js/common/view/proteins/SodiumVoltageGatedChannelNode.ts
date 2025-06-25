@@ -7,10 +7,8 @@
  */
 
 import Image from '../../../../../scenery/js/nodes/Image.js';
-import sodiumVoltageGatedMinus50mV_svg from '../../../../images/sodiumVoltageGatedMinus50mV_svg.js';
-
-import sodiumVoltageGatedMinus70mV_svg from '../../../../images/sodiumVoltageGatedMinus70mV_svg.js';
-import sodiumVoltageGatedPlus30mV_svg from '../../../../images/sodiumVoltageGatedPlus30mV_svg.js';
+import sodiumVoltageGatedClosed_svg from '../../../../images/sodiumVoltageGatedClosed_svg.js';
+import sodiumVoltageGatedOpen_svg from '../../../../images/sodiumVoltageGatedOpen_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import SodiumVoltageGatedChannel from '../../model/proteins/SodiumVoltageGatedChannel.js';
@@ -23,15 +21,15 @@ export default class SodiumVoltageGatedChannelNode extends TransportProteinNode 
    */
   public constructor( channel: SodiumVoltageGatedChannel | null ) {
 
-    const image = new Image( sodiumVoltageGatedPlus30mV_svg );
+    const image = new Image( sodiumVoltageGatedClosed_svg );
     super( image, channel );
 
     if ( channel ) {
 
       channel.stateProperty.link( state => {
-        const newImage = ( state === 'closedNegative70mV' ? sodiumVoltageGatedMinus70mV_svg :
-                           state === 'openNegative50mV' ? sodiumVoltageGatedMinus50mV_svg :
-                           state === 'closed30mV' ? sodiumVoltageGatedPlus30mV_svg :
+        const newImage = ( state === 'closedNegative70mV' ? sodiumVoltageGatedClosed_svg :
+                           state === 'openNegative50mV' ? sodiumVoltageGatedOpen_svg :
+                           state === 'closed30mV' ? sodiumVoltageGatedClosed_svg :
                            ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() );
 
         image.setImage( newImage );
