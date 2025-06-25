@@ -40,4 +40,14 @@ The project is a web-based interactive simulation built with TypeScript. It foll
 *   **Stale Artifacts:** The `modulify` task does **not** automatically clean up stale generated files. If an asset is renamed or deleted, the corresponding generated TypeScript module must be manually deleted from the repository before `grunt type-check` will report the correct errors.
 *   **Git-Based File Operations:** All file system modifications (renaming, deleting) must be done through `git` commands (`git mv`, `git rm`) to ensure the project history is preserved.
 
+## Learned Conventions and Tricky Workflows
+
+*   **Commit Message Format:** All git commits **must** include a full URL to a corresponding GitHub issue at the end of the commit message. For example: `git commit -m "Refactor: Improve performance, see https://github.com/phetsims/membrane-transport/issues/123"`.
+*   **Asset Renaming Workflow:** Renaming an image asset requires a specific, manual workflow:
+    1.  Use `git mv` to rename the asset file (e.g., `images/foo.svg`).
+    2.  Use `git mv` to rename the corresponding generated TypeScript module (e.g., `images/foo_svg.ts`).
+    3.  Update the `images/license.json` file to reflect the new asset filename.
+    4.  Search the codebase for the old filename and update any import statements or references in the code.
+    5.  Run `grunt type-check` to ensure all references have been correctly updated. The compiler errors will guide this process.
+
 Overall, the `membrane-transport` codebase is well-structured, well-documented, and easy to understand. It makes good use of modern web technologies and has a strong focus on quality and accessibility.
