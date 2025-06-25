@@ -55,6 +55,14 @@ crossingHighlights:                                     Crossing Highlights
 crossingSounds:                                         Crossing Sounds
 
 a11y:
+  simpleDiffusionScreen:
+    screenButtonsHelpText: Explore what solutes can diffuse freely in a cellular environment.
+  facilitatedDiffusionScreen:
+    screenButtonsHelpText: Explore conditions to facilitate diffusion for solutes using transport proteins.
+  activeTransportScreen:
+    screenButtonsHelpText: sdfasdfsadfdsfasdfsdf
+  playgroundScreen:
+    screenButtonsHelpText: Play with all solutes and all transport proteins.
   summary:
     playAreaSummaryIntro:                 |-
                                           An observation window zooms in on a cross-section of a cell's membrane.

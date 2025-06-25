@@ -56,6 +56,18 @@ type StringsType = {
   'crossingHighlightsStringProperty': LocalizedStringProperty;
   'crossingSoundsStringProperty': LocalizedStringProperty;
   'a11y': {
+    'simpleDiffusionScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'facilitatedDiffusionScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'activeTransportScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'playgroundScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+    };
     'summary': {
       'playAreaSummaryIntroStringProperty': LocalizedStringProperty;
       'playAreaSummaryProteinsStringProperty': LocalizedStringProperty;

@@ -15,7 +15,8 @@ import MembraneTransportFluent from '../MembraneTransportFluent.js';
 export default class SimpleDiffusionScreen extends MembraneTransportScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneTransportFluent.screen.simpleDiffusionStringProperty, tandem, 'simpleDiffusion' );
+    super( MembraneTransportFluent.screen.simpleDiffusionStringProperty, tandem, 'simpleDiffusion',
+      MembraneTransportFluent.a11y.simpleDiffusionScreen.screenButtonsHelpTextStringProperty );
   }
 
 }

@@ -15,7 +15,8 @@ import MembraneTransportFluent from '../MembraneTransportFluent.js';
 export default class PlaygroundScreen extends MembraneTransportScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneTransportFluent.screen.playgroundStringProperty, tandem, 'playground' );
+    super( MembraneTransportFluent.screen.playgroundStringProperty, tandem, 'playground',
+      MembraneTransportFluent.a11y.playgroundScreen.screenButtonsHelpTextStringProperty );
   }
 
 }

@@ -8,6 +8,7 @@
  */
 
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import MembraneTransportColors from '../common/MembraneTransportColors.js';
@@ -19,7 +20,8 @@ import MembraneTransportScreenView from './view/MembraneTransportScreenView.js';
 
 export default class MembraneTransportScreen extends Screen<MembraneTransportModel, MembraneTransportScreenView> {
 
-  public constructor( nameProperty: ReadOnlyProperty<string>, tandem: Tandem, featureSet: MembraneTransportFeatureSet ) {
+  public constructor( nameProperty: ReadOnlyProperty<string>, tandem: Tandem, featureSet: MembraneTransportFeatureSet,
+                      screenButtonHelpTextProperty: TReadOnlyProperty<string> ) {
 
     super(
       () => new MembraneTransportModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),
@@ -27,7 +29,8 @@ export default class MembraneTransportScreen extends Screen<MembraneTransportMod
         name: nameProperty,
         backgroundColorProperty: MembraneTransportColors.outsideCellColorProperty,
         tandem: tandem,
-        createKeyboardHelpNode: () => new MembraneTransportKeyboardHelpNode( featureSet )
+        createKeyboardHelpNode: () => new MembraneTransportKeyboardHelpNode( featureSet ),
+        screenButtonsHelpText: screenButtonHelpTextProperty
       }
     );
   }

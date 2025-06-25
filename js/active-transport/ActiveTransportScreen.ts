@@ -14,7 +14,9 @@ import MembraneTransportFluent from '../MembraneTransportFluent.js';
 export default class ActiveTransportScreen extends MembraneTransportScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneTransportFluent.screen.activeTransportStringProperty, tandem, 'activeTransport' );
+    super( MembraneTransportFluent.screen.activeTransportStringProperty, tandem, 'activeTransport',
+      MembraneTransportFluent.a11y.activeTransportScreen.screenButtonsHelpTextStringProperty
+    );
   }
 }
 

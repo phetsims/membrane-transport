@@ -15,7 +15,8 @@ import MembraneTransportFluent from '../MembraneTransportFluent.js';
 export default class FacilitatedDiffusionScreen extends MembraneTransportScreen {
 
   public constructor( tandem: Tandem ) {
-    super( MembraneTransportFluent.screen.facilitatedDiffusionStringProperty, tandem, 'facilitatedDiffusion' );
+    super( MembraneTransportFluent.screen.facilitatedDiffusionStringProperty, tandem, 'facilitatedDiffusion',
+      MembraneTransportFluent.a11y.facilitatedDiffusionScreen.screenButtonsHelpTextStringProperty );
   }
 }
 
