@@ -4,7 +4,7 @@
 
 The project is a web-based interactive simulation built with TypeScript. It follows a Model-View-Controller (MVC) like pattern, with clear separation of concerns. The directory structure is well-organized, with distinct folders for source code (`js`), assets (`images`, `sounds`), documentation (`doc`), and build artifacts (`build`).
 
-The codebase is organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport, and Playground. Common code is located in `js/common/`, further divided into `model/` and `view/` directories.
+The codebase is organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport, and Playground. Common code is located in `js/common/`, further divided into `model/` and `view/` directories. Shared values are often stored in `MembraneTransportConstants`.
 
 This project is developed as part of a PhET monorepo. You can follow import paths to explore dependencies, but be aware that TypeScript files (`.ts`) are often imported with a `.js` extension.
 
@@ -12,10 +12,10 @@ This project is developed as part of a PhET monorepo. You can follow import path
 
 *   **TypeScript:** The entire codebase is written in TypeScript, providing static typing and improved code quality.
 *   **Grunt:** The project uses Grunt as a task runner for building, testing, and other development tasks.
-*   **Custom Framework:** The simulation is built on a custom PhET framework that includes:
-    *   A component-based scene graph for creating and managing visual elements.
+*   **Custom PhET Framework:** The simulation is built on a custom PhET framework that mixes libraries like Scenery (scene graph), Axon (data binding), and Dot (math). It includes:
+    *   A component-based scene graph for creating and managing visual elements. UI nodes are typically `Node` subclasses or `CanvasNode` for high-volume rendering.
     *   A property-based model for managing application state (`axon`).
-    *   A model-view transform system for mapping between model and view coordinates.
+    *   A model-view transform system (`ModelViewTransform2`) for mapping between model and view coordinates.
     *   A sound management system.
     *   An internationalization system with support for fluent syntax.
 
@@ -27,8 +27,19 @@ This project is developed as part of a PhET monorepo. You can follow import path
 ## Key Features and Patterns
 
 *   **Component-Based Structure:** The application is composed of a hierarchy of components, each with its own model and view. This makes the code modular and easy to understand.
+*   **Reactivity and Time-Based Updates:**
+    *   The model exposes `Property` and `DerivedProperty` instances. Listen to changes via `property.link( listener )`.
+    *   For time-driven animations, many view nodes expose a `stepEmitter` that emits the time delta (`dt`) on each frame.
+    *   Avoid `setTimeout` or `setInterval`. Use `stepEmitter` callbacks for timed effects. The linter will flag direct async timer usage.
+*   **Rendering:**
+    *   The scene graph uses both Scenery `Node` objects and `CanvasNode`.
+    *   When using `CanvasNode`, you must manually call `invalidatePaint()` to trigger a redraw.
+    *   For performance-critical vector nodes, consider using `rasterizeNode` to cache them as images.
+*   **Layout and Styling:**
+    *   Layout often relies on fixed-size boxes with children clipped using `clipArea`.
+    *   Primitive shapes like `Rectangle`, `Path`, and `ArrowNode` are used for UI elements, positioned with properties like `.left` and `.centerY`.
 *   **Accessibility:** The codebase has a strong focus on accessibility, with features like:
-    *   A parallel DOM (`PDOM`) for screen readers.
+    *   A parallel DOM (`PDOM`) for screen readers. Use `PatternMessageProperty` bound to `accessibleName` and an appropriate `tagName` (e.g., `'li'`).
     *   Voicing for providing audio feedback.
     *   Keyboard navigation and interaction.
 *   **Internationalization:** The application is designed to be easily translated into other languages. It uses a fluent API for creating internationalized strings with placeholders.
@@ -43,7 +54,7 @@ This project is developed as part of a PhET monorepo. You can follow import path
     *   Use flat data structures for serialization.
     *   Design for lightweight models and views.
 *   **Error Handling:**
-    *   Validate inputs with `assert` statements.
+    *   Validate inputs with `assert` and `affirm` statements.
     *   Use type narrowing for safe operations.
     *   Document expected behaviors in code comments.
 
@@ -63,7 +74,7 @@ This project is developed as part of a PhET monorepo. You can follow import path
 *   **Git-Based File Operations:** All file system modifications (renaming, deleting) must be done through `git` commands (`git mv`, `git rm`) to ensure the project history is preserved.
 
 ### Build Commands
-*   `grunt lint --fix`: Run ESLint, automatically addressing formatting issues.
+*   `grunt lint --fix`: Run ESLint, automatically addressing formatting issues. The linter is configured to forbid certain patterns, like direct use of `setTimeout`.
 *   `grunt type-check`: Run TypeScript type checking.
 
 ## Learned Conventions and Tricky Workflows
@@ -75,6 +86,7 @@ This project is developed as part of a PhET monorepo. You can follow import path
     3.  Update the `images/license.json` file to reflect the new asset filename.
     4.  Search the codebase for the old filename and update any import statements or references in the code.
     5.  Run `grunt type-check` to ensure all references have been correctly updated. The compiler errors will guide this process.
+*   **Render Order:** When adding children to a Scenery `Node`, the order matters. Background elements must be added before foreground or interactive elements.
 *   **Code Style:**
     *   Follows PhET naming conventions: PascalCase for classes, camelCase for variables.
     *   JS/TS files do not end with newlines.
