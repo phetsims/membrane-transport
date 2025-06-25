@@ -93,7 +93,20 @@ This project is developed as part of a PhET monorepo. You can follow import path
     *   Line comments are preceded by a blank line.
     *   Import `.ts` files as `.js` in the import statements.
 *   **Internationalization (i18n):**
+    *   **Source of Truth:** All new strings must be added to the `membrane-transport-strings_en.yaml` file. The `grunt modulify` command will then automatically update the `membrane-transport-strings_en.json` and `MembraneTransportStrings.ts` files.
     *   Strings in `membrane-transport-strings_en.json` follow a nested structure that must be mirrored in `MembraneTransportStrings.ts`.
     *   The `grunt modulify` command automatically updates `MembraneTransportStrings.ts` when strings are changed.
     *   A11y strings often need deeper nesting (component > subcomponent > feature > property).
     *   When adding new accessibility text, check existing patterns for proper nesting structure.
+*   **Voicing:**
+    *   To make an announcement, use the `voicingUtteranceQueue`. Import it from `../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js`.
+    *   Create a new `Utterance` and add it to the queue:
+        ```typescript
+        import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
+        import Utterance from '../../../../utterance-queue/js/Utterance.js';
+
+        const utterance = new Utterance( { alert: 'Your text here' } );
+        voicingUtteranceQueue.addToBack( utterance );
+        ```
+*   **Phet-iO Instrumentation:**
+    *   When creating new `PhetioObject` classes, do not import `PhetioObjectIO`. Instead, import `IOType` from `../../../../tandem/js/types/IOType.js` and use the static `IOType.ObjectIO` for the `phetioType` option.
