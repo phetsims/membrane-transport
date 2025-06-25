@@ -215,10 +215,16 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     // Make it possible to hide or show the entire outside or inside solute control panel
     const outsideSoluteControlNode = new Node( {
-      tandem: outsideSoluteControlsTandem
+      tandem: outsideSoluteControlsTandem,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
     const insideSoluteControlNode = new Node( {
-      tandem: insideSoluteControlsTandem
+      tandem: insideSoluteControlsTandem,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
 
     // Number controls for the 'outside' solute concentrations

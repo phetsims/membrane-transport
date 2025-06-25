@@ -113,7 +113,12 @@ export default class SoluteBarChartNode extends Node {
 
       // pdom
       tagName: 'li',
-      accessibleName: accessibleNameProperty
+      accessibleName: accessibleNameProperty,
+
+      // phet-io
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
 
     // For layout, not just for debugging

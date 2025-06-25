@@ -105,7 +105,11 @@ export default class TransportProteinPanel extends Panel {
         // pdom
         accessibleHeading: config.titleProperty,
 
-        tandem: tandem.createTandem( config.tandemName )
+        // phet-io
+        tandem: tandem.createTandem( config.tandemName ),
+        visiblePropertyOptions: {
+          phetioFeatured: true
+        }
       } );
     };
 
@@ -223,7 +227,12 @@ export default class TransportProteinPanel extends Panel {
       accessibleHeading: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
-      tandem: tandem
+
+      // phet-io
+      tandem: tandem,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
 
     this.mutate( { left: 20, top: 20 } );
