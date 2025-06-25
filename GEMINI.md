@@ -68,7 +68,7 @@ This project is developed as part of a PhET monorepo. You can follow import path
 
 ## Learned Conventions and Tricky Workflows
 
-*   **Commit Message Format:** All git commits **must** include a full URL to a corresponding GitHub issue at the end of the commit message. For example: `git commit -m "Refactor: Improve performance, see https://github.com/phetsims/membrane-transport/issues/123"`.
+*   **Commit Message Format:** All git commits **must** be a single line and include a full URL to a corresponding GitHub issue at the end of the message. Do not use conventional commit prefixes like "Feat:" or "Refactor:". For example: `git commit -m "Improve performance, see https://github.com/phetsims/membrane-transport/issues/123"`.
 *   **Asset Renaming Workflow:** Renaming an image asset requires a specific, manual workflow:
     1.  Use `git mv` to rename the asset file (e.g., `images/foo.svg`).
     2.  Use `git mv` to rename the corresponding generated TypeScript module (e.g., `images/foo_svg.ts`).
