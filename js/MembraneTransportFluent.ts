@@ -55,11 +55,11 @@ addToMapIfDefined( 'animateLipids', 'animateLipidsStringProperty' );
 addToMapIfDefined( 'animateLipidsDescription', 'animateLipidsDescriptionStringProperty' );
 addToMapIfDefined( 'glucoseDrain', 'glucoseDrainStringProperty' );
 addToMapIfDefined( 'glucoseDrainDescription', 'glucoseDrainDescriptionStringProperty' );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', 'preferencesDialog.audio.sounds.stereoSoundsStringProperty' );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', 'preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty' );
 addToMapIfDefined( 'soluteConcentrations', 'soluteConcentrationsStringProperty' );
 addToMapIfDefined( 'crossingHighlights', 'crossingHighlightsStringProperty' );
 addToMapIfDefined( 'crossingSounds', 'crossingSoundsStringProperty' );
-addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', 'preferencesDialog.audio.sounds.stereoSoundsStringProperty' );
-addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', 'preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryIntro', 'a11y.summary.playAreaSummaryIntroStringProperty' );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryProteins', 'a11y.summary.playAreaSummaryProteinsStringProperty' );
 addToMapIfDefined( 'a11y_summary_playAreaSummaryPotential', 'a11y.summary.playAreaSummaryPotentialStringProperty' );
@@ -200,17 +200,17 @@ const MembraneTransportFluent = {
   leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'leakageChannels', _.get( MembraneTransportStrings, 'leakageChannelsStringProperty' ) ),
   NaPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'NaPlusKPlusPump', _.get( MembraneTransportStrings, 'NaPlusKPlusPumpStringProperty' ) ),
   sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'sodiumGlucoseCotransporterStringProperty' ) ),
+  _comment_34: new FluentComment( {"comment":"Membrane Potential Section","lineNumber":34,"associatedKey":"membranePotential_mV"} ),
   membranePotential_mVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotential_mV', _.get( MembraneTransportStrings, 'membranePotential_mVStringProperty' ) ),
   chargesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'charges', _.get( MembraneTransportStrings, 'chargesStringProperty' ) ),
+  _comment_38: new FluentComment( {"comment":"Ligands Section","lineNumber":38,"associatedKey":"addLigands"} ),
   addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'addLigands', _.get( MembraneTransportStrings, 'addLigandsStringProperty' ) ),
   removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'removeLigands', _.get( MembraneTransportStrings, 'removeLigandsStringProperty' ) ),
+  _comment_42: new FluentComment( {"comment":"Preferences Dialog","lineNumber":42,"associatedKey":"animateLipids"} ),
   animateLipidsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids', _.get( MembraneTransportStrings, 'animateLipidsStringProperty' ) ),
   animateLipidsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipidsDescription', _.get( MembraneTransportStrings, 'animateLipidsDescriptionStringProperty' ) ),
   glucoseDrainStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrain', _.get( MembraneTransportStrings, 'glucoseDrainStringProperty' ) ),
   glucoseDrainDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrainDescription', _.get( MembraneTransportStrings, 'glucoseDrainDescriptionStringProperty' ) ),
-  soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations', _.get( MembraneTransportStrings, 'soluteConcentrationsStringProperty' ) ),
-  crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingHighlights', _.get( MembraneTransportStrings, 'crossingHighlightsStringProperty' ) ),
-  crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingSounds', _.get( MembraneTransportStrings, 'crossingSoundsStringProperty' ) ),
   preferencesDialog: {
     audio: {
       sounds: {
@@ -219,6 +219,11 @@ const MembraneTransportFluent = {
       }
     }
   },
+  _comment_50: new FluentComment( {"comment":"Solute Concentration Bar Charts","lineNumber":50,"associatedKey":"soluteConcentrations"} ),
+  soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations', _.get( MembraneTransportStrings, 'soluteConcentrationsStringProperty' ) ),
+  _comment_53: new FluentComment( {"comment":"Checkboxes below the play area","lineNumber":53,"associatedKey":"crossingHighlights"} ),
+  crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingHighlights', _.get( MembraneTransportStrings, 'crossingHighlightsStringProperty' ) ),
+  crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingSounds', _.get( MembraneTransportStrings, 'crossingSoundsStringProperty' ) ),
   a11y: {
     summary: {
       playAreaSummaryIntroStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_summary_playAreaSummaryIntro', _.get( MembraneTransportStrings, 'a11y.summary.playAreaSummaryIntroStringProperty' ) ),
@@ -263,7 +268,7 @@ const MembraneTransportFluent = {
       voltageGatedChannelPanel: {
         sodiumIonNaPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty' ) ),
         potassiumIonKPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty' ) ),
-        _comment_92: new FluentComment( {"comment":"For the Membrane Potential radio buttons","lineNumber":92,"associatedKey":"membranePotential"} ),
+        _comment_100: new FluentComment( {"comment":"For the Membrane Potential radio buttons","lineNumber":100,"associatedKey":"membranePotential"} ),
         membranePotential: {
           radioButtonGroup: {
             accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty' ) ),
@@ -305,7 +310,7 @@ const MembraneTransportFluent = {
       ligandUnboundAlertStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_ligandUnboundAlert', _.get( MembraneTransportStrings, 'a11y.ligandNode.ligandUnboundAlertStringProperty' ) )
     },
     soluteControlsAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControlsAccessibleHelpText', _.get( MembraneTransportStrings, 'a11y.soluteControlsAccessibleHelpTextStringProperty' ) ),
-    _comment_125: new FluentComment( {"comment":"Accessible names for solute radio buttons","lineNumber":125,"associatedKey":"soluteAccessibleNames"} ),
+    _comment_133: new FluentComment( {"comment":"Accessible names for solute radio buttons","lineNumber":133,"associatedKey":"soluteAccessibleNames"} ),
     soluteAccessibleNames: {
       oxygenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_oxygen', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.oxygenStringProperty' ) ),
       carbonDioxideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_carbonDioxide', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.carbonDioxideStringProperty' ) ),
@@ -340,23 +345,23 @@ const MembraneTransportFluent = {
     currentDetailsLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_currentDetailsLigands', _.get( MembraneTransportStrings, 'a11y.currentDetailsLigandsStringProperty' ) ),
     membranePotentialValue: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_membranePotentialValue', _.get( MembraneTransportStrings, 'a11y.membranePotentialValueStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
     currentDetailsMembranePotential: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_currentDetailsMembranePotential', _.get( MembraneTransportStrings, 'a11y.currentDetailsMembranePotentialStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
-    _comment_251: new FluentComment( {"comment":"accessibleHelpText for the ligand control","lineNumber":251,"associatedKey":"ligandToggleButtonAccessibleHelpText"} ),
+    _comment_259: new FluentComment( {"comment":"accessibleHelpText for the ligand control","lineNumber":259,"associatedKey":"ligandToggleButtonAccessibleHelpText"} ),
     ligandToggleButtonAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAccessibleHelpText', _.get( MembraneTransportStrings, 'a11y.ligandToggleButtonAccessibleHelpTextStringProperty' ) ),
     ligandToggleButtonAddedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonAddedContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButtonAddedContextResponseStringProperty' ) ),
     ligandToggleButtonRemovedContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButtonRemovedContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButtonRemovedContextResponseStringProperty' ) ),
-    _comment_256: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","lineNumber":256,"associatedKey":"grabbedLigandResponsePattern"} ),
+    _comment_264: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","lineNumber":264,"associatedKey":"grabbedLigandResponsePattern"} ),
     grabbedLigandResponsePattern: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_grabbedLigandResponsePattern', _.get( MembraneTransportStrings, 'a11y.grabbedLigandResponsePatternStringProperty' ), [{"name":"proteinCount"}] ),
     grabbedLigandResponseWithHintPattern: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_grabbedLigandResponseWithHintPattern', _.get( MembraneTransportStrings, 'a11y.grabbedLigandResponseWithHintPatternStringProperty' ), [{"name":"proteinCount"}] ),
     grabbedLigandResponseWithEmptyMembraneHintPattern: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_grabbedLigandResponseWithEmptyMembraneHintPattern', _.get( MembraneTransportStrings, 'a11y.grabbedLigandResponseWithEmptyMembraneHintPatternStringProperty' ), [{"name":"proteinCount"}] ),
-    _comment_261: new FluentComment( {"comment":"Transport protein brief names","lineNumber":261,"associatedKey":"transportProteinBriefName"} ),
+    _comment_269: new FluentComment( {"comment":"Transport protein brief names","lineNumber":269,"associatedKey":"transportProteinBriefName"} ),
     transportProteinBriefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProteinBriefName', _.get( MembraneTransportStrings, 'a11y.transportProteinBriefNameStringProperty' ), [{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-    _comment_274: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that can open or close","lineNumber":274,"associatedKey":"ligandMovedAboveLigandGatedChannelPattern"} ),
+    _comment_282: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that can open or close","lineNumber":282,"associatedKey":"ligandMovedAboveLigandGatedChannelPattern"} ),
     ligandMovedAboveLigandGatedChannelPattern: new FluentPattern<{ index: FluentVariable, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLigandGatedChannelPattern', _.get( MembraneTransportStrings, 'a11y.ligandMovedAboveLigandGatedChannelPatternStringProperty' ), [{"name":"index"},{"name":"ligandType","variants":["triangleLigand","starLigand"]},{"name":"openOrClosed","variants":["open","closed"]},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-    _comment_284: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that cannot open or close (leakage channel).","lineNumber":284,"associatedKey":"ligandMovedAboveLeakageChannelPattern"} ),
+    _comment_292: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that cannot open or close (leakage channel).","lineNumber":292,"associatedKey":"ligandMovedAboveLeakageChannelPattern"} ),
     ligandMovedAboveLeakageChannelPattern: new FluentPattern<{ index: FluentVariable, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveLeakageChannelPattern', _.get( MembraneTransportStrings, 'a11y.ligandMovedAboveLeakageChannelPatternStringProperty' ), [{"name":"index"},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-    _comment_287: new FluentComment( {"comment":"Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.","lineNumber":287,"associatedKey":"ligandMovedAboveOtherChannelPattern"} ),
+    _comment_295: new FluentComment( {"comment":"Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.","lineNumber":295,"associatedKey":"ligandMovedAboveOtherChannelPattern"} ),
     ligandMovedAboveOtherChannelPattern: new FluentPattern<{ index: FluentVariable, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandMovedAboveOtherChannelPattern', _.get( MembraneTransportStrings, 'a11y.ligandMovedAboveOtherChannelPatternStringProperty' ), [{"name":"index"},{"name":"openOrClosed","variants":["open","closed"]},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-    _comment_294: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","lineNumber":294,"associatedKey":"membranePotentialChanges"} ),
+    _comment_302: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","lineNumber":302,"associatedKey":"membranePotentialChanges"} ),
     membranePotentialChanges: {
       sodiumVoltageGatedOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumVoltageGatedOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumVoltageGatedOpenedStringProperty' ) ),
       sodiumVoltageGatedClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumVoltageGatedClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumVoltageGatedClosedStringProperty' ) ),
@@ -364,7 +369,7 @@ const MembraneTransportFluent = {
       potassiumVoltageGatedClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_potassiumVoltageGatedClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.potassiumVoltageGatedClosedStringProperty' ) ),
       sodiumOpenedPotassiumOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumOpenedPotassiumOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumOpenedPotassiumOpenedStringProperty' ) ),
       sodiumOpenedPotassiumClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumOpenedPotassiumClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumOpenedPotassiumClosedStringProperty' ) ),
-      _comment_303: new FluentComment( {"comment":"We like to say opening first, since users are more interested to hear what just opened.","lineNumber":303,"associatedKey":"sodiumClosedPotassiumOpened"} ),
+      _comment_311: new FluentComment( {"comment":"We like to say opening first, since users are more interested to hear what just opened.","lineNumber":311,"associatedKey":"sodiumClosedPotassiumOpened"} ),
       sodiumClosedPotassiumOpenedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumClosedPotassiumOpened', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumClosedPotassiumOpenedStringProperty' ) ),
       sodiumClosedPotassiumClosedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_sodiumClosedPotassiumClosed', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.sodiumClosedPotassiumClosedStringProperty' ) ),
       noChangeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotentialChanges_noChange', _.get( MembraneTransportStrings, 'a11y.membranePotentialChanges.noChangeStringProperty' ) )

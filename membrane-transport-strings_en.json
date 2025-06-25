@@ -83,6 +83,12 @@
   "glucoseDrainDescription": {
     "value": "Simulate phosphorylation of glucose in the cell after transport. Simulation assumes a high concentration of glucose inside the cell."
   },
+  "preferencesDialog.audio.sounds.stereoSounds": {
+    "value": "Stereo Sounds"
+  },
+  "preferencesDialog.audio.sounds.stereoSoundsDescription": {
+    "value": "Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels."
+  },
   "soluteConcentrations": {
     "value": "Solute Concentrations"
   },
@@ -91,12 +97,6 @@
   },
   "crossingSounds": {
     "value": "Crossing Sounds"
-  },
-  "preferencesDialog.audio.sounds.stereoSounds": {
-    "value": "Stereo Sounds"
-  },
-  "preferencesDialog.audio.sounds.stereoSoundsDescription": {
-    "value": "Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels."
   },
   "a11y": {
     "summary": {

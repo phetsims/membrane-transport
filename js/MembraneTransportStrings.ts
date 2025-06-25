@@ -44,9 +44,6 @@ type StringsType = {
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
   'glucoseDrainStringProperty': LocalizedStringProperty;
   'glucoseDrainDescriptionStringProperty': LocalizedStringProperty;
-  'soluteConcentrationsStringProperty': LocalizedStringProperty;
-  'crossingHighlightsStringProperty': LocalizedStringProperty;
-  'crossingSoundsStringProperty': LocalizedStringProperty;
   'preferencesDialog': {
     'audio': {
       'sounds': {
@@ -55,6 +52,9 @@ type StringsType = {
       }
     }
   };
+  'soluteConcentrationsStringProperty': LocalizedStringProperty;
+  'crossingHighlightsStringProperty': LocalizedStringProperty;
+  'crossingSoundsStringProperty': LocalizedStringProperty;
   'a11y': {
     'summary': {
       'playAreaSummaryIntroStringProperty': LocalizedStringProperty;
