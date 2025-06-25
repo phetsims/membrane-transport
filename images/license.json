@@ -111,7 +111,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Brett Fiedler"
   },
-  "potassiumVoltageGatedMinus70and50mV.svg": {
+  "potassiumVoltageGatedClosed.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -119,12 +119,12 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Brett Fiedler"
   },
-  "potassiumVoltageGatedPlus30mV.svg": {
+  "potassiumVoltageGatedOpen.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.ddu",
+    "license": "contact phethelp@colorado.edu",
     "notes": "created by Brett Fiedler"
   },
   "sodiumGlucoseCotransporterState1.svg": {

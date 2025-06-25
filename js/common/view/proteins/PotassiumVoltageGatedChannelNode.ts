@@ -7,8 +7,8 @@
  */
 
 import Image from '../../../../../scenery/js/nodes/Image.js';
-import potassiumVoltageGatedMinus70and50mV_svg from '../../../../images/potassiumVoltageGatedMinus70and50mV_svg.js';
-import potassiumVoltageGatedPlus30mV_svg from '../../../../images/potassiumVoltageGatedPlus30mV_svg.js';
+import potassiumVoltageGatedClosed_svg from '../../../../images/potassiumVoltageGatedClosed_svg.js';
+import potassiumVoltageGatedOpen_svg from '../../../../images/potassiumVoltageGatedOpen_svg.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import PotassiumVoltageGatedChannel from '../../model/proteins/PotassiumVoltageGatedChannel.js';
@@ -21,16 +21,16 @@ export default class PotassiumVoltageGatedChannelNode extends TransportProteinNo
    */
   public constructor( channel: PotassiumVoltageGatedChannel | null ) {
 
-    const image = new Image( potassiumVoltageGatedMinus70and50mV_svg );
+    const image = new Image( potassiumVoltageGatedClosed_svg );
     super( image, channel );
 
     if ( channel ) {
 
       channel.stateProperty.link( state => {
-        const newImage = ( state === 'closedNegative70mV' ? potassiumVoltageGatedMinus70and50mV_svg :
-                           state === 'closedNegative50mV' ? potassiumVoltageGatedMinus70and50mV_svg :
-                           state === 'open30mV' ? potassiumVoltageGatedPlus30mV_svg :
-                           ( () => {throw new Error( 'unknown type of sodium voltage gated channel' );} )() );
+        const newImage = ( state === 'closedNegative70mV' ? potassiumVoltageGatedClosed_svg :
+                           state === 'closedNegative50mV' ? potassiumVoltageGatedClosed_svg :
+                           state === 'open30mV' ? potassiumVoltageGatedOpen_svg :
+                           ( () => {throw new Error( 'unknown type of potassium voltage gated channel' );} )() );
 
         image.setImage( newImage );
       }, { disposer: this } );
