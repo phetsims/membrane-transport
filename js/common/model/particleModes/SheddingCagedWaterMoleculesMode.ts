@@ -31,7 +31,7 @@ export default class SheddingCagedWaterMoleculesMode extends BaseParticleMode {
   }
 
   public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
-    const sheddingDuration = 0.1;
+    const sheddingDuration = 0.01;
     const newSheddingElapsed = ( this.sheddingElapsed || 0 ) + dt;
 
     if ( newSheddingElapsed >= sheddingDuration ) {

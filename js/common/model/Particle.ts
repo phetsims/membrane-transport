@@ -41,7 +41,7 @@ import Slot from './Slot.js';
 import { ParticleType } from './SoluteType.js';
 
 // The amount of time that must pass before a particle can cross the membrane again.
-const CROSSING_COOLDOWN = 0.5;
+const CROSSING_COOLDOWN = 10;
 
 // The radius of the circle around the center of a transport protein where a particle will be captured so
 // we can decide how it should interact with the transport protein.

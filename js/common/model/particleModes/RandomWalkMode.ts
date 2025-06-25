@@ -38,7 +38,7 @@ import PassiveDiffusionMode from './PassiveDiffusionMode.js';
 const TYPICAL_SPEED = 30;
 
 // The amount of time that must pass before a particle can cross the membrane again.
-const CROSSING_COOLDOWN = 0.5;
+const CROSSING_COOLDOWN = 10;
 
 // Epsilon value for nudging the particle into bounds after teleporting so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;

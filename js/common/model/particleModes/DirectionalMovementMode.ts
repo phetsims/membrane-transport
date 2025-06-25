@@ -35,7 +35,7 @@ export default abstract class DirectionalMovementMode extends BaseParticleMode {
   protected performDirectionalMovement( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
     const sign = this.direction === 'inward' ? -1 : 1;
     const signBefore = particle.position.y > 0;
-    const TYPICAL_SPEED = 30;
+    const TYPICAL_SPEED = 100;
 
     particle.position.y += sign * ( TYPICAL_SPEED / 5 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
     particle.position.x += dotRandom.nextDoubleBetween( -2, 2 ) * ( TYPICAL_SPEED / 2 ) * dt;
