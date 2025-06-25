@@ -1,4 +1,3 @@
-
 This document records my observations about the `membrane-transport` codebase.
 
 ## General Architecture
@@ -25,7 +24,7 @@ The project is a web-based interactive simulation built with TypeScript. It foll
     *   Keyboard navigation and interaction.
 *   **Internationalization:** The application is designed to be easily translated into other languages. It uses a fluent API for creating internationalized strings with placeholders.
 *   **Options Handling:** The `optionize` and `combineOptions` utilities provide a clean and consistent way to handle component options.
-*   **Derived Properties:** The `DerivedProperty` class allows for the creation of properties that are computed from other properties. This helps to keep the model concise and easy to reason about.
+*   **Derived Properties:** The `DerivedProperty` class allows for the creation of properties that are computed from other properties. This helps to keep the model concise and aeasy to reason about.
 
 ## Surprising and Unique Aspects
 
@@ -33,5 +32,12 @@ The project is a web-based interactive simulation built with TypeScript. It foll
 *   **Focus on Accessibility:** The level of attention paid to accessibility is impressive. The `voicing` and `PDOM` features are particularly noteworthy.
 *   **Fluent Internationalization:** The use of a fluent API for internationalization is a nice touch. It makes the code more readable and easier to maintain.
 *   **`affirm`:** The use of a custom assertion library (`affirm`) is interesting. It seems to be used for runtime checks and to enforce invariants.
+
+## Development Workflow
+
+*   **Build-Driven Refactoring:** The primary refactoring workflow is to make a change and then run `grunt type-check`. The resulting compilation errors from the TypeScript compiler should be used to identify all the locations in the code that require updates.
+*   **Asset `modulify`cation:** The `grunt modulify --targets=images` command is used to convert assets like SVGs into TypeScript modules. This command is integrated with git and will automatically `git add` the generated files.
+*   **Stale Artifacts:** The `modulify` task does **not** automatically clean up stale generated files. If an asset is renamed or deleted, the corresponding generated TypeScript module must be manually deleted from the repository before `grunt type-check` will report the correct errors.
+*   **Git-Based File Operations:** All file system modifications (renaming, deleting) must be done through `git` commands (`git mv`, `git rm`) to ensure the project history is preserved.
 
 Overall, the `membrane-transport` codebase is well-structured, well-documented, and easy to understand. It makes good use of modern web technologies and has a strong focus on quality and accessibility.
