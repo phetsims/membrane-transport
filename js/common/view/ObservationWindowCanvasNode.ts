@@ -244,10 +244,23 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
     if ( this.layer === 'back' ) {
       // Draw the background: upper half for outside cell, lower half for inside cell.
-      context.fillStyle = MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS();
-      context.fillRect( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
-      context.fillStyle = MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS();
-      context.fillRect( 0, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT / 2 );
+      // Create a vertical gradient from top to bottom
+      const gradient = context.createLinearGradient(
+        0, 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT
+      );
+
+      gradient.addColorStop( 0, MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS() );
+      gradient.addColorStop( 0.35, MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS() );
+      gradient.addColorStop( 0.65, MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS() );
+      gradient.addColorStop( 1, MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS() );
+
+      // Apply the gradient as fill style and fill the rectangle
+      context.fillStyle = gradient;
+      context.fillRect(
+        0, 0,
+        MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH,
+        MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT
+      );
 
       if ( this.model.chargesVisibleProperty.value ) {
         this.drawCharges( context );
