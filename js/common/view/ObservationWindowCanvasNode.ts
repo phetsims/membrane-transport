@@ -250,8 +250,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       );
 
       gradient.addColorStop( 0, MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS() );
-      gradient.addColorStop( 0.35, MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS() );
-      gradient.addColorStop( 0.65, MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS() );
+      gradient.addColorStop( 0.49, MembraneTransportColors.observationWindowOutsideCellColorProperty.value.toCSS() );
+      gradient.addColorStop( 0.51, MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS() );
       gradient.addColorStop( 1, MembraneTransportColors.observationWindowInsideCellColorProperty.value.toCSS() );
 
       // Apply the gradient as fill style and fill the rectangle
