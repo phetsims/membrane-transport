@@ -7,8 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import Vector2 from '../../../../../dot/js/Vector2.js';
-import optionize, { combineOptions } from '../../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import AccessibleDraggableOptions from '../../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import { ParallelDOMOptions } from '../../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
@@ -18,27 +17,15 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import TransportProtein from '../../model/proteins/TransportProtein.js';
 
-
-type SelfOptions = {
-
-  // The offset in view coordinates, describing how the protein sits on the membrane.
-  // This is to compensate for the fact that not all artwork has to be centered.
-  viewOffset?: Vector2;
-};
+type SelfOptions = EmptySelfOptions;
 
 type ProteinNodeOptions = SelfOptions & NodeOptions;
 
 export default class TransportProteinNode extends InteractiveHighlighting( Node ) {
 
-  public readonly viewOffset: Vector2;
-
   protected constructor( image: Image, transportProtein: TransportProtein | null, providedOptions?: ProteinNodeOptions ) {
-    const options = optionize<ProteinNodeOptions, SelfOptions, NodeOptions>()( {
-      viewOffset: Vector2.ZERO
-    }, providedOptions );
+    const options = optionize<ProteinNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
     super( options );
-
-    this.viewOffset = options.viewOffset;
 
     // Scale down the SVG
     const modelWidth = MembraneTransportConstants.TRANSPORT_PROTEIN_WIDTH;

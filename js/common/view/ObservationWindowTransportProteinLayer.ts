@@ -156,7 +156,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           } ) );
 
           transportProteinNode.mutate( {
-            center: modelViewTransform.modelToViewXY( slot.position, 0 ).plus( transportProteinNode.viewOffset ),
+            center: modelViewTransform.modelToViewXY( slot.position, 0 ),
             cursor: 'pointer'
           } );
 

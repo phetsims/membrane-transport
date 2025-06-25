@@ -49,7 +49,7 @@ export default class TransportProteinToolNode extends VBox {
     transportProteinNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
 
     super( combineOptions<VBoxOptions>( {}, {
-      spacing: type === 'sodiumIonVoltageGatedChannel' ? -12 : -3,
+      spacing: -3,
       tagName: 'button',
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',

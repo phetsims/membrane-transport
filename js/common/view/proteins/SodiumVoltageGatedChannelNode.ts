@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Vector2 from '../../../../../dot/js/Vector2.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import sodiumVoltageGatedMinus50mV_svg from '../../../../images/sodiumVoltageGatedMinus50mV_svg.js';
 
@@ -25,9 +24,7 @@ export default class SodiumVoltageGatedChannelNode extends TransportProteinNode 
   public constructor( channel: SodiumVoltageGatedChannel | null ) {
 
     const image = new Image( sodiumVoltageGatedPlus30mV_svg );
-    super( image, channel, {
-      viewOffset: new Vector2( 0, 15 )
-    } );
+    super( image, channel );
 
     if ( channel ) {
 
