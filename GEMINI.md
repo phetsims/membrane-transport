@@ -1,19 +1,28 @@
-This document records my observations about the `membrane-transport` codebase.
+# Membrane Transport Development Guidelines
 
 ## General Architecture
 
 The project is a web-based interactive simulation built with TypeScript. It follows a Model-View-Controller (MVC) like pattern, with clear separation of concerns. The directory structure is well-organized, with distinct folders for source code (`js`), assets (`images`, `sounds`), documentation (`doc`), and build artifacts (`build`).
 
+The codebase is organized by screens: SimpleDiffusion, FacilitatedDiffusion, ActiveTransport, and Playground. Common code is located in `js/common/`, further divided into `model/` and `view/` directories.
+
+This project is developed as part of a PhET monorepo. You can follow import paths to explore dependencies, but be aware that TypeScript files (`.ts`) are often imported with a `.js` extension.
+
 ## Core Technologies and Frameworks
 
 *   **TypeScript:** The entire codebase is written in TypeScript, providing static typing and improved code quality.
 *   **Grunt:** The project uses Grunt as a task runner for building, testing, and other development tasks.
-*   **Custom Framework:** The simulation is built on a custom framework that includes:
+*   **Custom Framework:** The simulation is built on a custom PhET framework that includes:
     *   A component-based scene graph for creating and managing visual elements.
     *   A property-based model for managing application state (`axon`).
     *   A model-view transform system for mapping between model and view coordinates.
     *   A sound management system.
     *   An internationalization system with support for fluent syntax.
+
+### Type System
+*   Use `TReadOnlyProperty<T>` from axon for read-only observables used in constructors.
+*   Use `Property<T>` from axon when you need to mutate the property.
+*   String properties from translations are `LocalizedStringProperty` type, not directly assignable to `Property<string>`.
 
 ## Key Features and Patterns
 
@@ -24,7 +33,20 @@ The project is a web-based interactive simulation built with TypeScript. It foll
     *   Keyboard navigation and interaction.
 *   **Internationalization:** The application is designed to be easily translated into other languages. It uses a fluent API for creating internationalized strings with placeholders.
 *   **Options Handling:** The `optionize` and `combineOptions` utilities provide a clean and consistent way to handle component options.
-*   **Derived Properties:** The `DerivedProperty` class allows for the creation of properties that are computed from other properties. This helps to keep the model concise and aeasy to reason about.
+*   **Derived Properties:** The `DerivedProperty` class allows for the creation of properties that are computed from other properties. This helps to keep the model concise and easy to reason about.
+*   **Component Patterns:**
+    *   Use configuration objects with standardized patterns for creating similar components.
+    *   Factor out repeated component creation logic into standalone functions.
+    *   When many instances of similar UI elements exist, use alignment groups for consistent sizing.
+    *   Interactive elements often use both mouse drag listeners and keyboard handlers.
+*   **Performance:**
+    *   Use flat data structures for serialization.
+    *   Design for lightweight models and views.
+*   **Error Handling:**
+    *   Validate inputs with `assert` statements.
+    *   Use type narrowing for safe operations.
+    *   Document expected behaviors in code comments.
+
 
 ## Surprising and Unique Aspects
 
@@ -40,6 +62,10 @@ The project is a web-based interactive simulation built with TypeScript. It foll
 *   **Stale Artifacts:** The `modulify` task does **not** automatically clean up stale generated files. If an asset is renamed or deleted, the corresponding generated TypeScript module must be manually deleted from the repository before `grunt type-check` will report the correct errors.
 *   **Git-Based File Operations:** All file system modifications (renaming, deleting) must be done through `git` commands (`git mv`, `git rm`) to ensure the project history is preserved.
 
+### Build Commands
+*   `grunt lint --fix`: Run ESLint, automatically addressing formatting issues.
+*   `grunt type-check`: Run TypeScript type checking.
+
 ## Learned Conventions and Tricky Workflows
 
 *   **Commit Message Format:** All git commits **must** include a full URL to a corresponding GitHub issue at the end of the commit message. For example: `git commit -m "Refactor: Improve performance, see https://github.com/phetsims/membrane-transport/issues/123"`.
@@ -49,5 +75,13 @@ The project is a web-based interactive simulation built with TypeScript. It foll
     3.  Update the `images/license.json` file to reflect the new asset filename.
     4.  Search the codebase for the old filename and update any import statements or references in the code.
     5.  Run `grunt type-check` to ensure all references have been correctly updated. The compiler errors will guide this process.
-
-Overall, the `membrane-transport` codebase is well-structured, well-documented, and easy to understand. It makes good use of modern web technologies and has a strong focus on quality and accessibility.
+*   **Code Style:**
+    *   Follows PhET naming conventions: PascalCase for classes, camelCase for variables.
+    *   JS/TS files do not end with newlines.
+    *   Line comments are preceded by a blank line.
+    *   Import `.ts` files as `.js` in the import statements.
+*   **Internationalization (i18n):**
+    *   Strings in `membrane-transport-strings_en.json` follow a nested structure that must be mirrored in `MembraneTransportStrings.ts`.
+    *   The `grunt modulify` command automatically updates `MembraneTransportStrings.ts` when strings are changed.
+    *   A11y strings often need deeper nesting (component > subcomponent > feature > property).
+    *   When adding new accessibility text, check existing patterns for proper nesting structure.
