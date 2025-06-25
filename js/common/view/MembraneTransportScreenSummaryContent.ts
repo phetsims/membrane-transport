@@ -24,53 +24,53 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
 
     const currentDetailsNode = new AccessibleListNode( [
       {
-        stringProperty: MembraneTransportFluent.a11y.currentDetailsNoAddedSolutesStringProperty,
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.noAddedSolutesStringProperty,
         visibleProperty: DerivedProperty.not( model.hasAnySolutesProperty )
       },
       {
-        stringProperty: MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnOutside.createProperty( {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.soluteTypesOnOutside.createProperty( {
           count: model.outsideSoluteTypesCountProperty
         } ),
         visibleProperty: model.hasAnySolutesProperty
       },
       {
-        stringProperty: MembraneTransportFluent.a11y.currentDetailsSoluteTypesOnInside.createProperty( {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.soluteTypesOnInside.createProperty( {
           count: model.insideSoluteTypesCountProperty
         } ),
         visibleProperty: model.hasAnySolutesProperty
       },
       {
-        stringProperty: MembraneTransportFluent.a11y.currentDetailsTransportProteins.createProperty( {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.transportProteins.createProperty( {
           proteinCount: model.transportProteinCountProperty,
           proteinTypeCount: model.transportProteinTypesCountProperty
         } ),
         visibleProperty: new DerivedProperty( [ model.transportProteinCountProperty ], count => count > 0 )
       },
       {
-        stringProperty: MembraneTransportFluent.a11y.currentDetailsLigandsStringProperty,
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.ligandsStringProperty,
         visibleProperty: model.areLigandsAddedProperty
       },
       {
-        stringProperty: MembraneTransportFluent.a11y.currentDetailsMembranePotential.createProperty( {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.membranePotential.createProperty( {
           membranePotential: model.membranePotentialProperty
         } ),
         visibleProperty: new BooleanProperty( getFeatureSetHasVoltages( model.featureSet ) )
       }
     ], {
-      leadingParagraphStringProperty: MembraneTransportFluent.a11y.currentDetailsLeadingParagraphStringProperty,
+      leadingParagraphStringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.leadingParagraphStringProperty,
       punctuationStyle: 'semicolon'
     } );
 
     super( {
-      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen1StringProperty :
-                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4StringProperty :
-                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.summary.playAreaSummaryScreen3StringProperty :
-                       MembraneTransportFluent.a11y.summary.playAreaSummaryScreen2and4StringProperty,
-      controlAreaContent: MembraneTransportFluent.a11y.summary.controlAreaSummaryStringProperty,
+      playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.playArea.screen1StringProperty :
+                       model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.screenSummary.playArea.screen2and4StringProperty :
+                       model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.screenSummary.playArea.screen3StringProperty :
+                       MembraneTransportFluent.a11y.screenSummary.playArea.screen2and4StringProperty,
+      controlAreaContent: MembraneTransportFluent.a11y.screenSummary.controlAreaStringProperty,
       currentDetailsContent: currentDetailsNode,
 
-      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.summary.interactionHintStringProperty :
-                              MembraneTransportFluent.a11y.summary.interactionHintWithTransportProteinsStringProperty
+      interactionHintContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
+                              MembraneTransportFluent.a11y.screenSummary.interactionHintWithTransportProteinsStringProperty
     } );
   }
 }

@@ -45,7 +45,7 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
       tandem: tandem,
 
       // pdom
-      accessibleHelpText: MembraneTransportFluent.a11y.ligandToggleButtonAccessibleHelpTextStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.ligandToggleButton.accessibleHelpTextStringProperty,
       valueOnSoundPlayer: addLigandSoundPlayer,
       valueOffSoundPlayer: removeLigandSoundPlayer
     } );
@@ -54,10 +54,10 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
     // Add accessible responses when the button is pressed, in the same way we do for sound effects.
     this.buttonModel.fireCompleteEmitter.addListener( () => {
       if ( model.areLigandsAddedProperty.value ) {
-        this.addAccessibleResponse( MembraneTransportFluent.a11y.ligandToggleButtonAddedContextResponseStringProperty );
+        this.addAccessibleResponse( MembraneTransportFluent.a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty );
       }
       else {
-        this.addAccessibleResponse( MembraneTransportFluent.a11y.ligandToggleButtonRemovedContextResponseStringProperty );
+        this.addAccessibleResponse( MembraneTransportFluent.a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty );
       }
     } );
   }

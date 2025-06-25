@@ -49,29 +49,29 @@ export default class MembranePotentialDescriber {
         if ( sodiumChanged && potassiumChanged ) {
           // Both channels changed state
           if ( sodiumIsOpen && potassiumIsOpen ) {
-            response = MembraneTransportFluent.a11y.membranePotentialChanges.sodiumOpenedPotassiumOpenedStringProperty.value;
+            response = MembraneTransportFluent.a11y.membranePotential.sodiumOpenedPotassiumOpenedResponseStringProperty.value;
           }
           else if ( sodiumIsOpen && !potassiumIsOpen ) {
-            response = MembraneTransportFluent.a11y.membranePotentialChanges.sodiumOpenedPotassiumClosedStringProperty.value;
+            response = MembraneTransportFluent.a11y.membranePotential.sodiumOpenedPotassiumClosedResponseStringProperty.value;
           }
           else if ( !sodiumIsOpen && potassiumIsOpen ) {
-            response = MembraneTransportFluent.a11y.membranePotentialChanges.sodiumClosedPotassiumOpenedStringProperty.value;
+            response = MembraneTransportFluent.a11y.membranePotential.sodiumClosedPotassiumOpenedResponseStringProperty.value;
           }
           else {
-            response = MembraneTransportFluent.a11y.membranePotentialChanges.sodiumClosedPotassiumClosedStringProperty.value;
+            response = MembraneTransportFluent.a11y.membranePotential.sodiumClosedPotassiumClosedResponseStringProperty.value;
           }
         }
         else if ( sodiumChanged ) {
           // Only sodium changed
           response = sodiumIsOpen ?
-                     MembraneTransportFluent.a11y.membranePotentialChanges.sodiumVoltageGatedOpenedStringProperty.value :
-                     MembraneTransportFluent.a11y.membranePotentialChanges.sodiumVoltageGatedClosedStringProperty.value;
+                     MembraneTransportFluent.a11y.membranePotential.sodiumVoltageGatedOpenedResponseStringProperty.value :
+                     MembraneTransportFluent.a11y.membranePotential.sodiumVoltageGatedClosedResponseStringProperty.value;
         }
         else if ( potassiumChanged ) {
           // Only potassium changed
           response = potassiumIsOpen ?
-                     MembraneTransportFluent.a11y.membranePotentialChanges.potassiumVoltageGatedOpenedStringProperty.value :
-                     MembraneTransportFluent.a11y.membranePotentialChanges.potassiumVoltageGatedClosedStringProperty.value;
+                     MembraneTransportFluent.a11y.membranePotential.potassiumVoltageGatedOpenedResponseStringProperty.value :
+                     MembraneTransportFluent.a11y.membranePotential.potassiumVoltageGatedClosedResponseStringProperty.value;
         }
         // If neither changed, response remains null
       }
@@ -85,8 +85,8 @@ export default class MembranePotentialDescriber {
 
         if ( sodiumWasOpen !== sodiumIsOpen ) {
           response = sodiumIsOpen ?
-                     MembraneTransportFluent.a11y.membranePotentialChanges.sodiumVoltageGatedOpenedStringProperty.value :
-                     MembraneTransportFluent.a11y.membranePotentialChanges.sodiumVoltageGatedClosedStringProperty.value;
+                     MembraneTransportFluent.a11y.membranePotential.sodiumVoltageGatedOpenedResponseStringProperty.value :
+                     MembraneTransportFluent.a11y.membranePotential.sodiumVoltageGatedClosedResponseStringProperty.value;
         }
       }
       else if ( hasPotassium ) {
@@ -99,13 +99,13 @@ export default class MembranePotentialDescriber {
 
         if ( potassiumWasOpen !== potassiumIsOpen ) {
           response = potassiumIsOpen ?
-                     MembraneTransportFluent.a11y.membranePotentialChanges.potassiumVoltageGatedOpenedStringProperty.value :
-                     MembraneTransportFluent.a11y.membranePotentialChanges.potassiumVoltageGatedClosedStringProperty.value;
+                     MembraneTransportFluent.a11y.membranePotential.potassiumVoltageGatedOpenedResponseStringProperty.value :
+                     MembraneTransportFluent.a11y.membranePotential.potassiumVoltageGatedClosedResponseStringProperty.value;
         }
       }
       else {
         // No voltage-gated channels present
-        response = MembraneTransportFluent.a11y.membranePotentialChanges.noChangeStringProperty.value;
+        response = MembraneTransportFluent.a11y.membranePotential.noChangeResponseStringProperty.value;
       }
 
       // Only announce if there was actually a change

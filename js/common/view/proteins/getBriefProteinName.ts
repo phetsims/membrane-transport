@@ -13,5 +13,5 @@ import TransportProteinType from '../../model/proteins/TransportProteinType.js';
 export default function getBriefProteinName( type: TransportProteinType ): TReadOnlyProperty<string> {
 
   // Create a pattern message property with the transportProteinType value and return its value
-  return MembraneTransportFluent.a11y.transportProteinBriefName.createProperty( { type: type } );
+  return MembraneTransportFluent.a11y.transportProtein.briefName.createProperty( { type: type } );
 }

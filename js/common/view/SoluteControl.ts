@@ -134,7 +134,7 @@ export default class SoluteControl extends Panel {
       soundGenerator.playSoundForValueChange( newCount, originalCount );
     } );
 
-    const objectResponseMessageProperty = MembraneTransportFluent.a11y.soluteSpinnerObjectResponsePattern.createProperty( {
+    const objectResponseMessageProperty = MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.createProperty( {
 
       // Qualitative descriptions for the amount of a solute, as described in
       // https://github.com/phetsims/membrane-transport/issues/242
@@ -170,17 +170,17 @@ export default class SoluteControl extends Panel {
         play: () => {/*no-op*/},
         stop: () => {/*no-op*/}
       },
-      accessibleName: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerAccessibleNamePattern.format( { soluteType: soluteType } ) :
-                      MembraneTransportFluent.a11y.outsideMembraneSpinnerAccessibleNamePattern.format( { soluteType: soluteType } ),
+      accessibleName: side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleName.format( { soluteType: soluteType } ) :
+                      MembraneTransportFluent.a11y.soluteControl.outside.accessibleName.format( { soluteType: soluteType } ),
 
-      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.insideMembraneSpinnerHelpTextStringProperty :
-                          MembraneTransportFluent.a11y.outsideMembraneSpinnerHelpTextStringProperty,
+      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleHelpTextStringProperty :
+                          MembraneTransportFluent.a11y.soluteControl.outside.accessibleHelpTextStringProperty,
 
       // A custom shorter voicingHintResponse was requested for this control, see
       // https://github.com/phetsims/membrane-transport/issues/219
-      voicingHintResponse: MembraneTransportFluent.a11y.soluteSpinnerVoicingHintResponseStringProperty,
+      voicingHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
 
-      accessibleRoleDescription: MembraneTransportFluent.a11y.soluteSpinnerRoleDescriptionStringProperty,
+      accessibleRoleDescription: MembraneTransportFluent.a11y.soluteControl.accessibleRoleDescriptionStringProperty,
 
       pdomCreateAriaValueText: ( value: number ) => {
         return objectResponseMessageProperty;
@@ -214,7 +214,7 @@ export default class SoluteControl extends Panel {
                                  ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
         // 4. Supply these to the translation message
-        return MembraneTransportFluent.a11y.soluteSpinnerContextResponsePattern.format( {
+        return MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
           amount: amount,                // aLittle / aLot
           addedOrRemoved: addedOrRemoved, // added / removed
           differenceSize: differenceSize, // aLittle / aLot

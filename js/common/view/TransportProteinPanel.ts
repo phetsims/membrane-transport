@@ -9,7 +9,6 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
-import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import VoicingText from '../../../../scenery/js/accessibility/voicing/nodes/VoicingText.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -127,7 +126,7 @@ export default class TransportProteinPanel extends Panel {
             transportProteinType: 'potassiumIonLeakageChannel',
             labelProperty: MembraneTransportFluent.potassiumIonStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty,
-            accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
+            accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty
           }
         ]
       } );
@@ -147,7 +146,7 @@ export default class TransportProteinPanel extends Panel {
               transportProteinType: 'potassiumIonVoltageGatedChannel',
               labelProperty: MembraneTransportFluent.potassiumIonStringProperty,
               accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty,
-              accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
+              accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty
             }
           ]
         },
@@ -169,7 +168,7 @@ export default class TransportProteinPanel extends Panel {
             transportProteinType: 'potassiumIonLigandGatedChannel',
             labelProperty: MembraneTransportFluent.potassiumIonStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty,
-            accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
+            accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty
           }
         ]
       }, new LigandToggleButton( model, tandem.createTandem( 'ligandToggleButton' ) ) );
@@ -198,7 +197,7 @@ export default class TransportProteinPanel extends Panel {
             transportProteinType: 'sodiumGlucoseCotransporter',
             labelProperty: MembraneTransportFluent.sodiumGlucoseCotransporterStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty,
-            accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.toolAccessibleHelpTextStringProperty
+            accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty
           }
         ]
       } );
@@ -221,9 +220,8 @@ export default class TransportProteinPanel extends Panel {
       children: interleaveHSeparators( panels )
     } );
     super( vbox, {
-      accessibleHeading: MembraneTransportFluent.a11y.transportProteinPanel.transportProteinsStringProperty,
+      accessibleHeading: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
-      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
       tandem: tandem
     } );

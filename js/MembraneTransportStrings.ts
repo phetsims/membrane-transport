@@ -68,20 +68,33 @@ type StringsType = {
     'playgroundScreen': {
       'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
     };
-    'summary': {
-      'playAreaSummaryIntroStringProperty': LocalizedStringProperty;
-      'playAreaSummaryProteinsStringProperty': LocalizedStringProperty;
-      'playAreaSummaryPotentialStringProperty': LocalizedStringProperty;
-      'playAreaSummaryBarChartsStringProperty': LocalizedStringProperty;
-      'playAreaSummaryScreen1StringProperty': LocalizedStringProperty;
-      'playAreaSummaryScreen2and4StringProperty': LocalizedStringProperty;
-      'playAreaSummaryScreen3StringProperty': LocalizedStringProperty;
-      'controlAreaSummaryStringProperty': LocalizedStringProperty;
+    'screenSummary': {
+      'playArea': {
+        'introStringProperty': LocalizedStringProperty;
+        'proteinsStringProperty': LocalizedStringProperty;
+        'potentialStringProperty': LocalizedStringProperty;
+        'barChartsStringProperty': LocalizedStringProperty;
+        'screen1StringProperty': LocalizedStringProperty;
+        'screen2and4StringProperty': LocalizedStringProperty;
+        'screen3StringProperty': LocalizedStringProperty;
+      };
+      'controlAreaStringProperty': LocalizedStringProperty;
+      'currentDetails': {
+        'leadingParagraphStringProperty': LocalizedStringProperty;
+        'noAddedSolutesStringProperty': LocalizedStringProperty;
+        'soluteTypesOnOutsideStringProperty': LocalizedStringProperty;
+        'soluteTypesOnInsideStringProperty': LocalizedStringProperty;
+        'transportProteinsStringProperty': LocalizedStringProperty;
+        'ligandsStringProperty': LocalizedStringProperty;
+        'membranePotentialValueStringProperty': LocalizedStringProperty;
+        'membranePotentialStringProperty': LocalizedStringProperty;
+      };
       'interactionHintStringProperty': LocalizedStringProperty;
       'interactionHintWithTransportProteinsStringProperty': LocalizedStringProperty;
     };
     'soluteControls': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'eraseSolutesButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
@@ -98,7 +111,7 @@ type StringsType = {
       'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
     };
     'transportProteinPanel': {
-      'transportProteinsStringProperty': LocalizedStringProperty;
+      'accessibleHeadingStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'ligandGatedChannelPanel': {
         'sodiumIonNaPlusLigandGatedStringProperty': LocalizedStringProperty;
@@ -129,29 +142,34 @@ type StringsType = {
         'chargesCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
           'voicingHelpTextStringProperty': LocalizedStringProperty;
-          'checkedContextResponseNegative70StringProperty': LocalizedStringProperty;
-          'checkedContextResponseNegative50StringProperty': LocalizedStringProperty;
-          'checkedContextResponsePositive30StringProperty': LocalizedStringProperty;
-          'uncheckedContextResponseStringProperty': LocalizedStringProperty;
+          'negative70AccessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+          'negative50AccessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+          'positive30AccessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
+          'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
         }
       };
       'activeTransportProteinPanel': {
         'sodiumPotassiumPumpStringProperty': LocalizedStringProperty;
         'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
-      };
-      'toolAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      }
     };
     'ligandNode': {
-      'starLigandStringProperty': LocalizedStringProperty;
-      'triangleLigandStringProperty': LocalizedStringProperty;
+      'starLigandAccessibleNameStringProperty': LocalizedStringProperty;
+      'triangleLigandAccessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'releasedLigandStringProperty': LocalizedStringProperty;
-      'ligandReleasedOffMembranePatternStringProperty': LocalizedStringProperty;
-      'ligandReleasedOnProteinPatternStringProperty': LocalizedStringProperty;
-      'ligandReleasedOnBusyOrIncompatibleProteinPatternStringProperty': LocalizedStringProperty;
-      'ligandUnboundAlertStringProperty': LocalizedStringProperty;
+      'releasedResponseStringProperty': LocalizedStringProperty;
+      'releasedOffMembraneResponseStringProperty': LocalizedStringProperty;
+      'releasedOnProteinResponseStringProperty': LocalizedStringProperty;
+      'releasedOnBusyOrIncompatibleProteinResponseStringProperty': LocalizedStringProperty;
+      'unboundResponseStringProperty': LocalizedStringProperty;
+      'movedAboveLigandGatedChannelResponseStringProperty': LocalizedStringProperty;
+      'movedAboveLeakageChannelResponseStringProperty': LocalizedStringProperty;
+      'movedAboveOtherChannelResponseStringProperty': LocalizedStringProperty;
+      'grabbedResponseStringProperty': LocalizedStringProperty;
+      'grabbedResponseWithHintStringProperty': LocalizedStringProperty;
+      'grabbedResponseWithEmptyMembraneHintStringProperty': LocalizedStringProperty;
     };
-    'soluteControlsAccessibleHelpTextStringProperty': LocalizedStringProperty;
     'soluteAccessibleNames': {
       'oxygenStringProperty': LocalizedStringProperty;
       'carbonDioxideStringProperty': LocalizedStringProperty;
@@ -160,16 +178,22 @@ type StringsType = {
       'glucoseStringProperty': LocalizedStringProperty;
       'atpStringProperty': LocalizedStringProperty;
     };
-    'outsideMembraneSpinnerAccessibleNamePatternStringProperty': LocalizedStringProperty;
-    'outsideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
-    'soluteSpinnerVoicingHintResponseStringProperty': LocalizedStringProperty;
-    'insideMembraneSpinnerAccessibleNamePatternStringProperty': LocalizedStringProperty;
-    'insideMembraneSpinnerHelpTextStringProperty': LocalizedStringProperty;
-    'soluteSpinnerRoleDescriptionStringProperty': LocalizedStringProperty;
     'soluteStringProperty': LocalizedStringProperty;
     'soluteCapitalizedStringProperty': LocalizedStringProperty;
-    'soluteSpinnerObjectResponsePatternStringProperty': LocalizedStringProperty;
-    'soluteSpinnerContextResponsePatternStringProperty': LocalizedStringProperty;
+    'soluteControl': {
+      'outside': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'inside': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'voicingHintResponseStringProperty': LocalizedStringProperty;
+      'accessibleRoleDescriptionStringProperty': LocalizedStringProperty;
+      'accessibleObjectResponseStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseStringProperty': LocalizedStringProperty;
+    };
     'soluteConcentrationsAccordionBox': {
       'descriptionContentStringProperty': LocalizedStringProperty;
       'barChart': {
@@ -178,37 +202,25 @@ type StringsType = {
         'crossingStringProperty': LocalizedStringProperty;
       }
     };
-    'currentDetailsLeadingParagraphStringProperty': LocalizedStringProperty;
-    'currentDetailsNoAddedSolutesStringProperty': LocalizedStringProperty;
-    'currentDetailsSoluteTypesOnOutsideStringProperty': LocalizedStringProperty;
-    'currentDetailsSoluteTypesOnInsideStringProperty': LocalizedStringProperty;
-    'currentDetailsTransportProteinsStringProperty': LocalizedStringProperty;
-    'currentDetailsLigandsStringProperty': LocalizedStringProperty;
-    'membranePotentialValueStringProperty': LocalizedStringProperty;
-    'currentDetailsMembranePotentialStringProperty': LocalizedStringProperty;
-    'ligandToggleButtonAccessibleHelpTextStringProperty': LocalizedStringProperty;
-    'ligandToggleButtonAddedContextResponseStringProperty': LocalizedStringProperty;
-    'ligandToggleButtonRemovedContextResponseStringProperty': LocalizedStringProperty;
-    'grabbedLigandResponsePatternStringProperty': LocalizedStringProperty;
-    'grabbedLigandResponseWithHintPatternStringProperty': LocalizedStringProperty;
-    'grabbedLigandResponseWithEmptyMembraneHintPatternStringProperty': LocalizedStringProperty;
-    'transportProteinBriefNameStringProperty': LocalizedStringProperty;
-    'ligandMovedAboveLigandGatedChannelPatternStringProperty': LocalizedStringProperty;
-    'ligandMovedAboveLeakageChannelPatternStringProperty': LocalizedStringProperty;
-    'ligandMovedAboveOtherChannelPatternStringProperty': LocalizedStringProperty;
-    'membranePotentialChanges': {
-      'sodiumVoltageGatedOpenedStringProperty': LocalizedStringProperty;
-      'sodiumVoltageGatedClosedStringProperty': LocalizedStringProperty;
-      'potassiumVoltageGatedOpenedStringProperty': LocalizedStringProperty;
-      'potassiumVoltageGatedClosedStringProperty': LocalizedStringProperty;
-      'sodiumOpenedPotassiumOpenedStringProperty': LocalizedStringProperty;
-      'sodiumOpenedPotassiumClosedStringProperty': LocalizedStringProperty;
-      'sodiumClosedPotassiumOpenedStringProperty': LocalizedStringProperty;
-      'sodiumClosedPotassiumClosedStringProperty': LocalizedStringProperty;
-      'noChangeStringProperty': LocalizedStringProperty;
+    'ligandToggleButton': {
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'addedAccessibleContextResponseStringProperty': LocalizedStringProperty;
+      'removedAccessibleContextResponseStringProperty': LocalizedStringProperty;
     };
     'transportProtein': {
-      'grabbedStringProperty': LocalizedStringProperty;
+      'grabbedResponseStringProperty': LocalizedStringProperty;
+      'briefNameStringProperty': LocalizedStringProperty;
+    };
+    'membranePotential': {
+      'sodiumVoltageGatedOpenedResponseStringProperty': LocalizedStringProperty;
+      'sodiumVoltageGatedClosedResponseStringProperty': LocalizedStringProperty;
+      'potassiumVoltageGatedOpenedResponseStringProperty': LocalizedStringProperty;
+      'potassiumVoltageGatedClosedResponseStringProperty': LocalizedStringProperty;
+      'sodiumOpenedPotassiumOpenedResponseStringProperty': LocalizedStringProperty;
+      'sodiumOpenedPotassiumClosedResponseStringProperty': LocalizedStringProperty;
+      'sodiumClosedPotassiumOpenedResponseStringProperty': LocalizedStringProperty;
+      'sodiumClosedPotassiumClosedResponseStringProperty': LocalizedStringProperty;
+      'noChangeResponseStringProperty': LocalizedStringProperty;
     }
   }
 };

@@ -104,11 +104,11 @@ export default class MembranePotentialPanel extends Panel {
         } ), {
           tandem: tandem.createTandem( 'chargesCheckbox' ),
           accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
-          uncheckedContextResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.uncheckedContextResponseStringProperty,
+          uncheckedContextResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleUncheckedContextResponseStringProperty,
           checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
-            [ -70 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative70StringProperty,
-            [ -50 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponseNegative50StringProperty,
-            30: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.checkedContextResponsePositive30StringProperty
+            [ -70 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.negative70AccessibleCheckedContextResponseStringProperty,
+            [ -50 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.negative50AccessibleCheckedContextResponseStringProperty,
+            30: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.positive30AccessibleCheckedContextResponseStringProperty
           } ),
 
           // The Voicing hint response is requested to be less verbose than the accessibleHelpText, see https://github.com/phetsims/membrane-transport/issues/254.

@@ -177,7 +177,7 @@ export default class InteractiveSlotsNode extends Node {
       ], transportProtein => {
         let proteinName = 'empty';
         if ( transportProtein ) {
-          proteinName = MembraneTransportFluent.a11y.transportProteinBriefName.format( {
+          proteinName = MembraneTransportFluent.a11y.transportProtein.briefName.format( {
             type: transportProtein.type
           } );
         }
@@ -510,7 +510,7 @@ export default class InteractiveSlotsNode extends Node {
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
     // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
-    this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedStringProperty );
+    this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
 
     MembraneTransportSounds.transportProteinGrabbed();
 
