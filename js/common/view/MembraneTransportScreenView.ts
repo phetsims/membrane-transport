@@ -150,7 +150,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       children: [ crossingHighlightsCheckbox, crossingSoundsCheckbox ],
       spacing: 5,
       align: 'left',
-      left: this.observationWindow.left,
+      right: this.observationWindow.right,
       centerY: timeControlNode.centerY
     } );
     this.addChild( checkboxVBox );
@@ -164,10 +164,11 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.addChild( soluteControlsNode );
 
     const eraseSolutesButton = new EraserButton( {
+      scale: 1.2,
       baseColor: 'rgb(239,214,147)',
       tandem: options.tandem.createTandem( 'eraseSolutesButton' ),
-      right: this.observationWindow.left - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN,
-      centerY: this.observationWindow.centerY,
+      left: this.observationWindow.left,
+      centerY: timeControlNode.centerY,
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
       enabledProperty: model.hasAnySolutesProperty
