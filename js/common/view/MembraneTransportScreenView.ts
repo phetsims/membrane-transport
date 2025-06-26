@@ -171,7 +171,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       centerY: timeControlNode.centerY,
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
-      enabledProperty: model.hasAnySolutesProperty
+      enabledProperty: model.hasAnySolutesProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextStringProperty
     } );
 
     eraseSolutesButton.addListener( () => {

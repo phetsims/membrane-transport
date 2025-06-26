@@ -115,6 +115,7 @@ a11y:
   eraseSolutesButton:
     accessibleName:            Reset Solutes
     accessibleContextResponse: Solutes cleared. Add solutes to observe changes
+    accessibleHelpText:        Disabled when no solutes have been added.
   crossingHighlightsCheckbox:
     accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
     accessibleCheckedContextResponse:   Visual highlights for solute crossings, on.

@@ -99,6 +99,7 @@ type StringsType = {
     'eraseSolutesButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'crossingHighlightsCheckbox': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
