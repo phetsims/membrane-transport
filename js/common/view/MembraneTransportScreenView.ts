@@ -165,6 +165,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const eraseSolutesButton = new EraserButton( {
       scale: 1.2,
+      // baseColor is 'rgb(239,214,147)' - a light yellowish beige color for the eraser button
       baseColor: 'rgb(239,214,147)',
       tandem: options.tandem.createTandem( 'eraseSolutesButton' ),
       left: this.observationWindow.left,
