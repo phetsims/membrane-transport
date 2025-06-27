@@ -8,10 +8,8 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -110,7 +108,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
-        innerContent: ligandView.type === 'triangleLigand' ? MembraneTransportFluent.a11y.ligandNode.triangleLigandAccessibleNameStringProperty : MembraneTransportFluent.a11y.ligandNode.starLigandAccessibleNameStringProperty
+        innerContent: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.type } )
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
@@ -357,7 +355,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
       // Declare type since it refers to itself in its own declaration
       const grabDragInteraction: GrabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
-        objectToGrabString: this.getLigandTypeName(),
+        objectToGrabString: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.type } ),
 
         accessibleHelpText: MembraneTransportFluent.a11y.ligandNode.accessibleHelpTextStringProperty,
 
@@ -405,9 +403,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
               // Drop off membrane: Use calculated position above "slot 8"
               this.ligand.position.set( this.getOffMembraneDropPosition() );
-
-              // TODO: use fluent pattern instead. https://github.com/phetsims/membrane-transport/issues/200
-              this.alert( new PatternStringProperty( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponseStringProperty, { ligandType: this.getLigandTypeName() } ) );
+              this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponse.format( { ligandType: this.ligand.type } ) );
             }
             else {
               // Drop on a slot (0 to SLOT_COUNT-1)
@@ -502,13 +498,6 @@ export default class LigandNode extends InteractiveHighlightingNode {
     this.isKeyboardGrabbed = false;
     this.currentTargetSlotIndex = null;
     this.initialPositionBeforeGrab = null;
-  }
-
-  /**
-   * Get the user-friendly name for the ligand type.
-   */
-  private getLigandTypeName(): TReadOnlyProperty<string> {
-    return this.ligand.type === 'triangleLigand' ? MembraneTransportFluent.a11y.ligandNode.triangleLigandAccessibleNameStringProperty : MembraneTransportFluent.a11y.ligandNode.starLigandAccessibleNameStringProperty;
   }
 
   /**

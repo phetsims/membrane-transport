@@ -161,11 +161,15 @@ a11y:
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
       accessibleHelpText:         Grab transporter to pull to membrane.
   ligandNode:
-    starLigandAccessibleName:                    Star Ligand
-    triangleLigandAccessibleName:                Triangle Ligand
+    accessibleName:                              |-
+                                                 { $ligandType ->
+                                                 [starLigand]     Star Ligand
+                                                 *[triangleLigand] Triangle Ligand
+                                                 }
     accessibleHelpText:                          Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally.
     releasedResponse:                            Released.
-    releasedOffMembraneResponse:                 "{{ligandType}} released off membrane"
+    releasedOffMembraneResponse:                 "{ a11y.ligandNode.accessibleName } released off membrane."
+
     releasedOnProteinResponse:                   Released. Binding successful. Protein opens.
     releasedOnBusyOrIncompatibleProteinResponse: Released. Binding unsuccessful. Ligand floats away.
     unboundResponse:                             Ligand floats away. Protein closes.

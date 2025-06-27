@@ -156,8 +156,7 @@ type StringsType = {
       }
     };
     'ligandNode': {
-      'starLigandAccessibleNameStringProperty': LocalizedStringProperty;
-      'triangleLigandAccessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'releasedResponseStringProperty': LocalizedStringProperty;
       'releasedOffMembraneResponseStringProperty': LocalizedStringProperty;

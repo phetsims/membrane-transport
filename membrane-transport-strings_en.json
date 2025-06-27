@@ -309,11 +309,8 @@
       }
     },
     "ligandNode": {
-      "starLigandAccessibleName": {
-        "value": "Star Ligand"
-      },
-      "triangleLigandAccessibleName": {
-        "value": "Triangle Ligand"
+      "accessibleName": {
+        "value": "{ $ligandType ->\n[starLigand]     Star Ligand\n*[triangleLigand] Triangle Ligand\n}"
       },
       "accessibleHelpText": {
         "value": "Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally."
@@ -322,7 +319,7 @@
         "value": "Released."
       },
       "releasedOffMembraneResponse": {
-        "value": "{{ligandType}} released off membrane"
+        "value": "{ a11y_ligandNode_accessibleName } released off membrane."
       },
       "releasedOnProteinResponse": {
         "value": "Released. Binding successful. Protein opens."
