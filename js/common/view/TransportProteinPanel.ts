@@ -224,7 +224,7 @@ export default class TransportProteinPanel extends Panel {
       children: interleaveHSeparators( panels )
     } );
     super( vbox, {
-      accessibleHeading: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty,
+      accessibleHeading: MembraneTransportFluent.a11y.transportProteinPanel.accessibleHeadingStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.accessibleHelpTextStringProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
 
