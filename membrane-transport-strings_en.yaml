@@ -308,8 +308,27 @@ a11y:
     addedAccessibleContextResponse:   Outside flooded with ligands.
     removedAccessibleContextResponse: Ligands removed.
 
+  cellMembrane:
+    accessibleHeading: Cell Membrane
+
   transportProtein:
     grabbedResponse: Grabbed.
+    offMembrane: Off membrane
+    releasedReplacedResponse: Released. Protein replaced.
+    deletedResponse: Deleted.
+    cancelledResponse: Released. Back to initial slot.
+    objectResponse: |-
+      { $openOrClosed ->
+        [open]   open
+       *[closed] closed
+      }, { $proteinIndex } of { $proteinCount } Proteins in Membrane
+    accessibleName: "{ $nameResponse }, { $objectResponse }"
+    accessibleNameReversed: "{ $objectResponse }, { $nameResponse }"
+
+    accessibleObjectResponse: Above slot { $slotIndex } of { $slotCount }.
+
+    # Included in the accessibleName for the protein when it is above an empty slot.
+    empty: empty
 
     # Transport protein brief names, used reused in several in the simulation.
     briefName:       |-

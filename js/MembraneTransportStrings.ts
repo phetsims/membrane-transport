@@ -207,8 +207,20 @@ type StringsType = {
       'addedAccessibleContextResponseStringProperty': LocalizedStringProperty;
       'removedAccessibleContextResponseStringProperty': LocalizedStringProperty;
     };
+    'cellMembrane': {
+      'accessibleHeadingStringProperty': LocalizedStringProperty;
+    };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;
+      'offMembraneStringProperty': LocalizedStringProperty;
+      'releasedReplacedResponseStringProperty': LocalizedStringProperty;
+      'deletedResponseStringProperty': LocalizedStringProperty;
+      'cancelledResponseStringProperty': LocalizedStringProperty;
+      'objectResponseStringProperty': LocalizedStringProperty;
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleNameReversedStringProperty': LocalizedStringProperty;
+      'accessibleObjectResponseStringProperty': LocalizedStringProperty;
+      'emptyStringProperty': LocalizedStringProperty;
       'briefNameStringProperty': LocalizedStringProperty;
     };
     'membranePotential': {

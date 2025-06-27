@@ -151,7 +151,17 @@ addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_barChart_crossing', 'a
 addToMapIfDefined( 'a11y_ligandToggleButton_accessibleHelpText', 'a11y.ligandToggleButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButton_addedAccessibleContextResponse', 'a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButton_removedAccessibleContextResponse', 'a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHeading', 'a11y.cellMembrane.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_grabbedResponse', 'a11y.transportProtein.grabbedResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_offMembrane', 'a11y.transportProtein.offMembraneStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_releasedReplacedResponse', 'a11y.transportProtein.releasedReplacedResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_deletedResponse', 'a11y.transportProtein.deletedResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_cancelledResponse', 'a11y.transportProtein.cancelledResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_objectResponse', 'a11y.transportProtein.objectResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_accessibleName', 'a11y.transportProtein.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_accessibleNameReversed', 'a11y.transportProtein.accessibleNameReversedStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_accessibleObjectResponse', 'a11y.transportProtein.accessibleObjectResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_empty', 'a11y.transportProtein.emptyStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_briefName', 'a11y.transportProtein.briefNameStringProperty' );
 addToMapIfDefined( 'a11y_membranePotential_sodiumVoltageGatedOpenedResponse', 'a11y.membranePotential.sodiumVoltageGatedOpenedResponseStringProperty' );
 addToMapIfDefined( 'a11y_membranePotential_sodiumVoltageGatedClosedResponse', 'a11y.membranePotential.sodiumVoltageGatedClosedResponseStringProperty' );
@@ -393,10 +403,23 @@ const MembraneTransportFluent = {
       addedAccessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_addedAccessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty' ) ),
       removedAccessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_removedAccessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty' ) )
     },
+    cellMembrane: {
+      accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHeadingStringProperty' ) )
+    },
     transportProtein: {
       _comment_0: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","associatedKey":"grabbedResponse"} ),
       grabbedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_grabbedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.grabbedResponseStringProperty' ) ),
-      _comment_1: new FluentComment( {"comment":"Transport protein brief names, used reused in several in the simulation.","associatedKey":"briefName"} ),
+      offMembraneStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_offMembrane', _.get( MembraneTransportStrings, 'a11y.transportProtein.offMembraneStringProperty' ) ),
+      releasedReplacedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_releasedReplacedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.releasedReplacedResponseStringProperty' ) ),
+      deletedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_deletedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.deletedResponseStringProperty' ) ),
+      cancelledResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_cancelledResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.cancelledResponseStringProperty' ) ),
+      objectResponse: new FluentPattern<{ openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, proteinCount: FluentVariable, proteinIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_objectResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.objectResponseStringProperty' ), [{"name":"openOrClosed","variants":["open","closed"]},{"name":"proteinCount"},{"name":"proteinIndex"}] ),
+      accessibleName: new FluentPattern<{ nameResponse: FluentVariable, objectResponse: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleNameStringProperty' ), [{"name":"nameResponse"},{"name":"objectResponse"}] ),
+      accessibleNameReversed: new FluentPattern<{ nameResponse: FluentVariable, objectResponse: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleNameReversed', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleNameReversedStringProperty' ), [{"name":"nameResponse"},{"name":"objectResponse"}] ),
+      accessibleObjectResponse: new FluentPattern<{ slotCount: FluentVariable, slotIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleObjectResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleObjectResponseStringProperty' ), [{"name":"slotCount"},{"name":"slotIndex"}] ),
+      _comment_1: new FluentComment( {"comment":"Included in the accessibleName for the protein when it is above an empty slot.","associatedKey":"empty"} ),
+      emptyStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_empty', _.get( MembraneTransportStrings, 'a11y.transportProtein.emptyStringProperty' ) ),
+      _comment_2: new FluentComment( {"comment":"Transport protein brief names, used reused in several in the simulation.","associatedKey":"briefName"} ),
       briefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProtein_briefName', _.get( MembraneTransportStrings, 'a11y.transportProtein.briefNameStringProperty' ), [{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] )
     },
     _comment_3: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),

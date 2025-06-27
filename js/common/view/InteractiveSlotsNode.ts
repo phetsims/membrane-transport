@@ -9,8 +9,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -44,7 +42,8 @@ type ReleaseReason = 'release' // basic release case
   | 'swap' // swap slots with another protein in the membrane
   | 'return' // return the protein to the toolbox
   | 'cancel' // cancel the interaction
-  | 'delete'; // remove the protein from the membrane
+  | 'delete' // remove the protein from the membrane
+  | 'replace'; // replace existing protein with one from toolbar
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
@@ -171,22 +170,31 @@ export default class InteractiveSlotsNode extends Node {
     // Draw a rectangle centered at each slot, vertically above them.
     slots.forEach( ( slot, index ) => {
 
-      const objectResponseStringProperty = new StringProperty( `Above slot ${index + 1} of ${slots.length}` );
-      const nameResponseStringProperty = new DerivedProperty( [
-        slot.transportProteinProperty
-      ], transportProtein => {
-        let proteinName = 'empty';
-        if ( transportProtein ) {
-          proteinName = MembraneTransportFluent.a11y.transportProtein.briefName.format( {
-            type: transportProtein.type
-          } );
-        }
+      // The name of the protein in a slot, for when there is one.
+      const briefNameProperty = MembraneTransportFluent.a11y.transportProtein.briefName.createProperty( {
+        type: new DerivedProperty( [ slot.transportProteinProperty ], transportProtein => {
 
-        return proteinName;
+          // Default case is provided, but this will only be used when there is a protein in the slot.
+          return transportProtein ? transportProtein.type : 'sodiumPotassiumPump';
+        } )
       } );
 
-      // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/97
-      const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{objectResponse}}, {{nameResponse}}' ), {
+      const objectResponseStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.createProperty( {
+        slotIndex: `${index + 1}`,
+        slotCount: `${slots.length}`
+      } );
+      const nameResponseStringProperty = new DerivedProperty( [
+        slot.transportProteinProperty,
+        MembraneTransportFluent.a11y.transportProtein.emptyStringProperty,
+        briefNameProperty
+      ], ( transportProtein, emptyString, briefName ) => {
+        return transportProtein ? briefName : emptyString;
+      } );
+
+      // The "reversed" accessible name pattern puts the slot before the protein name and will produce the requested output like
+      // "Above slot 1 of 3, empty" or
+      // "Above slot 2 of 3, Sodium Ion, Leakage"
+      const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNameReversed.createProperty( {
         objectResponse: objectResponseStringProperty,
         nameResponse: nameResponseStringProperty
       } );
@@ -205,8 +213,8 @@ export default class InteractiveSlotsNode extends Node {
 
     // Add a rectangle for the off-membrane state
     const offMembraneRect = createTestRectangle(
-      new StringProperty( 'Off membrane' ), // TODO i18n, see https://github.com/phetsims/membrane-transport/issues/97
-      new StringProperty( 'Off membrane' ), // TODO i18n, see https://github.com/phetsims/membrane-transport/issues/97
+      MembraneTransportFluent.a11y.transportProtein.offMembraneStringProperty,
+      MembraneTransportFluent.a11y.transportProtein.offMembraneStringProperty,
       null,
       MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
       OFF_MEMBRANE_VERTICAL_OFFSET
@@ -349,8 +357,8 @@ export default class InteractiveSlotsNode extends Node {
             }
             else {
 
-              // TODO: What should be said in this case? See https://github.com/phetsims/membrane-transport/issues/97
-              releaseReason = 'release';
+              // Protein from toolbar replaces existing protein in slot
+              releaseReason = 'replace';
             }
           }
           else {
@@ -400,7 +408,6 @@ export default class InteractiveSlotsNode extends Node {
             this.view.getTransportProteinToolNode( type ).focus();
           }
 
-          // TODO: What should be said in this case? See https://github.com/phetsims/membrane-transport/issues/97
           this.emoteRelease( 'delete' );
         }
       }
@@ -418,7 +425,6 @@ export default class InteractiveSlotsNode extends Node {
 
         this.release();
 
-        // TODO: What should we say in this case? See https://github.com/phetsims/membrane-transport/issues/97
         this.emoteRelease( 'cancel' );
 
         if ( origin instanceof TransportProteinToolNode ) {
@@ -538,7 +544,7 @@ export default class InteractiveSlotsNode extends Node {
     }
     else if ( reason === 'delete' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();
-      responseString = 'Deleted.';
+      responseString = MembraneTransportFluent.a11y.transportProtein.deletedResponseStringProperty.value;
     }
     else if ( reason === 'release' ) {
       MembraneTransportSounds.transportProteinReleased();
@@ -546,7 +552,11 @@ export default class InteractiveSlotsNode extends Node {
     }
     else if ( reason === 'cancel' ) {
       MembraneTransportSounds.transportProteinReleased();
-      responseString = 'Released. Back to initial slot.';
+      responseString = MembraneTransportFluent.a11y.transportProtein.cancelledResponseStringProperty.value;
+    }
+    else if ( reason === 'replace' ) {
+      MembraneTransportSounds.transportProteinReleased();
+      responseString = MembraneTransportFluent.a11y.transportProtein.releasedReplacedResponseStringProperty.value;
     }
 
     affirm( responseString !== null, 'We should have a response string to say.' );

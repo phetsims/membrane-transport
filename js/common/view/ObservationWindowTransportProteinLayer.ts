@@ -9,8 +9,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -65,8 +63,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     this.proteinsNodeParent = new Node( {
       tagName: 'div',
 
-      // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/97
-      accessibleHeading: 'Cell Membrane',
+      accessibleHeading: MembraneTransportFluent.a11y.cellMembrane.accessibleHeadingStringProperty,
       groupFocusHighlight: true,
       focusable: false
     } );
@@ -176,16 +173,14 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             type: type
           } );
 
-          // TODO i18n, see https://github.com/phetsims/membrane-transport/issues/97 (convert to fluent/yaml)
-          const objectResponseProperty = new PatternStringProperty( new StringProperty( '{{openOrClosed}}, {{proteinIndex}} of {{proteinCount}} Proteins in Membrane' ), {
+          const objectResponseProperty = MembraneTransportFluent.a11y.transportProtein.objectResponse.createProperty( {
             openOrClosed: transportProtein.openOrClosedProperty,
             proteinIndex: slottedNode.indexProperty,
             proteinCount: model.transportProteinCountProperty
           } );
 
           // The accessibleName for the PDOM, combine the name response and object response in the requested order.
-          // TODO: i18n, see https://github.com/phetsims/membrane-transport/issues/97 (convert to fluent/yaml)
-          const accessibleNameProperty = new PatternStringProperty( new StringProperty( '{{nameResponse}}, {{objectResponse}}' ), {
+          const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleName.createProperty( {
             nameResponse: nameResponseProperty,
             objectResponse: objectResponseProperty
           } );
