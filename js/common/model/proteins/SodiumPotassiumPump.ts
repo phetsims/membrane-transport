@@ -21,9 +21,10 @@
  */
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
-import { ParticleModeWithSlot } from '../Particle.js';
+import Particle, { ParticleModeWithSlot } from '../Particle.js';
 import MoveToSodiumPotassiumPumpMode from '../particleModes/MoveToSodiumPotassiumPumpMode.js';
 import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
 import WaitingInSodiumPotassiumPumpMode from '../particleModes/WaitingInSodiumPotassiumPumpMode.js';
@@ -35,6 +36,7 @@ import TransportProteinType from './TransportProteinType.js';
 type SodiumPotassiumPumpState =
   'openToInsideEmpty' | // Ready to get sodium ions
   'openToInsideSodiumBound' |  // Got the sodium ions, waiting for the phosphate from ATP
+  'openToInsideSodiumAndATPBound' | // Sodium and ATP bound, waiting to release the phosphate and create ADP
   'openToInsideSodiumAndPhosphateBound' | // Got the sodium ions and the phosphate, a short delay before opening to the outside
   'openToOutsideAwaitingPotassium' |
   'openToOutsidePotassiumBound'; // waiting for the potassium
@@ -59,6 +61,10 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   private static readonly PHOSPHATE_SITE = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownWithPhosphateSiteDimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.phosphateSite
+  );
+  private static readonly ATP_SITE_OPEN_TO_INSIDE = MembraneTransportConstants.getBindingSiteOffset(
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownWithPhosphateSiteDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.atpSiteOpenToInside
   );
   private static readonly PHOSPHATE_SITE_OPEN_TO_INSIDE = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownWithPhosphateSiteDimension,
@@ -177,6 +183,11 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
         this.stateProperty.value = 'openToInsideSodiumBound';
       }
     }
+    else if ( this.stateProperty.value === 'openToInsideSodiumAndATPBound' ) {
+      if ( this.timeSinceStateTransition >= 1.5 ) {
+        this.splitATP();
+      }
+    }
     else if ( this.stateProperty.value === 'openToInsideSodiumAndPhosphateBound' ) {
       if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
         this.openUpward();
@@ -187,6 +198,33 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
         this.openDownward();
       }
     }
+  }
+
+  /**
+   * After a delay, the bound ATP hydrolyzes into ADP + phosphate
+   */
+  public splitATP(): void {
+    const atp = this.model.solutes.find( solute => {
+      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+             solute.mode.slot === this.slot &&
+             solute.mode.site === 'phosphate';
+    } );
+
+    affirm( atp, 'There should be an ATP if we are trying to split it.' );
+    const currentPosition = atp.position;
+
+    this.model.addSolute( new Particle( currentPosition.copy(), 'adp', atp.model ) );
+    const phosphate = new Particle( currentPosition.copy(), 'phosphate', atp.model );
+    phosphate.mode = new WaitingInSodiumPotassiumPumpMode(
+      this.slot,
+      this,
+      'phosphate'
+    );
+
+    this.model.addSolute( phosphate );
+    this.model.removeSolute( atp );
+
+    this.stateProperty.value = 'openToInsideSodiumAndPhosphateBound';
   }
 
   // Open upward, letting sodium go outside the cell
@@ -262,6 +300,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     return site === 'sodium1' ? SodiumPotassiumPump.SODIUM_SITE_1 :
            site === 'sodium2' ? SodiumPotassiumPump.SODIUM_SITE_2 :
            site === 'sodium3' ? SodiumPotassiumPump.SODIUM_SITE_3 :
+           site === 'phosphate' && state === 'openToInsideSodiumAndATPBound' ? SodiumPotassiumPump.ATP_SITE_OPEN_TO_INSIDE :
            site === 'phosphate' && state === 'openToInsideSodiumAndPhosphateBound' ? SodiumPotassiumPump.PHOSPHATE_SITE_OPEN_TO_INSIDE :
            site === 'phosphate' ? SodiumPotassiumPump.PHOSPHATE_SITE :
            site === 'potassium1' ? SodiumPotassiumPump.POTASSIUM_SITE_1 :

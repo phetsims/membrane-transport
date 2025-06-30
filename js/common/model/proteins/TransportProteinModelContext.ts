@@ -10,6 +10,8 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 type TransportProteinModelContext = Pick<MembraneTransportModel,
   'isTransportProteinSoluteFree' |
   'getSlotForTransportProtein' |
+  'addSolute' |
+  'removeSolute' |
   'solutes' |
   'ligands' |
   'membranePotentialProperty' |

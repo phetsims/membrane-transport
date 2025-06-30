@@ -28,6 +28,7 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
       sodiumPotassiumPump.stateProperty.link( state => {
         image.image = state === 'openToInsideEmpty' ? naKPumpState1_svg :
                       state === 'openToInsideSodiumBound' ? naKPumpState1_svg :
+                      state === 'openToInsideSodiumAndATPBound' ? naKPumpState1_svg :
                       state === 'openToInsideSodiumAndPhosphateBound' ? naKPumpState1_svg :
                       state === 'openToOutsideAwaitingPotassium' ? naKPumpState2_svg :
                       state === 'openToOutsidePotassiumBound' ? naKPumpState2_svg :
