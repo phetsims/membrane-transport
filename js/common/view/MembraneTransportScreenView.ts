@@ -410,6 +410,8 @@ export default class MembraneTransportScreenView extends ScreenView {
    */
   public reset(): void {
     this.resetEmitter.emit();
+
+    MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.reset();
   }
 
   /**

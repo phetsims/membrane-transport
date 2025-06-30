@@ -26,6 +26,7 @@ import HighlightPath from '../../../../scenery/js/accessibility/HighlightPath.js
 import InteractiveHighlightingNode, { InteractiveHighlightingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
@@ -154,9 +155,11 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
     const soundDragListener = new SoundDragListener( {
       start: event => {
+
+        MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.value = false;
+
         // Prevent interaction if grabbed by keyboard
         if ( this.isKeyboardGrabbed ) {
-          // listener.interrupt();
           return;
         }
 
@@ -360,7 +363,11 @@ export default class LigandNode extends InteractiveHighlightingNode {
         accessibleHelpText: MembraneTransportFluent.a11y.ligandNode.accessibleHelpTextStringProperty,
 
         onGrab: inputType => {
+
           if ( inputType === 'alternative' ) {
+
+            MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.value = false;
+
             if ( ligand.mode instanceof LigandBoundMode ) {
               ligand.mode.ligandGatedChannel.unbindLigand();
             }
@@ -472,10 +479,31 @@ export default class LigandNode extends InteractiveHighlightingNode {
     const viewScale = viewWidth / this.width; // Use initial (unscaled) width
     this.setScaleMagnitude( viewScale );
 
+    // Must be done after scale is set above, otherwise the ligand is shrunken
+    if ( focusable ) {
+
+      const outline = new Circle( POTASSIUM_REGION_HEIGHT / 2, {
+        translation: region.center,
+        stroke: 'forestgreen',
+        lineWidth: 15,
+
+        // Adjusted so the phase matches
+        lineDash: [ 50, 47 ],
+
+        visibleProperty: MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY
+      } );
+
+      this.addChild( outline );
+    }
+
     // Initial positioning
     this.updateVisualPosition();
 
     soundDragListener.isOverProperty.link( isOver => {
+
+      if ( isOver ) {
+        MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.value = false;
+      }
 
       // If the ligand is already controlled, don't start walking when the pointer goes out.
       // Do not release a bound ligand by mouseover

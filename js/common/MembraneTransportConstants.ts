@@ -14,6 +14,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
@@ -140,6 +141,8 @@ export default class MembraneTransportConstants {
       -( dimension.height / 2 - site.y ) * MembraneTransportConstants.OVERALL_ARTWORK_SCALE
     );
   }
+
+  public static readonly LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY = new BooleanProperty( true );
 
   // Yes, it is unused, but this will remind us to not accidentally instantiate
   private constructor() {
