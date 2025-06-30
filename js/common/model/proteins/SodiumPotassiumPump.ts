@@ -184,7 +184,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
       }
     }
     else if ( this.stateProperty.value === 'openToInsideSodiumAndATPBound' ) {
-      if ( this.timeSinceStateTransition >= 1.5 ) {
+      if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
         this.splitATP();
       }
     }
