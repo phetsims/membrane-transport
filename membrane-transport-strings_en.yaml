@@ -326,7 +326,7 @@ a11y:
     accessibleName: "{ $nameResponse }, { $objectResponse }"
     accessibleNameReversed: "{ $objectResponse }, { $nameResponse }"
 
-    accessibleObjectResponse: Above slot { $slotIndex } of { $slotCount }.
+    accessibleObjectResponse: Above slot { $slotIndex } of { $slotCount }
 
     # Included in the accessibleName for the protein when it is above an empty slot.
     empty: empty

@@ -463,7 +463,7 @@
         "value": "{ $objectResponse }, { $nameResponse }"
       },
       "accessibleObjectResponse": {
-        "value": "Above slot { $slotIndex } of { $slotCount }."
+        "value": "Above slot { $slotIndex } of { $slotCount }"
       },
       "empty": {
         "value": "empty"
