@@ -39,7 +39,7 @@ export default class MembraneTransportConstants {
                                         MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT /
                                         MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH;
 
-  public static readonly LIGAND_COUNT = 10; // Per ligand type
+  public static readonly LIGAND_COUNT = 5; // Per ligand type
   public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
   public static readonly TRANSPORT_PROTEIN_WIDTH = 25; // Width in model coordinates
 

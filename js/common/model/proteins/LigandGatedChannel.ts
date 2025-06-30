@@ -22,7 +22,7 @@ import TransportProteinModelContext from './TransportProteinModelContext.js';
 const REBINDING_DELAY = 5;
 
 // Dwell time in seconds that a ligand remains bound before detaching. Multiple ions can pass through during this time, in seconds.
-const BINDING_DURATION = 7;
+const BINDING_DURATION = 15;
 
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
