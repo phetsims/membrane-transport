@@ -32,7 +32,7 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
   // Max solutes per solute type
   maxSolutes: {
     type: 'number',
-    defaultValue: 50
+    defaultValue: 300
   },
 
   // For development only. When provided, the ligands will slow down significantly during random walk.
