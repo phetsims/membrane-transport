@@ -284,6 +284,14 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   public clear(): void {
+
+    // Clear all solutes from active proteins
+    this.getFilledSlots().forEach( slot => {
+      const transportProtein = slot.transportProteinProperty.value;
+      affirm( transportProtein, 'Transport protein should be defined for a filled slot.' );
+      transportProtein.clear( slot );
+    } );
+
     this.solutes.length = 0;
     this.updateSoluteCounts();
   }

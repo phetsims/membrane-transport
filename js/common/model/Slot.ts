@@ -70,6 +70,9 @@ export default class Slot {
   }
 
   public clear(): void {
+    if ( this.transportProteinProperty.value ) {
+      this.transportProteinProperty.value.clear( this );
+    }
     this.transportProteinProperty.value = null;
   }
 

@@ -122,6 +122,19 @@ export default abstract class TransportProtein<State extends string = Intentiona
     releaseParticlesWithSlot( this.model.solutes );
     releaseParticlesWithSlot( this.model.ligands );
   }
+
+  /**
+   * Release any particles from this protein, and reset the state.
+   * Particles return to their random walk.
+   */
+  public clear( slot: Slot ): void {
+
+    // Release any particles that were interacting with the transport protein.
+    this.releaseParticles( slot );
+
+    // Reset the state of the transport protein to its initial state.
+    this.stateProperty.reset();
+  }
 }
 
 membraneTransport.register( 'TransportProtein', TransportProtein );
