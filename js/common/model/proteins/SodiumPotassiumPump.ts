@@ -183,18 +183,14 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
         this.stateProperty.value = 'openToInsideSodiumBound';
       }
     }
-    else if ( this.stateProperty.value === 'openToInsideSodiumAndATPBound' ) {
-      if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
+    else if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
+      if ( this.stateProperty.value === 'openToInsideSodiumAndATPBound' ) {
         this.splitATP();
       }
-    }
-    else if ( this.stateProperty.value === 'openToInsideSodiumAndPhosphateBound' ) {
-      if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
+      else if ( this.stateProperty.value === 'openToInsideSodiumAndPhosphateBound' ) {
         this.openUpward();
       }
-    }
-    else if ( this.stateProperty.value === 'openToOutsidePotassiumBound' ) {
-      if ( this.timeSinceStateTransition >= STATE_TRANSITION_INTERVAL ) {
+      else if ( this.stateProperty.value === 'openToOutsidePotassiumBound' ) {
         this.openDownward();
       }
     }
