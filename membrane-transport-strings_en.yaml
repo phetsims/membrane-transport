@@ -258,14 +258,15 @@ a11y:
                                } { $addedOrRemoved ->
                                  [added]   added
                                 *[removed] removed
-                               }. Now
-                               { $moreOrLessOrSame ->
+                               }. Now,
+                               { $moreOrLessOrSameOrNone ->
+                                 [none] no { a11y.solute } outside or inside.
                                  [same] same amount of solute inside and outside.
                                 *[other] { $differenceSize ->
                                    [aLittle] a little
                                   *[aLot]    a lot
                                  }
-                                 { $moreOrLessOrSame ->
+                                 { $moreOrLessOrSameOrNone ->
                                    [more] more
                                   *[less] less
                                  }

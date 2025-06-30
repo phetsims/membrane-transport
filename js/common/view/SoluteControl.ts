@@ -208,17 +208,18 @@ export default class SoluteControl extends Panel {
         const directionality = side === 'inside' ? 'insideThanOutside' : 'outsideThanInside';
 
         // Describe relative to the spinner that is being controlled
-        const moreOrLessOrSame = ( differenceInsideMinusOutside === 0 ) ? 'same' :
-                                 side === 'inside' ?
-                                 ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
-                                 ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
+        const moreOrLessOrSameOrNone = ( insideCount === 0 && outsideCount === 0 ) ? 'none' :
+                                       ( differenceInsideMinusOutside === 0 ) ? 'same' :
+                                       side === 'inside' ?
+                                       ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
+                                       ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
 
         // 4. Supply these to the translation message
         return MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
           amount: amount,                // aLittle / aLot
           addedOrRemoved: addedOrRemoved, // added / removed
           differenceSize: differenceSize, // aLittle / aLot
-          moreOrLessOrSame: moreOrLessOrSame, // more / less
+          moreOrLessOrSameOrNone: moreOrLessOrSameOrNone, // more / less
           soluteType: soluteType,       // e.g. 'Na⁺'
           directionality: directionality  // insideThanOutside / outsideThanInside
         } );
