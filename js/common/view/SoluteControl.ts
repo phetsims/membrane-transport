@@ -28,8 +28,8 @@ import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 type SelfOptions = EmptySelfOptions;
 type SoluteControlOptions = SelfOptions & StrictOmit<PanelOptions, 'tandem'>;
 
-const fineDelta = 2;
-const coarseDelta = 10;
+const fineDelta = 10;
+const coarseDelta = 50;
 
 export default class SoluteControl extends Panel {
 
@@ -231,7 +231,7 @@ export default class SoluteControl extends Panel {
 
         // Make smaller so there is enough space between the observation window and the solute radio buttons.
         arrowWidth: 8,
-        arrowHeight: 10,
+        arrowHeight: 16,
 
         phetioVisiblePropertyInstrumented: false
       }

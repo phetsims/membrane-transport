@@ -82,13 +82,13 @@ a11y:
       noAddedSolutes:         no added solutes
       soluteTypesOnOutside:   |-
                               { $count ->
-                                [one] { $count } added solute type on outside
-                               *[other] { $count } added solute types on outside
+                                [one] { $count } solute type on outside
+                               *[other] { $count } solute types on outside
                               }
       soluteTypesOnInside:    |-
                               { $count ->
-                                [one] { $count } added solute type on inside
-                               *[other] { $count } added solute types on inside
+                                [one] { $count } solute type on inside
+                               *[other] { $count } solute types on inside
                               }
       transportProteins:      |-
                               { $proteinCount ->

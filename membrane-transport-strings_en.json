@@ -154,10 +154,10 @@
           "value": "no added solutes"
         },
         "soluteTypesOnOutside": {
-          "value": "{ $count ->\n  [one] { $count } added solute type on outside\n *[other] { $count } added solute types on outside\n}"
+          "value": "{ $count ->\n  [one] { $count } solute type on outside\n *[other] { $count } solute types on outside\n}"
         },
         "soluteTypesOnInside": {
-          "value": "{ $count ->\n  [one] { $count } added solute type on inside\n *[other] { $count } added solute types on inside\n}"
+          "value": "{ $count ->\n  [one] { $count } solute type on inside\n *[other] { $count } solute types on inside\n}"
         },
         "transportProteins": {
           "value": "{ $proteinCount ->\n  [one] { $proteinCount} transport protein\n  *[other] { $proteinCount} transport proteins\n} of { $proteinTypeCount ->\n  [one] { $proteinTypeCount } type\n *[other] { $proteinTypeCount} types\n}, in membrane"
