@@ -48,6 +48,8 @@ export default class LigandGatedChannelNode extends TransportProteinNode {
         visibleProperty: highlightVisibleProperty
       } );
 
+      this.addDisposable( highlightVisibleProperty );
+
       channel.stateProperty.link( state => {
         image.image = type === 'sodiumIonLigandGatedChannel' ? ( state === 'ligandBoundOpen' || state === 'ligandUnboundOpen' ) ? sodiumLigandGatedOpen_svg : sodiumLigandGatedClosed_svg :
                       type === 'potassiumIonLigandGatedChannel' ? ( state === 'ligandBoundOpen' || state === 'ligandUnboundOpen' ) ? potassiumLigandGatedOpen_svg : potassiumLigandGatedClosed_svg :

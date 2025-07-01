@@ -199,7 +199,10 @@ export default class TransportProteinDragNode extends Node {
         observationWindow.clearSlotDragIndicatorHighlights();
       }
     } );
-    this.addInputListener( this.dragListener );
+    this.addInputListener( this.dragListener, {
+      disposer: this
+    } );
+    this.addDisposable( this.dragListener );
 
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
 
