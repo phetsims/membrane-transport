@@ -24,13 +24,13 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle, { ParticleModeWithSlot } from '../Particle.js';
 import MoveToSodiumPotassiumPumpMode from '../particleModes/MoveToSodiumPotassiumPumpMode.js';
 import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
 import WaitingInSodiumPotassiumPumpMode from '../particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 import { ParticleType } from '../SoluteType.js';
 
@@ -83,7 +83,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   );
 
   public constructor(
-    model: TransportProteinModelContext,
+    model: MembraneTransportModel,
     type: TransportProteinType,
     position: number
   ) {

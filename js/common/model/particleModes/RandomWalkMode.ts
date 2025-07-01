@@ -177,7 +177,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * Checks for a protein interaction and handles it.
    * Returns true if an interaction occurs.
    */
-  private attemptProteinInteraction( particle: Particle<IntentionalAny>, model: Pick<MembraneTransportModel, 'membraneSlots' | 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'>, outsideOfCell: boolean ): boolean {
+  private attemptProteinInteraction( particle: Particle<IntentionalAny>, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
     for ( let i = 0; i < model.membraneSlots.length; i++ ) {
       const slot = model.membraneSlots[ i ];
@@ -208,7 +208,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * Checks for membrane interactions, handling passive diffusion or bounce if necessary.
    * Returns true if passive diffusion occurs.
    */
-  private attemptMembraneInteraction( particle: Particle<IntentionalAny>, membraneTransportModel: Pick<MembraneTransportModel, 'checkGradientForCrossing'>, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
+  private attemptMembraneInteraction( particle: Particle<IntentionalAny>, membraneTransportModel: MembraneTransportModel, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
     if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       // Check for passive diffusion first, might change mode
@@ -321,7 +321,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     particle: Particle<IntentionalAny>,
     slot: Slot,
     transportProtein: TransportProtein,
-    model: Pick<MembraneTransportModel, 'ligands' | 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'>,
+    model: MembraneTransportModel,
     outsideOfCell: boolean
   ): boolean {
 
@@ -352,7 +352,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     particle: Particle<IntentionalAny>,
     slot: Slot,
     transportProtein: TransportProtein,
-    model: Pick<MembraneTransportModel, 'ligands'>,
+    model: MembraneTransportModel,
     outsideOfCell: boolean
   ): boolean {
     if ( ( particle.type === 'triangleLigand' || particle.type === 'starLigand' ) && outsideOfCell ) {
@@ -410,7 +410,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     particle: Particle<IntentionalAny>,
     slot: Slot,
     transportProtein: TransportProtein,
-    model: Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'>
+    model: MembraneTransportModel,
   ): boolean {
 
     if (

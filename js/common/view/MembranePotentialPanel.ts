@@ -27,7 +27,7 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembranePotentialPanel extends Panel {
-  public constructor( model: Pick<MembraneTransportModel, 'membranePotentialProperty' | 'chargesVisibleProperty'>, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, tandem: Tandem ) {
 
     const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
       value: -70,

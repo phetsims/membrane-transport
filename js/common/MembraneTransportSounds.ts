@@ -299,7 +299,7 @@ export default class MembraneTransportSounds {
     }
   }
 
-  public static updateAmbientSoluteSounds( model: Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties'> ): void {
+  public static updateAmbientSoluteSounds( model: MembraneTransportModel ): void {
 
     if ( !MembraneTransportQueryParameters.ambientSound ) {
       return;

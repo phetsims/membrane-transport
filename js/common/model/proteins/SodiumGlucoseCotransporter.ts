@@ -10,13 +10,13 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import { ParticleModeWithSlot } from '../Particle.js';
 import MoveToSodiumGlucoseTransporterMode from '../particleModes/MoveToSodiumGlucoseTransporterMode.js';
 import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
 import WaitingInSodiumGlucoseCotransporterMode from '../particleModes/WaitingInSodiumGlucoseCotransporterMode.js';
 import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
 // The sodium glucose cotransporter is always open to the inside or outside the cell
@@ -40,7 +40,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.glucoseSiteCenter
   );
 
-  public constructor( model: TransportProteinModelContext, type: TransportProteinType, position: number ) {
+  public constructor( model: MembraneTransportModel, type: TransportProteinType, position: number ) {
 
     // This protein is always 'closed' because there are no states that allow a particle to move through it freely.
     super( model, type, position, 'openToOutsideAwaitingParticles', [] );

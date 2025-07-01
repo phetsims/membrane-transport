@@ -11,12 +11,12 @@ import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import LigandBoundMode from '../particleModes/LigandBoundMode.js';
 import Slot from '../Slot.js';
 import SoluteType, { LigandType } from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
 const REBINDING_DELAY = 5;
@@ -55,7 +55,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel.open.ligandBindingSite
   );
 
-  public constructor( model: TransportProteinModelContext, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
+  public constructor( model: MembraneTransportModel, type: 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel', position: number ) {
     super( model, type, position, 'closed', [ 'ligandBoundOpen', 'ligandUnboundOpen' ] );
 
     this.ligandUnboundDueToNaturalCausesEmitter = model.ligandUnboundDueToNaturalCausesEmitter;

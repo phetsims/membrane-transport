@@ -35,7 +35,7 @@ const TEXT_OPTIONS = {
 } as const;
 
 export default class LigandToggleButton extends BooleanRectangularToggleButton {
-  public constructor( model: Pick<MembraneTransportModel, 'areLigandsAddedProperty'>, tandem: Tandem ) {
+  public constructor( model: MembraneTransportModel, tandem: Tandem ) {
 
     const trueNode = new Text( MembraneTransportFluent.removeLigandsStringProperty, TEXT_OPTIONS );
     const falseNode = new Text( MembraneTransportFluent.addLigandsStringProperty, TEXT_OPTIONS );

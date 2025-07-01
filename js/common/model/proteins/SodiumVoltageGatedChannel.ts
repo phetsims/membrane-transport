@@ -7,14 +7,14 @@
  */
 
 import membraneTransport from '../../../membraneTransport.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
 
 type VoltageGatedChannelState = 'closedNegative70mV' | 'openNegative50mV' | 'closed30mV'; // opens based on the voltage of the membrane
 
 export default class SodiumVoltageGatedChannel extends VoltageGatedChannel<VoltageGatedChannelState> {
 
-  public constructor( model: TransportProteinModelContext, position: number ) {
+  public constructor( model: MembraneTransportModel, position: number ) {
     super( model, 'sodiumIonVoltageGatedChannel', position, 'closedNegative70mV', [ 'openNegative50mV' ] );
   }
 

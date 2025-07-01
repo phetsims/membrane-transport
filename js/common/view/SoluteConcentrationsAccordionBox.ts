@@ -21,7 +21,7 @@ import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
 import InsideOutsideLabel from './InsideOutsideLabel.js';
-import SoluteBarChartNode, { BarChartModelType } from './SoluteBarChartNode.js';
+import SoluteBarChartNode from './SoluteBarChartNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoluteBarChartsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
@@ -30,7 +30,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
   public readonly stepEmitter: Emitter<[ number ]>;
 
-  public constructor( model: BarChartModelType & Pick<MembraneTransportModel, 'featureSet'>, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
+  public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleNode: new Text( MembraneTransportFluent.soluteConcentrationsStringProperty, { fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE } ),

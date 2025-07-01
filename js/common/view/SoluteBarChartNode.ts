@@ -43,14 +43,12 @@ const ABOUT_TWICE = 1.9;
 const SOME_MORE = 1.11;
 const ROUGHLY_EQUAL = 1;
 
-export type BarChartModelType = Pick<MembraneTransportModel, 'outsideSoluteCountProperties' | 'insideSoluteCountProperties' | 'fluxEntries' | 'isPlayingProperty'>;
-
 export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( model: BarChartModelType,
+  public constructor( model: MembraneTransportModel,
                       soluteType: PlottableSoluteTypes,
                       iconAlignGroup: AlignGroup,
                       tandem: Tandem ) {

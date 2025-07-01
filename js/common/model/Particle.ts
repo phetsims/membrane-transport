@@ -212,7 +212,7 @@ export default class Particle<T extends ParticleType> {
     return new Vector2( Math.cos( angle ), Math.sin( angle ) );
   }
 
-  public static stateToMode( model: Pick<MembraneTransportModel, 'membraneSlots'>, state: Record<string, IntentionalAny> ): BaseParticleMode {
+  public static stateToMode( model: MembraneTransportModel, state: Record<string, IntentionalAny> ): BaseParticleMode {
     const slot = state.slot !== null && state.slot !== undefined ? model.membraneSlots[ state.slot ] : null;
 
     switch( state.type ) {

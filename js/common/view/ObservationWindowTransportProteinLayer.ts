@@ -54,7 +54,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   private readonly proteinsNodeParent: Node;
 
   public constructor(
-    public readonly model: Pick<MembraneTransportModel, 'membraneSlots' | 'transportProteinCountProperty' | 'getFilledSlots'>,
+    public readonly model: MembraneTransportModel,
     view: MembraneTransportScreenView,
     modelViewTransform: ModelViewTransform2
   ) {

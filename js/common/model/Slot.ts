@@ -15,9 +15,9 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportModel from './MembraneTransportModel.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
-import TransportProteinModelContext from './proteins/TransportProteinModelContext.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 
 export default class Slot {
@@ -26,7 +26,7 @@ export default class Slot {
   public readonly transportProteinProperty: Property<null | TransportProtein>;
   private readonly transportProteinTypeProperty: DerivedProperty<TransportProteinType | null, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny>;
 
-  public constructor( private readonly model: TransportProteinModelContext, public readonly position: number, tandem: Tandem ) {
+  public constructor( private readonly model: MembraneTransportModel, public readonly position: number, tandem: Tandem ) {
 
     this.transportProteinProperty = new Property<null | TransportProtein>( null );
 

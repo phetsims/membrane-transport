@@ -33,7 +33,7 @@ const coarseDelta = 50;
 
 export default class SoluteControl extends Panel {
 
-  public constructor( model: Pick<MembraneTransportModel, 'soluteProperty' | 'insideSoluteCountProperties' | 'outsideSoluteCountProperties' | 'addSolutes' | 'removeSolutes'>,
+  public constructor( model: MembraneTransportModel,
                       soluteType: SoluteControlSolutes,
                       side: 'outside' | 'inside',
                       tandem: Tandem,

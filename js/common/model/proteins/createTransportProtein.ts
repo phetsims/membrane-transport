@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
 import PotassiumVoltageGatedChannel from './PotassiumVoltageGatedChannel.js';
@@ -14,10 +15,9 @@ import SodiumGlucoseCotransporter from './SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from './SodiumPotassiumPump.js';
 import SodiumVoltageGatedChannel from './SodiumVoltageGatedChannel.js';
 import TransportProtein from './TransportProtein.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
-export default function createTransportProtein( model: TransportProteinModelContext, type: TransportProteinType, position: number ): TransportProtein {
+export default function createTransportProtein( model: MembraneTransportModel, type: TransportProteinType, position: number ): TransportProtein {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 

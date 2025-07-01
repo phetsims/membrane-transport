@@ -18,10 +18,10 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle, { ParticleModeWithSlot } from '../Particle.js';
 import Slot from '../Slot.js';
 import SoluteType, { ParticleType } from '../SoluteType.js';
-import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
 
 // The State type parameter is a string union defined by the subclass, indicating which conformation or mode the protein
@@ -49,7 +49,7 @@ export default abstract class TransportProtein<State extends string = Intentiona
    * @param openStates - A list of states that are considered 'open' for the purposes of transport.
    */
   protected constructor(
-    public readonly model: TransportProteinModelContext,
+    public readonly model: MembraneTransportModel,
     public readonly type: TransportProteinType,
     public readonly position: number,
     initialState: State,
