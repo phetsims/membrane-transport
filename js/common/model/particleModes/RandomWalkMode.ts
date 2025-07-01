@@ -14,7 +14,6 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
-import MembraneTransportQueryParameters from '../../MembraneTransportQueryParameters.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle, { CAPTURE_RADIUS_PROPERTY } from '../Particle.js';
@@ -78,8 +77,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     const isOutsideCell = particle.position.y > 0;
 
     // For debugging, make the ligands move slower so they are easy to grab and drag.
-    const moveDeltaTime = ( MembraneTransportQueryParameters.slowLigands && ( particle.type === 'triangleLigand' || particle.type === 'starLigand' ) ) ? 0.1 * dt : dt;
-    this.moveParticle( moveDeltaTime, particle, direction );
+    this.moveParticle( dt, particle, direction );
 
     // Check for overlap and interactions after updating particle position. This prevents particles from crossing the membrane
     // when dt is large (on slower devices).

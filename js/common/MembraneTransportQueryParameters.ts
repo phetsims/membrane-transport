@@ -35,11 +35,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 300
   },
 
-  // For development only. When provided, the ligands will slow down significantly during random walk.
-  slowLigands: {
-    type: 'flag'
-  },
-
   // Sound design for channel crossings uses stereo panning
   stereoCrossings: {
     type: 'boolean',
