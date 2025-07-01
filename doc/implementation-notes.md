@@ -16,7 +16,7 @@ incorporating modern PhET frameworks and updated pedagogical features.
   - keyboard support and interactive highlights
   - dynamic locales
   - sim-specific preferences
-  - voicing (tier 1)
+  - voicing (core)
   - pan/zoom
 
 - **Excluded**
