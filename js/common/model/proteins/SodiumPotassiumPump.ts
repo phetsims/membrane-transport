@@ -32,6 +32,7 @@ import Slot from '../Slot.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinModelContext from './TransportProteinModelContext.js';
 import TransportProteinType from './TransportProteinType.js';
+import { ParticleType } from '../SoluteType.js';
 
 type SodiumPotassiumPumpState =
   'openToInsideEmpty' | // Ready to get sodium ions
@@ -43,6 +44,8 @@ type SodiumPotassiumPumpState =
 
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
+
+type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate';
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
@@ -132,51 +135,27 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   }
 
   public getNumberOfFilledSodiumSites(): number {
-
-    const sodium1 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium1' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium2' );
-    const sodium3 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium3' );
-
-    // Count the number of sodium that are filled
-    let numberSodiumFilled = 0;
-    if ( sodium1 ) {
-      numberSodiumFilled++;
-    }
-    if ( sodium2 ) {
-      numberSodiumFilled++;
-    }
-    if ( sodium3 ) {
-      numberSodiumFilled++;
-    }
-    return numberSodiumFilled;
+    const sites: SodiumPotassiumPumpSite[] = [ 'sodium1', 'sodium2', 'sodium3' ];
+    return sites.filter( site => this.getWaitingSolute( site ) ).length;
   }
 
   public getNumberOfFilledPotassiumSites(): number {
-
-    return this.model.solutes.filter( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                solute.mode.slot === this.slot &&
-                                                ( solute.mode.site === 'potassium1' || solute.mode.site === 'potassium2' ) ).length;
+    const sites: SodiumPotassiumPumpSite[] = [ 'potassium1', 'potassium2' ];
+    return sites.filter( site => this.getWaitingSolute( site ) ).length;
   }
 
+  private getWaitingSolute( site: SodiumPotassiumPumpSite ): Particle<ParticleType> | undefined {
+    return this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
+                                              solute.mode.slot === this.slot &&
+                                              solute.mode.site === site );
+  }
 
   public override step( dt: number ): void {
     super.step( dt );
 
-    const sodium1 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium1' );
-    const sodium2 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium2' );
-    const sodium3 = this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-                                                       solute.mode.slot === this.slot &&
-                                                       solute.mode.site === 'sodium3' );
+    const sodium1 = this.getWaitingSolute( 'sodium1' );
+    const sodium2 = this.getWaitingSolute( 'sodium2' );
+    const sodium3 = this.getWaitingSolute( 'sodium3' );
 
     if ( this.stateProperty.value === 'openToInsideEmpty' ) {
       if ( sodium1 && sodium2 && sodium3 ) {
@@ -200,11 +179,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
    * After a delay, the bound ATP hydrolyzes into ADP + phosphate
    */
   public splitATP(): void {
-    const atp = this.model.solutes.find( solute => {
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'phosphate';
-    } );
+    const atp = this.getWaitingSolute( 'phosphate' );
 
     affirm( atp, 'There should be an ATP if we are trying to split it.' );
     const currentPosition = atp.position;
@@ -226,21 +201,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   // Open upward, letting sodium go outside the cell
   public openUpward(): void {
 
-    const sodium1 = this.model.solutes.find( solute => {
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'sodium1';
-    } );
-    const sodium2 = this.model.solutes.find( solute => {
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'sodium2';
-    } );
-    const sodium3 = this.model.solutes.find( solute => {
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'sodium3';
-    } );
+    const sodium1 = this.getWaitingSolute( 'sodium1' );
+    const sodium2 = this.getWaitingSolute( 'sodium2' );
+    const sodium3 = this.getWaitingSolute( 'sodium3' );
     this.stateProperty.value = 'openToOutsideAwaitingPotassium';
 
     // Move solutes through the open sodium potassium pump
@@ -252,17 +215,8 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   // Open downward, letting potassium go into the cell
   public openDownward(): void {
 
-    const potassium1 = this.model.solutes.find( solute => {
-
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'potassium1';
-    } );
-    const potassium2 = this.model.solutes.find( solute => {
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'potassium2';
-    } );
+    const potassium1 = this.getWaitingSolute( 'potassium1' );
+    const potassium2 = this.getWaitingSolute( 'potassium2' );
     this.stateProperty.value = 'openToInsideEmpty';
 
     // Move solutes through the open sodium potassium pump
@@ -270,17 +224,13 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     potassium2!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward' );
 
     // release the phosphate
-    const phosphate = this.model.solutes.find( solute => {
-      return solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
-             solute.mode.slot === this.slot &&
-             solute.mode.site === 'phosphate';
-    } );
+    const phosphate = this.getWaitingSolute( 'phosphate' );
     if ( phosphate ) {
       phosphate.moveInDirection( new Vector2( 0, -1 ), 0.5 );
     }
   }
 
-  public getSitePosition( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' ): Vector2 {
+  public getSitePosition( site: SodiumPotassiumPumpSite ): Vector2 {
     const offset = SodiumPotassiumPump.getSitePositionOffset( site, this.stateProperty.value );
     return this.slot.getPositionVector().plus( offset );
   }
@@ -292,7 +242,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     } );
   }
 
-  public static getSitePositionOffset( site: 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate', state: SodiumPotassiumPumpState ): Vector2 {
+  public static getSitePositionOffset( site: SodiumPotassiumPumpSite, state: SodiumPotassiumPumpState ): Vector2 {
     return site === 'sodium1' ? SodiumPotassiumPump.SODIUM_SITE_1 :
            site === 'sodium2' ? SodiumPotassiumPump.SODIUM_SITE_2 :
            site === 'sodium3' ? SodiumPotassiumPump.SODIUM_SITE_3 :
