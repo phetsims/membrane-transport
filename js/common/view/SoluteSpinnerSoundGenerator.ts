@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Plays the "bubbling" sound when solutes are added via the Solute Spinners. This was adapted from the SoluteSpinnerSoundGenerator
+ * Plays the "bubbling" sound when solutes are added via the Solute Spinners. This was adapted from the ConcentrationSliderSoundGenerator
  * in the Greenhouse Effect simulation. See https://github.com/phetsims/greenhouse-effect/issues/28.
  *
  * @author Sam Reid (PhET Interactive Simulations)
