@@ -102,6 +102,8 @@ export default class MembranePotentialPanel extends Panel {
           maxWidth: 140,
           font: MembraneTransportConstants.FONT
         } ), {
+          touchAreaXDilation: 5,
+          touchAreaYDilation: 5,
           tandem: tandem.createTandem( 'chargesCheckbox' ),
           accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
           uncheckedContextResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleUncheckedContextResponseStringProperty,
