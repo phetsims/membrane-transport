@@ -130,6 +130,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
+      touchAreaYDilation: 5,
+      touchAreaXDilation: 5,
       accessibleHelpText: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
       checkedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty,
       uncheckedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty,
@@ -140,6 +142,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       font: MembraneTransportConstants.FONT,
       maxWidth: 160
     } ), {
+      touchAreaYDilation: 5,
+      touchAreaXDilation: 5,
       accessibleHelpText: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
       checkedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty,
       uncheckedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty,
@@ -148,7 +152,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const checkboxVBox = new VBox( {
       children: [ crossingHighlightsCheckbox, crossingSoundsCheckbox ],
-      spacing: 5,
+      spacing: 8,
       align: 'left',
       right: this.observationWindow.right,
       centerY: timeControlNode.centerY
