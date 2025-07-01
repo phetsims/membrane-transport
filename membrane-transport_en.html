@@ -30,19 +30,7 @@
         "url": "https://github.com/phetsims/membrane-transport.git"
       },
       "devDependencies": {
-        "grunt": "~1.5.3",
-        "esbuild": "^0.24.2",
-        "chokidar-cli": "^3.0.0",
-        "concurrently": "^9.1.2",
-        "@typescript-eslint/parser": "^8.31.0",
-        "js-yaml": "^4.1.0"
-      },
-      "scripts": {
-        "dev": "concurrently \"npm run watch-strings\" \"grunt dev-server\" \"npm run watch-sounds\"",
-        "watch-strings": "chokidar \"membrane-transport-strings_en.hjson\" -c \"grunt modulify --targets=strings\"",
-        "watch-sounds": "chokidar \"./sounds/*.mp3\" -c \"grunt modulify --targets=sounds && ../perennial-alias/bin/sage run ../perennial-alias/js/scripts/generate-license-json.ts ./sounds/ 'created by Ashton Morris (PhET Interactive Simulations)'\"",
-        "checkout-main": "git checkout main && cd ../chipper && git checkout main && cd ../joist && git checkout main",
-        "checkout-fluent": "git checkout fluent-json-chipper-1588 && cd ../chipper && git checkout fluent-json-chipper-1588 && cd ../joist && git checkout fluent-json-chipper-1588"
+        "grunt": "~1.5.3"
       },
       "phet": {
         "requirejsNamespace": "MEMBRANE_TRANSPORT",
