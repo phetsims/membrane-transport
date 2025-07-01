@@ -119,8 +119,7 @@ The simulation supports keyboard navigation and assistive technologies:
 ## PhET-iO Integration
 
 - Instrumentation includes stable identifiers for all key model elements and controls.
-- State snapshots capture essential model details, supporting session replay and synchronization.
-- Events emitted for significant particle-channel interactions, useful for data analysis or assessment.
+- State snapshots capture essential model details, supporting state and PhET Studio
 
 ## Performance and Optimization
 
