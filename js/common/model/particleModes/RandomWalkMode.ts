@@ -16,7 +16,8 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportQueryParameters from '../../MembraneTransportQueryParameters.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
-import { CAPTURE_RADIUS_PROPERTY } from '../Particle.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle, { CAPTURE_RADIUS_PROPERTY } from '../Particle.js';
 import LigandGatedChannel from '../proteins/LigandGatedChannel.js';
 import SodiumGlucoseCotransporter from '../proteins/SodiumGlucoseCotransporter.js';
 import SodiumPotassiumPump from '../proteins/SodiumPotassiumPump.js';
@@ -26,12 +27,10 @@ import Slot from '../Slot.js';
 import SoluteType from '../SoluteType.js';
 import BaseParticleMode from './BaseParticleMode.js';
 import LigandBoundMode from './LigandBoundMode.js';
-import MembraneTransportModel from '../MembraneTransportModel.js';
 import MoveToCenterOfChannelMode from './MoveToCenterOfChannelMode.js';
 import MoveToLigandBindingLocationMode from './MoveToLigandBindingLocationMode.js';
 import MoveToSodiumGlucoseTransporterMode from './MoveToSodiumGlucoseTransporterMode.js';
 import MoveToSodiumPotassiumPumpMode from './MoveToSodiumPotassiumPumpMode.js';
-import Particle from '../Particle.js';
 import PassiveDiffusionMode from './PassiveDiffusionMode.js';
 
 // Typical speed for movement
@@ -76,20 +75,21 @@ export default class RandomWalkMode extends BaseParticleMode {
     this.updateRandomWalkTimingAndDirection( dt, particle );
 
     const direction = this.currentDirection.copy();
-    const thisBounds = particle.getBounds();
     const isOutsideCell = particle.position.y > 0;
-
-    if ( this.attemptProteinInteraction( particle, model, isOutsideCell ) ) {
-      return;
-    }
-
-    if ( this.attemptMembraneInteraction( particle, model, thisBounds, isOutsideCell, direction ) ) {
-      return;
-    }
 
     // For debugging, make the ligands move slower so they are easy to grab and drag.
     const moveDeltaTime = ( MembraneTransportQueryParameters.slowLigands && ( particle.type === 'triangleLigand' || particle.type === 'starLigand' ) ) ? 0.1 * dt : dt;
     this.moveParticle( moveDeltaTime, particle, direction );
+
+    // Check for overlap and interactions after updating particle position. This prevents particles from crossing the membrane
+    // when dt is large (on slower devices).
+    if ( this.attemptProteinInteraction( particle, model, isOutsideCell ) ) {
+      return;
+    }
+
+    if ( this.attemptMembraneInteraction( particle, model, particle.getBounds(), isOutsideCell, direction ) ) {
+      return;
+    }
 
     const boundingRegion = isOutsideCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
 
