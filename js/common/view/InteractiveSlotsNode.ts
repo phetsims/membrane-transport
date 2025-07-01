@@ -73,7 +73,8 @@ export default class InteractiveSlotsNode extends Node {
       // So that we do not interrupt the name response when the protein is grabbed.
       cancelOther: false,
 
-      ariaLivePriority: AriaLive.ASSERTIVE
+      // Assertive was "losing" the message on Mac/Voiceover, but polite correctly schedules it after reading the accessible name from focus change
+      ariaLivePriority: AriaLive.POLITE
     }
   } );
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
@@ -515,7 +516,7 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
 
-    // Alert 'grabbed' before updating focus so that the 'grabbed' response is heard before the name of the protein.
+    // Alert 'grabbed' after so that it will interrupt the focus change read above.
     this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
 
     MembraneTransportSounds.transportProteinGrabbed();
