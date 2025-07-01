@@ -10,14 +10,16 @@ incorporating modern PhET frameworks and updated pedagogical features.
 
 - **Included:**
   - PhET-iO instrumentation
-  - description tiers (1 and 2)
+  - core description
+  - description Tier 2
   - sonification
   - keyboard support and interactive highlights
   - dynamic locales
   - sim-specific preferences
+  - voicing (tier 1)
+  - pan/zoom
 
 - **Excluded**
-  - voicing
   - region and culture customization
 
 ### Novel Approaches
