@@ -410,7 +410,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     particle: Particle<IntentionalAny>,
     slot: Slot,
     transportProtein: TransportProtein,
-    model: MembraneTransportModel,
+    model: MembraneTransportModel
   ): boolean {
 
     if (
