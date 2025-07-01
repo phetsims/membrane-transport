@@ -7,8 +7,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import { linear } from '../../../dot/js/util/linear.js';
-import affirm from '../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
 import CardSounds from '../../../tambo/js/sound-generators/CardSounds.js';
@@ -34,11 +32,6 @@ import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
 import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
 import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
 import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
-import soluteConcentrationsAmbienceLoop001_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop001_mp3.js';
-import soluteConcentrationsAmbienceLoop002_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop002_mp3.js';
-import soluteConcentrationsAmbienceLoop003_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop003_mp3.js';
-import soluteConcentrationsAmbienceLoop004_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop004_mp3.js';
-import soluteConcentrationsAmbienceLoop005_mp3 from '../../sounds/soluteConcentrationsAmbienceLoop005_mp3.js';
 import soluteCrossing001_mp3 from '../../sounds/soluteCrossing001_mp3.js';
 import soluteCrossing002_mp3 from '../../sounds/soluteCrossing002_mp3.js';
 import soluteCrossing003_mp3 from '../../sounds/soluteCrossing003_mp3.js';
@@ -54,11 +47,7 @@ import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward0
 import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
 
 import membraneTransport from '../membraneTransport.js';
-import AmbientSoundGeneratorFiltered from './AmbientSoundGeneratorFiltered.js';
-import MembraneTransportConstants from './MembraneTransportConstants.js';
 import MembraneTransportPreferences from './MembraneTransportPreferences.js';
-import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
-import MembraneTransportModel from './model/MembraneTransportModel.js';
 import Particle from './model/Particle.js';
 
 /**
@@ -224,22 +213,6 @@ const soluteCrossing003ReverbHighSounds = createPannedSoundSet( soluteCrossing_0
 const soluteCrossing004ReverbHighSounds = createPannedSoundSet( soluteCrossing_004_V5_Reverb_mp3, baseSoundClipOptions );
 const soluteCrossing005ReverbHighSounds = createPannedSoundSet( soluteCrossing_005_V5_Reverb_mp3, baseSoundClipOptions );
 
-// Helper function to create an ambient sound with a low-pass filter
-const createFilteredAmbientSound = ( soundFile: WrappedAudioBuffer, initialPlaybackRate = 1,
-                                     filterType: 'lowpass' | 'bandpass' = 'lowpass',
-                                     q = 10 ): AmbientSoundGeneratorFiltered => {
-  const ambientSoundGeneratorFiltered = new AmbientSoundGeneratorFiltered( soundFile, initialPlaybackRate, filterType, q );
-  soundManager.addSoundGenerator( ambientSoundGeneratorFiltered );
-  return ambientSoundGeneratorFiltered;
-};
-
-// Create ambient sounds and their filters
-const soluteConcentrationsAmbienceLoop001Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop001_mp3, 0.5, 'bandpass', 1 ); // glucose
-const soluteConcentrationsAmbienceLoop002Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop002_mp3 );
-const soluteConcentrationsAmbienceLoop003Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop003_mp3 );
-const soluteConcentrationsAmbienceLoop004Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop004_mp3 );
-const soluteConcentrationsAmbienceLoop005Sound = createFilteredAmbientSound( soluteConcentrationsAmbienceLoop005_mp3 );
-
 export default class MembraneTransportSounds {
 
   public static soluteCrossedMembrane(
@@ -297,61 +270,6 @@ export default class MembraneTransportSounds {
       reverbSoundToPlay.setOutputLevel( reverbVolume * baseSoundClipOptions.initialOutputLevel! );
       reverbSoundToPlay.play();
     }
-  }
-
-  public static updateAmbientSoluteSounds( model: MembraneTransportModel ): void {
-
-    if ( !MembraneTransportQueryParameters.ambientSound ) {
-      return;
-    }
-
-    const types = [ 'oxygen', 'carbonDioxide', 'sodiumIon', 'potassiumIon', 'glucose' ] as const;
-
-    types.forEach( type => {
-
-      // look up the ambient sound
-      const ambientSound = type === 'oxygen' ? soluteConcentrationsAmbienceLoop005Sound :
-                           type === 'carbonDioxide' ? soluteConcentrationsAmbienceLoop004Sound :
-                           type === 'sodiumIon' ? soluteConcentrationsAmbienceLoop003Sound :
-                           type === 'potassiumIon' ? soluteConcentrationsAmbienceLoop002Sound :
-                           soluteConcentrationsAmbienceLoop001Sound;
-
-      // set the volume based on the relative concentration.
-      const outsideAmount = model.outsideSoluteCountProperties[ type ].value;
-      const insideAmount = model.insideSoluteCountProperties[ type ].value;
-
-      const totalAmount = outsideAmount + insideAmount;
-
-      const amount = totalAmount / MembraneTransportConstants.MAX_SOLUTE_COUNT;
-      affirm( amount >= 0 && amount <= 1, `amount should be between 0 and 1, but got ${amount}` );
-
-      const volumeBoost = type === 'glucose' ? 1.5 : 1;
-      ambientSound.setOutputLevel( Math.max( amount * 0.5 * volumeBoost, 1 ) ); // overall normalization
-
-      // balance should be 0 if fully lopsided
-      // balance should be 1 if fully balanced
-      const balance = insideAmount === 0 || outsideAmount === 0 ? 0 :
-                      insideAmount < outsideAmount ? insideAmount / outsideAmount : outsideAmount / insideAmount;
-
-      const maxFrequency = type === 'oxygen' ? 500 :
-                           type === 'carbonDioxide' ? 1200 :
-                           type === 'sodiumIon' ? 2000 : // ignore
-                           type === 'potassiumIon' ? 1200 :
-                           750;
-
-      const minFrequency = type === 'oxygen' ? 50 :
-                           type === 'carbonDioxide' ? 328 :
-                           type === 'sodiumIon' ? 50 :
-                           type === 'potassiumIon' ? 250 :
-                           50;
-
-      const frequency = linear( 0, 1, maxFrequency, minFrequency, balance );
-
-      // console.log( 'inside amount', insideAmount, 'outside amount', outsideAmount, 'total amount', totalAmount, 'balance', balance, 'frequency', frequency );
-
-      ambientSound.setPlaying( totalAmount > 0 );
-      ambientSound.setFrequency( frequency );
-    } );
   }
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {

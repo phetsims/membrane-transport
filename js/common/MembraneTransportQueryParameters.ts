@@ -50,10 +50,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     type: 'string',
     validValues: [ 'fm', 'dist' ],
     defaultValue: 'fm'
-  },
-
-  ambientSound: {
-    type: 'flag'
   }
 } );
 

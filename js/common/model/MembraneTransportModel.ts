@@ -37,7 +37,6 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
 import UserControlledMode from './particleModes/UserControlledMode.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
@@ -335,10 +334,6 @@ export default class MembraneTransportModel extends PhetioObject {
     this.updateSoluteCounts();
 
     this.isUserDraggingLigandProperty.value = this.ligands.filter( ligand => ligand.mode instanceof UserControlledMode ).length > 0;
-
-    if ( this.isPlayingProperty.value ) {
-      MembraneTransportSounds.updateAmbientSoluteSounds( this );
-    }
 
   }
 
