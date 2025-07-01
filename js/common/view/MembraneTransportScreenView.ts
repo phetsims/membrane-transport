@@ -323,23 +323,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.screenViewModelViewTransform = screenViewModelViewTransform;
 
     model.soluteCrossedMembraneEmitter.addListener( ( particle, direction ) => {
-      // Calculate equilibrium ratio based on solute balance for this particle type
-      const insideCount = model.countSolutes( particle.type, 'inside' );
-      const outsideCount = model.countSolutes( particle.type, 'outside' );
-      const totalCount = insideCount + outsideCount;
-
-      // Calculate equilibrium ratio: 1 = full equilibrium, 0 = no equilibrium
-      let equilibriumRatio = 0.5; // default to halfway
-      if ( totalCount > 0 ) {
-        // Calculate how balanced the concentrations are
-        const balance = insideCount === 0 || outsideCount === 0 ? 0 :
-                        insideCount < outsideCount ? insideCount / outsideCount : outsideCount / insideCount;
-        equilibriumRatio = balance; // balance is 0 to 1, where 1 is perfect equilibrium
-      }
-
-      if ( this.model.crossingSoundsEnabledProperty.value ) {
-        MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction, equilibriumRatio );
-      }
+      MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction );
     } );
 
     this.model.membranePotentialProperty.lazyLink( MembranePotentialDescriber.createListener( model, this ) );

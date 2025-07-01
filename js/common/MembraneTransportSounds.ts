@@ -37,11 +37,6 @@ import soluteCrossing002_mp3 from '../../sounds/soluteCrossing002_mp3.js';
 import soluteCrossing003_mp3 from '../../sounds/soluteCrossing003_mp3.js';
 import soluteCrossing004_V5_mp3 from '../../sounds/soluteCrossing004_V5_mp3.js';
 import soluteCrossing005_V5_mp3 from '../../sounds/soluteCrossing005_V5_mp3.js';
-import soluteCrossing_001_Reverb_mp3 from '../../sounds/soluteCrossing_001_Reverb_mp3.js';
-import soluteCrossing_002_Reverb_mp3 from '../../sounds/soluteCrossing_002_Reverb_mp3.js';
-import soluteCrossing_003_Reverb_mp3 from '../../sounds/soluteCrossing_003_Reverb_mp3.js';
-import soluteCrossing_004_V5_Reverb_mp3 from '../../sounds/soluteCrossing_004_V5_Reverb_mp3.js';
-import soluteCrossing_005_V5_Reverb_mp3 from '../../sounds/soluteCrossing_005_V5_Reverb_mp3.js';
 
 import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward004_V5_mp3.js';
 import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
@@ -199,77 +194,32 @@ const soluteCrossing003HighSounds = createPannedSoundSet( sound3, baseSoundClipO
 const soluteCrossing004HighSounds = createPannedSoundSet( soluteCrossingOutward004_V5_mp3, baseSoundClipOptions );
 const soluteCrossing005HighSounds = createPannedSoundSet( soluteCrossingOutward005_V5_mp3, baseSoundClipOptions );
 
-// Create reverb sound sets for equilibrium crossover
-const soluteCrossing001ReverbSounds = createPannedSoundSet( soluteCrossing_001_Reverb_mp3, baseSoundClipOptions );
-const soluteCrossing002ReverbSounds = createPannedSoundSet( soluteCrossing_002_Reverb_mp3, baseSoundClipOptions );
-const soluteCrossing003ReverbSounds = createPannedSoundSet( soluteCrossing_003_Reverb_mp3, baseSoundClipOptions );
-const soluteCrossing004ReverbSounds = createPannedSoundSet( soluteCrossing_004_V5_Reverb_mp3, baseSoundClipOptions );
-const soluteCrossing005ReverbSounds = createPannedSoundSet( soluteCrossing_005_V5_Reverb_mp3, baseSoundClipOptions );
-
-// Create reverb sound sets for outward direction with higher pitch
-const soluteCrossing001ReverbHighSounds = createPannedSoundSet( soluteCrossing_001_Reverb_mp3, baseSoundClipOptions, 2 );
-const soluteCrossing002ReverbHighSounds = createPannedSoundSet( soluteCrossing_002_Reverb_mp3, baseSoundClipOptions, 2 );
-const soluteCrossing003ReverbHighSounds = createPannedSoundSet( soluteCrossing_003_Reverb_mp3, baseSoundClipOptions, 2 );
-const soluteCrossing004ReverbHighSounds = createPannedSoundSet( soluteCrossing_004_V5_Reverb_mp3, baseSoundClipOptions );
-const soluteCrossing005ReverbHighSounds = createPannedSoundSet( soluteCrossing_005_V5_Reverb_mp3, baseSoundClipOptions );
-
 export default class MembraneTransportSounds {
 
   public static soluteCrossedMembrane(
     type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'triangleLigand' | 'starLigand',
-    direction: 'inward' | 'outward',
-    equilibriumRatio = 0.5 ): void {
+    direction: 'inward' | 'outward' ): void {
 
     const stereoEnabled = MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty.value;
 
     // Determine which side to play (right, center, left) based on direction and stereo settings
     const side = stereoEnabled ? ( direction === 'inward' ? 'right' : 'left' ) : 'center';
 
-    // Choose standard sound sets based on particle type and direction
-    const standardSoundSet = direction === 'inward' ?
-                             ( type === 'oxygen' ? soluteCrossing005Sounds :
-                               type === 'carbonDioxide' ? soluteCrossing004Sounds :
-                               type === 'sodiumIon' ? soluteCrossing003Sounds :
-                               type === 'potassiumIon' ? soluteCrossing002Sounds :
-                               soluteCrossing001Sounds ) :
-                             ( type === 'oxygen' ? soluteCrossing005HighSounds :
-                               type === 'carbonDioxide' ? soluteCrossing004HighSounds :
-                               type === 'sodiumIon' ? soluteCrossing003HighSounds :
-                               type === 'potassiumIon' ? soluteCrossing002HighSounds :
-                               soluteCrossing001HighSounds );
+    // Choose the sound set based on particle type and direction
+    const soundSet = direction === 'inward' ?
+                     ( type === 'oxygen' ? soluteCrossing005Sounds :
+                       type === 'carbonDioxide' ? soluteCrossing004Sounds :
+                       type === 'sodiumIon' ? soluteCrossing003Sounds :
+                       type === 'potassiumIon' ? soluteCrossing002Sounds :
+                       soluteCrossing001Sounds ) :
+                     ( type === 'oxygen' ? soluteCrossing005HighSounds :
+                       type === 'carbonDioxide' ? soluteCrossing004HighSounds :
+                       type === 'sodiumIon' ? soluteCrossing003HighSounds :
+                       type === 'potassiumIon' ? soluteCrossing002HighSounds :
+                       soluteCrossing001HighSounds );
 
-    // Choose reverb sound sets based on particle type and direction
-    const reverbSoundSet = direction === 'inward' ?
-                           ( type === 'oxygen' ? soluteCrossing005ReverbSounds :
-                             type === 'carbonDioxide' ? soluteCrossing004ReverbSounds :
-                             type === 'sodiumIon' ? soluteCrossing003ReverbSounds :
-                             type === 'potassiumIon' ? soluteCrossing002ReverbSounds :
-                             soluteCrossing001ReverbSounds ) :
-                           ( type === 'oxygen' ? soluteCrossing005ReverbHighSounds :
-                             type === 'carbonDioxide' ? soluteCrossing004ReverbHighSounds :
-                             type === 'sodiumIon' ? soluteCrossing003ReverbHighSounds :
-                             type === 'potassiumIon' ? soluteCrossing002ReverbHighSounds :
-                             soluteCrossing001ReverbHighSounds );
-
-    // Calculate volumes based on equilibrium ratio
-    // equilibriumRatio = 1 means full equilibrium (100% reverb)
-    // equilibriumRatio = 0 means no equilibrium (100% standard)
-    const reverbVolume = equilibriumRatio;
-    const standardVolume = 1 - equilibriumRatio;
-
-    // Play both sounds with crossover volumes
-    const standardSoundToPlay = standardSoundSet[ side ];
-    const reverbSoundToPlay = reverbSoundSet[ side ];
-
-    if ( standardVolume > 0 ) {
-      standardSoundToPlay.setOutputLevel( standardVolume * baseSoundClipOptions.initialOutputLevel! );
-      standardSoundToPlay.play();
-    }
-
-    if ( reverbVolume > 0 ) {
-      reverbSoundToPlay.setOutputLevel( reverbVolume * baseSoundClipOptions.initialOutputLevel! );
-      reverbSoundToPlay.play();
-    }
+    const soundToPlay = soundSet[ side ];
+    soundToPlay.play();
   }
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
