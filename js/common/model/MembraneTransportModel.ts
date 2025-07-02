@@ -130,9 +130,9 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   public readonly membraneSlots: Slot[];
-  public readonly soluteCrossedMembraneEmitter = new Emitter<[ Particle, 'outward' | 'inward' ]>( {
+  public readonly soluteCrossedMembraneEmitter = new Emitter<[ Solute, 'outward' | 'inward' ]>( {
     parameters: [
-      { valueType: Particle },
+      { valueType: Solute },
       { validValues: [ 'outward', 'inward' ] }
     ]
   } );
@@ -454,7 +454,6 @@ export default class MembraneTransportModel extends PhetioObject {
   public getFilledSlots(): Slot[] {
     return this.membraneSlots.filter( slot => slot.isFilled() );
   }
-
 
   /**
    * Count the number of solutes inside or outside the cell membrane.

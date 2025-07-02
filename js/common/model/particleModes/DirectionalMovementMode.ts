@@ -12,10 +12,12 @@ import dotRandom from '../../../../../dot/js/dotRandom.js';
 import { boxMullerTransform } from '../../../../../dot/js/util/boxMullerTransform.js';
 import { clamp } from '../../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
+import type Solute from '../Solute.js';
 import BaseParticleMode, { ParticleModeType } from './BaseParticleMode.js';
 
 export default abstract class DirectionalMovementMode extends BaseParticleMode {
@@ -41,7 +43,10 @@ export default abstract class DirectionalMovementMode extends BaseParticleMode {
     const signAfter = particle.position.y > 0;
 
     if ( signBefore !== signAfter ) {
-      model.soluteCrossedMembraneEmitter.emit( particle, particle.position.y > 0 ? 'outward' : 'inward' );
+
+      // Ideally we would check instanceof Solute, but that triggers a cyclic import failure
+      affirm( particle.hasOwnProperty( 'soluteType' ), 'Only solutes can cross the membrane' );
+      model.soluteCrossedMembraneEmitter.emit( particle as Solute, particle.position.y > 0 ? 'outward' : 'inward' );
     }
   }
 

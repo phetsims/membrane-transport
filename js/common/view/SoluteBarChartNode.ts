@@ -32,16 +32,11 @@ import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
+import SoluteConcentrationDescriber from './SoluteConcentrationDescriber.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
 const BOX_HEIGHT = 92;
-
-// Thresholds describing the ratio of solute counts inside and outside.
-const MANY_MORE = 2.09;
-const ABOUT_TWICE = 1.9;
-const SOME_MORE = 1.11;
-const ROUGHLY_EQUAL = 1;
 
 export default class SoluteBarChartNode extends Node {
   public readonly stepEmitter = new Emitter<[ number ]>( {
@@ -59,27 +54,7 @@ export default class SoluteBarChartNode extends Node {
     const insideAmountProperty = insideSoluteCountProperty;
 
     const soluteDifferenceProperty = new DerivedProperty( [ outsideAmountProperty, insideAmountProperty ], ( outsideAmount, insideAmount ) => {
-
-      // These could be dividing by zero, but it is handled in the table below.
-      const outsideToInside = outsideAmount / insideAmount;
-      const insideToOutside = insideAmount / outsideAmount;
-
-      // Equality cases first because otherwise ratios are infinite and exact equality is important to describe.
-      return ( outsideAmount === 0 && insideAmount === 0 ) ? 'none' :
-             ( outsideAmount === insideAmount ) ? 'equal' :
-
-               // More outside than inside
-             outsideToInside >= MANY_MORE ? 'manyMoreOutside' :
-             outsideToInside >= ABOUT_TWICE ? 'aboutTwiceAsManyOutside' :
-             outsideToInside >= SOME_MORE ? 'someMoreOutside' :
-             outsideToInside > ROUGHLY_EQUAL ? 'roughlyEqualOutside' :
-
-               // More inside than outside
-             insideToOutside >= MANY_MORE ? 'manyMoreInside' :
-             insideToOutside >= ABOUT_TWICE ? 'aboutTwiceAsManyInside' :
-             insideToOutside >= SOME_MORE ? 'someMoreInside' :
-             insideToOutside > ROUGHLY_EQUAL ? 'roughlyEqualInside' :
-             ( () => { throw new Error( 'Undescribed counts' ); } )(); // IIFE to throw error
+      return SoluteConcentrationDescriber.getSoluteComparisonDescriptor( outsideAmount, insideAmount );
     } );
 
     // These are updated in stepEmitter, and used to add description for the accessible name.

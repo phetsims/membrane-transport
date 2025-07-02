@@ -180,6 +180,7 @@ type StringsType = {
     };
     'soluteStringProperty': LocalizedStringProperty;
     'soluteCapitalizedStringProperty': LocalizedStringProperty;
+    'soluteBriefStringProperty': LocalizedStringProperty;
     'soluteControl': {
       'outside': {
         'accessibleNameStringProperty': LocalizedStringProperty;
@@ -202,6 +203,8 @@ type StringsType = {
         'crossingStringProperty': LocalizedStringProperty;
       }
     };
+    'crossingInitialResponseStringProperty': LocalizedStringProperty;
+    'crossingSubsequentResponseStringProperty': LocalizedStringProperty;
     'ligandToggleButton': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'addedAccessibleContextResponseStringProperty': LocalizedStringProperty;

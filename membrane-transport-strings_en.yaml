@@ -209,26 +209,38 @@ a11y:
     atp:           Adenosine Triphosphate, ATP, complex, large
 
   # Names for the solute type. Reused in various places.
-  solute:            |-
-                     { $soluteType ->
-                       [oxygen]        oxygen molecules
-                       [carbonDioxide] carbon dioxide molecules
-                       [sodiumIon]     sodium ions
-                       [potassiumIon]  potassium ions
-                       [glucose]       glucose molecules
-                      *[atp]           ATP molecules
-                     }
+  solute:                     |-
+                              { $soluteType ->
+                                [oxygen]        oxygen molecules
+                                [carbonDioxide] carbon dioxide molecules
+                                [sodiumIon]     sodium ions
+                                [potassiumIon]  potassium ions
+                                [glucose]       glucose molecules
+                               *[atp]           ATP molecules
+                              }
 
   # Capitalized names for the solute type. Reused in various places.
-  soluteCapitalized: |-
-                     { $soluteType ->
-                       [oxygen]        Oxygen Molecules
-                       [carbonDioxide] Carbon Dioxide molecules
-                       [sodiumIon]     Sodium Ions
-                       [potassiumIon]  Potassium Ions
-                       [glucose]       Glucose Molecules
-                      *[atp]           Atp Molecules
-                     }
+  soluteCapitalized:          |-
+                              { $soluteType ->
+                                [oxygen]        Oxygen Molecules
+                                [carbonDioxide] Carbon Dioxide molecules
+                                [sodiumIon]     Sodium Ions
+                                [potassiumIon]  Potassium Ions
+                                [glucose]       Glucose Molecules
+                               *[atp]           Atp Molecules
+                              }
+
+  # Brevity is the soul of wit, so we use these brief names in various places.
+  soluteBrief:            |-
+                              { $soluteType ->
+                                [oxygen]        Oxygen
+                                [carbonDioxide] Carbon Dioxide
+                                [sodiumIon]     Sodium
+                                [potassiumIon]  Potassium
+                                [glucose]       Glucose
+                               *[atp]           Atp
+                              }
+
   soluteControl:
     outside:
       accessibleName:     "{ a11y.soluteCapitalized } Outside Cell"
@@ -290,11 +302,11 @@ a11y:
                         [manyMoreOutside] many more outside than inside 
                         [aboutTwiceAsManyOutside] about twice as many outside as inside
                         [someMoreOutside] some more outside than inside
-                        [roughlyEqualOutside] roughly equal, more outside than inside
+                        [roughlyEqualOutside] roughly equal amounts inside and outside
                         [manyMoreInside] many more inside than outside
                         [aboutTwiceAsManyInside] about twice as many inside as outside
                         [someMoreInside] some more inside than outside
-                        [roughlyEqualInside] roughly equal, more inside than outside
+                        [roughlyEqualInside] roughly equal amounts inside and outside
                       }
       crossing:       |-
                       { $crossing ->
@@ -303,6 +315,8 @@ a11y:
                         [outside] crossings out
                         [both] crossings in and out
                       }
+  crossingInitialResponse:    "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }"
+  crossingSubsequentResponse: "{ a11y.soluteBrief }, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }"
 
   ligandToggleButton:
     accessibleHelpText:               Add or remove triangle- and star-shaped ligands to outside of cell.
@@ -313,36 +327,36 @@ a11y:
     accessibleHeading: Cell Membrane
 
   transportProtein:
-    grabbedResponse: Grabbed.
-    offMembrane: Off membrane
+    grabbedResponse:          Grabbed.
+    offMembrane:              Off membrane
     releasedReplacedResponse: Released. Protein replaced.
-    deletedResponse: Deleted.
-    cancelledResponse: Released. Back to initial slot.
-    objectResponse: |-
-      { $openOrClosed ->
-        [open]   open
-       *[closed] closed
-      }, { $proteinIndex } of { $proteinCount } Proteins in Membrane
-    accessibleName: "{ $nameResponse }, { $objectResponse }"
-    accessibleNameReversed: "{ $objectResponse }, { $nameResponse }"
+    deletedResponse:          Deleted.
+    cancelledResponse:        Released. Back to initial slot.
+    objectResponse:           |-
+                              { $openOrClosed ->
+                                [open]   open
+                               *[closed] closed
+                              }, { $proteinIndex } of { $proteinCount } Proteins in Membrane
+    accessibleName:           "{ $nameResponse }, { $objectResponse }"
+    accessibleNameReversed:   "{ $objectResponse }, { $nameResponse }"
 
     accessibleObjectResponse: Above slot { $slotIndex } of { $slotCount }
 
     # Included in the accessibleName for the protein when it is above an empty slot.
-    empty: empty
+    empty:                    empty
 
     # Transport protein brief names, used reused in several in the simulation.
-    briefName:       |-
-                     { $type ->
-                       [sodiumIonLeakageChannel]         Sodium Ion, Leakage
-                       [potassiumIonLeakageChannel]      Potassium Ion, Leakage
-                       [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
-                       [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-                       [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
-                       [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
-                       [sodiumPotassiumPump]             Sodium Potassium Pump
-                      *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
-                     }
+    briefName:                |-
+                              { $type ->
+                                [sodiumIonLeakageChannel]         Sodium Ion, Leakage
+                                [potassiumIonLeakageChannel]      Potassium Ion, Leakage
+                                [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
+                                [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
+                                [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
+                                [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
+                                [sodiumPotassiumPump]             Sodium Potassium Pump
+                               *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
+                              }
 
   # Membrane potential change responses for voltage-gated channels
   membranePotential:

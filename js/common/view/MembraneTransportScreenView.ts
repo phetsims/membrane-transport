@@ -39,6 +39,7 @@ import MacroCellNode from './MacroCellNode.js';
 import MembranePotentialDescriber from './MembranePotentialDescriber.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
+import SoluteConcentrationDescriber from './SoluteConcentrationDescriber.js';
 import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox.js';
 import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
@@ -71,6 +72,10 @@ export default class MembraneTransportScreenView extends ScreenView {
       screenSummaryContent: new MembraneTransportScreenSummaryContent( model )
     }, providedOptions );
     super( options );
+
+    const soluteConcentrationDescriber = new SoluteConcentrationDescriber( model, this );
+    this.stepEmitter.addListener( dt => soluteConcentrationDescriber.step( dt ) );
+    this.resetEmitter.addListener( () => soluteConcentrationDescriber.reset() );
 
     // A model to view transform that maps a model point to a position in the screen view. This transform includes the translation
     // of the observation window so that you can position view components relative to things within the observation window.
