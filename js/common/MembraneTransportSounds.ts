@@ -13,6 +13,12 @@ import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/
 import soundManager from '../../../tambo/js/soundManager.js';
 import WrappedAudioBuffer from '../../../tambo/js/WrappedAudioBuffer.js';
 import boundaryReached_mp3 from '../../../tambo/sounds/boundaryReached_mp3.js';
+import cardMovement1_mp3 from '../../../tambo/sounds/cardMovement1_mp3.js';
+import cardMovement2_mp3 from '../../../tambo/sounds/cardMovement2_mp3.js';
+import cardMovement3_mp3 from '../../../tambo/sounds/cardMovement3_mp3.js';
+import cardMovement4_mp3 from '../../../tambo/sounds/cardMovement4_mp3.js';
+import cardMovement5_mp3 from '../../../tambo/sounds/cardMovement5_mp3.js';
+import cardMovement6_mp3 from '../../../tambo/sounds/cardMovement6_mp3.js';
 import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
 import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
 import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
@@ -39,10 +45,22 @@ import soluteCrossing005_V5_mp3 from '../../sounds/soluteCrossing005_V5_mp3.js';
 
 import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward004_V5_mp3.js';
 import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
-
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportPreferences from './MembraneTransportPreferences.js';
 import Particle from './model/Particle.js';
+
+// Taken from CardSounds.ts
+const cardMovementSounds = [
+  cardMovement1_mp3,
+  cardMovement2_mp3,
+  cardMovement3_mp3,
+  cardMovement4_mp3,
+  cardMovement5_mp3,
+  cardMovement6_mp3
+];
+
+const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, { initialOutputLevel: 0.3 } ) );
+cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
 /**
  * AudioContextSoundClip is a subclass of SoundClip that makes the audioContext property public
@@ -305,6 +323,25 @@ export default class MembraneTransportSounds {
 
   public static itemMoved( directionToPlay: 'left' | 'right' | 'both' ): void {
     CardSounds.playCardMovementSound( directionToPlay );
+  }
+
+  public static slotHover( slotIndex: number ): void {
+
+    // Sort in order of naturally occurring pitches, so that the first sound is the lowest pitch.
+    const clip = slotIndex === 0 ? cardMovementSoundClips[ 0 ] :
+                 slotIndex === 1 ? cardMovementSoundClips[ 2 ] :
+                 slotIndex === 2 ? cardMovementSoundClips[ 4 ] :
+                 slotIndex === 3 ? cardMovementSoundClips[ 1 ] :
+                 slotIndex === 4 ? cardMovementSoundClips[ 3 ] :
+                 slotIndex === 5 ? cardMovementSoundClips[ 5 ] :
+                 cardMovementSoundClips[ 5 ];
+
+    // choose a pitch proportional to the slotIndex, in addition to the natural pitch of the clip
+    const playbackRate = Math.pow( 2, slotIndex / 12 );
+
+    // Moving to the right, go up in pitch by 4 semitones
+    clip.setPlaybackRate( CardSounds.PLAYBACK_RATE * playbackRate );
+    clip.play();
   }
 
   public static ligandGrabbed(): void {

@@ -32,6 +32,7 @@ import TransportProteinToolNode from './TransportProteinToolNode.js';
 export default class TransportProteinDragNode extends Node {
   private readonly dragListener: DragListener;
   private readonly positionProperty: Vector2Property;
+  private isPress = 0;
 
   public constructor(
     view: MembraneTransportScreenView,
@@ -206,23 +207,16 @@ export default class TransportProteinDragNode extends Node {
 
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
 
-      // Only play sound when the user is controlling it, not when animating.
-      if ( newValue !== null && this.dragListener.isUserControlledProperty.value ) {
-        if ( oldValue === null ) {
-          // the pick up sound will play in this case
-        }
-        else if ( newValue > oldValue ) {
-          MembraneTransportSounds.itemMoved( 'right' );
-        }
-        else if ( newValue < oldValue ) {
-          MembraneTransportSounds.itemMoved( 'left' );
-        }
+      if ( newValue !== null && this.isPress === 0 ) {
+        MembraneTransportSounds.slotHover( newValue );
       }
     } );
   }
 
   public press( event: PressListenerEvent ): void {
+    this.isPress++;
     this.dragListener.press( event, this );
+    this.isPress--;
   }
 
   public setModelPosition( modelPosition: Vector2 ): void {
