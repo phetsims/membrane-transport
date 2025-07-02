@@ -35,13 +35,12 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
-import Particle, { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
+import Particle, { CAPTURE_RADIUS_PROPERTY, Ligand } from '../model/Particle.js';
 import LigandBoundMode from '../model/particleModes/LigandBoundMode.js';
 import UserControlledMode from '../model/particleModes/UserControlledMode.js';
 import UserOverMode from '../model/particleModes/UserOverMode.js';
 import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
 import Slot from '../model/Slot.js';
-import { LigandType } from '../model/SoluteType.js';
 import LigandParticleNode from './particles/LigandParticleNode.js';
 
 // constants
@@ -63,7 +62,7 @@ class LigandIndexProperty extends Vector2Property {
 
 export default class LigandNode extends InteractiveHighlightingNode {
 
-  private readonly ligand: Particle<LigandType>;
+  private readonly ligand: Ligand;
   private readonly modelViewTransform: ModelViewTransform2;
 
   // Keyboard interaction state
@@ -86,12 +85,12 @@ export default class LigandNode extends InteractiveHighlightingNode {
   public constructor(
     private readonly slots: Slot[],
     areLigandsAddedProperty: TProperty<boolean>,
-    ligand: Particle<LigandType>,
+    ligand: Ligand,
     modelViewTransform: ModelViewTransform2,
     ligandView: LigandParticleNode,
     focusable: boolean,
     transportProteinCountProperty: TProperty<number>,
-    ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Particle<LigandType> ]>,
+    ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Ligand ]>,
     tandem: Tandem,
     observationWindow: Node
   ) {
@@ -109,7 +108,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
-        innerContent: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.type } )
+        innerContent: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.ligandType } )
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
@@ -288,7 +287,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
               openOrClosed: protein.openOrClosedProperty,
               index: index,
               type: protein.type,
-              ligandType: this.ligand.type,
+              ligandType: this.ligand.ligandType,
               transportProteinCount: transportProteinCountProperty
             } ) );
           }
@@ -358,7 +357,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
       // Declare type since it refers to itself in its own declaration
       const grabDragInteraction: GrabDragInteraction = new GrabDragInteraction( this, keyboardListener, observationWindow, {
         tandem: tandem.createTandem( 'grabDragInteraction' ),
-        objectToGrabString: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.type } ),
+        objectToGrabString: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.ligandType } ),
 
         accessibleHelpText: MembraneTransportFluent.a11y.ligandNode.accessibleHelpTextStringProperty,
 
@@ -410,7 +409,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
               // Drop off membrane: Use calculated position above "slot 8"
               this.ligand.position.set( this.getOffMembraneDropPosition() );
-              this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponse.format( { ligandType: this.ligand.type } ) );
+              this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponse.format( { ligandType: this.ligand.ligandType } ) );
             }
             else {
               // Drop on a slot (0 to SLOT_COUNT-1)

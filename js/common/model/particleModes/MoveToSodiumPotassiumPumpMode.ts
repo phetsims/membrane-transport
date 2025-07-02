@@ -34,7 +34,7 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
     };
   }
 
-  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
     const targetPosition = this.sodiumPotassiumPump.getSitePosition( this.site );
 

@@ -62,7 +62,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     };
   }
 
-  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     this.stepRandomWalk( dt, particle, model );
   }
 
@@ -70,7 +70,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * Step the particle along a random walk path, including bouncing off the membrane
    * (central horizontal band) and the top/bottom walls, and wrapping around left/right walls.
    */
-  private stepRandomWalk( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  private stepRandomWalk( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     this.updateRandomWalkTimingAndDirection( dt, particle );
 
     const direction = this.currentDirection.copy();
@@ -104,7 +104,7 @@ export default class RandomWalkMode extends BaseParticleMode {
   /**
    * Updates the random walk timing and assigns a new direction if the timer has elapsed.
    */
-  private updateRandomWalkTimingAndDirection( dt: number, particle: Particle<IntentionalAny> ): void {
+  private updateRandomWalkTimingAndDirection( dt: number, particle: Particle ): void {
     const newTimeUntilNextDirection = this.timeUntilNextDirection - dt;
     const newTimeElapsedSinceMembraneCrossing = this.timeElapsedSinceMembraneCrossing + dt;
 
@@ -126,7 +126,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     }
   }
 
-  private handleBounceLigand( particle: Particle<IntentionalAny> ): void {
+  private handleBounceLigand( particle: Particle ): void {
 
     // Recompute thisBounds after the move
     const updatedBounds = particle.getBounds();
@@ -175,7 +175,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * Checks for a protein interaction and handles it.
    * Returns true if an interaction occurs.
    */
-  private attemptProteinInteraction( particle: Particle<IntentionalAny>, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
+  private attemptProteinInteraction( particle: Particle, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
     for ( let i = 0; i < model.membraneSlots.length; i++ ) {
       const slot = model.membraneSlots[ i ];
@@ -206,7 +206,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * Checks for membrane interactions, handling passive diffusion or bounce if necessary.
    * Returns true if passive diffusion occurs.
    */
-  private attemptMembraneInteraction( particle: Particle<IntentionalAny>, membraneTransportModel: MembraneTransportModel, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
+  private attemptMembraneInteraction( particle: Particle, membraneTransportModel: MembraneTransportModel, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
     if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
 
       // Check for passive diffusion first, might change mode
@@ -243,7 +243,7 @@ export default class RandomWalkMode extends BaseParticleMode {
   /**
    * Move the particle according to the potentially modified direction and speed.
    */
-  private moveParticle( dt: number, particle: Particle<IntentionalAny>, direction: Vector2 ): void {
+  private moveParticle( dt: number, particle: Particle, direction: Vector2 ): void {
     particle.position.x += direction.x * dt * TYPICAL_SPEED;
     particle.position.y += direction.y * dt * TYPICAL_SPEED;
   }
@@ -251,7 +251,7 @@ export default class RandomWalkMode extends BaseParticleMode {
   /**
    * Handles horizontal wrapping of the particle around left/right walls.
    */
-  private handleHorizontalWrap( particle: Particle<IntentionalAny>, boundingRegion: Bounds2 ): void {
+  private handleHorizontalWrap( particle: Particle, boundingRegion: Bounds2 ): void {
     const updatedBoundsAfterMove = particle.getBounds(); // Bounds AFTER movement
     const totalBounds = boundingRegion;
     const particleWidth = particle.dimension.width;
@@ -274,7 +274,7 @@ export default class RandomWalkMode extends BaseParticleMode {
   /**
    * Handles vertical bouncing of the particle off the top/bottom walls.
    */
-  private handleVerticalBounce( particle: Particle<IntentionalAny>, boundingRegion: Bounds2, direction: Vector2 ): void {
+  private handleVerticalBounce( particle: Particle, boundingRegion: Bounds2, direction: Vector2 ): void {
     const newBounds = particle.getBounds();
 
     let bounce = false;
@@ -316,7 +316,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * During randomWalk, check for interactions with transport proteins.
    */
   private handleProteinInteractionDuringRandomWalk(
-    particle: Particle<IntentionalAny>,
+    particle: Particle,
     slot: Slot,
     transportProtein: TransportProtein,
     model: MembraneTransportModel,
@@ -347,7 +347,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * @returns true if an interaction occurred
    */
   private handleLigandGatedChannelInteraction(
-    particle: Particle<IntentionalAny>,
+    particle: Particle,
     slot: Slot,
     transportProtein: TransportProtein,
     model: MembraneTransportModel,
@@ -382,7 +382,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * Check for sodium and potassium ions interacting with leakage channels.
    * @returns true if an interaction occurred
    */
-  private handleLeakageChannelInteraction( particle: Particle<IntentionalAny>, slot: Slot, transportProtein: TransportProtein, outsideOfCell: boolean ): boolean {
+  private handleLeakageChannelInteraction( particle: Particle, slot: Slot, transportProtein: TransportProtein, outsideOfCell: boolean ): boolean {
 
     const sodiumGates = [ 'sodiumIonLeakageChannel', 'sodiumIonLigandGatedChannel', 'sodiumIonVoltageGatedChannel' ];
     const potassiumGates = [ 'potassiumIonLeakageChannel', 'potassiumIonLigandGatedChannel', 'potassiumIonVoltageGatedChannel' ];
@@ -405,7 +405,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * @returns true if an interaction occurred
    */
   private handleSodiumGlucoseCotransporterInteraction(
-    particle: Particle<IntentionalAny>,
+    particle: Particle,
     slot: Slot,
     transportProtein: TransportProtein,
     model: MembraneTransportModel
@@ -449,7 +449,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * @returns true if an interaction occurred
    */
   private handleSodiumPotassiumPumpSodiumIntracellularInteraction(
-    particle: Particle<IntentionalAny>,
+    particle: Particle,
     slot: Slot,
     transportProtein: TransportProtein
   ): boolean {
@@ -480,7 +480,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * @returns true if an interaction occurred
    */
   private handleSodiumPotassiumPumpATPIntracellularInteraction(
-    particle: Particle<IntentionalAny>,
+    particle: Particle,
     slot: Slot,
     transportProtein: TransportProtein
   ): boolean {
@@ -506,7 +506,7 @@ export default class RandomWalkMode extends BaseParticleMode {
    * @returns true if an interaction occurred
    */
   private handleSodiumPotassiumPumpPotassiumExtracellularInteraction(
-    particle: Particle<IntentionalAny>,
+    particle: Particle,
     slot: Slot,
     transportProtein: TransportProtein
   ): boolean {

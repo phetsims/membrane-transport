@@ -38,7 +38,7 @@ import WaitingInSodiumGlucoseCotransporterMode from './particleModes/WaitingInSo
 import WaitingInSodiumPotassiumPumpMode from './particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import RandomWalkUtils from './RandomWalkUtils.js';
 import Slot from './Slot.js';
-import { ParticleType } from './SoluteType.js';
+import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
 
 // The amount of time that must pass before a particle can cross the membrane again.
 const CROSSING_COOLDOWN = 10;
@@ -56,7 +56,7 @@ const PHOSPHATE_FADE_TIME = 2; // in seconds
 // When a ligand is bound to a protein, it does not have a slot.
 export type ParticleModeWithSlot = BaseParticleMode & { slot: Slot };
 
-export default class Particle<T extends ParticleType> {
+export default abstract class Particle {
 
   public mode: BaseParticleMode;
 
@@ -71,9 +71,9 @@ export default class Particle<T extends ParticleType> {
   // Indicates whether the ligand has keyboard focus -- this causes a different random walk behavior.
   public focused = false;
 
-  public constructor(
+  protected constructor(
     public readonly position: Vector2,
-    public readonly type: T,
+    public readonly type: ParticleType,
     public readonly model: PhetioObject // For serialization
   ) {
     const lookup = getParticleViewDimensions()[ type ];
@@ -153,7 +153,7 @@ export default class Particle<T extends ParticleType> {
    * @param removeParticle - Handles removal of the particle from the model.
    * @returns true if the particle was removed, false otherwise
    */
-  private updateAbsorption( dt: number, removeParticle: ( particle: Particle<T> ) => void ): boolean {
+  private updateAbsorption( dt: number, removeParticle: ( solute: Solute ) => void ): boolean {
 
     // Incorporate dt into opacity deltas for consistent behavior on varying frame rates
     const fadeRateGlucose = dt / GLUCOSE_FADE_TIME;
@@ -166,7 +166,7 @@ export default class Particle<T extends ParticleType> {
       if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && MembraneTransportPreferences.instance.absorbGlucoseProperty.value ) {
         this.opacity -= fadeRateGlucose;
         if ( this.opacity <= 0 ) {
-          removeParticle( this );
+          removeParticle( this as unknown as Solute );
           return true; // Particle removed
         }
       }
@@ -181,7 +181,7 @@ export default class Particle<T extends ParticleType> {
     if ( this.type === 'phosphate' && this.mode instanceof RandomWalkMode && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
       this.opacity -= fadeRatePhosphate;
       if ( this.opacity <= 0 ) {
-        removeParticle( this );
+        removeParticle( this as unknown as Solute );
         return true; // Particle removed
       }
     }
@@ -190,7 +190,7 @@ export default class Particle<T extends ParticleType> {
     if ( this.type === 'adp' && this.mode instanceof RandomWalkMode ) {
       this.opacity -= fadeRateAdp;
       if ( this.opacity <= 0 ) {
-        removeParticle( this );
+        removeParticle( this as unknown as Solute );
         return true; // Particle removed
       }
     }
@@ -247,6 +247,42 @@ export default class Particle<T extends ParticleType> {
       default:
         throw new Error( `Unknown particle mode type: ${state.type}` );
     }
+  }
+}
+
+/**
+ * The model for a ligand, which can bind to the ligand gated channels to open them.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
+export class Ligand extends Particle {
+
+  public constructor(
+    position: Vector2,
+    public readonly ligandType: LigandType,
+    model: PhetioObject
+  ) {
+    super( position, ligandType, model );
+  }
+}
+
+/**
+ * The model for a solute, which can be added by the user, and diffuse across the membrane or transport through the
+ * transport proteins.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
+ */
+
+export class Solute extends Particle {
+
+  public constructor(
+    position: Vector2,
+    public readonly soluteType: SoluteType,
+    model: PhetioObject
+  ) {
+    super( position, soluteType, model );
   }
 }
 

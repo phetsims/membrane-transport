@@ -28,7 +28,7 @@ export default class PassiveDiffusionMode extends DirectionalMovementMode {
     };
   }
 
-  protected handleSpecificBehavior( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  protected handleSpecificBehavior( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     // Passive diffusion has no specific behavior beyond the common directional movement
   }
 

@@ -91,7 +91,7 @@ export default class ObservationWindow extends Node {
 
       model.ligands.forEach( ligand => {
 
-        const ligandViewNode = new LigandParticleNode( ligand.type );
+        const ligandViewNode = new LigandParticleNode( ligand.ligandType );
 
         // Make the first ligand of each type focusable
         const isFocusable = !focusableLigandTypes.has( ligand.type );

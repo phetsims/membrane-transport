@@ -37,13 +37,13 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import Particle, { ParticleModeWithSlot } from './Particle.js';
+import Particle, { Ligand, ParticleModeWithSlot, Solute } from './Particle.js';
 import UserControlledMode from './particleModes/UserControlledMode.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
-import SoluteType, { LigandType, ParticleType, SoluteControlSolutes } from './SoluteType.js';
+import SoluteType, { ParticleType, SoluteControlSolutes } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -52,7 +52,7 @@ type MembraneTransportModelOptions = SelfOptions & PickRequired<PhetioObjectOpti
 // For the solute bar charts, keep track of how much solute has crossed at which time, so that we can keep a rolling
 // average over a given time window
 export type FluxEntry = {
-  soluteType: SoluteType;
+  soluteType: ParticleType;
   time: number;
   direction: 'inward' | 'outward';
 };
@@ -108,14 +108,14 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly chargesVisibleProperty: Property<boolean>;
   public readonly membranePotentialProperty: Property<( -70 ) | -50 | 30>;
 
-  public readonly ligandUnboundDueToNaturalCausesEmitter = new Emitter<[ Particle<LigandType> ]>( {
-    parameters: [ { valueType: Particle } ]
+  public readonly ligandUnboundDueToNaturalCausesEmitter = new Emitter<[ Ligand ]>( {
+    parameters: [ { valueType: Ligand } ]
   } );
 
-  public readonly solutes: Particle<SoluteType>[] = [];
+  public readonly solutes: Solute[] = [];
 
   // On screens that support ligands, the ligands are eagerly created and shown/hidden based on a Property. They are not cleared on reset
-  public readonly ligands: Particle<LigandType>[] = [];
+  public readonly ligands: Ligand[] = [];
 
   private readonly resetEmitter = new Emitter();
 
@@ -128,7 +128,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   public readonly membraneSlots: Slot[];
-  public readonly soluteCrossedMembraneEmitter = new Emitter<[ Particle<IntentionalAny>, 'outward' | 'inward' ]>( {
+  public readonly soluteCrossedMembraneEmitter = new Emitter<[ Particle, 'outward' | 'inward' ]>( {
     parameters: [
       { valueType: Particle },
       { validValues: [ 'outward', 'inward' ] }
@@ -243,22 +243,28 @@ export default class MembraneTransportModel extends PhetioObject {
     this.addParticles( soluteType, location, count, this.solutes );
   }
 
-  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle<SoluteType | LigandType>[] ): void {
+  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle[] ): void {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneTransportConstants.INSIDE_CELL_BOUNDS.minX, MembraneTransportConstants.INSIDE_CELL_BOUNDS.maxX );
       const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY;
-      soluteArray.push( new Particle( new Vector2( x, y ), soluteType, this ) );
+
+      if ( soluteType === 'starLigand' || soluteType === 'triangleLigand' ) {
+        soluteArray.push( new Ligand( new Vector2( x, y ), soluteType, this ) );
+      }
+      else {
+        soluteArray.push( new Solute( new Vector2( x, y ), soluteType, this ) );
+      }
     }
     this.updateSoluteCounts();
   }
 
-  public addSolute( particle: Particle<IntentionalAny> ): void {
-    this.solutes.push( particle );
+  public addSolute( solute: Solute ): void {
+    this.solutes.push( solute );
     this.updateSoluteCounts();
   }
 
-  public removeSolute( particle: Particle<IntentionalAny> ): void {
-    this.solutes.splice( this.solutes.indexOf( particle ), 1 );
+  public removeSolute( solute: Solute ): void {
+    this.solutes.splice( this.solutes.indexOf( solute ), 1 );
     this.updateSoluteCounts();
   }
 
@@ -337,7 +343,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
   }
 
-  private stepFlux( dt: number, soluteInitialYValues: Map<Particle<SoluteType>, number> ): void {
+  private stepFlux( dt: number, soluteInitialYValues: Map<Particle, number> ): void {
 
     // Prune any recentSoluteFlux that is more than 1000ms old.
     const staleEntries = this.fluxEntries.filter( fluxEntry => this.time - fluxEntry.time > 1 );
@@ -460,8 +466,9 @@ export default class MembraneTransportModel extends PhetioObject {
     } ).length;
   }
 
-  public removeParticle( particle: Particle<IntentionalAny> ): void {
-    this.solutes.splice( this.solutes.indexOf( particle ), 1 );
+  // TODO: https://github.com/phetsims/membrane-transport/issues/300 Rename to removeSolute
+  public removeParticle( solute: Solute ): void {
+    this.solutes.splice( this.solutes.indexOf( solute ), 1 );
   }
 
   public getLeftmostEmptySlot(): Slot | null {
@@ -481,7 +488,7 @@ export default class MembraneTransportModel extends PhetioObject {
    */
   public isTransportProteinSoluteFree(
     slot: Slot,
-    predicate: ( solute: Particle<SoluteType> ) => boolean = ( () => true )
+    predicate: ( solute: Particle ) => boolean = ( () => true )
   ): boolean {
 
     // Check if any Particle mode has this slot and matches the predicate
@@ -514,7 +521,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    * for more information on the different serialization types.
    */
-  public static readonly ParticleIO = new IOType<Particle<ParticleType>, ParticleStateObject>( 'ParticleIO', {
+  public static readonly ParticleIO = new IOType<Particle, ParticleStateObject>( 'ParticleIO', {
     valueType: Particle,
     stateSchema: {
       position: Vector2.Vector2IO,
@@ -525,7 +532,7 @@ export default class MembraneTransportModel extends PhetioObject {
       model: ReferenceIO( IOType.ObjectIO ), // Cannot reference MembraneTransportModel.MembraneTransportModelIO because it creates a circular dependency
       opacity: NumberIO
     },
-    toStateObject: ( particle: Particle<IntentionalAny> ) => {
+    toStateObject: ( particle: Particle ) => {
       return {
         position: particle.position,
         type: particle.type,
@@ -538,11 +545,9 @@ export default class MembraneTransportModel extends PhetioObject {
 
       const model = ReferenceIO( IOType.ObjectIO ).fromStateObject( stateObject.model ) as MembraneTransportModel;
 
-      const particle = new Particle(
-        new Vector2( stateObject.position.x, stateObject.position.y ),
-        stateObject.type,
-        model
-      );
+      const particle = ( stateObject.type === 'starLigand' || stateObject.type === 'triangleLigand' ) ?
+                       new Ligand( new Vector2( stateObject.position.x, stateObject.position.y ), stateObject.type, model ) :
+                       new Solute( new Vector2( stateObject.position.x, stateObject.position.y ), stateObject.type, model );
       particle.opacity = stateObject.opacity;
       particle.mode = Particle.stateToMode( model, stateObject.mode );
       return particle;
@@ -678,7 +683,7 @@ type MembraneTransportModelStateObject = {
 
 export type ParticleStateObject = {
   position: Vector2;
-  type: SoluteType;
+  type: ParticleType;
   mode: Record<string, unknown>;
   model: ReferenceIOState;
   opacity: number;

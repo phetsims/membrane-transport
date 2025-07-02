@@ -21,7 +21,7 @@ import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle, { ParticleModeWithSlot } from '../Particle.js';
 import Slot from '../Slot.js';
-import SoluteType, { ParticleType } from '../SoluteType.js';
+import SoluteType from '../SoluteType.js';
 import TransportProteinType from './TransportProteinType.js';
 
 // The State type parameter is a string union defined by the subclass, indicating which conformation or mode the protein
@@ -91,7 +91,7 @@ export default abstract class TransportProtein<State extends string = Intentiona
     return slot;
   }
 
-  public hasSolutesMovingTowardOrThroughTransportProtein( solutePredicate: ( solute: Particle<ParticleType> ) => boolean = ( () => true ) ): boolean {
+  public hasSolutesMovingTowardOrThroughTransportProtein( solutePredicate: ( solute: Particle ) => boolean = ( () => true ) ): boolean {
     return !this.model.isTransportProteinSoluteFree( this.slot, solutePredicate );
   }
 
@@ -113,7 +113,7 @@ export default abstract class TransportProtein<State extends string = Intentiona
    * Set free any ligands or particles that are interacting with the transport protein.
    */
   public releaseParticles( slot: Slot ): void {
-    const releaseParticlesWithSlot = ( particles: Particle<IntentionalAny>[] ) => {
+    const releaseParticlesWithSlot = ( particles: Particle[] ) => {
       particles
         .filter( particle => ( particle.mode as ParticleModeWithSlot ).slot === slot )
         .forEach( particle => particle.releaseFromInteraction( particle.position.y > 0 ? 20 : -20 ) );

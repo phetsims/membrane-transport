@@ -9,10 +9,10 @@
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
-import Slot from '../Slot.js';
-import BaseParticleMode from './BaseParticleMode.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
+import Slot from '../Slot.js';
+import BaseParticleMode from './BaseParticleMode.js';
 import EnteringTransportProteinMode from './EnteringTransportProteinMode.js';
 
 export default class MoveToCenterOfChannelMode extends BaseParticleMode {
@@ -28,7 +28,7 @@ export default class MoveToCenterOfChannelMode extends BaseParticleMode {
     };
   }
 
-  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPositionX = particle.position.x;
     const targetPositionX = this.slot.position;
     const TYPICAL_SPEED = 30;

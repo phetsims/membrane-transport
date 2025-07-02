@@ -12,10 +12,10 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import Particle from '../Particle.js';
+import Particle, { Ligand } from '../Particle.js';
 import LigandBoundMode from '../particleModes/LigandBoundMode.js';
 import Slot from '../Slot.js';
-import SoluteType, { LigandType } from '../SoluteType.js';
+import SoluteType from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 
 // Time in seconds that must elapse after a ligand unbinds before another can bind, in seconds
@@ -34,7 +34,7 @@ type LigandGatedChannelState = 'closed' | // idle state, not bound to a ligand
 
 export default class LigandGatedChannel extends TransportProtein<LigandGatedChannelState> {
 
-  private readonly ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Particle<LigandType> ]>;
+  private readonly ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Ligand ]>;
 
   // Offsets for binding positions, relative to the center of the slot. Static so that they can be controlled from the dev tools.
   private static readonly SODIUM_BINDING_OFFSET_CLOSED = MembraneTransportConstants.getBindingSiteOffset(
@@ -94,7 +94,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
    * we need this to be on the Particle to make it easier to control
    * deserializing from PhET-iO state.
    */
-  private get boundLigand(): Particle<LigandType> | null {
+  private get boundLigand(): Ligand | null {
     return this.model.ligands.find( ligand => ligand.mode instanceof LigandBoundMode && ligand.mode.ligandGatedChannel === this ) || null;
   }
 
@@ -119,7 +119,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   /**
    * Called when a ligand hits the membrane near this channel
    */
-  public bindLigand( ligand: Particle<LigandType> ): void {
+  public bindLigand( ligand: Particle ): void {
 
     // Only bind if not already bound and past the rebinding delay
     if ( this.isAvailableForBinding() ) {

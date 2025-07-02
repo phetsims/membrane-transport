@@ -25,7 +25,7 @@ export default class UserControlledMode extends BaseParticleMode {
     return this.baseToStateObject();
   }
 
-  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     // nothing to do when user is controlling the particle
   }
 

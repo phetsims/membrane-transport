@@ -9,11 +9,11 @@
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportModel from '../MembraneTransportModel.js';
+import Particle from '../Particle.js';
 import SodiumPotassiumPump from '../proteins/SodiumPotassiumPump.js';
 import Slot from '../Slot.js';
 import BaseParticleMode from './BaseParticleMode.js';
-import MembraneTransportModel from '../MembraneTransportModel.js';
-import Particle from '../Particle.js';
 
 export default class WaitingInSodiumPotassiumPumpMode extends BaseParticleMode {
 
@@ -32,7 +32,7 @@ export default class WaitingInSodiumPotassiumPumpMode extends BaseParticleMode {
     };
   }
 
-  public step( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const targetPosition = this.sodiumPotassiumPump.getSitePosition( this.site );
     particle.position.set( targetPosition );
   }

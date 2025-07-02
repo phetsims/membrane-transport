@@ -36,7 +36,7 @@ export default class MovingThroughTransportProteinMode extends DirectionalMoveme
     };
   }
 
-  protected handleSpecificBehavior( dt: number, particle: Particle<IntentionalAny>, model: MembraneTransportModel ): void {
+  protected handleSpecificBehavior( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const center = this.slot.position + ( this.offset || 0 );
     const maxDistanceFromCenter = 0.8;
     if ( Math.abs( particle.position.x - center ) > maxDistanceFromCenter ) {

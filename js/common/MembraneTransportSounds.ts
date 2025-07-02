@@ -7,7 +7,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import IntentionalAny from '../../../phet-core/js/types/IntentionalAny.js';
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
 import CardSounds from '../../../tambo/js/sound-generators/CardSounds.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
@@ -238,11 +237,11 @@ export default class MembraneTransportSounds {
     mtATPActivateTransporter.play();
   }
 
-  public static particleBounced( particle: Particle<IntentionalAny> ): void {
+  public static particleBounced( particle: Particle ): void {
     // too annoying
   }
 
-  public static gasMoleculeEnteredMembrane( particle: Particle<IntentionalAny>, direction: 'inward' | 'outward' ): void {
+  public static gasMoleculeEnteredMembrane( particle: Particle, direction: 'inward' | 'outward' ): void {
     // collectSound.setPlaybackRate( direction === 'inward' ? 1 : 1.2 );
     // collectSound.play();
   }
