@@ -214,8 +214,8 @@ export default class InteractiveSlotsNode extends Node {
 
     // Add a rectangle for the off-membrane state
     const offMembraneRect = createTestRectangle(
-      MembraneTransportFluent.a11y.transportProtein.offMembraneStringProperty,
-      MembraneTransportFluent.a11y.transportProtein.offMembraneStringProperty,
+      MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
+      MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
       null,
       MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
       OFF_MEMBRANE_VERTICAL_OFFSET

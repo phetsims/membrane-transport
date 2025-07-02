@@ -203,8 +203,13 @@ type StringsType = {
         'crossingStringProperty': LocalizedStringProperty;
       }
     };
-    'crossingInitialResponseStringProperty': LocalizedStringProperty;
-    'crossingSubsequentResponseStringProperty': LocalizedStringProperty;
+    'soluteCrossing': {
+      'initialResponseStringProperty': LocalizedStringProperty;
+      'subsequentResponseStringProperty': LocalizedStringProperty;
+      'inBalanceResponseStringProperty': LocalizedStringProperty;
+      'manyTypesResponseStringProperty': LocalizedStringProperty;
+      'manyTypesInBalanceResponseStringProperty': LocalizedStringProperty;
+    };
     'ligandToggleButton': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'addedAccessibleContextResponseStringProperty': LocalizedStringProperty;
@@ -215,7 +220,7 @@ type StringsType = {
     };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;
-      'offMembraneStringProperty': LocalizedStringProperty;
+      'offMembraneResponseStringProperty': LocalizedStringProperty;
       'releasedReplacedResponseStringProperty': LocalizedStringProperty;
       'deletedResponseStringProperty': LocalizedStringProperty;
       'cancelledResponseStringProperty': LocalizedStringProperty;

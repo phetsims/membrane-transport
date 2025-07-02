@@ -209,37 +209,37 @@ a11y:
     atp:           Adenosine Triphosphate, ATP, complex, large
 
   # Names for the solute type. Reused in various places.
-  solute:                     |-
-                              { $soluteType ->
-                                [oxygen]        oxygen molecules
-                                [carbonDioxide] carbon dioxide molecules
-                                [sodiumIon]     sodium ions
-                                [potassiumIon]  potassium ions
-                                [glucose]       glucose molecules
-                               *[atp]           ATP molecules
-                              }
+  solute:            |-
+                     { $soluteType ->
+                       [oxygen]        oxygen molecules
+                       [carbonDioxide] carbon dioxide molecules
+                       [sodiumIon]     sodium ions
+                       [potassiumIon]  potassium ions
+                       [glucose]       glucose molecules
+                      *[atp]           ATP molecules
+                     }
 
   # Capitalized names for the solute type. Reused in various places.
-  soluteCapitalized:          |-
-                              { $soluteType ->
-                                [oxygen]        Oxygen Molecules
-                                [carbonDioxide] Carbon Dioxide molecules
-                                [sodiumIon]     Sodium Ions
-                                [potassiumIon]  Potassium Ions
-                                [glucose]       Glucose Molecules
-                               *[atp]           Atp Molecules
-                              }
+  soluteCapitalized: |-
+                     { $soluteType ->
+                       [oxygen]        Oxygen Molecules
+                       [carbonDioxide] Carbon Dioxide molecules
+                       [sodiumIon]     Sodium Ions
+                       [potassiumIon]  Potassium Ions
+                       [glucose]       Glucose Molecules
+                      *[atp]           Atp Molecules
+                     }
 
   # Brevity is the soul of wit, so we use these brief names in various places.
-  soluteBrief:            |-
-                              { $soluteType ->
-                                [oxygen]        Oxygen
-                                [carbonDioxide] Carbon Dioxide
-                                [sodiumIon]     Sodium
-                                [potassiumIon]  Potassium
-                                [glucose]       Glucose
-                               *[atp]           Atp
-                              }
+  soluteBrief:       |-
+                     { $soluteType ->
+                       [oxygen]        Oxygen
+                       [carbonDioxide] Carbon Dioxide
+                       [sodiumIon]     Sodium
+                       [potassiumIon]  Potassium
+                       [glucose]       Glucose
+                      *[atp]           Atp
+                     }
 
   soluteControl:
     outside:
@@ -315,8 +315,13 @@ a11y:
                         [outside] crossings out
                         [both] crossings in and out
                       }
-  crossingInitialResponse:    "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }"
-  crossingSubsequentResponse: "{ a11y.soluteBrief }, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }"
+
+  soluteCrossing:
+    initialResponse:            "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }."
+    subsequentResponse:         "{ a11y.soluteBrief }, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }."
+    inBalanceResponse:          "{ a11y.soluteCapitalized } crossing steadily in both directions, now roughly equal."
+    manyTypesResponse:          Many solute types crossing membrane.
+    manyTypesInBalanceResponse: Many solutes types crossing steadily in both directions.
 
   ligandToggleButton:
     accessibleHelpText:               Add or remove triangle- and star-shaped ligands to outside of cell.
@@ -328,7 +333,7 @@ a11y:
 
   transportProtein:
     grabbedResponse:          Grabbed.
-    offMembrane:              Off membrane
+    offMembraneResponse:      Off membrane
     releasedReplacedResponse: Released. Protein replaced.
     deletedResponse:          Deleted.
     cancelledResponse:        Released. Back to initial slot.

@@ -7,7 +7,9 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import { equalsEpsilon } from '../../../../dot/js/util/equalsEpsilon.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetSelectableSoluteTypes } from '../MembraneTransportFeatureSet.js';
@@ -25,6 +27,7 @@ type CrossingEvent = {
 
 type CrossingData = {
   crossingEvents: CrossingEvent[];
+  inBalance: boolean;
 };
 
 const descriptionInterval = 5;
@@ -33,12 +36,14 @@ export default class SoluteConcentrationDescriber {
   private soluteTypeToCrossingDataMap: Map<SoluteType, CrossingData> = new Map<SoluteType, CrossingData>();
   private timeSinceDescription = 0;
   private isInitialDescription = true;
+  private previousResponse: TAlertable | null = null;
 
   public constructor( public readonly model: MembraneTransportModel, public readonly contextResponseNode: Node ) {
 
     getFeatureSetSelectableSoluteTypes( model.featureSet ).forEach( soluteType => {
       this.soluteTypeToCrossingDataMap.set( soluteType, {
-          crossingEvents: []
+          crossingEvents: [],
+          inBalance: false
         }
       );
     } );
@@ -58,6 +63,13 @@ export default class SoluteConcentrationDescriber {
     } );
   }
 
+  private addAccessibleContextResponse( response: AlertableNoUtterance ): void {
+    if ( response !== this.previousResponse ) {
+      this.contextResponseNode.addAccessibleContextResponse( response );
+    }
+    this.previousResponse = response;
+  }
+
   public step( dt: number ): void {
     if ( this.model.isPlayingProperty.value ) {
       this.timeSinceDescription += dt;
@@ -75,6 +87,10 @@ export default class SoluteConcentrationDescriber {
             const inwardCrossingCount = crossingData.crossingEvents.filter( event => event.direction === 'inward' ).length;
             const outwardCrossingCount = crossingData.crossingEvents.filter( event => event.direction === 'outward' ).length;
 
+            this.soluteTypeToCrossingDataMap.get( soluteType )!.inBalance =
+              equalsEpsilon( inwardCrossingCount / outwardCrossingCount, 1, 0.3 ) ||
+              equalsEpsilon( outwardCrossingCount / inwardCrossingCount, 1, 0.3 );
+
             if ( inwardCrossingCount > 0 || outwardCrossingCount > 0 ) {
               soluteTypesCrossing.add( soluteType );
             }
@@ -89,10 +105,15 @@ export default class SoluteConcentrationDescriber {
           const insideCount = this.model.countSolutes( soluteType, 'inside' );
           const comparisonDescription = SoluteConcentrationDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount );
 
-          if ( this.isInitialDescription ) {
+          if ( this.soluteTypeToCrossingDataMap.get( soluteType )!.inBalance ) {
+            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.inBalanceResponse.format( {
+              soluteType: soluteType as SoluteControlSolutes
+            } ) );
+          }
+          else if ( this.isInitialDescription ) {
 
             // Initial: {{solute}} crossing membrane, {compareSoluteCompartments}
-            this.contextResponseNode.addAccessibleContextResponse( MembraneTransportFluent.a11y.crossingInitialResponse.format( {
+            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.initialResponse.format( {
               soluteType: soluteType as SoluteControlSolutes,
               amount: comparisonDescription
             } ) );
@@ -101,10 +122,24 @@ export default class SoluteConcentrationDescriber {
           else {
 
             // Subsequent: {soluteShortName}, {compareSoluteCompartments}
-            this.contextResponseNode.addAccessibleContextResponse( MembraneTransportFluent.a11y.crossingSubsequentResponse.format( {
+            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.subsequentResponse.format( {
               soluteType: soluteType as SoluteControlSolutes,
               amount: comparisonDescription
             } ) );
+          }
+        }
+        else if ( soluteTypesCrossing.size > 1 ) {
+
+          // Multiple solutes are crossing at once so describe that in a simple way.
+          // TODO: Is many OK or do we need to list them all out? See https://github.com/phetsims/membrane-transport/issues/263
+          //   NOTE: Instead of a join, we could do a simple addAccessibleContextResponse for each solute type.
+
+          const allInBalance = Array.from( soluteTypesCrossing ).every( soluteType => this.soluteTypeToCrossingDataMap.get( soluteType )!.inBalance );
+          if ( allInBalance ) {
+            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.manyTypesInBalanceResponseStringProperty );
+          }
+          else {
+            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.manyTypesResponseStringProperty );
           }
         }
 
