@@ -37,12 +37,14 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import Particle, { Ligand, ParticleModeWithSlot, Solute } from './Particle.js';
+import Ligand from './Ligand.js';
+import Particle, { ParticleModeWithSlot } from './Particle.js';
 import UserControlledMode from './particleModes/UserControlledMode.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
 import { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
+import Solute from './Solute.js';
 import SoluteType, { ParticleType, SoluteControlSolutes } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -670,6 +672,14 @@ export default class MembraneTransportModel extends PhetioObject {
       }
     }
   } );
+
+  /* Some steps in splitting ATP are done here to prevent a circular dependency with Solute. */
+  public splitATP( currentPosition: Vector2 ): Solute {
+    this.addSolute( new Solute( currentPosition.copy(), 'adp', this ) );
+    const phosphate = new Solute( currentPosition.copy(), 'phosphate', this );
+    this.addSolute( phosphate );
+    return phosphate;
+  }
 }
 
 type MembraneTransportModelStateObject = {

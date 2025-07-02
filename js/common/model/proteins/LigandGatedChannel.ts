@@ -11,8 +11,9 @@ import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import Ligand from '../Ligand.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import Particle, { Ligand } from '../Particle.js';
+import Particle from '../Particle.js';
 import LigandBoundMode from '../particleModes/LigandBoundMode.js';
 import Slot from '../Slot.js';
 import SoluteType from '../SoluteType.js';
@@ -90,7 +91,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * Look up the ligand bounds to this protein. This is not a instance variable because
+   * Look up the ligand bounds to this protein. This is not an instance variable because
    * we need this to be on the Particle to make it easier to control
    * deserializing from PhET-iO state.
    */

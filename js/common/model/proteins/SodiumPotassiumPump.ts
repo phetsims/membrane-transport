@@ -25,11 +25,12 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
-import { ParticleModeWithSlot, Solute } from '../Particle.js';
+import { ParticleModeWithSlot } from '../Particle.js';
 import MoveToSodiumPotassiumPumpMode from '../particleModes/MoveToSodiumPotassiumPumpMode.js';
 import MovingThroughTransportProteinMode from '../particleModes/MovingThroughTransportProteinMode.js';
 import WaitingInSodiumPotassiumPumpMode from '../particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import Slot from '../Slot.js';
+import Solute from '../Solute.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
@@ -183,15 +184,13 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     affirm( atp, 'There should be an ATP if we are trying to split it.' );
     const currentPosition = atp.position;
 
-    this.model.addSolute( new Solute( currentPosition.copy(), 'adp', atp.model ) );
-    const phosphate = new Solute( currentPosition.copy(), 'phosphate', atp.model );
+    const phosphate = this.model.splitATP( currentPosition );
+
     phosphate.mode = new WaitingInSodiumPotassiumPumpMode(
       this.slot,
       this,
       'phosphate'
     );
-
-    this.model.addSolute( phosphate );
     this.model.removeSolute( atp );
 
     this.stateProperty.value = 'openToInsideSodiumAndPhosphateBound';

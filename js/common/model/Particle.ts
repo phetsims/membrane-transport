@@ -38,7 +38,8 @@ import WaitingInSodiumGlucoseCotransporterMode from './particleModes/WaitingInSo
 import WaitingInSodiumPotassiumPumpMode from './particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import RandomWalkUtils from './RandomWalkUtils.js';
 import Slot from './Slot.js';
-import SoluteType, { LigandType, ParticleType } from './SoluteType.js';
+import type Solute from './Solute.js';
+import { ParticleType } from './SoluteType.js';
 
 // The amount of time that must pass before a particle can cross the membrane again.
 const CROSSING_COOLDOWN = 10;
@@ -247,42 +248,6 @@ export default abstract class Particle {
       default:
         throw new Error( `Unknown particle mode type: ${state.type}` );
     }
-  }
-}
-
-/**
- * The model for a ligand, which can bind to the ligand gated channels to open them.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Jesse Greenberg (PhET Interactive Simulations)
- */
-export class Ligand extends Particle {
-
-  public constructor(
-    position: Vector2,
-    public readonly ligandType: LigandType,
-    model: PhetioObject
-  ) {
-    super( position, ligandType, model );
-  }
-}
-
-/**
- * The model for a solute, which can be added by the user, and diffuse across the membrane or transport through the
- * transport proteins.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Jesse Greenberg (PhET Interactive Simulations)
- */
-
-export class Solute extends Particle {
-
-  public constructor(
-    position: Vector2,
-    public readonly soluteType: SoluteType,
-    model: PhetioObject
-  ) {
-    super( position, soluteType, model );
   }
 }
 
