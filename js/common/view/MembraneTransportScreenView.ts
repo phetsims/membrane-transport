@@ -17,6 +17,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
@@ -211,8 +212,10 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const solutesPanel = new SolutesPanel( model.featureSet, model.soluteProperty, {
       tandem: soluteControlsTandem.createTandem( 'solutesPanel' ),
-      left: soluteConcentrationsAccordionBox.left,
-      centerY: screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.centerY )
+      left: soluteConcentrationsAccordionBox.left
+    } );
+    ManualConstraint.create( this, [ solutesPanel ], solutesPanelProxy => {
+      solutesPanelProxy.centerY = screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.centerY );
     } );
     soluteControlsNode.addChild( solutesPanel );
 
