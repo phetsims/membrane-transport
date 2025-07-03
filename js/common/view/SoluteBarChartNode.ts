@@ -101,7 +101,7 @@ export default class SoluteBarChartNode extends Node {
 
     // We want to keep the relative sizes correct for the gas solutes and the ions
     // but the ATP and Glucose are much larger, so we scale them down.
-    icon.setScaleMagnitude( soluteType === 'glucose' ? 0.075 :
+    icon.setScaleMagnitude( soluteType === 'glucose' ? 0.06 :
                             soluteType === 'potassiumIon' ? 0.08 :
                             0.1 );
 
