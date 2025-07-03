@@ -150,11 +150,11 @@ export default class ObservationWindow extends Node {
 
     ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
       outsideTextProxy.top = TEXT_MARGIN;
-      outsideTextProxy.right = MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
+      outsideTextProxy.left = TEXT_MARGIN;
     } );
     ManualConstraint.create( this, [ insideText ], insideTextProxy => {
       insideTextProxy.bottom = MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN;
-      insideTextProxy.right = MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH - TEXT_MARGIN;
+      insideTextProxy.left = TEXT_MARGIN;
     } );
 
     this.addChild( outsideText );

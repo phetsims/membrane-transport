@@ -15,7 +15,7 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
 const textOptions = { fontSize: 13, maxWidth: 200 };
-const panelOptions = { cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS, stroke: null, fill: Color.WHITE.withAlpha( 0.3 ) };
+const panelOptions = { cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS, stroke: null, fill: Color.WHITE.withAlpha( 0.4 ) };
 
 export default class InsideOutsideLabel extends Panel {
   public constructor( side: 'inside' | 'outside', options?: LayoutNodeOptions ) {
