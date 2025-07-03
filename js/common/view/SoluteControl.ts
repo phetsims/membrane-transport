@@ -12,6 +12,7 @@ import Range from '../../../../dot/js/Range.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import { OneKeyStroke } from '../../../../scenery/js/input/KeyDescriptor.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -62,6 +63,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       accessibleName: accessibleName,
       accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleHelpTextStringProperty :
                           MembraneTransportFluent.a11y.soluteControl.outside.accessibleHelpTextStringProperty,
+      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_AFTER_CONTENT,
 
       // voicing
       voicingNameResponse: accessibleName,
