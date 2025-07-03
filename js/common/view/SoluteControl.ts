@@ -153,7 +153,7 @@ export default class SoluteControl extends Voicing( Panel ) {
     };
 
     // Plays sounds when solutes are added or removed.
-    const soundGenerator = new SoluteSpinnerSoundGenerator( new Range( 0, 50 ) );
+    const soundGenerator = new SoluteSpinnerSoundGenerator( new Range( 0, MembraneTransportConstants.MAX_SOLUTE_COUNT ) );
 
     const arrowButtonHeight = 16;
     const buttonOptions: ArrowButtonOptions = {
