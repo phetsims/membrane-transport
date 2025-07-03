@@ -257,7 +257,10 @@ export default class MembraneTransportModel extends PhetioObject {
   public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle[] ): void {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneTransportConstants.INSIDE_CELL_BOUNDS.minX, MembraneTransportConstants.INSIDE_CELL_BOUNDS.maxX );
-      const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY;
+
+      const yOffset = dotRandom.nextDoubleBetween( 2, 4 );
+
+      const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY + yOffset : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY - yOffset;
 
       if ( soluteType === 'starLigand' || soluteType === 'triangleLigand' ) {
         soluteArray.push( new Ligand( new Vector2( x, y ), soluteType, this ) );
