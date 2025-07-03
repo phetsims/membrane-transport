@@ -183,7 +183,7 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
     this.resetEmitter.addListener( () => this.isPlayingProperty.reset() );
 
-    this.chargesVisibleProperty = new BooleanProperty( false, {
+    this.chargesVisibleProperty = new BooleanProperty( this.featureSet === 'facilitatedDiffusion', {
       tandem: getFeatureSetHasVoltages( this.featureSet ) ? providedOptions.tandem.createTandem( 'chargesVisibleProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
