@@ -37,6 +37,8 @@ export default class ObservationWindow extends Node {
   public readonly ligandNodes: LigandNode[] = [];
   public readonly slotDragIndicatorNodes: SlotDragIndicatorNode[];
 
+  public static readonly CORNER_RADIUS = 3;
+
   private readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
@@ -55,7 +57,8 @@ export default class ObservationWindow extends Node {
     const frameNode = new Rectangle( 0, 0, MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT, {
       stroke: 'black',
       lineWidth: 2,
-      pickable: false
+      pickable: false,
+      cornerRadius: ObservationWindow.CORNER_RADIUS
     } );
 
     // Clipping region that contains the background canvas and the ligand node

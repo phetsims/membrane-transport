@@ -12,6 +12,7 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import membraneTransport from '../../membraneTransport.js';
+import ObservationWindow from './ObservationWindow.js';
 
 export default class ThumbnailNode extends Node {
   public constructor( centerX: number, centerY: number, observationWindowBounds: Bounds2 ) {
@@ -33,10 +34,8 @@ export default class ThumbnailNode extends Node {
       stroke: 'black',
       lineWidth: 1
     };
-    this.addChild( new Line( rectangle.left, rectangle.top, observationWindowBounds.left, observationWindowBounds.top, lineOptions ) );
-    this.addChild( new Line( rectangle.right, rectangle.top, observationWindowBounds.right, observationWindowBounds.top, lineOptions ) );
-    this.addChild( new Line( rectangle.left, rectangle.bottom, observationWindowBounds.left, observationWindowBounds.bottom, lineOptions ) );
-    this.addChild( new Line( rectangle.right, rectangle.bottom, observationWindowBounds.right, observationWindowBounds.bottom, lineOptions ) );
+    this.addChild( new Line( rectangle.left, rectangle.top, observationWindowBounds.left + ObservationWindow.CORNER_RADIUS / 2, observationWindowBounds.top + ObservationWindow.CORNER_RADIUS / 2, lineOptions ) );
+    this.addChild( new Line( rectangle.left, rectangle.bottom, observationWindowBounds.left + ObservationWindow.CORNER_RADIUS / 2, observationWindowBounds.bottom - ObservationWindow.CORNER_RADIUS / 2, lineOptions ) );
   }
 }
 
