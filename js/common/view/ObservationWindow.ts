@@ -107,6 +107,7 @@ export default class ObservationWindow extends Node {
           isFocusable,
           model.transportProteinCountProperty,
           model.ligandUnboundDueToNaturalCausesEmitter,
+          model.ligandInteractionCueVisibleProperty,
 
           // NOTE: In phet-io, we used to instrument all interactive objects, but in this case, that seems like overinstrumentation. Instead,
           // just instrument the one focusable ligand of each type. See https://github.com/phetsims/membrane-transport/issues/32

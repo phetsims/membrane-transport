@@ -140,6 +140,9 @@ export default class MembraneTransportModel extends PhetioObject {
   // Updated lazily in step(), by checking the state of each ligand
   public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
 
+  // Show a highlight around the focusable ligands until the user interacts with one
+  public readonly ligandInteractionCueVisibleProperty: BooleanProperty;
+
   public readonly crossingHighlightsEnabledProperty: Property<boolean>;
   public readonly crossingSoundsEnabledProperty: Property<boolean>;
 
@@ -200,6 +203,12 @@ export default class MembraneTransportModel extends PhetioObject {
       phetioFeatured: true
     } );
     this.resetEmitter.addListener( () => this.areLigandsAddedProperty.reset() );
+
+    this.ligandInteractionCueVisibleProperty = new BooleanProperty( true, {
+      tandem: getFeatureSetHasLigands( featureSet ) ? providedOptions.tandem.createTandem( 'ligandInteractionCueVisibleProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true
+    } );
+    this.resetEmitter.addListener( () => this.ligandInteractionCueVisibleProperty.reset() );
 
     this.crossingHighlightsEnabledProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'crossingHighlightsEnabledProperty' ),

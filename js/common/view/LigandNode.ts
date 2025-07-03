@@ -92,6 +92,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     focusable: boolean,
     transportProteinCountProperty: TProperty<number>,
     ligandUnboundDueToNaturalCausesEmitter: Emitter<[ Ligand ]>,
+    ligandInteractionCueVisibleProperty: TProperty<boolean>,
     tandem: Tandem,
     observationWindow: Node
   ) {
@@ -156,7 +157,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     const soundDragListener = new SoundDragListener( {
       start: event => {
 
-        MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.value = false;
+        ligandInteractionCueVisibleProperty.value = false;
 
         // Prevent interaction if grabbed by keyboard
         if ( this.isKeyboardGrabbed ) {
@@ -366,7 +367,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
           if ( inputType === 'alternative' ) {
 
-            MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.value = false;
+            ligandInteractionCueVisibleProperty.value = false;
 
             if ( ligand.mode instanceof LigandBoundMode ) {
               ligand.mode.ligandGatedChannel.unbindLigand();
@@ -490,7 +491,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         // Adjusted so the phase matches
         lineDash: [ 50, 47 ],
 
-        visibleProperty: MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY
+        visibleProperty: ligandInteractionCueVisibleProperty
       } );
 
       this.addChild( outline );
@@ -502,7 +503,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     soundDragListener.isOverProperty.link( isOver => {
 
       if ( isOver ) {
-        MembraneTransportConstants.LIGAND_INTERACTION_CUE_VISIBLE_PROPERTY.value = false;
+        ligandInteractionCueVisibleProperty.value = false;
       }
 
       // If the ligand is already controlled, don't start walking when the pointer goes out.
