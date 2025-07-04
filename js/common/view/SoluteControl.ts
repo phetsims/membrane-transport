@@ -131,7 +131,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       const differenceInsideMinusOutside = insideCount - outsideCount;
 
       // 3. Decide if it's more or less, and is it a large or small difference
-      const differenceSize = Math.abs( differenceInsideMinusOutside ) < 5 ? 'aLittle' : 'aLot';
+      const differenceSize = Math.abs( differenceInsideMinusOutside ) < 100 ? 'aLittle' : 'aLot';
       const directionality = side === 'inside' ? 'insideThanOutside' : 'outsideThanInside';
 
       // Describe relative to the spinner that is being controlled
@@ -257,6 +257,13 @@ export default class SoluteControl extends Voicing( Panel ) {
     super( new Node( {
       children: [ buttonBox ]
     } ), options );
+
+    // Speak the object response describing the "value" of the control when it is focused.
+    this.focusedProperty.link( focused => {
+      if ( focused ) {
+        this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
+      }
+    } );
 
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
     const coarseIncrementKeys: OneKeyStroke[] = [ 'arrowRight', 'arrowUp' ];
