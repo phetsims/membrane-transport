@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
@@ -44,6 +45,23 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
 
     // This protein is always 'closed' because there are no states that allow a particle to move through it freely.
     super( model, type, position, 'openToOutsideAwaitingParticles', [] );
+
+    // Eject bound particles when the sodium ion concentration threshold is not met.
+    const thresholdBlockedProperty = new DerivedProperty( [
+      model.outsideSoluteCountProperties.sodiumIon,
+      model.insideSoluteCountProperties.sodiumIon
+    ], ( outsideCount, insideCount ) => outsideCount <= insideCount );
+
+    this.disposeEmitter.addListener( () => thresholdBlockedProperty.dispose() );
+
+    thresholdBlockedProperty.lazyLink( thresholdBlocked => {
+      if ( thresholdBlocked ) {
+
+        this.model.solutes
+          .filter( particle => ( particle.mode as ParticleModeWithSlot ).slot === this.slot )
+          .forEach( particle => particle.startRandomWalk() );
+      }
+    } );
   }
 
   public override step( dt: number ): void {

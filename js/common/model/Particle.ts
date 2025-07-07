@@ -109,6 +109,12 @@ export default abstract class Particle {
 
   public releaseFromInteraction( y: number ): void {
     this.position.y = y;
+    this.startRandomWalk();
+  }
+
+  public startRandomWalk(): void {
+
+    // Start in random walk mode with random directions.
     this.mode = Particle.createRandomWalkMode( true );
   }
 
