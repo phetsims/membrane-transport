@@ -299,6 +299,8 @@ a11y:
                       { $amount ->
                         *[none]  none
                         [equal] Amounts exactly equal outside and inside
+                        [allOutside] all outside, none inside
+                        [allInside] all inside, none outside
                         [manyMoreOutside] many more outside than inside 
                         [aboutTwiceAsManyOutside] about twice as many outside as inside
                         [someMoreOutside] some more outside than inside

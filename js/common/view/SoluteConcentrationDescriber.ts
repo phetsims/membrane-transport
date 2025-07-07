@@ -17,8 +17,9 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Solute from '../model/Solute.js';
 import SoluteType, { SoluteControlSolutes } from '../model/SoluteType.js';
 
-type SoluteComparisonDescriptor = 'equal' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'someMoreOutside' |
-  'roughlyEqualOutside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'someMoreInside' | 'roughlyEqualInside' | 'none';
+type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMoreOutside' |
+  'aboutTwiceAsManyOutside' | 'someMoreOutside' | 'roughlyEqualOutside' | 'manyMoreInside' |
+  'aboutTwiceAsManyInside' | 'someMoreInside' | 'roughlyEqualInside' | 'none';
 
 type CrossingEvent = {
   solute: Solute;
@@ -171,6 +172,8 @@ export default class SoluteConcentrationDescriber {
 
     // Equality cases first because otherwise ratios are infinite and exact equality is important to describe.
     return ( outsideAmount === 0 && insideAmount === 0 ) ? 'none' :
+           ( insideAmount === 0 && outsideAmount > 0 ) ? 'allOutside' :
+           ( outsideAmount === 0 && insideAmount > 0 ) ? 'allInside' :
            ( outsideAmount === insideAmount ) ? 'equal' :
 
              // More outside than inside
