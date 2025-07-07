@@ -258,7 +258,7 @@ export default class MembraneTransportModel extends PhetioObject {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneTransportConstants.INSIDE_CELL_BOUNDS.minX, MembraneTransportConstants.INSIDE_CELL_BOUNDS.maxX );
 
-      const yOffset = dotRandom.nextDoubleBetween( 2, 4 );
+      const yOffset = dotRandom.nextDoubleBetween( 1, 10 );
 
       const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY + yOffset : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY - yOffset;
 
