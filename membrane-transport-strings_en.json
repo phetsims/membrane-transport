@@ -202,10 +202,10 @@
       "accessibleHelpText": {
         "value": "Explore with or without visual highlights for solute crossings."
       },
-      "accessibleCheckedContextResponse": {
+      "accessibleContextResponseChecked": {
         "value": "Visual highlights for solute crossings, on."
       },
-      "accessibleUncheckedContextResponse": {
+      "accessibleContextResponseUnchecked": {
         "value": "Visual highlights for solute crossings, off."
       }
     },
@@ -213,10 +213,10 @@
       "accessibleHelpText": {
         "value": "Explore with or without unique sounds for solute crossings."
       },
-      "accessibleCheckedContextResponse": {
+      "accessibleContextResponseChecked": {
         "value": "Solute crossing sounds on."
       },
-      "accessibleUncheckedContextResponse": {
+      "accessibleContextResponseUnchecked": {
         "value": "Solute crossing sounds off."
       }
     },
@@ -282,16 +282,16 @@
           "voicingHelpText": {
             "value": "Explore with or without charge signs along membrane."
           },
-          "negative70AccessibleCheckedContextResponse": {
+          "accessibleContextResponseCheckedNegative70": {
             "value": "Positive outside and negative inside; charge signs densely packed along membrane."
           },
-          "negative50AccessibleCheckedContextResponse": {
+          "accessibleContextResponseCheckedNegative50": {
             "value": "Positive outside and negative inside; charge signs lightly packed along membrane."
           },
-          "positive30AccessibleCheckedContextResponse": {
+          "accessibleContextResponseCheckedPositive30": {
             "value": "Negative outside and positive inside; charge signs sparse along membrane."
           },
-          "accessibleUncheckedContextResponse": {
+          "accessibleContextResponseUnchecked": {
             "value": "Membrane potential charge signs, hidden."
           }
         }

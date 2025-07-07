@@ -118,12 +118,12 @@ a11y:
     accessibleHelpText:        Disabled when no solutes have been added.
   crossingHighlightsCheckbox:
     accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
-    accessibleCheckedContextResponse:   Visual highlights for solute crossings, on.
-    accessibleUncheckedContextResponse: Visual highlights for solute crossings, off.
+    accessibleContextResponseChecked:   Visual highlights for solute crossings, on.
+    accessibleContextResponseUnchecked: Visual highlights for solute crossings, off.
   crossingSoundsCheckbox:
     accessibleHelpText:                 Explore with or without unique sounds for solute crossings.
-    accessibleCheckedContextResponse:   Solute crossing sounds on.
-    accessibleUncheckedContextResponse: Solute crossing sounds off.
+    accessibleContextResponseChecked:   Solute crossing sounds on.
+    accessibleContextResponseUnchecked: Solute crossing sounds off.
   transportProteinPanel:
     accessibleHeading:  Transport Proteins
     accessibleHelpText: Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
@@ -152,10 +152,10 @@ a11y:
       chargesCheckbox:
         accessibleHelpText:                         Explore with or without charge signs showing membrane potential along inside and outside.
         voicingHelpText:                            Explore with or without charge signs along membrane.
-        negative70AccessibleCheckedContextResponse: Positive outside and negative inside; charge signs densely packed along membrane.
-        negative50AccessibleCheckedContextResponse: Positive outside and negative inside; charge signs lightly packed along membrane.
-        positive30AccessibleCheckedContextResponse: Negative outside and positive inside; charge signs sparse along membrane.
-        accessibleUncheckedContextResponse:         Membrane potential charge signs, hidden.
+        accessibleContextResponseCheckedNegative70: Positive outside and negative inside; charge signs densely packed along membrane.
+        accessibleContextResponseCheckedNegative50: Positive outside and negative inside; charge signs lightly packed along membrane.
+        accessibleContextResponseCheckedPositive30: Negative outside and positive inside; charge signs sparse along membrane.
+        accessibleContextResponseUnchecked:         Membrane potential charge signs, hidden.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter

@@ -139,8 +139,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       touchAreaYDilation: 5,
       touchAreaXDilation: 5,
       accessibleHelpText: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
-      checkedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleCheckedContextResponseStringProperty,
-      uncheckedContextResponse: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleUncheckedContextResponseStringProperty,
+      accessibleContextResponseChecked: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty,
+      accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty,
       tandem: options.tandem.createTandem( 'crossingHighlightsCheckbox' )
     } );
 
@@ -151,8 +151,8 @@ export default class MembraneTransportScreenView extends ScreenView {
       touchAreaYDilation: 5,
       touchAreaXDilation: 5,
       accessibleHelpText: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
-      checkedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleCheckedContextResponseStringProperty,
-      uncheckedContextResponse: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleUncheckedContextResponseStringProperty,
+      accessibleContextResponseChecked: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty,
+      accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty,
       tandem: options.tandem.createTandem( 'crossingSoundsCheckbox' )
     } );
 

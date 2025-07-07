@@ -106,11 +106,11 @@ export default class MembranePotentialPanel extends Panel {
           touchAreaYDilation: 5,
           tandem: tandem.createTandem( 'chargesCheckbox' ),
           accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
-          uncheckedContextResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleUncheckedContextResponseStringProperty,
-          checkedContextResponse: DerivedProperty.fromRecord( model.membranePotentialProperty, {
-            [ -70 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.negative70AccessibleCheckedContextResponseStringProperty,
-            [ -50 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.negative50AccessibleCheckedContextResponseStringProperty,
-            30: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.positive30AccessibleCheckedContextResponseStringProperty
+          accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty,
+          accessibleContextResponseChecked: DerivedProperty.fromRecord( model.membranePotentialProperty, {
+            [ -70 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty,
+            [ -50 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty,
+            30: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty
           } ),
 
           // The Voicing hint response is requested to be less verbose than the accessibleHelpText, see https://github.com/phetsims/membrane-transport/issues/254.

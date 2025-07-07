@@ -103,13 +103,13 @@ type StringsType = {
     };
     'crossingHighlightsCheckbox': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'accessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
-      'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseCheckedStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
     };
     'crossingSoundsCheckbox': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'accessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
-      'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseCheckedStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
     };
     'transportProteinPanel': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
@@ -143,10 +143,10 @@ type StringsType = {
         'chargesCheckbox': {
           'accessibleHelpTextStringProperty': LocalizedStringProperty;
           'voicingHelpTextStringProperty': LocalizedStringProperty;
-          'negative70AccessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
-          'negative50AccessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
-          'positive30AccessibleCheckedContextResponseStringProperty': LocalizedStringProperty;
-          'accessibleUncheckedContextResponseStringProperty': LocalizedStringProperty;
+          'accessibleContextResponseCheckedNegative70StringProperty': LocalizedStringProperty;
+          'accessibleContextResponseCheckedNegative50StringProperty': LocalizedStringProperty;
+          'accessibleContextResponseCheckedPositive30StringProperty': LocalizedStringProperty;
+          'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
         }
       };
       'activeTransportProteinPanel': {
