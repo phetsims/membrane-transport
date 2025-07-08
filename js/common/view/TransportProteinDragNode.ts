@@ -85,7 +85,8 @@ export default class TransportProteinDragNode extends Node {
       const closest = getClosestSlotDragIndicatorNode();
 
       observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-        slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'red' : 'black';
+        slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'rgb(0, 173, 29)' : 'white';
+        slotDragIndicatorNode.fill = slotDragIndicatorNode === closest ? 'rgba(0, 173, 29, 0.2)' : 'rgba( 0, 0, 0, 0.2 )';
       } );
     };
 

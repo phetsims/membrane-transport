@@ -17,11 +17,12 @@ export default class SlotDragIndicatorNode extends Rectangle {
   public constructor( public readonly slot: Slot, modelViewTransform: ModelViewTransform2 ) {
 
     // In view coordinates, the area for a slot that can contain a transport protein
-    super( 0, 0, 65, 90, 15, 10, {
+    super( 0, 0, 65, 105, 15, 10, {
       center: modelViewTransform.modelToViewXY( slot.position, 0 ),
       stroke: 'blue',
-      lineWidth: 2,
+      lineWidth: 4,
       lineDash: [ 4, 4 ],
+      fill: 'rgba( 0, 0, 255, 0.2 )', // Light blue fill
 
       // Only shown when the user is dragging a membrane toward it
       visible: false
