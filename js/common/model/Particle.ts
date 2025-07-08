@@ -169,8 +169,8 @@ export default abstract class Particle {
 
     if ( this.type === 'glucose' ) {
 
-      // If absorb feature is enabled, glucose inside the cell will fade out over time.
-      if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && MembraneTransportPreferences.instance.absorbGlucoseProperty.value ) {
+      // If glucose metabolism is enabled, glucose inside the cell will fade out over time.
+      if ( this.position.y < MembraneTransportConstants.MEMBRANE_BOUNDS.minY && MembraneTransportPreferences.instance.glucoseMetabolismProperty.value ) {
         this.opacity -= fadeRateGlucose;
         if ( this.opacity <= 0 ) {
           removeParticle( this as unknown as Solute );

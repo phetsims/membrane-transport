@@ -21,9 +21,9 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     public: true
   },
 
-  // Causes glucose in the intracellular area to be "absorbed" - they will automatically be removed from the sim
+  // Causes glucose in the intracellular area to be metabolized - they will automatically be removed from the sim
   // after a while.
-  absorbGlucose: {
+  glucoseMetabolism: {
     type: 'boolean',
     defaultValue: false,
     public: true

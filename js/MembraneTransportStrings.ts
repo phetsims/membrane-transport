@@ -42,8 +42,8 @@ type StringsType = {
   'removeLigandsStringProperty': LocalizedStringProperty;
   'animateLipidsStringProperty': LocalizedStringProperty;
   'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
-  'glucoseDrainStringProperty': LocalizedStringProperty;
-  'glucoseDrainDescriptionStringProperty': LocalizedStringProperty;
+  'glucoseMetabolismStringProperty': LocalizedStringProperty;
+  'glucoseMetabolismDescriptionStringProperty': LocalizedStringProperty;
   'preferencesDialog': {
     'audio': {
       'sounds': {

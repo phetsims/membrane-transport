@@ -53,8 +53,8 @@ addToMapIfDefined( 'addLigands', 'addLigandsStringProperty' );
 addToMapIfDefined( 'removeLigands', 'removeLigandsStringProperty' );
 addToMapIfDefined( 'animateLipids', 'animateLipidsStringProperty' );
 addToMapIfDefined( 'animateLipidsDescription', 'animateLipidsDescriptionStringProperty' );
-addToMapIfDefined( 'glucoseDrain', 'glucoseDrainStringProperty' );
-addToMapIfDefined( 'glucoseDrainDescription', 'glucoseDrainDescriptionStringProperty' );
+addToMapIfDefined( 'glucoseMetabolism', 'glucoseMetabolismStringProperty' );
+addToMapIfDefined( 'glucoseMetabolismDescription', 'glucoseMetabolismDescriptionStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', 'preferencesDialog.audio.sounds.stereoSoundsStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', 'preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty' );
 addToMapIfDefined( 'soluteConcentrations', 'soluteConcentrationsStringProperty' );
@@ -230,8 +230,8 @@ const MembraneTransportFluent = {
   _comment_5: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"animateLipids"} ),
   animateLipidsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids', _.get( MembraneTransportStrings, 'animateLipidsStringProperty' ) ),
   animateLipidsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipidsDescription', _.get( MembraneTransportStrings, 'animateLipidsDescriptionStringProperty' ) ),
-  glucoseDrainStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrain', _.get( MembraneTransportStrings, 'glucoseDrainStringProperty' ) ),
-  glucoseDrainDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseDrainDescription', _.get( MembraneTransportStrings, 'glucoseDrainDescriptionStringProperty' ) ),
+  glucoseMetabolismStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolism', _.get( MembraneTransportStrings, 'glucoseMetabolismStringProperty' ) ),
+  glucoseMetabolismDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolismDescription', _.get( MembraneTransportStrings, 'glucoseMetabolismDescriptionStringProperty' ) ),
   preferencesDialog: {
     audio: {
       sounds: {

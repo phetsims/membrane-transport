@@ -187,15 +187,15 @@ export default class SoluteBarChartNode extends Node {
       }
     } );
 
-    // Update inside bar width when count changes, but don't show stripe. If absorbing glucose, then it was requested to show the maximum solute count
+    // Update inside bar width when count changes, but don't show stripe. If metabolizing glucose, then it was requested to show the maximum solute count
     // and adjust the bar color and stroke. See https://github.com/phetsims/membrane-transport/issues/187
-    Multilink.multilink( [ insideSoluteCountProperty, MembraneTransportPreferences.instance.absorbGlucoseProperty ], ( soluteCount, absorbGlucose ) => {
-      const glucoseAndAbsorbing = soluteType === 'glucose' && absorbGlucose;
+    Multilink.multilink( [ insideSoluteCountProperty, MembraneTransportPreferences.instance.glucoseMetabolismProperty ], ( soluteCount, glucoseMetabolism ) => {
+      const isMetabolizingGlucose = soluteType === 'glucose' && glucoseMetabolism;
 
-      const countToUse = glucoseAndAbsorbing ? MembraneTransportConstants.MAX_SOLUTE_COUNT : soluteCount;
+      const countToUse = isMetabolizingGlucose ? MembraneTransportConstants.MAX_SOLUTE_COUNT : soluteCount;
       const width = countToWidth( countToUse );
 
-      insideBar.fill = glucoseAndAbsorbing ? MembraneTransportColors.absorbingGlucoseColorProperty : fillColorProperty;
+      insideBar.fill = isMetabolizingGlucose ? MembraneTransportColors.metabolizingGlucoseColorProperty : fillColorProperty;
 
       insideBar.setRectWidth( width );
       insideBar.left = origin.centerX;
