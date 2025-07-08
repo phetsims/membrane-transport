@@ -60,7 +60,7 @@ export default class TransportProteinDragNode extends Node {
 
     // Convert view bounds to model bounds for dragging constraints
     // If the view bounds change while dragging, it's OK to not keep the node in bounds, because the TransportProteinDragNode is
-    // transient and will return to the toolbox when it is dropped anyways.
+    // transient and will return to the toolbox when it is dropped anyway.
     const modelBoundsProperty = new DerivedProperty( [ visibleBoundsProperty ], visibleBounds => {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );

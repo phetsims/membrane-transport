@@ -147,7 +147,7 @@ export default class Phospholipid {
         state.anchorY
       );
 
-      // We'll use two Bezier curves that cover 6 control points total
+      // We'll use two Bézier curves that cover 6 control points total
       // First segment: anchor -> cp0, cp1 -> cp2
       context.bezierCurveTo(
         this.modelViewTransform.modelToViewX( controlPoints[ 0 ].x + this.headOffsetX ),

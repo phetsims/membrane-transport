@@ -1,8 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * ThumbnailNode shows a small rectangular view on macroscopic cell shape, showing that the ObservationWindow is a zoomed-
- * in view of the cell.
+ * ThumbnailNode shows a small rectangular view on macroscopic cell shape, showing that the ObservationWindow is a zoomed-in
+ * view of the cell.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

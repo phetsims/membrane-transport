@@ -55,7 +55,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       parameters: [ { valueType: 'number' } ]
     } );
 
-    // the top half is extracelluar
+    // the top half is extracellular
     const topHalf = new Rectangle( 0, 0, contentWidth, 50, {
       fill: MembraneTransportColors.observationWindowOutsideCellColorProperty
     } );
