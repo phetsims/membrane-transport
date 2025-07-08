@@ -47,7 +47,6 @@ import soluteCrossingOutward004_V5_mp3 from '../../sounds/soluteCrossingOutward0
 import soluteCrossingOutward005_V5_mp3 from '../../sounds/soluteCrossingOutward005_V5_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportPreferences from './MembraneTransportPreferences.js';
-import Particle from './model/Particle.js';
 
 // Taken from CardSounds.ts
 const cardMovementSounds = [
@@ -253,15 +252,6 @@ export default class MembraneTransportSounds {
 
   public static phosphateLockedInToSodiumPotassiumPump(): void {
     mtATPActivateTransporter.play();
-  }
-
-  public static particleBounced( particle: Particle ): void {
-    // too annoying
-  }
-
-  public static gasMoleculeEnteredMembrane( particle: Particle, direction: 'inward' | 'outward' ): void {
-    // collectSound.setPlaybackRate( direction === 'inward' ? 1 : 1.2 );
-    // collectSound.play();
   }
 
   public static proteinReturnedToToolbox(): void {

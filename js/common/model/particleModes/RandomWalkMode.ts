@@ -14,7 +14,6 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
-import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle, { CAPTURE_RADIUS_PROPERTY } from '../Particle.js';
 import LigandGatedChannel from '../proteins/LigandGatedChannel.js';
@@ -133,23 +132,15 @@ export default class RandomWalkMode extends BaseParticleMode {
 
     const direction = this.currentDirection.copy();
 
-    let bounced = false;
-
     // Adjust x-axis collision
     const xAdjustment = RandomWalkMode.adjustAxis( particle.position.x, updatedBounds.minX, updatedBounds.maxX, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.minX, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.maxX, direction.x );
     particle.position.x = xAdjustment.newPos;
     direction.x = xAdjustment.newDir;
-    if ( xAdjustment.bounce ) {
-      bounced = true;
-    }
 
     // Adjust y-axis collision
     const yAdjustment = RandomWalkMode.adjustAxis( particle.position.y, updatedBounds.minY, updatedBounds.maxY, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.minY, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.maxY, direction.y );
     particle.position.y = yAdjustment.newPos;
     direction.y = yAdjustment.newDir;
-    if ( yAdjustment.bounce ) {
-      bounced = true;
-    }
 
     // Update the mode with new direction if it changed
     if ( !direction.equals( this.currentDirection ) ) {
@@ -158,10 +149,6 @@ export default class RandomWalkMode extends BaseParticleMode {
         this.timeUntilNextDirection,
         this.timeElapsedSinceMembraneCrossing
       );
-    }
-
-    if ( bounced ) {
-      MembraneTransportSounds.particleBounced( particle );
     }
   }
 
@@ -215,7 +202,6 @@ export default class RandomWalkMode extends BaseParticleMode {
         const newMode = new PassiveDiffusionMode( outsideOfCell ? 'inward' : 'outward' );
         particle.mode = newMode;
 
-        MembraneTransportSounds.gasMoleculeEnteredMembrane( particle, newMode.direction );
         return true;
       }
 
@@ -307,8 +293,6 @@ export default class RandomWalkMode extends BaseParticleMode {
 
       // Teleport to give the sense that one particle left at once coordinate and another entered at the same time
       particle.position.x = dotRandom.nextDoubleBetween( boundingRegion.minX, boundingRegion.maxX );
-
-      MembraneTransportSounds.particleBounced( particle );
     }
   }
 
