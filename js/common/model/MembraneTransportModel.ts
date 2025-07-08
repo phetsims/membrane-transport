@@ -83,7 +83,7 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
 //      0.5 - half of moves against the gradient are blocked.
 //      1 - All moves against the gradient are blocked.
 const BIAS_THRESHOLD = 0.05;
-const GRADIENT_BIAS_STRENGTH = 0.4;
+const GRADIENT_BIAS_STRENGTH = 0.9;
 
 export default class MembraneTransportModel extends PhetioObject {
 
