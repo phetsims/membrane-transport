@@ -32,7 +32,7 @@ import TransportProteinToolNode from './TransportProteinToolNode.js';
 export default class TransportProteinDragNode extends Node {
   private readonly dragListener: DragListener;
   private readonly positionProperty: Vector2Property;
-  private isPress = 0;
+  private pressCount = 0;
 
   public constructor(
     view: MembraneTransportScreenView,
@@ -208,16 +208,16 @@ export default class TransportProteinDragNode extends Node {
 
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
 
-      if ( newValue !== null && this.isPress === 0 ) {
+      if ( newValue !== null && this.pressCount === 0 ) {
         MembraneTransportSounds.slotHover( newValue );
       }
     } );
   }
 
   public press( event: PressListenerEvent ): void {
-    this.isPress++;
+    this.pressCount++;
     this.dragListener.press( event, this );
-    this.isPress--;
+    this.pressCount--;
   }
 
   public setModelPosition( modelPosition: Vector2 ): void {
