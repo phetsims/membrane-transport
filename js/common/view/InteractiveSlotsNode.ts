@@ -104,7 +104,7 @@ export default class InteractiveSlotsNode extends Node {
     } );
 
     // A focusable Node that contains the accessible content for the interaction.
-    const createTestRectangle = (
+    const createAccessibleRectangle = (
       accessibleNameProperty: TReadOnlyProperty<string>,
       voicingNameResponseProperty: TReadOnlyProperty<string>,
       voicingObjectResponseProperty: TReadOnlyProperty<string> | null,
@@ -200,7 +200,7 @@ export default class InteractiveSlotsNode extends Node {
         nameResponse: nameResponseStringProperty
       } );
 
-      const rect = createTestRectangle(
+      const rect = createAccessibleRectangle(
         accessibleNameProperty,
         nameResponseStringProperty,
         objectResponseStringProperty,
@@ -213,7 +213,7 @@ export default class InteractiveSlotsNode extends Node {
     } );
 
     // Add a rectangle for the off-membrane state
-    const offMembraneRect = createTestRectangle(
+    const offMembraneRect = createAccessibleRectangle(
       MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
       MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
       null,
