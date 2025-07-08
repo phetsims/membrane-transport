@@ -280,6 +280,11 @@ export default class InteractiveSlotsNode extends Node {
           // If the selected index changed, update the focus
           this.updateFocus();
         }
+        else {
+
+          // The user was at the edge, and tried to move further, so play a boundary reached sound
+          MembraneTransportSounds.boundaryReached();
+        }
       }
     } );
     this.addInputListener( selectionKeyboardListener );
