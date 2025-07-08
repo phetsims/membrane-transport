@@ -53,6 +53,7 @@ export default class SoluteControl extends Voicing( Panel ) {
     const accessibleName = side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleName.format( { soluteType: soluteType } ) :
                            MembraneTransportFluent.a11y.soluteControl.outside.accessibleName.format( { soluteType: soluteType } );
 
+    // TODO: Please document why AccessibleDraggableOptions is appropriate here, is this draggable? see https://github.com/phetsims/membrane-transport/issues/269
     const options = optionize4<SoluteControlOptions, SelfOptions, ParentOptions>()( {}, AccessibleDraggableOptions, {
       align: 'center',
       visibleProperty: gatedVisibleProperty,
@@ -89,6 +90,7 @@ export default class SoluteControl extends Voicing( Panel ) {
 
     // The accessibleObjectResponse for the entire control, describing the current value. It describes the amount of solutes of
     // this type on this side of the membrane qualitatively. It is spoken every time the SoluteControl is used.
+    // TODO: Is this a memory leak? It is called many times during the lifetime of the SoluteControl, and allocates new DerivedProperty which links back to model.*countProperties, see https://github.com/phetsims/membrane-transport/issues/269
     const createAccessibleObjectResponse = () => {
       return MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.format( {
 
@@ -173,6 +175,8 @@ export default class SoluteControl extends Voicing( Panel ) {
 
       // TODO: In the previous design, each button had a `firedEmitter` and `enabledProperty` in phet studio.
       //   This seems to hide the visibleProperty, but I do not see an enabledProperty. See https://github.com/phetsims/membrane-transport/issues/269.
+      // TODO: Since we supply our own enabledProperty, `phetioEnabledPropertyInstrumented: true` is ignored. We could instrument those, but I
+      //   don't see that as a necessary and essential feature (unless it was required during the phet-io design?), so I would recommend just removing `phetioEnabledPropertyInstrumented: true` https://github.com/phetsims/membrane-transport/issues/269.
       phetioVisiblePropertyInstrumented: false,
       phetioEnabledPropertyInstrumented: true
     };
@@ -254,6 +258,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       ]
     } );
 
+    // TODO: Why not pass buttonBox directly to super? The extra `Node` layer seems to do nothing. See https://github.com/phetsims/membrane-transport/issues/269
     super( new Node( {
       children: [ buttonBox ]
     } ), options );
@@ -266,6 +271,7 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
 
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
+    // TODO: Does anything need to be done here to support HotKeyData? See https://github.com/phetsims/membrane-transport/issues/269
     const coarseIncrementKeys: OneKeyStroke[] = [ 'arrowRight', 'arrowUp' ];
     const coarseDecrementKeys: OneKeyStroke[] = [ 'arrowLeft', 'arrowDown' ];
     const fineIncrementKeys: OneKeyStroke[] = [ 'shift+arrowRight', 'shift+arrowUp' ];
