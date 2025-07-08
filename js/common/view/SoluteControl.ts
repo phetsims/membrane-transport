@@ -271,7 +271,7 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
 
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
-    // TODO: Does anything need to be done here to support HotKeyData? See https://github.com/phetsims/membrane-transport/issues/269
+    // TODO: Does anything need to be done here to support HotkeyData? See https://github.com/phetsims/membrane-transport/issues/269
     const coarseIncrementKeys: OneKeyStroke[] = [ 'arrowRight', 'arrowUp' ];
     const coarseDecrementKeys: OneKeyStroke[] = [ 'arrowLeft', 'arrowDown' ];
     const fineIncrementKeys: OneKeyStroke[] = [ 'shift+arrowRight', 'shift+arrowUp' ];
