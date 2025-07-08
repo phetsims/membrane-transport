@@ -324,6 +324,7 @@ export default class MembraneTransportSounds {
                  slotIndex === 3 ? cardMovementSoundClips[ 1 ] :
                  slotIndex === 4 ? cardMovementSoundClips[ 3 ] :
                  slotIndex === 5 ? cardMovementSoundClips[ 5 ] :
+                 slotIndex === 6 ? cardMovementSoundClips[ 5 ] :
                  cardMovementSoundClips[ 5 ];
 
     // choose a pitch proportional to the slotIndex, in addition to the natural pitch of the clip

@@ -260,6 +260,9 @@ export default class InteractiveSlotsNode extends Node {
             const toolNode = this.view.getTransportProteinToolNode( this.selectedType );
             if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
               this.selectedIndex = 'offMembrane';
+
+              // Play a sound for moving off the membrane
+              MembraneTransportSounds.slotHover( 7 );
             }
             else {
               // Cannot move off membrane, stay at the rightmost slot
