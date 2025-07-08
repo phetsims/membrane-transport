@@ -15,8 +15,6 @@ import DirectionalMovementMode from './DirectionalMovementMode.js';
 
 export default class PassiveDiffusionMode extends DirectionalMovementMode {
 
-  public readonly slot = null;
-
   public constructor( direction: 'inward' | 'outward' ) {
     super( 'passiveDiffusion', direction );
   }

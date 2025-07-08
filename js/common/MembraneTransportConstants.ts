@@ -24,6 +24,10 @@ import MembraneTransportQueryParameters from './MembraneTransportQueryParameters
 
 export default class MembraneTransportConstants {
 
+  // The typical speed of particles in the simulation. Some particles may use value relative to this,
+  // to move faster or slower. In model units per second.
+  public static readonly TYPICAL_SPEED = 30;
+
   // Size of the observation window in view coordinates
   public static readonly OBSERVATION_WINDOW_WIDTH = 534;
   public static readonly OBSERVATION_WINDOW_HEIGHT = 400;

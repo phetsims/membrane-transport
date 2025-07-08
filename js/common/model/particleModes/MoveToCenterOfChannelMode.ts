@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Particle is moving towards the central opening of a transport protein channel (e.g., leakage or gated ion channel).
+ * The Particle is moving towards the central opening of a transport protein channel (e.g., leakage or gated ion channel).
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -9,6 +9,7 @@
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import Slot from '../Slot.js';
@@ -31,9 +32,8 @@ export default class MoveToCenterOfChannelMode extends BaseParticleMode {
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPositionX = particle.position.x;
     const targetPositionX = this.slot.position;
-    const TYPICAL_SPEED = 30;
 
-    const maxStepSize = TYPICAL_SPEED * dt;
+    const maxStepSize = MembraneTransportConstants.TYPICAL_SPEED * dt;
     particle.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
 
     if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {

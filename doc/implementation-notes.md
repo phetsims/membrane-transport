@@ -51,7 +51,8 @@ via serialization of the container.
 Each Particle has a finite state machine to indicate what mode it is in, such as a random walk, or passing through a
 transport protein. Membrane transport proteins additionally add their own state (often with their own finite state
 machine) to manage their interactions. See js/common/model/Particle.ts and js/common/model/particleModes/ for more
-details.
+details. See js/common/particleModes/BaseParticleMode.ts for the modes and the order that particles transition through
+them.
 
 Solutes can be added via the spinners, and flow in from the top or bottom of the ObservationWindow. Solutes are
 non-interactive. Ligands can be added via a button, and Ligands are interactive, and can be dragged around the canvas

@@ -10,6 +10,7 @@
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import LigandGatedChannel from '../proteins/LigandGatedChannel.js';
@@ -34,8 +35,7 @@ export default class MoveToLigandBindingLocationMode extends BaseParticleMode {
     if ( ligandGatedChannel ) {
       const currentPosition = particle.position;
       const targetPosition = ligandGatedChannel.getBindingPosition();
-      const TYPICAL_SPEED = 30;
-      const maxStepSize = TYPICAL_SPEED * dt;
+      const maxStepSize = MembraneTransportConstants.TYPICAL_SPEED * dt;
 
       particle.position.x += Math.sign( targetPosition.x - currentPosition.x ) * maxStepSize;
       particle.position.y += Math.sign( targetPosition.y - currentPosition.y ) * maxStepSize;

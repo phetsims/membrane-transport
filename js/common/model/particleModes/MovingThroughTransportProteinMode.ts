@@ -36,6 +36,10 @@ export default class MovingThroughTransportProteinMode extends DirectionalMoveme
     };
   }
 
+  /**
+   * Keep the particle close to the center of the transport protein. If the particle moves through SodiumGlucoseCotransporter,
+   * the protein becomes open to the inside.
+   */
   protected handleSpecificBehavior( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const center = this.slot.position + ( this.offset || 0 );
     const maxDistanceFromCenter = 0.8;

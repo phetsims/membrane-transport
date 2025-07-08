@@ -10,6 +10,7 @@
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
@@ -42,9 +43,8 @@ export default class MoveToSodiumGlucoseTransporterMode extends BaseParticleMode
     const targetPosition = this.sodiumGlucoseCotransporter.getSitePosition( this.site );
     const vector = targetPosition.minus( currentPosition );
     const direction = vector.normalized();
-    const TYPICAL_SPEED = 30;
 
-    const maxStepSize = TYPICAL_SPEED * dt;
+    const maxStepSize = MembraneTransportConstants.TYPICAL_SPEED * dt;
     particle.position.x += direction.x * maxStepSize;
     particle.position.y += direction.y * maxStepSize;
 

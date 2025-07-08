@@ -2,6 +2,7 @@
 
 /**
  * Particle is in the initial phase of entering a transport protein channel from either the inside or outside.
+ * Particles are moving toward the entrance of the transport protein.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -36,12 +37,11 @@ export default class EnteringTransportProteinMode extends BaseParticleMode {
     const thresholdY = direction === -1
                        ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - particle.dimension.height / 2
                        : MembraneTransportConstants.MEMBRANE_BOUNDS.minY + particle.dimension.height / 2;
-    const TYPICAL_SPEED = 30;
 
-    particle.position.y += direction * TYPICAL_SPEED * dt;
+    particle.position.y += direction * MembraneTransportConstants.TYPICAL_SPEED * dt;
 
-    if ( ( direction === -1 && particle.position.y <= thresholdY ) ||
-         ( direction === 1 && particle.position.y >= thresholdY ) ) {
+    if ( ( direction === -1 && particle.position.y <= thresholdY ) || // above membrane, moving inward
+         ( direction === 1 && particle.position.y >= thresholdY ) ) { // below membrane, moving outward
       particle.mode = new SheddingCagedWaterMoleculesMode( this.slot );
     }
   }

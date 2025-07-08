@@ -52,9 +52,8 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   public override toStateObject(): IntentionalAny {
-    const baseState = this.baseToStateObject();
     return {
-      type: baseState.type,
+      type: this.type,
       currentDirection: Vector2.Vector2IO.toStateObject( this.currentDirection ),
       timeUntilNextDirection: this.timeUntilNextDirection,
       timeElapsedSinceMembraneCrossing: this.timeElapsedSinceMembraneCrossing

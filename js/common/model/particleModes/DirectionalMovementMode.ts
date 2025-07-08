@@ -9,20 +9,19 @@
  */
 
 import dotRandom from '../../../../../dot/js/dotRandom.js';
-import { boxMullerTransform } from '../../../../../dot/js/util/boxMullerTransform.js';
-import { clamp } from '../../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
+import RandomWalkUtils from '../RandomWalkUtils.js';
 import type Solute from '../Solute.js';
-import BaseParticleMode, { ParticleModeType } from './BaseParticleMode.js';
+import BaseParticleMode from './BaseParticleMode.js';
 
 export default abstract class DirectionalMovementMode extends BaseParticleMode {
 
-  protected constructor( type: ParticleModeType, public readonly direction: 'inward' | 'outward' ) {
+  protected constructor( type: 'movingThroughTransportProtein' | 'passiveDiffusion', public readonly direction: 'inward' | 'outward' ) {
     super( type );
   }
 
@@ -32,13 +31,15 @@ export default abstract class DirectionalMovementMode extends BaseParticleMode {
     this.handleBoundaryBehavior( dt, particle );
   }
 
+  /**
+   * Moves a particle through the membrane, with some randomness to "jiggle" through. But it moves faster vertically to cross the membrane.
+   */
   protected performDirectionalMovement( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const sign = this.direction === 'inward' ? -1 : 1;
     const signBefore = particle.position.y > 0;
-    const TYPICAL_SPEED = 100;
 
-    particle.position.y += sign * ( TYPICAL_SPEED / 5 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
-    particle.position.x += dotRandom.nextDoubleBetween( -2, 2 ) * ( TYPICAL_SPEED / 2 ) * dt;
+    particle.position.y += sign * ( MembraneTransportConstants.TYPICAL_SPEED * 2 / 3 ) * dt * dotRandom.nextDoubleBetween( 0.1, 2 );
+    particle.position.x += dotRandom.nextDoubleBetween( -2, 2 ) * ( MembraneTransportConstants.TYPICAL_SPEED * 5 / 3 ) * dt;
 
     const signAfter = particle.position.y > 0;
 
@@ -50,25 +51,20 @@ export default abstract class DirectionalMovementMode extends BaseParticleMode {
     }
   }
 
-  protected sampleValueHowLongToGoStraight(): number {
-    const result = boxMullerTransform( 0.3, 0.4, dotRandom );
-    return clamp( result, 0.01, 2 );
-  }
-
   protected handleBoundaryBehavior( dt: number, particle: Particle ): void {
     if ( this.direction === 'inward' && ( particle.position.y + particle.dimension.height / 2 ) < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
       const downwardDirection = new Vector2(
         dotRandom.nextDoubleBetween( -1, 1 ),
         dotRandom.nextDoubleBetween( -1, 0 )
       ).normalize();
-      particle.moveInDirection( downwardDirection, this.sampleValueHowLongToGoStraight() );
+      particle.moveInDirection( downwardDirection, RandomWalkUtils.sampleValueHowLongToGoStraight() );
     }
     if ( this.direction === 'outward' && ( particle.position.y - particle.dimension.height / 2 ) > MembraneTransportConstants.MEMBRANE_BOUNDS.maxY ) {
       const upwardDirection = new Vector2(
         dotRandom.nextDoubleBetween( -1, 1 ),
         dotRandom.nextDoubleBetween( 0, 1 )
       ).normalize();
-      particle.moveInDirection( upwardDirection, this.sampleValueHowLongToGoStraight() );
+      particle.moveInDirection( upwardDirection, RandomWalkUtils.sampleValueHowLongToGoStraight() );
     }
   }
 

@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
@@ -35,8 +36,9 @@ export default class LigandBoundMode extends BaseParticleMode {
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): LigandBoundMode {
+    affirm( slot.transportProteinProperty.value instanceof LigandGatedChannel, 'LigandBoundMode expects a LigandGatedChannel' );
     return new LigandBoundMode(
-      slot.transportProteinProperty.value as LigandGatedChannel,
+      slot.transportProteinProperty.value,
       slot
     );
   }

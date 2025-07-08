@@ -9,6 +9,7 @@
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
@@ -34,10 +35,12 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
     };
   }
 
+  // TODO: There are 5 lines of duplication between this and MoveToGlucoseSodiumTransporterMode. Lets refactor it. See https://github.com/phetsims/membrane-transport/issues/315.
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
     const targetPosition = this.sodiumPotassiumPump.getSitePosition( this.site );
 
+    // TODO: We believe that this can be moved to MembraneTransportConstants.getBindingSiteOffset. See https://github.com/phetsims/membrane-transport/issues/318.
     if ( this.site === 'phosphate' ) {
       targetPosition.y -= 17;
       targetPosition.x += 3;
@@ -45,9 +48,8 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
 
     const vector = targetPosition.minus( currentPosition );
     const direction = vector.normalized();
-    const TYPICAL_SPEED = 30;
 
-    const maxStepSize = TYPICAL_SPEED * dt;
+    const maxStepSize = MembraneTransportConstants.TYPICAL_SPEED * dt;
     particle.position.x += direction.x * maxStepSize;
     particle.position.y += direction.y * maxStepSize;
 

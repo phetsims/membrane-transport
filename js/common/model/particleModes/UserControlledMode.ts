@@ -22,7 +22,9 @@ export default class UserControlledMode extends BaseParticleMode {
   }
 
   public override toStateObject(): IntentionalAny {
-    return this.baseToStateObject();
+    return {
+      type: this.type
+    };
   }
 
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
