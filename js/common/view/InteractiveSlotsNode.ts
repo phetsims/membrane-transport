@@ -366,7 +366,9 @@ export default class InteractiveSlotsNode extends Node {
             }
             else {
 
-              // Protein from toolbar replaces existing protein in slot
+              // Protein from toolbar replaces existing protein in slot. Animate the replaced protein back to the toolbox.
+              const replacedProteinNode = view.createFromKeyboard( currentType, selectedSlot, false );
+              returnToolToToolbox( replacedProteinNode );
               releaseReason = 'replace';
             }
           }
@@ -522,7 +524,7 @@ export default class InteractiveSlotsNode extends Node {
   public grab( slot: Slot, type: TransportProteinType, toolNode?: TransportProteinToolNode ): void {
     this.selectedType = type;
     this.selectedIndex = this.slots.indexOf( slot );
-    this.grabbedNode = this.view.createFromKeyboard( type, slot, toolNode );
+    this.grabbedNode = this.view.createFromKeyboard( type, slot, true, toolNode );
 
     // Alert 'grabbed' after so that it will interrupt the focus change read above.
     this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
@@ -564,7 +566,7 @@ export default class InteractiveSlotsNode extends Node {
       responseString = MembraneTransportFluent.a11y.transportProtein.cancelledResponseStringProperty.value;
     }
     else if ( reason === 'replace' ) {
-      MembraneTransportSounds.transportProteinReleased();
+      MembraneTransportSounds.proteinReturnedToToolbox();
       responseString = MembraneTransportFluent.a11y.transportProtein.releasedReplacedResponseStringProperty.value;
     }
 

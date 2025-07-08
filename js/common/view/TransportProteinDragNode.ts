@@ -42,7 +42,9 @@ export default class TransportProteinDragNode extends Node {
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     public readonly type: TransportProteinType,
     // Where this came from, so that during a swap, the other one knows where to go. Or when pressing 'escape', it knows where to return
-    public readonly origin: Slot | TransportProteinToolNode
+    public readonly origin: Slot | TransportProteinToolNode,
+    // whether sound can be played while dragging. Note that when a temporary node is created, it should not play sounds as it animates back to the toolbox.
+    private readonly playSound: boolean
   ) {
     super( {
       tagName: 'p',
@@ -145,6 +147,32 @@ export default class TransportProteinDragNode extends Node {
             this.origin.transportProteinType = otherContents;
             MembraneTransportSounds.transportProteinSwapped();
           }
+          else if ( otherContents ) {
+
+            // A protein from the toolbox is replacing one in a slot. Animate the replaced protein back to its toolbox.
+            MembraneTransportSounds.proteinReturnedToToolbox();
+
+            // Create a temporary node for the replaced protein to animate it back to the toolbox
+            const replacedProteinNode = view.createFromKeyboard( otherContents, closest.slot, false );
+
+            const toolNode = view.getTransportProteinToolNode( otherContents );
+
+            if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
+              const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
+              const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
+
+              const animation = createPositionAnimation(
+                value => replacedProteinNode.setModelPosition( value ),
+                replacedProteinNode.getModelPosition(),
+                modelPoint,
+                () => replacedProteinNode.dispose()
+              );
+              animation.start();
+            }
+            else {
+              replacedProteinNode.dispose();
+            }
+          }
           else {
             MembraneTransportSounds.transportProteinReleased();
           }
@@ -208,7 +236,7 @@ export default class TransportProteinDragNode extends Node {
 
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
 
-      if ( newValue !== null && this.pressCount === 0 ) {
+      if ( newValue !== null && this.pressCount === 0 && this.playSound ) {
         MembraneTransportSounds.slotHover( newValue );
       }
     } );
