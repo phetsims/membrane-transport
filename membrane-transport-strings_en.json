@@ -165,6 +165,9 @@
         "ligands": {
           "value": "2 added ligand types on outside only"
         },
+        "atpReacting": {
+          "value": "ATP reacting to form ADP and phosphate, which regularly fade away on the inside"
+        },
         "membranePotential": {
           "value": "membrane potential of { a11y_membranePotentialValue }"
         }

@@ -86,6 +86,7 @@ type StringsType = {
         'soluteTypesOnInsideStringProperty': LocalizedStringProperty;
         'transportProteinsStringProperty': LocalizedStringProperty;
         'ligandsStringProperty': LocalizedStringProperty;
+        'atpReactingStringProperty': LocalizedStringProperty;
         'membranePotentialStringProperty': LocalizedStringProperty;
       };
       'interactionHintStringProperty': LocalizedStringProperty;

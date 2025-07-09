@@ -105,6 +105,8 @@ export default class MembraneTransportModel extends PhetioObject {
   // True when the model has any solutes inside or outside the membrane.
   public readonly hasAnySolutesProperty = new BooleanProperty( false );
 
+  public readonly hasAnyADPOrPhosphateProperty = new BooleanProperty( false );
+
   public readonly soluteProperty: StringUnionProperty<SoluteControlSolutes>;
 
   public readonly chargesVisibleProperty: Property<boolean>;
@@ -407,6 +409,8 @@ export default class MembraneTransportModel extends PhetioObject {
     this.insideSoluteTypesCountProperty.value = insideNumberOfTypes;
 
     this.hasAnySolutesProperty.value = this.outsideSoluteTypesCountProperty.value > 0 || this.insideSoluteTypesCountProperty.value > 0;
+
+    this.hasAnyADPOrPhosphateProperty.value = this.solutes.some( solute => solute.type === 'adp' || solute.type === 'phosphate' );
   }
 
   /**

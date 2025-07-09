@@ -51,6 +51,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
         visibleProperty: model.areLigandsAddedProperty
       },
       {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.atpReactingStringProperty,
+        visibleProperty: model.hasAnyADPOrPhosphateProperty
+      },
+      {
         stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.membranePotential.createProperty( {
           membranePotential: model.membranePotentialProperty
         } ),
