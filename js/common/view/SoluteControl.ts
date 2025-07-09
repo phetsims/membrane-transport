@@ -11,7 +11,7 @@ import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import { OneKeyStroke } from '../../../../scenery/js/input/KeyDescriptor.js';
@@ -53,13 +53,14 @@ export default class SoluteControl extends Voicing( Panel ) {
     const accessibleName = side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleName.format( { soluteType: soluteType } ) :
                            MembraneTransportFluent.a11y.soluteControl.outside.accessibleName.format( { soluteType: soluteType } );
 
-    // TODO: Please document why AccessibleDraggableOptions is appropriate here, is this draggable? see https://github.com/phetsims/membrane-transport/issues/269
-    const options = optionize4<SoluteControlOptions, SelfOptions, ParentOptions>()( {}, AccessibleDraggableOptions, {
+    // Extends AccessibleInteractiveOptions, which forces the screen reader to give all keyboard events for this custom
+    // interaction.
+    const options = optionize4<SoluteControlOptions, SelfOptions, ParentOptions>()( {}, AccessibleInteractiveOptions, {
       align: 'center',
       visibleProperty: gatedVisibleProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
 
-      // pdom - extends AccessibleDraggableOptions
+      // pdom - extends AccessibleInteractiveOptions
       accessibleRoleDescription: MembraneTransportFluent.a11y.soluteControl.accessibleRoleDescriptionStringProperty,
       accessibleName: accessibleName,
       accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleHelpTextStringProperty :
