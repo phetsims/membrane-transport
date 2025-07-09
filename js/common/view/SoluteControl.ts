@@ -176,12 +176,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       // Individual buttons are not available, the entire control is one stop in the traversal order.
       pdomVisible: false,
 
-      // TODO: In the previous design, each button had a `firedEmitter` and `enabledProperty` in phet studio.
-      //   This seems to hide the visibleProperty, but I do not see an enabledProperty. See https://github.com/phetsims/membrane-transport/issues/269.
-      // TODO: Since we supply our own enabledProperty, `phetioEnabledPropertyInstrumented: true` is ignored. We could instrument those, but I
-      //   don't see that as a necessary and essential feature (unless it was required during the phet-io design?), so I would recommend just removing `phetioEnabledPropertyInstrumented: true` https://github.com/phetsims/membrane-transport/issues/269.
-      phetioVisiblePropertyInstrumented: false,
-      phetioEnabledPropertyInstrumented: true
+      phetioVisiblePropertyInstrumented: false
     };
 
     const coarseButtonOptions = {
