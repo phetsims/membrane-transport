@@ -456,22 +456,22 @@
       "accessibleHeading": {
         "value": "Cell Membrane"
       },
-      "accessibleParagraphNoSolutesProteinsHidden": {
+      "accessibleHelpTextNoSolutesProteinsHidden": {
         "value": "Look for Solute Controls to add and remove solute types."
       },
-      "accessibleParagraphWithSolutesProteinsHidden": {
+      "accessibleHelpTextWithSolutesProteinsHidden": {
         "value": "Observe crossing solutes. Look for Solute Controls to add and remove solute types."
       },
-      "accessibleParagraphNoSolutesOrProteins": {
+      "accessibleHelpTextNoSolutesOrProteins": {
         "value": "Membrane potential is { a11y_membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add."
       },
-      "accessibleParagraphWithSolutesNoProteins": {
+      "accessibleHelpTextWithSolutesNoProteins": {
         "value": "Membrane potential is { a11y_membranePotentialValue }. No proteins in membrane. Observe crossing solutes. Look for transport proteins to add."
       },
-      "accessibleParagraphWithProteinsNoSolutes": {
-        "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Look for Solute Controls to add or remove solutes."
+      "accessibleHelpTextWithProteinsNoSolutes": {
+        "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Look for Solute Controls to add or remove solutes types."
       },
-      "accessibleParagraphWithSolutesAndProteins": {
+      "accessibleHelpTextWithSolutesAndProteins": {
         "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Observe crossing solutes and protein changes, grab protein to re-order or delete. Look for transport proteins to add."
       }
     },

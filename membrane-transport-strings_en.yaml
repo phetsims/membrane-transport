@@ -334,33 +334,33 @@ a11y:
     removedAccessibleContextResponse: Ligands removed.
 
   cellMembrane:
-    accessibleHeading:                            Cell Membrane
+    accessibleHeading:                           Cell Membrane
 
     # A description of the cell membrane when there are no solutes, and you cannot add any proteins.
-    accessibleParagraphNoSolutesProteinsHidden:   Look for Solute Controls to add and remove solute types.
+    accessibleHelpTextNoSolutesProteinsHidden:   Look for Solute Controls to add and remove solute types.
 
     # A description of the cell membrane when there ARE solutes, but you cannot add any proteins.
-    accessibleParagraphWithSolutesProteinsHidden: Observe crossing solutes. Look for Solute Controls to add and remove solute types.
+    accessibleHelpTextWithSolutesProteinsHidden: Observe crossing solutes. Look for Solute Controls to add and remove solute types.
 
     # A description of the cell membrane when there are no solutes and no proteins yet.
-    accessibleParagraphNoSolutesOrProteins:       Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add.
+    accessibleHelpTextNoSolutesOrProteins:       Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add.
 
     # A description of the cell membrane when there are solutes but no proteins yet.
-    accessibleParagraphWithSolutesNoProteins:     Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Observe crossing solutes. Look for transport proteins to add.
+    accessibleHelpTextWithSolutesNoProteins:     Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Observe crossing solutes. Look for transport proteins to add.
 
     # A description of the cell membrane when there are no solutes but there are proteins.
-    accessibleParagraphWithProteinsNoSolutes:     |-
-                                                  Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
-                                                  [one] { $typeCount } type
-                                                  *[other] { $typeCount } types
-                                                  }. Look for Solute Controls to add or remove solutes types.
+    accessibleHelpTextWithProteinsNoSolutes:     |-
+                                                 Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
+                                                 [one] { $typeCount } type
+                                                 *[other] { $typeCount } types
+                                                 }. Look for Solute Controls to add or remove solutes types.
 
     # A description of the cell membrane when there are solutes and proteins.
-    accessibleParagraphWithSolutesAndProteins:    |-
-                                                  Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
-                                                  [one] { $typeCount } type
-                                                  *[other] { $typeCount } types
-                                                  }. Observe crossing solutes and protein changes, grab protein to re-order or delete. Look for transport proteins to add.
+    accessibleHelpTextWithSolutesAndProteins:    |-
+                                                 Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
+                                                 [one] { $typeCount } type
+                                                 *[other] { $typeCount } types
+                                                 }. Observe crossing solutes and protein changes, grab protein to re-order or delete. Look for transport proteins to add.
 
   transportProtein:
     grabbedResponse:          Grabbed.

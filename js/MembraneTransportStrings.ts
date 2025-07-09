@@ -217,12 +217,12 @@ type StringsType = {
     };
     'cellMembrane': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
-      'accessibleParagraphNoSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
-      'accessibleParagraphWithSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
-      'accessibleParagraphNoSolutesOrProteinsStringProperty': LocalizedStringProperty;
-      'accessibleParagraphWithSolutesNoProteinsStringProperty': LocalizedStringProperty;
-      'accessibleParagraphWithProteinsNoSolutesStringProperty': LocalizedStringProperty;
-      'accessibleParagraphWithSolutesAndProteinsStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextNoSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextWithSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextNoSolutesOrProteinsStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextWithSolutesNoProteinsStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextWithProteinsNoSolutesStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextWithSolutesAndProteinsStringProperty': LocalizedStringProperty;
     };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;

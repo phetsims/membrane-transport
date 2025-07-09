@@ -12,6 +12,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
@@ -68,27 +69,27 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
       // An accessible paragraph that describes the membrane potential, number of protein types, and hints to interact when there
       // are no solutes or proteins. It includes string Properties so that it can be localized. Dependency Properties that change
-      // strings may not be included in the DerivedProperty since changes to string content will already change the accessibleParagraph.
-      accessibleParagraph: new DerivedProperty( [
+      // strings may not be included in the DerivedProperty since changes to string content will already change the accessibleHelpText.
+      accessibleHelpText: new DerivedProperty( [
 
         // model Properties
         model.hasAnySolutesProperty,
         model.transportProteinCountProperty,
 
         // string Properties
-        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphNoSolutesProteinsHiddenStringProperty,
-        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithSolutesProteinsHiddenStringProperty,
-        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphNoSolutesOrProteins.createProperty( {
+        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesProteinsHiddenStringProperty,
+        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesProteinsHiddenStringProperty,
+        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesOrProteins.createProperty( {
           membranePotential: model.membranePotentialProperty
         } ),
-        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithSolutesNoProteins.createProperty( {
+        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesNoProteins.createProperty( {
           membranePotential: model.membranePotentialProperty
         } ),
-        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithProteinsNoSolutes.createProperty( {
+        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithProteinsNoSolutes.createProperty( {
           membranePotential: model.membranePotentialProperty,
           typeCount: model.transportProteinTypesCountProperty
         } ),
-        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithSolutesAndProteins.createProperty( {
+        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesAndProteins.createProperty( {
           membranePotential: model.membranePotentialProperty,
           typeCount: model.transportProteinTypesCountProperty
         } )
@@ -121,6 +122,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           return withSolutesAndProteinsString;
         }
       } ),
+      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
       groupFocusHighlight: true,
       focusable: false
     } );
