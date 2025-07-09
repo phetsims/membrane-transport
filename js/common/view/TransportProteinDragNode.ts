@@ -153,7 +153,7 @@ export default class TransportProteinDragNode extends Node {
             MembraneTransportSounds.proteinReturnedToToolbox();
 
             // Create a temporary node for the replaced protein to animate it back to the toolbox
-            const replacedProteinNode = view.createFromKeyboard( otherContents, closest.slot, false );
+            const replacedProteinNode = view.createTemporaryProteinNode( otherContents, closest.slot, false );
 
             const toolNode = view.getTransportProteinToolNode( otherContents );
 

@@ -375,10 +375,10 @@ export default class MembraneTransportScreenView extends ScreenView {
   }
 
   /**
-   * Called when the user presses a membrane protein in the toolbox to create one via keyboard.
-   * This just creates a drag node Icon and adds it to the view. Also used for animating a replaced protein back to the toolbox (even from mouse)
+   * Creates a temporary transport protein drag node and adds it to the view. Useful for animations and keyboard input that
+   * do not require a forwarded Pointer press.
    */
-  public createFromKeyboard( type: TransportProteinType, slot: Slot, playSound: boolean, toolNode?: TransportProteinToolNode ): TransportProteinDragNode {
+  public createTemporaryProteinNode( type: TransportProteinType, slot: Slot, playSound: boolean, toolNode?: TransportProteinToolNode ): TransportProteinDragNode {
 
     // Move over the first available slot
     const slotX = slot.position;
