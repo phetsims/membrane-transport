@@ -86,7 +86,6 @@ type StringsType = {
         'soluteTypesOnInsideStringProperty': LocalizedStringProperty;
         'transportProteinsStringProperty': LocalizedStringProperty;
         'ligandsStringProperty': LocalizedStringProperty;
-        'membranePotentialValueStringProperty': LocalizedStringProperty;
         'membranePotentialStringProperty': LocalizedStringProperty;
       };
       'interactionHintStringProperty': LocalizedStringProperty;
@@ -170,6 +169,7 @@ type StringsType = {
       'grabbedResponseWithHintStringProperty': LocalizedStringProperty;
       'grabbedResponseWithEmptyMembraneHintStringProperty': LocalizedStringProperty;
     };
+    'membranePotentialValueStringProperty': LocalizedStringProperty;
     'soluteAccessibleNames': {
       'oxygenStringProperty': LocalizedStringProperty;
       'carbonDioxideStringProperty': LocalizedStringProperty;
@@ -217,6 +217,12 @@ type StringsType = {
     };
     'cellMembrane': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
+      'accessibleParagraphNoSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
+      'accessibleParagraphWithSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
+      'accessibleParagraphNoSolutesOrProteinsStringProperty': LocalizedStringProperty;
+      'accessibleParagraphWithSolutesNoProteinsStringProperty': LocalizedStringProperty;
+      'accessibleParagraphWithProteinsNoSolutesStringProperty': LocalizedStringProperty;
+      'accessibleParagraphWithSolutesAndProteinsStringProperty': LocalizedStringProperty;
     };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;

@@ -20,6 +20,7 @@ import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import { getFeatureSetHasProteins } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
@@ -64,6 +65,62 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       tagName: 'div',
 
       accessibleHeading: MembraneTransportFluent.a11y.cellMembrane.accessibleHeadingStringProperty,
+
+      // An accessible paragraph that describes the membrane potential, number of protein types, and hints to interact when there
+      // are no solutes or proteins. It includes string Properties so that it can be localized. Dependency Properties that change
+      // strings may not be included in the DerivedProperty since changes to string content will already change the accessibleParagraph.
+      accessibleParagraph: new DerivedProperty( [
+
+        // model Properties
+        model.hasAnySolutesProperty,
+        model.transportProteinCountProperty,
+
+        // string Properties
+        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphNoSolutesProteinsHiddenStringProperty,
+        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithSolutesProteinsHiddenStringProperty,
+        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphNoSolutesOrProteins.createProperty( {
+          membranePotential: model.membranePotentialProperty
+        } ),
+        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithSolutesNoProteins.createProperty( {
+          membranePotential: model.membranePotentialProperty
+        } ),
+        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithProteinsNoSolutes.createProperty( {
+          membranePotential: model.membranePotentialProperty,
+          typeCount: model.transportProteinTypesCountProperty
+        } ),
+        MembraneTransportFluent.a11y.cellMembrane.accessibleParagraphWithSolutesAndProteins.createProperty( {
+          membranePotential: model.membranePotentialProperty,
+          typeCount: model.transportProteinTypesCountProperty
+        } )
+      ], (
+        hasAnySolutes,
+        transportProteinCount,
+        noSolutesProteinsHiddenString,
+        withSolutesProteinsHiddenString,
+        noSolutesOrProteinsString,
+        withSolutesNoProteinsString,
+        withProteinsNoSolutesString,
+        withSolutesAndProteinsString
+      ) => {
+        if ( !getFeatureSetHasProteins( model.featureSet ) && !hasAnySolutes ) {
+          return noSolutesProteinsHiddenString;
+        }
+        else if ( !getFeatureSetHasProteins( model.featureSet ) && hasAnySolutes ) {
+          return withSolutesProteinsHiddenString;
+        }
+        else if ( !hasAnySolutes && transportProteinCount === 0 ) {
+          return noSolutesOrProteinsString;
+        }
+        else if ( hasAnySolutes && transportProteinCount === 0 ) {
+          return withSolutesNoProteinsString;
+        }
+        else if ( transportProteinCount > 0 && !hasAnySolutes ) {
+          return withProteinsNoSolutesString;
+        }
+        else {
+          return withSolutesAndProteinsString;
+        }
+      } ),
       groupFocusHighlight: true,
       focusable: false
     } );

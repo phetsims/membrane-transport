@@ -39,3 +39,7 @@ export const getFeatureSetHasVoltages = ( featureSet: MembraneTransportFeatureSe
 export const getFeatureSetHasLigands = ( featureSet: MembraneTransportFeatureSet ): boolean => {
   return featureSet === 'facilitatedDiffusion' || featureSet === 'playground';
 };
+
+export const getFeatureSetHasProteins = ( featureSet: MembraneTransportFeatureSet ): boolean => {
+  return featureSet !== 'simpleDiffusion';
+};

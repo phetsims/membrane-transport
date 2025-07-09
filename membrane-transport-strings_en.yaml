@@ -78,35 +78,29 @@ a11y:
       screen3:     "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.proteins } { a11y.screenSummary.playArea.barCharts }"
     controlArea:                          You can pause action or slow it down to hear more details, add or remove sounds and highlights that enhance solute crossings, and you can reset everything to start over.
     currentDetails:
-      leadingParagraph:       "Right now, zoomed-in cross section of cell has:"
-      noAddedSolutes:         no added solutes
-      soluteTypesOnOutside:   |-
-                              { $count ->
-                                [one] { $count } solute type on outside
-                               *[other] { $count } solute types on outside
-                              }
-      soluteTypesOnInside:    |-
-                              { $count ->
-                                [one] { $count } solute type on inside
-                               *[other] { $count } solute types on inside
-                              }
-      transportProteins:      |-
-                              { $proteinCount ->
-                                [one] { $proteinCount} transport protein
-                                *[other] { $proteinCount} transport proteins
-                              } of { $proteinTypeCount ->
-                                [one] { $proteinTypeCount } type
-                               *[other] { $proteinTypeCount} types
-                              }, in membrane
+      leadingParagraph:     "Right now, zoomed-in cross section of cell has:"
+      noAddedSolutes:       no added solutes
+      soluteTypesOnOutside: |-
+                            { $count ->
+                              [one] { $count } solute type on outside
+                             *[other] { $count } solute types on outside
+                            }
+      soluteTypesOnInside:  |-
+                            { $count ->
+                              [one] { $count } solute type on inside
+                             *[other] { $count } solute types on inside
+                            }
+      transportProteins:    |-
+                            { $proteinCount ->
+                              [one] { $proteinCount} transport protein
+                              *[other] { $proteinCount} transport proteins
+                            } of { $proteinTypeCount ->
+                              [one] { $proteinTypeCount } type
+                             *[other] { $proteinTypeCount} types
+                            }, in membrane
 
-      ligands:                2 added ligand types on outside only
-      membranePotentialValue: |-
-                              { $membranePotential ->
-                                [-70] negative 70
-                                [-50] negative 50
-                                *[30] positive 30
-                              } millivolts
-      membranePotential:      "membrane potential of { a11y.screenSummary.currentDetails.membranePotentialValue }"
+      ligands:              2 added ligand types on outside only
+      membranePotential:    "membrane potential of { a11y.membranePotentialValue }"
     interactionHint:                      Add or remove solute to outside or inside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins.
   soluteControls:
@@ -198,6 +192,15 @@ a11y:
     grabbedResponse:                             Grabbed. Outside, { $proteinCount } Proteins in Membrane.
     grabbedResponseWithHint:                     "{ a11y.ligandNode.grabbedResponse } Move ligand with A or D keys. Space to release."
     grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Space to release. Add transport proteins."
+
+
+  # The membrane potential value, used in various places.
+  membranePotentialValue: |-
+                          { $membranePotential ->
+                            [-70] negative 70
+                            [-50] negative 50
+                            *[30] positive 30
+                          } millivolts
   
   # Accessible names for solute radio buttons
   soluteAccessibleNames:
@@ -209,37 +212,37 @@ a11y:
     atp:           Adenosine Triphosphate, ATP, complex, large
 
   # Names for the solute type. Reused in various places.
-  solute:            |-
-                     { $soluteType ->
-                       [oxygen]        oxygen molecules
-                       [carbonDioxide] carbon dioxide molecules
-                       [sodiumIon]     sodium ions
-                       [potassiumIon]  potassium ions
-                       [glucose]       glucose molecules
-                      *[atp]           ATP molecules
-                     }
+  solute:                 |-
+                          { $soluteType ->
+                            [oxygen]        oxygen molecules
+                            [carbonDioxide] carbon dioxide molecules
+                            [sodiumIon]     sodium ions
+                            [potassiumIon]  potassium ions
+                            [glucose]       glucose molecules
+                           *[atp]           ATP molecules
+                          }
 
   # Capitalized names for the solute type. Reused in various places.
-  soluteCapitalized: |-
-                     { $soluteType ->
-                       [oxygen]        Oxygen Molecules
-                       [carbonDioxide] Carbon Dioxide molecules
-                       [sodiumIon]     Sodium Ions
-                       [potassiumIon]  Potassium Ions
-                       [glucose]       Glucose Molecules
-                      *[atp]           Atp Molecules
-                     }
+  soluteCapitalized:      |-
+                          { $soluteType ->
+                            [oxygen]        Oxygen Molecules
+                            [carbonDioxide] Carbon Dioxide molecules
+                            [sodiumIon]     Sodium Ions
+                            [potassiumIon]  Potassium Ions
+                            [glucose]       Glucose Molecules
+                           *[atp]           Atp Molecules
+                          }
 
   # Brevity is the soul of wit, so we use these brief names in various places.
-  soluteBrief:       |-
-                     { $soluteType ->
-                       [oxygen]        Oxygen
-                       [carbonDioxide] Carbon Dioxide
-                       [sodiumIon]     Sodium
-                       [potassiumIon]  Potassium
-                       [glucose]       Glucose
-                      *[atp]           Atp
-                     }
+  soluteBrief:            |-
+                          { $soluteType ->
+                            [oxygen]        Oxygen
+                            [carbonDioxide] Carbon Dioxide
+                            [sodiumIon]     Sodium
+                            [potassiumIon]  Potassium
+                            [glucose]       Glucose
+                           *[atp]           Atp
+                          }
 
   soluteControl:
     outside:
@@ -331,7 +334,33 @@ a11y:
     removedAccessibleContextResponse: Ligands removed.
 
   cellMembrane:
-    accessibleHeading: Cell Membrane
+    accessibleHeading:                            Cell Membrane
+
+    # A description of the cell membrane when there are no solutes, and you cannot add any proteins.
+    accessibleParagraphNoSolutesProteinsHidden:   Look for Solute Controls to add and remove solute types.
+
+    # A description of the cell membrane when there ARE solutes, but you cannot add any proteins.
+    accessibleParagraphWithSolutesProteinsHidden: Observe crossing solutes. Look for Solute Controls to add and remove solute types.
+
+    # A description of the cell membrane when there are no solutes and no proteins yet.
+    accessibleParagraphNoSolutesOrProteins:       Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add.
+
+    # A description of the cell membrane when there are solutes but no proteins yet.
+    accessibleParagraphWithSolutesNoProteins:     Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Observe crossing solutes. Look for transport proteins to add.
+
+    # A description of the cell membrane when there are no solutes but there are proteins.
+    accessibleParagraphWithProteinsNoSolutes:     |-
+                                                  Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
+                                                  [one] { $typeCount } type
+                                                  *[other] { $typeCount } types
+                                                  }. Look for Solute Controls to add or remove solutes types.
+
+    # A description of the cell membrane when there are solutes and proteins.
+    accessibleParagraphWithSolutesAndProteins:    |-
+                                                  Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
+                                                  [one] { $typeCount } type
+                                                  *[other] { $typeCount } types
+                                                  }. Observe crossing solutes and protein changes, grab protein to re-order or delete. Look for transport proteins to add.
 
   transportProtein:
     grabbedResponse:          Grabbed.
