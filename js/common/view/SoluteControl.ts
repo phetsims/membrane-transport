@@ -8,16 +8,16 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
-import { OneKeyStroke } from '../../../../scenery/js/input/KeyDescriptor.js';
+import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
 import ArrowButton, { ArrowButtonOptions } from '../../../../sun/js/buttons/ArrowButton.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
@@ -256,10 +256,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       ]
     } );
 
-    // TODO: Why not pass buttonBox directly to super? The extra `Node` layer seems to do nothing. See https://github.com/phetsims/membrane-transport/issues/269
-    super( new Node( {
-      children: [ buttonBox ]
-    } ), options );
+    super( buttonBox, options );
 
     // Speak the object response describing the "value" of the control when it is focused.
     this.focusedProperty.link( focused => {
@@ -269,30 +266,24 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
 
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
-    // TODO: Does anything need to be done here to support HotkeyData? See https://github.com/phetsims/membrane-transport/issues/269
-    const coarseIncrementKeys: OneKeyStroke[] = [ 'arrowRight', 'arrowUp' ];
-    const coarseDecrementKeys: OneKeyStroke[] = [ 'arrowLeft', 'arrowDown' ];
-    const fineIncrementKeys: OneKeyStroke[] = [ 'shift+arrowRight', 'shift+arrowUp' ];
-    const fineDecrementKeys: OneKeyStroke[] = [ 'shift+arrowLeft', 'shift+arrowDown' ];
-
     const keyboardListener = new KeyboardListener( {
-      keys: [
-        ...coarseIncrementKeys,
-        ...coarseDecrementKeys,
-        ...fineIncrementKeys,
-        ...fineDecrementKeys
-      ],
+      keyStringProperties: HotkeyData.combineKeyStringProperties( [
+        SoluteControl.COARSE_INCREMENT_HOTKEY_DATA,
+        SoluteControl.COARSE_DECREMENT_HOTKEY_DATA,
+        SoluteControl.FINE_INCREMENT_HOTKEY_DATA,
+        SoluteControl.FINE_DECREMENT_HOTKEY_DATA
+      ] ),
       fire: ( event, keysPressed, listener ) => {
-        if ( coarseIncrementKeys.includes( keysPressed ) ) {
+        if ( SoluteControl.COARSE_INCREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
           incrementCoarseButton.pdomClick();
         }
-        else if ( coarseDecrementKeys.includes( keysPressed ) ) {
+        else if ( SoluteControl.COARSE_DECREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
           decrementCoarseButton.pdomClick();
         }
-        else if ( fineIncrementKeys.includes( keysPressed ) ) {
+        else if ( SoluteControl.FINE_INCREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
           incrementFineButton.pdomClick();
         }
-        else if ( fineDecrementKeys.includes( keysPressed ) ) {
+        else if ( SoluteControl.FINE_DECREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
           decrementFineButton.pdomClick();
         }
         else {
@@ -305,6 +296,27 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
     this.addInputListener( keyboardListener );
   }
+
+  private static readonly COARSE_INCREMENT_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [ new Property( 'arrowRight' ), new Property( 'arrowUp' ) ],
+    repoName: membraneTransport.name,
+    binderName: 'SoluteControl coarse increment'
+  } );
+  private static readonly COARSE_DECREMENT_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [ new Property( 'arrowLeft' ), new Property( 'arrowDown' ) ],
+    repoName: membraneTransport.name,
+    binderName: 'SoluteControl coarse decrement'
+  } );
+  private static readonly FINE_INCREMENT_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [ new Property( 'shift+arrowRight' ), new Property( 'shift+arrowUp' ) ],
+    repoName: membraneTransport.name,
+    binderName: 'SoluteControl fine increment'
+  } );
+  private static readonly FINE_DECREMENT_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [ new Property( 'shift+arrowLeft' ), new Property( 'shift+arrowDown' ) ],
+    repoName: membraneTransport.name,
+    binderName: 'SoluteControl fine decrement'
+  } );
 }
 
 membraneTransport.register( 'SoluteControl', SoluteControl );
