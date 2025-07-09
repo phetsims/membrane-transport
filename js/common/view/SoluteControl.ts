@@ -89,26 +89,28 @@ export default class SoluteControl extends Voicing( Panel ) {
     const decrementEnabledProperty = new DerivedProperty( [ sideCountProperty ], sideCount => sideCount > 0 );
     const incrementEnabledProperty = new DerivedProperty( [ totalCountProperty ], totalCount => totalCount < MembraneTransportConstants.MAX_SOLUTE_COUNT );
 
+    // A qualitative description of the amount of solutes.
+    const amountProperty = new DerivedProperty( [ sideCountProperty ], count => {
+      const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
+      return count === 0 ? 'none' :
+             count <= 3 ? 'few' :
+             countAsFraction <= 0.10 ? 'some' :
+             countAsFraction <= 0.25 ? 'smallAmount' :
+             countAsFraction <= 0.40 ? 'several' :
+             countAsFraction <= 0.60 ? 'many' :
+             countAsFraction <= 0.80 ? 'largeAmount' :
+             countAsFraction < 1 ? 'hugeAmount' :
+             'maxAmount';
+    } );
+
     // The accessibleObjectResponse for the entire control, describing the current value. It describes the amount of solutes of
     // this type on this side of the membrane qualitatively. It is spoken every time the SoluteControl is used.
-    // TODO: Is this a memory leak? It is called many times during the lifetime of the SoluteControl, and allocates new DerivedProperty which links back to model.*countProperties, see https://github.com/phetsims/membrane-transport/issues/269
     const createAccessibleObjectResponse = () => {
       return MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.format( {
 
         // Qualitative descriptions for the amount of a solute, as described in
         // https://github.com/phetsims/membrane-transport/issues/242
-        amount: new DerivedProperty( [ sideCountProperty ], count => {
-          const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
-          return count === 0 ? 'none' :
-                 count <= 3 ? 'few' :
-                 countAsFraction <= 0.10 ? 'some' :
-                 countAsFraction <= 0.25 ? 'smallAmount' :
-                 countAsFraction <= 0.40 ? 'several' :
-                 countAsFraction <= 0.60 ? 'many' :
-                 countAsFraction <= 0.80 ? 'largeAmount' :
-                 countAsFraction < 1 ? 'hugeAmount' :
-                 'maxAmount';
-        } ),
+        amount: amountProperty,
         soluteType: model.soluteProperty
       } );
     };
