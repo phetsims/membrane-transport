@@ -32,7 +32,7 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import createPositionAnimation from './createPositionAnimation.js';
+import animateProteinReturn from './animateProteinReturn.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
@@ -149,17 +149,7 @@ export default class InteractiveSlotsNode extends Node {
       if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
         const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
         const modelPoint = view.screenViewModelViewTransform.viewToModelPosition( viewPoint );
-
-        const animation = createPositionAnimation(
-          value => grabbedNode.setModelPosition( value ),
-          grabbedNode.getModelPosition(),
-          modelPoint,
-          () => {
-            grabbedNode.dispose();
-          }
-        );
-
-        animation.start();
+        animateProteinReturn( grabbedNode, modelPoint );
       }
       else {
 

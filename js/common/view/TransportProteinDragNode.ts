@@ -23,7 +23,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import createPositionAnimation from './createPositionAnimation.js';
+import animateProteinReturn from './animateProteinReturn.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindow from './ObservationWindow.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
@@ -160,14 +160,7 @@ export default class TransportProteinDragNode extends Node {
             if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
               const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
               const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
-
-              const animation = createPositionAnimation(
-                value => replacedProteinNode.setModelPosition( value ),
-                replacedProteinNode.getModelPosition(),
-                modelPoint,
-                () => replacedProteinNode.dispose()
-              );
-              animation.start();
+              animateProteinReturn( replacedProteinNode, modelPoint );
             }
             else {
               replacedProteinNode.dispose();
@@ -196,13 +189,9 @@ export default class TransportProteinDragNode extends Node {
             const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
             const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-            const animation = createPositionAnimation( value => positionProperty.set( value ), positionProperty.value, modelPoint, () => {
-              this.visible = false;
+            animateProteinReturn( this, modelPoint, () => {
               modelBoundsProperty.dispose();
-              this.dispose();
             } );
-
-            animation.start();
 
             MembraneTransportSounds.proteinReturnedToToolbox();
           }
