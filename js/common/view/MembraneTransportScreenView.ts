@@ -22,22 +22,23 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
+import cell_svg from '../../../images/cell_svg.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
-import MacroCellNode from './MacroCellNode.js';
 import MembranePotentialDescriber from './MembranePotentialDescriber.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -87,9 +88,6 @@ export default class MembraneTransportScreenView extends ScreenView {
       MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.width / MembraneTransportConstants.MODEL_WIDTH
     );
 
-    const macroCellNode = new MacroCellNode();
-    this.addChild( macroCellNode );
-
     this.observationWindow = new ObservationWindow( model, this, MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM, MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS, options.tandem.createTandem( 'observationWindow' ) );
     this.stepEmitter.addListener( dt => this.observationWindow.step( dt ) );
     this.resetEmitter.addListener( () => this.observationWindow.reset() );
@@ -99,7 +97,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.observationWindow.x = this.layoutBounds.centerX - MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH / 2;
     this.observationWindow.y = MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN;
 
-    this.addChild( new ThumbnailNode( macroCellNode.thumbnailCenterX, macroCellNode.thumbnailCenterY, this.observationWindow.bounds ) );
     this.addChild( this.observationWindow );
 
     const resetAllButton = new ResetAllButton( {
@@ -279,6 +276,18 @@ export default class MembraneTransportScreenView extends ScreenView {
     soluteControlsNode.addChild( outsideSoluteControlNode );
     soluteControlsNode.addChild( insideSoluteControlNode );
 
+    const cellNode = new Image( cell_svg, {
+      maxWidth: 120,
+      top: this.observationWindow.centerY,
+      centerX: soluteControlsNode.centerX + 15
+    } );
+    this.addChild( cellNode );
+
+    this.addChild( new ThumbnailNode( cellNode.centerX - 3, cellNode.top + 1.5, this.observationWindow.bounds ) );
+
+    // In front of the ThumbnailNode, so that it is not obscured by the thumbnail.
+    soluteControlsNode.moveToFront();
+
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
       const transportProteinPanel = new TransportProteinPanel( model, options.tandem.createTandem( 'transportProteinPanel' ), this );
@@ -317,7 +326,6 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );
-      macroCellNode.moveToFront();
     }
 
     // Toggle the capture radius
