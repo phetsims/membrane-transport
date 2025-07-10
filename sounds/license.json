@@ -167,7 +167,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossing001.mp3": {
+  "soluteCrossingGeneric.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -175,7 +175,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossing002.mp3": {
+  "soluteCrossingPotassium.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -183,7 +183,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossing003.mp3": {
+  "soluteCrossingSodium.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -191,7 +191,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossing004_V5.mp3": {
+  "soluteCrossingCarbonDioxide.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -199,7 +199,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossing005_V5.mp3": {
+  "soluteCrossingOxygen.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -207,7 +207,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossingOutward004_V5.mp3": {
+  "soluteCrossingCarbonDioxideOutward.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -215,7 +215,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "soluteCrossingOutward005_V5.mp3": {
+  "soluteCrossingOxygenOutward.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
