@@ -14,12 +14,14 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
-const textOptions = { fontSize: 13, maxWidth: 200 };
 const panelOptions = { cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS, stroke: null, fill: Color.WHITE.withAlpha( 0.4 ) };
 
 export default class InsideOutsideLabel extends Panel {
-  public constructor( side: 'inside' | 'outside', options?: LayoutNodeOptions ) {
-    super( new Text( side === 'outside' ? MembraneTransportFluent.outsideStringProperty : MembraneTransportFluent.insideStringProperty, textOptions ), panelOptions );
+  public constructor( side: 'inside' | 'outside', textMaxWidth: number, options?: LayoutNodeOptions ) {
+    super( new Text( side === 'outside' ? MembraneTransportFluent.outsideStringProperty : MembraneTransportFluent.insideStringProperty, {
+      fontSize: 13,
+      maxWidth: textMaxWidth
+    } ), panelOptions );
 
     options && this.mutate( options );
   }

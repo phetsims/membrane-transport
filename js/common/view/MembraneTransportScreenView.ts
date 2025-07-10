@@ -130,9 +130,10 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.addChild( timeControlNode );
 
+    const CHECKBOX_TEXT_MAX_WIDTH = 120;
     const crossingHighlightsCheckbox = new Checkbox( this.model.crossingHighlightsEnabledProperty, new Text( MembraneTransportFluent.crossingHighlightsStringProperty, {
       font: MembraneTransportConstants.FONT,
-      maxWidth: 160
+      maxWidth: CHECKBOX_TEXT_MAX_WIDTH
     } ), {
       touchAreaYDilation: 5,
       touchAreaXDilation: 5,
@@ -144,7 +145,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.crossingSoundsStringProperty, {
       font: MembraneTransportConstants.FONT,
-      maxWidth: 160
+      maxWidth: CHECKBOX_TEXT_MAX_WIDTH
     } ), {
       touchAreaYDilation: 5,
       touchAreaXDilation: 5,

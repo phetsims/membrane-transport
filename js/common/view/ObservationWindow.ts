@@ -148,8 +148,9 @@ export default class ObservationWindow extends Node {
 
     // NOTE: Duplication with SoluteConcentrationsAccordionBox
     const TEXT_MARGIN = 3;
-    const outsideText = new InsideOutsideLabel( 'outside' );
-    const insideText = new InsideOutsideLabel( 'inside' );
+    const TEXT_MAX_WIDTH = 120;
+    const outsideText = new InsideOutsideLabel( 'outside', TEXT_MAX_WIDTH );
+    const insideText = new InsideOutsideLabel( 'inside', TEXT_MAX_WIDTH );
 
     ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
       outsideTextProxy.top = TEXT_MARGIN;

@@ -68,8 +68,9 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
     // NOTE: Duplication with ObservationWindow
     const TEXT_MARGIN = 27;
-    const outsideText = new InsideOutsideLabel( 'outside', { top: contentNode.top + TEXT_MARGIN, scale: 0.85 } );
-    const insideText = new InsideOutsideLabel( 'inside', { bottom: contentNode.bottom - TEXT_MARGIN, scale: 0.85 } );
+    const TEXT_MAX_WIDTH = 46;
+    const outsideText = new InsideOutsideLabel( 'outside', TEXT_MAX_WIDTH, { top: contentNode.top + TEXT_MARGIN, scale: 0.85 } );
+    const insideText = new InsideOutsideLabel( 'inside', TEXT_MAX_WIDTH, { bottom: contentNode.bottom - TEXT_MARGIN, scale: 0.85 } );
 
     contentNode.addChild( outsideText );
     contentNode.addChild( insideText );
