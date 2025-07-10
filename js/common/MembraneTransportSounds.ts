@@ -35,7 +35,7 @@ import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
 import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
 import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
 import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
-import proteinReturnSound4_mp3 from '../../sounds/proteinReturnSound4_mp3.js';
+import proteinReturnToToolbox_mp3 from '../../sounds/proteinReturnToToolbox_mp3.js';
 import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
 import soluteCrossing001_mp3 from '../../sounds/soluteCrossing001_mp3.js';
 import soluteCrossing002_mp3 from '../../sounds/soluteCrossing002_mp3.js';
@@ -168,7 +168,7 @@ const channelSounds = {
   }
 };
 
-const proteinReturnSound = newSoundClip( proteinReturnSound4_mp3, {
+const proteinReturnToToolboxSound = newSoundClip( proteinReturnToToolbox_mp3, {
   initialOutputLevel: 0.2
 } );
 
@@ -255,7 +255,7 @@ export default class MembraneTransportSounds {
   }
 
   public static proteinReturnedToToolbox(): void {
-    proteinReturnSound.play();
+    proteinReturnToToolboxSound.play();
   }
 
   public static boundaryReached(): void {
