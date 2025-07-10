@@ -39,13 +39,6 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
     const targetPosition = this.sodiumPotassiumPump.getSitePosition( this.site );
-
-    // TODO: We believe that this can be moved to MembraneTransportConstants.getBindingSiteOffset. See https://github.com/phetsims/membrane-transport/issues/318.
-    if ( this.site === 'phosphate' ) {
-      targetPosition.y -= 17;
-      targetPosition.x += 3;
-    }
-
     const vector = targetPosition.minus( currentPosition );
     const direction = vector.normalized();
 
