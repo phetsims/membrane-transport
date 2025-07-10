@@ -35,6 +35,7 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MacroCellNode from './MacroCellNode.js';
 import MembranePotentialDescriber from './MembranePotentialDescriber.js';
@@ -321,7 +322,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     // Toggle the capture radius
     KeyboardListener.createGlobal( this, {
-      keys: [ 'm' ], fire: () => {
+      keyStringProperties: MembraneTransportHotkeyData.membraneTransportScreenView.toggleCaptureRadius.keyStringProperties, fire: () => {
         const initialValue = CAPTURE_RADIUS_PROPERTY.initialValue;
         CAPTURE_RADIUS_PROPERTY.value = CAPTURE_RADIUS_PROPERTY.value === initialValue ? initialValue * 100 : initialValue;
         console.log( 'Capture radius: ', CAPTURE_RADIUS_PROPERTY.value );

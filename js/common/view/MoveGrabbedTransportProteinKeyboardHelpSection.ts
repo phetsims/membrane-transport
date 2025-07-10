@@ -28,6 +28,9 @@ export default class MoveGrabbedTransportProteinKeyboardHelpSection extends Keyb
     super( title, [
 
       KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.interactiveSlotsNode.selection ),
+      KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.interactiveSlotsNode.releaseProtein ),
+      KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.interactiveSlotsNode.deleteProtein ),
+      KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.interactiveSlotsNode.cancelInteraction ),
 
       KeyboardHelpSectionRow.labelWithIconList( moveMessage, [
         KeyboardHelpIconFactory.iconOrIcon(

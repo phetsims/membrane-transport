@@ -28,6 +28,7 @@ import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragL
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -318,7 +319,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
     if ( focusable ) {
 
       const escListener = new KeyboardListener( {
-        keys: [ 'escape' ],
+        keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.cancelInteraction.keyStringProperties,
         fire: () => {
 
           // Ignore if focus is lost or interaction disabled somehow

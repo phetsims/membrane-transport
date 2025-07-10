@@ -380,7 +380,7 @@ export default class InteractiveSlotsNode extends Node {
       }
     };
     const releaseKeyboardListener = new KeyboardListener( {
-      keys: [ 'enter', 'space' ],
+      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.releaseProtein.keyStringProperties,
       fireOnDown: false,
       fire: ( event, keysPressed, listener ) => {
         fireReleased();
@@ -389,7 +389,7 @@ export default class InteractiveSlotsNode extends Node {
     this.addInputListener( releaseKeyboardListener );
 
     const deleteKeyboardListener = new KeyboardListener( {
-      keys: [ 'backspace', 'delete' ],
+      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.deleteProtein.keyStringProperties,
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const grabbedNode = this.grabbedNode;
@@ -418,7 +418,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Return the protein to its origin when pressing escape to cancel.
     const escapeKeyboardListener = new KeyboardListener( {
-      keys: [ 'escape' ],
+      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.cancelInteraction.keyStringProperties,
       enabledProperty: this.grabbedProperty,
       fire: () => {
         affirm( this.grabbedNode, 'We must have a Node if this listener is firing.' );

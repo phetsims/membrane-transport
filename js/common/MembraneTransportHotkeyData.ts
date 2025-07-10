@@ -27,6 +27,36 @@ export default class MembraneTransportHotkeyData {
     selection: createHotkeyData(
       [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
       new StringProperty( 'Select a slot' )
+    ),
+    releaseProtein: createHotkeyData(
+      [ 'enter', 'space' ],
+      new StringProperty( 'Release protein' )
+    ),
+    deleteProtein: createHotkeyData(
+      [ 'backspace', 'delete' ],
+      new StringProperty( 'Delete protein' )
+    ),
+    cancelInteraction: createHotkeyData(
+      [ 'escape' ],
+      new StringProperty( 'Cancel interaction' )
+    )
+  };
+
+  public static readonly observationWindowTransportProteinLayer = {
+    selection: createHotkeyData(
+      [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+      new StringProperty( 'Select a protein' )
+    ),
+    grabProtein: createHotkeyData(
+      [ 'enter', 'space' ],
+      new StringProperty( 'Grab protein' )
+    )
+  };
+
+  public static readonly membraneTransportScreenView = {
+    toggleCaptureRadius: createHotkeyData(
+      [ 'm' ],
+      new StringProperty( 'Toggle capture radius' )
     )
   };
 }

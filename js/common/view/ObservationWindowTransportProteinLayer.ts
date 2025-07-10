@@ -17,6 +17,7 @@ import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -160,7 +161,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
-      keys: [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.selection.keyStringProperties,
       enabledProperty: DerivedProperty.not( this.interactiveSlotsNode.grabbedProperty ),
       fire: ( event, keysPressed, listener ) => {
         const proteinCount = model.getFilledSlots().length;
@@ -173,7 +174,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     this.addInputListener( selectionKeyboardListener );
 
     const grabKeyboardListener = new KeyboardListener( {
-      keys: [ 'enter', 'space' ],
+      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.grabProtein.keyStringProperties,
       fire: ( event, keysPressed, listener ) => {
         if ( !this.interactiveSlotsNode.grabbedProperty.value ) {
           const selectedSlot = this.getTransportProteinNodes()[ this.selectedIndex ].slot;
