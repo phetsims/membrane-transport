@@ -22,14 +22,14 @@ import cardMovement6_mp3 from '../../../tambo/sounds/cardMovement6_mp3.js';
 import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
 import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
 import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
-import channelCloseSet1_001_mp3 from '../../sounds/channelCloseSet1_001_mp3.js';
-import channelCloseSet1_002_mp3 from '../../sounds/channelCloseSet1_002_mp3.js';
-import channelCloseSet2_001_mp3 from '../../sounds/channelCloseSet2_001_mp3.js';
-import channelCloseSet2_003_mp3 from '../../sounds/channelCloseSet2_003_mp3.js';
-import channelOpenSet1_001_mp3 from '../../sounds/channelOpenSet1_001_mp3.js';
-import channelOpenSet1_002_mp3 from '../../sounds/channelOpenSet1_002_mp3.js';
-import channelOpenSet2_002_mp3 from '../../sounds/channelOpenSet2_002_mp3.js';
-import channelOpenSet2_003_mp3 from '../../sounds/channelOpenSet2_003_mp3.js';
+import sodiumLigandGatedChannelOpen_mp3 from '../../sounds/sodiumLigandGatedChannelOpen_mp3.js';
+import sodiumLigandGatedChannelClose_mp3 from '../../sounds/sodiumLigandGatedChannelClose_mp3.js';
+import potassiumLigandGatedChannelOpen_mp3 from '../../sounds/potassiumLigandGatedChannelOpen_mp3.js';
+import potassiumLigandGatedChannelClose_mp3 from '../../sounds/potassiumLigandGatedChannelClose_mp3.js';
+import sodiumVoltageGatedChannelOpen_mp3 from '../../sounds/sodiumVoltageGatedChannelOpen_mp3.js';
+import sodiumVoltageGatedChannelClose_mp3 from '../../sounds/sodiumVoltageGatedChannelClose_mp3.js';
+import potassiumVoltageGatedChannelOpen_mp3 from '../../sounds/potassiumVoltageGatedChannelOpen_mp3.js';
+import potassiumVoltageGatedChannelClose_mp3 from '../../sounds/potassiumVoltageGatedChannelClose_mp3.js';
 import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
 import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
 import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
@@ -154,16 +154,16 @@ type ChannelType = 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChann
 const channelSounds = {
   1: {
     open: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelCloseSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelOpenSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelOpenSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelOpenSet2_002_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( sodiumLigandGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( potassiumLigandGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( sodiumVoltageGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( potassiumVoltageGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
-      sodiumIonLigandGatedChannel: newSoundClip( channelOpenSet1_001_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( channelCloseSet2_003_mp3, CHANNEL_SOUND_OPTIONS ),
-      sodiumIonVoltageGatedChannel: newSoundClip( channelCloseSet1_002_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonVoltageGatedChannel: newSoundClip( channelCloseSet2_001_mp3, CHANNEL_SOUND_OPTIONS )
+      sodiumIonLigandGatedChannel: newSoundClip( sodiumLigandGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( potassiumLigandGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS ),
+      sodiumIonVoltageGatedChannel: newSoundClip( sodiumVoltageGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonVoltageGatedChannel: newSoundClip( potassiumVoltageGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS )
     }
   }
 };

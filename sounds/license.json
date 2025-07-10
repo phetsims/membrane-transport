@@ -31,7 +31,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelCloseSet1_001.mp3": {
+  "sodiumLigandGatedChannelOpen.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -39,7 +39,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelCloseSet1_002.mp3": {
+  "sodiumVoltageGatedChannelClose.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -47,7 +47,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelCloseSet2_001.mp3": {
+  "potassiumVoltageGatedChannelClose.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -55,7 +55,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelCloseSet2_003.mp3": {
+  "potassiumLigandGatedChannelClose.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -63,7 +63,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelOpenSet1_001.mp3": {
+  "sodiumLigandGatedChannelClose.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -71,7 +71,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelOpenSet1_002.mp3": {
+  "sodiumVoltageGatedChannelOpen.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -79,7 +79,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelOpenSet2_002.mp3": {
+  "potassiumVoltageGatedChannelOpen.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -87,7 +87,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris (PhET Interactive Simulations)"
   },
-  "channelOpenSet2_003.mp3": {
+  "potassiumLigandGatedChannelOpen.mp3": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
