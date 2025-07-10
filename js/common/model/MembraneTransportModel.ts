@@ -483,11 +483,6 @@ export default class MembraneTransportModel extends PhetioObject {
     } ).length;
   }
 
-  // TODO: https://github.com/phetsims/membrane-transport/issues/300 Rename to removeSolute
-  public removeParticle( solute: Solute ): void {
-    this.solutes.splice( this.solutes.indexOf( solute ), 1 );
-  }
-
   public getLeftmostEmptySlot(): Slot | null {
     return this.membraneSlots.find( slot => !slot.isFilled() ) || null;
   }
