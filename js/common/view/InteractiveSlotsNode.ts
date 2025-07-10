@@ -29,6 +29,7 @@ import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
@@ -227,7 +228,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
-      keys: [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.selection.keyStringProperties,
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const allSlotsCount = slots.length;
