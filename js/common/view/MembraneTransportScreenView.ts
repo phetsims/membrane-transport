@@ -356,7 +356,7 @@ export default class MembraneTransportScreenView extends ScreenView {
    * @param origin - Where the transport protein came from
    * @returns The created transport protein drag node
    */
-  private createTransportProteinDragNode( modelPosition: Vector2, type: TransportProteinType, origin: Slot | TransportProteinToolNode, playSound: boolean ): TransportProteinDragNode {
+  private createTransportProteinDragNode( modelPosition: Vector2, type: TransportProteinType, origin: Slot | TransportProteinToolNode ): TransportProteinDragNode {
     const transportProteinDragNode = new TransportProteinDragNode(
       this,
       this.observationWindow,
@@ -364,8 +364,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       modelPosition,
       this.visibleBoundsProperty,
       type,
-      origin,
-      playSound
+      origin
     );
     this.addChild( transportProteinDragNode );
 
@@ -379,7 +378,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const viewPoint = this.globalToLocalPoint( event.pointer.point );
     const modelPosition = this.screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
-    const channelDragNode = this.createTransportProteinDragNode( modelPosition, type, origin, true );
+    const channelDragNode = this.createTransportProteinDragNode( modelPosition, type, origin );
     channelDragNode.press( event );
     MembraneTransportSounds.transportProteinGrabbed();
   }
@@ -388,7 +387,7 @@ export default class MembraneTransportScreenView extends ScreenView {
    * Creates a temporary transport protein drag node and adds it to the view. Useful for animations and keyboard input that
    * do not require a forwarded Pointer press.
    */
-  public createTemporaryProteinNode( type: TransportProteinType, slot: Slot, playSound: boolean, toolNode?: TransportProteinToolNode ): TransportProteinDragNode {
+  public createTemporaryProteinNode( type: TransportProteinType, slot: Slot, toolNode?: TransportProteinToolNode ): TransportProteinDragNode {
 
     // Move over the first available slot
     const slotX = slot.position;
@@ -399,7 +398,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     // the origin will be set to indicate that to support return/swapping purposes.
     const origin = toolNode || slot;
 
-    const dragNode = this.createTransportProteinDragNode( modelPoint, type, origin, playSound );
+    const dragNode = this.createTransportProteinDragNode( modelPoint, type, origin );
     dragNode.pickable = false; // keyboard only
     return dragNode;
   }

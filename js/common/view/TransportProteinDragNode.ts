@@ -32,7 +32,10 @@ import TransportProteinToolNode from './TransportProteinToolNode.js';
 export default class TransportProteinDragNode extends Node {
   private readonly dragListener: DragListener;
   private readonly positionProperty: Vector2Property;
-  private pressCount = 0;
+
+  // Controls whether the Node can play sounds. Often this is disabled when the Node is returning to a toolbox or
+  // being picked up the first time.
+  public canPlaySounds = true;
 
   public constructor(
     view: MembraneTransportScreenView,
@@ -42,9 +45,7 @@ export default class TransportProteinDragNode extends Node {
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     public readonly type: TransportProteinType,
     // Where this came from, so that during a swap, the other one knows where to go. Or when pressing 'escape', it knows where to return
-    public readonly origin: Slot | TransportProteinToolNode,
-    // whether sound can be played while dragging. Note that when a temporary node is created, it should not play sounds as it animates back to the toolbox.
-    private readonly playSound: boolean
+    public readonly origin: Slot | TransportProteinToolNode
   ) {
     super( {
       tagName: 'p',
@@ -153,7 +154,7 @@ export default class TransportProteinDragNode extends Node {
             MembraneTransportSounds.proteinReturnedToToolbox();
 
             // Create a temporary node for the replaced protein to animate it back to the toolbox
-            const replacedProteinNode = view.createTemporaryProteinNode( otherContents, closest.slot, false );
+            const replacedProteinNode = view.createTemporaryProteinNode( otherContents, closest.slot );
 
             const toolNode = view.getTransportProteinToolNode( otherContents );
 
@@ -225,16 +226,18 @@ export default class TransportProteinDragNode extends Node {
 
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
 
-      if ( newValue !== null && this.pressCount === 0 && this.playSound ) {
+      if ( newValue !== null && this.canPlaySounds ) {
         MembraneTransportSounds.slotHover( newValue );
       }
     } );
   }
 
   public press( event: PressListenerEvent ): void {
-    this.pressCount++;
+
+    // Don't play the interaction sound on first press because we should hear a default 'grab' sound instead.
+    this.canPlaySounds = false;
     this.dragListener.press( event, this );
-    this.pressCount--;
+    this.canPlaySounds = true;
   }
 
   public setModelPosition( modelPosition: Vector2 ): void {

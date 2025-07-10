@@ -358,7 +358,7 @@ export default class InteractiveSlotsNode extends Node {
             else {
 
               // Protein from toolbar replaces existing protein in slot. Animate the replaced protein back to the toolbox.
-              const replacedProteinNode = view.createTemporaryProteinNode( currentType, selectedSlot, false );
+              const replacedProteinNode = view.createTemporaryProteinNode( currentType, selectedSlot );
               returnToolToToolbox( replacedProteinNode );
               releaseReason = 'replace';
             }
@@ -515,7 +515,10 @@ export default class InteractiveSlotsNode extends Node {
   public grab( slot: Slot, type: TransportProteinType, toolNode?: TransportProteinToolNode ): void {
     this.selectedType = type;
     this.selectedIndex = this.slots.indexOf( slot );
-    this.grabbedNode = this.view.createTemporaryProteinNode( type, slot, true, toolNode );
+    this.grabbedNode = this.view.createTemporaryProteinNode( type, slot, toolNode );
+
+    // On grab, we should hear a "grab" sound instead of other interaction sounds.
+    this.grabbedNode.canPlaySounds = false;
 
     // Alert 'grabbed' after so that it will interrupt the focus change read above.
     this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
@@ -528,6 +531,9 @@ export default class InteractiveSlotsNode extends Node {
     this.updateGrabHighlights();
 
     this.updateFocus();
+
+    // After being grabbed, allow the default interaction sounds to play.
+    this.grabbedNode.canPlaySounds = true;
   }
 
   /**

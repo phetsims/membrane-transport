@@ -38,6 +38,9 @@ export default function animateProteinReturn(
     easing: Easing.CUBIC_IN_OUT
   } );
 
+  // No sounds should be played as the Node returns to the toolbox.
+  proteinNode.canPlaySounds = false;
+
   animation.endedEmitter.addListener( () => {
     proteinNode.dispose();
     onComplete && onComplete();
