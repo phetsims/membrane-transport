@@ -229,12 +229,13 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // Make sure that the transport proteins are in the correct reading order.
           this.proteinsNodeParent.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
 
+          // The short name of the transport protein.
           const nameResponseProperty = MembraneTransportFluent.a11y.transportProtein.briefName.createProperty( {
             type: type
           } );
 
+          // The name of the transport protein combined with its index within the membrane.
           const objectResponseProperty = MembraneTransportFluent.a11y.transportProtein.objectResponse.createProperty( {
-            openOrClosed: transportProtein.openOrClosedProperty,
             proteinIndex: slottedNode.indexProperty,
             proteinCount: model.transportProteinCountProperty
           } );

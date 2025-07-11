@@ -369,11 +369,7 @@ a11y:
     releasedReplacedResponse: Released. Protein replaced.
     deletedResponse:          Deleted.
     cancelledResponse:        Released. Back to initial slot.
-    objectResponse:           |-
-                              { $openOrClosed ->
-                                [open]   open
-                               *[closed] closed
-                              }, { $proteinIndex } of { $proteinCount } Proteins in Membrane
+    objectResponse:           "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"
     accessibleName:           "{ $nameResponse }, { $objectResponse }"
     accessibleNameReversed:   "{ $objectResponse }, { $nameResponse }"
 
