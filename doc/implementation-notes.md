@@ -34,10 +34,9 @@ incorporating modern PhET frameworks and updated pedagogical features.
   channel, the transient node is removed and the transport protein is added to the model. For the GrabSortInteraction,
   it operates on transient nodes as well. Preferring transient, short-lived Nodes helps us keep each individual node
   simpler and more manageable, as opposed to if we had a single Node that had to handle all modalities.
-* **Strings** The simulation is experimenting with JSON5 for the JSON strings, see `membrane-transport-strings_en.json5`
-  and a simplified syntax that omits the "value" keys. This allows for comments in the file. The standard json file is
-  generated during `grunt update` or `grunt modulify`. Longer strings for description are written in Fluent, which is in
-  ./strings/MembraneTransport_en.ftl
+* **Strings** Since it supports full description, the simulation has extensive usage of complex strings. At the time of
+  development, the lead description designer identified this as the most complex description effort undertaken so far.
+  We use Fluent for the strings, as described in phet-info/doc/strings-i18n-yaml-fluent.md
 * **MembraneTransportConstants** is implemented via static attributes in a class, so the values can refer to each other
   in the declaration. This is unlike other simulations that export const and use file-specific local variables for
   cross-references. This also helps with searchability, since values are referred to the same way everywhere.
@@ -66,6 +65,8 @@ the current state of the simulation.
 ### View
 
 Much of the simulation is shown in the central ObservationWindow, which has most of its contents rendered in canvas.
+Please draw your attention to InteractiveSlotsNode, which supports the keyboard interaction for adding/moving/swapping/
+removing transport proteins from the membrane.
 
 ### Ligand-Gated Channels
 
