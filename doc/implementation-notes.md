@@ -48,6 +48,9 @@ The simulation has 4 screens, but they all share nearly identical code, with dif
 
 ### Model
 
+`MembraneTransportModel` is the central model class, which composes `Particle` instances which may be either `Ligand` or
+`Solute`, and the model also has `TransportProtein` instances.
+
 The model is purposefully simple, with flat data structures to facilitate PhET-iO serialization. For instance, Several
 model Properties for particular transport protein state are not PhET-iO instrumented; instead they appear in the state
 via serialization of the container.
@@ -74,7 +77,9 @@ protein it is bound to. The protein can query the model to find the associated p
 
 ### View
 
-Much of the simulation is shown in the central ObservationWindow, which has most of its contents rendered in canvas.
+The central file for the view is `MembraneTransportScreenView.ts`, which has much of the layout and tree structure.
+
+Much of the play area is shown in the central ObservationWindow, which has most of its contents rendered in canvas.
 Please draw your attention to InteractiveSlotsNode, which supports the keyboard interaction for adding/moving/swapping/
 removing transport proteins from the membrane.
 
