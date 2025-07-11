@@ -59,6 +59,11 @@ with mouse or keyboard. Solutes and Ligands subclasses of `class Particle`. They
 machine which indicates their current mode and during step() can transition to a new mode based on the current mode and
 the current state of the simulation.
 
+Conceptually, the state is divided between the proteins and the particles, but in order to simplify phet-io
+serialization, in practice it is implemented in the particle data only. This breaks cyclic dependencies in the
+serialization graph. This means that instead of a protein knowing what is bound to it, the particle knows what
+transport protein it is bound to.  The protein can query the model to find the associated particles.
+
 **Slots** are the 7 positions on the membrane where a transport protein can be added.
 **Slot Contents** refers to what a Slot may contain, which may be null or a transport protein.
 
