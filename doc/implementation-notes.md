@@ -41,6 +41,11 @@ incorporating modern PhET frameworks and updated pedagogical features.
   in the declaration. This is unlike other simulations that export const and use file-specific local variables for
   cross-references. This also helps with searchability, since values are referred to the same way everywhere.
 
+### Screens
+
+The simulation has 4 screens, but they all share nearly identical code, with different settings specified by
+`MembraneTransportFeatureSet`.
+
 ### Model
 
 The model is purposefully simple, with flat data structures to facilitate PhET-iO serialization. For instance, Several
@@ -61,8 +66,8 @@ the current state of the simulation.
 
 Conceptually, the state is divided between the proteins and the particles, but in order to simplify phet-io
 serialization, in practice it is implemented in the particle data only. This breaks cyclic dependencies in the
-serialization graph. This means that instead of a protein knowing what is bound to it, the particle knows what
-transport protein it is bound to.  The protein can query the model to find the associated particles.
+serialization graph. This means that instead of a protein knowing what is bound to it, the particle knows what transport
+protein it is bound to. The protein can query the model to find the associated particles.
 
 **Slots** are the 7 positions on the membrane where a transport protein can be added.
 **Slot Contents** refers to what a Slot may contain, which may be null or a transport protein.
