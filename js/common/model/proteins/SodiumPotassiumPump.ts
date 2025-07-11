@@ -45,7 +45,7 @@ type SodiumPotassiumPumpState =
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
 
-type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate';
+type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' | 'atp';
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
@@ -244,8 +244,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     return site === 'sodium1' ? SodiumPotassiumPump.SODIUM_SITE_1 :
            site === 'sodium2' ? SodiumPotassiumPump.SODIUM_SITE_2 :
            site === 'sodium3' ? SodiumPotassiumPump.SODIUM_SITE_3 :
+           site === 'atp' ? SodiumPotassiumPump.ATP_SITE_OPEN_TO_INSIDE.plusXY( 0, 0 ) :
            site === 'phosphate' && state === 'openToInsideSodiumAndATPBound' ? SodiumPotassiumPump.ATP_SITE_OPEN_TO_INSIDE :
-           site === 'phosphate' && state === 'openToInsideSodiumAndPhosphateBound' ? SodiumPotassiumPump.PHOSPHATE_SITE_OPEN_TO_INSIDE :
+           site === 'phosphate' && state === 'openToInsideSodiumAndPhosphateBound' ? SodiumPotassiumPump.PHOSPHATE_SITE_OPEN_TO_INSIDE.plusXY( 0, -0.5 ) :
            site === 'phosphate' ? SodiumPotassiumPump.PHOSPHATE_SITE :
            site === 'potassium1' ? SodiumPotassiumPump.POTASSIUM_SITE_1 :
            site === 'potassium2' ? SodiumPotassiumPump.POTASSIUM_SITE_2 :

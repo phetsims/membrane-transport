@@ -477,7 +477,7 @@ export default class RandomWalkMode extends BaseParticleMode {
       !transportProtein.hasSolutesMovingTowardOrThroughTransportProtein( ( solute => solute.type === 'atp' ) ) // make sure no sodium still leaving
     ) {
 
-      particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, 'phosphate' );
+      particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, 'atp' );
       return true;
     }
 

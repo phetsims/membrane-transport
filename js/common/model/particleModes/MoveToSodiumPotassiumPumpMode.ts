@@ -22,7 +22,7 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
 
   public constructor( public readonly slot: Slot,
                       public readonly sodiumPotassiumPump: SodiumPotassiumPump,
-                      public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2' ) {
+                      public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp' | 'potassium1' | 'potassium2' ) {
     super( 'moveToSodiumPotassiumPump' );
   }
 
@@ -39,6 +39,7 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
     const targetPosition = this.sodiumPotassiumPump.getSitePosition( this.site );
+
     const vector = targetPosition.minus( currentPosition );
     const direction = vector.normalized();
 
@@ -52,7 +53,7 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
 
       if ( particle.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToInsideEmpty' ) {
 
-        const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site );
+        const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
         particle.mode = mode;
         particle.position.set( targetPosition );
 
@@ -60,13 +61,13 @@ export default class MoveToSodiumPotassiumPumpMode extends BaseParticleMode {
       }
       else if ( particle.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
-        particle.mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site );
+        particle.mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
         sodiumPotassiumPump.stateProperty.value = 'openToInsideSodiumAndATPBound';
         MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
       }
       else if ( particle.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ) {
 
-        const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site );
+        const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
         particle.mode = mode;
         particle.position.set( targetPosition );
 
