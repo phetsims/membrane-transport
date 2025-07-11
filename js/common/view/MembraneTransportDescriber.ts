@@ -250,6 +250,10 @@ export default class MembraneTransportDescriber {
       }
     }
 
+    if ( response === '' ) {
+      response = 'no description found for the circumstances';
+    }
+
     return response;
   }
 
