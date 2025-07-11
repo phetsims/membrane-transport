@@ -175,7 +175,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const eraseSolutesButton = new EraserButton( {
       scale: 1.2,
       tandem: options.tandem.createTandem( 'eraseSolutesButton' ),
-      left: this.observationWindow.left,
+      right: this.observationWindow.left - 5,
       centerY: timeControlNode.centerY,
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,

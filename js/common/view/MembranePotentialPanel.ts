@@ -57,7 +57,7 @@ export default class MembranePotentialPanel extends Panel {
       accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' ),
-      spacing: 35,
+      spacing: 25,
       layoutOptions: {
 
         // A margin so that there is extra space between the radio button group and the arrow line
@@ -75,7 +75,7 @@ export default class MembranePotentialPanel extends Panel {
 
     const vbox = new VBox( {
       spacing: 4,
-      align: 'left',
+      align: 'center',
       children: [
 
         new VoicingText( MembraneTransportFluent.membranePotential_mVStringProperty, {
@@ -102,6 +102,10 @@ export default class MembranePotentialPanel extends Panel {
           maxWidth: 140,
           font: MembraneTransportConstants.FONT
         } ), {
+          layoutOptions: {
+            align: 'left',
+            topMargin: 6
+          },
           touchAreaXDilation: 5,
           touchAreaYDilation: 5,
           tandem: tandem.createTandem( 'chargesCheckbox' ),
@@ -152,7 +156,7 @@ export default class MembranePotentialPanel extends Panel {
     super( content, {
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
       stroke: null,
-      fill: 'rgb(230,229,229)',
+      fill: null,
       tandem: tandem
     } );
 
