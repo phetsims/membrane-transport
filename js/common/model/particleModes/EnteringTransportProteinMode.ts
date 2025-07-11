@@ -15,7 +15,7 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import Slot from '../Slot.js';
 import BaseParticleMode from './BaseParticleMode.js';
-import SheddingCagedWaterMoleculesMode from './SheddingCagedWaterMoleculesMode.js';
+import MovingThroughTransportProteinMode from './MovingThroughTransportProteinMode.js';
 
 export default class EnteringTransportProteinMode extends BaseParticleMode {
 
@@ -42,7 +42,7 @@ export default class EnteringTransportProteinMode extends BaseParticleMode {
 
     if ( ( direction === -1 && particle.position.y <= thresholdY ) || // above membrane, moving inward
          ( direction === 1 && particle.position.y >= thresholdY ) ) { // below membrane, moving outward
-      particle.mode = new SheddingCagedWaterMoleculesMode( this.slot );
+      particle.mode = new MovingThroughTransportProteinMode( this.slot, this.slot.transportProteinType!, this.direction );
     }
   }
 

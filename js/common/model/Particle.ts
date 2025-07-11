@@ -31,7 +31,6 @@ import MoveToSodiumPotassiumPumpMode from './particleModes/MoveToSodiumPotassium
 import MovingThroughTransportProteinMode from './particleModes/MovingThroughTransportProteinMode.js';
 import PassiveDiffusionMode from './particleModes/PassiveDiffusionMode.js';
 import RandomWalkMode from './particleModes/RandomWalkMode.js';
-import SheddingCagedWaterMoleculesMode from './particleModes/SheddingCagedWaterMoleculesMode.js';
 import UserControlledMode from './particleModes/UserControlledMode.js';
 import UserOverMode from './particleModes/UserOverMode.js';
 import WaitingInSodiumGlucoseCotransporterMode from './particleModes/WaitingInSodiumGlucoseCotransporterMode.js';
@@ -241,8 +240,6 @@ export default abstract class Particle {
         return MoveToLigandBindingLocationMode.fromStateObject( state, slot! );
       case 'enteringTransportProtein':
         return EnteringTransportProteinMode.fromStateObject( state, slot! );
-      case 'sheddingCagedWaterMolecules':
-        return SheddingCagedWaterMoleculesMode.fromStateObject( state, slot! );
       case 'passiveDiffusion':
         return PassiveDiffusionMode.fromStateObject( state );
       case 'movingThroughTransportProtein':

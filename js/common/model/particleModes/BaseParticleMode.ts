@@ -12,7 +12,6 @@
  *  - randomWalk
  *  - moveToCenterOfChannel
  *  - enteringTransportProtein
- *  - sheddingCagedWaterMolecules
  *  - movingThroughTransportProtein
  *  - randomWalk
  *
@@ -53,7 +52,6 @@ type ParticleModeType = 'randomWalk' |
   'waitingInSodiumPotassiumPump' |
   'moveToLigandBindingLocation' |
   'enteringTransportProtein' |
-  'sheddingCagedWaterMolecules' |
   'passiveDiffusion' |
   'movingThroughTransportProtein' |
   'userControlled' |
