@@ -32,7 +32,7 @@ import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
-import SoluteConcentrationDescriber from './SoluteConcentrationDescriber.js';
+import MembraneTransportDescriber from './MembraneTransportDescriber.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
@@ -54,7 +54,7 @@ export default class SoluteBarChartNode extends Node {
     const insideAmountProperty = insideSoluteCountProperty;
 
     const soluteDifferenceProperty = new DerivedProperty( [ outsideAmountProperty, insideAmountProperty ], ( outsideAmount, insideAmount ) => {
-      return SoluteConcentrationDescriber.getSoluteComparisonDescriptor( outsideAmount, insideAmount );
+      return MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideAmount, insideAmount );
     } );
 
     // These are updated in stepEmitter, and used to add description for the accessible name.

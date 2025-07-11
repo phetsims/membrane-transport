@@ -16,12 +16,14 @@ import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import RandomWalkUtils from '../RandomWalkUtils.js';
+import Slot from '../Slot.js';
 import type Solute from '../Solute.js';
+import SoluteCrossedMembraneEvent from '../SoluteCrossedMembraneEvent.js';
 import BaseParticleMode from './BaseParticleMode.js';
 
 export default abstract class DirectionalMovementMode extends BaseParticleMode {
 
-  protected constructor( type: 'movingThroughTransportProtein' | 'passiveDiffusion', public readonly direction: 'inward' | 'outward' ) {
+  protected constructor( type: 'movingThroughTransportProtein' | 'passiveDiffusion', public readonly direction: 'inward' | 'outward', public readonly slot: Slot | null ) {
     super( type );
   }
 
@@ -47,7 +49,8 @@ export default abstract class DirectionalMovementMode extends BaseParticleMode {
 
       // Ideally we would check instanceof Solute, but that triggers a cyclic import failure
       affirm( particle.hasOwnProperty( 'soluteType' ), 'Only solutes can cross the membrane' );
-      model.soluteCrossedMembraneEmitter.emit( particle as Solute, particle.position.y > 0 ? 'outward' : 'inward' );
+
+      model.soluteCrossedMembraneEmitter.emit( new SoluteCrossedMembraneEvent( this.slot, particle as Solute, particle.position.y > 0 ? 'outward' : 'inward' ) );
     }
   }
 

@@ -257,6 +257,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
               // Node is focused.
               voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
             }
+
+            this.model.focusedProteinProperty.value = focused ? transportProtein : null;
           }, { disposer: transportProteinNode } );
 
           transportProteinNode.accessibleName = accessibleNameProperty;

@@ -19,17 +19,17 @@ import DirectionalMovementMode from './DirectionalMovementMode.js';
 
 export default class MovingThroughTransportProteinMode extends DirectionalMovementMode {
 
-  public constructor( public readonly slot: Slot,
+  public constructor( private readonly movingThroughSlot: Slot,
                       public readonly transportProteinType: TransportProteinType,
                       direction: 'inward' | 'outward',
                       public readonly offset?: number ) {
-    super( 'movingThroughTransportProtein', direction );
+    super( 'movingThroughTransportProtein', direction, movingThroughSlot );
   }
 
   public override toStateObject(): IntentionalAny {
     return {
       type: this.type,
-      slot: this.slot.getIndex(),
+      slot: this.movingThroughSlot.getIndex(),
       transportProteinType: this.transportProteinType,
       direction: this.direction,
       offset: this.offset || null
@@ -41,7 +41,7 @@ export default class MovingThroughTransportProteinMode extends DirectionalMoveme
    * the protein becomes open to the inside.
    */
   protected handleSpecificBehavior( dt: number, particle: Particle, model: MembraneTransportModel ): void {
-    const center = this.slot.position + ( this.offset || 0 );
+    const center = this.movingThroughSlot.position + ( this.offset || 0 );
     const maxDistanceFromCenter = 0.8;
     if ( Math.abs( particle.position.x - center ) > maxDistanceFromCenter ) {
       particle.position.x = center + maxDistanceFromCenter * Math.sign( particle.position.x - center );
@@ -51,7 +51,7 @@ export default class MovingThroughTransportProteinMode extends DirectionalMoveme
                         this.direction === 'outward' && particle.position.y > 0;
 
     if ( crossedOver && Math.abs( particle.position.y ) > MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 ) {
-      const transportProtein = this.slot.transportProteinProperty.value;
+      const transportProtein = this.movingThroughSlot.transportProteinProperty.value;
 
       if ( transportProtein instanceof SodiumGlucoseCotransporter ) {
         transportProtein.stateProperty.value = 'openToInside';

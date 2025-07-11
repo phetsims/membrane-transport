@@ -16,7 +16,7 @@ import DirectionalMovementMode from './DirectionalMovementMode.js';
 export default class PassiveDiffusionMode extends DirectionalMovementMode {
 
   public constructor( direction: 'inward' | 'outward' ) {
-    super( 'passiveDiffusion', direction );
+    super( 'passiveDiffusion', direction, null );
   }
 
   public override toStateObject(): IntentionalAny {

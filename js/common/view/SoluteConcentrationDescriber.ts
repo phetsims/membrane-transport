@@ -7,65 +7,49 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import { equalsEpsilon } from '../../../../dot/js/util/equalsEpsilon.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
-import { getFeatureSetSelectableSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import Solute from '../model/Solute.js';
-import SoluteType, { SoluteControlSolutes } from '../model/SoluteType.js';
+import LeakageChannel from '../model/proteins/LeakageChannel.js';
+import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
+import SodiumGlucoseCotransporter from '../model/proteins/SodiumGlucoseCotransporter.js';
+import SodiumPotassiumPump from '../model/proteins/SodiumPotassiumPump.js';
+import TransportProtein from '../model/proteins/TransportProtein.js';
+import VoltageGatedChannel from '../model/proteins/VoltageGatedChannel.js';
+import SoluteCrossedMembraneEvent from '../model/SoluteCrossedMembraneEvent.js';
+import SoluteType from '../model/SoluteType.js';
 
 type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMoreOutside' |
   'aboutTwiceAsManyOutside' | 'someMoreOutside' | 'roughlyEqualOutside' | 'manyMoreInside' |
   'aboutTwiceAsManyInside' | 'someMoreInside' | 'roughlyEqualInside' | 'none';
 
-type CrossingEvent = {
-  solute: Solute;
-  direction: 'inward' | 'outward';
-};
-
-type CrossingData = {
-  crossingEvents: CrossingEvent[];
-  inBalance: boolean;
-};
-
 const descriptionInterval = 5;
 
-export default class SoluteConcentrationDescriber {
-  private soluteTypeToCrossingDataMap: Map<SoluteType, CrossingData> = new Map<SoluteType, CrossingData>();
+export default class MembraneTransportDescriber {
+
   private timeSinceDescription = 0;
-  private isInitialDescription = true;
   private previousResponse: TAlertable | null = null;
 
+  private previousSoluteComparisons: Record<SoluteType, SoluteComparisonDescriptor> = {
+    oxygen: 'none',
+    carbonDioxide: 'none',
+    sodiumIon: 'none',
+    potassiumIon: 'none',
+    glucose: 'none',
+    atp: 'none',
+    adp: 'none',
+    phosphate: 'none'
+  };
+
   public constructor( public readonly model: MembraneTransportModel, public readonly contextResponseNode: Node ) {
-
-    getFeatureSetSelectableSoluteTypes( model.featureSet ).forEach( soluteType => {
-      this.soluteTypeToCrossingDataMap.set( soluteType, {
-          crossingEvents: [],
-          inBalance: false
-        }
-      );
-    } );
-
-    // When there is a crossing event, add it to the corresponding list
-    model.soluteCrossedMembraneEmitter.addListener( ( solute, direction ) => {
-      this.soluteTypeToCrossingDataMap.get( solute.soluteType )!.crossingEvents.push( {
-        solute: solute,
-        direction: direction
-      } );
-    } );
-  }
-
-  private clearCrossingData(): void {
-    this.soluteTypeToCrossingDataMap.forEach( crossingData => {
-      crossingData.crossingEvents.length = 0;
-    } );
   }
 
   private addAccessibleContextResponse( response: AlertableNoUtterance ): void {
-    if ( response !== this.previousResponse ) {
+    if ( response !== this.previousResponse && response !== '' ) {
       this.contextResponseNode.addAccessibleContextResponse( response );
     }
     this.previousResponse = response;
@@ -77,85 +61,235 @@ export default class SoluteConcentrationDescriber {
 
       if ( this.timeSinceDescription > descriptionInterval ) {
 
-        // Print the crossing events for each solute type.
-        const soluteTypesCrossing = new Set<SoluteType>();
-        this.soluteTypeToCrossingDataMap.forEach( ( crossingData, soluteType ) => {
-          const insideCount = this.model.countSolutes( soluteType, 'inside' );
-          const outsideCount = this.model.countSolutes( soluteType, 'outside' );
+        const response = this.getDescriptionFromEventQueue(
+          this.model.descriptionEventQueue,
+          this.model.focusedProteinProperty.value,
+          this.model.getTransportProteins(),
+          this.model.insideSoluteCountProperties,
+          this.model.outsideSoluteCountProperties
+        );
 
-          if ( insideCount + outsideCount > 0 ) {
-
-            const inwardCrossingCount = crossingData.crossingEvents.filter( event => event.direction === 'inward' ).length;
-            const outwardCrossingCount = crossingData.crossingEvents.filter( event => event.direction === 'outward' ).length;
-
-            this.soluteTypeToCrossingDataMap.get( soluteType )!.inBalance =
-              equalsEpsilon( inwardCrossingCount / outwardCrossingCount, 1, 0.3 ) ||
-              equalsEpsilon( outwardCrossingCount / inwardCrossingCount, 1, 0.3 );
-
-            if ( inwardCrossingCount > 0 || outwardCrossingCount > 0 ) {
-              soluteTypesCrossing.add( soluteType );
-            }
-          }
-        } );
-
-        if ( soluteTypesCrossing.size === 1 ) {
-
-          const soluteType = Array.from( soluteTypesCrossing )[ 0 ];
-
-          const outsideCount = this.model.countSolutes( soluteType, 'outside' );
-          const insideCount = this.model.countSolutes( soluteType, 'inside' );
-          const comparisonDescription = SoluteConcentrationDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount );
-
-          if ( this.soluteTypeToCrossingDataMap.get( soluteType )!.inBalance ) {
-            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.inBalanceResponse.format( {
-              soluteType: soluteType as SoluteControlSolutes
-            } ) );
-          }
-          else if ( this.isInitialDescription ) {
-
-            // Initial: {{solute}} crossing membrane, {compareSoluteCompartments}
-            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.initialResponse.format( {
-              soluteType: soluteType as SoluteControlSolutes,
-              amount: comparisonDescription
-            } ) );
-            this.isInitialDescription = false;
-          }
-          else {
-
-            // Subsequent: {soluteShortName}, {compareSoluteCompartments}
-            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.subsequentResponse.format( {
-              soluteType: soluteType as SoluteControlSolutes,
-              amount: comparisonDescription
-            } ) );
-          }
-        }
-        else if ( soluteTypesCrossing.size > 1 ) {
-
-          // Multiple solutes are crossing at once so describe that in a simple way.
-          // TODO: Is many OK or do we need to list them all out? See https://github.com/phetsims/membrane-transport/issues/263
-          //   NOTE: Instead of a join, we could do a simple addAccessibleContextResponse for each solute type.
-
-          const allInBalance = Array.from( soluteTypesCrossing ).every( soluteType => this.soluteTypeToCrossingDataMap.get( soluteType )!.inBalance );
-          if ( allInBalance ) {
-            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.manyTypesInBalanceResponseStringProperty );
-          }
-          else {
-            this.addAccessibleContextResponse( MembraneTransportFluent.a11y.soluteCrossing.manyTypesResponseStringProperty );
-          }
-        }
+        console.log( response );
+        this.addAccessibleContextResponse( response );
 
         this.timeSinceDescription = 0;
 
-        // clear the crossing events for the next interval
-        this.clearCrossingData();
+        // Clear the event queue after processing this description.
+        this.model.clearDescriptionEventQueue();
       }
     }
   }
 
   public reset(): void {
-    this.clearCrossingData();
     this.timeSinceDescription = 0;
-    this.isInitialDescription = true;
+    this.previousSoluteComparisons = {
+      oxygen: 'none',
+      carbonDioxide: 'none',
+      sodiumIon: 'none',
+      potassiumIon: 'none',
+      glucose: 'none',
+      atp: 'none',
+      adp: 'none',
+      phosphate: 'none'
+    };
+  }
+
+  private getDescriptionFromEventQueue(
+    queue: SoluteCrossedMembraneEvent[],
+    focusedProtein: null | TransportProtein,
+    transportProteins: TransportProtein[],
+    insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
+    outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
+  ): string {
+
+    if ( focusedProtein ) {
+      return 'focused protein: ' + focusedProtein.type;
+    }
+
+    const oxygenCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'oxygen' );
+    const carbonDioxideCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'carbonDioxide' );
+    const sodiumCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'sodiumIon' );
+    const potassiumCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'potassiumIon' );
+    const glucoseCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'glucose' );
+
+    const simpleDiffusion = oxygenCrossed || carbonDioxideCrossed;
+
+    const hasFacilitatedDiffusionChannels = transportProteins.some( p =>
+      p instanceof LeakageChannel || p instanceof LigandGatedChannel || p instanceof VoltageGatedChannel
+    );
+    const hasActiveTransporters = transportProteins.some( p =>
+      p instanceof SodiumPotassiumPump || p instanceof SodiumGlucoseCotransporter
+    );
+    const hasNaKPump = transportProteins.some( p => p instanceof SodiumPotassiumPump );
+    const hasNaGlucoseCotransporter = transportProteins.some( p => p instanceof SodiumGlucoseCotransporter );
+
+    const sodiumPumpedOut = queue.some( event => event.solute.soluteType === 'sodiumIon' && event.transportProteinType === 'sodiumPotassiumPump' );
+    const potassiumPumpedIn = queue.some( event => event.solute.soluteType === 'potassiumIon' && event.transportProteinType === 'sodiumPotassiumPump' );
+    const sodiumShuttled = queue.some( event => event.solute.soluteType === 'sodiumIon' && event.transportProteinType === 'sodiumGlucoseCotransporter' );
+    const glucoseShuttled = queue.some( event => event.solute.soluteType === 'glucose' && event.transportProteinType === 'sodiumGlucoseCotransporter' );
+
+    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) );
+    const compareSoluteCompartmentsIfChanged = this.getCompareSoluteCompartmentsIfChanged(
+      solutesThatCrossed,
+      insideSoluteCountProperties,
+      outsideSoluteCountProperties
+    );
+
+    let response = '';
+
+    if ( simpleDiffusion ) {
+      if ( !hasActiveTransporters && !hasFacilitatedDiffusionChannels ) {
+        if ( oxygenCrossed && !carbonDioxideCrossed ) {
+          response = `Oxygen crossing membrane, Oxygen ${this.getSoluteComparisonString( 'oxygen', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+        }
+        else if ( !oxygenCrossed && carbonDioxideCrossed ) {
+          response = `Carbon Dioxide crossing membrane, Carbon Dioxide ${this.getSoluteComparisonString( 'carbonDioxide', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+        }
+        else if ( oxygenCrossed && carbonDioxideCrossed ) {
+          response = `Multiple solutes crossing membrane, ${compareSoluteCompartmentsIfChanged}`;
+        }
+      }
+      else if ( !hasActiveTransporters && hasFacilitatedDiffusionChannels ) {
+        response = `Multiple solutes crossing membrane, ${compareSoluteCompartmentsIfChanged}`;
+      }
+      else if ( hasActiveTransporters ) {
+        if ( hasNaKPump && !hasNaGlucoseCotransporter ) {
+          if ( sodiumPumpedOut && !potassiumPumpedIn ) {
+            response = `Multiple solutes crossing membrane and Sodium pumped outside, ${compareSoluteCompartmentsIfChanged}`;
+          }
+          else if ( !sodiumPumpedOut && potassiumPumpedIn ) {
+            response = `Multiple solutes crossing membrane and Potassium pumped inside, ${compareSoluteCompartmentsIfChanged}`;
+          }
+          else if ( sodiumPumpedOut && potassiumPumpedIn ) {
+            response = `Multiple solutes crossing membrane and Sodium pumped outside, Potassium pumped inside, ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+        else if ( hasNaGlucoseCotransporter && !hasNaKPump ) {
+          if ( sodiumShuttled && glucoseShuttled ) {
+            response = `Multiple solutes crossing membrane and Sodium shuttled with Glucose, ${compareSoluteCompartmentsIfChanged}.`;
+          }
+        }
+        else if ( hasNaKPump && hasNaGlucoseCotransporter ) {
+          if ( sodiumPumpedOut && sodiumShuttled && !potassiumPumpedIn ) {
+            response = `Multiple solutes crossing membrane and Sodium pumped outside and shuttled with Glucose, ${compareSoluteCompartmentsIfChanged}.`;
+          }
+          else if ( potassiumPumpedIn && sodiumPumpedOut && sodiumShuttled ) {
+            response = `Multiple solutes crossing membrane, Potassium pumped inside, sodium pumped outside and shuttled with glucose ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+      }
+    }
+    else {
+
+      // No simple diffusion
+      if ( !hasActiveTransporters && hasFacilitatedDiffusionChannels ) {
+        if ( sodiumCrossed && !potassiumCrossed ) {
+          response = `Sodium crossing membrane, Sodium ${this.getSoluteComparisonString( 'sodiumIon', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+        }
+        else if ( !sodiumCrossed && potassiumCrossed ) {
+          response = `Potassium crossing membrane, Potassium ${this.getSoluteComparisonString( 'potassiumIon', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+        }
+        else if ( sodiumCrossed && potassiumCrossed ) {
+          response = `Multiple solutes crossing membrane, ${compareSoluteCompartmentsIfChanged}`;
+        }
+      }
+      else if ( hasActiveTransporters && !hasFacilitatedDiffusionChannels ) {
+        if ( hasNaKPump && !hasNaGlucoseCotransporter ) {
+          if ( sodiumPumpedOut && !potassiumPumpedIn ) {
+            response = `Sodium pumped outside, Sodium ${this.getSoluteComparisonString( 'sodiumIon', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+          }
+          else if ( !sodiumPumpedOut && potassiumPumpedIn ) {
+            response = `Potassium pumped inside, Potassium, ${this.getSoluteComparisonString( 'potassiumIon', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+          }
+          else if ( sodiumPumpedOut && potassiumPumpedIn ) {
+            response = `Sodium pumped outside, Potassium pumped inside, ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+        else if ( hasNaGlucoseCotransporter && !hasNaKPump ) {
+          if ( sodiumShuttled && glucoseShuttled ) {
+            response = `Sodium and glucose shuttled across membrane, ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+        else if ( hasNaKPump && hasNaGlucoseCotransporter ) {
+          if ( sodiumPumpedOut && sodiumShuttled && !potassiumPumpedIn && !glucoseCrossed ) {
+            response = `Sodium pumped outside and shuttled with Glucose, ${compareSoluteCompartmentsIfChanged}.`;
+          }
+          else if ( potassiumPumpedIn && sodiumPumpedOut && sodiumShuttled ) {
+            response = `Potassium pumped inside, sodium pumped outside and shuttled with glucose ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+      }
+      else if ( hasActiveTransporters && hasFacilitatedDiffusionChannels ) {
+        if ( hasNaKPump && !hasNaGlucoseCotransporter ) {
+          if ( sodiumCrossed && !potassiumCrossed ) {
+            response = `Sodium crossing membrane and pumped outside, Sodium ${this.getSoluteComparisonString( 'sodiumIon', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+          }
+          else if ( !sodiumCrossed && potassiumCrossed ) {
+            response = `Potassium crossing membrane and pumped inside, Potassium ${this.getSoluteComparisonString( 'potassiumIon', insideSoluteCountProperties, outsideSoluteCountProperties )}`;
+          }
+          else if ( sodiumCrossed && potassiumCrossed ) {
+            response = `Multiple solutes crossing membrane and Sodium pumped outside, Potassium pumped inside, ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+        else if ( hasNaGlucoseCotransporter && !hasNaKPump ) {
+          if ( sodiumShuttled && glucoseShuttled && !potassiumCrossed ) {
+            response = `Sodium crossing and shuttled with glucose across membrane, ${compareSoluteCompartmentsIfChanged}`;
+          }
+          else if ( potassiumCrossed && sodiumShuttled && glucoseShuttled ) {
+            response = `Multiple solutes crossing membrane and Sodium shuttled with Glucose, ${compareSoluteCompartmentsIfChanged}.`;
+          }
+        }
+        else if ( hasNaKPump && hasNaGlucoseCotransporter ) {
+          if ( sodiumCrossed && glucoseCrossed && !potassiumCrossed ) {
+            response = `Multiple solutes crossing membrane and Sodium pumped outside and shuttled with Glucose, ${compareSoluteCompartmentsIfChanged}.`;
+          }
+          else if ( sodiumCrossed && potassiumCrossed && glucoseCrossed ) {
+            response = `Multiple solutes crossing membrane, Potassium pumped inside, sodium pumped outside and shuttled with glucose ${compareSoluteCompartmentsIfChanged}`;
+          }
+        }
+      }
+    }
+
+    return response;
+  }
+
+  private getCompareSoluteCompartmentsIfChanged(
+    solutesThatCrossed: SoluteType[],
+    insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
+    outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
+  ): string {
+    const changedComparisons: string[] = [];
+    solutesThatCrossed.forEach( soluteType => {
+      const comparison = MembraneTransportDescriber.getSoluteComparisonDescriptor(
+        outsideSoluteCountProperties[ soluteType ].value,
+        insideSoluteCountProperties[ soluteType ].value
+      );
+      if ( comparison !== this.previousSoluteComparisons[ soluteType ] ) {
+        const soluteName = soluteType;
+        const comparisonString = this.getSoluteComparisonString( soluteType, insideSoluteCountProperties, outsideSoluteCountProperties );
+        changedComparisons.push( `${soluteName}, ${comparisonString}` );
+      }
+      this.previousSoluteComparisons[ soluteType ] = comparison;
+    } );
+    return changedComparisons.join( ', ' );
+  }
+
+  private getSoluteComparisonString(
+    soluteType: SoluteType,
+    insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
+    outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
+  ): string {
+    const descriptor = MembraneTransportDescriber.getSoluteComparisonDescriptor(
+      outsideSoluteCountProperties[ soluteType ].value,
+      insideSoluteCountProperties[ soluteType ].value
+    );
+    return MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.comparison.format( {
+      amount: descriptor
+    } );
+  }
+
+  private static didSoluteTypeCross( queue: SoluteCrossedMembraneEvent[], soluteType: SoluteType ): boolean {
+    return queue.some( event => event.solute.soluteType === soluteType );
   }
 
   public static getSoluteComparisonDescriptor( outsideAmount: number, insideAmount: number ): SoluteComparisonDescriptor {
@@ -191,4 +325,4 @@ export default class SoluteConcentrationDescriber {
   }
 }
 
-membraneTransport.register( 'SoluteConcentrationDescriber', SoluteConcentrationDescriber );
+membraneTransport.register( 'MembraneTransportDescriber', MembraneTransportDescriber );

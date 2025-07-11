@@ -40,9 +40,9 @@ import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MembranePotentialDescriber from './MembranePotentialDescriber.js';
+import MembraneTransportDescriber from './MembraneTransportDescriber.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
-import SoluteConcentrationDescriber from './SoluteConcentrationDescriber.js';
 import SoluteConcentrationsAccordionBox from './SoluteConcentrationsAccordionBox.js';
 import SoluteControl from './SoluteControl.js';
 import SolutesPanel from './SolutesPanel.js';
@@ -76,7 +76,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     }, providedOptions );
     super( options );
 
-    const soluteConcentrationDescriber = new SoluteConcentrationDescriber( model, this );
+    const soluteConcentrationDescriber = new MembraneTransportDescriber( model, this );
     this.stepEmitter.addListener( dt => soluteConcentrationDescriber.step( dt ) );
     this.resetEmitter.addListener( () => soluteConcentrationDescriber.reset() );
 
@@ -340,9 +340,9 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.screenViewModelViewTransform = screenViewModelViewTransform;
 
-    model.soluteCrossedMembraneEmitter.addListener( ( particle, direction ) => {
+    model.soluteCrossedMembraneEmitter.addListener( event => {
       if ( model.crossingSoundsEnabledProperty.value ) {
-        MembraneTransportSounds.soluteCrossedMembrane( particle.type, direction );
+        MembraneTransportSounds.soluteCrossedMembrane( event.solute.type, event.direction );
       }
     } );
 

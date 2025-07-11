@@ -45,6 +45,7 @@ import TransportProtein from './proteins/TransportProtein.js';
 import { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import Solute from './Solute.js';
+import SoluteCrossedMembraneEvent from './SoluteCrossedMembraneEvent.js';
 import SoluteType, { ParticleType, SoluteControlSolutes } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -112,6 +113,10 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly chargesVisibleProperty: Property<boolean>;
   public readonly membranePotentialProperty: Property<( -70 ) | -50 | 30>;
 
+  // Property that holds the currently focused transport protein, or null if none is focused.
+  // Used for description, to speak details specifically about this protein.
+  public readonly focusedProteinProperty = new Property<TransportProtein | null>( null );
+
   public readonly ligandUnboundDueToNaturalCausesEmitter = new Emitter<[ Ligand ]>( {
     parameters: [ { valueType: Ligand } ]
   } );
@@ -132,12 +137,13 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly areLigandsAddedProperty: BooleanProperty;
 
   public readonly membraneSlots: Slot[];
-  public readonly soluteCrossedMembraneEmitter = new Emitter<[ Solute, 'outward' | 'inward' ]>( {
-    parameters: [
-      { valueType: Solute },
-      { validValues: [ 'outward', 'inward' ] }
-    ]
+
+  public readonly soluteCrossedMembraneEmitter = new Emitter<[ SoluteCrossedMembraneEvent ]>( {
+    parameters: [ { valueType: SoluteCrossedMembraneEvent } ]
   } );
+
+  // Enqueue events over time for description
+  public readonly descriptionEventQueue: SoluteCrossedMembraneEvent[] = [];
 
   // Updated lazily in step(), by checking the state of each ligand
   public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
@@ -247,6 +253,10 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
 
     this.membraneSlots.forEach( slot => slot.transportProteinProperty.link( () => this.updateTransportProteinCounts() ) );
+
+    this.soluteCrossedMembraneEmitter.addListener( soluteCrossedMembraneEvent => {
+      this.descriptionEventQueue.push( soluteCrossedMembraneEvent );
+    } );
   }
 
   /**
@@ -315,6 +325,7 @@ export default class MembraneTransportModel extends PhetioObject {
 
     this.solutes.length = 0;
     this.updateSoluteCounts();
+    this.clearDescriptionEventQueue();
   }
 
   /**
@@ -323,6 +334,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public reset(): void {
     this.resetEmitter.emit();
     this.updateSoluteCounts();
+    this.clearDescriptionEventQueue();
   }
 
   /**
@@ -469,6 +481,17 @@ export default class MembraneTransportModel extends PhetioObject {
 
   public getFilledSlots(): Slot[] {
     return this.membraneSlots.filter( slot => slot.isFilled() );
+  }
+
+  /**
+   * Returns transport proteins that are currently in the model.
+   */
+  public getTransportProteins(): TransportProtein[] {
+    return this.getFilledSlots().map( slot => slot.transportProteinProperty.value! );
+  }
+
+  public clearDescriptionEventQueue(): void {
+    this.descriptionEventQueue.length = 0;
   }
 
   /**
