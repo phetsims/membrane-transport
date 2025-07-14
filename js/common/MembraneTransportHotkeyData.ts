@@ -25,9 +25,14 @@ function createHotkeyData( keys: OneKeyStroke[],
 }
 
 export default class MembraneTransportHotkeyData {
+  public static readonly SELECT_LEFT: OneKeyStroke[] = [ 'arrowLeft', 'a' ];
+  public static readonly SELECT_RIGHT: OneKeyStroke[] = [ 'arrowRight', 'd' ];
+
   public static readonly interactiveSlotsNode = {
-    selection: createHotkeyData(
-      [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+    selection: createHotkeyData( [
+        ...MembraneTransportHotkeyData.SELECT_LEFT,
+        ...MembraneTransportHotkeyData.SELECT_RIGHT
+      ],
       new StringProperty( 'Select a slot' )
     ),
     releaseProtein: createHotkeyData(
@@ -45,8 +50,10 @@ export default class MembraneTransportHotkeyData {
   };
 
   public static readonly observationWindowTransportProteinLayer = {
-    selection: createHotkeyData(
-      [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+    selection: createHotkeyData( [
+        ...MembraneTransportHotkeyData.SELECT_LEFT,
+        ...MembraneTransportHotkeyData.SELECT_RIGHT
+      ],
       new StringProperty( 'Select a protein' )
     ),
     grabProtein: createHotkeyData(

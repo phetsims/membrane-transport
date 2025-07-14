@@ -232,7 +232,7 @@ export default class InteractiveSlotsNode extends Node {
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const allSlotsCount = slots.length;
-        const delta = [ 'arrowLeft', 'a' ].includes( keysPressed ) ? -1 : 1;
+        const delta = MembraneTransportHotkeyData.SELECT_LEFT.includes( keysPressed ) ? -1 : 1;
 
         // If off the membrane, we can only move to the left, and the next index should be slots.length;
         const originalIndex = this.selectedIndex;
