@@ -125,51 +125,6 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 *   **`screenViewModelViewTransform`:** A `ModelViewTransform2` specific to the `ScreenView` that helps position UI
     elements relative to the `ObservationWindow`.
 
-## Specific Features Implementation Details
-
-### Ligand-Gated Channels
-
--   Channels switch between closed and open states based on ligand presence.
--   **Binding Sites** detect ligands, changing the state to open.
--   Open channels allow diffusion of specific particle types (e.g., sodium ions) driven by concentration gradients (no
-    active pulling).
--   Visual feedback indicates channel states clearly; channels are either open or closed (binary state).
-
-### Voltage-Gated Channels
-
-Channels respond to membrane voltage, modeled as the net charge difference between membrane sides:
-
--   Channels open when ion imbalance crosses a preset threshold.
--   Diffusion is passive; ions flow down gradients, potentially altering voltage and causing channels to close
-    dynamically.
-
-### Sodium-Potassium Pump (Active Transport)
-
-The simulation includes a Na⁺/K⁺ pump actively transporting ions against their gradients. Its mechanism involves a
-sequence of states:
-*   3 x Sodium bind
-*   ATP binds and releases PO4, ADP drifts, PO4 stays attached
-*   Conformation change
-*   3 x Sodium released
-*   2 x K bind
-*   Conformation change
-*   PO4 release
-*   2 x K release
-
-### Glucose Transporters (Facilitated Diffusion)
-
-Glucose transporters model passive transport of glucose molecules:
-
--   Only transport glucose, distinguished visually.
--   Simulate a simplified carrier mechanism with cooldown between transports, preventing instantaneous saturation.
--   Bidirectional, always down concentration gradients, with simple visual feedback during transport.
-
-### Passive Diffusion of Gases
-
-The simulation supports passive diffusion of O₂ and CO₂ molecules directly across the membrane without the presence of
-channel proteins. Their movement across the membrane occurs spontaneously, driven by concentration gradients alone.
-The "Hollywood" bias (`checkGradientForCrossing`) is applied to these particles to ensure pedagogically sound macroscopic behavior.
-
 ## Accessibility and Alternative Input
 
 The simulation supports keyboard navigation and assistive technologies:
@@ -207,4 +162,4 @@ when added to slots, and their state is also serialized as part of the `Membrane
 -   The model and view are designed to be lightweight, with transient nodes used for dragging interactions to avoid
     overhead on persistent objects.
 -   The "Hollywood" bias for passive diffusion helps manage the visual behavior of a small number of particles without
-    requiring a large particle count for realistic macroscopic behavior.
+    requiring a large particle count for realistic macroscopic behavior. See `checkGradientForCrossing` and `BIAS_THRESHOLD`.
