@@ -95,7 +95,8 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     const timesToPlay = Math.min( available, desiredAmount );
 
     // Calculate the minimum playback rate based on the current concentration.
-    const minPlaybackRate = 1 + newValue / 20;
+    // Dividing the newValue reduces the playback rate and creates more subtle changes across the range.
+    const minPlaybackRate = 1 + ( newValue / this.coarseDelta );
 
     let delayAmount = 0;
     _.times( timesToPlay, () => {
