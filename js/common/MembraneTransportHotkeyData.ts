@@ -52,13 +52,6 @@ export default class MembraneTransportHotkeyData {
       new StringProperty( 'Grab protein' )
     )
   };
-
-  public static readonly membraneTransportScreenView = {
-    toggleCaptureRadius: createHotkeyData(
-      [ 'm' ],
-      new StringProperty( 'Toggle capture radius' )
-    )
-  };
 }
 
 membraneTransport.register( 'MembraneTransportHotkeyData', MembraneTransportHotkeyData );

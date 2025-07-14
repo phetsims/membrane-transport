@@ -10,13 +10,12 @@ incorporating modern PhET frameworks and updated pedagogical features.
 
 - **Included:**
   - PhET-iO instrumentation
-  - core description
-  - description Tier 2
+  - Interactive Description
   - sonification
-  - keyboard support and interactive highlights
+  - Interactive highlights
   - dynamic locales
   - sim-specific preferences
-  - voicing (core)
+  - Core Voicing
   - pan/zoom
 
 - **Excluded**
@@ -31,12 +30,12 @@ incorporating modern PhET frameworks and updated pedagogical features.
     screens.
 *   **Transient Short-Lived Nodes**: We have taken efforts to keep the model and view lightweight. For example, when
     dragging a transport protein, a transient non-PhET-iO instrumented Node is temporarily created. When dropping the
-    channel, the transient node is removed and the transport protein is added to the model. For the `GrabSortInteraction`,
-    it operates on transient nodes as well. Preferring transient, short-lived Nodes helps us keep each individual node
-    simpler and more manageable, as opposed to if we had a single Node that had to handle all modalities.
-*   **Strings** Since it supports full description, the simulation has extensive usage of complex strings. At the time of
-    development, the lead description designer identified this as the most complex description effort undertaken so far.
-    We use Fluent for the strings, as described in `phet-info/doc/strings-i18n-yaml-fluent.md`.
+    channel, the transient node is removed and the transport protein is added to the model. Preferring transient,
+    short-lived Nodes helps us keep each individual node simpler and more manageable, as opposed to if we had a
+    single Node that had to handle all modalities.
+*   **Strings** Since this sim supports Interactive Description, the simulation has extensive usage of complex strings.
+    At the time of  development, the lead description designer identified this as the most complex description effort 
+    undertaken so far. We use Fluent for the strings, as described in `phet-info/doc/strings-i18n-yaml-fluent.md`.
 *   **MembraneTransportConstants** is implemented via static attributes in a class, so the values can refer to each other
     in the declaration. This is unlike other simulations that export const and use file-specific local variables for
     cross-references. This also helps with searchability, since values are referred to the same way everywhere.
@@ -49,12 +48,6 @@ The simulation uses a 2D coordinate system. The `ObservationWindow` defines the 
 A `ModelViewTransform2` instance (`MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM`) is used to map
 model coordinates to view coordinates within the `ObservationWindow`. The `MembraneTransportScreenView` also maintains
 its own `screenViewModelViewTransform` to position UI components relative to the observation window.
-
-### Query Parameters
-
-Sim-specific query parameters are not explicitly documented in a dedicated file like `MOTHAQueryParameters.ts` or `NaturalSelectionQueryParameters.ts`.
-However, the `phet.chipper.queryParameters.dev` flag is used in `MembraneTransportScreenView.ts` for development-time
-visualizations (e.g., `Circle` at the origin).
 
 ### Memory Management
 
@@ -166,8 +159,6 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 *   **`forwardFromKeyboard`:** Facilitates keyboard interaction for placing transport proteins from the toolbox into slots.
 *   **`screenViewModelViewTransform`:** A `ModelViewTransform2` specific to the `ScreenView` that helps position UI
     elements relative to the `ObservationWindow`.
-*   **Keyboard Listeners:** Global keyboard listeners are used for specific debug features, such as toggling the
-    `CAPTURE_RADIUS_PROPERTY`.
 *   **Accessibility (PDOM):** The view extensively uses `ParallelDOM` for screen reader support, with explicit `pdomOrder`
     definitions for various UI elements to ensure a logical navigation flow.
 *   **Sounds:** `MembraneTransportSounds.soluteCrossedMembrane` is triggered when solutes cross the membrane, based on

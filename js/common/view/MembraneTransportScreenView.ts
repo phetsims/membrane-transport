@@ -19,7 +19,6 @@ import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
-import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
@@ -32,10 +31,8 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
-import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
@@ -328,15 +325,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Circle( 5, { fill: 'red', opacity: 0.5, center: screenViewModelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ) } ) );
     }
-
-    // Toggle the capture radius
-    KeyboardListener.createGlobal( this, {
-      keyStringProperties: MembraneTransportHotkeyData.membraneTransportScreenView.toggleCaptureRadius.keyStringProperties, fire: () => {
-        const initialValue = CAPTURE_RADIUS_PROPERTY.initialValue;
-        CAPTURE_RADIUS_PROPERTY.value = CAPTURE_RADIUS_PROPERTY.value === initialValue ? initialValue * 100 : initialValue;
-        console.log( 'Capture radius: ', CAPTURE_RADIUS_PROPERTY.value );
-      }
-    } );
 
     this.screenViewModelViewTransform = screenViewModelViewTransform;
 

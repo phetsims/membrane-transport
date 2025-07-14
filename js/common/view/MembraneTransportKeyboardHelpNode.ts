@@ -37,8 +37,7 @@ export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboard
       ),
       new KeyboardHelpSection( 'TODO: title', [
         KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.observationWindowTransportProteinLayer.selection ),
-        KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.observationWindowTransportProteinLayer.grabProtein ),
-        KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.membraneTransportScreenView.toggleCaptureRadius )
+        KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.observationWindowTransportProteinLayer.grabProtein )
       ] )
     ];
 
