@@ -8,7 +8,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -25,6 +24,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
@@ -251,22 +251,22 @@ export default class SoluteControl extends Voicing( Panel ) {
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
     const keyboardListener = new KeyboardListener( {
       keyStringProperties: HotkeyData.combineKeyStringProperties( [
-        SoluteControl.COARSE_INCREMENT_HOTKEY_DATA,
-        SoluteControl.COARSE_DECREMENT_HOTKEY_DATA,
-        SoluteControl.FINE_INCREMENT_HOTKEY_DATA,
-        SoluteControl.FINE_DECREMENT_HOTKEY_DATA
+        MembraneTransportHotkeyData.soluteControl.coarseIncrement,
+        MembraneTransportHotkeyData.soluteControl.coarseDecrement,
+        MembraneTransportHotkeyData.soluteControl.fineIncrement,
+        MembraneTransportHotkeyData.soluteControl.fineDecrement
       ] ),
       fire: ( event, keysPressed, listener ) => {
-        if ( SoluteControl.COARSE_INCREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        if ( MembraneTransportHotkeyData.soluteControl.coarseIncrement.hasKeyStroke( keysPressed ) ) {
           incrementCoarseButton.pdomClick();
         }
-        else if ( SoluteControl.COARSE_DECREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.soluteControl.coarseDecrement.hasKeyStroke( keysPressed ) ) {
           decrementCoarseButton.pdomClick();
         }
-        else if ( SoluteControl.FINE_INCREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.soluteControl.fineIncrement.hasKeyStroke( keysPressed ) ) {
           incrementFineButton.pdomClick();
         }
-        else if ( SoluteControl.FINE_DECREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.soluteControl.fineDecrement.hasKeyStroke( keysPressed ) ) {
           decrementFineButton.pdomClick();
         }
         else {
@@ -279,27 +279,6 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
     this.addInputListener( keyboardListener );
   }
-
-  private static readonly COARSE_INCREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'arrowRight' ), new Property( 'arrowUp' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl coarse increment'
-  } );
-  private static readonly COARSE_DECREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'arrowLeft' ), new Property( 'arrowDown' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl coarse decrement'
-  } );
-  private static readonly FINE_INCREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'shift+arrowRight' ), new Property( 'shift+arrowUp' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl fine increment'
-  } );
-  private static readonly FINE_DECREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'shift+arrowLeft' ), new Property( 'shift+arrowDown' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl fine decrement'
-  } );
 }
 
 membraneTransport.register( 'SoluteControl', SoluteControl );

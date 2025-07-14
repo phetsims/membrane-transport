@@ -54,6 +54,25 @@ export default class MembraneTransportHotkeyData {
       new StringProperty( 'Grab protein' )
     )
   };
+
+  public static readonly soluteControl = {
+    coarseIncrement: createHotkeyData(
+      [ 'arrowRight', 'arrowUp' ],
+      new StringProperty( 'Coarse increment solute' )
+    ),
+    coarseDecrement: createHotkeyData(
+      [ 'arrowLeft', 'arrowDown' ],
+      new StringProperty( 'Coarse decrement solute' )
+    ),
+    fineIncrement: createHotkeyData(
+      [ 'shift+arrowRight', 'shift+arrowUp' ],
+      new StringProperty( 'Fine increment solute' )
+    ),
+    fineDecrement: createHotkeyData(
+      [ 'shift+arrowLeft', 'shift+arrowDown' ],
+      new StringProperty( 'Fine decrement solute' )
+    )
+  };
 }
 
 membraneTransport.register( 'MembraneTransportHotkeyData', MembraneTransportHotkeyData );
