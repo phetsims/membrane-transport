@@ -115,6 +115,10 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 *   **`TransportProteinPanel` and `TransportProteinToolNode`:** UI for selecting and adding transport proteins to the membrane.
 *   **`TransportProteinDragNode`:** A transient `Node` created when a transport protein is dragged from the toolbox or
     moved on the membrane. It handles the visual representation and interaction during dragging.
+*   ** `ObservationWindowTransportProteinLayer`:** The layer for interactive transport proteins, which implements
+    selecting a protein to grab with alternative input.
+*   ** `InteractiveSlotsNode`:** Implements sorting transport proteins with alternative input, and works in tandem with
+    `ObservationWindowTransportProteinLayer` to manage the interaction of transport proteins in slots.
 
 ### View Logic and Interactions
 
