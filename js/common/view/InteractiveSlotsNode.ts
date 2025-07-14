@@ -465,11 +465,15 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedType = null;
     this.selectedIndex = 0;
 
-    if ( disposeIcon && this.grabbedNode ) {
-      this.grabbedNode.dispose();
-    }
-    this.grabbedNode = null;
+    if ( this.grabbedNode ) {
+      this.grabbedNode.release();
 
+      if ( disposeIcon ) {
+        this.grabbedNode.dispose();
+      }
+    }
+
+    this.grabbedNode = null;
     this.grabbedProperty.value = false;
   }
 
@@ -517,23 +521,20 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createTemporaryProteinNode( type, slot, toolNode );
 
-    // On grab, we should hear a "grab" sound instead of other interaction sounds.
-    this.grabbedNode.canPlaySounds = false;
-
     // Alert 'grabbed' after so that it will interrupt the focus change read above.
     this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
 
-    MembraneTransportSounds.transportProteinGrabbed();
+    this.grabbedNode.grab( () => {
 
-    // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
-    this.grabbedProperty.value = true;
+      // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
+      this.grabbedProperty.value = true;
 
-    this.updateGrabHighlights();
+      // Update the interactive and focus highlights.
+      this.updateGrabHighlights();
 
-    this.updateFocus();
-
-    // After being grabbed, allow the default interaction sounds to play.
-    this.grabbedNode.canPlaySounds = true;
+      // Move focus to the grabbed Node.
+      this.updateFocus();
+    } );
   }
 
   /**

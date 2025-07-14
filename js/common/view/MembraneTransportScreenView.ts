@@ -380,7 +380,6 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const channelDragNode = this.createTransportProteinDragNode( modelPosition, type, origin );
     channelDragNode.press( event );
-    MembraneTransportSounds.transportProteinGrabbed();
   }
 
   /**

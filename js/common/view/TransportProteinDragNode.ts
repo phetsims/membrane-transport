@@ -39,7 +39,7 @@ export default class TransportProteinDragNode extends Node {
 
   public constructor(
     view: MembraneTransportScreenView,
-    observationWindow: ObservationWindow,
+    private readonly observationWindow: ObservationWindow,
     screenViewModelViewTransform: ModelViewTransform2,
     modelPosition: Vector2,
     visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
@@ -68,37 +68,15 @@ export default class TransportProteinDragNode extends Node {
       return screenViewModelViewTransform.viewToModelBounds( visibleBounds );
     } );
 
-    const getClosestSlotDragIndicatorNode = () => {
-
-      // Check the observation window to find the closest available target we overlap
-      // If any rectangle overlaps, change its stroke color to red, Change all others back to black
-      const overlappingSlotDragIndicatorNodes = observationWindow.slotDragIndicatorNodes.filter( slotDragIndicatorNode => {
-        return slotDragIndicatorNode.globalBounds.intersectsBounds( this.globalBounds );
-      } );
-
-      return _.sortBy( overlappingSlotDragIndicatorNodes, slotDragIndicatorNode => {
-        return slotDragIndicatorNode.globalBounds.center.distance( this.globalBounds.center );
-      } )[ 0 ];
-    };
-
     // eslint-disable-next-line consistent-this,@typescript-eslint/no-this-alias
     const myself = this;
-
-    const updateHighlight = () => {
-      const closest = getClosestSlotDragIndicatorNode();
-
-      observationWindow.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-        slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'rgb(0, 173, 29)' : 'white';
-        slotDragIndicatorNode.fill = slotDragIndicatorNode === closest ? 'rgba(0, 173, 29, 0.2)' : 'rgba( 0, 0, 0, 0.2 )';
-      } );
-    };
 
     const inContactWithWallProperty = new DerivedProperty( [ positionProperty, modelBoundsProperty ], ( position, bounds ) => {
       return position.x === bounds.minX || position.x === bounds.maxX || position.y === bounds.minY || position.y === bounds.maxY;
     } );
 
     const slotHoverIndexProperty = new DerivedProperty( [ positionProperty ], position => {
-      const closest = getClosestSlotDragIndicatorNode();
+      const closest = observationWindow.getClosestSlotDragIndicatorNode( this.globalBounds );
       if ( closest ) {
         return observationWindow.slotDragIndicatorNodes.indexOf( closest );
       }
@@ -122,19 +100,11 @@ export default class TransportProteinDragNode extends Node {
       positionProperty: this.positionProperty,
       transform: screenViewModelViewTransform,
       tandem: Tandem.OPT_OUT,
-      start: () => {
-        updateHighlight();
-        observationWindow.setSlotDragIndicatorsVisible( true );
-      },
-      drag: () => {
-        updateHighlight();
-      },
       end: () => {
-
-        observationWindow.setSlotDragIndicatorsVisible( false );
+        this.release();
 
         // drop into the selected target, or move back to the toolbox
-        const closest = getClosestSlotDragIndicatorNode();
+        const closest = observationWindow.getClosestSlotDragIndicatorNode( this.globalBounds );
 
         if ( closest ) {
 
@@ -225,6 +195,7 @@ export default class TransportProteinDragNode extends Node {
     this.addDisposable( this.dragListener );
 
     slotHoverIndexProperty.lazyLink( ( newValue, oldValue ) => {
+      observationWindow.updateSlotDragIndicatorHighlights( this.globalBounds );
 
       if ( newValue !== null && this.canPlaySounds ) {
         MembraneTransportSounds.slotHover( newValue );
@@ -233,11 +204,34 @@ export default class TransportProteinDragNode extends Node {
   }
 
   public press( event: PressListenerEvent ): void {
+    this.grab( () => {
+      this.dragListener.press( event, this );
+    } );
+  }
 
-    // Don't play the interaction sound on first press because we should hear a default 'grab' sound instead.
+  /**
+   * General work to be done whenever this Node is 'grabbed'.
+   * @param onGrab
+   */
+  public grab( onGrab: () => void ): void {
+    this.observationWindow.updateSlotDragIndicatorHighlights( this.globalBounds );
+    this.observationWindow.setSlotDragIndicatorsVisible( true );
+    MembraneTransportSounds.transportProteinGrabbed();
+
+    // When the Node is grabbed, we want to hear the 'grabbed' sound, so disable the custom interaction
+    // sounds until the Node is further dragged over slots.
     this.canPlaySounds = false;
-    this.dragListener.press( event, this );
+    onGrab();
     this.canPlaySounds = true;
+  }
+
+  /**
+   * General work to be done whenever this Node is 'released'.
+   * This could not play 'release' sounds because the logic for selecting the right sound
+   * is more complicated than a single 'released' sound.
+   */
+  public release(): void {
+    this.observationWindow.setSlotDragIndicatorsVisible( false );
   }
 
   public setModelPosition( modelPosition: Vector2 ): void {
