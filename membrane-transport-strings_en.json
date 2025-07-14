@@ -59,7 +59,7 @@
   "sodiumGlucoseCotransporter": {
     "value": "Na<sup>+</sup>/Glucose<br>Cotransporter"
   },
-  "membranePotential_mV": {
+  "membranePotentialMV": {
     "value": "Membrane Potential (mV)"
   },
   "charges": {

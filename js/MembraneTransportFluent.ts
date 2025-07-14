@@ -47,7 +47,7 @@ addToMapIfDefined( 'activeTransporters', 'activeTransportersStringProperty' );
 addToMapIfDefined( 'leakageChannels', 'leakageChannelsStringProperty' );
 addToMapIfDefined( 'naPlusKPlusPump', 'naPlusKPlusPumpStringProperty' );
 addToMapIfDefined( 'sodiumGlucoseCotransporter', 'sodiumGlucoseCotransporterStringProperty' );
-addToMapIfDefined( 'membranePotential_mV', 'membranePotential_mVStringProperty' );
+addToMapIfDefined( 'membranePotentialMV', 'membranePotentialMVStringProperty' );
 addToMapIfDefined( 'charges', 'chargesStringProperty' );
 addToMapIfDefined( 'addLigands', 'addLigandsStringProperty' );
 addToMapIfDefined( 'removeLigands', 'removeLigandsStringProperty' );
@@ -228,8 +228,8 @@ const MembraneTransportFluent = {
   leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'leakageChannels', _.get( MembraneTransportStrings, 'leakageChannelsStringProperty' ) ),
   naPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'naPlusKPlusPump', _.get( MembraneTransportStrings, 'naPlusKPlusPumpStringProperty' ) ),
   sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'sodiumGlucoseCotransporterStringProperty' ) ),
-  _comment_3: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotential_mV"} ),
-  membranePotential_mVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotential_mV', _.get( MembraneTransportStrings, 'membranePotential_mVStringProperty' ) ),
+  _comment_3: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotentialMV"} ),
+  membranePotentialMVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotentialMV', _.get( MembraneTransportStrings, 'membranePotentialMVStringProperty' ) ),
   chargesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'charges', _.get( MembraneTransportStrings, 'chargesStringProperty' ) ),
   _comment_4: new FluentComment( {"comment":"Ligands Section","associatedKey":"addLigands"} ),
   addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'addLigands', _.get( MembraneTransportStrings, 'addLigandsStringProperty' ) ),

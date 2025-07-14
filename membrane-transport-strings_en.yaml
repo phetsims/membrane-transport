@@ -32,7 +32,7 @@ naPlusKPlusPump:                                        Na<sup>+</sup>/K<sup>+</
 sodiumGlucoseCotransporter:                             Na<sup>+</sup>/Glucose<br>Cotransporter
 
 # Membrane Potential Section
-membranePotential_mV:                                   Membrane Potential (mV)
+membranePotentialMV:                                   Membrane Potential (mV)
 charges:                                                Charges
 
 # Ligands Section
