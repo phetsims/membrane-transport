@@ -3,6 +3,8 @@
 /**
  * HotkeyData for the KeyboardListeners in MembraneTransport.
  *
+ * TODO: i18n and finish content, see https://github.com/phetsims/membrane-transport/issues/46
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
