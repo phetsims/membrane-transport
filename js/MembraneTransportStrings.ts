@@ -40,15 +40,21 @@ type StringsType = {
   'chargesStringProperty': LocalizedStringProperty;
   'addLigandsStringProperty': LocalizedStringProperty;
   'removeLigandsStringProperty': LocalizedStringProperty;
-  'animateLipidsStringProperty': LocalizedStringProperty;
-  'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
-  'glucoseMetabolismStringProperty': LocalizedStringProperty;
-  'glucoseMetabolismDescriptionStringProperty': LocalizedStringProperty;
+  'animateLipids': {
+    'labelStringProperty': LocalizedStringProperty;
+    'descriptionStringProperty': LocalizedStringProperty;
+  };
+  'glucoseMetabolism': {
+    'labelStringProperty': LocalizedStringProperty;
+    'descriptionStringProperty': LocalizedStringProperty;
+  };
   'preferencesDialog': {
     'audio': {
       'sounds': {
-        'stereoSoundsStringProperty': LocalizedStringProperty;
-        'stereoSoundsDescriptionStringProperty': LocalizedStringProperty;
+        'stereoSounds': {
+          'labelStringProperty': LocalizedStringProperty;
+          'descriptionStringProperty': LocalizedStringProperty;
+        }
       }
     }
   };

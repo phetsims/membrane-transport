@@ -29,9 +29,9 @@ export default class MembraneTransportSoundPreferencesNode extends VBox {
       children: [
         new PreferencesControl( {
           isDisposable: false,
-          labelNode: new Text( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoSoundsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+          labelNode: new Text( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoSounds.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
           controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
-          descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+          descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoSounds.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
           tandem: tandem.createTandem( 'stereoCrossingSoundsEnabledControl' ),
           phetioFeatured: true,
           visiblePropertyOptions: {

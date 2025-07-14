@@ -71,22 +71,22 @@
   "removeLigands": {
     "value": "Remove Ligands"
   },
-  "animateLipids": {
+  "animateLipids.label": {
     "value": "Animate Lipids"
   },
-  "animateLipidsDescription": {
+  "animateLipids.description": {
     "value": "Whether the phospholipids forming the cell membrane should be animated."
   },
-  "glucoseMetabolism": {
+  "glucoseMetabolism.label": {
     "value": "Glucose Metabolism"
   },
-  "glucoseMetabolismDescription": {
+  "glucoseMetabolism.description": {
     "value": "Glucose fades from the inside of the cell. Barcharts display constant high concentration of glucose inside the cell."
   },
-  "preferencesDialog.audio.sounds.stereoSounds": {
+  "preferencesDialog.audio.sounds.stereoSounds.label": {
     "value": "Stereo Sounds"
   },
-  "preferencesDialog.audio.sounds.stereoSoundsDescription": {
+  "preferencesDialog.audio.sounds.stereoSounds.description": {
     "value": "Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels."
   },
   "soluteConcentrations": {

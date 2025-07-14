@@ -51,12 +51,12 @@ addToMapIfDefined( 'membranePotentialMV', 'membranePotentialMVStringProperty' );
 addToMapIfDefined( 'charges', 'chargesStringProperty' );
 addToMapIfDefined( 'addLigands', 'addLigandsStringProperty' );
 addToMapIfDefined( 'removeLigands', 'removeLigandsStringProperty' );
-addToMapIfDefined( 'animateLipids', 'animateLipidsStringProperty' );
-addToMapIfDefined( 'animateLipidsDescription', 'animateLipidsDescriptionStringProperty' );
-addToMapIfDefined( 'glucoseMetabolism', 'glucoseMetabolismStringProperty' );
-addToMapIfDefined( 'glucoseMetabolismDescription', 'glucoseMetabolismDescriptionStringProperty' );
-addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds', 'preferencesDialog.audio.sounds.stereoSoundsStringProperty' );
-addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSoundsDescription', 'preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty' );
+addToMapIfDefined( 'animateLipids_label', 'animateLipids.labelStringProperty' );
+addToMapIfDefined( 'animateLipids_description', 'animateLipids.descriptionStringProperty' );
+addToMapIfDefined( 'glucoseMetabolism_label', 'glucoseMetabolism.labelStringProperty' );
+addToMapIfDefined( 'glucoseMetabolism_description', 'glucoseMetabolism.descriptionStringProperty' );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds_label', 'preferencesDialog.audio.sounds.stereoSounds.labelStringProperty' );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds_description', 'preferencesDialog.audio.sounds.stereoSounds.descriptionStringProperty' );
 addToMapIfDefined( 'soluteConcentrations', 'soluteConcentrationsStringProperty' );
 addToMapIfDefined( 'crossingHighlights', 'crossingHighlightsStringProperty' );
 addToMapIfDefined( 'crossingSounds', 'crossingSoundsStringProperty' );
@@ -234,22 +234,28 @@ const MembraneTransportFluent = {
   _comment_4: new FluentComment( {"comment":"Ligands Section","associatedKey":"addLigands"} ),
   addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'addLigands', _.get( MembraneTransportStrings, 'addLigandsStringProperty' ) ),
   removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'removeLigands', _.get( MembraneTransportStrings, 'removeLigandsStringProperty' ) ),
-  _comment_5: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"animateLipids"} ),
-  animateLipidsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids', _.get( MembraneTransportStrings, 'animateLipidsStringProperty' ) ),
-  animateLipidsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipidsDescription', _.get( MembraneTransportStrings, 'animateLipidsDescriptionStringProperty' ) ),
-  glucoseMetabolismStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolism', _.get( MembraneTransportStrings, 'glucoseMetabolismStringProperty' ) ),
-  glucoseMetabolismDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolismDescription', _.get( MembraneTransportStrings, 'glucoseMetabolismDescriptionStringProperty' ) ),
+  animateLipids: {
+    _comment_0: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"animateLipids.label"} ),
+    labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids_label', _.get( MembraneTransportStrings, 'animateLipids.labelStringProperty' ) ),
+    descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids_description', _.get( MembraneTransportStrings, 'animateLipids.descriptionStringProperty' ) )
+  },
+  glucoseMetabolism: {
+    labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolism_label', _.get( MembraneTransportStrings, 'glucoseMetabolism.labelStringProperty' ) ),
+    descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolism_description', _.get( MembraneTransportStrings, 'glucoseMetabolism.descriptionStringProperty' ) )
+  },
   preferencesDialog: {
     audio: {
       sounds: {
-        stereoSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSounds', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoSoundsStringProperty' ) ),
-        stereoSoundsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSoundsDescription', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoSoundsDescriptionStringProperty' ) )
+        stereoSounds: {
+          labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSounds_label', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoSounds.labelStringProperty' ) ),
+          descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSounds_description', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoSounds.descriptionStringProperty' ) )
+        }
       }
     }
   },
-  _comment_6: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrations"} ),
+  _comment_5: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrations"} ),
   soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations', _.get( MembraneTransportStrings, 'soluteConcentrationsStringProperty' ) ),
-  _comment_7: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"crossingHighlights"} ),
+  _comment_6: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"crossingHighlights"} ),
   crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingHighlights', _.get( MembraneTransportStrings, 'crossingHighlightsStringProperty' ) ),
   crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingSounds', _.get( MembraneTransportStrings, 'crossingSoundsStringProperty' ) ),
   a11y: {
