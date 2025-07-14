@@ -20,9 +20,14 @@ import membraneTransport from '../../membraneTransport.js';
 
 export default class SoluteSpinnerSoundGenerator extends ValueChangeSoundPlayer {
 
-  public constructor( range: Range ) {
+  /**
+   * @param coarseDelta - The amount of change in solutes when the 'coarse' button is pressed. This is used to
+   *                      normalize the number of 'add solute' sounds that are played every event.
+   * @param range
+   */
+  public constructor( coarseDelta: number, range: Range ) {
 
-    const sliderMiddleSoundGenerator = new SliderMiddleRangeSoundGenerator( {
+    const sliderMiddleSoundGenerator = new SliderMiddleRangeSoundGenerator( coarseDelta, {
       initialOutputLevel: 0.1
     } );
     soundManager.addSoundGenerator( sliderMiddleSoundGenerator );
@@ -41,10 +46,12 @@ export default class SoluteSpinnerSoundGenerator extends ValueChangeSoundPlayer 
  */
 class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPlayer {
   private readonly baseSoundClip: SoundClip;
+  private readonly coarseDelta: number;
 
-  public constructor( options?: Partial<SoundGeneratorOptions> ) {
+  public constructor( coarseDelta: number, options?: Partial<SoundGeneratorOptions> ) {
 
     super( options );
+    this.coarseDelta = coarseDelta;
 
     // Create a dynamics compressor so that the output of this sound generator doesn't go too high when lots of sounds
     // are being played.
@@ -77,9 +84,14 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     // Set a value for the number of playing instances of the clip at which we limit additional plays.  This helps to
     // prevent too many instances of the clip from playing simultaneously, which can sound a bit chaotic.
     const playingInstancesLimitThreshold = 5;
-
     const available = playingInstancesLimitThreshold - this.baseSoundClip.getNumberOfPlayingInstances();
-    const desiredAmount = Math.abs( newValue - oldValue );
+
+    // The number of tones to play is based on the number of solutes added, normalized by the number
+    // that you can add in one click of the coarse button.
+    const delta = Math.abs( newValue - oldValue );
+    const normalizedDelta = delta / this.coarseDelta;
+    const desiredAmount = Math.floor( normalizedDelta * playingInstancesLimitThreshold );
+
     const timesToPlay = Math.min( available, desiredAmount );
 
     // Calculate the minimum playback rate based on the current concentration.
