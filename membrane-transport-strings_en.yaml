@@ -28,7 +28,7 @@ ligandGatedChannels:                                    Ligand-gated Channels
 activeTransporters:                                     Active Transporters
 leakageChannels:                                        Leakage Channels
 
-NaPlusKPlusPump:                                        Na<sup>+</sup>/K<sup>+</sup><br>Pump
+naPlusKPlusPump:                                        Na<sup>+</sup>/K<sup>+</sup><br>Pump
 sodiumGlucoseCotransporter:                             Na<sup>+</sup>/Glucose<br>Cotransporter
 
 # Membrane Potential Section

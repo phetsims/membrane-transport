@@ -53,7 +53,7 @@
   "leakageChannels": {
     "value": "Leakage Channels"
   },
-  "NaPlusKPlusPump": {
+  "naPlusKPlusPump": {
     "value": "Na<sup>+</sup>/K<sup>+</sup><br>Pump"
   },
   "sodiumGlucoseCotransporter": {

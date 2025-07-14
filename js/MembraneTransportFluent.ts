@@ -45,7 +45,7 @@ addToMapIfDefined( 'voltageGatedChannels', 'voltageGatedChannelsStringProperty' 
 addToMapIfDefined( 'ligandGatedChannels', 'ligandGatedChannelsStringProperty' );
 addToMapIfDefined( 'activeTransporters', 'activeTransportersStringProperty' );
 addToMapIfDefined( 'leakageChannels', 'leakageChannelsStringProperty' );
-addToMapIfDefined( 'NaPlusKPlusPump', 'NaPlusKPlusPumpStringProperty' );
+addToMapIfDefined( 'naPlusKPlusPump', 'naPlusKPlusPumpStringProperty' );
 addToMapIfDefined( 'sodiumGlucoseCotransporter', 'sodiumGlucoseCotransporterStringProperty' );
 addToMapIfDefined( 'membranePotential_mV', 'membranePotential_mVStringProperty' );
 addToMapIfDefined( 'charges', 'chargesStringProperty' );
@@ -226,7 +226,7 @@ const MembraneTransportFluent = {
   ligandGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'ligandGatedChannels', _.get( MembraneTransportStrings, 'ligandGatedChannelsStringProperty' ) ),
   activeTransportersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'activeTransporters', _.get( MembraneTransportStrings, 'activeTransportersStringProperty' ) ),
   leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'leakageChannels', _.get( MembraneTransportStrings, 'leakageChannelsStringProperty' ) ),
-  NaPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'NaPlusKPlusPump', _.get( MembraneTransportStrings, 'NaPlusKPlusPumpStringProperty' ) ),
+  naPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'naPlusKPlusPump', _.get( MembraneTransportStrings, 'naPlusKPlusPumpStringProperty' ) ),
   sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'sodiumGlucoseCotransporterStringProperty' ) ),
   _comment_3: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotential_mV"} ),
   membranePotential_mVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotential_mV', _.get( MembraneTransportStrings, 'membranePotential_mVStringProperty' ) ),
