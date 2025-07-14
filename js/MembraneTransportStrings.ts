@@ -188,6 +188,7 @@ type StringsType = {
     'soluteStringProperty': LocalizedStringProperty;
     'soluteCapitalizedStringProperty': LocalizedStringProperty;
     'soluteBriefStringProperty': LocalizedStringProperty;
+    'soluteComparisonStringProperty': LocalizedStringProperty;
     'soluteControl': {
       'outside': {
         'accessibleNameStringProperty': LocalizedStringProperty;
@@ -206,7 +207,6 @@ type StringsType = {
       'descriptionContentStringProperty': LocalizedStringProperty;
       'barChart': {
         'accessibleNameStringProperty': LocalizedStringProperty;
-        'comparisonStringProperty': LocalizedStringProperty;
         'crossingStringProperty': LocalizedStringProperty;
       }
     };

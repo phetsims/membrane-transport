@@ -287,7 +287,7 @@ export default class MembraneTransportDescriber {
       outsideSoluteCountProperties[ soluteType ].value,
       insideSoluteCountProperties[ soluteType ].value
     );
-    return MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.comparison.format( {
+    return MembraneTransportFluent.a11y.soluteComparison.format( {
       amount: descriptor
     } );
   }

@@ -43,7 +43,7 @@ removeLigands:                                           Remove Ligands
 animateLipids.label:                                     Animate Lipids
 animateLipids.description:                               Whether the phospholipids forming the cell membrane should be animated.
 glucoseMetabolism.label:                                 Glucose Metabolism
-glucoseMetabolism.description:                Glucose fades from the inside of the cell. Barcharts display constant high concentration of glucose inside the cell.
+glucoseMetabolism.description:                           Glucose fades from the inside of the cell. Barcharts display constant high concentration of glucose inside the cell.
 preferencesDialog.audio.sounds.stereoSounds.label:       Stereo Sounds
 preferencesDialog.audio.sounds.stereoSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 
@@ -245,6 +245,23 @@ a11y:
                            *[atp]           Atp
                           }
 
+  # A description of relative amounts of solute outside and inside the cell.
+  soluteComparison:       |-
+                          { $amount ->
+                            *[none]  none
+                            [equal] amounts exactly equal outside and inside
+                            [allOutside] all outside, none inside
+                            [allInside] all inside, none outside
+                            [manyMoreOutside] many more outside than inside 
+                            [aboutTwiceAsManyOutside] about twice as many outside as inside
+                            [someMoreOutside] some more outside than inside
+                            [roughlyEqualOutside] roughly equal amounts inside and outside
+                            [manyMoreInside] many more inside than outside
+                            [aboutTwiceAsManyInside] about twice as many inside as outside
+                            [someMoreInside] some more inside than outside
+                            [roughlyEqualInside] roughly equal amounts inside and outside
+                          }
+
   soluteControl:
     outside:
       accessibleName:     "{ a11y.soluteCapitalized } Outside Cell"
@@ -273,27 +290,12 @@ a11y:
                                } { $addedOrRemoved ->
                                  [added]   added
                                 *[removed] removed
-                               }. Now, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }. 
+                               }. Now, { a11y.soluteComparison }. 
 
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
-      accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteConcentrationsAccordionBox.barChart.comparison }; { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
-      comparison:     |-
-                      { $amount ->
-                        *[none]  none
-                        [equal] amounts exactly equal outside and inside
-                        [allOutside] all outside, none inside
-                        [allInside] all inside, none outside
-                        [manyMoreOutside] many more outside than inside 
-                        [aboutTwiceAsManyOutside] about twice as many outside as inside
-                        [someMoreOutside] some more outside than inside
-                        [roughlyEqualOutside] roughly equal amounts inside and outside
-                        [manyMoreInside] many more inside than outside
-                        [aboutTwiceAsManyInside] about twice as many inside as outside
-                        [someMoreInside] some more inside than outside
-                        [roughlyEqualInside] roughly equal amounts inside and outside
-                      }
+      accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
       crossing:       |-
                       { $crossing ->
                         *[none] no crossings
@@ -303,8 +305,8 @@ a11y:
                       }
 
   soluteCrossing:
-    initialResponse:            "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }."
-    subsequentResponse:         "{ a11y.soluteBrief }, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }."
+    initialResponse:            "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteComparison }."
+    subsequentResponse:         "{ a11y.soluteBrief }, { a11y.soluteComparison }."
     inBalanceResponse:          "{ a11y.soluteCapitalized } crossing steadily in both directions, now roughly equal."
     manyTypesResponse:          Many solute types crossing membrane.
     manyTypesInBalanceResponse: Many solutes types crossing steadily in both directions.
