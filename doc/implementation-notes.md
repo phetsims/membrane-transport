@@ -99,35 +99,6 @@ state and behavior of solutes, ligands, and transport proteins within the membra
     *   There are `SLOT_COUNT` (7) predefined positions on the membrane where transport proteins can be placed.
     *   `membraneSlots` is an array of `Slot` instances, each managing a `transportProteinProperty` that can hold a `TransportProtein` or be `null`.
 
-### Model Properties and State
-
-`MembraneTransportModel` exposes several key `Property` instances for tracking simulation state:
-*   `timeSpeedProperty`: Controls the simulation speed (`TimeSpeed.NORMAL` or `TimeSpeed.SLOW`).
-*   `isPlayingProperty`: Controls whether the simulation is running or paused.
-*   `outsideSoluteCountProperties` and `insideSoluteCountProperties`: Records of `NumberProperty` instances for the count of each `SoluteType` on either side of the membrane.
-*   `hasAnySolutesProperty`: Indicates if any solutes are present.
-*   `hasAnyADPOrPhosphateProperty`: Specific to the Na+/K+ pump, tracks presence of ADP/Phosphate.
-*   `soluteProperty`: The currently selected solute type for adding/removing.
-*   `chargesVisibleProperty` and `membranePotentialProperty`: Relevant for voltage-gated channels.
-*   `areLigandsAddedProperty`: Controls the active state of ligands.
-*   `isUserDraggingLigandProperty`: Tracks if a ligand is currently being dragged.
-*   `ligandInteractionCueVisibleProperty`: Controls a visual cue for ligands.
-*   `crossingHighlightsEnabledProperty` and `crossingSoundsEnabledProperty`: User preferences for visual/auditory feedback on solute crossing.
-
-### Simulation Logic
-
-*   **`step(dt: number)`:** The main update loop for the model. It advances time, updates particle positions and modes,
-    and steps transport proteins. It also calls `stepFlux` to manage flux entries.
-*   **`addSolutes`, `removeSolutes`, `clear`:** Methods for managing the collection of `Solute` instances.
-*   **`updateSoluteCounts()`:** Recalculates and updates the `outsideSoluteCountProperties`, `insideSoluteCountProperties`,
-    and related aggregate counts.
-*   **`getSignedGradient(soluteType: SoluteType)`:** Calculates the concentration gradient for a given solute type.
-*   **`checkGradientForCrossing(soluteType: SoluteType, location: 'outside' | 'inside')`:** Implements a "Hollywood" bias
-    for passive transport. This stochastic check (`BIAS_THRESHOLD`, `GRADIENT_BIAS_STRENGTH`) probabilistically
-    vetoes particle hops that go against the concentration gradient, ensuring macroscopic behavior aligns with
-    downhill movement while allowing some uphill leaks.
-*   **`splitATP(currentPosition: Vector2)`:** A utility method for the Na+/K+ pump, creating ADP and Phosphate solutes.
-
 ## View
 
 `MembraneTransportScreenView` (`js/common/view/MembraneTransportScreenView.ts`) is the primary view class, responsible
@@ -139,16 +110,11 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 *   **`ObservationWindow`:** The central display area where particles move and membrane proteins are located. It uses its
     own `ModelViewTransform2` (`MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM`) for rendering
     model elements. Most of its contents are rendered on a canvas for performance.
-*   **`TimeControlNode`:** Standard PhET component for controlling simulation play/pause and speed.
-*   **`ResetAllButton`:** Resets the entire simulation.
-*   **`EraserButton`:** Clears all solutes from the model.
 *   **`SoluteConcentrationsAccordionBox`:** Displays bar charts showing solute concentrations.
 *   **`SolutesPanel` and `SoluteControl`:** UI elements for selecting and adding/removing different types of solutes.
 *   **`TransportProteinPanel` and `TransportProteinToolNode`:** UI for selecting and adding transport proteins to the membrane.
 *   **`TransportProteinDragNode`:** A transient `Node` created when a transport protein is dragged from the toolbox or
     moved on the membrane. It handles the visual representation and interaction during dragging.
-*   **Checkboxes:** `crossingHighlightsCheckbox` and `crossingSoundsCheckbox` allow users to toggle visual highlights
-    and sound effects for particles crossing the membrane.
 
 ### View Logic and Interactions
 
