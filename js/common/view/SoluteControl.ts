@@ -27,6 +27,7 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
+import MembraneTransportDescriber from './MembraneTransportDescriber.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -125,35 +126,17 @@ export default class SoluteControl extends Voicing( Panel ) {
         return null;
       }
 
-      // 1. Magnitude of this change
       const difference = newValue - previousValue;
-      const amount = Math.abs( difference ) === coarseDelta ? 'aLot' : 'aLittle';
+      const amountAdded = Math.abs( difference ) === coarseDelta ? 'aLot' : 'aLittle';
       const addedOrRemoved = ( difference > 0 ) ? 'added' : 'removed';
 
-      // 2. Figure out how many are inside vs. outside now
       const insideCount = model.insideSoluteCountProperties[ soluteType ].value;
       const outsideCount = model.outsideSoluteCountProperties[ soluteType ].value;
-      const differenceInsideMinusOutside = insideCount - outsideCount;
 
-      // 3. Decide if it's more or less, and is it a large or small difference
-      const differenceSize = Math.abs( differenceInsideMinusOutside ) < 100 ? 'aLittle' : 'aLot';
-      const directionality = side === 'inside' ? 'insideThanOutside' : 'outsideThanInside';
-
-      // Describe relative to the spinner that is being controlled
-      const moreOrLessOrSameOrNone = ( insideCount === 0 && outsideCount === 0 ) ? 'none' :
-                                     ( differenceInsideMinusOutside === 0 ) ? 'same' :
-                                     side === 'inside' ?
-                                     ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
-                                     ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
-
-      // 4. Supply these to the translation message
       return MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
-        amount: amount,                // aLittle / aLot
+        amountAdded: amountAdded, // aLittle / aLot
         addedOrRemoved: addedOrRemoved, // added / removed
-        differenceSize: differenceSize, // aLittle / aLot
-        moreOrLessOrSameOrNone: moreOrLessOrSameOrNone, // more / less
-        soluteType: soluteType,       // e.g. 'Na⁺'
-        directionality: directionality  // insideThanOutside / outsideThanInside
+        amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
       } );
     };
 

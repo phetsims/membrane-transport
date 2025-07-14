@@ -267,33 +267,13 @@ a11y:
                                 *[maxAmount] max amount of
                                } { a11y.solute }
     accessibleContextResponse: |-
-                               { $amount ->
-                               
+                               { $amountAdded ->
                                  [aLittle] A little
                                 *[aLot]    A lot
                                } { $addedOrRemoved ->
                                  [added]   added
                                 *[removed] removed
-                               }. Now,
-                               { $moreOrLessOrSameOrNone ->
-                                 [none] no { a11y.solute } outside or inside.
-                                 [same] same amount of solute inside and outside.
-                                *[other] { $differenceSize ->
-                                   [aLittle] a little
-                                  *[aLot]    a lot
-                                 }
-                                 { $moreOrLessOrSameOrNone ->
-                                   [more] more
-                                  *[less] less
-                                 }
-                                 { a11y.solute }
-                                 { $directionality ->
-                                   [insideThanOutside] inside than outside
-                                  *[outsideThanInside] outside than inside
-                                 }.
-                               }    
-
-
+                               }. Now, { a11y.soluteConcentrationsAccordionBox.barChart.comparison }. 
 
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
@@ -302,7 +282,7 @@ a11y:
       comparison:     |-
                       { $amount ->
                         *[none]  none
-                        [equal] Amounts exactly equal outside and inside
+                        [equal] amounts exactly equal outside and inside
                         [allOutside] all outside, none inside
                         [allInside] all inside, none outside
                         [manyMoreOutside] many more outside than inside 
