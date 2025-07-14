@@ -119,6 +119,9 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
     selecting a protein to grab with alternative input.
 *   ** `InteractiveSlotsNode`:** Implements sorting transport proteins with alternative input, and works in tandem with
     `ObservationWindowTransportProteinLayer` to manage the interaction of transport proteins in slots.
+*   ** `SoluteCrossedMembraneEvent`:** An event that is emitted when a solute crosses the membrane. This is an important
+    part of the Interactive Description implementation, and allows us to describe simulation behavior over time. See
+    `MembraneTransportDescriber` for more details.
 
 ### View Logic and Interactions
 
