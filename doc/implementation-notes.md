@@ -125,18 +125,6 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 *   **`screenViewModelViewTransform`:** A `ModelViewTransform2` specific to the `ScreenView` that helps position UI
     elements relative to the `ObservationWindow`.
 
-## Accessibility and Alternative Input
-
-The simulation supports keyboard navigation and assistive technologies:
-
--   Keyboard controls for adding and repositioning channels, toggling ligands, and more.
--   Dynamic accessible descriptions (PDOM) clearly communicate membrane state and particle concentration.
--   Visual/auditory cues enhance feedback, thoroughly tested with common screen readers (NVDA, VoiceOver).
-
-## PhET-iO Integration
-
-The simulation is fully PhET-iO instrumented, allowing external tools to control and observe its state.
-
 ### IOTypes
 
 Custom `IOType`s are defined for key model elements to support PhET-iO serialization:
