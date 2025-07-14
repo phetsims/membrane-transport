@@ -122,17 +122,8 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 
 ### View Logic and Interactions
 
-*   **`step(dt: number)`:** The view's update loop, which calls `step` on the `ObservationWindow` and other
-    time-dependent view components.
-*   **`createFromMouseDrag` and `createTemporaryProteinNode`:** Methods for creating and managing `TransportProteinDragNode`s,
-    handling both mouse-based dragging and keyboard-initiated placement of transport proteins.
-*   **`forwardFromKeyboard`:** Facilitates keyboard interaction for placing transport proteins from the toolbox into slots.
 *   **`screenViewModelViewTransform`:** A `ModelViewTransform2` specific to the `ScreenView` that helps position UI
     elements relative to the `ObservationWindow`.
-*   **Accessibility (PDOM):** The view extensively uses `ParallelDOM` for screen reader support, with explicit `pdomOrder`
-    definitions for various UI elements to ensure a logical navigation flow.
-*   **Sounds:** `MembraneTransportSounds.soluteCrossedMembrane` is triggered when solutes cross the membrane, based on
-    the `crossingSoundsEnabledProperty`.
 
 ## Specific Features Implementation Details
 
