@@ -14,12 +14,7 @@ import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import LeakageChannel from '../model/proteins/LeakageChannel.js';
-import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
-import SodiumGlucoseCotransporter from '../model/proteins/SodiumGlucoseCotransporter.js';
-import SodiumPotassiumPump from '../model/proteins/SodiumPotassiumPump.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
-import VoltageGatedChannel from '../model/proteins/VoltageGatedChannel.js';
 import SoluteCrossedMembraneEvent from '../model/SoluteCrossedMembraneEvent.js';
 import SoluteType from '../model/SoluteType.js';
 
