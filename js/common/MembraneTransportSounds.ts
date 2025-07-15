@@ -196,7 +196,7 @@ const genericCrossingSound = soluteCrossingGeneric_mp3;
 const potassiumCrossingSound = soluteCrossingPotassium_mp3;
 const sodiumCrossingSound = soluteCrossingSodium_mp3;
 
-const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.6 };
+const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.3 };
 
 const soluteCrossingGenericSounds = createPannedSoundSet( genericCrossingSound, baseSoundClipOptions );
 const soluteCrossingPotassiumSounds = createPannedSoundSet( potassiumCrossingSound, baseSoundClipOptions );

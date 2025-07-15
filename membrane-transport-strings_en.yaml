@@ -124,14 +124,14 @@ a11y:
     accessibleHelpText: Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
                         and release proteins into membrane.
     ligandGatedChannelPanel:
-      sodiumIonNaPlusLigandGated:   Sodium Ion NA plus, Ligand-gated
-      potassiumIonKPlusLigandGated: Potassium Ion K plus, Ligand-gated
+      sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
+      potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
     leakageChannelPanel:
-      sodiumIonNaPlusLeakage:   Sodium Ion NA plus, Leakage
-      potassiumIonKPlusLeakage: Potassium Ion K plus, Leakage
+      sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
+      potassiumIonKPlusLeakage: Potassium-selective, Leakage
     voltageGatedChannelPanel:
-      sodiumIonNaPlusVoltageGated:   Sodium Ion NA plus, Voltage-gated
-      potassiumIonKPlusVoltageGated: Potassium Ion K plus, Voltage-gated
+      sodiumIonNaPlusVoltageGated:   Sodium-selective, Voltage-gated
+      potassiumIonKPlusVoltageGated: Potassium-selective, Voltage-gated
 
       # For the Membrane Potential radio buttons
       membranePotential:
@@ -375,10 +375,10 @@ a11y:
 
   # Membrane potential change responses for voltage-gated channels
   membranePotential:
-    sodiumVoltageGatedOpenedResponse:    Sodium Ion Voltage-gated, open.
-    sodiumVoltageGatedClosedResponse:    Sodium Ion Voltage-gated, closed.
-    potassiumVoltageGatedOpenedResponse: Potassium Ion Voltage-gated, open.
-    potassiumVoltageGatedClosedResponse: Potassium Ion Voltage-gated, closed.
+    sodiumVoltageGatedOpenedResponse:    Sodium-selective Voltage-gated, open.
+    sodiumVoltageGatedClosedResponse:    Sodium-selective Voltage-gated, closed.
+    potassiumVoltageGatedOpenedResponse: Potassium-selective Voltage-gated, open.
+    potassiumVoltageGatedClosedResponse: Potassium-selective Voltage-gated, closed.
     sodiumOpenedPotassiumOpenedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedOpenedResponse }"
     sodiumOpenedPotassiumClosedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedClosedResponse }"
 
