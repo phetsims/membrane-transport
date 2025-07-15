@@ -3,6 +3,8 @@
 /**
  * HotkeyData for the KeyboardListeners in MembraneTransport.
  *
+ * TODO: i18n and finish content, see https://github.com/phetsims/membrane-transport/issues/46
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
@@ -23,9 +25,14 @@ function createHotkeyData( keys: OneKeyStroke[],
 }
 
 export default class MembraneTransportHotkeyData {
+  public static readonly SELECT_LEFT: OneKeyStroke[] = [ 'arrowLeft', 'a' ];
+  public static readonly SELECT_RIGHT: OneKeyStroke[] = [ 'arrowRight', 'd' ];
+
   public static readonly interactiveSlotsNode = {
-    selection: createHotkeyData(
-      [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+    selection: createHotkeyData( [
+        ...MembraneTransportHotkeyData.SELECT_LEFT,
+        ...MembraneTransportHotkeyData.SELECT_RIGHT
+      ],
       new StringProperty( 'Select a slot' )
     ),
     releaseProtein: createHotkeyData(
@@ -43,8 +50,10 @@ export default class MembraneTransportHotkeyData {
   };
 
   public static readonly observationWindowTransportProteinLayer = {
-    selection: createHotkeyData(
-      [ 'arrowLeft', 'arrowRight', 'a', 'd' ],
+    selection: createHotkeyData( [
+        ...MembraneTransportHotkeyData.SELECT_LEFT,
+        ...MembraneTransportHotkeyData.SELECT_RIGHT
+      ],
       new StringProperty( 'Select a protein' )
     ),
     grabProtein: createHotkeyData(
@@ -53,10 +62,22 @@ export default class MembraneTransportHotkeyData {
     )
   };
 
-  public static readonly membraneTransportScreenView = {
-    toggleCaptureRadius: createHotkeyData(
-      [ 'm' ],
-      new StringProperty( 'Toggle capture radius' )
+  public static readonly soluteControl = {
+    coarseIncrement: createHotkeyData(
+      [ 'arrowRight', 'arrowUp' ],
+      new StringProperty( 'Coarse increment solute' )
+    ),
+    coarseDecrement: createHotkeyData(
+      [ 'arrowLeft', 'arrowDown' ],
+      new StringProperty( 'Coarse decrement solute' )
+    ),
+    fineIncrement: createHotkeyData(
+      [ 'shift+arrowRight', 'shift+arrowUp' ],
+      new StringProperty( 'Fine increment solute' )
+    ),
+    fineDecrement: createHotkeyData(
+      [ 'shift+arrowLeft', 'shift+arrowDown' ],
+      new StringProperty( 'Fine decrement solute' )
     )
   };
 }

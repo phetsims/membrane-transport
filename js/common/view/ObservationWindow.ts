@@ -204,5 +204,35 @@ export default class ObservationWindow extends Node {
       slotDragIndicatorNode.stroke = 'black';
     } );
   }
+
+  /**
+   * Returns the closest slot drag indicator node that overlaps with the given global bounds.
+   * If multiple nodes overlap, the one whose center is closest to the center of the given bounds is returned.
+   */
+  public getClosestSlotDragIndicatorNode( globalBounds: Bounds2 ): SlotDragIndicatorNode {
+
+    // Check the observation window to find the closest available target we overlap
+    // If any rectangle overlaps, change its stroke color to red, Change all others back to black
+    const overlappingSlotDragIndicatorNodes = this.slotDragIndicatorNodes.filter( slotDragIndicatorNode => {
+      return slotDragIndicatorNode.globalBounds.intersectsBounds( globalBounds );
+    } );
+
+    return _.sortBy( overlappingSlotDragIndicatorNodes, slotDragIndicatorNode => {
+      return slotDragIndicatorNode.globalBounds.center.distance( globalBounds.center );
+    } )[ 0 ];
+  }
+
+  /**
+   * Highlights the indicator node that is closest to the given global bounds. Indicates
+   * where the dragged transport protein will be dropped for all modes of input.
+   */
+  public updateSlotDragIndicatorHighlights( globalBounds: Bounds2 ): void {
+    const closest = this.getClosestSlotDragIndicatorNode( globalBounds );
+
+    this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
+      slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'rgb(0, 173, 29)' : 'white';
+      slotDragIndicatorNode.fill = slotDragIndicatorNode === closest ? 'rgba(0, 173, 29, 0.2)' : 'rgba( 0, 0, 0, 0.2 )';
+    } );
+  }
 }
 membraneTransport.register( 'ObservationWindow', ObservationWindow );

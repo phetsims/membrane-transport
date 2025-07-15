@@ -8,7 +8,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -25,8 +24,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolutes } from '../model/SoluteType.js';
+import MembraneTransportDescriber from './MembraneTransportDescriber.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -125,40 +126,22 @@ export default class SoluteControl extends Voicing( Panel ) {
         return null;
       }
 
-      // 1. Magnitude of this change
       const difference = newValue - previousValue;
-      const amount = Math.abs( difference ) === coarseDelta ? 'aLot' : 'aLittle';
+      const amountAdded = Math.abs( difference ) === coarseDelta ? 'aLot' : 'aLittle';
       const addedOrRemoved = ( difference > 0 ) ? 'added' : 'removed';
 
-      // 2. Figure out how many are inside vs. outside now
       const insideCount = model.insideSoluteCountProperties[ soluteType ].value;
       const outsideCount = model.outsideSoluteCountProperties[ soluteType ].value;
-      const differenceInsideMinusOutside = insideCount - outsideCount;
 
-      // 3. Decide if it's more or less, and is it a large or small difference
-      const differenceSize = Math.abs( differenceInsideMinusOutside ) < 100 ? 'aLittle' : 'aLot';
-      const directionality = side === 'inside' ? 'insideThanOutside' : 'outsideThanInside';
-
-      // Describe relative to the spinner that is being controlled
-      const moreOrLessOrSameOrNone = ( insideCount === 0 && outsideCount === 0 ) ? 'none' :
-                                     ( differenceInsideMinusOutside === 0 ) ? 'same' :
-                                     side === 'inside' ?
-                                     ( ( differenceInsideMinusOutside >= 0 ) ? 'more' : 'less' ) :
-                                     ( ( differenceInsideMinusOutside >= 0 ) ? 'less' : 'more' );
-
-      // 4. Supply these to the translation message
       return MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
-        amount: amount,                // aLittle / aLot
+        amountAdded: amountAdded, // aLittle / aLot
         addedOrRemoved: addedOrRemoved, // added / removed
-        differenceSize: differenceSize, // aLittle / aLot
-        moreOrLessOrSameOrNone: moreOrLessOrSameOrNone, // more / less
-        soluteType: soluteType,       // e.g. 'Na⁺'
-        directionality: directionality  // insideThanOutside / outsideThanInside
+        amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
       } );
     };
 
     // Plays sounds when solutes are added or removed.
-    const soundGenerator = new SoluteSpinnerSoundGenerator( new Range( 0, MembraneTransportConstants.MAX_SOLUTE_COUNT ) );
+    const soundGenerator = new SoluteSpinnerSoundGenerator( coarseDelta, new Range( 0, MembraneTransportConstants.MAX_SOLUTE_COUNT ) );
 
     const arrowButtonHeight = 16;
     const buttonOptions: ArrowButtonOptions = {
@@ -268,22 +251,22 @@ export default class SoluteControl extends Voicing( Panel ) {
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
     const keyboardListener = new KeyboardListener( {
       keyStringProperties: HotkeyData.combineKeyStringProperties( [
-        SoluteControl.COARSE_INCREMENT_HOTKEY_DATA,
-        SoluteControl.COARSE_DECREMENT_HOTKEY_DATA,
-        SoluteControl.FINE_INCREMENT_HOTKEY_DATA,
-        SoluteControl.FINE_DECREMENT_HOTKEY_DATA
+        MembraneTransportHotkeyData.soluteControl.coarseIncrement,
+        MembraneTransportHotkeyData.soluteControl.coarseDecrement,
+        MembraneTransportHotkeyData.soluteControl.fineIncrement,
+        MembraneTransportHotkeyData.soluteControl.fineDecrement
       ] ),
       fire: ( event, keysPressed, listener ) => {
-        if ( SoluteControl.COARSE_INCREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        if ( MembraneTransportHotkeyData.soluteControl.coarseIncrement.hasKeyStroke( keysPressed ) ) {
           incrementCoarseButton.pdomClick();
         }
-        else if ( SoluteControl.COARSE_DECREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.soluteControl.coarseDecrement.hasKeyStroke( keysPressed ) ) {
           decrementCoarseButton.pdomClick();
         }
-        else if ( SoluteControl.FINE_INCREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.soluteControl.fineIncrement.hasKeyStroke( keysPressed ) ) {
           incrementFineButton.pdomClick();
         }
-        else if ( SoluteControl.FINE_DECREMENT_HOTKEY_DATA.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.soluteControl.fineDecrement.hasKeyStroke( keysPressed ) ) {
           decrementFineButton.pdomClick();
         }
         else {
@@ -296,27 +279,6 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
     this.addInputListener( keyboardListener );
   }
-
-  private static readonly COARSE_INCREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'arrowRight' ), new Property( 'arrowUp' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl coarse increment'
-  } );
-  private static readonly COARSE_DECREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'arrowLeft' ), new Property( 'arrowDown' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl coarse decrement'
-  } );
-  private static readonly FINE_INCREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'shift+arrowRight' ), new Property( 'shift+arrowUp' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl fine increment'
-  } );
-  private static readonly FINE_DECREMENT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [ new Property( 'shift+arrowLeft' ), new Property( 'shift+arrowDown' ) ],
-    repoName: membraneTransport.name,
-    binderName: 'SoluteControl fine decrement'
-  } );
 }
 
 membraneTransport.register( 'SoluteControl', SoluteControl );

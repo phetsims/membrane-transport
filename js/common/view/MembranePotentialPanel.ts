@@ -78,7 +78,7 @@ export default class MembranePotentialPanel extends Panel {
       align: 'center',
       children: [
 
-        new VoicingText( MembraneTransportFluent.membranePotential_mVStringProperty, {
+        new VoicingText( MembraneTransportFluent.membranePotentialMVStringProperty, {
           maxWidth: 160,
           font: MembraneTransportConstants.FONT,
 

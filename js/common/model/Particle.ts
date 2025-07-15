@@ -47,6 +47,7 @@ const CROSSING_COOLDOWN = 10;
 // we can decide how it should interact with the transport protein.
 // The extra capture radius was added so that all particles can be captured. If the capture radius is less than
 // half the height of a particle, it will never be captured.
+// It is an observable Property because it was useful to change at runtime for debugging.
 export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 2.5 );
 
 const GLUCOSE_FADE_TIME = 7; // in seconds, how long it takes for glucose to fade out if glucose absorption is enabled

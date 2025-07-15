@@ -34,21 +34,27 @@ type StringsType = {
   'ligandGatedChannelsStringProperty': LocalizedStringProperty;
   'activeTransportersStringProperty': LocalizedStringProperty;
   'leakageChannelsStringProperty': LocalizedStringProperty;
-  'NaPlusKPlusPumpStringProperty': LocalizedStringProperty;
+  'naPlusKPlusPumpStringProperty': LocalizedStringProperty;
   'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
-  'membranePotential_mVStringProperty': LocalizedStringProperty;
+  'membranePotentialMVStringProperty': LocalizedStringProperty;
   'chargesStringProperty': LocalizedStringProperty;
   'addLigandsStringProperty': LocalizedStringProperty;
   'removeLigandsStringProperty': LocalizedStringProperty;
-  'animateLipidsStringProperty': LocalizedStringProperty;
-  'animateLipidsDescriptionStringProperty': LocalizedStringProperty;
-  'glucoseMetabolismStringProperty': LocalizedStringProperty;
-  'glucoseMetabolismDescriptionStringProperty': LocalizedStringProperty;
+  'animateLipids': {
+    'labelStringProperty': LocalizedStringProperty;
+    'descriptionStringProperty': LocalizedStringProperty;
+  };
+  'glucoseMetabolism': {
+    'labelStringProperty': LocalizedStringProperty;
+    'descriptionStringProperty': LocalizedStringProperty;
+  };
   'preferencesDialog': {
     'audio': {
       'sounds': {
-        'stereoSoundsStringProperty': LocalizedStringProperty;
-        'stereoSoundsDescriptionStringProperty': LocalizedStringProperty;
+        'stereoSounds': {
+          'labelStringProperty': LocalizedStringProperty;
+          'descriptionStringProperty': LocalizedStringProperty;
+        }
       }
     }
   };
@@ -182,6 +188,7 @@ type StringsType = {
     'soluteStringProperty': LocalizedStringProperty;
     'soluteCapitalizedStringProperty': LocalizedStringProperty;
     'soluteBriefStringProperty': LocalizedStringProperty;
+    'soluteComparisonStringProperty': LocalizedStringProperty;
     'soluteControl': {
       'outside': {
         'accessibleNameStringProperty': LocalizedStringProperty;
@@ -200,7 +207,6 @@ type StringsType = {
       'descriptionContentStringProperty': LocalizedStringProperty;
       'barChart': {
         'accessibleNameStringProperty': LocalizedStringProperty;
-        'comparisonStringProperty': LocalizedStringProperty;
         'crossingStringProperty': LocalizedStringProperty;
       }
     };

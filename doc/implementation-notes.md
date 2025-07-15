@@ -10,13 +10,12 @@ incorporating modern PhET frameworks and updated pedagogical features.
 
 - **Included:**
   - PhET-iO instrumentation
-  - core description
-  - description Tier 2
+  - Interactive Description
   - sonification
-  - keyboard support and interactive highlights
+  - Interactive highlights
   - dynamic locales
   - sim-specific preferences
-  - voicing (core)
+  - Core Voicing
   - pan/zoom
 
 - **Excluded**
@@ -31,12 +30,12 @@ incorporating modern PhET frameworks and updated pedagogical features.
     screens.
 *   **Transient Short-Lived Nodes**: We have taken efforts to keep the model and view lightweight. For example, when
     dragging a transport protein, a transient non-PhET-iO instrumented Node is temporarily created. When dropping the
-    channel, the transient node is removed and the transport protein is added to the model. For the `GrabSortInteraction`,
-    it operates on transient nodes as well. Preferring transient, short-lived Nodes helps us keep each individual node
-    simpler and more manageable, as opposed to if we had a single Node that had to handle all modalities.
-*   **Strings** Since it supports full description, the simulation has extensive usage of complex strings. At the time of
-    development, the lead description designer identified this as the most complex description effort undertaken so far.
-    We use Fluent for the strings, as described in `phet-info/doc/strings-i18n-yaml-fluent.md`.
+    channel, the transient node is removed and the transport protein is added to the model. Preferring transient,
+    short-lived Nodes helps us keep each individual node simpler and more manageable, as opposed to if we had a
+    single Node that had to handle all modalities.
+*   **Strings** Since this sim supports Interactive Description, the simulation has extensive usage of complex strings.
+    At the time of  development, the lead description designer identified this as the most complex description effort 
+    undertaken so far. We use Fluent for the strings, as described in `phet-info/doc/strings-i18n-yaml-fluent.md`.
 *   **MembraneTransportConstants** is implemented via static attributes in a class, so the values can refer to each other
     in the declaration. This is unlike other simulations that export const and use file-specific local variables for
     cross-references. This also helps with searchability, since values are referred to the same way everywhere.
@@ -49,12 +48,6 @@ The simulation uses a 2D coordinate system. The `ObservationWindow` defines the 
 A `ModelViewTransform2` instance (`MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM`) is used to map
 model coordinates to view coordinates within the `ObservationWindow`. The `MembraneTransportScreenView` also maintains
 its own `screenViewModelViewTransform` to position UI components relative to the observation window.
-
-### Query Parameters
-
-Sim-specific query parameters are not explicitly documented in a dedicated file like `MOTHAQueryParameters.ts` or `NaturalSelectionQueryParameters.ts`.
-However, the `phet.chipper.queryParameters.dev` flag is used in `MembraneTransportScreenView.ts` for development-time
-visualizations (e.g., `Circle` at the origin).
 
 ### Memory Management
 
@@ -106,35 +99,6 @@ state and behavior of solutes, ligands, and transport proteins within the membra
     *   There are `SLOT_COUNT` (7) predefined positions on the membrane where transport proteins can be placed.
     *   `membraneSlots` is an array of `Slot` instances, each managing a `transportProteinProperty` that can hold a `TransportProtein` or be `null`.
 
-### Model Properties and State
-
-`MembraneTransportModel` exposes several key `Property` instances for tracking simulation state:
-*   `timeSpeedProperty`: Controls the simulation speed (`TimeSpeed.NORMAL` or `TimeSpeed.SLOW`).
-*   `isPlayingProperty`: Controls whether the simulation is running or paused.
-*   `outsideSoluteCountProperties` and `insideSoluteCountProperties`: Records of `NumberProperty` instances for the count of each `SoluteType` on either side of the membrane.
-*   `hasAnySolutesProperty`: Indicates if any solutes are present.
-*   `hasAnyADPOrPhosphateProperty`: Specific to the Na+/K+ pump, tracks presence of ADP/Phosphate.
-*   `soluteProperty`: The currently selected solute type for adding/removing.
-*   `chargesVisibleProperty` and `membranePotentialProperty`: Relevant for voltage-gated channels.
-*   `areLigandsAddedProperty`: Controls the active state of ligands.
-*   `isUserDraggingLigandProperty`: Tracks if a ligand is currently being dragged.
-*   `ligandInteractionCueVisibleProperty`: Controls a visual cue for ligands.
-*   `crossingHighlightsEnabledProperty` and `crossingSoundsEnabledProperty`: User preferences for visual/auditory feedback on solute crossing.
-
-### Simulation Logic
-
-*   **`step(dt: number)`:** The main update loop for the model. It advances time, updates particle positions and modes,
-    and steps transport proteins. It also calls `stepFlux` to manage flux entries.
-*   **`addSolutes`, `removeSolutes`, `clear`:** Methods for managing the collection of `Solute` instances.
-*   **`updateSoluteCounts()`:** Recalculates and updates the `outsideSoluteCountProperties`, `insideSoluteCountProperties`,
-    and related aggregate counts.
-*   **`getSignedGradient(soluteType: SoluteType)`:** Calculates the concentration gradient for a given solute type.
-*   **`checkGradientForCrossing(soluteType: SoluteType, location: 'outside' | 'inside')`:** Implements a "Hollywood" bias
-    for passive transport. This stochastic check (`BIAS_THRESHOLD`, `GRADIENT_BIAS_STRENGTH`) probabilistically
-    vetoes particle hops that go against the concentration gradient, ensuring macroscopic behavior aligns with
-    downhill movement while allowing some uphill leaks.
-*   **`splitATP(currentPosition: Vector2)`:** A utility method for the Na+/K+ pump, creating ADP and Phosphate solutes.
-
 ## View
 
 `MembraneTransportScreenView` (`js/common/view/MembraneTransportScreenView.ts`) is the primary view class, responsible
@@ -146,89 +110,23 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 *   **`ObservationWindow`:** The central display area where particles move and membrane proteins are located. It uses its
     own `ModelViewTransform2` (`MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM`) for rendering
     model elements. Most of its contents are rendered on a canvas for performance.
-*   **`TimeControlNode`:** Standard PhET component for controlling simulation play/pause and speed.
-*   **`ResetAllButton`:** Resets the entire simulation.
-*   **`EraserButton`:** Clears all solutes from the model.
 *   **`SoluteConcentrationsAccordionBox`:** Displays bar charts showing solute concentrations.
 *   **`SolutesPanel` and `SoluteControl`:** UI elements for selecting and adding/removing different types of solutes.
 *   **`TransportProteinPanel` and `TransportProteinToolNode`:** UI for selecting and adding transport proteins to the membrane.
 *   **`TransportProteinDragNode`:** A transient `Node` created when a transport protein is dragged from the toolbox or
     moved on the membrane. It handles the visual representation and interaction during dragging.
-*   **Checkboxes:** `crossingHighlightsCheckbox` and `crossingSoundsCheckbox` allow users to toggle visual highlights
-    and sound effects for particles crossing the membrane.
+*   ** `ObservationWindowTransportProteinLayer`:** The layer for interactive transport proteins, which implements
+    selecting a protein to grab with alternative input.
+*   ** `InteractiveSlotsNode`:** Implements sorting transport proteins with alternative input, and works in tandem with
+    `ObservationWindowTransportProteinLayer` to manage the interaction of transport proteins in slots.
+*   ** `SoluteCrossedMembraneEvent`:** An event that is emitted when a solute crosses the membrane. This is an important
+    part of the Interactive Description implementation, and allows us to describe simulation behavior over time. See
+    `MembraneTransportDescriber` for more details.
 
 ### View Logic and Interactions
 
-*   **`step(dt: number)`:** The view's update loop, which calls `step` on the `ObservationWindow` and other
-    time-dependent view components.
-*   **`createFromMouseDrag` and `createTemporaryProteinNode`:** Methods for creating and managing `TransportProteinDragNode`s,
-    handling both mouse-based dragging and keyboard-initiated placement of transport proteins.
-*   **`forwardFromKeyboard`:** Facilitates keyboard interaction for placing transport proteins from the toolbox into slots.
 *   **`screenViewModelViewTransform`:** A `ModelViewTransform2` specific to the `ScreenView` that helps position UI
     elements relative to the `ObservationWindow`.
-*   **Keyboard Listeners:** Global keyboard listeners are used for specific debug features, such as toggling the
-    `CAPTURE_RADIUS_PROPERTY`.
-*   **Accessibility (PDOM):** The view extensively uses `ParallelDOM` for screen reader support, with explicit `pdomOrder`
-    definitions for various UI elements to ensure a logical navigation flow.
-*   **Sounds:** `MembraneTransportSounds.soluteCrossedMembrane` is triggered when solutes cross the membrane, based on
-    the `crossingSoundsEnabledProperty`.
-
-## Specific Features Implementation Details
-
-### Ligand-Gated Channels
-
--   Channels switch between closed and open states based on ligand presence.
--   **Binding Sites** detect ligands, changing the state to open.
--   Open channels allow diffusion of specific particle types (e.g., sodium ions) driven by concentration gradients (no
-    active pulling).
--   Visual feedback indicates channel states clearly; channels are either open or closed (binary state).
-
-### Voltage-Gated Channels
-
-Channels respond to membrane voltage, modeled as the net charge difference between membrane sides:
-
--   Channels open when ion imbalance crosses a preset threshold.
--   Diffusion is passive; ions flow down gradients, potentially altering voltage and causing channels to close
-    dynamically.
-
-### Sodium-Potassium Pump (Active Transport)
-
-The simulation includes a Na⁺/K⁺ pump actively transporting ions against their gradients. Its mechanism involves a
-sequence of states:
-*   3 x Sodium bind
-*   ATP binds and releases PO4, ADP drifts, PO4 stays attached
-*   Conformation change
-*   3 x Sodium released
-*   2 x K bind
-*   Conformation change
-*   PO4 release
-*   2 x K release
-
-### Glucose Transporters (Facilitated Diffusion)
-
-Glucose transporters model passive transport of glucose molecules:
-
--   Only transport glucose, distinguished visually.
--   Simulate a simplified carrier mechanism with cooldown between transports, preventing instantaneous saturation.
--   Bidirectional, always down concentration gradients, with simple visual feedback during transport.
-
-### Passive Diffusion of Gases
-
-The simulation supports passive diffusion of O₂ and CO₂ molecules directly across the membrane without the presence of
-channel proteins. Their movement across the membrane occurs spontaneously, driven by concentration gradients alone.
-The "Hollywood" bias (`checkGradientForCrossing`) is applied to these particles to ensure pedagogically sound macroscopic behavior.
-
-## Accessibility and Alternative Input
-
-The simulation supports keyboard navigation and assistive technologies:
-
--   Keyboard controls for adding and repositioning channels, toggling ligands, and more.
--   Dynamic accessible descriptions (PDOM) clearly communicate membrane state and particle concentration.
--   Visual/auditory cues enhance feedback, thoroughly tested with common screen readers (NVDA, VoiceOver).
-
-## PhET-iO Integration
-
-The simulation is fully PhET-iO instrumented, allowing external tools to control and observe its state.
 
 ### IOTypes
 
@@ -255,4 +153,4 @@ when added to slots, and their state is also serialized as part of the `Membrane
 -   The model and view are designed to be lightweight, with transient nodes used for dragging interactions to avoid
     overhead on persistent objects.
 -   The "Hollywood" bias for passive diffusion helps manage the visual behavior of a small number of particles without
-    requiring a large particle count for realistic macroscopic behavior.
+    requiring a large particle count for realistic macroscopic behavior. See `checkGradientForCrossing` and `BIAS_THRESHOLD`.

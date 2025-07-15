@@ -194,7 +194,7 @@ export default class TransportProteinPanel extends Panel {
         transportProteins: [
           {
             transportProteinType: 'sodiumPotassiumPump',
-            labelProperty: MembraneTransportFluent.NaPlusKPlusPumpStringProperty,
+            labelProperty: MembraneTransportFluent.naPlusKPlusPumpStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty
           },
           {
