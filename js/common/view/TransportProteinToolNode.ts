@@ -23,7 +23,7 @@ const richTextOptions: RichTextOptions = {
   font: MembraneTransportConstants.FONT,
 
   // Found by inspection. maxHeight required to constrain multi-line text.
-  maxWidth: 100,
+  maxWidth: 85,
   maxHeight: 40
 };
 
