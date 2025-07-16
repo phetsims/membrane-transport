@@ -7,7 +7,9 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
@@ -411,6 +413,13 @@ export default class MembraneTransportDescriber {
            countAsFraction < 1 ? 'hugeAmount' :
            'maxAmount';
 
+  }
+
+  /**
+   * Creates a Property for the qualitative amount descriptor that will change with the countProperty.
+   */
+  public static createQualitativeAmountDescriptorProperty( countProperty: TReadOnlyProperty<number> ): TReadOnlyProperty<SoluteQualitativeAmountDescriptor> {
+    return new DerivedProperty( [ countProperty ], MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor );
   }
 }
 

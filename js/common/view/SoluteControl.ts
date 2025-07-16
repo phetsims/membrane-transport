@@ -90,11 +90,6 @@ export default class SoluteControl extends Voicing( Panel ) {
     const decrementEnabledProperty = new DerivedProperty( [ sideCountProperty ], sideCount => sideCount > 0 );
     const incrementEnabledProperty = new DerivedProperty( [ totalCountProperty ], totalCount => totalCount < MembraneTransportConstants.MAX_SOLUTE_COUNT );
 
-    // A qualitative description of the amount of solutes.
-    const amountProperty = new DerivedProperty( [ sideCountProperty ], count => {
-      return MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( count );
-    } );
-
     // The accessibleObjectResponse for the entire control, describing the current value. It describes the amount of solutes of
     // this type on this side of the membrane qualitatively. It is spoken every time the SoluteControl is used.
     const createAccessibleObjectResponse = () => {
@@ -102,7 +97,7 @@ export default class SoluteControl extends Voicing( Panel ) {
 
         // Qualitative descriptions for the amount of a solute, as described in
         // https://github.com/phetsims/membrane-transport/issues/242
-        amount: amountProperty,
+        amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty ),
         soluteType: model.soluteProperty
       } );
     };

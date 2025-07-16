@@ -62,20 +62,12 @@ export default class SoluteBarChartNode extends Node {
       return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( outwardCount, inwardCount );
     } );
 
-    const outsideQualitativeAmountProperty = new DerivedProperty( [ outsideSoluteCountProperty ], count => {
-      return MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( count );
-    } );
-
-    const insideQualitativeAmountProperty = new DerivedProperty( [ insideSoluteCountProperty ], count => {
-      return MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( count );
-    } );
-
     const accessibleNameProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleName.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
       direction: crossingProperty,
-      outsideAmount: outsideQualitativeAmountProperty,
-      insideAmount: insideQualitativeAmountProperty
+      outsideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( outsideSoluteCountProperty ),
+      insideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( insideSoluteCountProperty )
     } );
 
     super( {
