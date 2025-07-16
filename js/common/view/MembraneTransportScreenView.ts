@@ -277,7 +277,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const cellNode = new Image( cell_svg, {
       maxWidth: 120,
       top: this.observationWindow.centerY,
-      centerX: soluteControlsNode.centerX + 15
+      centerX: soluteControlsNode.centerX + 30
     } );
     this.addChild( cellNode );
 
