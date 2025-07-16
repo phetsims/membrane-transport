@@ -22,27 +22,37 @@ type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMo
   'aboutTwiceAsManyOutside' | 'someMoreOutside' | 'roughlyEqualOutside' | 'manyMoreInside' |
   'aboutTwiceAsManyInside' | 'someMoreInside' | 'roughlyEqualInside' | 'none';
 
-const descriptionInterval = 5;
+// The interval in seconds at which the system will trigger responses.
+const DESCRIPTION_INTERVAL = 5;
 
 export default class MembraneTransportDescriber {
 
+  // This system triggers responses at a fixed interval.
   private timeSinceDescription = 0;
+
+  // We keep track of the last response to avoid repeating it unnecessarily.
   private previousResponse: TAlertable | null = null;
 
-  private previousSoluteComparisons: Record<SoluteType, SoluteComparisonDescriptor> = {
-    oxygen: 'none',
-    carbonDioxide: 'none',
-    sodiumIon: 'none',
-    potassiumIon: 'none',
-    glucose: 'none',
-    atp: 'none',
-    adp: 'none',
-    phosphate: 'none'
-  };
+  // Keep track of the previous solute comparisons. When any of these change, the description of the new comparison
+  // will be added to the response.
+  private previousSoluteComparisons: Record<SoluteType, SoluteComparisonDescriptor>;
 
-  public constructor( public readonly model: MembraneTransportModel, public readonly contextResponseNode: Node ) {
+  private readonly model: MembraneTransportModel;
+
+  // The Node which is used to trigger context responses.
+  private readonly contextResponseNode: Node;
+
+  public constructor( model: MembraneTransportModel, contextResponseNode: Node ) {
+    this.model = model;
+    this.contextResponseNode = contextResponseNode;
+
+    this.previousSoluteComparisons = this.getCleanSoluteComparisons();
   }
 
+  /**
+   * Add a context response to the queue. But only if it is different from the previous response
+   * to prevent unnecessary repetition.
+   */
   private addAccessibleContextResponse( response: AlertableNoUtterance ): void {
     if ( response !== this.previousResponse && response !== '' ) {
       this.contextResponseNode.addAccessibleContextResponse( response );
@@ -50,12 +60,14 @@ export default class MembraneTransportDescriber {
     this.previousResponse = response;
   }
 
+  /**
+   * Step the describer, triggering a response at the interval.
+   */
   public step( dt: number ): void {
     if ( this.model.isPlayingProperty.value ) {
       this.timeSinceDescription += dt;
 
-      if ( this.timeSinceDescription > descriptionInterval ) {
-
+      if ( this.timeSinceDescription > DESCRIPTION_INTERVAL ) {
         const response = this.getDescriptionFromEventQueue(
           this.model.descriptionEventQueue,
           this.model.focusedProteinProperty.value,
@@ -69,15 +81,18 @@ export default class MembraneTransportDescriber {
 
         this.timeSinceDescription = 0;
 
-        // Clear the event queue after processing this description.
+        // The queue should be cleared every time a description is generated to accurately describe
+        // at the next interval.
         this.model.clearDescriptionEventQueue();
       }
     }
   }
 
-  public reset(): void {
-    this.timeSinceDescription = 0;
-    this.previousSoluteComparisons = {
+  /**
+   * Reset the map of solute comparisons to a clean state so that any changes will be described.
+   */
+  private getCleanSoluteComparisons(): Record<SoluteType, SoluteComparisonDescriptor> {
+    return {
       oxygen: 'none',
       carbonDioxide: 'none',
       sodiumIon: 'none',
@@ -89,6 +104,11 @@ export default class MembraneTransportDescriber {
     };
   }
 
+  public reset(): void {
+    this.timeSinceDescription = 0;
+    this.previousSoluteComparisons = this.getCleanSoluteComparisons();
+  }
+
   private getDescriptionFromEventQueue(
     queue: SoluteCrossedMembraneEvent[],
     focusedProtein: null | TransportProtein,
@@ -97,34 +117,33 @@ export default class MembraneTransportDescriber {
     outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
   ): string {
 
+    // No description when a protein is focused (to be implemented at another time).
     if ( focusedProtein ) {
-      return ''; // No description when a protein is focused
+      return '';
     }
 
+    // No events to describe.
     if ( queue.length === 0 ) {
-      return ''; // No events to describe
+      return '';
     }
 
+    // In this implementation, the overall description is built from pieces of information.
     const descriptionParts: string[] = [];
+
+    // If oxygen or carbon dioxide cross the membrane, that information will be included as part of the description
+    // of active transport events.
+    const oxygenCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'oxygen' );
+    const carbonDioxideCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'carbonDioxide' );
+    const anySimpleDiffusion = oxygenCrossed || carbonDioxideCrossed;
 
     // Identify active transport events
     const sodiumPumped = queue.some( e => e.transportProteinType === 'sodiumPotassiumPump' && e.solute.soluteType === 'sodiumIon' );
     const potassiumPumped = queue.some( e => e.transportProteinType === 'sodiumPotassiumPump' && e.solute.soluteType === 'potassiumIon' );
     const cotransported = queue.some( e => e.transportProteinType === 'sodiumGlucoseCotransporter' );
+    const anyActiveTransport = sodiumPumped || potassiumPumped || cotransported;
 
-    if ( sodiumPumped && potassiumPumped ) {
-      descriptionParts.push( 'Sodium pumped out and potassium pumped in' );
-    }
-    else if ( sodiumPumped ) {
-      descriptionParts.push( 'Sodium pumped out' );
-    }
-    else if ( potassiumPumped ) {
-      descriptionParts.push( 'Potassium pumped in' );
-    }
-
-    if ( cotransported ) {
-      descriptionParts.push( 'Sodium and glucose shuttled across membrane' );
-    }
+    // Identify simple diffusion events
+    const simpleDiffusers = _.uniq( queue.filter( e => e.transportProteinType === null ).map( e => e.solute.soluteType ) );
 
     // Identify facilitated diffusion events (that were not part of active transport)
     const facilitatedSolutes = _.uniq( queue.filter( e => {
@@ -132,13 +151,36 @@ export default class MembraneTransportDescriber {
              !descriptionParts.some( part => part.toLowerCase().includes( e.solute.soluteType.toLowerCase() ) );
     } ).map( e => e.solute.soluteType ) );
 
+    // Identify all solute types that crossed the membrane
+    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) );
+
+    if ( anyActiveTransport ) {
+
+      // When simple diffusion occurs alongside active transport, a summary statement is provided.
+      if ( anySimpleDiffusion ) {
+        descriptionParts.push( 'multiple solutes crossing' );
+      }
+
+      if ( sodiumPumped && potassiumPumped ) {
+        descriptionParts.push( 'sodium pumped out and potassium pumped in' );
+      }
+      else if ( sodiumPumped ) {
+        descriptionParts.push( 'sodium pumped out' );
+      }
+      else if ( potassiumPumped ) {
+        descriptionParts.push( 'potassium pumped in' );
+      }
+
+      if ( cotransported ) {
+        descriptionParts.push( 'sodium and glucose shuttled across' );
+      }
+    }
+
     if ( facilitatedSolutes.length > 0 ) {
       const soluteNames = facilitatedSolutes.filter( s => s !== 'adp' && s !== 'phosphate' ).map( s => MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: s } ) ).join( ' and ' );
       descriptionParts.push( `${soluteNames} crossed through channels` );
     }
 
-    // Identify simple diffusion events
-    const simpleDiffusers = _.uniq( queue.filter( e => e.transportProteinType === null ).map( e => e.solute.soluteType ) );
     if ( simpleDiffusers.length > 0 && descriptionParts.length === 0 && simpleDiffusers[ 0 ] !== 'adp' && simpleDiffusers[ 0 ] !== 'phosphate' ) {
       if ( simpleDiffusers.length === 1 ) {
         descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossed the membrane` );
@@ -160,7 +202,6 @@ export default class MembraneTransportDescriber {
     response = response.charAt( 0 ).toUpperCase() + response.slice( 1 );
 
     // Append the comparison string
-    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) );
     const comparisonString = this.getCompareSoluteCompartmentsIfChanged(
       solutesThatCrossed,
       insideSoluteCountProperties,
