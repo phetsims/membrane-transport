@@ -314,6 +314,9 @@ export default class MembraneTransportDescriber {
     } );
   }
 
+  /**
+   * Returns true when the solute type has crossed the membrane at all, according to the event queue.
+   */
   private static didSoluteTypeCross( queue: SoluteCrossedMembraneEvent[], soluteType: SoluteType ): boolean {
     return queue.some( event => event.solute.soluteType === soluteType );
   }
