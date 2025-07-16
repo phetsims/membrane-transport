@@ -13,6 +13,7 @@ import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import SoluteCrossedMembraneEvent from '../model/SoluteCrossedMembraneEvent.js';
@@ -24,6 +25,9 @@ type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMo
 
 type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inBothDirections' |
   'mostlyToInside' | 'toInside' | 'none';
+
+type SoluteQualitativeAmountDescriptor = 'none' | 'few' | 'some' | 'smallAmount' |
+  'several' | 'many' | 'largeAmount' | 'hugeAmount' | 'maxAmount';
 
 // The interval in seconds at which the system will trigger responses.
 const DESCRIPTION_INTERVAL = 5;
@@ -393,6 +397,20 @@ export default class MembraneTransportDescriber {
            insideToOutside >= SOME_MORE ? 'someMoreInside' :
            insideToOutside > ROUGHLY_EQUAL ? 'roughlyEqualInside' :
            ( () => { throw new Error( 'Undescribed counts' ); } )(); // IIFE to throw error
+  }
+
+  public static getSoluteQualitativeAmountDescriptor( count: number ): SoluteQualitativeAmountDescriptor {
+    const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
+    return count === 0 ? 'none' :
+           count <= 3 ? 'few' :
+           countAsFraction <= 0.10 ? 'some' :
+           countAsFraction <= 0.25 ? 'smallAmount' :
+           countAsFraction <= 0.40 ? 'several' :
+           countAsFraction <= 0.60 ? 'many' :
+           countAsFraction <= 0.80 ? 'largeAmount' :
+           countAsFraction < 1 ? 'hugeAmount' :
+           'maxAmount';
+
   }
 }
 

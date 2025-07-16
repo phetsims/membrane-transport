@@ -92,16 +92,7 @@ export default class SoluteControl extends Voicing( Panel ) {
 
     // A qualitative description of the amount of solutes.
     const amountProperty = new DerivedProperty( [ sideCountProperty ], count => {
-      const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
-      return count === 0 ? 'none' :
-             count <= 3 ? 'few' :
-             countAsFraction <= 0.10 ? 'some' :
-             countAsFraction <= 0.25 ? 'smallAmount' :
-             countAsFraction <= 0.40 ? 'several' :
-             countAsFraction <= 0.60 ? 'many' :
-             countAsFraction <= 0.80 ? 'largeAmount' :
-             countAsFraction < 1 ? 'hugeAmount' :
-             'maxAmount';
+      return MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( count );
     } );
 
     // The accessibleObjectResponse for the entire control, describing the current value. It describes the amount of solutes of

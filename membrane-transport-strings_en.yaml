@@ -196,12 +196,12 @@ a11y:
 
 
   # The membrane potential value, used in various places.
-  membranePotentialValue: |-
-                          { $membranePotential ->
-                            [-70] negative 70
-                            [-50] negative 50
-                            *[30] positive 30
-                          } millivolts
+  membranePotentialValue:         |-
+                                  { $membranePotential ->
+                                    [-70] negative 70
+                                    [-50] negative 50
+                                    *[30] positive 30
+                                  } millivolts
   
   # Accessible names for solute radio buttons
   soluteAccessibleNames:
@@ -213,54 +213,65 @@ a11y:
     atp:           Adenosine Triphosphate, ATP, complex, large
 
   # Names for the solute type. Reused in various places.
-  solute:                 |-
-                          { $soluteType ->
-                            [oxygen]        oxygen molecules
-                            [carbonDioxide] carbon dioxide molecules
-                            [sodiumIon]     sodium ions
-                            [potassiumIon]  potassium ions
-                            [glucose]       glucose molecules
-                           *[atp]           ATP molecules
-                          }
+  solute:                         |-
+                                  { $soluteType ->
+                                    [oxygen]        oxygen molecules
+                                    [carbonDioxide] carbon dioxide molecules
+                                    [sodiumIon]     sodium ions
+                                    [potassiumIon]  potassium ions
+                                    [glucose]       glucose molecules
+                                   *[atp]           ATP molecules
+                                  }
 
   # Capitalized names for the solute type. Reused in various places.
-  soluteCapitalized:      |-
-                          { $soluteType ->
-                            [oxygen]        Oxygen Molecules
-                            [carbonDioxide] Carbon Dioxide molecules
-                            [sodiumIon]     Sodium Ions
-                            [potassiumIon]  Potassium Ions
-                            [glucose]       Glucose Molecules
-                           *[atp]           Atp Molecules
-                          }
+  soluteCapitalized:              |-
+                                  { $soluteType ->
+                                    [oxygen]        Oxygen Molecules
+                                    [carbonDioxide] Carbon Dioxide molecules
+                                    [sodiumIon]     Sodium Ions
+                                    [potassiumIon]  Potassium Ions
+                                    [glucose]       Glucose Molecules
+                                   *[atp]           Atp Molecules
+                                  }
 
   # Brevity is the soul of wit, so we use these brief names in various places.
-  soluteBrief:            |-
-                          { $soluteType ->
-                            [oxygen]        Oxygen
-                            [carbonDioxide] Carbon Dioxide
-                            [sodiumIon]     Sodium
-                            [potassiumIon]  Potassium
-                            [glucose]       Glucose
-                           *[atp]           Atp
-                          }
+  soluteBrief:                    |-
+                                  { $soluteType ->
+                                    [oxygen]        Oxygen
+                                    [carbonDioxide] Carbon Dioxide
+                                    [sodiumIon]     Sodium
+                                    [potassiumIon]  Potassium
+                                    [glucose]       Glucose
+                                   *[atp]           Atp
+                                  }
 
   # A description of relative amounts of solute outside and inside the cell.
-  soluteComparison:       |-
-                          { $amount ->
-                            *[none]  none
-                            [equal] amounts exactly equal outside and inside
-                            [allOutside] all outside, none inside
-                            [allInside] all inside, none outside
-                            [manyMoreOutside] many more outside than inside 
-                            [aboutTwiceAsManyOutside] about twice as many outside as inside
-                            [someMoreOutside] some more outside than inside
-                            [roughlyEqualOutside] roughly equal amounts inside and outside
-                            [manyMoreInside] many more inside than outside
-                            [aboutTwiceAsManyInside] about twice as many inside as outside
-                            [someMoreInside] some more inside than outside
-                            [roughlyEqualInside] roughly equal amounts inside and outside
-                          }
+  soluteComparison:               |-
+                                  { $amount ->
+                                    *[none]  none
+                                    [equal] amounts exactly equal outside and inside
+                                    [allOutside] all outside, none inside
+                                    [allInside] all inside, none outside
+                                    [manyMoreOutside] many more outside than inside 
+                                    [aboutTwiceAsManyOutside] about twice as many outside as inside
+                                    [someMoreOutside] some more outside than inside
+                                    [roughlyEqualOutside] roughly equal amounts inside and outside
+                                    [manyMoreInside] many more inside than outside
+                                    [aboutTwiceAsManyInside] about twice as many inside as outside
+                                    [someMoreInside] some more inside than outside
+                                    [roughlyEqualInside] roughly equal amounts inside and outside
+                                  }
+
+  # A description of the average crossing direction of a solute across the membrane.
+  soluteAverageCrossingDirection: |-
+                                  { $direction ->
+                                    [toOutside] to outside
+                                    [mostlyToOutside] mostly to outside
+                                    [inBothDirections] in both directions
+                                    [mostlyToInside] mostly to inside
+                                    [toInside] to inside
+                                    *[none] no recent crossings
+                                  }
 
   soluteControl:
     outside:
@@ -295,7 +306,28 @@ a11y:
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
-      accessibleName: "{ a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteConcentrationsAccordionBox.barChart.crossing }."
+      accessibleName: |-
+                      { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection } happening at membrane; currently { $outsideAmount ->
+                        [none] none
+                        [few] a few
+                        [some] some
+                        [smallAmount] small amount of
+                        [several] several
+                        [many] many
+                        [largeAmount] large amount of
+                        [hugeAmount] huge amount of
+                       *[maxAmount] max amount of
+                      } outside, { $insideAmount ->
+                        [none] none
+                        [few] a few
+                        [some] some
+                        [smallAmount] small amount of
+                        [several] several
+                        [many] many
+                        [largeAmount] large amount of
+                        [hugeAmount] huge amount of
+                       *[maxAmount] max amount of
+                      } inside.
       crossing:       |-
                       { $crossing ->
                         *[none] no crossings

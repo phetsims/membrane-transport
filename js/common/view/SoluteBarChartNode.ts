@@ -29,8 +29,8 @@ import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
-import createParticleNode from './particles/createParticleNode.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
+import createParticleNode from './particles/createParticleNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
@@ -47,32 +47,35 @@ export default class SoluteBarChartNode extends Node {
                       tandem: Tandem ) {
 
     const outsideSoluteCountProperty = model.outsideSoluteCountProperties[ soluteType ];
-    const outsideAmountProperty = outsideSoluteCountProperty;
     const insideSoluteCountProperty = model.insideSoluteCountProperties[ soluteType ];
-    const insideAmountProperty = insideSoluteCountProperty;
 
-    const soluteDifferenceProperty = new DerivedProperty( [ outsideAmountProperty, insideAmountProperty ], ( outsideAmount, insideAmount ) => {
+    const soluteDifferenceProperty = new DerivedProperty( [ outsideSoluteCountProperty, insideSoluteCountProperty ], ( outsideAmount, insideAmount ) => {
       return MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideAmount, insideAmount );
     } );
 
     // These are updated in stepEmitter, and used to add description for the accessible name.
-    const inwardCountProperty = new NumberProperty( 0 );
     const outwardCountProperty = new NumberProperty( 0 );
+    const inwardCountProperty = new NumberProperty( 0 );
 
-    const crossingProperty = new DerivedProperty( [ inwardCountProperty, outwardCountProperty ], ( inwardCount, outwardCount ) => {
-
+    const crossingProperty = new DerivedProperty( [ outwardCountProperty, inwardCountProperty ], ( outwardCount, inwardCount ) => {
       affirm( inwardCount >= 0 && outwardCount >= 0, 'counts should be non-negative' );
+      return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( outwardCount, inwardCount );
+    } );
 
-      return inwardCount === 0 && outwardCount === 0 ? 'none' :
-             inwardCount > 0 && outwardCount === 0 ? 'inside' :
-             inwardCount === 0 && outwardCount > 0 ? 'outside' :
-             'both';
+    const outsideQualitativeAmountProperty = new DerivedProperty( [ outsideSoluteCountProperty ], count => {
+      return MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( count );
+    } );
+
+    const insideQualitativeAmountProperty = new DerivedProperty( [ insideSoluteCountProperty ], count => {
+      return MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( count );
     } );
 
     const accessibleNameProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleName.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
-      crossing: crossingProperty
+      direction: crossingProperty,
+      outsideAmount: outsideQualitativeAmountProperty,
+      insideAmount: insideQualitativeAmountProperty
     } );
 
     super( {

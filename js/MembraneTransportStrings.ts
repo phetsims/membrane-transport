@@ -189,6 +189,7 @@ type StringsType = {
     'soluteCapitalizedStringProperty': LocalizedStringProperty;
     'soluteBriefStringProperty': LocalizedStringProperty;
     'soluteComparisonStringProperty': LocalizedStringProperty;
+    'soluteAverageCrossingDirectionStringProperty': LocalizedStringProperty;
     'soluteControl': {
       'outside': {
         'accessibleNameStringProperty': LocalizedStringProperty;
