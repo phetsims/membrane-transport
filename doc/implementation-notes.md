@@ -85,7 +85,7 @@ state and behavior of solutes, ligands, and transport proteins within the membra
 *   **Particles (`Particle`, `Solute`, `Ligand`):**
     *   `Particle` is the base class for `Solute` and `Ligand`.
     *   `Solute` instances are non-interactive and represent molecules like oxygen, carbon dioxide, sodium, potassium,
-        ATP, ADP, and phosphate. They can be added/removed via spinners.
+        ATP, ADP, and phosphate. Most can be added/removed via spinners. Some, like ADP and phosphate, only emerge from other solutes at runtime.
     *   `Ligand` instances are interactive (draggable by mouse/keyboard) and represent signaling molecules. They are
         pre-allocated at startup (`MembraneTransportConstants.LIGAND_COUNT`) and their active state is controlled by
         `areLigandsAddedProperty`.
