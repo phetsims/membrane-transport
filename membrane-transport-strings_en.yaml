@@ -43,7 +43,7 @@ removeLigands:                                           Remove Ligands
 animateLipids.label:                                     Animate Lipids
 animateLipids.description:                               Whether the phospholipids forming the cell membrane should be animated.
 glucoseMetabolism.label:                                 Glucose Metabolism
-glucoseMetabolism.description:                           Glucose fades from the inside of the cell. Barcharts display constant high concentration of glucose inside the cell.
+glucoseMetabolism.description:                           Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
 preferencesDialog.audio.sounds.stereoSounds.label:       Stereo Sounds
 preferencesDialog.audio.sounds.stereoSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 

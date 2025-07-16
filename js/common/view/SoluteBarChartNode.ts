@@ -11,7 +11,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -28,7 +27,6 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
-import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
@@ -187,15 +185,12 @@ export default class SoluteBarChartNode extends Node {
       }
     } );
 
-    // Update inside bar width when count changes, but don't show stripe. If metabolizing glucose, then it was requested to show the maximum solute count
-    // and adjust the bar color and stroke. See https://github.com/phetsims/membrane-transport/issues/187
-    Multilink.multilink( [ insideSoluteCountProperty, MembraneTransportPreferences.instance.glucoseMetabolismProperty ], ( soluteCount, glucoseMetabolism ) => {
-      const isMetabolizingGlucose = soluteType === 'glucose' && glucoseMetabolism;
+    // Update inside bar width when count changes, but don't show stripe.
+    insideSoluteCountProperty.link( soluteCount => {
 
-      const countToUse = isMetabolizingGlucose ? MembraneTransportConstants.MAX_SOLUTE_COUNT : soluteCount;
-      const width = countToWidth( countToUse );
+      const width = countToWidth( soluteCount );
 
-      insideBar.fill = isMetabolizingGlucose ? MembraneTransportColors.metabolizingGlucoseColorProperty : fillColorProperty;
+      insideBar.fill = fillColorProperty;
 
       insideBar.setRectWidth( width );
       insideBar.left = origin.centerX;

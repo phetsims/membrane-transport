@@ -81,7 +81,7 @@
     "value": "Glucose Metabolism"
   },
   "glucoseMetabolism.description": {
-    "value": "Glucose fades from the inside of the cell. Barcharts display constant high concentration of glucose inside the cell."
+    "value": "Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism."
   },
   "preferencesDialog.audio.sounds.stereoSounds.label": {
     "value": "Stereo Sounds"
