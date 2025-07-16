@@ -221,6 +221,10 @@ export default class MembraneTransportDescriber {
     outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
   ): string {
     const changedComparisons: string[] = [];
+
+    // If only one solute type crossed, we don't need to include the name in the description.
+    const includeSoluteName = solutesThatCrossed.length > 1;
+
     solutesThatCrossed.forEach( soluteType => {
       const comparison = MembraneTransportDescriber.getSoluteComparisonDescriptor(
         outsideSoluteCountProperties[ soluteType ].value,
@@ -229,7 +233,13 @@ export default class MembraneTransportDescriber {
       if ( comparison !== this.previousSoluteComparisons[ soluteType ] && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
         const soluteName = MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } );
         const comparisonString = this.getSoluteComparisonString( soluteType, insideSoluteCountProperties, outsideSoluteCountProperties );
-        changedComparisons.push( `${soluteName}, ${comparisonString}` );
+
+        if ( includeSoluteName ) {
+          changedComparisons.push( `${soluteName}, ${comparisonString}` );
+        }
+        else {
+          changedComparisons.push( comparisonString );
+        }
       }
       this.previousSoluteComparisons[ soluteType ] = comparison;
     } );
