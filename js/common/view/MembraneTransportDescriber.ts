@@ -31,13 +31,41 @@ type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inB
 type SoluteQualitativeAmountDescriptor = 'none' | 'few' | 'some' | 'smallAmount' |
   'several' | 'many' | 'largeAmount' | 'hugeAmount' | 'maxAmount';
 
+// These are the model states that will trigger the describer to provide hints to the user to
+// encourage productive activity. Each hint state is spoken once until some action occurs that
+// resets the state, such as adding/removing solutes, ligands, or proteins.
+type HintState = {
+  active: boolean; // Is the simulation in a state where a hint is needed?
+  provided: boolean; // Has the hint been provided to the user?
+};
+type HintStates = {
+  hasLigandGatedChannelWithoutLigands: HintState;
+  hasVoltageGatedChannelAtRestingPotential: HintState;
+  hasPumpAwaitingPhosphateWithoutATP: HintState;
+  hasSodiumGlucoseCotransporterWithLowOutsideSodium: HintState;
+};
+
+// A fundamental snapshot of the simulation state. If any of these change, it indicates that the user
+// has done something important. The describer will reset the time since the last hint description
+// AND whether hints have been provided.
+type FundamentalState = {
+  soluteCount: number; // The total number of solutes in the system, both inside and outside.
+  proteinCount: number; // The total number of transport proteins in the system.
+  ligandsAdded: boolean; // Whether ligands have been added to the system.
+};
+
 // The interval in seconds at which the system will trigger responses.
 const DESCRIPTION_INTERVAL = 5;
+
+// The interval in seconds at wich the system will trigger a 'hint' response to guide the user to make
+// a change.
+const HINT_DESCRIPTION_INTERVAL = 20;
 
 export default class MembraneTransportDescriber {
 
   // This system triggers responses at a fixed interval.
   private timeSinceDescription = 0;
+  private timeSinceHintDescription = 0;
 
   // We keep track of the last response to avoid repeating it unnecessarily.
   private previousResponse: TAlertable | null = null;
@@ -50,6 +78,12 @@ export default class MembraneTransportDescriber {
   // will be added to the response.
   private previousSteadyStates: Record<SoluteType, boolean>;
 
+  // The states that require hints to be provided to the user, and whether they have been provided yet.
+  private hintStates: HintStates;
+
+  // A basic snapshot of the model, when this changes it indicates the user has done something significant.
+  private fundamentalState: FundamentalState;
+
   private readonly model: MembraneTransportModel;
 
   // The Node which is used to trigger context responses.
@@ -61,6 +95,8 @@ export default class MembraneTransportDescriber {
 
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
     this.previousSteadyStates = this.getCleanSteadyStates();
+    this.hintStates = this.getCleanHintStates();
+    this.fundamentalState = this.getCleanFundamentalState();
   }
 
   /**
@@ -69,6 +105,7 @@ export default class MembraneTransportDescriber {
    */
   private addAccessibleContextResponse( response: AlertableNoUtterance ): void {
     if ( response !== this.previousResponse && response !== '' ) {
+      console.log( response );
       this.contextResponseNode.addAccessibleContextResponse( response );
     }
     this.previousResponse = response;
@@ -79,8 +116,21 @@ export default class MembraneTransportDescriber {
    */
   public step( dt: number ): void {
     if ( this.model.isPlayingProperty.value ) {
-      this.timeSinceDescription += dt;
 
+      // If the model has changed significantly, reset the time since the last hint description.
+      const updatedFundamentalState = this.getUpdatedFundamentalState();
+      if ( MembraneTransportDescriber.areFundamentalStatesDifferent( this.fundamentalState, updatedFundamentalState ) ) {
+        this.fundamentalState = updatedFundamentalState;
+
+        // Reset hint timing variables and make sure that none of the hints have been provided yet.
+        this.hintStates = this.getCleanHintStates();
+        this.timeSinceHintDescription = 0;
+      }
+
+      //-------------------------------------------------------------------------
+      // Regular response describing solute and protein activity
+      //-------------------------------------------------------------------------
+      this.timeSinceDescription += dt;
       if ( this.timeSinceDescription > DESCRIPTION_INTERVAL ) {
         const response = this.getDescriptionFromEventQueue(
           this.model.descriptionEventQueue,
@@ -90,7 +140,6 @@ export default class MembraneTransportDescriber {
           this.model.outsideSoluteCountProperties
         );
 
-        console.log( response );
         this.addAccessibleContextResponse( response );
 
         this.timeSinceDescription = 0;
@@ -99,7 +148,144 @@ export default class MembraneTransportDescriber {
         // at the next interval.
         this.model.clearDescriptionEventQueue();
       }
+
+      //-------------------------------------------------------------------------
+      // Hint response (if needed) to guide the user to productive activity
+      //-------------------------------------------------------------------------
+      this.hintStates = this.computeHintStates();
+      if ( MembraneTransportDescriber.shouldMakeHintDescription( this.hintStates ) ) {
+        this.timeSinceHintDescription += dt;
+        if ( this.timeSinceHintDescription > HINT_DESCRIPTION_INTERVAL ) {
+          const hintResponse = MembraneTransportDescriber.getHintDescription( this.hintStates );
+          this.addAccessibleContextResponse( hintResponse );
+
+          this.timeSinceHintDescription = 0;
+        }
+      }
+      else {
+
+        // The simulation is not in a state where a hint is needed, so reset the time and we will start counting
+        // again when the next hint is needed.
+        this.timeSinceHintDescription = 0;
+      }
     }
+  }
+
+  /**
+   * Returns true if any of the hint states require a hint to be provided to the user.
+   */
+  private static shouldMakeHintDescription( hintStates: HintStates ): boolean {
+    return MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasLigandGatedChannelWithoutLigands ) ||
+           MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasVoltageGatedChannelAtRestingPotential ) ||
+           MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasPumpAwaitingPhosphateWithoutATP ) ||
+           MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasSodiumGlucoseCotransporterWithLowOutsideSodium );
+  }
+
+  /**
+   * A hint state requires a hint if it is active and has not been provided yet to the user.
+   */
+  private static doesHintStateRequireHint( hintState: HintState ): boolean {
+    return hintState.active && !hintState.provided;
+  }
+
+  /**
+   * Compute new hint states based on the current model state. The provided flags are kept as-is.
+   */
+  private computeHintStates(): HintStates {
+    return {
+      hasLigandGatedChannelWithoutLigands: {
+        active: this.hasLigandGatedChannelWithoutLigands(),
+        provided: this.hintStates.hasLigandGatedChannelWithoutLigands.provided
+      },
+      hasVoltageGatedChannelAtRestingPotential: {
+        active: this.hasVoltageGatedChannelAtRestingPotential(),
+        provided: this.hintStates.hasVoltageGatedChannelAtRestingPotential.provided
+      },
+      hasPumpAwaitingPhosphateWithoutATP: {
+        active: this.hasPumpAwaitingPhosphateWithoutATP(),
+        provided: this.hintStates.hasPumpAwaitingPhosphateWithoutATP.provided
+      },
+      hasSodiumGlucoseCotransporterWithLowOutsideSodium: {
+        active: this.hasSodiumGlucoseCotransporterWithLowOutsideSodium(),
+        provided: this.hintStates.hasSodiumGlucoseCotransporterWithLowOutsideSodium.provided
+      }
+    };
+  }
+
+  /**
+   * One of the states where a hint condition is required. In this case, there are sodium or potassium
+   * ligand-gated channels but no ligands have been added.
+   */
+  private hasLigandGatedChannelWithoutLigands(): boolean {
+    const transportProteins = this.model.getTransportProteins();
+    const hasSodiumLigandGatedChannel = transportProteins.some( p => p.type === 'sodiumIonLigandGatedChannel' );
+    const hasPotassiumLigandGatedChannel = transportProteins.some( p => p.type === 'potassiumIonLigandGatedChannel' );
+    return ( hasSodiumLigandGatedChannel || hasPotassiumLigandGatedChannel ) && !this.model.areLigandsAddedProperty.value;
+  }
+
+  /**
+   * One of the states where a hint condition is required. In this case, there are sodium or potassium
+   * voltage-gated channels, and the membrane potential is at resting potential (-70 mV).
+   */
+  private hasVoltageGatedChannelAtRestingPotential(): boolean {
+    const transportProteins = this.model.getTransportProteins();
+    const hasSodiumVoltageGatedChannel = transportProteins.some( p => p.type === 'sodiumIonVoltageGatedChannel' );
+    const hasPotassiumVoltageGatedChannel = transportProteins.some( p => p.type === 'potassiumIonVoltageGatedChannel' );
+    return ( hasSodiumVoltageGatedChannel || hasPotassiumVoltageGatedChannel ) && this.model.membranePotentialProperty.value === -70;
+  }
+
+  /**
+   * One of the states where a hint condition is required. In this case, there is a sodium-potassium pump
+   * that is awaiting phosphate (open to inside and bound to sodium), but there is no ATP inside the cell.
+   */
+  private hasPumpAwaitingPhosphateWithoutATP(): boolean {
+    const transportProteins = this.model.getTransportProteins();
+    const sodiumPotassiumPumps = transportProteins.filter( p => p.type === 'sodiumPotassiumPump' );
+    const hasPumpAwaitingPhosphate = sodiumPotassiumPumps.some( p => p.stateProperty.value === 'openToInsideSodiumBound' );
+    const atpInside = this.model.insideSoluteCountProperties.atp?.value > 0;
+    return hasPumpAwaitingPhosphate && !atpInside;
+  }
+
+  /**
+   * One of the states where a hint condition is required. In this case, there is a sodium-glucose cotransporter
+   * and the sodium concentration outside the cell is less than or equal to the sodium concentration inside the cell.
+   */
+  private hasSodiumGlucoseCotransporterWithLowOutsideSodium(): boolean {
+    const transportProteins = this.model.getTransportProteins();
+    const hasSodiumGlucoseCotransporter = transportProteins.some( p => p.type === 'sodiumGlucoseCotransporter' );
+    const sodiumOutside = this.model.outsideSoluteCountProperties.sodiumIon?.value;
+    const sodiumInside = this.model.insideSoluteCountProperties.sodiumIon?.value;
+    return hasSodiumGlucoseCotransporter && ( sodiumOutside <= sodiumInside );
+  }
+
+  /**
+   * Returns a hint description based on the computed states that require a hint.
+   * Note that this mutates the hintStates to mark the hints as they are provided.
+   */
+  private static getHintDescription( hintStates: HintStates ): string {
+
+    // Loop through the hint states and describe all that are required. As they are consumed, mark them as provided.
+    const hintDescriptions = [];
+
+    if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasLigandGatedChannelWithoutLigands ) ) {
+      hintDescriptions.push( 'Ligand-gated protein closed. Look for ligand molecules' );
+      hintStates.hasLigandGatedChannelWithoutLigands.provided = true;
+    }
+    if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasVoltageGatedChannelAtRestingPotential ) ) {
+      hintDescriptions.push( 'Voltage-gated protein closed. Check membrane potential' );
+      hintStates.hasVoltageGatedChannelAtRestingPotential.provided = true;
+    }
+    if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasPumpAwaitingPhosphateWithoutATP ) ) {
+      hintDescriptions.push( 'Pump needs phosphate source' );
+      hintStates.hasPumpAwaitingPhosphateWithoutATP.provided = true;
+    }
+    if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasSodiumGlucoseCotransporterWithLowOutsideSodium ) ) {
+      hintDescriptions.push( 'Cotransporter not binding sodium. Check outside sodium levels' );
+      hintStates.hasSodiumGlucoseCotransporterWithLowOutsideSodium.provided = true;
+    }
+
+    // Combine contents
+    return hintDescriptions.join( ', ' );
   }
 
   /**
@@ -131,10 +317,55 @@ export default class MembraneTransportDescriber {
     };
   }
 
+  /**
+   * Returns a clean set of hint states, where all hints are inactive and have not been provided.
+   */
+  private getCleanHintStates(): HintStates {
+    return {
+      hasLigandGatedChannelWithoutLigands: { active: false, provided: false },
+      hasVoltageGatedChannelAtRestingPotential: { active: false, provided: false },
+      hasPumpAwaitingPhosphateWithoutATP: { active: false, provided: false },
+      hasSodiumGlucoseCotransporterWithLowOutsideSodium: { active: false, provided: false }
+    };
+  }
+
+  /**
+   * Returns a clean fundamental state.
+   */
+  private getCleanFundamentalState(): FundamentalState {
+    return {
+      soluteCount: 0,
+      proteinCount: 0,
+      ligandsAdded: false
+    };
+  }
+
+  /**
+   * Returns an updated fundamental state based on the current model state.
+   */
+  private getUpdatedFundamentalState(): FundamentalState {
+    return {
+      soluteCount: this.model.totalInsideSoluteCountProperty.value + this.model.totalOutsideSoluteCountProperty.value,
+      proteinCount: this.model.getTransportProteins().length,
+      ligandsAdded: this.model.areLigandsAddedProperty.value
+    };
+  }
+
+  /**
+   * Returns true if the two FundamentalStates are different.
+   */
+  private static areFundamentalStatesDifferent( previous: FundamentalState, current: FundamentalState ): boolean {
+    return previous.soluteCount !== current.soluteCount ||
+           previous.proteinCount !== current.proteinCount ||
+           previous.ligandsAdded !== current.ligandsAdded;
+  }
+
   public reset(): void {
     this.timeSinceDescription = 0;
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
     this.previousSteadyStates = this.getCleanSteadyStates();
+    this.hintStates = this.getCleanHintStates();
+    this.fundamentalState = this.getCleanFundamentalState();
   }
 
   private getDescriptionFromEventQueue(

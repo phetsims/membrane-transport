@@ -100,6 +100,10 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly insideSoluteTypesCountProperty = new NumberProperty( 0 );
   public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
 
+  public readonly totalOutsideSoluteCountProperty = new NumberProperty( 0 );
+  public readonly totalInsideSoluteCountProperty = new NumberProperty( 0 );
+
+
   public readonly transportProteinCountProperty = new NumberProperty( 0 );
   public readonly transportProteinTypesCountProperty = new NumberProperty( 0 );
 
@@ -395,10 +399,20 @@ export default class MembraneTransportModel extends PhetioObject {
   public updateSoluteCounts(): void {
 
     // Update the solute counts after the solutes have moved
+    let totalOutsideCount = 0;
+    let totalInsideCount = 0;
     getFeatureSetSoluteTypes( this.featureSet ).forEach( soluteType => {
-      this.outsideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'outside' );
-      this.insideSoluteCountProperties[ soluteType ].value = this.countSolutes( soluteType, 'inside' );
+      const soluteTypeOutsideCount = this.countSolutes( soluteType, 'outside' );
+      const soluteTypeInsideCount = this.countSolutes( soluteType, 'inside' );
+      this.outsideSoluteCountProperties[ soluteType ].value = soluteTypeOutsideCount;
+      this.insideSoluteCountProperties[ soluteType ].value = soluteTypeInsideCount;
+
+      totalOutsideCount += soluteTypeOutsideCount;
+      totalInsideCount += soluteTypeInsideCount;
     } );
+
+    this.totalOutsideSoluteCountProperty.value = totalOutsideCount;
+    this.totalInsideSoluteCountProperty.value = totalInsideCount;
 
     // Count the number of different types of solute outside:
     let outsideNumberOfTypes = 0;
