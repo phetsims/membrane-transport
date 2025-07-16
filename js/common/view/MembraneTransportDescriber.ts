@@ -318,39 +318,46 @@ export default class MembraneTransportDescriber {
     return queue.some( event => event.solute.soluteType === soluteType );
   }
 
+  /**
+   * Returns an enum descriptor of the average crossing direction for a solute type based on the number that have crossed in and
+   * out of the membrane.
+   * @param crossedToOutside - Count of solutes of a type that crossed to the outside
+   * @param crossedToInside - Count of solutes of a type that crossed to the inside
+   */
   public static getAverageCrossingDirectionDescriptor( crossedToOutside: number, crossedToInside: number ): AverageCrossingDirectionDescriptor {
     const total = crossedToOutside + crossedToInside;
 
+    let descriptor: AverageCrossingDirectionDescriptor = 'none';
+
     if ( total === 0 ) {
-      return 'none';
+      descriptor = 'none';
     }
 
     const percentOutward = crossedToOutside / total;
     const percentInward = crossedToInside / total;
 
-    // 100% outward
     if ( percentOutward === 1 ) {
-      return 'toOutside';
+      // 100% outward
+      descriptor = 'toOutside';
     }
-    // 100% inward
     if ( percentInward === 1 ) {
-      return 'toInside';
+      // 100% inward
+      descriptor = 'toInside';
     }
-    // >= 0.61 outward
     if ( percentOutward >= 0.61 ) {
-      return 'mostlyToOutside';
+      // >= 0.61 outward
+      descriptor = 'mostlyToOutside';
     }
-    // >= 0.61 inward
     if ( percentInward >= 0.61 ) {
-      return 'mostlyToInside';
+      // >= 0.61 inward
+      descriptor = 'mostlyToInside';
     }
-    // 0 - 10% difference (within 5% of 50/50)
     if ( Math.abs( percentOutward - percentInward ) <= 0.10 ) {
-      return 'inBothDirections';
+      // 0 - 10% difference - in this case the solute is considered to be in steady state
+      descriptor = 'inBothDirections';
     }
 
-    // Fallback (should not be reached)
-    return 'none';
+    return descriptor;
   }
 
   public static getSoluteComparisonDescriptor( outsideAmount: number, insideAmount: number ): SoluteComparisonDescriptor {
