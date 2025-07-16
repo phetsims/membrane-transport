@@ -22,6 +22,9 @@ type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMo
   'aboutTwiceAsManyOutside' | 'someMoreOutside' | 'roughlyEqualOutside' | 'manyMoreInside' |
   'aboutTwiceAsManyInside' | 'someMoreInside' | 'roughlyEqualInside' | 'none';
 
+type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inBothDirections' |
+  'mostlyToInside' | 'toInside' | 'none';
+
 // The interval in seconds at which the system will trigger responses.
 const DESCRIPTION_INTERVAL = 5;
 
@@ -37,6 +40,10 @@ export default class MembraneTransportDescriber {
   // will be added to the response.
   private previousSoluteComparisons: Record<SoluteType, SoluteComparisonDescriptor>;
 
+  // Keep track of the previous steady states. when any of these change, the description of the new steady state
+  // will be added to the response.
+  private previousSteadyStates: Record<SoluteType, boolean>;
+
   private readonly model: MembraneTransportModel;
 
   // The Node which is used to trigger context responses.
@@ -47,6 +54,7 @@ export default class MembraneTransportDescriber {
     this.contextResponseNode = contextResponseNode;
 
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
+    this.previousSteadyStates = this.getCleanSteadyStates();
   }
 
   /**
@@ -104,9 +112,23 @@ export default class MembraneTransportDescriber {
     };
   }
 
+  private getCleanSteadyStates(): Record<SoluteType, boolean> {
+    return {
+      oxygen: false,
+      carbonDioxide: false,
+      sodiumIon: false,
+      potassiumIon: false,
+      glucose: false,
+      atp: false,
+      adp: false,
+      phosphate: false
+    };
+  }
+
   public reset(): void {
     this.timeSinceDescription = 0;
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
+    this.previousSteadyStates = this.getCleanSteadyStates();
   }
 
   private getDescriptionFromEventQueue(
@@ -201,7 +223,11 @@ export default class MembraneTransportDescriber {
     // Capitalize the first letter
     response = response.charAt( 0 ).toUpperCase() + response.slice( 1 );
 
-    // Append the comparison string
+    const steadyStateString = this.getEnteredSteadyStateIfChanged( solutesThatCrossed, queue );
+
+    if ( steadyStateString ) {
+      response += `, ${steadyStateString}`;
+    }
     const comparisonString = this.getCompareSoluteCompartmentsIfChanged(
       solutesThatCrossed,
       insideSoluteCountProperties,
@@ -230,7 +256,15 @@ export default class MembraneTransportDescriber {
         outsideSoluteCountProperties[ soluteType ].value,
         insideSoluteCountProperties[ soluteType ].value
       );
-      if ( comparison !== this.previousSoluteComparisons[ soluteType ] && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
+
+      // If the solute is in steady state, don't describe the comparison because we want to hear that it is in steady state.
+      // and don't want to make it seem like it is changing.
+      const inSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, this.model.descriptionEventQueue );
+
+      if (
+        comparison !== this.previousSoluteComparisons[ soluteType ] &&
+        !inSteadyState &&
+        soluteType !== 'adp' && soluteType !== 'phosphate' ) {
         const soluteName = MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } );
         const comparisonString = this.getSoluteComparisonString( soluteType, insideSoluteCountProperties, outsideSoluteCountProperties );
 
@@ -244,6 +278,26 @@ export default class MembraneTransportDescriber {
       this.previousSoluteComparisons[ soluteType ] = comparison;
     } );
     return changedComparisons.join( ', ' );
+  }
+
+  private getEnteredSteadyStateIfChanged( solutesThatCrossed: SoluteType[], queue: SoluteCrossedMembraneEvent[] ): string {
+    const changedSteadyStates: string[] = [];
+
+    solutesThatCrossed.forEach( soluteType => {
+      const isSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, queue );
+      if ( isSteadyState && !this.previousSteadyStates[ soluteType ] ) {
+        changedSteadyStates.push( `${soluteType} crossing steadily in both directions, now roughly equal` );
+      }
+      this.previousSteadyStates[ soluteType ] = isSteadyState;
+    } );
+
+    return changedSteadyStates.join( ', ' );
+  }
+
+  private static isSteadyState( soluteType: SoluteType, queue: SoluteCrossedMembraneEvent[] ): boolean {
+    const crossedInside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'inward' ).length;
+    const crossedOutside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'outward' ).length;
+    return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( crossedOutside, crossedInside ) === 'inBothDirections';
   }
 
   private getSoluteComparisonString(
@@ -262,6 +316,41 @@ export default class MembraneTransportDescriber {
 
   private static didSoluteTypeCross( queue: SoluteCrossedMembraneEvent[], soluteType: SoluteType ): boolean {
     return queue.some( event => event.solute.soluteType === soluteType );
+  }
+
+  public static getAverageCrossingDirectionDescriptor( crossedToOutside: number, crossedToInside: number ): AverageCrossingDirectionDescriptor {
+    const total = crossedToOutside + crossedToInside;
+
+    if ( total === 0 ) {
+      return 'none';
+    }
+
+    const percentOutward = crossedToOutside / total;
+    const percentInward = crossedToInside / total;
+
+    // 100% outward
+    if ( percentOutward === 1 ) {
+      return 'toOutside';
+    }
+    // 100% inward
+    if ( percentInward === 1 ) {
+      return 'toInside';
+    }
+    // >= 0.61 outward
+    if ( percentOutward >= 0.61 ) {
+      return 'mostlyToOutside';
+    }
+    // >= 0.61 inward
+    if ( percentInward >= 0.61 ) {
+      return 'mostlyToInside';
+    }
+    // 0 - 10% difference (within 5% of 50/50)
+    if ( Math.abs( percentOutward - percentInward ) <= 0.10 ) {
+      return 'inBothDirections';
+    }
+
+    // Fallback (should not be reached)
+    return 'none';
   }
 
   public static getSoluteComparisonDescriptor( outsideAmount: number, insideAmount: number ): SoluteComparisonDescriptor {
