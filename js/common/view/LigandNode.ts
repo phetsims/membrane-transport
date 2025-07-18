@@ -28,12 +28,12 @@ import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragL
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import type Ligand from '../model/Ligand.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
@@ -166,7 +166,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         }
 
         if ( ligand.mode instanceof LigandBoundMode ) {
-          ligand.mode.ligandGatedChannel.unbindLigand();
+          ligand.mode.ligandGatedChannel.unbindLigand( false );
         }
 
         ligand.mode = new UserControlledMode();
@@ -371,7 +371,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
             ligandInteractionCueVisibleProperty.value = false;
 
             if ( ligand.mode instanceof LigandBoundMode ) {
-              ligand.mode.ligandGatedChannel.unbindLigand();
+              ligand.mode.ligandGatedChannel.unbindLigand( false );
             }
 
             // --- Grab Logic ---
@@ -428,8 +428,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
                   // Allow immediate binding attempt by model
                   protein.clearRebindingCooldown();
-
                   this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOnProteinResponseStringProperty );
+                  this.ligand.manuallyBound = true;
                 }
                 else {
                   this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOnBusyOrIncompatibleProteinResponseStringProperty );
@@ -517,8 +517,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
     // When the unbinding happens after a NATURAL binding, don't speak this. We only want to hear this if the
     // binding occurs after a user-initiated action.
     ligandUnboundDueToNaturalCausesEmitter.addListener( ligand => {
-      if ( ligand === this.ligand ) {
+      if ( ligand === this.ligand && this.ligand.manuallyBound ) {
         this.alert( MembraneTransportFluent.a11y.ligandNode.unboundResponseStringProperty );
+        this.ligand.manuallyBound = false; // Reset the flag after alerting
       }
     }, { disposer: this } );
   }

@@ -84,9 +84,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
     // After the binding duration, release the ligand
     if ( this.stateProperty.value === 'ligandBoundOpen' && this.timeSinceStateTransition >= BINDING_DURATION && this.boundLigand && !this.hasSolutesMovingTowardOrThroughTransportProtein() ) {
-      const ligand = this.boundLigand;
-      this.unbindLigand();
-      this.ligandUnboundDueToNaturalCausesEmitter.emit( ligand );
+      this.unbindLigand( true );
     }
   }
 
@@ -132,16 +130,25 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * Release the bound ligand if any
+   * Release the bound ligand if any.
+   * @param naturally - If true, the ligand is unbound due to natural causes (e.g., binding duration expired).
    */
-  public unbindLigand(): void {
+  public unbindLigand( naturally: boolean ): void {
     if ( this.boundLigand ) {
+      const ligand = this.boundLigand;
 
       // Reset the ligand to random walk mode
-      this.boundLigand.mode = Particle.createRandomWalkMode( false );
+      ligand.mode = Particle.createRandomWalkMode( false );
 
       // Clear the bound state
       this.stateProperty.value = 'ligandUnboundOpen';
+
+      if ( naturally ) {
+        this.ligandUnboundDueToNaturalCausesEmitter.emit( ligand );
+      }
+
+      // After the above emitter so that manuallyBound is correct in callbacks.
+      ligand.manuallyBound = false;
     }
   }
 
@@ -162,7 +169,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   public override releaseParticles( slot: Slot ): void {
     super.releaseParticles( slot );
     if ( this.boundLigand ) {
-      this.unbindLigand();
+      this.unbindLigand( false );
     }
   }
 }

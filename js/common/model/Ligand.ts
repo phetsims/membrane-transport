@@ -15,6 +15,9 @@ import { LigandType } from './SoluteType.js';
 
 export default class Ligand extends Particle {
 
+  // True when the ligand is manually bound to the channel because the user placed it there.
+  public manuallyBound = false;
+
   public constructor(
     position: Vector2,
     public readonly ligandType: LigandType,
