@@ -64,6 +64,16 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     } );
   }
 
+  /**
+   * For the sodium potassium pump, particles control the state so the state needs to be reset after clearing.
+   */
+  public override clear( slot: Slot ): void {
+    super.clear( slot );
+
+    // Reset the state of the transport protein after clearing interacting particles.
+    this.stateProperty.reset();
+  }
+
   public override step( dt: number ): void {
     super.step( dt );
 

@@ -166,6 +166,17 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     return new Vector2( this.slot.position, 0 ).plus( bindingPositionOffset );
   }
 
+  /**
+   * For the ligand gated channels, clear removes all particles and ligands. Since ligands control
+   * the state, we need to make sure that the state is reset after clearing.
+   */
+  public override clear( slot: Slot ): void {
+    super.clear( slot );
+
+    // Reset the state of the transport protein after clearing interacting particles.
+    this.stateProperty.reset();
+  }
+
   public override releaseParticles( slot: Slot ): void {
     super.releaseParticles( slot );
     if ( this.boundLigand ) {

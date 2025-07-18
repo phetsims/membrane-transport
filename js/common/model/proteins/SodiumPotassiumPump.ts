@@ -103,6 +103,17 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
                                               solute.mode.site === site ) === undefined;
   }
 
+  /**
+   * For the sodium potassium pump, particles control the state so the state needs to be reset after clearing.
+   * @param slot
+   */
+  public override clear( slot: Slot ): void {
+    super.clear( slot );
+
+    // Reset the state of the transport protein after clearing interacting particles.
+    this.stateProperty.reset();
+  }
+
   public override isAvailableForPassiveTransport(): boolean {
     return false;
   }

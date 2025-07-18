@@ -131,9 +131,6 @@ export default abstract class TransportProtein<State extends string = Intentiona
 
     // Release any particles that were interacting with the transport protein.
     this.releaseParticles( slot );
-
-    // Reset the state of the transport protein to its initial state.
-    this.stateProperty.reset();
   }
 }
 
