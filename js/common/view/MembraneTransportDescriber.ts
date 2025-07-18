@@ -77,7 +77,7 @@ export default class MembraneTransportDescriber {
   // Keep track of the solutes that were in 'steady state' with roughly equal solute counts since the
   // last description. When any solute first enters steady state with roughly equal solute counts,
   // the description of the new steady state will be added to the response.
-  private previousSteadyStateAndEqualMap: Record<SoluteType, boolean>;
+  private previousSteadyStateMap: Record<SoluteType, boolean>;
 
   // The states that require hints to be provided to the user, and whether they have been provided yet.
   private hintStates: HintStates;
@@ -95,7 +95,7 @@ export default class MembraneTransportDescriber {
     this.contextResponseNode = contextResponseNode;
 
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
-    this.previousSteadyStateAndEqualMap = this.getCleanSteadyStates();
+    this.previousSteadyStateMap = this.getCleanSteadyStates();
     this.hintStates = this.getCleanHintStates();
     this.fundamentalState = this.getCleanFundamentalState();
   }
@@ -364,7 +364,7 @@ export default class MembraneTransportDescriber {
   public reset(): void {
     this.timeSinceDescription = 0;
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
-    this.previousSteadyStateAndEqualMap = this.getCleanSteadyStates();
+    this.previousSteadyStateMap = this.getCleanSteadyStates();
     this.hintStates = this.getCleanHintStates();
     this.fundamentalState = this.getCleanFundamentalState();
   }
@@ -528,12 +528,12 @@ export default class MembraneTransportDescriber {
         this.model.insideSoluteCountProperties[ soluteType ].value
       );
 
-      const steadyStateAndRoughlyEqual = isSteadyState && isRoughlyEqual;
-      if ( steadyStateAndRoughlyEqual && !this.previousSteadyStateAndEqualMap[ soluteType ] ) {
+      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside.
+      if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
         changedSteadyStates.push( `${soluteType} crossing steadily in both directions, now roughly equal` );
       }
 
-      this.previousSteadyStateAndEqualMap[ soluteType ] = steadyStateAndRoughlyEqual;
+      this.previousSteadyStateMap[ soluteType ] = isSteadyState;
     } );
 
     return changedSteadyStates.join( ', ' );
