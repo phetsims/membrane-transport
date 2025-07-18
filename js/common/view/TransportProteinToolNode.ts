@@ -36,7 +36,6 @@ export default class TransportProteinToolNode extends VBox {
     type: TransportProteinType,
     label: TReadOnlyProperty<string>,
     accessibleName: TReadOnlyProperty<string>,
-    accessibleHelpText: TReadOnlyProperty<string> | undefined,
     view: MembraneTransportScreenView
   ) {
 
@@ -53,8 +52,7 @@ export default class TransportProteinToolNode extends VBox {
       tagName: 'button',
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
-      accessibleName: accessibleName,
-      accessibleHelpText: accessibleHelpText
+      accessibleName: accessibleName
     } ) );
 
 

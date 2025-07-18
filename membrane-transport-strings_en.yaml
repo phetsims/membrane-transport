@@ -126,12 +126,15 @@ a11y:
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
+      accessibleHelpText:           Transmembrane single channel proteins with open and closed states, and a triangle- or star-shaped ligand binding site. Grab to pull to protein.
     leakageChannelPanel:
       sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
       potassiumIonKPlusLeakage: Potassium-selective, Leakage
+      accessibleHelpText:       Transmembrane single channel proteins, always open. Grab to pull to membrane.
     voltageGatedChannelPanel:
       sodiumIonNaPlusVoltageGated:   Sodium-selective, Voltage-gated
       potassiumIonKPlusVoltageGated: Potassium-selective, Voltage-gated
+      accessibleHelpText:            Transmembrane single channel proteins with open and closed states. Grab to pull to protein.
 
       # For the Membrane Potential radio buttons
       membranePotential:
@@ -154,7 +157,11 @@ a11y:
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
-      accessibleHelpText:         Grab transporter to pull to membrane.
+      accessibleHelpText:         |-
+                                  Proteins that open to one side at a time and follow specific binding sequences of solutes to transport solutes across the membrane. Grab to pull to membrane.
+                                    Sodium Potassium Pump begins open to the inside with 3 small circular binding sites awaiting solute. A phosphate is required to change the shape of the protein and open to the outside. Two larger circular binding sites awaiting solute are exposed. The pump returns to its original shape, open to the inside.
+                                    Sodium-Glucose Cotransporter begins open to the outside with two small circular binding sites and one hexagonal binding site. Requires specific solute concentration outside cell to shuttle. Cotransporter changes shape to shuttle solutes to inside and returns to to original shape.
+
   ligandNode:
     accessibleName:                              |-
                                                  { $ligandType ->
@@ -202,7 +209,7 @@ a11y:
                                     [-50] negative 50
                                     *[30] positive 30
                                   } millivolts
-  
+
   # Accessible names for solute radio buttons
   soluteAccessibleNames:
     oxygen:        Oxygen, O2, nonpolar, small

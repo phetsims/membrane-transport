@@ -123,14 +123,17 @@ type StringsType = {
       'ligandGatedChannelPanel': {
         'sodiumIonNaPlusLigandGatedStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusLigandGatedStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
       'leakageChannelPanel': {
         'sodiumIonNaPlusLeakageStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusLeakageStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
       'voltageGatedChannelPanel': {
         'sodiumIonNaPlusVoltageGatedStringProperty': LocalizedStringProperty;
         'potassiumIonKPlusVoltageGatedStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
         'membranePotential': {
           'radioButtonGroup': {
             'accessibleNameStringProperty': LocalizedStringProperty;
