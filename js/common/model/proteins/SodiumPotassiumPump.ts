@@ -103,17 +103,6 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
                                               solute.mode.site === site ) === undefined;
   }
 
-  /**
-   * For the sodium potassium pump, particles control the state so the state needs to be reset after clearing.
-   * @param slot
-   */
-  public override clear( slot: Slot ): void {
-    super.clear( slot );
-
-    // Reset the state of the transport protein after clearing interacting particles.
-    this.stateProperty.reset();
-  }
-
   public override isAvailableForPassiveTransport(): boolean {
     return false;
   }
@@ -244,11 +233,19 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     return this.slot.getPositionVector().plus( offset );
   }
 
-  public override releaseParticles( slot: Slot ): void {
-    super.releaseParticles( slot );
+  /**
+   * For the sodium potassium pump, solutes control the state so the state needs to be reset after clearing.
+   * @param slot
+   */
+  public override clearSolutes( slot: Slot ): void {
+    super.clearSolutes( slot );
+
     this.model.solutes.filter( solute => ( solute.mode as ParticleModeWithSlot ).slot === slot ).forEach( particle => {
       particle.releaseFromInteraction( particle.type === 'potassiumIon' ? 20 : -20 );
     } );
+
+    // Reset the state of the transport protein after clearing interacting particles.
+    this.stateProperty.reset();
   }
 
   public static getSitePositionOffset( site: SodiumPotassiumPumpSite, state: SodiumPotassiumPumpState ): Vector2 {

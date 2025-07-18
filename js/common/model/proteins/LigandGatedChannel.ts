@@ -171,17 +171,15 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
    * the state, we need to make sure that the state is reset after clearing.
    */
   public override clear( slot: Slot ): void {
-    super.clear( slot );
 
-    // Reset the state of the transport protein after clearing interacting particles.
-    this.stateProperty.reset();
-  }
-
-  public override releaseParticles( slot: Slot ): void {
-    super.releaseParticles( slot );
+    // Also release any ligands interacting with this channel.
     if ( this.boundLigand ) {
       this.unbindLigand( false );
     }
+    this.releaseParticlesWithSlot( this.model.ligands, slot );
+
+    // release solutes and reset state.
+    super.clear( slot );
   }
 }
 

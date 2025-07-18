@@ -44,7 +44,7 @@ export default class Slot {
 
       // We must releaseParticle given a slot, since the slot is already disassociated from the transport protein.
       // However, we also do not want to add arguments to dispose, so we do this in two steps.
-      oldTransportProtein && oldTransportProtein.releaseParticles( this );
+      oldTransportProtein && oldTransportProtein.clear( this );
       oldTransportProtein && oldTransportProtein.dispose();
     } );
   }

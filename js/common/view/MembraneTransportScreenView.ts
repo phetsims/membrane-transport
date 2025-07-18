@@ -179,7 +179,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       enabledProperty: model.hasAnySolutesProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextStringProperty,
       listener: () => {
-        model.clear();
+        model.clearSolutes();
       }
     } );
     soluteControlsNode.addChild( eraseSolutesButton );

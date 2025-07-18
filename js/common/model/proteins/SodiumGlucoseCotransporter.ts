@@ -64,16 +64,6 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     } );
   }
 
-  /**
-   * For the sodium potassium pump, particles control the state so the state needs to be reset after clearing.
-   */
-  public override clear( slot: Slot ): void {
-    super.clear( slot );
-
-    // Reset the state of the transport protein after clearing interacting particles.
-    this.stateProperty.reset();
-  }
-
   public override step( dt: number ): void {
     super.step( dt );
 
@@ -169,9 +159,15 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     return new Vector2( this.slot.position + offset.x, offset.y );
   }
 
-  public override releaseParticles( slot: Slot ): void {
-    super.releaseParticles( slot );
+  /**
+   * For the sodium potassium pump, solutes control the state so the state needs to be reset after clearing.
+   */
+  public override clearSolutes( slot: Slot ): void {
+    super.clearSolutes( slot );
     this.model.solutes.filter( solute => ( solute.mode as ParticleModeWithSlot ).slot === slot ).forEach( particle => particle.releaseFromInteraction( 20 ) );
+
+    // Reset the state of the transport protein after clearing interacting particles.
+    this.stateProperty.reset();
   }
 
   public static getSitePositionOffset( site: 'left' | 'right' | 'center' ): Vector2 {

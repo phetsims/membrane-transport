@@ -110,27 +110,31 @@ export default abstract class TransportProtein<State extends string = Intentiona
   public abstract isAvailableForPassiveTransport( soluteType: SoluteType, location: 'outside' | 'inside' ): boolean;
 
   /**
-   * Set free any ligands or particles that are interacting with the transport protein.
+   * Release any of the provided particles that are interacting with the transport protein.
    */
-  public releaseParticles( slot: Slot ): void {
-    const releaseParticlesWithSlot = ( particles: Particle[] ) => {
-      particles
-        .filter( particle => ( particle.mode as ParticleModeWithSlot ).slot === slot )
-        .forEach( particle => particle.releaseFromInteraction( particle.position.y > 0 ? 20 : -20 ) );
-    };
-
-    releaseParticlesWithSlot( this.model.solutes );
-    releaseParticlesWithSlot( this.model.ligands );
+  protected releaseParticlesWithSlot( particles: Particle[], slot: Slot ): void {
+    particles
+      .filter( particle => ( particle.mode as ParticleModeWithSlot ).slot === slot )
+      .forEach( particle => particle.releaseFromInteraction( particle.position.y > 0 ? 20 : -20 ) );
   }
 
   /**
-   * Release any particles from this protein, and reset the state.
+   * Release any solutes that are interacting with the transport protein.
+   */
+  public clearSolutes( slot: Slot ): void {
+
+    // Release any solutes that were interacting with the transport protein.
+    this.releaseParticlesWithSlot( this.model.solutes, slot );
+  }
+
+  /**
+   * Release any particles (ligands or solutes) from this protein, and reset the state.
    * Particles return to their random walk.
    */
   public clear( slot: Slot ): void {
+    this.clearSolutes( slot );
 
-    // Release any particles that were interacting with the transport protein.
-    this.releaseParticles( slot );
+    this.stateProperty.reset();
   }
 }
 
