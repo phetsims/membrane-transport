@@ -1,4 +1,20 @@
 {
+  "active_transport_home_icon.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "active_transport_nav_icon.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
   "adp.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
@@ -24,6 +40,22 @@
     "notes": "created by Brett Fiedler"
   },
   "cell.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "facilitated_diffusion_home_icon.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "facilitated_diffusion_nav_icon.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -64,6 +96,22 @@
     "notes": "created by Brett Fiedler"
   },
   "phosphate.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "playground_home_icon.svg": {
+    "text": [
+      "Copyright 2025 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Brett Fiedler"
+  },
+  "playground_nav_icon.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -135,7 +183,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Brett Fiedler"
   },
-    "simple_diffusion_icon.svg": {
+  "simple_diffusion_home_icon.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],
@@ -143,23 +191,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Brett Fiedler"
   },
-    "facilitated_diffusion_icon.svg": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Brett Fiedler"
-  },
-    "active_transport_icon.svg": {
-    "text": [
-      "Copyright 2025 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Brett Fiedler"
-  },
-    "playground_icon.svg": {
+  "simple_diffusion_nav_icon.svg": {
     "text": [
       "Copyright 2025 University of Colorado Boulder"
     ],

@@ -513,7 +513,7 @@
         "value": "empty"
       },
       "briefName": {
-        "value": "{ $type ->\n  [sodiumIonLeakageChannel]         Sodium Ion, Leakage\n  [potassiumIonLeakageChannel]      Potassium Ion, Leakage\n  [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated\n  [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated\n  [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated\n  [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated\n  [sodiumPotassiumPump]             Sodium Potassium Pump\n *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter\n}"
+        "value": "{ $type ->\n  [sodiumIonLeakageChannel]         Sodium-selective, Leakage\n  [potassiumIonLeakageChannel]      Potassium-selective, Leakage\n  [sodiumIonVoltageGatedChannel]    Sodium-selective, Voltage-Gated\n  [potassiumIonVoltageGatedChannel] Potassium-selective, Voltage-Gated\n  [sodiumIonLigandGatedChannel]     Sodium-selective, Ligand-Gated\n  [potassiumIonLigandGatedChannel]  Potassium-selective, Ligand-Gated\n  [sodiumPotassiumPump]             Sodium Potassium Pump\n *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter\n}"
       }
     },
     "membranePotential": {

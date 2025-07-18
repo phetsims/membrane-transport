@@ -395,12 +395,12 @@ a11y:
     # Transport protein brief names, used reused in several in the simulation.
     briefName:                |-
                               { $type ->
-                                [sodiumIonLeakageChannel]         Sodium Ion, Leakage
-                                [potassiumIonLeakageChannel]      Potassium Ion, Leakage
-                                [sodiumIonVoltageGatedChannel]    Sodium Ion, Voltage-Gated
-                                [potassiumIonVoltageGatedChannel] Potassium Ion, Voltage-Gated
-                                [sodiumIonLigandGatedChannel]     Sodium Ion, Ligand-Gated
-                                [potassiumIonLigandGatedChannel]  Potassium Ion, Ligand-Gated
+                                [sodiumIonLeakageChannel]         Sodium-selective, Leakage
+                                [potassiumIonLeakageChannel]      Potassium-selective, Leakage
+                                [sodiumIonVoltageGatedChannel]    Sodium-selective, Voltage-Gated
+                                [potassiumIonVoltageGatedChannel] Potassium-selective, Voltage-Gated
+                                [sodiumIonLigandGatedChannel]     Sodium-selective, Ligand-Gated
+                                [potassiumIonLigandGatedChannel]  Potassium-selective, Ligand-Gated
                                 [sodiumPotassiumPump]             Sodium Potassium Pump
                                *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
                               }
