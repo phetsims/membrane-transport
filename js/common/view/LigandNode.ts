@@ -514,6 +514,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
       }
     } );
 
+    // When the unbinding happens after a NATURAL binding, don't speak this. We only want to hear this if the
+    // binding occurs after a user-initiated action.
     ligandUnboundDueToNaturalCausesEmitter.addListener( ligand => {
       if ( ligand === this.ligand ) {
         this.alert( MembraneTransportFluent.a11y.ligandNode.unboundResponseStringProperty );

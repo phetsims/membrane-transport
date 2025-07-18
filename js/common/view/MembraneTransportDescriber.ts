@@ -74,9 +74,10 @@ export default class MembraneTransportDescriber {
   // will be added to the response.
   private previousSoluteComparisons: Record<SoluteType, SoluteComparisonDescriptor>;
 
-  // Keep track of the previous steady states. when any of these change, the description of the new steady state
-  // will be added to the response.
-  private previousSteadyStates: Record<SoluteType, boolean>;
+  // Keep track of the solutes that were in 'steady state' with roughly equal solute counts since the
+  // last description. When any solute first enters steady state with roughly equal solute counts,
+  // the description of the new steady state will be added to the response.
+  private previousSteadyStateAndEqualMap: Record<SoluteType, boolean>;
 
   // The states that require hints to be provided to the user, and whether they have been provided yet.
   private hintStates: HintStates;
@@ -94,7 +95,7 @@ export default class MembraneTransportDescriber {
     this.contextResponseNode = contextResponseNode;
 
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
-    this.previousSteadyStates = this.getCleanSteadyStates();
+    this.previousSteadyStateAndEqualMap = this.getCleanSteadyStates();
     this.hintStates = this.getCleanHintStates();
     this.fundamentalState = this.getCleanFundamentalState();
   }
@@ -363,7 +364,7 @@ export default class MembraneTransportDescriber {
   public reset(): void {
     this.timeSinceDescription = 0;
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
-    this.previousSteadyStates = this.getCleanSteadyStates();
+    this.previousSteadyStateAndEqualMap = this.getCleanSteadyStates();
     this.hintStates = this.getCleanHintStates();
     this.fundamentalState = this.getCleanFundamentalState();
   }
@@ -522,19 +523,37 @@ export default class MembraneTransportDescriber {
 
     solutesThatCrossed.forEach( soluteType => {
       const isSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, queue );
-      if ( isSteadyState && !this.previousSteadyStates[ soluteType ] ) {
+      const isRoughlyEqual = MembraneTransportDescriber.isRoughlyEqual(
+        this.model.outsideSoluteCountProperties[ soluteType ].value,
+        this.model.insideSoluteCountProperties[ soluteType ].value
+      );
+
+      const steadyStateAndRoughlyEqual = isSteadyState && isRoughlyEqual;
+      if ( steadyStateAndRoughlyEqual && !this.previousSteadyStateAndEqualMap[ soluteType ] ) {
         changedSteadyStates.push( `${soluteType} crossing steadily in both directions, now roughly equal` );
       }
-      this.previousSteadyStates[ soluteType ] = isSteadyState;
+
+      this.previousSteadyStateAndEqualMap[ soluteType ] = steadyStateAndRoughlyEqual;
     } );
 
     return changedSteadyStates.join( ', ' );
   }
 
+  /**
+   * Returns true when the solute type is in 'steady state', according to getAverageCrossingDirectionDescriptor.
+   */
   private static isSteadyState( soluteType: SoluteType, queue: SoluteCrossedMembraneEvent[] ): boolean {
     const crossedInside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'inward' ).length;
     const crossedOutside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'outward' ).length;
     return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( crossedOutside, crossedInside ) === 'inBothDirections';
+  }
+
+  /**
+   * Returns true when the outside and inside counts are roughly equal, according to getSoluteComparisonDescriptor.
+   */
+  private static isRoughlyEqual( outsideCount: number, insideCount: number ): boolean {
+    return MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount ) === 'roughlyEqualInside' ||
+           MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount ) === 'roughlyEqualOutside';
   }
 
   private getSoluteComparisonString(
