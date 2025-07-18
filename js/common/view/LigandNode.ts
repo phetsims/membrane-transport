@@ -38,7 +38,6 @@ import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import type Ligand from '../model/Ligand.js';
 import { SLOT_COUNT } from '../model/MembraneTransportModel.js';
 import Particle, { CAPTURE_RADIUS_PROPERTY } from '../model/Particle.js';
-import LigandBoundMode from '../model/particleModes/LigandBoundMode.js';
 import UserControlledMode from '../model/particleModes/UserControlledMode.js';
 import UserOverMode from '../model/particleModes/UserOverMode.js';
 import LigandGatedChannel from '../model/proteins/LigandGatedChannel.js';
@@ -165,9 +164,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
           return;
         }
 
-        if ( ligand.mode instanceof LigandBoundMode ) {
-          ligand.mode.ligandGatedChannel.unbindLigand( false );
-        }
+        // Make sure that the ligand is no longer bound to a ligand gated channel
+        ligand.unbindFromChannel();
 
         ligand.mode = new UserControlledMode();
 
@@ -370,9 +368,8 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
             ligandInteractionCueVisibleProperty.value = false;
 
-            if ( ligand.mode instanceof LigandBoundMode ) {
-              ligand.mode.ligandGatedChannel.unbindLigand( false );
-            }
+            // Make sure that this ligand is no longer bound to a ligand gated channel.
+            this.ligand.unbindFromChannel();
 
             // --- Grab Logic ---
             this.isKeyboardGrabbed = true;

@@ -8,9 +8,10 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportModel from './MembraneTransportModel.js';
 import Particle from './Particle.js';
+import LigandBoundMode from './particleModes/LigandBoundMode.js';
 import { LigandType } from './SoluteType.js';
 
 export default class Ligand extends Particle {
@@ -21,9 +22,25 @@ export default class Ligand extends Particle {
   public constructor(
     position: Vector2,
     public readonly ligandType: LigandType,
-    model: PhetioObject
+    model: MembraneTransportModel
   ) {
     super( position, ligandType, model );
+
+    // When ligands are removed from the model, make sure that they are unbound from any channel.
+    model.areLigandsAddedProperty.lazyLink( areLigandsAdded => {
+      if ( !areLigandsAdded ) {
+        this.unbindFromChannel();
+      }
+    } );
+  }
+
+  /**
+   * Unbinds the ligand from the channel, if it is bound.
+   */
+  public unbindFromChannel(): void {
+    if ( this.mode instanceof LigandBoundMode ) {
+      this.mode.ligandGatedChannel.unbindLigand( false );
+    }
   }
 }
 
