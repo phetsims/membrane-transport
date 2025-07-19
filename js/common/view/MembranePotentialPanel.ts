@@ -34,7 +34,8 @@ export default class MembranePotentialPanel extends Panel {
       createNode: tandem => new Text( '-70', MembraneTransportConstants.TEXT_OPTIONS ),
       tandemName: 'negative70RadioButton',
       options: {
-        accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
+        accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty,
+        phetioVisiblePropertyInstrumented: false
       }
     },
       {
@@ -42,7 +43,8 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '-50', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'negative50RadioButton',
         options: {
-          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty,
+          phetioVisiblePropertyInstrumented: false
         }
       },
       {
@@ -50,7 +52,8 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '+30', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'positive30RadioButton',
         options: {
-          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty,
+          phetioVisiblePropertyInstrumented: false
         }
       } ], {
       orientation: 'horizontal',
