@@ -218,8 +218,8 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     this.stateProperty.value = 'openToInsideEmpty';
 
     // Move solutes through the open sodium potassium pump
-    potassium1!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward', -5 );
-    potassium2!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward' );
+    potassium1!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward', -2 );
+    potassium2!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'inward', +2 );
 
     // release the phosphate
     const phosphate = this.getWaitingSolute( 'phosphate' );
