@@ -11,6 +11,7 @@ import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
+import Image from '../../../scenery/js/nodes/Image.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import MembraneTransportColors from '../common/MembraneTransportColors.js';
 import membraneTransport from '../membraneTransport.js';
@@ -25,8 +26,8 @@ export default class MembraneTransportScreen extends Screen<MembraneTransportMod
                       tandem: Tandem,
                       featureSet: MembraneTransportFeatureSet,
                       screenButtonHelpTextProperty: TReadOnlyProperty<string>,
-                      homeScreenIcon: ScreenIcon,
-                      navigationBarIcon: ScreenIcon ) {
+                      homeScreenIcon: HTMLImageElement,
+                      navigationBarIcon: HTMLImageElement ) {
 
     super(
       () => new MembraneTransportModel( featureSet, { tandem: tandem.createTandem( 'model' ) } ),
@@ -36,8 +37,14 @@ export default class MembraneTransportScreen extends Screen<MembraneTransportMod
         tandem: tandem,
         createKeyboardHelpNode: () => new MembraneTransportKeyboardHelpNode( featureSet ),
         screenButtonsHelpText: screenButtonHelpTextProperty,
-        homeScreenIcon: homeScreenIcon,
-        navigationBarIcon: navigationBarIcon
+        homeScreenIcon: new ScreenIcon( new Image( homeScreenIcon ), {
+          maxIconWidthProportion: 1,
+          maxIconHeightProportion: 1
+        } ),
+        navigationBarIcon: new ScreenIcon( new Image( navigationBarIcon ), {
+          maxIconWidthProportion: 1,
+          maxIconHeightProportion: 1
+        } )
       }
     );
   }

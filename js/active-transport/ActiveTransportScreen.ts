@@ -6,8 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import Image from '../../../scenery/js/nodes/Image.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import active_transport_home_icon_svg from '../../images/active_transport_home_icon_svg.js';
 import active_transport_nav_icon_svg from '../../images/active_transport_nav_icon_svg.js';
@@ -23,8 +21,8 @@ export default class ActiveTransportScreen extends MembraneTransportScreen {
       tandem,
       'activeTransport',
       MembraneTransportFluent.a11y.activeTransportScreen.screenButtonsHelpTextStringProperty,
-      new ScreenIcon( new Image( active_transport_home_icon_svg ) ),
-      new ScreenIcon( new Image( active_transport_nav_icon_svg ) )
+      active_transport_home_icon_svg,
+      active_transport_nav_icon_svg
     );
   }
 }
