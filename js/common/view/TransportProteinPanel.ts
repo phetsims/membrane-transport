@@ -84,9 +84,6 @@ export default class TransportProteinPanel extends Panel {
             fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
             maxWidth: 175,
 
-            // Setting this removes it from the tab focus order
-            readingBlockTagName: null,
-
             // Setting this removes an unnecessary duplicate from the PDOM
             accessibleParagraph: null
 
