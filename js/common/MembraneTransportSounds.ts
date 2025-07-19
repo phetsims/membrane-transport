@@ -36,7 +36,7 @@ import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
 import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
 import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
 import proteinReturnToToolbox_mp3 from '../../sounds/proteinReturnToToolbox_mp3.js';
-import shareWhooshSound_mp3 from '../../sounds/shareWhooshSound_mp3.js';
+import shareWhooshSound_mp3 from '../../../tambo/sounds/shareWhooshSound_mp3.js';
 import soluteCrossingGeneric_mp3 from '../../sounds/soluteCrossingGeneric_mp3.js';
 import soluteCrossingPotassium_mp3 from '../../sounds/soluteCrossingPotassium_mp3.js';
 import soluteCrossingSodium_mp3 from '../../sounds/soluteCrossingSodium_mp3.js';
