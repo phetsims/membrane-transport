@@ -241,10 +241,12 @@ type StringsType = {
       'releasedReplacedResponseStringProperty': LocalizedStringProperty;
       'deletedResponseStringProperty': LocalizedStringProperty;
       'cancelledResponseStringProperty': LocalizedStringProperty;
-      'objectResponseStringProperty': LocalizedStringProperty;
+      'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleNameReversedStringProperty': LocalizedStringProperty;
-      'accessibleObjectResponseStringProperty': LocalizedStringProperty;
+      'accessibleObjectResponseOpenCloseStringProperty': LocalizedStringProperty;
+      'accessibleStateDescriptionStringProperty': LocalizedStringProperty;
+      'accessibleNameMovingStringProperty': LocalizedStringProperty;
+      'accessibleObjectResponseMovingStringProperty': LocalizedStringProperty;
       'emptyStringProperty': LocalizedStringProperty;
       'briefNameStringProperty': LocalizedStringProperty;
     };
