@@ -190,17 +190,28 @@ const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
-const mtLigandsStickv3 = newSoundClip( ligandsStickV3_mp3, { initialOutputLevel: 0.3 } );
-const mtLigandsUnstickv3 = newSoundClip( ligandsUnstickV3_mp3, { initialOutputLevel: 0.3 } );
+const ligandBindSoundClip = newSoundClip( ligandsStickV3_mp3, { initialOutputLevel: 0.3 } );
+const ligandUnbindSoundClip = newSoundClip( ligandsUnstickV3_mp3, { initialOutputLevel: 0.3 } );
 
-const mtNAPlusAttachSound = newSoundClip( naPlusAttach_mp3, { initialOutputLevel: 0.3 } );
-const mtKPlusAttachSound = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.3 } );
-const mtGlucoseActivateTransporterSound = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
+const sodiumLowpassFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'lowpass',
+  frequency: 200,
+  Q: 1.5
+} );
 
-const mtATPActivateTransporter = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
+const sodiumBindingSoundClip = newSoundClip( naPlusAttach_mp3, {
+  initialOutputLevel: 0.8,
+  additionalAudioNodes: [
+    sodiumLowpassFilter
+  ]
+} );
+const potassiumBindingSoundClip = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const glucoseActivateTransporterSoundClip = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
-const mtActiveTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
-const mtActiveTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
+const phosphateBindingSoundClip = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
+
+const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
+const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
@@ -253,19 +264,19 @@ export default class MembraneTransportSounds {
   }
 
   public static sodiumLockedInToSodiumPotassiumPump( site: string, numberSodiumsFilled: number ): void {
-    mtNAPlusAttachSound.setPlaybackRate( numberSodiumsFilled === 1 ? G_NOTE :
-                                         numberSodiumsFilled === 2 ? C_NOTE :
-                                         E_NOTE );
-    mtNAPlusAttachSound.play();
+    sodiumBindingSoundClip.setPlaybackRate( numberSodiumsFilled === 1 ? G_NOTE :
+                                            numberSodiumsFilled === 2 ? C_NOTE :
+                                            E_NOTE );
+    sodiumBindingSoundClip.play();
   }
 
   public static potassiumLockedInToSodiumPotassiumPump( site: string, numberPotassiumsFilled: number ): void {
-    mtKPlusAttachSound.setPlaybackRate( numberPotassiumsFilled === 1 ? G_NOTE : C_NOTE );
-    mtKPlusAttachSound.play();
+    potassiumBindingSoundClip.setPlaybackRate( numberPotassiumsFilled === 1 ? G_NOTE : C_NOTE );
+    potassiumBindingSoundClip.play();
   }
 
   public static phosphateLockedInToSodiumPotassiumPump(): void {
-    mtATPActivateTransporter.play();
+    phosphateBindingSoundClip.play();
   }
 
   public static proteinReturnedToToolbox(): void {
@@ -306,11 +317,11 @@ export default class MembraneTransportSounds {
   }
 
   public static ligandBound(): void {
-    mtLigandsStickv3.play();
+    ligandBindSoundClip.play();
   }
 
   public static ligandUnbound(): void {
-    mtLigandsUnstickv3.play();
+    ligandUnbindSoundClip.play();
   }
 
   public static transportProteinGrabbed(): void {
@@ -362,17 +373,17 @@ export default class MembraneTransportSounds {
 
   public static particleBoundToSodiumGlucoseTransporter( type: 'sodiumIon' | 'glucose', filledSodiumSiteCount: number ): void {
     if ( type === 'sodiumIon' ) {
-      mtNAPlusAttachSound.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : C_NOTE );
-      mtNAPlusAttachSound.play();
+      sodiumBindingSoundClip.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : C_NOTE );
+      sodiumBindingSoundClip.play();
     }
     else {
-      mtGlucoseActivateTransporterSound.play();
+      glucoseActivateTransporterSoundClip.play();
     }
   }
 
   public static activeTransporterRockedAndSuccess(): void {
-    mtActiveTransportersRockOrOpenSound.play();
-    mtActiveTransportersSuccessChord.play();
+    activeTransportersRockOrOpenSound.play();
+    activeTransportersSuccessChord.play();
   }
 }
 
