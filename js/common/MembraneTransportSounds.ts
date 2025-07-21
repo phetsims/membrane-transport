@@ -190,8 +190,8 @@ const boundaryReachedSound = newSoundClip( boundaryReached_mp3 );
 
 const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLevel: 0.6 } );
 
-const mtLigandsStickv3 = newSoundClip( ligandsStickV3_mp3, { initialOutputLevel: 0.3 } );
-const mtLigandsUnstickv3 = newSoundClip( ligandsUnstickV3_mp3, { initialOutputLevel: 0.3 } );
+const ligandBindSoundClip = newSoundClip( ligandsStickV3_mp3, { initialOutputLevel: 0.3 } );
+const ligandUnbindSoundClip = newSoundClip( ligandsUnstickV3_mp3, { initialOutputLevel: 0.3 } );
 
 const sodiumLowpassFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -317,11 +317,11 @@ export default class MembraneTransportSounds {
   }
 
   public static ligandBound(): void {
-    mtLigandsStickv3.play();
+    ligandBindSoundClip.play();
   }
 
   public static ligandUnbound(): void {
-    mtLigandsUnstickv3.play();
+    ligandUnbindSoundClip.play();
   }
 
   public static transportProteinGrabbed(): void {
