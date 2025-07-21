@@ -269,6 +269,22 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             this.model.focusedProteinProperty.value = focused ? transportProtein : null;
           }, { disposer: transportProteinNode } );
 
+          // Some context responses happen when there is an important state change. This is verbose and detailed information that should
+          // only be spoken while focus is on the transport protein. While focus is on the transport protein, other context responses
+          // are skipped. See MembraneTransportDescriber.
+          transportProtein.stateProperty.lazyLink( state => {
+            if ( transportProteinNode.focused ) {
+
+              if ( state === 'openToInsideEmpty' || state === 'openToInsideSodiumAndATPBound' || state === 'openToInside' ) {
+                transportProteinNode.addAccessibleObjectResponse(
+                  MembraneTransportFluent.a11y.transportProtein.accessibleContextResponse.format( {
+                    state: state
+                  } )
+                );
+              }
+            }
+          }, { disposer: transportProteinNode } );
+
           transportProteinNode.accessibleName = accessibleNameProperty;
           transportProteinNode.addDisposable( accessibleNameProperty, nameResponseProperty, locationStringProperty, slottedNode.indexProperty );
 

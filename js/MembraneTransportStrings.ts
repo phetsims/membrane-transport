@@ -244,7 +244,8 @@ type StringsType = {
       'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseOpenCloseStringProperty': LocalizedStringProperty;
-      'accessibleStateDescriptionStringProperty': LocalizedStringProperty;
+      'accessibleParagraphStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseStringProperty': LocalizedStringProperty;
       'accessibleNameMovingStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseMovingStringProperty': LocalizedStringProperty;
       'emptyStringProperty': LocalizedStringProperty;

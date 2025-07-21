@@ -423,7 +423,7 @@ a11y:
                                           *[closed] closed                                           
                                        }
 
-    accessibleStateDescription:        |-
+    accessibleParagraph:        |-
                                        { $state ->
                                           [openToInsideEmpty] Awaiting sodium, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToInsideSodiumBound] 3 sodium bound, awaiting phosphate, { a11y.transportProtein.accessibleObjectResponseOpenClose}
@@ -437,6 +437,14 @@ a11y:
                                           [openToInside] pumping sodium and glucose to inside, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                        
                                           *[other] { a11y.transportProtein.accessibleObjectResponseOpenClose }
+                                       }.
+
+    accessibleContextResponse:         |-
+                                       { $state ->
+                                          [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside
+                                          [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
+                                       
+                                          *[openToInside] 2 sodium and 1 glucose shuttled to inside
                                        }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.

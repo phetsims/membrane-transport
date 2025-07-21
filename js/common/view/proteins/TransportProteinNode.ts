@@ -43,7 +43,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // It was found that the interactive protein should have the application role so that the
     // roledescription and accessible name are read.
     if ( transportProtein ) {
-      const accessibleParagraphStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleStateDescription.createProperty( {
+      const accessibleParagraphStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleParagraph.createProperty( {
         state: transportProtein.stateProperty
       } );
       this.addDisposable( accessibleParagraphStringProperty );
