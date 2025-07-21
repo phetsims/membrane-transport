@@ -171,7 +171,7 @@ export default class InteractiveSlotsNode extends Node {
         } )
       } );
 
-      const objectResponseStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.createProperty( {
+      const objectResponseStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponseMoving.createProperty( {
         slotIndex: `${index + 1}`,
         slotCount: `${slots.length}`
       } );
@@ -186,8 +186,9 @@ export default class InteractiveSlotsNode extends Node {
       // The "reversed" accessible name pattern puts the slot before the protein name and will produce the requested output like
       // "Above slot 1 of 3, empty" or
       // "Above slot 2 of 3, Sodium Ion, Leakage"
-      const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNameReversed.createProperty( {
-        objectResponse: objectResponseStringProperty,
+      const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNameMoving.createProperty( {
+        slotIndex: `${index + 1}`,
+        slotCount: `${slots.length}`,
         nameResponse: nameResponseStringProperty
       } );
 

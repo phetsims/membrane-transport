@@ -14,6 +14,7 @@ import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voi
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportFluent from '../../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import TransportProtein from '../../model/proteins/TransportProtein.js';
 
@@ -42,8 +43,14 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // It was found that the interactive protein should have the application role so that the
     // roledescription and accessible name are read.
     if ( transportProtein ) {
+      const accessibleParagraphStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleParagraph.createProperty( {
+        state: transportProtein.stateProperty
+      } );
+      this.addDisposable( accessibleParagraphStringProperty );
+
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
-        accessibleRoleDescription: 'navigable'
+        accessibleRoleDescription: 'navigable',
+        accessibleParagraph: accessibleParagraphStringProperty
       } ) );
     }
   }

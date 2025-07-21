@@ -17,12 +17,12 @@ import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasProteins } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
@@ -234,8 +234,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             type: type
           } );
 
-          // The name of the transport protein combined with its index within the membrane.
-          const objectResponseProperty = MembraneTransportFluent.a11y.transportProtein.objectResponse.createProperty( {
+          // The location of the transport protein, like "1 of 3 Proteins in Membrane".
+          const locationStringProperty = MembraneTransportFluent.a11y.transportProtein.proteinLocation.createProperty( {
             proteinIndex: slottedNode.indexProperty,
             proteinCount: model.transportProteinCountProperty
           } );
@@ -243,7 +243,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // The accessibleName for the PDOM, combine the name response and object response in the requested order.
           const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleName.createProperty( {
             nameResponse: nameResponseProperty,
-            objectResponse: objectResponseProperty
+            proteinIndex: slottedNode.indexProperty,
+            proteinCount: model.transportProteinCountProperty
           } );
 
           // Voicing - speak the appropriate response on focus.
@@ -251,19 +252,41 @@ export default class ObservationWindowTransportProteinLayer extends Node {
             if ( focused ) {
               const responsePacket = new ResponsePacket( {
                 nameResponse: nameResponseProperty,
-                objectResponse: objectResponseProperty
+                objectResponse: locationStringProperty
               } );
 
               // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
               // Node is focused.
               voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
+
+              transportProteinNode.addAccessibleObjectResponse(
+                MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponseOpenClose.format( {
+                  state: transportProtein.stateProperty
+                } )
+              );
             }
 
             this.model.focusedProteinProperty.value = focused ? transportProtein : null;
           }, { disposer: transportProteinNode } );
 
+          // Some context responses happen when there is an important state change. This is verbose and detailed information that should
+          // only be spoken while focus is on the transport protein. While focus is on the transport protein, other context responses
+          // are skipped. See MembraneTransportDescriber.
+          transportProtein.stateProperty.lazyLink( state => {
+            if ( transportProteinNode.focused ) {
+
+              if ( state === 'openToInsideEmpty' || state === 'openToInsideSodiumAndATPBound' || state === 'openToInside' ) {
+                transportProteinNode.addAccessibleObjectResponse(
+                  MembraneTransportFluent.a11y.transportProtein.accessibleContextResponse.format( {
+                    state: state
+                  } )
+                );
+              }
+            }
+          }, { disposer: transportProteinNode } );
+
           transportProteinNode.accessibleName = accessibleNameProperty;
-          transportProteinNode.addDisposable( accessibleNameProperty, nameResponseProperty, objectResponseProperty, slottedNode.indexProperty );
+          transportProteinNode.addDisposable( accessibleNameProperty, nameResponseProperty, locationStringProperty, slottedNode.indexProperty );
 
           // Make sure that the indices of all the proteins are correct after adding/removing proteins
           this.record.forEach( collection => {
