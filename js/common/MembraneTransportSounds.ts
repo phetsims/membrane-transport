@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import phetAudioContext from '../../../tambo/js/phetAudioContext.js';
 import sharedSoundPlayers from '../../../tambo/js/sharedSoundPlayers.js';
 import CardSounds from '../../../tambo/js/sound-generators/CardSounds.js';
 import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
@@ -19,32 +20,32 @@ import cardMovement3_mp3 from '../../../tambo/sounds/cardMovement3_mp3.js';
 import cardMovement4_mp3 from '../../../tambo/sounds/cardMovement4_mp3.js';
 import cardMovement5_mp3 from '../../../tambo/sounds/cardMovement5_mp3.js';
 import cardMovement6_mp3 from '../../../tambo/sounds/cardMovement6_mp3.js';
+import shareWhooshSound_mp3 from '../../../tambo/sounds/shareWhooshSound_mp3.js';
 import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
 import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
 import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
-import sodiumLigandGatedChannelOpen_mp3 from '../../sounds/sodiumLigandGatedChannelOpen_mp3.js';
-import sodiumLigandGatedChannelClose_mp3 from '../../sounds/sodiumLigandGatedChannelClose_mp3.js';
-import potassiumLigandGatedChannelOpen_mp3 from '../../sounds/potassiumLigandGatedChannelOpen_mp3.js';
-import potassiumLigandGatedChannelClose_mp3 from '../../sounds/potassiumLigandGatedChannelClose_mp3.js';
-import sodiumVoltageGatedChannelOpen_mp3 from '../../sounds/sodiumVoltageGatedChannelOpen_mp3.js';
-import sodiumVoltageGatedChannelClose_mp3 from '../../sounds/sodiumVoltageGatedChannelClose_mp3.js';
-import potassiumVoltageGatedChannelOpen_mp3 from '../../sounds/potassiumVoltageGatedChannelOpen_mp3.js';
-import potassiumVoltageGatedChannelClose_mp3 from '../../sounds/potassiumVoltageGatedChannelClose_mp3.js';
 import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
 import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
 import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
 import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
 import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
+import potassiumLigandGatedChannelClose_mp3 from '../../sounds/potassiumLigandGatedChannelClose_mp3.js';
+import potassiumLigandGatedChannelOpen_mp3 from '../../sounds/potassiumLigandGatedChannelOpen_mp3.js';
+import potassiumVoltageGatedChannelClose_mp3 from '../../sounds/potassiumVoltageGatedChannelClose_mp3.js';
+import potassiumVoltageGatedChannelOpen_mp3 from '../../sounds/potassiumVoltageGatedChannelOpen_mp3.js';
 import proteinReturnToToolbox_mp3 from '../../sounds/proteinReturnToToolbox_mp3.js';
-import shareWhooshSound_mp3 from '../../../tambo/sounds/shareWhooshSound_mp3.js';
-import soluteCrossingGeneric_mp3 from '../../sounds/soluteCrossingGeneric_mp3.js';
-import soluteCrossingPotassium_mp3 from '../../sounds/soluteCrossingPotassium_mp3.js';
-import soluteCrossingSodium_mp3 from '../../sounds/soluteCrossingSodium_mp3.js';
+import sodiumLigandGatedChannelClose_mp3 from '../../sounds/sodiumLigandGatedChannelClose_mp3.js';
+import sodiumLigandGatedChannelOpen_mp3 from '../../sounds/sodiumLigandGatedChannelOpen_mp3.js';
+import sodiumVoltageGatedChannelClose_mp3 from '../../sounds/sodiumVoltageGatedChannelClose_mp3.js';
+import sodiumVoltageGatedChannelOpen_mp3 from '../../sounds/sodiumVoltageGatedChannelOpen_mp3.js';
 import soluteCrossingCarbonDioxide_mp3 from '../../sounds/soluteCrossingCarbonDioxide_mp3.js';
-import soluteCrossingOxygen_mp3 from '../../sounds/soluteCrossingOxygen_mp3.js';
 
 import soluteCrossingCarbonDioxideOutward_mp3 from '../../sounds/soluteCrossingCarbonDioxideOutward_mp3.js';
+import soluteCrossingGeneric_mp3 from '../../sounds/soluteCrossingGeneric_mp3.js';
+import soluteCrossingOxygen_mp3 from '../../sounds/soluteCrossingOxygen_mp3.js';
 import soluteCrossingOxygenOutward_mp3 from '../../sounds/soluteCrossingOxygenOutward_mp3.js';
+import soluteCrossingPotassium_mp3 from '../../sounds/soluteCrossingPotassium_mp3.js';
+import soluteCrossingSodium_mp3 from '../../sounds/soluteCrossingSodium_mp3.js';
 import membraneTransport from '../membraneTransport.js';
 import MembraneTransportPreferences from './MembraneTransportPreferences.js';
 
@@ -58,8 +59,21 @@ const cardMovementSounds = [
   cardMovement6_mp3
 ];
 
+const lowpassFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'lowpass',
+  frequency: 400,
+  Q: 1.5
+} );
+
 const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, { initialOutputLevel: 0.3 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
+
+// create lowpass filtered sounds
+const cardMovementLowpassSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
+  initialOutputLevel: 0.3,
+  additionalAudioNodes: [ lowpassFilter ]
+} ) );
+cardMovementLowpassSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
 /**
  * AudioContextSoundClip is a subclass of SoundClip that makes the audioContext property public
@@ -315,17 +329,20 @@ export default class MembraneTransportSounds {
     CardSounds.playCardMovementSound( directionToPlay );
   }
 
-  public static slotHover( slotIndex: number ): void {
+  public static slotHover( slotIndex: number, isOccupied: boolean ): void {
+
+    // Use the lowpass filter for occupied slots
+    const soundClips = isOccupied ? cardMovementLowpassSoundClips : cardMovementSoundClips;
 
     // Sort in order of naturally occurring pitches, so that the first sound is the lowest pitch.
-    const clip = slotIndex === 0 ? cardMovementSoundClips[ 0 ] :
-                 slotIndex === 1 ? cardMovementSoundClips[ 2 ] :
-                 slotIndex === 2 ? cardMovementSoundClips[ 4 ] :
-                 slotIndex === 3 ? cardMovementSoundClips[ 1 ] :
-                 slotIndex === 4 ? cardMovementSoundClips[ 3 ] :
-                 slotIndex === 5 ? cardMovementSoundClips[ 5 ] :
-                 slotIndex === 6 ? cardMovementSoundClips[ 5 ] :
-                 cardMovementSoundClips[ 5 ];
+    const clip = slotIndex === 0 ? soundClips[ 0 ] :
+                 slotIndex === 1 ? soundClips[ 2 ] :
+                 slotIndex === 2 ? soundClips[ 4 ] :
+                 slotIndex === 3 ? soundClips[ 1 ] :
+                 slotIndex === 4 ? soundClips[ 3 ] :
+                 slotIndex === 5 ? soundClips[ 5 ] :
+                 slotIndex === 6 ? soundClips[ 5 ] :
+                 soundClips[ 5 ];
 
     // choose a pitch proportional to the slotIndex, in addition to the natural pitch of the clip
     const playbackRate = Math.pow( 2, slotIndex / 12 );

@@ -253,7 +253,7 @@ export default class InteractiveSlotsNode extends Node {
               this.selectedIndex = 'offMembrane';
 
               // Play a sound for moving off the membrane
-              MembraneTransportSounds.slotHover( 7 );
+              MembraneTransportSounds.slotHover( 7, false );
             }
             else {
               // Cannot move off membrane, stay at the rightmost slot

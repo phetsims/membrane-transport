@@ -198,7 +198,8 @@ export default class TransportProteinDragNode extends Node {
       observationWindow.updateSlotDragIndicatorHighlights( this.globalBounds );
 
       if ( newValue !== null && this.canPlaySounds ) {
-        MembraneTransportSounds.slotHover( newValue );
+        const contentsAtSlot = observationWindow.slotDragIndicatorNodes[ newValue ].slot.transportProteinType;
+        MembraneTransportSounds.slotHover( newValue, contentsAtSlot !== null );
       }
     } );
   }
