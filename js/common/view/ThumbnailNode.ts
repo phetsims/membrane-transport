@@ -29,13 +29,18 @@ export default class ThumbnailNode extends Node {
     } );
     this.addChild( rectangle );
 
+    const LINE_WIDTH = 1;
+
     // draw lines from each corner to the observation window.
     const lineOptions = {
       stroke: 'black',
-      lineWidth: 1
+      lineWidth: LINE_WIDTH
     };
-    this.addChild( new Line( rectangle.left, rectangle.top, observationWindowBounds.left + ObservationWindow.CORNER_RADIUS / 2, observationWindowBounds.top + ObservationWindow.CORNER_RADIUS / 2, lineOptions ) );
-    this.addChild( new Line( rectangle.left, rectangle.bottom, observationWindowBounds.left + ObservationWindow.CORNER_RADIUS / 2, observationWindowBounds.bottom - ObservationWindow.CORNER_RADIUS / 2, lineOptions ) );
+
+    // Lines to the corner of the rectangle
+    const INSET = LINE_WIDTH / 2;
+    this.addChild( new Line( rectangle.left + INSET, rectangle.top + INSET, observationWindowBounds.left + ObservationWindow.CORNER_RADIUS / 2, observationWindowBounds.top + ObservationWindow.CORNER_RADIUS / 2, lineOptions ) );
+    this.addChild( new Line( rectangle.left + INSET, rectangle.bottom - INSET, observationWindowBounds.left + ObservationWindow.CORNER_RADIUS / 2, observationWindowBounds.bottom - ObservationWindow.CORNER_RADIUS / 2, lineOptions ) );
   }
 }
 
