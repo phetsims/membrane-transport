@@ -319,22 +319,22 @@ a11y:
                         [none] none
                         [few] a few
                         [some] some
-                        [smallAmount] small amount of
+                        [smallAmount] small amount
                         [several] several
                         [many] many
-                        [largeAmount] large amount of
-                        [hugeAmount] huge amount of
-                       *[maxAmount] max amount of
+                        [largeAmount] large amount
+                        [hugeAmount] huge amount
+                       *[maxAmount] max amount
                       } outside, { $insideAmount ->
                         [none] none
                         [few] a few
                         [some] some
-                        [smallAmount] small amount of
+                        [smallAmount] small amount
                         [several] several
                         [many] many
-                        [largeAmount] large amount of
-                        [hugeAmount] huge amount of
-                       *[maxAmount] max amount of
+                        [largeAmount] large amount
+                        [hugeAmount] huge amount
+                       *[maxAmount] max amount
                       } inside.
       crossing:       |-
                       { $crossing ->

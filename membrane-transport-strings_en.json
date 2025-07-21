@@ -432,7 +432,7 @@
       },
       "barChart": {
         "accessibleName": {
-          "value": "{ a11y_soluteCapitalized }: { a11y_soluteComparison }; { a11y_soluteAverageCrossingDirection }; { $outsideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} outside, { $insideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} inside."
+          "value": "{ a11y_soluteCapitalized }: { a11y_soluteComparison }; { a11y_soluteAverageCrossingDirection }; { $outsideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount\n  [several] several\n  [many] many\n  [largeAmount] large amount\n  [hugeAmount] huge amount\n *[maxAmount] max amount\n} outside, { $insideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount\n  [several] several\n  [many] many\n  [largeAmount] large amount\n  [hugeAmount] huge amount\n *[maxAmount] max amount\n} inside."
         },
         "crossing": {
           "value": "{ $crossing ->\n  *[none] no crossings\n  [inside] crossings in\n  [outside] crossings out\n  [both] crossings in and out\n}"
