@@ -126,7 +126,7 @@ a11y:
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
-      accessibleHelpText:           Transmembrane single channel proteins with open and closed states, and a triangle- or star-shaped ligand binding site. Grab to pull to protein.
+      accessibleHelpText:           Transmembrane single channel proteins with open and closed states, and a triangle- or star-shaped ligand binding site. Grab to pull to membrane.
     leakageChannelPanel:
       sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
       potassiumIonKPlusLeakage: Potassium-selective, Leakage
@@ -134,7 +134,7 @@ a11y:
     voltageGatedChannelPanel:
       sodiumIonNaPlusVoltageGated:   Sodium-selective, Voltage-gated
       potassiumIonKPlusVoltageGated: Potassium-selective, Voltage-gated
-      accessibleHelpText:            Transmembrane single channel proteins with open and closed states. Grab to pull to protein.
+      accessibleHelpText:            Transmembrane single channel proteins with open and closed states. Grab to pull to membrane.
 
       # For the Membrane Potential radio buttons
       membranePotential:
@@ -272,11 +272,11 @@ a11y:
   # A description of the average crossing direction of a solute across the membrane.
   soluteAverageCrossingDirection: |-
                                   { $direction ->
-                                    [toOutside] to outside
-                                    [mostlyToOutside] mostly to outside
-                                    [inBothDirections] in both directions
-                                    [mostlyToInside] mostly to inside
-                                    [toInside] to inside
+                                    [toOutside] crossings to outside
+                                    [mostlyToOutside] crossings mostly to outside
+                                    [inBothDirections] crossings in both directions
+                                    [mostlyToInside] crossings mostly to inside
+                                    [toInside] crossings to inside
                                     *[none] no recent crossings
                                   }
 
@@ -314,7 +314,7 @@ a11y:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
       accessibleName: |-
-                      { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection } happening at membrane; currently { $outsideAmount ->
+                      { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection }; { $outsideAmount ->
                         [none] none
                         [few] a few
                         [some] some

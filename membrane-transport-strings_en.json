@@ -235,7 +235,7 @@
           "value": "Potassium-selective, Ligand-gated"
         },
         "accessibleHelpText": {
-          "value": "Transmembrane single channel proteins with open and closed states, and a triangle- or star-shaped ligand binding site. Grab to pull to protein."
+          "value": "Transmembrane single channel proteins with open and closed states, and a triangle- or star-shaped ligand binding site. Grab to pull to membrane."
         }
       },
       "leakageChannelPanel": {
@@ -257,7 +257,7 @@
           "value": "Potassium-selective, Voltage-gated"
         },
         "accessibleHelpText": {
-          "value": "Transmembrane single channel proteins with open and closed states. Grab to pull to protein."
+          "value": "Transmembrane single channel proteins with open and closed states. Grab to pull to membrane."
         },
         "membranePotential": {
           "radioButtonGroup": {
@@ -394,7 +394,7 @@
       "value": "{ $amount ->\n  *[none]  none\n  [equal] amounts exactly equal outside and inside\n  [allOutside] all outside, none inside\n  [allInside] all inside, none outside\n  [manyMoreOutside] many more outside than inside \n  [aboutTwiceAsManyOutside] about twice as many outside as inside\n  [someMoreOutside] some more outside than inside\n  [roughlyEqualOutside] roughly equal amounts inside and outside\n  [manyMoreInside] many more inside than outside\n  [aboutTwiceAsManyInside] about twice as many inside as outside\n  [someMoreInside] some more inside than outside\n  [roughlyEqualInside] roughly equal amounts inside and outside\n}"
     },
     "soluteAverageCrossingDirection": {
-      "value": "{ $direction ->\n  [toOutside] to outside\n  [mostlyToOutside] mostly to outside\n  [inBothDirections] in both directions\n  [mostlyToInside] mostly to inside\n  [toInside] to inside\n  *[none] no recent crossings\n}"
+      "value": "{ $direction ->\n  [toOutside] crossings to outside\n  [mostlyToOutside] crossings mostly to outside\n  [inBothDirections] crossings in both directions\n  [mostlyToInside] crossings mostly to inside\n  [toInside] crossings to inside\n  *[none] no recent crossings\n}"
     },
     "soluteControl": {
       "outside": {
@@ -432,7 +432,7 @@
       },
       "barChart": {
         "accessibleName": {
-          "value": "{ a11y_soluteCapitalized }: { a11y_soluteComparison }; { a11y_soluteAverageCrossingDirection } happening at membrane; currently { $outsideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} outside, { $insideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} inside."
+          "value": "{ a11y_soluteCapitalized }: { a11y_soluteComparison }; { a11y_soluteAverageCrossingDirection }; { $outsideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} outside, { $insideAmount ->\n  [none] none\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} inside."
         },
         "crossing": {
           "value": "{ $crossing ->\n  *[none] no crossings\n  [inside] crossings in\n  [outside] crossings out\n  [both] crossings in and out\n}"
