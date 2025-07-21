@@ -313,7 +313,7 @@
           "value": "Sodium-Glucose Cotransporter"
         },
         "accessibleHelpText": {
-          "value": "Proteins that open to one side at a time and follow specific binding sequences of solutes to transport solutes across the membrane. Grab to pull to membrane.\n  Sodium Potassium Pump begins open to the inside with 3 small circular binding sites awaiting solute. A phosphate is required to change the shape of the protein and open to the outside. Two larger circular binding sites awaiting solute are exposed. The pump returns to its original shape, open to the inside.\n  Sodium-Glucose Cotransporter begins open to the outside with two small circular binding sites and one hexagonal binding site. Requires specific solute concentration outside cell to shuttle. Cotransporter changes shape to shuttle solutes to inside and returns to to original shape."
+          "value": "Proteins that open to one side at a time and follow specific solute binding sequences to transport solutes across membrane.\n  Sodium Potassium Pump, when open to inside has binding sites for 3 sodium and 1 phosphate. When open to outside has binding sites for 2 potassium.\n  Sodium-Glucose Cotransporter, only open to outside and has binding sites for 2 sodium and 1 glucose. Requires specific solute concentrations to shuttle.\n  Grab to pull to membrane."
         }
       }
     },
@@ -487,7 +487,7 @@
         "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Look for Solute Controls to add or remove solutes types."
       },
       "accessibleHelpTextWithSolutesAndProteins": {
-        "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Observe crossing solutes and protein changes, grab protein to re-order or delete. Look for transport proteins to add."
+        "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Observe crossing solutes and protein changes, grab protein to re-order or delete."
       }
     },
     "transportProtein": {
