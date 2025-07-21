@@ -431,7 +431,7 @@ a11y:
                                           [openToInsideSodiumAndATPBound] ATP reacts, phosphate bound, pumping 3 sodium to outside, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToInsideSodiumAndPhosphateBound] Phosphate bound, pumping 3 sodium to outside, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate still bound, { a11y.transportProtein.accessibleObjectResponseOpenClose}
-                                          [openToOutsidePotassiumBound]Pphosphate floating away, pumping 2 potassium to inside, { a11y.transportProtein.accessibleObjectResponseOpenClose}
+                                          [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                        
                                           [openToOutsideAwaitingParticles] Awaiting sodium and glucose, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToOutsideAllParticlesBound] Sodium and glucose bound, { a11y.transportProtein.accessibleObjectResponseOpenClose}
