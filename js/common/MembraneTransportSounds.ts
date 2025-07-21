@@ -193,7 +193,18 @@ const shareWhooshSound = newSoundClip( shareWhooshSound_mp3, { initialOutputLeve
 const mtLigandsStickv3 = newSoundClip( ligandsStickV3_mp3, { initialOutputLevel: 0.3 } );
 const mtLigandsUnstickv3 = newSoundClip( ligandsUnstickV3_mp3, { initialOutputLevel: 0.3 } );
 
-const mtNAPlusAttachSound = newSoundClip( naPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const sodiumLowpassFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'lowpass',
+  frequency: 200,
+  Q: 1.5
+} );
+
+const mtNAPlusAttachSound = newSoundClip( naPlusAttach_mp3, {
+  initialOutputLevel: 0.8,
+  additionalAudioNodes: [
+    sodiumLowpassFilter
+  ]
+} );
 const mtKPlusAttachSound = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.3 } );
 const mtGlucoseActivateTransporterSound = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
