@@ -18,7 +18,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
-import TransportProteinType from './proteins/TransportProteinType.js';
+import TransportProteinType, { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 
 export default class Slot {
 
@@ -37,7 +37,8 @@ export default class Slot {
       tandem: tandem.createTandem( 'transportProteinTypeProperty' ),
       phetioValueType: NullableIO( StringIO ),
       phetioFeatured: true,
-      phetioDocumentation: 'The type of transport protein in this slot, or null if the slot is empty.'
+      phetioDocumentation: 'The type of transport protein in this slot, or null if the slot is empty.',
+      validValues: [ ...TransportProteinTypeValues, null ]
     } );
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
