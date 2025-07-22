@@ -121,8 +121,7 @@ export default class MembraneTransportDescriber {
         this.fundamentalState = updatedFundamentalState;
 
         // Reset hint timing variables and make sure that none of the hints have been provided yet.
-        this.hintStates = this.getCleanHintStates();
-        this.timeSinceHintDescription = 0;
+        this.resetAfterFundamentalStateChange();
       }
 
       //-------------------------------------------------------------------------
@@ -352,12 +351,23 @@ export default class MembraneTransportDescriber {
            previous.ligandsAdded !== current.ligandsAdded;
   }
 
+  /**
+   * A full reset of the describer.
+   */
   public reset(): void {
     this.timeSinceDescription = 0;
+    this.fundamentalState = this.getCleanFundamentalState();
+    this.resetAfterFundamentalStateChange();
+  }
+
+  /**
+   * Reset state tracking variables that should be reset after an important user interaction, like adding/removing solutes or proteins.
+   */
+  public resetAfterFundamentalStateChange(): void {
+    this.hintStates = this.getCleanHintStates();
+    this.timeSinceHintDescription = 0;
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
     this.previousSteadyStateMap = this.getCleanSteadyStates();
-    this.hintStates = this.getCleanHintStates();
-    this.fundamentalState = this.getCleanFundamentalState();
   }
 
   private getDescriptionFromEventQueue(): string {
