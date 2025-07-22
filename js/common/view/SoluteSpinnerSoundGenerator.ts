@@ -77,25 +77,23 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
 
     affirm( newValue !== undefined && oldValue !== undefined, 'newValue and oldValue should be defined' );
 
-    // parameters the bound the randomization, empirically determined
-    const minimumInterSoundTime = 0.06;
-    const maximumInterSoundTime = minimumInterSoundTime * 1.5;
+    // Play 5 sounds for coarse changes, and 2 sounds for fine changes.
+    const delta = Math.abs( newValue - oldValue );
+    const desiredAmount = delta > 25 ? 5 : 2;
 
     // Set a value for the number of playing instances of the clip at which we limit additional plays.  This helps to
     // prevent too many instances of the clip from playing simultaneously, which can sound a bit chaotic.
     const playingInstancesLimitThreshold = 5;
     const available = playingInstancesLimitThreshold - this.baseSoundClip.getNumberOfPlayingInstances();
-
-    // The number of tones to play is based on the number of solutes added, normalized by the number
-    // that you can add in one click of the coarse button.
-    const delta = Math.abs( newValue - oldValue );
-
-    const desiredAmount = delta > 25 ? 5 : 2;
     const timesToPlay = Math.min( available, desiredAmount );
 
     // Calculate the minimum playback rate based on the current concentration.
     // Dividing the newValue reduces the playback rate and creates more subtle changes across the range.
     const minPlaybackRate = 1 + ( newValue / this.coarseDelta );
+
+    // parameters the bound the randomization, empirically determined
+    const minimumInterSoundTime = 0.06;
+    const maximumInterSoundTime = minimumInterSoundTime * 1.5;
 
     let delayAmount = 0;
     _.times( timesToPlay, () => {
