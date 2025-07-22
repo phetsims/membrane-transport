@@ -189,7 +189,7 @@ export default class MembranePotentialPanel extends Panel {
     const button1 = membranePotentialRadioButtonGroup.getButtonForValue( -70 );
     const button2 = membranePotentialRadioButtonGroup.getButtonForValue( -50 );
     const button3 = membranePotentialRadioButtonGroup.getButtonForValue( 30 );
-    ManualConstraint.create( this, [ arrowNode, button1, button2, button3, lineNegative70 ], ( arrowNodeProxy, button1Proxy, line1Proxy ) => {
+    ManualConstraint.create( membranePotentialControl, [ arrowNode, button1, button2, button3, lineNegative70 ], ( arrowNodeProxy, button1Proxy, line1Proxy ) => {
 
       const INSET = 30;
 
