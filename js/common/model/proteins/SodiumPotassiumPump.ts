@@ -62,7 +62,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.sodiumSite3
   );
   private static readonly PHOSPHATE_SITE = MembraneTransportConstants.getBindingSiteOffset(
-    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownWithPhosphateSiteDimension,
+    MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openUpDimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.phosphateSite
   );
   private static readonly ATP_SITE_OPEN_TO_INSIDE = MembraneTransportConstants.getBindingSiteOffset(

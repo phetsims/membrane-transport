@@ -126,7 +126,7 @@ export default class MembraneTransportConstants {
 
       atpSiteOpenToInside: new Vector2( 406, 1220 ),
 
-      phosphateSite: new Vector2( 320, 805 ),
+      phosphateSite: new Vector2( 323, 810 ),
       phosphateSiteOpenToInside: new Vector2( 493, 783 ),
 
       potassiumSite1: new Vector2( 209, 339.5 ),
