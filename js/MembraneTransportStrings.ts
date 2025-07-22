@@ -210,6 +210,7 @@ type StringsType = {
     'soluteConcentrationsAccordionBox': {
       'descriptionContentStringProperty': LocalizedStringProperty;
       'barChart': {
+        'accessibleNameNoneStringProperty': LocalizedStringProperty;
         'accessibleNameStringProperty': LocalizedStringProperty;
         'crossingStringProperty': LocalizedStringProperty;
       }

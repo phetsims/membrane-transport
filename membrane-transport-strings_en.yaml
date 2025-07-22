@@ -314,6 +314,8 @@ a11y:
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
+      accessibleNameNone: |-
+                      { a11y.soluteCapitalized }: none outside, none inside.
       accessibleName: |-
                       { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection }; { $outsideAmount ->
                         [none] none
