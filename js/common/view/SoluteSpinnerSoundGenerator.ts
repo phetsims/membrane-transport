@@ -89,9 +89,8 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     // The number of tones to play is based on the number of solutes added, normalized by the number
     // that you can add in one click of the coarse button.
     const delta = Math.abs( newValue - oldValue );
-    const normalizedDelta = delta / this.coarseDelta;
-    const desiredAmount = Math.floor( normalizedDelta * playingInstancesLimitThreshold );
 
+    const desiredAmount = delta > 25 ? 5 : 2;
     const timesToPlay = Math.min( available, desiredAmount );
 
     // Calculate the minimum playback rate based on the current concentration.
