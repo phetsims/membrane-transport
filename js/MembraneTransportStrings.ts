@@ -51,7 +51,7 @@ type StringsType = {
   'preferencesDialog': {
     'audio': {
       'sounds': {
-        'stereoSounds': {
+        'stereoCrossingSounds': {
           'labelStringProperty': LocalizedStringProperty;
           'descriptionStringProperty': LocalizedStringProperty;
         }

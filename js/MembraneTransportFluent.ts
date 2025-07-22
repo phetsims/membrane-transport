@@ -55,8 +55,8 @@ addToMapIfDefined( 'animateLipids_label', 'animateLipids.labelStringProperty' );
 addToMapIfDefined( 'animateLipids_description', 'animateLipids.descriptionStringProperty' );
 addToMapIfDefined( 'glucoseMetabolism_label', 'glucoseMetabolism.labelStringProperty' );
 addToMapIfDefined( 'glucoseMetabolism_description', 'glucoseMetabolism.descriptionStringProperty' );
-addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds_label', 'preferencesDialog.audio.sounds.stereoSounds.labelStringProperty' );
-addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoSounds_description', 'preferencesDialog.audio.sounds.stereoSounds.descriptionStringProperty' );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_label', 'preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty' );
+addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_description', 'preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty' );
 addToMapIfDefined( 'soluteConcentrations', 'soluteConcentrationsStringProperty' );
 addToMapIfDefined( 'crossingHighlights', 'crossingHighlightsStringProperty' );
 addToMapIfDefined( 'crossingSounds', 'crossingSoundsStringProperty' );
@@ -253,9 +253,9 @@ const MembraneTransportFluent = {
   preferencesDialog: {
     audio: {
       sounds: {
-        stereoSounds: {
-          labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSounds_label', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoSounds.labelStringProperty' ) ),
-          descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoSounds_description', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoSounds.descriptionStringProperty' ) )
+        stereoCrossingSounds: {
+          labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoCrossingSounds_label', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty' ) ),
+          descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoCrossingSounds_description', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty' ) )
         }
       }
     }

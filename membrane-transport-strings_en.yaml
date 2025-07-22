@@ -1,58 +1,58 @@
 # Strings for the Membrane Transport simulation
 
 # Title
-membrane-transport.title:                                Membrane Transport
+membrane-transport.title:                                        Membrane Transport
 
 # Screens
-screen.simpleDiffusion:                                  Simple Diffusion
-screen.facilitatedDiffusion:                             Facilitated Diffusion
-screen.activeTransport:                                  Active Transport
-screen.playground:                                       Playground
+screen.simpleDiffusion:                                          Simple Diffusion
+screen.facilitatedDiffusion:                                     Facilitated Diffusion
+screen.activeTransport:                                          Active Transport
+screen.playground:                                               Playground
 
 # Solutes
-solutes:                                                 Solutes
-oxygen:                                                  O<sub>2</sub>
-carbonDioxide:                                           CO<sub>2</sub>
-sodiumIon:                                               Na<sup>+</sup>
-potassiumIon:                                            K<sup>+</sup>
-glucose:                                                 Glucose
-atp:                                                     ATP
+solutes:                                                         Solutes
+oxygen:                                                          O<sub>2</sub>
+carbonDioxide:                                                   CO<sub>2</sub>
+sodiumIon:                                                       Na<sup>+</sup>
+potassiumIon:                                                    K<sup>+</sup>
+glucose:                                                         Glucose
+atp:                                                             ATP
 
 # Cell Regions
-outside:                                                 Outside
-inside:                                                  Inside
+outside:                                                         Outside
+inside:                                                          Inside
 
 # On the Toolbox
-voltageGatedChannels:                                    Voltage-gated Channels
-ligandGatedChannels:                                     Ligand-gated Channels
-activeTransporters:                                      Active Transporters
-leakageChannels:                                         Leakage Channels
+voltageGatedChannels:                                            Voltage-gated Channels
+ligandGatedChannels:                                             Ligand-gated Channels
+activeTransporters:                                              Active Transporters
+leakageChannels:                                                 Leakage Channels
 
-naPlusKPlusPump:                                         Na<sup>+</sup>/K<sup>+</sup><br>Pump
-sodiumGlucoseCotransporter:                              Na<sup>+</sup>/Glucose<br>Cotransporter
+naPlusKPlusPump:                                                 Na<sup>+</sup>/K<sup>+</sup><br>Pump
+sodiumGlucoseCotransporter:                                      Na<sup>+</sup>/Glucose<br>Cotransporter
 
 # Membrane Potential Section
-membranePotentialMV:                                     Membrane Potential (mV)
-charges:                                                 Charges
+membranePotentialMV:                                             Membrane Potential (mV)
+charges:                                                         Charges
 
 # Ligands Section
-addLigands:                                              Add Ligands
-removeLigands:                                           Remove Ligands
+addLigands:                                                      Add Ligands
+removeLigands:                                                   Remove Ligands
 
 # Preferences Dialog
-animateLipids.label:                                     Animate Lipids
-animateLipids.description:                               Whether the phospholipids forming the cell membrane should be animated.
-glucoseMetabolism.label:                                 Glucose Metabolism
-glucoseMetabolism.description:                           Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
-preferencesDialog.audio.sounds.stereoSounds.label:       Stereo Sounds
-preferencesDialog.audio.sounds.stereoSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
+animateLipids.label:                                             Animate Lipids
+animateLipids.description:                                       Whether the phospholipids forming the cell membrane should be animated.
+glucoseMetabolism.label:                                         Glucose Metabolism
+glucoseMetabolism.description:                                   Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
+preferencesDialog.audio.sounds.stereoCrossingSounds.label:       Stereo Crossing Sounds
+preferencesDialog.audio.sounds.stereoCrossingSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 
 # Solute Concentration Bar Charts
-soluteConcentrations:                                    Solute Concentrations
+soluteConcentrations:                                            Solute Concentrations
 
 # Checkboxes below the play area
-crossingHighlights:                                      Crossing Highlights
-crossingSounds:                                          Crossing Sounds
+crossingHighlights:                                              Crossing Highlights
+crossingSounds:                                                  Crossing Sounds
 
 a11y:
   simpleDiffusionScreen:
@@ -424,7 +424,7 @@ a11y:
                                           *[closed] closed                                           
                                        }
 
-    accessibleParagraph:        |-
+    accessibleParagraph:               |-
                                        { $state ->
                                           [openToInsideEmpty] Awaiting sodium, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToInsideSodiumBound] 3 sodium bound, awaiting phosphate, { a11y.transportProtein.accessibleObjectResponseOpenClose}
