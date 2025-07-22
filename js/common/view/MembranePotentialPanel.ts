@@ -29,6 +29,8 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 export default class MembranePotentialPanel extends Panel {
   public constructor( model: MembraneTransportModel, tandem: Tandem ) {
 
+    const membranePotentialControlTandem = tandem.createTandem( 'membranePotentialControl' );
+
     const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
       value: -70,
       createNode: tandem => new Text( '-70', MembraneTransportConstants.TEXT_OPTIONS ),
@@ -59,7 +61,8 @@ export default class MembranePotentialPanel extends Panel {
       orientation: 'horizontal',
       accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
-      tandem: tandem.createTandem( 'membranePotentialRadioButtonGroup' ),
+      tandem: membranePotentialControlTandem.createTandem( 'membranePotentialRadioButtonGroup' ),
+      phetioVisiblePropertyInstrumented: false,
       spacing: 25,
       layoutOptions: {
 
@@ -68,7 +71,6 @@ export default class MembranePotentialPanel extends Panel {
       }
     } );
 
-
     const arrowNode = new ArrowNode( 0, 0, 160, 0, {
       fill: 'black',
       stroke: null,
@@ -76,11 +78,10 @@ export default class MembranePotentialPanel extends Panel {
       doubleHead: true
     } );
 
-    const vbox = new VBox( {
+    const membranePotentialControlVBox = new VBox( {
       spacing: 4,
       align: 'center',
       children: [
-
         new VoicingText( MembraneTransportFluent.membranePotentialMVStringProperty, {
           maxWidth: 160,
           font: MembraneTransportConstants.FONT,
@@ -99,7 +100,46 @@ export default class MembranePotentialPanel extends Panel {
 
         arrowNode,
 
-        membranePotentialRadioButtonGroup,
+        membranePotentialRadioButtonGroup
+      ]
+    } );
+
+    // Connect lines from the radio buttons to their corresponding positions on the arrow
+    const lineOptions: LineOptions = {
+      stroke: 'black',
+      lineWidth: 1
+    };
+
+    const lineNegative70 = new Line( 0, 0, 0, 0, lineOptions );
+    const tickNegative70 = new Line( 0, 0, 0, 0, lineOptions );
+    const lineNegative50 = new Line( 0, 0, 0, 0, lineOptions );
+    const tickNegative50 = new Line( 0, 0, 0, 0, lineOptions );
+    const linePositive30 = new Line( 0, 0, 0, 0, lineOptions );
+    const tickPositive30 = new Line( 0, 0, 0, 0, lineOptions );
+
+    // The zero tick mark has a lineWidth of 2 so that it does not look like it is pointing to the -50 mV button.
+    const tickZero = new Line( 0, 0, 0, 0, combineOptions<LineOptions>( {}, lineOptions, { lineWidth: 2 } ) );
+
+    const membranePotentialControl = new Node( {
+      tandem: membranePotentialControlTandem,
+      children: [
+        membranePotentialControlVBox,
+        lineNegative70,
+        lineNegative50,
+        linePositive30,
+        tickNegative70,
+        tickNegative50,
+        tickPositive30,
+        tickZero
+      ]
+    } );
+
+    const vbox = new VBox( {
+      spacing: 4,
+      align: 'center',
+      children: [
+
+        membranePotentialControl,
 
         new Checkbox( model.chargesVisibleProperty, new Text( MembraneTransportFluent.chargesStringProperty, {
           maxWidth: 140,
@@ -127,31 +167,8 @@ export default class MembranePotentialPanel extends Panel {
       ]
     } );
 
-    // Connect lines from the radio buttons to their corresponding positions on the arrow
-    const lineOptions: LineOptions = {
-      stroke: 'black',
-      lineWidth: 1
-    };
-
-    const lineNegative70 = new Line( 0, 0, 0, 0, lineOptions );
-    const tickNegative70 = new Line( 0, 0, 0, 0, lineOptions );
-    const lineNegative50 = new Line( 0, 0, 0, 0, lineOptions );
-    const tickNegative50 = new Line( 0, 0, 0, 0, lineOptions );
-    const linePositive30 = new Line( 0, 0, 0, 0, lineOptions );
-    const tickPositive30 = new Line( 0, 0, 0, 0, lineOptions );
-
-    // The zero tick mark has a lineWidth of 2 so that it does not look like it is pointing to the -50 mV button.
-    const tickZero = new Line( 0, 0, 0, 0, combineOptions<LineOptions>( {}, lineOptions, { lineWidth: 2 } ) );
-
     const content = new Node( {
       children: [
-        lineNegative70,
-        lineNegative50,
-        linePositive30,
-        tickNegative70,
-        tickNegative50,
-        tickPositive30,
-        tickZero,
         vbox
       ]
     } );
