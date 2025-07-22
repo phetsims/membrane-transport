@@ -25,31 +25,39 @@ export default class MembraneTransportPreferencesNode extends VBox {
 
   public constructor( tandem: Tandem ) {
 
+    const animateLipidsControl = new PreferencesControl( {
+      isDisposable: false,
+      labelNode: new Text( MembraneTransportFluent.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new RichText( MembraneTransportFluent.animateLipids.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+      tandem: tandem.createTandem( 'animateLipidsControl' ),
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
+    } );
+
+    animateLipidsControl.addLinkedElement( MembraneTransportPreferences.instance.animateLipidsProperty );
+
+    const glucoseMetabolismControl = new PreferencesControl( {
+      isDisposable: false,
+      labelNode: new Text( MembraneTransportFluent.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new RichText( MembraneTransportFluent.glucoseMetabolism.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.glucoseMetabolismProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+      tandem: tandem.createTandem( 'glucoseMetabolismControl' ),
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
+    } );
+
+    glucoseMetabolismControl.addLinkedElement( MembraneTransportPreferences.instance.glucoseMetabolismProperty );
+
     super( {
       spacing: PreferencesDialogConstants.VERTICAL_CONTENT_SPACING,
       children: [
-        new PreferencesControl( {
-          isDisposable: false,
-          labelNode: new Text( MembraneTransportFluent.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-          descriptionNode: new RichText( MembraneTransportFluent.animateLipids.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
-          tandem: tandem.createTandem( 'animateLipidsControl' ),
-          phetioFeatured: true,
-          visiblePropertyOptions: {
-            phetioFeatured: true
-          }
-        } ),
-        new PreferencesControl( {
-          isDisposable: false,
-          labelNode: new Text( MembraneTransportFluent.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-          descriptionNode: new RichText( MembraneTransportFluent.glucoseMetabolism.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-          controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.glucoseMetabolismProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
-          tandem: tandem.createTandem( 'glucoseMetabolismControl' ),
-          phetioFeatured: true,
-          visiblePropertyOptions: {
-            phetioFeatured: true
-          }
-        } )
+        animateLipidsControl,
+        glucoseMetabolismControl
       ]
     } );
   }
