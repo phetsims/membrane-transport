@@ -122,6 +122,9 @@ export default class MembranePotentialPanel extends Panel {
 
     const membranePotentialControl = new Node( {
       tandem: membranePotentialControlTandem,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      },
       children: [
         membranePotentialControlVBox,
         lineNegative70,
