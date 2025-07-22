@@ -314,37 +314,40 @@ a11y:
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     barChart:
-      accessibleNameNone: |-
-                      { a11y.soluteCapitalized }: none outside, none inside.
-      accessibleName: |-
-                      { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection }; { $outsideAmount ->
-                        [none] none
-                        [few] a few
-                        [some] some
-                        [smallAmount] small amount
-                        [several] several
-                        [many] many
-                        [largeAmount] large amount
-                        [hugeAmount] huge amount
-                       *[maxAmount] max amount
-                      } outside, { $insideAmount ->
-                        [none] none
-                        [few] a few
-                        [some] some
-                        [smallAmount] small amount
-                        [several] several
-                        [many] many
-                        [largeAmount] large amount
-                        [hugeAmount] huge amount
-                       *[maxAmount] max amount
-                      } inside.
-      crossing:       |-
-                      { $crossing ->
-                        *[none] no crossings
-                        [inside] crossings in
-                        [outside] crossings out
-                        [both] crossings in and out
-                      }
+
+      # Note this description is used instead of accessibleName in the case that there are none inside AND none outside.
+      accessibleNameWithNoParticles: |-
+                                     { a11y.soluteCapitalized }: none outside, none inside.
+
+      accessibleNameWithParticles:   |-
+                                     { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection }; { $outsideAmount ->
+                                       [none] none
+                                       [few] a few
+                                       [some] some
+                                       [smallAmount] small amount
+                                       [several] several
+                                       [many] many
+                                       [largeAmount] large amount
+                                       [hugeAmount] huge amount
+                                      *[maxAmount] max amount
+                                     } outside, { $insideAmount ->
+                                       [none] none
+                                       [few] a few
+                                       [some] some
+                                       [smallAmount] small amount
+                                       [several] several
+                                       [many] many
+                                       [largeAmount] large amount
+                                       [hugeAmount] huge amount
+                                      *[maxAmount] max amount
+                                     } inside.
+      crossing:                      |-
+                                     { $crossing ->
+                                       *[none] no crossings
+                                       [inside] crossings in
+                                       [outside] crossings out
+                                       [both] crossings in and out
+                                     }
 
   soluteCrossing:
     initialResponse:            "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteComparison }."
