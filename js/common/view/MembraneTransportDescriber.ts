@@ -443,7 +443,9 @@ export default class MembraneTransportDescriber {
 
     if ( simpleDiffusers.length > 0 && descriptionParts.length === 0 && simpleDiffusers[ 0 ] !== 'adp' && simpleDiffusers[ 0 ] !== 'phosphate' ) {
       if ( simpleDiffusers.length === 1 ) {
-        descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossed the membrane` );
+        if ( this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
+          descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossed the membrane` );
+        }
       }
       else {
         descriptionParts.push( 'Multiple solutes crossed the membrane' );
@@ -479,6 +481,25 @@ export default class MembraneTransportDescriber {
     return response;
   }
 
+  /**
+   * Returns true when the describer should describe the relative solute comparisons for the given solute type.
+   * This is true when the solute type has changed its comparison since the last description, and
+   * it is not in steady state.
+   */
+  private shouldDescribeComparisons( soluteType: SoluteType ): boolean {
+    const currentComparison = MembraneTransportDescriber.getSoluteComparisonDescriptor(
+      this.model.outsideSoluteCountProperties[ soluteType ].value,
+      this.model.insideSoluteCountProperties[ soluteType ].value
+    );
+    const previousComparison = this.previousSoluteComparisons[ soluteType ];
+
+    // If the solute is in steady state, don't describe the comparison because we want to hear that it is in steady state.
+    // and don't want to make it seem like it is changing.
+    const inSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, this.model.descriptionEventQueue );
+
+    return ( currentComparison !== previousComparison ) && !inSteadyState;
+  }
+
   private getCompareSoluteCompartmentsIfChanged(
     solutesThatCrossed: SoluteType[],
     insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
@@ -495,14 +516,7 @@ export default class MembraneTransportDescriber {
         insideSoluteCountProperties[ soluteType ].value
       );
 
-      // If the solute is in steady state, don't describe the comparison because we want to hear that it is in steady state.
-      // and don't want to make it seem like it is changing.
-      const inSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, this.model.descriptionEventQueue );
-
-      if (
-        comparison !== this.previousSoluteComparisons[ soluteType ] &&
-        !inSteadyState &&
-        soluteType !== 'adp' && soluteType !== 'phosphate' ) {
+      if ( this.shouldDescribeComparisons( soluteType ) && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
         const soluteName = MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } );
         const comparisonString = this.getSoluteComparisonString( soluteType, insideSoluteCountProperties, outsideSoluteCountProperties );
 
