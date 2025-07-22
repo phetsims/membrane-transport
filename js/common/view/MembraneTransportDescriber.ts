@@ -436,19 +436,34 @@ export default class MembraneTransportDescriber {
       }
     }
 
-    if ( facilitatedSolutes.length > 0 ) {
-      const soluteNames = facilitatedSolutes.filter( s => s !== 'adp' && s !== 'phosphate' ).map( s => MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: s } ) ).join( ' and ' );
-      descriptionParts.push( `${soluteNames} crossed through channels` );
-    }
+    if ( facilitatedSolutes.length > 0 && facilitatedSolutes[ 0 ] !== 'adp' && facilitatedSolutes[ 0 ] !== 'phosphate' ) {
+      if ( facilitatedSolutes.length === 1 ) {
+        const facilitatedSolute = facilitatedSolutes[ 0 ];
 
-    if ( simpleDiffusers.length > 0 && descriptionParts.length === 0 && simpleDiffusers[ 0 ] !== 'adp' && simpleDiffusers[ 0 ] !== 'phosphate' ) {
-      if ( simpleDiffusers.length === 1 ) {
-        if ( this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
-          descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossed the membrane` );
+        if ( this.shouldDescribeComparisons( facilitatedSolute ) ) {
+          const directionDescriptor = MembraneTransportDescriber.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute, queue );
+          const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
+          descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
         }
       }
       else {
-        descriptionParts.push( 'Multiple solutes crossed the membrane' );
+        const soluteNames = facilitatedSolutes.filter( s => s !== 'adp' && s !== 'phosphate' ).map( s => MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: s } ) ).join( ' and ' );
+        descriptionParts.push( `${soluteNames} crossing through channels` );
+      }
+    }
+
+    if ( descriptionParts.length === 0 ) {
+      if ( simpleDiffusers.length > 0 && simpleDiffusers[ 0 ] !== 'adp' && simpleDiffusers[ 0 ] !== 'phosphate' ) {
+        if ( simpleDiffusers.length === 1 ) {
+          if ( this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
+            const directionDescriptor = MembraneTransportDescriber.getAverageCrossingDirectionDescriptorFromQueue( simpleDiffusers[ 0 ], queue );
+            const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
+            descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossing the membrane, ${directionDescriptionString}` );
+          }
+        }
+        else {
+          descriptionParts.push( 'Multiple solutes crossing the membrane' );
+        }
       }
     }
 
@@ -557,9 +572,16 @@ export default class MembraneTransportDescriber {
    * Returns true when the solute type is in 'steady state', according to getAverageCrossingDirectionDescriptor.
    */
   private static isSteadyState( soluteType: SoluteType, queue: SoluteCrossedMembraneEvent[] ): boolean {
+    return MembraneTransportDescriber.getAverageCrossingDirectionDescriptorFromQueue( soluteType, queue ) === 'inBothDirections';
+  }
+
+  /**
+   * Returns true when the solute type is in 'steady state', according to getAverageCrossingDirectionDescriptor.
+   */
+  private static getAverageCrossingDirectionDescriptorFromQueue( soluteType: SoluteType, queue: SoluteCrossedMembraneEvent[] ): AverageCrossingDirectionDescriptor {
     const crossedInside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'inward' ).length;
     const crossedOutside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'outward' ).length;
-    return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( crossedOutside, crossedInside ) === 'inBothDirections';
+    return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( crossedOutside, crossedInside );
   }
 
   /**
