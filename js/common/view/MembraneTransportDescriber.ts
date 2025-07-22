@@ -8,7 +8,6 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import _ from '../../../../sherpa/js/lodash.js';
@@ -17,8 +16,6 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import TransportProtein from '../model/proteins/TransportProtein.js';
-import SoluteCrossedMembraneEvent from '../model/SoluteCrossedMembraneEvent.js';
 import SoluteType from '../model/SoluteType.js';
 
 type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMoreOutside' |
@@ -133,13 +130,7 @@ export default class MembraneTransportDescriber {
       //-------------------------------------------------------------------------
       this.timeSinceDescription += dt;
       if ( this.timeSinceDescription > DESCRIPTION_INTERVAL ) {
-        const response = this.getDescriptionFromEventQueue(
-          this.model.descriptionEventQueue,
-          this.model.focusedProteinProperty.value,
-          this.model.getTransportProteins(),
-          this.model.insideSoluteCountProperties,
-          this.model.outsideSoluteCountProperties
-        );
+        const response = this.getDescriptionFromEventQueue();
 
         this.addAccessibleContextResponse( response );
 
@@ -369,18 +360,14 @@ export default class MembraneTransportDescriber {
     this.fundamentalState = this.getCleanFundamentalState();
   }
 
-  private getDescriptionFromEventQueue(
-    queue: SoluteCrossedMembraneEvent[],
-    focusedProtein: null | TransportProtein,
-    transportProteins: TransportProtein[],
-    insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
-    outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
-  ): string {
+  private getDescriptionFromEventQueue(): string {
 
     // No description when a protein is focused (to be implemented at another time).
-    if ( focusedProtein ) {
+    if ( this.model.focusedProteinProperty.value ) {
       return '';
     }
+
+    const queue = this.model.descriptionEventQueue;
 
     // No events to describe.
     if ( queue.length === 0 ) {
@@ -392,8 +379,8 @@ export default class MembraneTransportDescriber {
 
     // If oxygen or carbon dioxide cross the membrane, that information will be included as part of the description
     // of active transport events.
-    const oxygenCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'oxygen' );
-    const carbonDioxideCrossed = MembraneTransportDescriber.didSoluteTypeCross( queue, 'carbonDioxide' );
+    const oxygenCrossed = this.didSoluteTypeCross( 'oxygen' );
+    const carbonDioxideCrossed = this.didSoluteTypeCross( 'carbonDioxide' );
     const anySimpleDiffusion = oxygenCrossed || carbonDioxideCrossed;
 
     // Identify active transport events
@@ -441,7 +428,7 @@ export default class MembraneTransportDescriber {
         const facilitatedSolute = facilitatedSolutes[ 0 ];
 
         if ( this.shouldDescribeComparisons( facilitatedSolute ) ) {
-          const directionDescriptor = MembraneTransportDescriber.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute, queue );
+          const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
           const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
           descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
         }
@@ -456,7 +443,7 @@ export default class MembraneTransportDescriber {
       if ( simpleDiffusers.length > 0 && simpleDiffusers[ 0 ] !== 'adp' && simpleDiffusers[ 0 ] !== 'phosphate' ) {
         if ( simpleDiffusers.length === 1 ) {
           if ( this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
-            const directionDescriptor = MembraneTransportDescriber.getAverageCrossingDirectionDescriptorFromQueue( simpleDiffusers[ 0 ], queue );
+            const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( simpleDiffusers[ 0 ] );
             const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
             descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossing the membrane, ${directionDescriptionString}` );
           }
@@ -478,16 +465,12 @@ export default class MembraneTransportDescriber {
     // Capitalize the first letter
     response = response.charAt( 0 ).toUpperCase() + response.slice( 1 );
 
-    const steadyStateString = this.getEnteredSteadyStateIfChanged( solutesThatCrossed, queue );
+    const steadyStateString = this.getEnteredSteadyStateIfChanged( solutesThatCrossed );
 
     if ( steadyStateString ) {
       response += `, ${steadyStateString}`;
     }
-    const comparisonString = this.getCompareSoluteCompartmentsIfChanged(
-      solutesThatCrossed,
-      insideSoluteCountProperties,
-      outsideSoluteCountProperties
-    );
+    const comparisonString = this.getCompareSoluteCompartmentsIfChanged( solutesThatCrossed );
 
     if ( comparisonString ) {
       response += `, ${comparisonString}`;
@@ -510,16 +493,12 @@ export default class MembraneTransportDescriber {
 
     // If the solute is in steady state, don't describe the comparison because we want to hear that it is in steady state.
     // and don't want to make it seem like it is changing.
-    const inSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, this.model.descriptionEventQueue );
+    const inSteadyState = this.isSteadyState( soluteType );
 
     return ( currentComparison !== previousComparison ) && !inSteadyState;
   }
 
-  private getCompareSoluteCompartmentsIfChanged(
-    solutesThatCrossed: SoluteType[],
-    insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
-    outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
-  ): string {
+  private getCompareSoluteCompartmentsIfChanged( solutesThatCrossed: SoluteType[] ): string {
     const changedComparisons: string[] = [];
 
     // If only one solute type crossed, we don't need to include the name in the description.
@@ -527,13 +506,13 @@ export default class MembraneTransportDescriber {
 
     solutesThatCrossed.forEach( soluteType => {
       const comparison = MembraneTransportDescriber.getSoluteComparisonDescriptor(
-        outsideSoluteCountProperties[ soluteType ].value,
-        insideSoluteCountProperties[ soluteType ].value
+        this.model.outsideSoluteCountProperties[ soluteType ].value,
+        this.model.insideSoluteCountProperties[ soluteType ].value
       );
 
       if ( this.shouldDescribeComparisons( soluteType ) && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
         const soluteName = MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } );
-        const comparisonString = this.getSoluteComparisonString( soluteType, insideSoluteCountProperties, outsideSoluteCountProperties );
+        const comparisonString = this.getSoluteComparisonString( soluteType );
 
         if ( includeSoluteName ) {
           changedComparisons.push( `${soluteName}, ${comparisonString}` );
@@ -547,11 +526,11 @@ export default class MembraneTransportDescriber {
     return changedComparisons.join( ', ' );
   }
 
-  private getEnteredSteadyStateIfChanged( solutesThatCrossed: SoluteType[], queue: SoluteCrossedMembraneEvent[] ): string {
+  private getEnteredSteadyStateIfChanged( solutesThatCrossed: SoluteType[] ): string {
     const changedSteadyStates: string[] = [];
 
     solutesThatCrossed.forEach( soluteType => {
-      const isSteadyState = MembraneTransportDescriber.isSteadyState( soluteType, queue );
+      const isSteadyState = this.isSteadyState( soluteType );
       const isRoughlyEqual = MembraneTransportDescriber.isRoughlyEqual(
         this.model.outsideSoluteCountProperties[ soluteType ].value,
         this.model.insideSoluteCountProperties[ soluteType ].value
@@ -571,16 +550,16 @@ export default class MembraneTransportDescriber {
   /**
    * Returns true when the solute type is in 'steady state', according to getAverageCrossingDirectionDescriptor.
    */
-  private static isSteadyState( soluteType: SoluteType, queue: SoluteCrossedMembraneEvent[] ): boolean {
-    return MembraneTransportDescriber.getAverageCrossingDirectionDescriptorFromQueue( soluteType, queue ) === 'inBothDirections';
+  private isSteadyState( soluteType: SoluteType ): boolean {
+    return this.getAverageCrossingDirectionDescriptorFromQueue( soluteType ) === 'inBothDirections';
   }
 
   /**
    * Returns true when the solute type is in 'steady state', according to getAverageCrossingDirectionDescriptor.
    */
-  private static getAverageCrossingDirectionDescriptorFromQueue( soluteType: SoluteType, queue: SoluteCrossedMembraneEvent[] ): AverageCrossingDirectionDescriptor {
-    const crossedInside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'inward' ).length;
-    const crossedOutside = queue.filter( event => event.solute.soluteType === soluteType && event.direction === 'outward' ).length;
+  private getAverageCrossingDirectionDescriptorFromQueue( soluteType: SoluteType ): AverageCrossingDirectionDescriptor {
+    const crossedInside = this.model.descriptionEventQueue.filter( event => event.solute.soluteType === soluteType && event.direction === 'inward' ).length;
+    const crossedOutside = this.model.descriptionEventQueue.filter( event => event.solute.soluteType === soluteType && event.direction === 'outward' ).length;
     return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( crossedOutside, crossedInside );
   }
 
@@ -592,14 +571,10 @@ export default class MembraneTransportDescriber {
            MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount ) === 'roughlyEqualOutside';
   }
 
-  private getSoluteComparisonString(
-    soluteType: SoluteType,
-    insideSoluteCountProperties: Record<SoluteType, NumberProperty>,
-    outsideSoluteCountProperties: Record<SoluteType, NumberProperty>
-  ): string {
+  private getSoluteComparisonString( soluteType: SoluteType ): string {
     const descriptor = MembraneTransportDescriber.getSoluteComparisonDescriptor(
-      outsideSoluteCountProperties[ soluteType ].value,
-      insideSoluteCountProperties[ soluteType ].value
+      this.model.outsideSoluteCountProperties[ soluteType ].value,
+      this.model.insideSoluteCountProperties[ soluteType ].value
     );
     return MembraneTransportFluent.a11y.soluteComparison.format( {
       amount: descriptor
@@ -609,8 +584,8 @@ export default class MembraneTransportDescriber {
   /**
    * Returns true when the solute type has crossed the membrane at all, according to the event queue.
    */
-  private static didSoluteTypeCross( queue: SoluteCrossedMembraneEvent[], soluteType: SoluteType ): boolean {
-    return queue.some( event => event.solute.soluteType === soluteType );
+  private didSoluteTypeCross( soluteType: SoluteType ): boolean {
+    return this.model.descriptionEventQueue.some( event => event.solute.soluteType === soluteType );
   }
 
   /**
