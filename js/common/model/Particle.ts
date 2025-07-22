@@ -48,11 +48,11 @@ const CROSSING_COOLDOWN = 10;
 // The extra capture radius was added so that all particles can be captured. If the capture radius is less than
 // half the height of a particle, it will never be captured.
 // It is an observable Property because it was useful to change at runtime for debugging.
-export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 2.5 );
+export const CAPTURE_RADIUS_PROPERTY = new NumberProperty( MembraneTransportConstants.MEMBRANE_BOUNDS.height / 2 * 4 );
 
-const GLUCOSE_FADE_TIME = 7; // in seconds, how long it takes for glucose to fade out if glucose absorption is enabled
-const ADP_FADE_TIME = 16; // in seconds
-const PHOSPHATE_FADE_TIME = 2; // in seconds
+const GLUCOSE_FADE_TIME = 10; // in seconds, how long it takes for glucose to fade out if glucose absorption is enabled
+const ADP_FADE_TIME = 10; // in seconds
+const PHOSPHATE_FADE_TIME = 5; // in seconds
 
 // When a ligand is bound to a protein, it does not have a slot.
 export type ParticleModeWithSlot = BaseParticleMode & { slot: Slot };

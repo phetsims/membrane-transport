@@ -20,8 +20,8 @@ const RandomWalkUtils = {
    * go straight before a sudden direction change.
    */
   sampleValueHowLongToGoStraight(): number {
-    const result = boxMullerTransform( 0.3, 0.4, dotRandom );
-    return clamp( result, 0.01, 2 );
+    const result = boxMullerTransform( 0.1, 0.2, dotRandom );
+    return clamp( result, 0.01, 1 );
   },
 
   /**
