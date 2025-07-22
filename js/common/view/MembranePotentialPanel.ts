@@ -180,7 +180,10 @@ export default class MembranePotentialPanel extends Panel {
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
       stroke: null,
       fill: null,
-      tandem: tandem
+      tandem: tandem,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
 
     const button1 = membranePotentialRadioButtonGroup.getButtonForValue( -70 );
