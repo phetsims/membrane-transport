@@ -207,7 +207,10 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     const solutesPanel = new SolutesPanel( model.featureSet, model.soluteProperty, {
       tandem: soluteControlsTandem.createTandem( 'solutesPanel' ),
-      left: soluteConcentrationsAccordionBox.left
+      left: soluteConcentrationsAccordionBox.left,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
     ManualConstraint.create( this, [ solutesPanel ], solutesPanelProxy => {
       solutesPanelProxy.centerY = screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.centerY );
