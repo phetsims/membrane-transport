@@ -260,13 +260,19 @@ a11y:
                                     [equal] amounts exactly equal outside and inside
                                     [allOutside] all outside, none inside
                                     [allInside] all inside, none outside
-                                    [manyMoreOutside] many more outside than inside 
+                                    [manyManyMoreOutside] many many more outside than inside
+                                    [manyMoreOutside] many more outside than inside
                                     [aboutTwiceAsManyOutside] about twice as many outside as inside
+                                    [alotMoreOutside] a lot more outside than inside
                                     [someMoreOutside] some more outside than inside
+                                    [littleBitMoreOutside] a little bit more outside than inside
                                     [roughlyEqualOutside] roughly equal amounts inside and outside
+                                    [manyManyMoreInside] many many more inside than outside
                                     [manyMoreInside] many more inside than outside
                                     [aboutTwiceAsManyInside] about twice as many inside as outside
+                                    [alotMoreInside] a lot more inside than outside
                                     [someMoreInside] some more inside than outside
+                                    [littleBitMoreInside] a little bit more inside than outside
                                     [roughlyEqualInside] roughly equal amounts inside and outside
                                   }
 
@@ -298,8 +304,8 @@ a11y:
                                  [smallAmount] small amount of
                                  [several] several
                                  [many] many
-                                 [largeAmount] large amount of
-                                 [hugeAmount] huge amount of
+                                 [largeAmount] large amount
+                                 [hugeAmount] huge amount
                                 *[maxAmount] max amount of
                                } { a11y.solute }
     accessibleContextResponse: |-
@@ -444,6 +450,7 @@ a11y:
                                        
                                           *[other] { a11y.transportProtein.accessibleObjectResponseOpenClose }
                                        }.
+
 
     accessibleContextResponse:         |-
                                        { $state ->

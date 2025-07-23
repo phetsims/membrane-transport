@@ -18,9 +18,11 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType from '../model/SoluteType.js';
 
-type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMoreOutside' |
-  'aboutTwiceAsManyOutside' | 'someMoreOutside' | 'roughlyEqualOutside' | 'manyMoreInside' |
-  'aboutTwiceAsManyInside' | 'someMoreInside' | 'roughlyEqualInside' | 'none';
+type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' |
+  'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' |
+  'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' |
+  'aboutTwiceAsManyInside' | 'alotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' |
+  'roughlyEqualInside' | 'none';
 
 type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inBothDirections' |
   'mostlyToInside' | 'toInside' | 'none';
@@ -259,7 +261,7 @@ export default class MembraneTransportDescriber {
     const hintDescriptions = [];
 
     if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasLigandGatedChannelWithoutLigands ) ) {
-      hintDescriptions.push( 'Ligand-gated protein closed. Look for ligand molecules' );
+      hintDescriptions.push( 'Ligand-gated protein closed. Look for ligands' );
       hintStates.hasLigandGatedChannelWithoutLigands.provided = true;
     }
     if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasVoltageGatedChannelAtRestingPotential ) ) {
@@ -419,24 +421,23 @@ export default class MembraneTransportDescriber {
       }
 
       if ( sodiumPumped && potassiumPumped ) {
-        descriptionParts.push( 'sodium pumped out and potassium pumped in' );
+        descriptionParts.push( 'sodium pumped outside and potassium pumped inside' );
       }
       else if ( sodiumPumped ) {
-        descriptionParts.push( 'sodium pumped out' );
+        descriptionParts.push( 'sodium pumped outside' );
       }
       else if ( potassiumPumped ) {
-        descriptionParts.push( 'potassium pumped in' );
+        descriptionParts.push( 'potassium pumped inside' );
       }
 
       if ( cotransported ) {
-        descriptionParts.push( 'sodium and glucose shuttled across' );
+        descriptionParts.push( 'sodium and glucose shuttled inside' );
       }
     }
-
+    
     if ( facilitatedSolutes.length > 0 && facilitatedSolutes[ 0 ] !== 'adp' && facilitatedSolutes[ 0 ] !== 'phosphate' ) {
       if ( facilitatedSolutes.length === 1 ) {
         const facilitatedSolute = facilitatedSolutes[ 0 ];
-
         if ( this.shouldDescribeComparisons( facilitatedSolute ) ) {
           const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
           const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
@@ -455,11 +456,11 @@ export default class MembraneTransportDescriber {
           if ( this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
             const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( simpleDiffusers[ 0 ] );
             const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
-            descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossing the membrane, ${directionDescriptionString}` );
+            descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossing membrane, ${directionDescriptionString}` );
           }
         }
         else {
-          descriptionParts.push( 'Multiple solutes crossing the membrane' );
+          descriptionParts.push( 'Multiple solutes crossing' );
         }
       }
     }
@@ -546,9 +547,9 @@ export default class MembraneTransportDescriber {
         this.model.insideSoluteCountProperties[ soluteType ].value
       );
 
-      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside.
+      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside. TODO: replace soluteType with brief solute name, see https://github.com/phetsims/membrane-transport/issues/323
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
-        changedSteadyStates.push( `${soluteType} crossing steadily in both directions, now roughly equal` );
+        changedSteadyStates.push( `${soluteType} crossing steadily in both directions, amounts each side roughly equal` );
       }
 
       this.previousSteadyStateMap[ soluteType ] = isSteadyState;
@@ -616,26 +617,27 @@ export default class MembraneTransportDescriber {
     const percentOutward = crossedToOutside / total;
     const percentInward = crossedToInside / total;
 
-    if ( percentOutward === 1 ) {
+    if ( Math.abs( percentOutward - percentInward ) <= 0.3 ) {
+      // 0 - 20% difference - in this case the solute is considered to be in steady state
+      descriptor = 'inBothDirections';
+    }
+    if ( percentOutward === 0.95 ) {
       // 100% outward
       descriptor = 'toOutside';
     }
-    if ( percentInward === 1 ) {
+    if ( percentInward === 0.95 ) {
       // 100% inward
       descriptor = 'toInside';
     }
-    if ( percentOutward >= 0.61 ) {
+    if ( percentOutward >= 0.6 ) {
       // >= 0.61 outward
       descriptor = 'mostlyToOutside';
     }
-    if ( percentInward >= 0.61 ) {
+    if ( percentInward >= 0.6 ) {
       // >= 0.61 inward
       descriptor = 'mostlyToInside';
     }
-    if ( Math.abs( percentOutward - percentInward ) <= 0.10 ) {
-      // 0 - 10% difference - in this case the solute is considered to be in steady state
-      descriptor = 'inBothDirections';
-    }
+
 
     return descriptor;
   }
@@ -643,9 +645,12 @@ export default class MembraneTransportDescriber {
   public static getSoluteComparisonDescriptor( outsideAmount: number, insideAmount: number ): SoluteComparisonDescriptor {
 
     // Thresholds describing the ratio of solute counts inside and outside.
-    const MANY_MORE = 2.09;
+    const MANY_MANY_MORE = 5.0;
+    const MANY_MORE = 2.1;
     const ABOUT_TWICE = 1.9;
-    const SOME_MORE = 1.3;
+    const A_LOT = 1.7;
+    const SOME_MORE = 1.5;
+    const LITTLE_BIT = 1.2;
     const ROUGHLY_EQUAL = 1;
 
     // These could be dividing by zero, but it is handled in the table below.
@@ -659,15 +664,22 @@ export default class MembraneTransportDescriber {
            ( outsideAmount === insideAmount ) ? 'equal' :
 
              // More outside than inside
+
+           outsideToInside >= MANY_MANY_MORE ? 'manyManyMoreOutside' :
            outsideToInside >= MANY_MORE ? 'manyMoreOutside' :
            outsideToInside >= ABOUT_TWICE ? 'aboutTwiceAsManyOutside' :
+           outsideToInside >= A_LOT ? 'alotMoreOutside' :
            outsideToInside >= SOME_MORE ? 'someMoreOutside' :
+           outsideToInside >= LITTLE_BIT ? 'littleBitMoreOutside' :
            outsideToInside > ROUGHLY_EQUAL ? 'roughlyEqualOutside' :
 
              // More inside than outside
+           insideToOutside >= MANY_MANY_MORE ? 'manyManyMoreInside' :
            insideToOutside >= MANY_MORE ? 'manyMoreInside' :
            insideToOutside >= ABOUT_TWICE ? 'aboutTwiceAsManyInside' :
+           insideToOutside >= A_LOT ? 'alotMoreInside' :
            insideToOutside >= SOME_MORE ? 'someMoreInside' :
+           insideToOutside >= LITTLE_BIT ? 'littleBitMoreInside' :
            insideToOutside > ROUGHLY_EQUAL ? 'roughlyEqualInside' :
            ( () => { throw new Error( 'Undescribed counts' ); } )(); // IIFE to throw error
   }
@@ -676,13 +688,13 @@ export default class MembraneTransportDescriber {
     const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
     return count === 0 ? 'none' :
            count <= 3 ? 'few' :
-           countAsFraction <= 0.10 ? 'some' :
-           countAsFraction <= 0.25 ? 'smallAmount' :
-           countAsFraction <= 0.40 ? 'several' :
-           countAsFraction <= 0.60 ? 'many' :
-           countAsFraction <= 0.80 ? 'largeAmount' :
-           countAsFraction < 1 ? 'hugeAmount' :
-           'maxAmount';
+           countAsFraction <= 0.10 ? 'some' : // = 10% of 300 = 30 solutes
+           countAsFraction <= 0.25 ? 'smallAmount' : // = 25% of 300 = 75 solutes
+           countAsFraction <= 0.40 ? 'several' : // = 40% of 300 = 120 solutes
+           countAsFraction <= 0.60 ? 'many' : // = 60% of 300 = 180 solutes
+           countAsFraction <= 0.80 ? 'largeAmount' : // = 80% of 300 = 240 solutes
+           countAsFraction < 1 ? 'hugeAmount' : // = up to 300 solutes
+           'maxAmount'; // = 300 solutes, the maximum amount
 
   }
 
