@@ -24,6 +24,7 @@ import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import Particle from '../model/Particle.js';
+import MoveToTargetMode from '../model/particleModes/MoveToTargetMode.js';
 import WaitingInSodiumPotassiumPumpMode from '../model/particleModes/WaitingInSodiumPotassiumPumpMode.js';
 import SoluteType from '../model/SoluteType.js';
 import createParticleNode from './particles/createParticleNode.js';
@@ -200,7 +201,75 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       }
 
       context.stroke();
+
+      // Draw MoveToTargetMode waypoints for debugging
+      this.drawMoveToTargetWaypoints( context );
     }
+  }
+
+  /**
+   * Draw waypoints for particles in MoveToTargetMode for debugging visualization
+   */
+  private drawMoveToTargetWaypoints( context: CanvasRenderingContext2D ): void {
+    this.model.solutes.forEach( solute => {
+      if ( solute.mode instanceof MoveToTargetMode ) {
+        const mode = solute.mode;
+        
+        // Draw start position in red
+        if ( mode.startPosition ) {
+          this.drawWaypoint( context, mode.startPosition, 'red', 3 );
+        }
+        
+        // Draw checkpoint in green
+        if ( mode.checkpoint ) {
+          this.drawWaypoint( context, mode.checkpoint, 'green', 3 );
+        }
+        
+        // Draw target position in blue
+        if ( mode.targetPosition ) {
+          this.drawWaypoint( context, mode.targetPosition, 'blue', 3 );
+        }
+        
+        // Draw a line from particle current position to what it's currently targeting
+        // This will show us if the particle is actually moving toward the checkpoint or skipping it
+        if ( mode.startPosition && mode.checkpoint && mode.targetPosition ) {
+          // Use the actual checkpoint status from the mode
+          const currentTarget = mode.hasReachedCheckpointPublic ? mode.targetPosition : mode.checkpoint;
+          
+          // Draw thick yellow line from particle to its current target
+          this.drawWaypointLine( context, solute.position, currentTarget, 'rgba(255, 255, 0, 0.8)' );
+          
+          // Draw connecting lines for the planned path
+          this.drawWaypointLine( context, mode.startPosition, mode.checkpoint, 'rgba(255, 0, 0, 0.3)' );
+          this.drawWaypointLine( context, mode.checkpoint, mode.targetPosition, 'rgba(0, 0, 255, 0.3)' );
+        }
+      }
+    } );
+  }
+
+  /**
+   * Draw a single waypoint marker
+   */
+  private drawWaypoint( context: CanvasRenderingContext2D, position: Vector2, color: string, radius: number ): void {
+    const viewX = this.modelViewTransform.modelToViewX( position.x );
+    const viewY = this.modelViewTransform.modelToViewY( position.y );
+    
+    context.fillStyle = color;
+    context.beginPath();
+    context.arc( viewX, viewY, radius, 0, 2 * Math.PI );
+    context.fill();
+  }
+
+  /**
+   * Draw a line between two waypoints
+   */
+  private drawWaypointLine( context: CanvasRenderingContext2D, start: Vector2, end: Vector2, color: string ): void {
+    context.strokeStyle = color;
+    context.lineWidth = 1;
+    context.beginPath();
+    this.moveTo( context, start.x, start.y );
+    this.lineTo( context, end.x, end.y );
+    context.stroke();
   }
 
 
