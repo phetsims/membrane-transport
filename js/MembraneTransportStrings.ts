@@ -213,6 +213,9 @@ type StringsType = {
       'barChart': {
         'accessibleNameWithNoParticlesStringProperty': LocalizedStringProperty;
         'accessibleNameWithParticlesStringProperty': LocalizedStringProperty;
+        'glucoseMetabolismStringProperty': LocalizedStringProperty;
+        'accessibleNameWithParticlesAndGlucoseMetabolismStringProperty': LocalizedStringProperty;
+        'accessibleNameWithNoParticlesAndGlucoseMetabolismStringProperty': LocalizedStringProperty;
         'crossingStringProperty': LocalizedStringProperty;
       }
     };

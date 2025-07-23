@@ -348,6 +348,9 @@ a11y:
                                        [hugeAmount] huge amount
                                       *[maxAmount] max amount
                                      } inside.
+      glucoseMetabolism:             Glucose disappears from inside as it is metabolized by the cell.
+      accessibleNameWithParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
+      accessibleNameWithNoParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
       crossing:                      |-
                                      { $crossing ->
                                        *[none] no crossings

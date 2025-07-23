@@ -27,6 +27,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
@@ -73,10 +74,31 @@ export default class SoluteBarChartNode extends Node {
       soluteType: soluteType
     } );
 
-    const accessibleNameProperty = new DerivedProperty( [ outsideSoluteCountProperty, insideSoluteCountProperty, accessibleNameWithParticlesProperty, accessibleNameWithNoParticlesProperty ],
-      ( outsideSoluteCount, insideSoluteCount, accessibleNameWithParticles, accessibleNameNone ) => {
-        if ( outsideSoluteCount === 0 && insideSoluteCount === 0 ) {
+    const accessibleNameWithParticlesAndGlucoseMetabolismProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticlesAndGlucoseMetabolism.createProperty( {
+      soluteType: soluteType,
+      amount: soluteDifferenceProperty,
+      direction: crossingProperty,
+      outsideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( outsideSoluteCountProperty ),
+      insideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( insideSoluteCountProperty )
+    } );
+
+    const accessibleNameWithNoParticlesAndGlucoseMetabolismProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticlesAndGlucoseMetabolism.createProperty( {
+      soluteType: soluteType
+    } );
+
+    const accessibleNameProperty = new DerivedProperty( [ outsideSoluteCountProperty, insideSoluteCountProperty, accessibleNameWithParticlesProperty, accessibleNameWithNoParticlesProperty, accessibleNameWithParticlesAndGlucoseMetabolismProperty, accessibleNameWithNoParticlesAndGlucoseMetabolismProperty, MembraneTransportPreferences.instance.glucoseMetabolismProperty ],
+      ( outsideSoluteCount, insideSoluteCount, accessibleNameWithParticles, accessibleNameNone, accessibleNameWithParticlesAndGlucoseMetabolism, accessibleNameWithNoParticlesAndGlucoseMetabolism, glucoseMetabolism ) => {
+        const hasNoParticles = outsideSoluteCount === 0 && insideSoluteCount === 0;
+        const isGlucoseWithMetabolism = soluteType === 'glucose' && glucoseMetabolism;
+
+        if ( hasNoParticles && isGlucoseWithMetabolism ) {
+          return accessibleNameWithNoParticlesAndGlucoseMetabolism;
+        }
+        else if ( hasNoParticles ) {
           return accessibleNameNone;
+        }
+        else if ( isGlucoseWithMetabolism ) {
+          return accessibleNameWithParticlesAndGlucoseMetabolism;
         }
         else {
           return accessibleNameWithParticles;
