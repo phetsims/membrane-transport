@@ -110,13 +110,49 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
     }
   }
 
-  public override toStateObject(): IntentionalAny {
-    return {
+  /**
+   * Helper method for subclasses to create their state objects by combining base state with additional properties.
+   * @param additionalProperties - Additional properties specific to the subclass
+   * @returns Combined state object
+   */
+  protected createStateObject( additionalProperties: IntentionalAny ): IntentionalAny {
+    const baseState = {
       type: this.type,
       startPosition: { x: this.startPosition.x, y: this.startPosition.y },
       checkpoint: { x: this.checkpoint.x, y: this.checkpoint.y },
       targetPosition: { x: this.targetPosition.x, y: this.targetPosition.y },
       hasReachedCheckpoint: this.hasReachedCheckpoint
+    };
+    // eslint-disable-next-line phet/no-object-spread-on-non-literals
+    return { ...baseState, ...additionalProperties };
+  }
+
+  /**
+   * Static helper method to create Vector2 objects from serialized state.
+   * @param vectorState - Serialized vector with x and y properties
+   * @returns New Vector2 instance
+   */
+  protected static createVector2FromState( vectorState: { x: number; y: number } ): Vector2 {
+    return new Vector2( vectorState.x, vectorState.y );
+  }
+
+  /**
+   * Helper method to create movement positions for a particle.
+   * @param particle - The particle that will be moving
+   * @param targetPosition - The final target position
+   * @returns Object containing startPosition, checkpoint, and targetPosition
+   */
+  public static createMovementPositions( particle: Particle, targetPosition: Vector2 ): {
+    startPosition: Vector2;
+    checkpoint: Vector2;
+    targetPosition: Vector2;
+  } {
+    const startPosition = particle.position.copy();
+    const checkpoint = MoveToTargetMode.calculateIntermediateCheckpoint( startPosition, targetPosition );
+    return {
+      startPosition: startPosition,
+      checkpoint: checkpoint,
+      targetPosition: targetPosition
     };
   }
 }

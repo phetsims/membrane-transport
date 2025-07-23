@@ -31,17 +31,11 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
   }
 
   public override toStateObject(): IntentionalAny {
-    const parentState = super.toStateObject();
-    return {
-      type: parentState.type,
-      startPosition: parentState.startPosition,
-      checkpoint: parentState.checkpoint,
-      targetPosition: parentState.targetPosition,
-      hasReachedCheckpoint: parentState.hasReachedCheckpoint,
+    return this.createStateObject( {
       slot: this.slot.getIndex(),
       sodiumPotassiumPump: true,
       site: this.site
-    };
+    } );
   }
 
   protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
@@ -84,9 +78,9 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       slot,
       slot.transportProteinProperty.value as SodiumPotassiumPump,
       stateObject.site,
-      new Vector2( stateObject.startPosition.x, stateObject.startPosition.y ),
-      new Vector2( stateObject.checkpoint.x, stateObject.checkpoint.y ),
-      new Vector2( stateObject.targetPosition.x, stateObject.targetPosition.y ),
+      MoveToTargetMode.createVector2FromState( stateObject.startPosition ),
+      MoveToTargetMode.createVector2FromState( stateObject.checkpoint ),
+      MoveToTargetMode.createVector2FromState( stateObject.targetPosition ),
       stateObject.hasReachedCheckpoint
     );
   }
