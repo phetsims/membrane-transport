@@ -94,6 +94,7 @@ type StringsType = {
         'ligandsStringProperty': LocalizedStringProperty;
         'atpReactingStringProperty': LocalizedStringProperty;
         'membranePotentialStringProperty': LocalizedStringProperty;
+        'glucoseMetabolismStringProperty': LocalizedStringProperty;
       };
       'interactionHintStringProperty': LocalizedStringProperty;
       'interactionHintWithTransportProteinsStringProperty': LocalizedStringProperty;

@@ -14,6 +14,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 
 export default class MembraneTransportScreenSummaryContent extends ScreenSummaryContent {
 
@@ -59,6 +60,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
           membranePotential: model.membranePotentialProperty
         } ),
         visibleProperty: new BooleanProperty( getFeatureSetHasVoltages( model.featureSet ) )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.glucoseMetabolismStringProperty,
+        visibleProperty: MembraneTransportPreferences.instance.glucoseMetabolismProperty
       }
     ], {
       leadingParagraphStringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.leadingParagraphStringProperty,
