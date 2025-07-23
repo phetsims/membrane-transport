@@ -220,9 +220,20 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
           this.drawWaypoint( context, mode.startPosition, 'red', 3 );
         }
         
-        // Draw checkpoint in green
-        if ( mode.checkpoint ) {
-          this.drawWaypoint( context, mode.checkpoint, 'green', 3 );
+        // Draw checkpoints with different colors/sizes
+        if ( mode.checkpoints && mode.checkpoints.length > 0 ) {
+          // First checkpoint in green
+          if ( mode.checkpoints[ 0 ] ) {
+            this.drawWaypoint( context, mode.checkpoints[ 0 ], 'green', 3 );
+          }
+          // Second checkpoint in orange
+          if ( mode.checkpoints[ 1 ] ) {
+            this.drawWaypoint( context, mode.checkpoints[ 1 ], 'orange', 3 );
+          }
+          // Third checkpoint in purple (just outside protein mouth)
+          if ( mode.checkpoints[ 2 ] ) {
+            this.drawWaypoint( context, mode.checkpoints[ 2 ], 'purple', 4 );
+          }
         }
         
         // Draw target position in blue
@@ -231,17 +242,28 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
         }
         
         // Draw a line from particle current position to what it's currently targeting
-        // This will show us if the particle is actually moving toward the checkpoint or skipping it
-        if ( mode.startPosition && mode.checkpoint && mode.targetPosition ) {
-          // Use the actual checkpoint status from the mode
-          const currentTarget = mode.hasReachedCheckpointPublic ? mode.targetPosition : mode.checkpoint;
+        if ( mode.startPosition && mode.checkpoints && mode.targetPosition ) {
+          // Get the current target from the mode
+          const currentTarget = mode.currentTargetPublic;
           
           // Draw thick yellow line from particle to its current target
           this.drawWaypointLine( context, solute.position, currentTarget, 'rgba(255, 255, 0, 0.8)' );
           
           // Draw connecting lines for the planned path
-          this.drawWaypointLine( context, mode.startPosition, mode.checkpoint, 'rgba(255, 0, 0, 0.3)' );
-          this.drawWaypointLine( context, mode.checkpoint, mode.targetPosition, 'rgba(0, 0, 255, 0.3)' );
+          // From start to first checkpoint
+          if ( mode.checkpoints[ 0 ] ) {
+            this.drawWaypointLine( context, mode.startPosition, mode.checkpoints[ 0 ], 'rgba(255, 0, 0, 0.3)' );
+          }
+          // Between checkpoints
+          for ( let i = 0; i < mode.checkpoints.length - 1; i++ ) {
+            if ( mode.checkpoints[ i ] && mode.checkpoints[ i + 1 ] ) {
+              this.drawWaypointLine( context, mode.checkpoints[ i ], mode.checkpoints[ i + 1 ], 'rgba(128, 0, 255, 0.3)' );
+            }
+          }
+          // From last checkpoint to target
+          if ( mode.checkpoints.length > 0 && mode.checkpoints[ mode.checkpoints.length - 1 ] ) {
+            this.drawWaypointLine( context, mode.checkpoints[ mode.checkpoints.length - 1 ], mode.targetPosition, 'rgba(0, 0, 255, 0.3)' );
+          }
         }
       }
     } );

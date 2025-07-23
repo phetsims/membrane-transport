@@ -19,21 +19,28 @@ import BaseParticleMode, { ParticleModeType } from './BaseParticleMode.js';
 
 export default abstract class MoveToTargetMode extends BaseParticleMode {
 
-  // Track whether the particle has reached its intermediate checkpoint
-  private hasReachedCheckpoint = false;
+  // Track which checkpoint the particle is currently targeting (0-2 for checkpoints, 3 for final target)
+  private currentCheckpointIndex = 0;
 
-  // Getter to expose checkpoint status for debugging
-  public get hasReachedCheckpointPublic(): boolean {
-    return this.hasReachedCheckpoint;
+  // Getters to expose checkpoint status for debugging
+  public get currentCheckpointIndexPublic(): number {
+    return this.currentCheckpointIndex;
+  }
+
+  // Get the checkpoint we're currently targeting (or target if all checkpoints reached)
+  public get currentTargetPublic(): Vector2 {
+    return this.currentCheckpointIndex < this.checkpoints.length ?
+           this.checkpoints[ this.currentCheckpointIndex ] :
+           this.targetPosition;
   }
 
   protected constructor( type: ParticleModeType,
                          public readonly startPosition: Vector2,
-                         public readonly checkpoint: Vector2,
+                         public readonly checkpoints: Vector2[],
                          public readonly targetPosition: Vector2,
-                         hasReachedCheckpoint = false ) {
+                         currentCheckpointIndex = 0 ) {
     super( type );
-    this.hasReachedCheckpoint = hasReachedCheckpoint;
+    this.currentCheckpointIndex = currentCheckpointIndex;
   }
 
   /**
@@ -53,38 +60,76 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
   protected abstract onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void;
 
   /**
-   * Calculate an intermediate checkpoint that deviates from the direct path by up to +/- 30 degrees.
-   * This simulates the Brownian motion seen in RandomWalkMode.
-   * The checkpoint is always chosen to move away from the membrane.
+   * Calculate three intermediate checkpoints between start and target.
+   * The first two simulate Brownian motion, the third is positioned just outside the protein mouth.
+   *
    * @param start - The starting position
    * @param target - The final target position
-   * @returns The intermediate checkpoint position
+   * @param isProteinTarget - Whether the target is a protein binding site
+   * @param particleType - The type of particle (used for special handling like ATP)
+   * @returns Array of three checkpoint positions
    */
-  public static calculateIntermediateCheckpoint( start: Vector2, target: Vector2 ): Vector2 {
-
-    const midpoint = start.average( target );
+  public static calculateCheckpoints( start: Vector2, target: Vector2, isProteinTarget: boolean, particleType?: string ): Vector2[] {
+    const checkpoints: Vector2[] = [];
 
     // Determine which side of the membrane we're on (positive y is outside cell)
     const isOutsideCell = start.y > 0;
 
-    // Calculate the deviation distance (proportional to the direct path length)
-    const deviationDistance = 5;
+    // ATP particles need to stay further from the membrane to avoid permeation
+    const isATP = particleType === 'atp';
+    const membraneAvoidanceMultiplier = isATP ? 10 : 1.0;
 
-    // Create a deviation vector that always points away from the membrane
-    const deviationVector = new Vector2(
-      dotRandom.nextDoubleBetween( -2, 2 ), // Random x component
-      isOutsideCell ? 2 : -2  // y component always away from membrane
-    ).normalized().timesScalar( deviationDistance );
+    // First checkpoint at ~25% of the way
+    const firstPoint = start.blend( target, 0.25 );
+    const deviationDistance1 = 4;
+    const deviationVector1 = new Vector2(
+      dotRandom.nextDoubleBetween( -2, 2 ),
+      ( isOutsideCell ? 1.5 : -1.5 ) * membraneAvoidanceMultiplier
+    ).normalized().timesScalar( deviationDistance1 );
+    checkpoints.push( firstPoint.plus( deviationVector1 ) );
 
-    // Apply the deviation to the midpoint
-    return midpoint.plus( deviationVector );
+    // Second checkpoint at ~50% of the way
+    const secondPoint = start.blend( target, 0.5 );
+    const deviationDistance2 = 5;
+    const deviationVector2 = new Vector2(
+      dotRandom.nextDoubleBetween( -2, 2 ),
+      ( isOutsideCell ? 2 : -2 ) * membraneAvoidanceMultiplier
+    ).normalized().timesScalar( deviationDistance2 );
+    checkpoints.push( secondPoint.plus( deviationVector2 ) );
+
+    // Third checkpoint - just outside the protein mouth if targeting a protein
+    if ( isProteinTarget ) {
+      // Position it just outside the membrane at the target's x coordinate with some randomness
+      // ATP particles need extra distance from the membrane to avoid permeation
+      const baseDistance = 8;
+      const atpExtraDistance = isATP ? 20 : 0;
+      const membraneEdgeY = isOutsideCell ?
+                            MembraneTransportConstants.MEMBRANE_BOUNDS.maxY + baseDistance + atpExtraDistance :
+                            MembraneTransportConstants.MEMBRANE_BOUNDS.minY - baseDistance - atpExtraDistance;
+      const randomXOffset = dotRandom.nextDoubleBetween( -10, 10 );
+      checkpoints.push( new Vector2( target.x + randomXOffset, membraneEdgeY ) );
+    }
+    else {
+      // For non-protein targets, use a point at ~75% of the way
+      const thirdPoint = start.blend( target, 0.75 );
+      const deviationDistance3 = 3;
+      const deviationVector3 = new Vector2(
+        dotRandom.nextDoubleBetween( -1.5, 1.5 ),
+        isOutsideCell ? 1 : -1
+      ).normalized().timesScalar( deviationDistance3 );
+      checkpoints.push( thirdPoint.plus( deviationVector3 ) );
+    }
+
+    return checkpoints;
   }
 
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
 
-    // Determine which target we're moving toward (checkpoint or final target)
-    const currentTarget = this.hasReachedCheckpoint ? this.targetPosition : this.checkpoint;
+    // Determine which target we're moving toward
+    const currentTarget = this.currentCheckpointIndex < this.checkpoints.length ?
+                          this.checkpoints[ this.currentCheckpointIndex ] :
+                          this.targetPosition;
 
     const vector = currentTarget.minus( currentPosition );
     const distance = vector.magnitude;
@@ -92,9 +137,9 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
 
     if ( distance <= maxStepSize ) {
       // We can reach the current target in this step
-      if ( !this.hasReachedCheckpoint ) {
-        // Reached the checkpoint, now move toward the final target
-        this.hasReachedCheckpoint = true;
+      if ( this.currentCheckpointIndex < this.checkpoints.length ) {
+        // Reached a checkpoint, move to the next one
+        this.currentCheckpointIndex++;
         particle.position.set( currentTarget );
       }
       else {
@@ -119,9 +164,9 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
     const baseState = {
       type: this.type,
       startPosition: { x: this.startPosition.x, y: this.startPosition.y },
-      checkpoint: { x: this.checkpoint.x, y: this.checkpoint.y },
+      checkpoints: this.checkpoints.map( checkpoint => ( { x: checkpoint.x, y: checkpoint.y } ) ),
       targetPosition: { x: this.targetPosition.x, y: this.targetPosition.y },
-      hasReachedCheckpoint: this.hasReachedCheckpoint
+      currentCheckpointIndex: this.currentCheckpointIndex
     };
     // eslint-disable-next-line phet/no-object-spread-on-non-literals
     return { ...baseState, ...additionalProperties };
@@ -140,20 +185,30 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
    * Helper method to create movement positions for a particle.
    * @param particle - The particle that will be moving
    * @param targetPosition - The final target position
-   * @returns Object containing startPosition, checkpoint, and targetPosition
+   * @param isProteinTarget - Whether the target is a protein binding site
+   * @returns Object containing startPosition, checkpoints array, and targetPosition
    */
-  public static createMovementPositions( particle: Particle, targetPosition: Vector2 ): {
+  public static createMovementPositions( particle: Particle, targetPosition: Vector2, isProteinTarget = false ): {
     startPosition: Vector2;
-    checkpoint: Vector2;
+    checkpoints: Vector2[];
     targetPosition: Vector2;
   } {
     const startPosition = particle.position.copy();
-    const checkpoint = MoveToTargetMode.calculateIntermediateCheckpoint( startPosition, targetPosition );
+    const checkpoints = MoveToTargetMode.calculateCheckpoints( startPosition, targetPosition, isProteinTarget, particle.type );
     return {
       startPosition: startPosition,
-      checkpoint: checkpoint,
+      checkpoints: checkpoints,
       targetPosition: targetPosition
     };
+  }
+
+  /**
+   * Static helper method to create Vector2 array from serialized state.
+   * @param checkpointsState - Serialized checkpoints array
+   * @returns Array of Vector2 instances
+   */
+  protected static createCheckpointsFromState( checkpointsState: Array<{ x: number; y: number }> ): Vector2[] {
+    return checkpointsState.map( checkpoint => new Vector2( checkpoint.x, checkpoint.y ) );
   }
 }
 

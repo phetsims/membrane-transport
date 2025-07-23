@@ -24,10 +24,10 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
                       public readonly sodiumPotassiumPump: SodiumPotassiumPump,
                       public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp' | 'potassium1' | 'potassium2',
                       startPosition: Vector2,
-                      checkpoint: Vector2,
+                      checkpoints: Vector2[],
                       targetPosition: Vector2,
-                      hasReachedCheckpoint = false ) {
-    super( 'moveToSodiumPotassiumPump', startPosition, checkpoint, targetPosition, hasReachedCheckpoint );
+                      currentCheckpointIndex = 0 ) {
+    super( 'moveToSodiumPotassiumPump', startPosition, checkpoints, targetPosition, currentCheckpointIndex );
   }
 
   public override toStateObject(): IntentionalAny {
@@ -79,9 +79,9 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       slot.transportProteinProperty.value as SodiumPotassiumPump,
       stateObject.site,
       MoveToTargetMode.createVector2FromState( stateObject.startPosition ),
-      MoveToTargetMode.createVector2FromState( stateObject.checkpoint ),
+      MoveToTargetMode.createCheckpointsFromState( stateObject.checkpoints ),
       MoveToTargetMode.createVector2FromState( stateObject.targetPosition ),
-      stateObject.hasReachedCheckpoint
+      stateObject.currentCheckpointIndex
     );
   }
 }

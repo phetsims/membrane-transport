@@ -19,8 +19,8 @@ import MoveToTargetMode from './MoveToTargetMode.js';
 
 export default class MoveToCenterOfChannelMode extends MoveToTargetMode {
 
-  public constructor( public readonly slot: Slot, startPosition: Vector2, checkpoint: Vector2, targetPosition: Vector2, hasReachedCheckpoint = false ) {
-    super( 'moveToCenterOfChannel', startPosition, checkpoint, targetPosition, hasReachedCheckpoint );
+  public constructor( public readonly slot: Slot, startPosition: Vector2, checkpoints: Vector2[], targetPosition: Vector2, currentCheckpointIndex = 0 ) {
+    super( 'moveToCenterOfChannel', startPosition, checkpoints, targetPosition, currentCheckpointIndex );
   }
 
   public override toStateObject(): IntentionalAny {
@@ -50,9 +50,9 @@ export default class MoveToCenterOfChannelMode extends MoveToTargetMode {
     return new MoveToCenterOfChannelMode(
       slot,
       MoveToTargetMode.createVector2FromState( stateObject.startPosition ),
-      MoveToTargetMode.createVector2FromState( stateObject.checkpoint ),
+      MoveToTargetMode.createCheckpointsFromState( stateObject.checkpoints ),
       MoveToTargetMode.createVector2FromState( stateObject.targetPosition ),
-      stateObject.hasReachedCheckpoint
+      stateObject.currentCheckpointIndex
     );
   }
 }

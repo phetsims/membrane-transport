@@ -360,8 +360,8 @@ export default class RandomWalkMode extends BaseParticleMode {
           if ( isLigandFree ) {
             const targetPosition = slot.transportProteinProperty.value instanceof LigandGatedChannel ?
               ( slot.transportProteinProperty.value ).getBindingPosition() : particle.position.copy();
-            const { startPosition, checkpoint, targetPosition: finalTarget } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-            particle.mode = new MoveToLigandBindingLocationMode( slot, startPosition, checkpoint, finalTarget );
+            const { startPosition, checkpoints, targetPosition: finalTarget } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+            particle.mode = new MoveToLigandBindingLocationMode( slot, startPosition, checkpoints, finalTarget );
             return true;
           }
         }
@@ -389,8 +389,8 @@ export default class RandomWalkMode extends BaseParticleMode {
         const mouthY = isOutsideCell ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY
                                      : MembraneTransportConstants.MEMBRANE_BOUNDS.minY;
         const targetPosition = new Vector2( slot.position, mouthY );
-        const { startPosition, checkpoint } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-        particle.mode = new MoveToCenterOfChannelMode( slot, startPosition, checkpoint, targetPosition );
+        const { startPosition, checkpoints } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+        particle.mode = new MoveToCenterOfChannelMode( slot, startPosition, checkpoints, targetPosition );
         return true;
       }
     }
@@ -427,8 +427,8 @@ export default class RandomWalkMode extends BaseParticleMode {
         if ( availableSites.length > 0 ) {
           const site = dotRandom.sample( availableSites );
           const targetPosition = transportProtein.getSitePosition( site );
-          const { startPosition, checkpoint } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-          particle.mode = new MoveToSodiumGlucoseTransporterMode( slot, transportProtein, site, startPosition, checkpoint, targetPosition );
+          const { startPosition, checkpoints } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+          particle.mode = new MoveToSodiumGlucoseTransporterMode( slot, transportProtein, site, startPosition, checkpoints, targetPosition );
           return true;
         }
       }
@@ -436,8 +436,8 @@ export default class RandomWalkMode extends BaseParticleMode {
 
         // Glucose can only use center site
         const targetPosition = transportProtein.getSitePosition( 'center' );
-        const { startPosition, checkpoint } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-        particle.mode = new MoveToSodiumGlucoseTransporterMode( slot, transportProtein, 'center', startPosition, checkpoint, targetPosition );
+        const { startPosition, checkpoints } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+        particle.mode = new MoveToSodiumGlucoseTransporterMode( slot, transportProtein, 'center', startPosition, checkpoints, targetPosition );
         return true;
       }
     }
@@ -469,8 +469,8 @@ export default class RandomWalkMode extends BaseParticleMode {
       if ( openSodiumSites.length > 0 ) {
         const site = dotRandom.sample( openSodiumSites );
         const targetPosition = transportProtein.getSitePosition( site );
-        const { startPosition, checkpoint } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-        particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, site, startPosition, checkpoint, targetPosition );
+        const { startPosition, checkpoints } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+        particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, site, startPosition, checkpoints, targetPosition );
         return true;
       }
     }
@@ -498,8 +498,8 @@ export default class RandomWalkMode extends BaseParticleMode {
     ) {
 
       const targetPosition = transportProtein.getSitePosition( 'atp' );
-      const { startPosition, checkpoint } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-      particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, 'atp', startPosition, checkpoint, targetPosition );
+      const { startPosition, checkpoints } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+      particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, 'atp', startPosition, checkpoints, targetPosition );
       return true;
     }
 
@@ -530,8 +530,8 @@ export default class RandomWalkMode extends BaseParticleMode {
       if ( openPotassiumSites.length > 0 ) {
         const site = dotRandom.sample( openPotassiumSites );
         const targetPosition = transportProtein.getSitePosition( site );
-        const { startPosition, checkpoint } = MoveToTargetMode.createMovementPositions( particle, targetPosition );
-        particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, site, startPosition, checkpoint, targetPosition );
+        const { startPosition, checkpoints } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
+        particle.mode = new MoveToSodiumPotassiumPumpMode( slot, transportProtein, site, startPosition, checkpoints, targetPosition );
         return true;
       }
     }
