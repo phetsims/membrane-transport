@@ -7,19 +7,19 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import SodiumGlucoseCotransporter from '../proteins/SodiumGlucoseCotransporter.js';
 import Slot from '../Slot.js';
-import BaseParticleMode from './BaseParticleMode.js';
+import MoveToTargetMode from './MoveToTargetMode.js';
 import WaitingInSodiumGlucoseCotransporterMode from './WaitingInSodiumGlucoseCotransporterMode.js';
 
-export default class MoveToSodiumGlucoseTransporterMode extends BaseParticleMode {
+export default class MoveToSodiumGlucoseTransporterMode extends MoveToTargetMode {
 
   public constructor( public readonly slot: Slot,
                       public readonly sodiumGlucoseCotransporter: SodiumGlucoseCotransporter,
@@ -36,30 +36,23 @@ export default class MoveToSodiumGlucoseTransporterMode extends BaseParticleMode
     };
   }
 
-  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
+  protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
+    return this.sodiumGlucoseCotransporter.getSitePosition( this.site );
+  }
+
+  protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
     affirm( particle.type === 'sodiumIon' || particle.type === 'glucose', 'Only sodium and glucose can move to the sodium glucose cotransporter' );
 
-    const currentPosition = particle.position.copy();
-    const targetPosition = this.sodiumGlucoseCotransporter.getSitePosition( this.site );
-    const vector = targetPosition.minus( currentPosition );
-    const direction = vector.normalized();
+    const newMode = new WaitingInSodiumGlucoseCotransporterMode(
+      this.slot,
+      this.sodiumGlucoseCotransporter,
+      this.site
+    );
+    particle.mode = newMode;
 
-    const maxStepSize = MembraneTransportConstants.TYPICAL_SPEED * dt;
-    particle.position.x += direction.x * maxStepSize;
-    particle.position.y += direction.y * maxStepSize;
+    particle.position.set( targetPosition );
 
-    if ( currentPosition.distance( targetPosition ) <= maxStepSize ) {
-      const newMode = new WaitingInSodiumGlucoseCotransporterMode(
-        this.slot,
-        this.sodiumGlucoseCotransporter,
-        this.site
-      );
-      particle.mode = newMode;
-
-      particle.position.set( targetPosition );
-
-      MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( particle.type, newMode.sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
-    }
+    MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( particle.type, newMode.sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): MoveToSodiumGlucoseTransporterMode {

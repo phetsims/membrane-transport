@@ -43,6 +43,19 @@ This project is developed as part of a PhET monorepo. You can follow import path
 - Line comments are preceded by a blank line
 - Import *.ts files as *.js in the import statements
 
+## Particle Mode System
+
+*   **Mode-Based Architecture:** Particles use a sophisticated mode system where each mode (subclass of `BaseParticleMode`) encapsulates specific behavior:
+    *   Movement modes like `MoveToTargetMode` (parent class for targeted movement)
+    *   `MoveToCenterOfChannelMode`, `MoveToLigandBindingLocationMode`, `MoveToSodiumPotassiumPumpMode`, `MoveToSodiumGlucoseTransporterMode` all share common movement logic
+    *   Each mode implements `step()` for frame updates and `toStateObject()` for serialization
+*   **Movement Pattern:** Common particle movement involves:
+    *   Calculating target position
+    *   Vector-based movement with normalized direction
+    *   Using `MembraneTransportConstants.TYPICAL_SPEED` for consistent motion
+    *   Detecting arrival when within one step of target
+*   **Mode Transitions:** Particles transition between modes based on specific conditions (e.g., reaching a target triggers binding or entering a channel)
+
 ## Key Features and Patterns
 
 *   **Component-Based Structure:** The application is composed of a hierarchy of components, each with its own model and view. This makes the code modular and easy to understand.
@@ -69,6 +82,7 @@ This project is developed as part of a PhET monorepo. You can follow import path
     *   Factor out repeated component creation logic into standalone functions.
     *   When many instances of similar UI elements exist, use alignment groups for consistent sizing.
     *   Interactive elements often use both mouse drag listeners and keyboard handlers.
+    *   When multiple classes share similar behavior (e.g., movement logic), create abstract parent classes with template methods rather than duplicating code.
 *   **Performance:**
     *   Use flat data structures for serialization.
     *   Design for lightweight models and views.
@@ -120,3 +134,5 @@ This project is developed as part of a PhET monorepo. You can follow import path
 *   **Focus on Accessibility:** The level of attention paid to accessibility is impressive. The `voicing` and `PDOM` features are particularly noteworthy.
 *   **Fluent Internationalization:** The use of a fluent API for internationalization is a nice touch. It makes the code more readable and easier to maintain.
 *   **`affirm`:** The use of a custom assertion library (`affirm`) is interesting. It seems to be used for runtime checks and to enforce invariants.
+*   **Particle Mode System:** The particle system uses an elegant state-machine pattern where each mode is a separate class. This avoids complex conditional logic and makes particle behavior modular and testable.
+*   **Normalized Movement:** Particle movement uses vector math with normalized directions, ensuring smooth movement at consistent speeds regardless of distance or direction.

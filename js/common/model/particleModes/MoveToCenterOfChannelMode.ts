@@ -7,16 +7,16 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import Slot from '../Slot.js';
-import BaseParticleMode from './BaseParticleMode.js';
 import EnteringTransportProteinMode from './EnteringTransportProteinMode.js';
+import MoveToTargetMode from './MoveToTargetMode.js';
 
-export default class MoveToCenterOfChannelMode extends BaseParticleMode {
+export default class MoveToCenterOfChannelMode extends MoveToTargetMode {
 
   public constructor( public readonly slot: Slot ) {
     super( 'moveToCenterOfChannel' );
@@ -29,19 +29,16 @@ export default class MoveToCenterOfChannelMode extends BaseParticleMode {
     };
   }
 
-  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
-    const currentPositionX = particle.position.x;
-    const targetPositionX = this.slot.position;
+  protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
+    // Move only in X direction, maintaining current Y position
+    return new Vector2( this.slot.position, particle.position.y );
+  }
 
-    const maxStepSize = MembraneTransportConstants.TYPICAL_SPEED * dt;
-    particle.position.x += Math.sign( targetPositionX - currentPositionX ) * maxStepSize;
-
-    if ( Math.abs( targetPositionX - currentPositionX ) <= maxStepSize ) {
-      particle.mode = new EnteringTransportProteinMode(
-        this.slot,
-        particle.position.y > 0 ? 'inward' : 'outward'
-      );
-    }
+  protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
+    particle.mode = new EnteringTransportProteinMode(
+      this.slot,
+      particle.position.y > 0 ? 'inward' : 'outward'
+    );
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): MoveToCenterOfChannelMode {
