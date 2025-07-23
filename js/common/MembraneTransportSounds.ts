@@ -200,18 +200,18 @@ const sodiumLowpassFilter = new BiquadFilterNode( phetAudioContext, {
 } );
 
 const sodiumBindingSoundClip = newSoundClip( naPlusAttach_mp3, {
-  initialOutputLevel: 0.8,
+  initialOutputLevel: 0.4,
   additionalAudioNodes: [
     sodiumLowpassFilter
   ]
 } );
-const potassiumBindingSoundClip = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.3 } );
+const potassiumBindingSoundClip = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.25 } );
 const glucoseActivateTransporterSoundClip = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
 const phosphateBindingSoundClip = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
 
-const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.3 } );
-const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.3 } );
+const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.2 } );
+const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.2 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
@@ -221,7 +221,7 @@ const genericCrossingSound = soluteCrossingGeneric_mp3;
 const potassiumCrossingSound = soluteCrossingPotassium_mp3;
 const sodiumCrossingSound = soluteCrossingSodium_mp3;
 
-const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.3 };
+const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.2 };
 
 const soluteCrossingGenericSounds = createPannedSoundSet( genericCrossingSound, baseSoundClipOptions );
 const soluteCrossingPotassiumSounds = createPannedSoundSet( potassiumCrossingSound, baseSoundClipOptions );

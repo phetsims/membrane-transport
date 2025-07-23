@@ -525,13 +525,13 @@
         "value": "{ $state ->\n   [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside\n   [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside\n\n   *[openToInside] 2 sodium and 1 glucose shuttled to inside\n}."
       },
       "accessibleNameMoving": {
-        "value": "{ a11y_transportProtein_accessibleObjectResponseMoving }, { $nameResponse }"
+        "value": "{ a11y_transportProtein_accessibleObjectResponseMoving }, above { $nameResponse }"
       },
       "accessibleObjectResponseMoving": {
-        "value": "Above slot { $slotIndex } of { $slotCount }"
+        "value": "Slot { $slotIndex } of { $slotCount }"
       },
       "empty": {
-        "value": "empty"
+        "value": "empty slot"
       },
       "briefName": {
         "value": "{ $type ->\n  [sodiumIonLeakageChannel]         Sodium-selective, Leakage\n  [potassiumIonLeakageChannel]      Potassium-selective, Leakage\n  [sodiumIonVoltageGatedChannel]    Sodium-selective, Voltage-Gated\n  [potassiumIonVoltageGatedChannel] Potassium-selective, Voltage-Gated\n  [sodiumIonLigandGatedChannel]     Sodium-selective, Ligand-Gated\n  [potassiumIonLigandGatedChannel]  Potassium-selective, Ligand-Gated\n  [sodiumPotassiumPump]             Sodium Potassium Pump\n *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter\n}"

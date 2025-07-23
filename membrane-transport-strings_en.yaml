@@ -461,11 +461,11 @@ a11y:
                                        }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.
-    accessibleNameMoving:              "{ a11y.transportProtein.accessibleObjectResponseMoving }, { $nameResponse }"
-    accessibleObjectResponseMoving:    Above slot { $slotIndex } of { $slotCount }
+    accessibleNameMoving:              "{ a11y.transportProtein.accessibleObjectResponseMoving }, above { $nameResponse }"
+    accessibleObjectResponseMoving:    Slot { $slotIndex } of { $slotCount }
 
     # Included in the accessibleName for the protein when it is above an empty slot.
-    empty:                             empty
+    empty:                             empty slot
 
     # Transport protein brief names, used reused in several in the simulation.
     briefName:                         |-
