@@ -9,6 +9,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
@@ -16,7 +17,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import SoluteType from '../model/SoluteType.js';
+import SoluteType, { PlottableSoluteTypes } from '../model/SoluteType.js';
 
 type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' |
   'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' |
@@ -389,12 +390,6 @@ export default class MembraneTransportDescriber {
     // In this implementation, the overall description is built from pieces of information.
     const descriptionParts: string[] = [];
 
-    // If oxygen or carbon dioxide cross the membrane, that information will be included as part of the description
-    // of active transport events.
-    const oxygenCrossed = this.didSoluteTypeCross( 'oxygen' );
-    const carbonDioxideCrossed = this.didSoluteTypeCross( 'carbonDioxide' );
-    const anySimpleDiffusion = oxygenCrossed || carbonDioxideCrossed;
-
     // Identify active transport events
     const sodiumPumped = queue.some( e => e.transportProteinType === 'sodiumPotassiumPump' && e.solute.soluteType === 'sodiumIon' );
     const potassiumPumped = queue.some( e => e.transportProteinType === 'sodiumPotassiumPump' && e.solute.soluteType === 'potassiumIon' );
@@ -402,24 +397,50 @@ export default class MembraneTransportDescriber {
     const anyActiveTransport = sodiumPumped || potassiumPumped || cotransported;
 
     // Identify simple diffusion events
-    const simpleDiffusers = _.uniq( queue.filter( e => e.transportProteinType === null ).map( e => e.solute.soluteType ) );
+    const simpleDiffusers = _.uniq( queue.filter( e => e.transportProteinType === null ).map( e => e.solute.soluteType ) ) as ( 'oxygen' | 'carbonDioxide' )[];
 
     // Identify facilitated diffusion events (that were not part of active transport)
     const facilitatedSolutes = _.uniq( queue.filter( e => {
       return ( e.transportProteinType?.includes( 'Leakage' ) || e.transportProteinType?.includes( 'Gated' ) ) &&
              !descriptionParts.some( part => part.toLowerCase().includes( e.solute.soluteType.toLowerCase() ) );
-    } ).map( e => e.solute.soluteType ) );
+    } ).map( e => e.solute.soluteType ) ) as Exclude<SoluteType, 'adp' | 'phosphate'>[];
 
     // Identify all solute types that crossed the membrane
-    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) );
+    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) ) as PlottableSoluteTypes[];
+
+    // If there is only one facilitated solute type, and that solute type is NOT in steady state and the comparison descriptor has changed,
+    // then we will describe that it is crossing the membrane and in what direction.
+    if ( facilitatedSolutes.length === 1 && this.shouldDescribeComparisons( facilitatedSolutes[ 0 ] ) ) {
+      const facilitatedSolute = facilitatedSolutes[ 0 ];
+      const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
+      const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
+      descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
+    }
+    else if ( simpleDiffusers.length === 1 && this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
+
+      // If there is only one simple diffusion type that has gone into a new comparison region that is not in steady state,
+      // we include a more sophisticated description of it
+      const soluteType = simpleDiffusers[ 0 ];
+      const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( soluteType );
+      const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
+      descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } )} crossing membrane, ${directionDescriptionString}` );
+    }
+    else {
+
+      // Many solutes are moving across so we have a general description of everything happening.
+      // TODO: Remove solutes that are being shuttled across, see 323
+      const solutesThatWeShouldDescribe = solutesThatCrossed.filter( soluteType => {
+        return this.shouldDescribeComparisons( soluteType );
+      } );
+      if ( solutesThatWeShouldDescribe.length > 0 ) {
+        const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.soluteBrief.format( {
+          soluteType: soluteType
+        } ) ).join( ', ' );
+        descriptionParts.push( `${soluteNames}, crossing the membrane` );
+      }
+    }
 
     if ( anyActiveTransport ) {
-
-      // When simple diffusion occurs alongside active transport, a summary statement is provided.
-      if ( anySimpleDiffusion ) {
-        descriptionParts.push( 'multiple solutes crossing' );
-      }
-
       if ( sodiumPumped && potassiumPumped ) {
         descriptionParts.push( 'sodium pumped outside and potassium pumped inside' );
       }
@@ -432,36 +453,6 @@ export default class MembraneTransportDescriber {
 
       if ( cotransported ) {
         descriptionParts.push( 'sodium and glucose shuttled inside' );
-      }
-    }
-
-    if ( facilitatedSolutes.length > 0 && facilitatedSolutes[ 0 ] !== 'adp' && facilitatedSolutes[ 0 ] !== 'phosphate' ) {
-      if ( facilitatedSolutes.length === 1 ) {
-        const facilitatedSolute = facilitatedSolutes[ 0 ];
-        if ( this.shouldDescribeComparisons( facilitatedSolute ) ) {
-          const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
-          const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
-          descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
-        }
-      }
-      else {
-        const soluteNames = facilitatedSolutes.filter( s => s !== 'adp' && s !== 'phosphate' ).map( s => MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: s } ) ).join( ' and ' );
-        descriptionParts.push( `${soluteNames} crossing through channels` );
-      }
-    }
-
-    if ( descriptionParts.length === 0 ) {
-      if ( simpleDiffusers.length > 0 && simpleDiffusers[ 0 ] !== 'adp' && simpleDiffusers[ 0 ] !== 'phosphate' ) {
-        if ( simpleDiffusers.length === 1 ) {
-          if ( this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
-            const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( simpleDiffusers[ 0 ] );
-            const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
-            descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: simpleDiffusers[ 0 ] } )} crossing membrane, ${directionDescriptionString}` );
-          }
-        }
-        else {
-          descriptionParts.push( 'Multiple solutes crossing' );
-        }
       }
     }
 
@@ -501,9 +492,9 @@ export default class MembraneTransportDescriber {
     );
     const previousComparison = this.previousSoluteComparisons[ soluteType ];
 
-    // If the solute is in steady state, don't describe the comparison because we want to hear that it is in steady state.
-    // and don't want to make it seem like it is changing.
-    const inSteadyState = this.isSteadyState( soluteType );
+    // If the solute is described as being in steady state, don't describe the comparison because that makes it
+    // seem like it is changing.
+    const inSteadyState = this.previousSteadyStateMap[ soluteType ];
 
     return ( currentComparison !== previousComparison ) && !inSteadyState;
   }
@@ -531,6 +522,17 @@ export default class MembraneTransportDescriber {
           changedComparisons.push( comparisonString );
         }
       }
+
+      const isRoughlyEqual = this.areSoluteTypeCountsRoughlyEqual( soluteType );
+      const wasPreviouslyRoughlyEqual = this.previousSoluteComparisons[ soluteType ] === 'roughlyEqualInside' ||
+                                        this.previousSoluteComparisons[ soluteType ] === 'roughlyEqualOutside' ||
+                                        this.previousSoluteComparisons[ soluteType ] === 'equal';
+
+      // If we were 'roughly equal' and we are no longer 'roughly equal', then we should be kicked out of steady state.
+      if ( wasPreviouslyRoughlyEqual && !isRoughlyEqual ) {
+        this.previousSteadyStateMap[ soluteType ] = false;
+      }
+
       this.previousSoluteComparisons[ soluteType ] = comparison;
     } );
     return changedComparisons.join( ', ' );
@@ -541,19 +543,17 @@ export default class MembraneTransportDescriber {
 
     solutesThatCrossed.forEach( soluteType => {
       const isSteadyState = this.isSteadyState( soluteType );
-      const isRoughlyEqual = MembraneTransportDescriber.isRoughlyEqual(
-        this.model.outsideSoluteCountProperties[ soluteType ].value,
-        this.model.insideSoluteCountProperties[ soluteType ].value
-      );
-
-      console.log( 'soluteType: ', soluteType, ' isSteadyState: ', isSteadyState, ' isRoughlyEqual: ', isRoughlyEqual );
+      const isRoughlyEqual = this.areSoluteTypeCountsRoughlyEqual( soluteType );
 
       // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside. TODO: replace soluteType with brief solute name, see https://github.com/phetsims/membrane-transport/issues/323
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
         changedSteadyStates.push( `${soluteType} crossing steadily in both directions, amounts each side roughly equal` );
       }
 
-      this.previousSteadyStateMap[ soluteType ] = isSteadyState;
+      // Once we enter steady state, we are not going to leave steady state until we are out of "roughly equal" amounts.
+      if ( isSteadyState ) {
+        this.previousSteadyStateMap[ soluteType ] = isSteadyState;
+      }
     } );
 
     return changedSteadyStates.join( ', ' );
@@ -578,9 +578,14 @@ export default class MembraneTransportDescriber {
   /**
    * Returns true when the outside and inside counts are roughly equal, according to getSoluteComparisonDescriptor.
    */
-  private static isRoughlyEqual( outsideCount: number, insideCount: number ): boolean {
-    return MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount ) === 'roughlyEqualInside' ||
-           MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount ) === 'roughlyEqualOutside';
+  private areSoluteTypeCountsRoughlyEqual( soluteType: SoluteType ): boolean {
+    const outsideCount = this.model.outsideSoluteCountProperties[ soluteType ].value;
+    const insideCount = this.model.insideSoluteCountProperties[ soluteType ].value;
+    const descriptor = MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount );
+
+    return descriptor === 'equal' ||
+           descriptor === 'roughlyEqualInside' ||
+           descriptor === 'roughlyEqualOutside';
   }
 
   private getSoluteComparisonString( soluteType: SoluteType ): string {
