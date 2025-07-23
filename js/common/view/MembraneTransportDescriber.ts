@@ -434,7 +434,7 @@ export default class MembraneTransportDescriber {
         descriptionParts.push( 'sodium and glucose shuttled inside' );
       }
     }
-    
+
     if ( facilitatedSolutes.length > 0 && facilitatedSolutes[ 0 ] !== 'adp' && facilitatedSolutes[ 0 ] !== 'phosphate' ) {
       if ( facilitatedSolutes.length === 1 ) {
         const facilitatedSolute = facilitatedSolutes[ 0 ];
@@ -465,25 +465,24 @@ export default class MembraneTransportDescriber {
       }
     }
 
-    // If after all that, we still have nothing, don't say anything.
-    if ( descriptionParts.length === 0 ) {
-      return '';
-    }
-
     // Combine the event descriptions
     let response = descriptionParts.join( ' and ' );
 
-    // Capitalize the first letter
-    response = response.charAt( 0 ).toUpperCase() + response.slice( 1 );
+    // TODO: Capitalize the first letter, see https://github.com/phetsims/membrane-transport/issues/348
+    // response = response.charAt( 0 ).toUpperCase() + response.slice( 1 );
 
     const steadyStateString = this.getEnteredSteadyStateIfChanged( solutesThatCrossed );
 
     if ( steadyStateString ) {
+
+      // TODO: Fix the commas, see https://github.com/phetsims/membrane-transport/issues/348
       response += `, ${steadyStateString}`;
     }
     const comparisonString = this.getCompareSoluteCompartmentsIfChanged( solutesThatCrossed );
 
     if ( comparisonString ) {
+
+      // TODO: Fix the commas, see https://github.com/phetsims/membrane-transport/issues/348
       response += `, ${comparisonString}`;
     }
 
@@ -546,6 +545,8 @@ export default class MembraneTransportDescriber {
         this.model.outsideSoluteCountProperties[ soluteType ].value,
         this.model.insideSoluteCountProperties[ soluteType ].value
       );
+
+      console.log( 'soluteType: ', soluteType, ' isSteadyState: ', isSteadyState, ' isRoughlyEqual: ', isRoughlyEqual );
 
       // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside. TODO: replace soluteType with brief solute name, see https://github.com/phetsims/membrane-transport/issues/323
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
