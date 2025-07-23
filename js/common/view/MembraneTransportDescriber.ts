@@ -428,7 +428,7 @@ export default class MembraneTransportDescriber {
     else {
 
       // Many solutes are moving across so we have a general description of everything happening.
-      // TODO: Remove solutes that are being shuttled across, see 323
+      // TODO: Remove solutes that are being shuttled across, see #323
       const solutesThatWeShouldDescribe = solutesThatCrossed.filter( soluteType => {
         return this.shouldDescribeComparisons( soluteType );
       } );
