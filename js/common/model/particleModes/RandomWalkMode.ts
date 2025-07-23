@@ -197,7 +197,12 @@ export default class RandomWalkMode extends BaseParticleMode {
 
       // Check for passive diffusion first, might change mode
       const location = outsideOfCell ? 'outside' : 'inside';
-      if ( ( particle.type === 'oxygen' || particle.type === 'carbonDioxide' ) && dotRandom.nextDouble() < 0.90 && membraneTransportModel.checkGradientForCrossing( particle.type, location ) ) {
+      const isGasParticle = particle.type === 'oxygen' || particle.type === 'carbonDioxide';
+      if ( isGasParticle &&
+           dotRandom.nextDouble() < 0.90 &&
+           membraneTransportModel.checkGradientForCrossing( particle.type, location ) &&
+           this.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN
+      ) {
         const newMode = new PassiveDiffusionMode( outsideOfCell ? 'inward' : 'outward' );
         particle.mode = newMode;
 
