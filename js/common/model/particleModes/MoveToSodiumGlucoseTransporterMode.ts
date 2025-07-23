@@ -23,13 +23,22 @@ export default class MoveToSodiumGlucoseTransporterMode extends MoveToTargetMode
 
   public constructor( public readonly slot: Slot,
                       public readonly sodiumGlucoseCotransporter: SodiumGlucoseCotransporter,
-                      public readonly site: 'left' | 'center' | 'right' ) {
-    super( 'moveToSodiumGlucoseCotransporter' );
+                      public readonly site: 'left' | 'center' | 'right',
+                      startPosition: Vector2,
+                      checkpoint: Vector2,
+                      targetPosition: Vector2,
+                      hasReachedCheckpoint = false ) {
+    super( 'moveToSodiumGlucoseCotransporter', startPosition, checkpoint, targetPosition, hasReachedCheckpoint );
   }
 
   public override toStateObject(): IntentionalAny {
+    const parentState = super.toStateObject();
     return {
-      type: this.type,
+      type: parentState.type,
+      startPosition: parentState.startPosition,
+      checkpoint: parentState.checkpoint,
+      targetPosition: parentState.targetPosition,
+      hasReachedCheckpoint: parentState.hasReachedCheckpoint,
       slot: this.slot.getIndex(),
       sodiumGlucoseCotransporter: true,
       site: this.site
@@ -59,7 +68,11 @@ export default class MoveToSodiumGlucoseTransporterMode extends MoveToTargetMode
     return new MoveToSodiumGlucoseTransporterMode(
       slot,
       slot.transportProteinProperty.value as SodiumGlucoseCotransporter,
-      stateObject.site
+      stateObject.site,
+      new Vector2( stateObject.startPosition.x, stateObject.startPosition.y ),
+      new Vector2( stateObject.checkpoint.x, stateObject.checkpoint.y ),
+      new Vector2( stateObject.targetPosition.x, stateObject.targetPosition.y ),
+      stateObject.hasReachedCheckpoint
     );
   }
 }

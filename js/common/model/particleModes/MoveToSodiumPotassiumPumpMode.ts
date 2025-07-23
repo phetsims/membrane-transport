@@ -22,13 +22,22 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
 
   public constructor( public readonly slot: Slot,
                       public readonly sodiumPotassiumPump: SodiumPotassiumPump,
-                      public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp' | 'potassium1' | 'potassium2' ) {
-    super( 'moveToSodiumPotassiumPump' );
+                      public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp' | 'potassium1' | 'potassium2',
+                      startPosition: Vector2,
+                      checkpoint: Vector2,
+                      targetPosition: Vector2,
+                      hasReachedCheckpoint = false ) {
+    super( 'moveToSodiumPotassiumPump', startPosition, checkpoint, targetPosition, hasReachedCheckpoint );
   }
 
   public override toStateObject(): IntentionalAny {
+    const parentState = super.toStateObject();
     return {
-      type: this.type,
+      type: parentState.type,
+      startPosition: parentState.startPosition,
+      checkpoint: parentState.checkpoint,
+      targetPosition: parentState.targetPosition,
+      hasReachedCheckpoint: parentState.hasReachedCheckpoint,
       slot: this.slot.getIndex(),
       sodiumPotassiumPump: true,
       site: this.site
@@ -74,7 +83,11 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
     return new MoveToSodiumPotassiumPumpMode(
       slot,
       slot.transportProteinProperty.value as SodiumPotassiumPump,
-      stateObject.site
+      stateObject.site,
+      new Vector2( stateObject.startPosition.x, stateObject.startPosition.y ),
+      new Vector2( stateObject.checkpoint.x, stateObject.checkpoint.y ),
+      new Vector2( stateObject.targetPosition.x, stateObject.targetPosition.y ),
+      stateObject.hasReachedCheckpoint
     );
   }
 }

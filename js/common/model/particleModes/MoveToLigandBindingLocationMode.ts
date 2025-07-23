@@ -19,13 +19,18 @@ import MoveToTargetMode from './MoveToTargetMode.js';
 
 export default class MoveToLigandBindingLocationMode extends MoveToTargetMode {
 
-  public constructor( public readonly slot: Slot ) {
-    super( 'moveToLigandBindingLocation' );
+  public constructor( public readonly slot: Slot, startPosition: Vector2, checkpoint: Vector2, targetPosition: Vector2, hasReachedCheckpoint = false ) {
+    super( 'moveToLigandBindingLocation', startPosition, checkpoint, targetPosition, hasReachedCheckpoint );
   }
 
   public override toStateObject(): IntentionalAny {
+    const parentState = super.toStateObject();
     return {
-      type: this.type,
+      type: parentState.type,
+      startPosition: parentState.startPosition,
+      checkpoint: parentState.checkpoint,
+      targetPosition: parentState.targetPosition,
+      hasReachedCheckpoint: parentState.hasReachedCheckpoint,
       slot: this.slot.getIndex()
     };
   }
@@ -45,7 +50,13 @@ export default class MoveToLigandBindingLocationMode extends MoveToTargetMode {
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): MoveToLigandBindingLocationMode {
-    return new MoveToLigandBindingLocationMode( slot );
+    return new MoveToLigandBindingLocationMode(
+      slot,
+      new Vector2( stateObject.startPosition.x, stateObject.startPosition.y ),
+      new Vector2( stateObject.checkpoint.x, stateObject.checkpoint.y ),
+      new Vector2( stateObject.targetPosition.x, stateObject.targetPosition.y ),
+      stateObject.hasReachedCheckpoint
+    );
   }
 }
 

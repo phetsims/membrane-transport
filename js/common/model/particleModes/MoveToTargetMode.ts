@@ -10,6 +10,7 @@
 
 import dotRandom from '../../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
@@ -21,21 +22,18 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
   // Track whether the particle has reached its intermediate checkpoint
   private hasReachedCheckpoint = false;
 
-  // Store the initial position when the mode starts
-  public startPosition: Vector2 | null = null;
-
-  // Store the intermediate checkpoint position
-  public checkpoint: Vector2 | null = null;
-
-  public targetPosition: Vector2 | null = null;
-
   // Getter to expose checkpoint status for debugging
   public get hasReachedCheckpointPublic(): boolean {
     return this.hasReachedCheckpoint;
   }
 
-  protected constructor( type: ParticleModeType ) {
+  protected constructor( type: ParticleModeType,
+                         public readonly startPosition: Vector2,
+                         public readonly checkpoint: Vector2,
+                         public readonly targetPosition: Vector2,
+                         hasReachedCheckpoint = false ) {
     super( type );
+    this.hasReachedCheckpoint = hasReachedCheckpoint;
   }
 
   /**
@@ -62,7 +60,7 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
    * @param target - The final target position
    * @returns The intermediate checkpoint position
    */
-  private calculateIntermediateCheckpoint( start: Vector2, target: Vector2 ): Vector2 {
+  public static calculateIntermediateCheckpoint( start: Vector2, target: Vector2 ): Vector2 {
 
     const midpoint = start.average( target );
 
@@ -84,17 +82,9 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
 
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
-    const finalTargetPosition = this.getTargetPosition( particle, model );
-
-    // Initialize starting position and checkpoint on first step
-    if ( this.startPosition === null ) {
-      this.startPosition = currentPosition.copy();
-      this.checkpoint = this.calculateIntermediateCheckpoint( this.startPosition, finalTargetPosition );
-      this.targetPosition = finalTargetPosition;
-    }
 
     // Determine which target we're moving toward (checkpoint or final target)
-    const currentTarget = this.hasReachedCheckpoint ? finalTargetPosition : this.checkpoint!;
+    const currentTarget = this.hasReachedCheckpoint ? this.targetPosition : this.checkpoint;
 
     const vector = currentTarget.minus( currentPosition );
     const distance = vector.magnitude;
@@ -109,7 +99,7 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
       }
       else {
         // Reached the final target
-        this.onTargetReached( particle, model, finalTargetPosition );
+        this.onTargetReached( particle, model, this.targetPosition );
       }
     }
     else {
@@ -118,6 +108,16 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
       particle.position.x += direction.x * maxStepSize;
       particle.position.y += direction.y * maxStepSize;
     }
+  }
+
+  public override toStateObject(): IntentionalAny {
+    return {
+      type: this.type,
+      startPosition: { x: this.startPosition.x, y: this.startPosition.y },
+      checkpoint: { x: this.checkpoint.x, y: this.checkpoint.y },
+      targetPosition: { x: this.targetPosition.x, y: this.targetPosition.y },
+      hasReachedCheckpoint: this.hasReachedCheckpoint
+    };
   }
 }
 
