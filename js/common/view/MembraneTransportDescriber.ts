@@ -547,7 +547,7 @@ export default class MembraneTransportDescriber {
         this.model.insideSoluteCountProperties[ soluteType ].value
       );
 
-      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside. TODO: replace soluteType with brief solute name
+      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside. TODO: replace soluteType with brief solute name, see https://github.com/phetsims/membrane-transport/issues/323
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
         changedSteadyStates.push( `${soluteType} crossing steadily in both directions, amounts each side roughly equal` );
       }
