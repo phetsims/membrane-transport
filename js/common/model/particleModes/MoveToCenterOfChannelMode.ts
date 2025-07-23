@@ -10,6 +10,7 @@
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
+import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import Slot from '../Slot.js';
@@ -30,8 +31,13 @@ export default class MoveToCenterOfChannelMode extends MoveToTargetMode {
   }
 
   protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
-    // Move only in X direction, maintaining current Y position
-    return new Vector2( this.slot.position, particle.position.y );
+    // Determine the y-coordinate of the mouth of the protein based on which side the particle is on
+    const isOutsideCell = particle.position.y > 0;
+    const mouthY = isOutsideCell ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY
+                                 : MembraneTransportConstants.MEMBRANE_BOUNDS.minY;
+
+    // Move directly to the mouth of the protein at the membrane edge
+    return new Vector2( this.slot.position, mouthY );
   }
 
   protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
