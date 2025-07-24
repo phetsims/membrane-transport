@@ -9,7 +9,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
