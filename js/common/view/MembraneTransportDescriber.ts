@@ -635,7 +635,7 @@ export default class MembraneTransportDescriber {
     const percentOutward = crossedToOutside / total;
     const percentInward = crossedToInside / total;
 
-    if ( Math.abs( percentOutward - percentInward ) <= 0.3 ) {
+    if ( Math.abs( percentOutward - percentInward ) <= 0.5 ) {
       // 0 - 20% difference - in this case the solute is considered to be in steady state
       descriptor = 'inBothDirections';
     }
@@ -668,7 +668,7 @@ export default class MembraneTransportDescriber {
     const ABOUT_TWICE = 1.9;
     const A_LOT = 1.7;
     const SOME_MORE = 1.5;
-    const LITTLE_BIT = 1.2;
+    const LITTLE_BIT = 1.3;
     const ROUGHLY_EQUAL = 1;
 
     // These could be dividing by zero, but it is handled in the table below.
