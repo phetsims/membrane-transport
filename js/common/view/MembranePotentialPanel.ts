@@ -64,6 +64,7 @@ export default class MembranePotentialPanel extends Panel {
       tandem: membranePotentialControlTandem.createTandem( 'membranePotentialRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,
       spacing: 25,
+      touchAreaYDilation: 5,
       layoutOptions: {
 
         // A margin so that there is extra space between the radio button group and the arrow line
