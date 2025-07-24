@@ -9,6 +9,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
@@ -468,28 +469,32 @@ export default class MembraneTransportDescriber {
       }
     }
 
-    // Combine the event descriptions
-    let response = descriptionParts.join( ' and ' );
+    const responses: string[] = [];
 
-    // TODO: Capitalize the first letter, see https://github.com/phetsims/membrane-transport/issues/348
-    // response = response.charAt( 0 ).toUpperCase() + response.slice( 1 );
+    // First, Combine the event descriptions.
+    if ( descriptionParts.length > 0 ) {
+      const firstPart = descriptionParts.join( ' and ' );
+      const capitalized = firstPart.charAt( 0 ).toUpperCase() + firstPart.slice( 1 );
+      responses.push( capitalized );
+    }
 
+    // Add a description of all solutes that have entered steady state.
     const steadyStateString = this.getEnteredSteadyStateIfChanged( solutesThatCrossed );
-
-    if ( steadyStateString ) {
-
-      // TODO: Fix the commas, see https://github.com/phetsims/membrane-transport/issues/348
-      response += `, ${steadyStateString}`;
+    if ( steadyStateString && steadyStateString.trim().length > 0 ) {
+      responses.push( steadyStateString );
     }
+
+    // Add a description of all solute types that have changed their relative comparison amount.
     const comparisonString = this.getCompareSoluteCompartmentsIfChanged( solutesThatCrossed );
-
-    if ( comparisonString ) {
-
-      // TODO: Fix the commas, see https://github.com/phetsims/membrane-transport/issues/348
-      response += `, ${comparisonString}`;
+    if ( comparisonString && comparisonString.trim().length > 0 ) {
+      responses.push( comparisonString );
     }
 
-    return response;
+    // Join all fragments together.
+    const statement = responses.join( ', ' );
+
+    // Add a period at the end of the statement.
+    return statement ? `${statement}.` : '';
   }
 
   /**
@@ -557,9 +562,11 @@ export default class MembraneTransportDescriber {
       const isSteadyState = this.isSteadyState( soluteType );
       const isRoughlyEqual = this.areSoluteTypeCountsRoughlyEqual( soluteType );
 
-      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside. TODO: replace soluteType with brief solute name, see https://github.com/phetsims/membrane-transport/issues/323
+      // The steady-state description should only be included if there are ALSO equal counts of the solute inside and outside.
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
-        changedSteadyStates.push( `${soluteType} crossing steadily in both directions, amounts each side roughly equal` );
+
+        affirm( soluteType !== 'adp' && soluteType !== 'phosphate', 'adp cant cross the membrane, so it should not be described' );
+        changedSteadyStates.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } )} crossing steadily in both directions, amounts each side roughly equal` );
       }
 
       // Once we enter steady state, we are not going to leave steady state until we are out of "roughly equal" amounts.
