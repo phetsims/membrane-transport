@@ -398,6 +398,20 @@ export default class MembraneTransportDescriber {
     // Identify simple diffusion events
     const simpleDiffusers = _.uniq( queue.filter( e => e.transportProteinType === null ).map( e => e.solute.soluteType ) ) as ( 'oxygen' | 'carbonDioxide' )[];
 
+    // Returns true if a solute type is in active transport.
+    const soluteInActiveTransport = ( soluteType: SoluteType ): boolean => {
+      return ( ( soluteType === 'glucose' || soluteType === 'sodiumIon' ) && cotransported ) ||
+             ( soluteType === 'potassiumIon' && potassiumPumped ) ||
+             ( soluteType === 'sodiumIon' && sodiumPumped );
+    };
+
+    // A filter for solute types that removes solutes that are part of active transport and cannot be described becauase
+    // they haven't changed the counts enough inside and outside the cell. When a solute is in active transport,
+    // it will get a specific description later in the response.
+    const isSoluteDescribable = ( soluteType: SoluteType ): boolean => {
+      return !soluteInActiveTransport( soluteType ) && this.shouldDescribeComparisons( soluteType );
+    };
+
     // Identify facilitated diffusion events (that were not part of active transport)
     const facilitatedSolutes = _.uniq( queue.filter( e => {
       return ( e.transportProteinType?.includes( 'Leakage' ) || e.transportProteinType?.includes( 'Gated' ) ) &&
@@ -407,10 +421,12 @@ export default class MembraneTransportDescriber {
     // Identify all solute types that crossed the membrane
     const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) ) as PlottableSoluteTypes[];
 
+    const facilitatedSolutesThatWeShouldDescribe = facilitatedSolutes.filter( isSoluteDescribable );
+
     // If there is only one facilitated solute type, and that solute type is NOT in steady state and the comparison descriptor has changed,
     // then we will describe that it is crossing the membrane and in what direction.
-    if ( facilitatedSolutes.length === 1 && this.shouldDescribeComparisons( facilitatedSolutes[ 0 ] ) ) {
-      const facilitatedSolute = facilitatedSolutes[ 0 ];
+    if ( facilitatedSolutesThatWeShouldDescribe.length === 1 ) {
+      const facilitatedSolute = facilitatedSolutesThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
       const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
       descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
@@ -427,10 +443,7 @@ export default class MembraneTransportDescriber {
     else {
 
       // Many solutes are moving across so we have a general description of everything happening.
-      // TODO: Remove solutes that are being shuttled across, see #323
-      const solutesThatWeShouldDescribe = solutesThatCrossed.filter( soluteType => {
-        return this.shouldDescribeComparisons( soluteType );
-      } );
+      const solutesThatWeShouldDescribe = solutesThatCrossed.filter( isSoluteDescribable );
       if ( solutesThatWeShouldDescribe.length > 0 ) {
         const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.soluteBrief.format( {
           soluteType: soluteType
