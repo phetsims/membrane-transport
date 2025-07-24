@@ -222,18 +222,19 @@ const potassiumCrossingSound = soluteCrossingPotassium_mp3;
 const sodiumCrossingSound = soluteCrossingSodium_mp3;
 
 const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.2 };
+const gasCrossingSoundOptions: SoundClipOptions = { initialOutputLevel: 0.02 };
 
 const soluteCrossingGenericSounds = createPannedSoundSet( genericCrossingSound, baseSoundClipOptions );
 const soluteCrossingPotassiumSounds = createPannedSoundSet( potassiumCrossingSound, baseSoundClipOptions );
 const soluteCrossingSodiumSounds = createPannedSoundSet( sodiumCrossingSound, baseSoundClipOptions );
-const soluteCrossingCarbonDioxideSounds = createPannedSoundSet( soluteCrossingCarbonDioxide_mp3, baseSoundClipOptions );
-const soluteCrossingOxygenSounds = createPannedSoundSet( soluteCrossingOxygen_mp3, baseSoundClipOptions );
+const soluteCrossingCarbonDioxideSounds = createPannedSoundSet( soluteCrossingCarbonDioxide_mp3, gasCrossingSoundOptions );
+const soluteCrossingOxygenSounds = createPannedSoundSet( soluteCrossingOxygen_mp3, gasCrossingSoundOptions );
 
 const soluteCrossingGenericHighSounds = createPannedSoundSet( genericCrossingSound, baseSoundClipOptions, 2 );
 const soluteCrossingPotassiumHighSounds = createPannedSoundSet( potassiumCrossingSound, baseSoundClipOptions, 2 );
 const soluteCrossingSodiumHighSounds = createPannedSoundSet( sodiumCrossingSound, baseSoundClipOptions, 2 );
-const soluteCrossingCarbonDioxideHighSounds = createPannedSoundSet( soluteCrossingCarbonDioxideOutward_mp3, baseSoundClipOptions );
-const soluteCrossingOxygenHighSounds = createPannedSoundSet( soluteCrossingOxygenOutward_mp3, baseSoundClipOptions );
+const soluteCrossingCarbonDioxideHighSounds = createPannedSoundSet( soluteCrossingCarbonDioxideOutward_mp3, gasCrossingSoundOptions );
+const soluteCrossingOxygenHighSounds = createPannedSoundSet( soluteCrossingOxygenOutward_mp3, gasCrossingSoundOptions );
 
 export default class MembraneTransportSounds {
 
