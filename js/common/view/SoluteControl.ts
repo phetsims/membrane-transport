@@ -21,6 +21,7 @@ import ArrowButton, { ArrowButtonOptions } from '../../../../sun/js/buttons/Arro
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ValueChangeUtterance from '../../../../utterance-queue/js/ValueChangeUtterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -93,12 +94,17 @@ export default class SoluteControl extends Voicing( Panel ) {
     // The accessibleObjectResponse for the entire control, describing the current value. It describes the amount of solutes of
     // this type on this side of the membrane qualitatively. It is spoken every time the SoluteControl is used.
     const createAccessibleObjectResponse = () => {
-      return MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.format( {
 
-        // Qualitative descriptions for the amount of a solute, as described in
-        // https://github.com/phetsims/membrane-transport/issues/242
-        amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty ),
-        soluteType: model.soluteProperty
+      // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
+      // pressed rapidly.
+      return new ValueChangeUtterance( {
+        alert: MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.format( {
+
+          // Qualitative descriptions for the amount of a solute, as described in
+          // https://github.com/phetsims/membrane-transport/issues/242
+          amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty ),
+          soluteType: model.soluteProperty
+        } )
       } );
     };
 
@@ -119,10 +125,14 @@ export default class SoluteControl extends Voicing( Panel ) {
       const insideCount = model.insideSoluteCountProperties[ soluteType ].value;
       const outsideCount = model.outsideSoluteCountProperties[ soluteType ].value;
 
-      return MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
-        amountAdded: amountAdded, // aLittle / aLot
-        addedOrRemoved: addedOrRemoved, // added / removed
-        amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
+      // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
+      // pressed rapidly.
+      return new ValueChangeUtterance( {
+        alert: MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
+          amountAdded: amountAdded, // aLittle / aLot
+          addedOrRemoved: addedOrRemoved, // added / removed
+          amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
+        } )
       } );
     };
 
