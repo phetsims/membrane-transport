@@ -64,8 +64,8 @@ type StringsType = {
       }
     }
   };
-  'barChart': {
-    'soluteConcentrationsStringProperty': LocalizedStringProperty;
+  'soluteConcentrationsAccordionBox': {
+    'titleStringProperty': LocalizedStringProperty;
   };
   'settings': {
     'crossingHighlightsStringProperty': LocalizedStringProperty;

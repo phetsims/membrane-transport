@@ -54,8 +54,8 @@ preferencesDialog:
   audio.sounds.stereoCrossingSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 
 # Solute Concentration Bar Charts
-barChart:
-  soluteConcentrations: Solute Concentrations
+soluteConcentrationsAccordionBox:
+  title: Solute Concentrations
 
 # Checkboxes below the play area
 settings:
@@ -236,7 +236,7 @@ a11y:
                               }
 
     # Capitalized names for the solute type. Reused in various places.
-    uppercaseName:          |-
+    uppercaseName:            |-
                               { $soluteType ->
                                 [oxygen]        Oxygen Molecules
                                 [carbonDioxide] Carbon Dioxide molecules
