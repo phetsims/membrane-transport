@@ -11,10 +11,8 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
-import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -30,7 +28,7 @@ import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
-import MembraneTransportDescriber from './MembraneTransportDescriber.js';
+import MembraneTransportDescriber, { AverageCrossingDirectionDescriptor } from './MembraneTransportDescriber.js';
 import createParticleNode from './particles/createParticleNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
@@ -42,8 +40,16 @@ export default class SoluteBarChartNode extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
 
+  /**
+   * @param model
+   * @param soluteType
+   * @param averageCrossingDirectionProperty - Property describing the average crossing direction in/out of the cell for the solute types
+   * @param iconAlignGroup
+   * @param tandem
+   */
   public constructor( model: MembraneTransportModel,
                       soluteType: PlottableSoluteTypes,
+                      averageCrossingDirectionProperty: TReadOnlyProperty<AverageCrossingDirectionDescriptor>,
                       iconAlignGroup: AlignGroup,
                       tandem: Tandem ) {
 
@@ -54,19 +60,10 @@ export default class SoluteBarChartNode extends Node {
       return MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideAmount, insideAmount );
     } );
 
-    // These are updated in stepEmitter, and used to add description for the accessible name.
-    const outwardCountProperty = new NumberProperty( 0 );
-    const inwardCountProperty = new NumberProperty( 0 );
-
-    const crossingProperty = new DerivedProperty( [ outwardCountProperty, inwardCountProperty ], ( outwardCount, inwardCount ) => {
-      affirm( inwardCount >= 0 && outwardCount >= 0, 'counts should be non-negative' );
-      return MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( outwardCount, inwardCount );
-    } );
-
     const accessibleNameWithParticlesProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
-      direction: crossingProperty,
+      direction: averageCrossingDirectionProperty,
       outsideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( outsideSoluteCountProperty ),
       insideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( insideSoluteCountProperty )
     } );
@@ -77,7 +74,7 @@ export default class SoluteBarChartNode extends Node {
     const accessibleNameWithParticlesAndGlucoseMetabolismProperty = MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticlesAndGlucoseMetabolism.createProperty( {
       soluteType: soluteType,
       amount: soluteDifferenceProperty,
-      direction: crossingProperty,
+      direction: averageCrossingDirectionProperty,
       outsideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( outsideSoluteCountProperty ),
       insideAmount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( insideSoluteCountProperty )
     } );
@@ -262,9 +259,6 @@ export default class SoluteBarChartNode extends Node {
 
         updateStripe( inwardCount, insideStripe, insideBar, insideSoluteCountProperty );
         updateStripe( outwardCount, outsideStripe, outsideBar, outsideSoluteCountProperty );
-
-        inwardCountProperty.value = inwardCount;
-        outwardCountProperty.value = outwardCount;
       }
     } );
 

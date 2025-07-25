@@ -73,9 +73,9 @@ export default class MembraneTransportScreenView extends ScreenView {
     }, providedOptions );
     super( options );
 
-    const soluteConcentrationDescriber = new MembraneTransportDescriber( model, this );
-    this.stepEmitter.addListener( dt => soluteConcentrationDescriber.step( dt ) );
-    this.resetEmitter.addListener( () => soluteConcentrationDescriber.reset() );
+    const membraneTransportDescriber = new MembraneTransportDescriber( model, this );
+    this.stepEmitter.addListener( dt => membraneTransportDescriber.step( dt ) );
+    this.resetEmitter.addListener( () => membraneTransportDescriber.reset() );
 
     // A model to view transform that maps a model point to a position in the screen view. This transform includes the translation
     // of the observation window so that you can position view components relative to things within the observation window.
@@ -185,7 +185,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     soluteControlsNode.addChild( eraseSolutesButton );
 
     // Solute concentrations
-    const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, {
+    const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, membraneTransportDescriber.averageSoluteCrossingDirectionProperties, {
       tandem: options.tandem.createTandem( 'soluteConcentrationsAccordionBox' )
     } );
 

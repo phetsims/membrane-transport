@@ -7,6 +7,7 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -19,8 +20,9 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import { getSoluteBarChartTandemName } from '../model/SoluteType.js';
+import SoluteType, { getSoluteBarChartTandemName } from '../model/SoluteType.js';
 import InsideOutsideLabel from './InsideOutsideLabel.js';
+import { AverageCrossingDirectionDescriptor } from './MembraneTransportDescriber.js';
 import SoluteBarChartNode from './SoluteBarChartNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -30,7 +32,10 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
   public readonly stepEmitter: Emitter<[ number ]>;
 
-  public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
+  public constructor(
+    model: MembraneTransportModel,
+    averageSoluteCrossingDirectionProperties: Record<SoluteType, Property<AverageCrossingDirectionDescriptor>>,
+    providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleNode: new Text( MembraneTransportFluent.soluteConcentrationsAccordionBox.titleStringProperty, {
@@ -81,7 +86,14 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
     const iconAlignGroup = new AlignGroup();
     const hbox = new HBox( {
       children: getFeatureSetSoluteTypes( model.featureSet ).filter( solute => solute !== 'atp' && solute !== 'adp' && solute !== 'phosphate' ).map( soluteType => {
-        const soluteBarChartNode = new SoluteBarChartNode( model, soluteType, iconAlignGroup, options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) ) );
+        const averageCrossingDirectionProperty = averageSoluteCrossingDirectionProperties[ soluteType ];
+        const soluteBarChartNode = new SoluteBarChartNode(
+          model,
+          soluteType,
+          averageCrossingDirectionProperty,
+          iconAlignGroup,
+          options.tandem.createTandem( getSoluteBarChartTandemName( soluteType ) )
+        );
         stepEmitter.addListener( dt => soluteBarChartNode.stepEmitter.emit( dt ) );
         return soluteBarChartNode;
       } ),

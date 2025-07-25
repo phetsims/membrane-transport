@@ -8,6 +8,7 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -16,6 +17,7 @@ import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType, { PlottableSoluteTypes } from '../model/SoluteType.js';
 
@@ -25,7 +27,7 @@ type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyMa
   'aboutTwiceAsManyInside' | 'aLotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' |
   'roughlyEqualInside' | 'none';
 
-type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inBothDirections' |
+export type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inBothDirections' |
   'mostlyToInside' | 'toInside' | 'none';
 
 type SoluteQualitativeAmountDescriptor = 'none' | 'few' | 'some' | 'smallAmount' |
@@ -74,6 +76,9 @@ export default class MembraneTransportDescriber {
   // will be added to the response.
   private previousSoluteComparisons: Record<SoluteType, SoluteComparisonDescriptor>;
 
+  // Describes the average crossing direction for each solute type. Updated every DESCRIPTION_INTERVAL.
+  public readonly averageSoluteCrossingDirectionProperties = {} as Record<SoluteType, Property<AverageCrossingDirectionDescriptor>>;
+
   // Keep track of the solutes that were in 'steady state' with roughly equal solute counts since the
   // last description. When any solute first enters steady state with roughly equal solute counts,
   // the description of the new steady state will be added to the response.
@@ -93,6 +98,10 @@ export default class MembraneTransportDescriber {
     this.previousSteadyStateMap = this.getCleanSteadyStates();
     this.hintStates = this.getCleanHintStates();
     this.fundamentalState = this.getCleanFundamentalState();
+
+    getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
+      this.averageSoluteCrossingDirectionProperties[ soluteType ] = new Property<AverageCrossingDirectionDescriptor>( 'none' );
+    } );
   }
 
   /**
@@ -126,6 +135,14 @@ export default class MembraneTransportDescriber {
       //-------------------------------------------------------------------------
       this.timeSinceDescription += dt;
       if ( this.timeSinceDescription > DESCRIPTION_INTERVAL ) {
+
+        const soluteTypes = getFeatureSetSoluteTypes( this.model.featureSet );
+        soluteTypes.forEach( ( soluteType: SoluteType ) => {
+          const crossedInside = this.model.descriptionEventQueue.filter( event => event.solute.soluteType === soluteType && event.direction === 'inward' ).length;
+          const crossedOutside = this.model.descriptionEventQueue.filter( event => event.solute.soluteType === soluteType && event.direction === 'outward' ).length;
+          this.averageSoluteCrossingDirectionProperties[ soluteType ].value = MembraneTransportDescriber.getAverageCrossingDirectionDescriptor( crossedOutside, crossedInside );
+        } );
+
         const response = this.getDescriptionFromEventQueue();
 
         this.addAccessibleContextResponse( response );
@@ -306,6 +323,18 @@ export default class MembraneTransportDescriber {
   }
 
   /**
+   * Reset the average crossing direction Properties for all solute types.
+   */
+  private resetCrossingDirectionProperties(): void {
+
+    // Reset the solute crossing direction properties to 'none' so that they can be updated
+    // with the next step.
+    getFeatureSetSoluteTypes( this.model.featureSet ).forEach( soluteType => {
+      this.averageSoluteCrossingDirectionProperties[ soluteType ].value = 'none';
+    } );
+  }
+
+  /**
    * Returns a clean set of hint states, where all hints are inactive and have not been provided.
    */
   private getCleanHintStates(): HintStates {
@@ -355,6 +384,7 @@ export default class MembraneTransportDescriber {
     this.timeSinceDescription = 0;
     this.fundamentalState = this.getCleanFundamentalState();
     this.resetAfterFundamentalStateChange();
+    this.resetCrossingDirectionProperties();
   }
 
   /**
@@ -422,7 +452,7 @@ export default class MembraneTransportDescriber {
     // then we will describe that it is crossing the membrane and in what direction.
     if ( facilitatedSolutesThatWeShouldDescribe.length === 1 ) {
       const facilitatedSolute = facilitatedSolutesThatWeShouldDescribe[ 0 ];
-      const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
+      const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ facilitatedSolute ].value;
       const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
       descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
     }
@@ -431,7 +461,7 @@ export default class MembraneTransportDescriber {
       // If there is only one simple diffusion type that has gone into a new comparison region that is not in steady state,
       // we include a more sophisticated description of it
       const soluteType = simpleDiffusers[ 0 ];
-      const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( soluteType );
+      const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ soluteType ].value;
       const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
       descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing membrane, ${directionDescriptionString}` );
     }
