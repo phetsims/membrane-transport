@@ -445,7 +445,6 @@ a11y:
                                           [closedNegative50mV] closed
                                           [open30mV] open
                                        
-                                       
                                           [ligandBoundClosed] closed
                                           [ligandBoundOpen] open
                                           [ligandUnboundOpen] open
@@ -465,6 +464,27 @@ a11y:
                                           [openToOutsideAwaitingParticles] Awaiting sodium and glucose, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToOutsideAllParticlesBound] Sodium and glucose bound, { a11y.transportProtein.accessibleObjectResponseOpenClose}
                                           [openToInside] Pumping sodium and glucose to inside, { a11y.transportProtein.accessibleObjectResponseOpenClose}
+                                       
+                                          [ligandBoundClosed] { $proteinType ->
+                                            [sodiumIonLigandGatedChannel] triangle shape ligand bound, closed channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] star shape ligand bound, closed channel through membrane
+                                          }
+                                          [ligandBoundOpen] { $proteinType ->
+                                            [sodiumIonLigandGatedChannel] triangle shape ligand bound, open channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] star shape ligand bound, open channel through membrane
+                                          }
+                                          [ligandUnboundOpen] { $proteinType ->
+                                            [sodiumIonLigandGatedChannel] no triangle shape ligand bound, open channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] no star shape ligand bound, open channel through membrane
+                                          }
+                                       
+                                          [open] open channel through membrane
+                                          [closed] { $proteinType ->
+                                            [sodiumIonLigandGatedChannel] no triangle shape ligand bound, closed channel through membrane 
+                                            [potassiumIonLigandGatedChannel] no star shape ligand bound, closed channel through membrane
+                                            
+                                            *[other] { a11y.transportProtein.accessibleObjectResponseOpenClose }
+                                          }
                                        
                                           *[other] { a11y.transportProtein.accessibleObjectResponseOpenClose }
                                        }.

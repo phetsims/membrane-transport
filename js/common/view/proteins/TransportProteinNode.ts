@@ -43,9 +43,14 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // It was found that the interactive protein should have the application role so that the
     // roledescription and accessible name are read.
     if ( transportProtein ) {
+
       const accessibleParagraphStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleParagraph.createProperty( {
-        state: transportProtein.stateProperty
+        state: transportProtein.stateProperty,
+        proteinType: transportProtein.type === 'sodiumIonLigandGatedChannel' ? 'sodiumIonLigandGatedChannel' :
+                     transportProtein.type === 'potassiumIonLigandGatedChannel' ? 'potassiumIonLigandGatedChannel' :
+                     'other'
       } );
+
       this.addDisposable( accessibleParagraphStringProperty );
 
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
