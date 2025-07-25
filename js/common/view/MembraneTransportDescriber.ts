@@ -399,7 +399,6 @@ export default class MembraneTransportDescriber {
 
   private getDescriptionFromEventQueue(): string {
 
-    // No description when a protein is focused (to be implemented at another time).
     if ( this.model.focusedProteinProperty.value ) {
       return '';
     }

@@ -478,6 +478,14 @@ a11y:
                                             *[potassiumIonLigandGatedChannel] no star shape ligand bound, open channel through membrane
                                           }
                                        
+                                          [closedNegative70mV] closed channel through membrane at -70 mV
+                                          [openNegative50mV] open channel through membrane at -50 mV
+                                          [closed30mV] closed channel through membrane at 30 mV
+                                       
+                                          [closedNegative70mV] closed channel through membrane at -70 mV
+                                          [closedNegative50mV] closed channel through membrane at -50 mV
+                                          [open30mV] open channel through membrane at 30 mV
+                                       
                                           [open] open channel through membrane
                                           [closed] { $proteinType ->
                                             [sodiumIonLigandGatedChannel] no triangle shape ligand bound, closed channel through membrane 
