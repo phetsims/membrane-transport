@@ -386,7 +386,12 @@ export default class LigandNode extends InteractiveHighlightingNode {
         },
 
         onRelease: inputType => {
-          if ( inputType === 'alternative' ) {
+          if ( inputType === 'alternative' ||
+
+               // When escape is pressed, it calls a cancel event which shows up here as 'programmatic'.
+               // But we don't want to run this logic for other programmatic cases, so also guard on this.isKeyboardGrabbed
+               ( inputType === 'programmatic' && this.isKeyboardGrabbed )
+          ) {
             const wasGrabbed = this.isKeyboardGrabbed; // Store state before resetting
             this.isKeyboardGrabbed = false;
             MembraneTransportSounds.ligandReleased();
