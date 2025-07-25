@@ -484,11 +484,42 @@ export default class MembraneTransportDescriber {
       responses.push( steadyStateString );
     }
 
+    // Update the described steady state values. The relative amount descriptions change depending on whether the solute
+    // is described as 'steady state', so this must be done before getCompareSoluteCompartmentsIfChanged.
+    solutesThatCrossed.forEach( soluteType => {
+
+      // Only save those that go INTO steady state. Once a solute is in steady state, it is not going to be described
+      // as out of steady state until it is no longer in 'roughly equal' amounts.
+      const isSteadyState = this.isSteadyState( soluteType );
+      if ( isSteadyState ) {
+        this.previousSteadyStateMap[ soluteType ] = isSteadyState;
+      }
+      else {
+
+        // At this moment, we are not in "steady state" anymore. But we are only going to describe that we are out of steady
+        // state if the relative counts go out of 'roughly equal' amounts. This way, we prevent describing oscillations
+        // around steady state.
+        const isRoughlyEqual = this.areSoluteTypeCountsRoughlyEqual( soluteType );
+        const wasRoughlyEqual = this.wereSoluteTypeCountsRoughlyEqual( soluteType );
+        if ( wasRoughlyEqual && !isRoughlyEqual ) {
+          this.previousSteadyStateMap[ soluteType ] = false;
+        }
+      }
+    } );
+
     // Add a description of all solute types that have changed their relative comparison amount.
     const comparisonString = this.getCompareSoluteCompartmentsIfChanged( solutesThatCrossed );
     if ( comparisonString && comparisonString.trim().length > 0 ) {
       responses.push( comparisonString );
     }
+
+    // Update previous comparisons for the next description.
+    solutesThatCrossed.forEach( soluteType => {
+      this.previousSoluteComparisons[ soluteType ] = MembraneTransportDescriber.getSoluteComparisonDescriptor(
+        this.model.outsideSoluteCountProperties[ soluteType ].value,
+        this.model.insideSoluteCountProperties[ soluteType ].value
+      );
+    } );
 
     // Join all fragments together.
     const statement = responses.join( ', ' );
@@ -523,11 +554,6 @@ export default class MembraneTransportDescriber {
     const includeSoluteName = solutesThatCrossed.length > 1;
 
     solutesThatCrossed.forEach( soluteType => {
-      const comparison = MembraneTransportDescriber.getSoluteComparisonDescriptor(
-        this.model.outsideSoluteCountProperties[ soluteType ].value,
-        this.model.insideSoluteCountProperties[ soluteType ].value
-      );
-
       if ( this.shouldDescribeComparisons( soluteType ) && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
         const soluteName = MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } );
         const comparisonString = this.getSoluteComparisonString( soluteType );
@@ -539,18 +565,6 @@ export default class MembraneTransportDescriber {
           changedComparisons.push( comparisonString );
         }
       }
-
-      const isRoughlyEqual = this.areSoluteTypeCountsRoughlyEqual( soluteType );
-      const wasPreviouslyRoughlyEqual = this.previousSoluteComparisons[ soluteType ] === 'roughlyEqualInside' ||
-                                        this.previousSoluteComparisons[ soluteType ] === 'roughlyEqualOutside' ||
-                                        this.previousSoluteComparisons[ soluteType ] === 'equal';
-
-      // If we were 'roughly equal' and we are no longer 'roughly equal', then we should be kicked out of steady state.
-      if ( wasPreviouslyRoughlyEqual && !isRoughlyEqual ) {
-        this.previousSteadyStateMap[ soluteType ] = false;
-      }
-
-      this.previousSoluteComparisons[ soluteType ] = comparison;
     } );
     return changedComparisons.join( ', ' );
   }
@@ -567,11 +581,6 @@ export default class MembraneTransportDescriber {
 
         affirm( soluteType !== 'adp' && soluteType !== 'phosphate', 'adp cant cross the membrane, so it should not be described' );
         changedSteadyStates.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing steadily in both directions, amounts each side roughly equal` );
-      }
-
-      // Once we enter steady state, we are not going to leave steady state until we are out of "roughly equal" amounts.
-      if ( isSteadyState ) {
-        this.previousSteadyStateMap[ soluteType ] = isSteadyState;
       }
     } );
 
@@ -605,6 +614,13 @@ export default class MembraneTransportDescriber {
     return descriptor === 'equal' ||
            descriptor === 'roughlyEqualInside' ||
            descriptor === 'roughlyEqualOutside';
+  }
+
+  private wereSoluteTypeCountsRoughlyEqual( soluteType: SoluteType ): boolean {
+    const previousComparison = this.previousSoluteComparisons[ soluteType ];
+    return previousComparison === 'equal' ||
+           previousComparison === 'roughlyEqualInside' ||
+           previousComparison === 'roughlyEqualOutside';
   }
 
   private getSoluteComparisonString( soluteType: SoluteType ): string {
