@@ -474,27 +474,7 @@
         },
         "accessibleNameWithNoParticlesAndGlucoseMetabolism": {
           "value": "{ a11y_soluteConcentrationsAccordionBox_barChart_accessibleNameWithNoParticles } { a11y_soluteConcentrationsAccordionBox_barChart_glucoseMetabolism }"
-        },
-        "crossing": {
-          "value": "{ $crossing ->\n  *[none] no crossings\n  [inside] crossings in\n  [outside] crossings out\n  [both] crossings in and out\n}"
         }
-      }
-    },
-    "soluteCrossing": {
-      "initialResponse": {
-        "value": "{ a11y_solutes_uppercaseName } crossing membrane, { a11y_solutes_amountComparison }."
-      },
-      "subsequentResponse": {
-        "value": "{ a11y_solutes_briefName }, { a11y_solutes_amountComparison }."
-      },
-      "inBalanceResponse": {
-        "value": "{ a11y_solutes_uppercaseName } crossing steadily in both directions, now roughly equal."
-      },
-      "manyTypesResponse": {
-        "value": "Many solute types crossing membrane."
-      },
-      "manyTypesInBalanceResponse": {
-        "value": "Many solutes types crossing steadily in both directions."
       }
     },
     "ligandToggleButton": {

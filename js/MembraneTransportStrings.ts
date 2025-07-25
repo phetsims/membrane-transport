@@ -230,15 +230,7 @@ type StringsType = {
         'glucoseMetabolismStringProperty': LocalizedStringProperty;
         'accessibleNameWithParticlesAndGlucoseMetabolismStringProperty': LocalizedStringProperty;
         'accessibleNameWithNoParticlesAndGlucoseMetabolismStringProperty': LocalizedStringProperty;
-        'crossingStringProperty': LocalizedStringProperty;
       }
-    };
-    'soluteCrossing': {
-      'initialResponseStringProperty': LocalizedStringProperty;
-      'subsequentResponseStringProperty': LocalizedStringProperty;
-      'inBalanceResponseStringProperty': LocalizedStringProperty;
-      'manyTypesResponseStringProperty': LocalizedStringProperty;
-      'manyTypesInBalanceResponseStringProperty': LocalizedStringProperty;
     };
     'ligandToggleButton': {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;

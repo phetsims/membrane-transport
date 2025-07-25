@@ -370,20 +370,6 @@ a11y:
       glucoseMetabolism:                                 Glucose disappears from inside as it is metabolized by the cell.
       accessibleNameWithParticlesAndGlucoseMetabolism:   "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
       accessibleNameWithNoParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
-      crossing:                                          |-
-                                                         { $crossing ->
-                                                           *[none] no crossings
-                                                           [inside] crossings in
-                                                           [outside] crossings out
-                                                           [both] crossings in and out
-                                                         }
-
-  soluteCrossing:
-    initialResponse:            "{ a11y.solutes.uppercaseName } crossing membrane, { a11y.solutes.amountComparison }."
-    subsequentResponse:         "{ a11y.solutes.briefName }, { a11y.solutes.amountComparison }."
-    inBalanceResponse:          "{ a11y.solutes.uppercaseName } crossing steadily in both directions, now roughly equal."
-    manyTypesResponse:          Many solute types crossing membrane.
-    manyTypesInBalanceResponse: Many solutes types crossing steadily in both directions.
 
   ligandToggleButton:
     accessibleHelpText:               Add or remove triangle- and star-shaped ligands to outside of cell.
