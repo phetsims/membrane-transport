@@ -46,12 +46,17 @@ transportProteinPanel:
 
 # Preferences Dialog
 preferencesDialog:
-  animateLipids.label:                           Animate Lipids
-  animateLipids.description:                     Whether the phospholipids forming the cell membrane should be animated.
-  glucoseMetabolism.label:                       Glucose Metabolism
-  glucoseMetabolism.description:                 Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
-  audio.sounds.stereoCrossingSounds.label:       Stereo Crossing Sounds
-  audio.sounds.stereoCrossingSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
+  animateLipids:
+    label:       Animate Lipids
+    description: Whether the phospholipids forming the cell membrane should be animated.
+  glucoseMetabolism:
+    label:       Glucose Metabolism
+    description: Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
+  audio:
+    sounds:
+      stereoCrossingSounds:
+        label:       Stereo Crossing Sounds
+        description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 
 # Solute Concentration Bar Charts
 soluteConcentrationsAccordionBox:
@@ -490,7 +495,7 @@ a11y:
                                           [closed] { $proteinType ->
                                             [sodiumIonLigandGatedChannel] no triangle shape ligand bound, closed channel through membrane 
                                             [potassiumIonLigandGatedChannel] no star shape ligand bound, closed channel through membrane
-                                            
+                                       
                                             *[other] { a11y.transportProtein.accessibleObjectResponseOpenClose }
                                           }
                                        
