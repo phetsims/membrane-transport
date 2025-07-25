@@ -20,9 +20,9 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import SoluteType, { PlottableSoluteTypes } from '../model/SoluteType.js';
 
 type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' |
-  'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' |
+  'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'aLotMoreOutside' | 'someMoreOutside' |
   'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' |
-  'aboutTwiceAsManyInside' | 'alotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' |
+  'aboutTwiceAsManyInside' | 'aLotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' |
   'roughlyEqualInside' | 'none';
 
 type AverageCrossingDirectionDescriptor = 'toOutside' | 'mostlyToOutside' | 'inBothDirections' |
@@ -57,7 +57,7 @@ type FundamentalState = {
 // The interval in seconds at which the system will trigger responses.
 const DESCRIPTION_INTERVAL = 5;
 
-// The interval in seconds at wich the system will trigger a 'hint' response to guide the user to make
+// The interval in seconds at which the system will trigger a 'hint' response to guide the user to make
 // a change.
 const HINT_DESCRIPTION_INTERVAL = 20;
 
@@ -85,14 +85,9 @@ export default class MembraneTransportDescriber {
   // A basic snapshot of the model, when this changes it indicates the user has done something significant.
   private fundamentalState: FundamentalState;
 
-  private readonly model: MembraneTransportModel;
-
-  // The Node which is used to trigger context responses.
-  private readonly contextResponseNode: Node;
-
-  public constructor( model: MembraneTransportModel, contextResponseNode: Node ) {
-    this.model = model;
-    this.contextResponseNode = contextResponseNode;
+  public constructor( private readonly model: MembraneTransportModel,
+                      private readonly contextResponseNode: Node // The Node which is used to trigger context responses.
+  ) {
 
     this.previousSoluteComparisons = this.getCleanSoluteComparisons();
     this.previousSteadyStateMap = this.getCleanSteadyStates();
@@ -105,8 +100,7 @@ export default class MembraneTransportDescriber {
    * to prevent unnecessary repetition.
    */
   private addAccessibleContextResponse( response: AlertableNoUtterance ): void {
-    if ( response !== this.previousResponse && response !== '' ) {
-      console.log( response );
+    if ( response !== this.previousResponse ) {
       this.contextResponseNode.addAccessibleContextResponse( response );
     }
     this.previousResponse = response;
@@ -158,7 +152,7 @@ export default class MembraneTransportDescriber {
       }
       else {
 
-        // The simulation is not in a state where a hint is needed, so reset the time and we will start counting
+        // The simulation is not in a state where a hint is needed, so reset the time, and we will start counting
         // again when the next hint is needed.
         this.timeSinceHintDescription = 0;
       }
@@ -406,7 +400,7 @@ export default class MembraneTransportDescriber {
              ( soluteType === 'sodiumIon' && sodiumPumped );
     };
 
-    // A filter for solute types that removes solutes that are part of active transport and cannot be described becauase
+    // A filter for solute types that removes solutes that are part of active transport and cannot be described because
     // they haven't changed the counts enough inside and outside the cell. When a solute is in active transport,
     // it will get a specific description later in the response.
     const isSoluteDescribable = ( soluteType: SoluteType ): boolean => {
@@ -634,13 +628,6 @@ export default class MembraneTransportDescriber {
   }
 
   /**
-   * Returns true when the solute type has crossed the membrane at all, according to the event queue.
-   */
-  private didSoluteTypeCross( soluteType: SoluteType ): boolean {
-    return this.model.descriptionEventQueue.some( event => event.solute.soluteType === soluteType );
-  }
-
-  /**
    * Returns an enum descriptor of the average crossing direction for a solute type based on the number that have crossed in and
    * out of the membrane.
    * @param crossedToOutside - Count of solutes of a type that crossed to the outside
@@ -709,7 +696,7 @@ export default class MembraneTransportDescriber {
            outsideToInside >= MANY_MANY_MORE ? 'manyManyMoreOutside' :
            outsideToInside >= MANY_MORE ? 'manyMoreOutside' :
            outsideToInside >= ABOUT_TWICE ? 'aboutTwiceAsManyOutside' :
-           outsideToInside >= A_LOT ? 'alotMoreOutside' :
+           outsideToInside >= A_LOT ? 'aLotMoreOutside' :
            outsideToInside >= SOME_MORE ? 'someMoreOutside' :
            outsideToInside >= LITTLE_BIT ? 'littleBitMoreOutside' :
            outsideToInside > ROUGHLY_EQUAL ? 'roughlyEqualOutside' :
@@ -718,7 +705,7 @@ export default class MembraneTransportDescriber {
            insideToOutside >= MANY_MANY_MORE ? 'manyManyMoreInside' :
            insideToOutside >= MANY_MORE ? 'manyMoreInside' :
            insideToOutside >= ABOUT_TWICE ? 'aboutTwiceAsManyInside' :
-           insideToOutside >= A_LOT ? 'alotMoreInside' :
+           insideToOutside >= A_LOT ? 'aLotMoreInside' :
            insideToOutside >= SOME_MORE ? 'someMoreInside' :
            insideToOutside >= LITTLE_BIT ? 'littleBitMoreInside' :
            insideToOutside > ROUGHLY_EQUAL ? 'roughlyEqualInside' :
