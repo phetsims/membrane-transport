@@ -334,7 +334,6 @@ a11y:
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
 
-    # TODO: Update this key, see https://github.com/phetsims/membrane-transport/issues/333
     barChart:
 
       # Note this description is used instead of accessibleName in the case that there are none inside AND none outside.
