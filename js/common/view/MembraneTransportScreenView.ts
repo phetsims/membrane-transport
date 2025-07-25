@@ -252,7 +252,7 @@ export default class MembraneTransportScreenView extends ScreenView {
         const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside',
           outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
             centerX: soluteControlCenterX,
-            top: this.observationWindow.top + MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
+            top: this.observationWindow.top,
 
             // So it is very clear that this is associated with the outside of the cell
             fill: MembraneTransportColors.observationWindowOutsideCellColorProperty
@@ -264,7 +264,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside',
         insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
           centerX: soluteControlCenterX,
-          bottom: this.observationWindow.bottom - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
+          bottom: this.observationWindow.bottom,
 
           // So it is very clear that this is associated with the inside of the cell
           fill: MembraneTransportColors.observationWindowInsideCellColorProperty

@@ -58,6 +58,7 @@ export default class SoluteControl extends Voicing( Panel ) {
     // Extends AccessibleInteractiveOptions, which forces the screen reader to give all keyboard events for this custom
     // interaction.
     const options = optionize4<SoluteControlOptions, SelfOptions, ParentOptions>()( {}, AccessibleInteractiveOptions, {
+      yMargin: 10,
       align: 'center',
       visibleProperty: gatedVisibleProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
