@@ -17,6 +17,7 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Line, { LineOptions } from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
+import type { RectangularRadioButtonOptions } from '../../../../sun/js/buttons/RectangularRadioButton.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -31,32 +32,39 @@ export default class MembranePotentialPanel extends Panel {
 
     const membranePotentialControlTandem = tandem.createTandem( 'membranePotentialControl' );
 
+    const radioButtonOptions: RectangularRadioButtonOptions = {
+      phetioVisiblePropertyInstrumented: false,
+
+      // Do not let the mouse area extend beyond the button, see https://github.com/phetsims/membrane-transport/issues/358
+      mouseAreaXDilation: 0
+    };
+
     const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
       value: -70,
       createNode: tandem => new Text( '-70', MembraneTransportConstants.TEXT_OPTIONS ),
       tandemName: 'negative70RadioButton',
-      options: {
-        accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty,
-        phetioVisiblePropertyInstrumented: false
-      }
+      options: combineOptions<RectangularRadioButtonOptions>( {
+          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
+        },
+        radioButtonOptions
+      )
     },
       {
         value: -50,
         createNode: tandem => new Text( '-50', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'negative50RadioButton',
-        options: {
-          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty,
-          phetioVisiblePropertyInstrumented: false
-        }
+        options: combineOptions<RectangularRadioButtonOptions>( {
+            accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
+          },
+          radioButtonOptions )
       },
       {
         value: 30,
         createNode: tandem => new Text( '+30', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'positive30RadioButton',
-        options: {
-          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty,
-          phetioVisiblePropertyInstrumented: false
-        }
+        options: combineOptions<RectangularRadioButtonOptions>( {
+          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
+        }, radioButtonOptions )
       } ], {
       orientation: 'horizontal',
       accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
