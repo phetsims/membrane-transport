@@ -117,19 +117,19 @@ export default class TransportProteinPanel extends Panel {
 
       // Leakage channels
       const leakageChannelPanel = createPanel( {
-        titleProperty: MembraneTransportFluent.leakageChannelsStringProperty,
+        titleProperty: MembraneTransportFluent.transportProteinPanel.leakageChannelsStringProperty,
         tandemName: 'leakageChannelPanel',
         expanded: true,
         accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.leakageChannelPanel.accessibleHelpTextStringProperty,
         transportProteins: [
           {
             transportProteinType: 'sodiumIonLeakageChannel',
-            labelProperty: MembraneTransportFluent.sodiumIonStringProperty,
+            labelProperty: MembraneTransportFluent.soluteNames.sodiumIonStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty
           },
           {
             transportProteinType: 'potassiumIonLeakageChannel',
-            labelProperty: MembraneTransportFluent.potassiumIonStringProperty,
+            labelProperty: MembraneTransportFluent.soluteNames.potassiumIonStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty
           }
         ]
@@ -137,19 +137,19 @@ export default class TransportProteinPanel extends Panel {
 
       // Voltage-gated channels
       const voltageGatedChannelPanel = createPanel( {
-          titleProperty: MembraneTransportFluent.voltageGatedChannelsStringProperty,
+          titleProperty: MembraneTransportFluent.transportProteinPanel.voltageGatedChannelsStringProperty,
           tandemName: 'voltageGatedChannelPanel',
           expanded: true,
           accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.accessibleHelpTextStringProperty,
           transportProteins: [
             {
               transportProteinType: 'sodiumIonVoltageGatedChannel',
-              labelProperty: MembraneTransportFluent.sodiumIonStringProperty,
+              labelProperty: MembraneTransportFluent.soluteNames.sodiumIonStringProperty,
               accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty
             },
             {
               transportProteinType: 'potassiumIonVoltageGatedChannel',
-              labelProperty: MembraneTransportFluent.potassiumIonStringProperty,
+              labelProperty: MembraneTransportFluent.soluteNames.potassiumIonStringProperty,
               accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty
             }
           ]
@@ -159,19 +159,19 @@ export default class TransportProteinPanel extends Panel {
 
       // Ligand-gated channels
       const ligandGatedChannelPanel = createPanel( {
-        titleProperty: MembraneTransportFluent.ligandGatedChannelsStringProperty,
+        titleProperty: MembraneTransportFluent.transportProteinPanel.ligandGatedChannelsStringProperty,
         tandemName: 'ligandGatedChannelPanel',
         expanded: true,
         accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.ligandGatedChannelPanel.accessibleHelpTextStringProperty,
         transportProteins: [
           {
             transportProteinType: 'sodiumIonLigandGatedChannel',
-            labelProperty: MembraneTransportFluent.sodiumIonStringProperty,
+            labelProperty: MembraneTransportFluent.soluteNames.sodiumIonStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty
           },
           {
             transportProteinType: 'potassiumIonLigandGatedChannel',
-            labelProperty: MembraneTransportFluent.potassiumIonStringProperty,
+            labelProperty: MembraneTransportFluent.soluteNames.potassiumIonStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty
           }
         ]
@@ -188,19 +188,19 @@ export default class TransportProteinPanel extends Panel {
 
       // Active transport proteins
       const activeTransportProteinPanel = createPanel( {
-        titleProperty: MembraneTransportFluent.activeTransportersStringProperty,
+        titleProperty: MembraneTransportFluent.transportProteinPanel.activeTransportersStringProperty,
         tandemName: 'activeTransportProteinPanel',
         expanded: true,
         accessibleHelpTextStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty,
         transportProteins: [
           {
             transportProteinType: 'sodiumPotassiumPump',
-            labelProperty: MembraneTransportFluent.naPlusKPlusPumpStringProperty,
+            labelProperty: MembraneTransportFluent.transportProteinPanel.naPlusKPlusPumpStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty
           },
           {
             transportProteinType: 'sodiumGlucoseCotransporter',
-            labelProperty: MembraneTransportFluent.sodiumGlucoseCotransporterStringProperty,
+            labelProperty: MembraneTransportFluent.transportProteinPanel.sodiumGlucoseCotransporterStringProperty,
             accessibleNameStringProperty: MembraneTransportFluent.a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty
           }
         ]

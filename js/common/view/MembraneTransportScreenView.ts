@@ -128,27 +128,27 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.addChild( timeControlNode );
 
     const CHECKBOX_TEXT_MAX_WIDTH = 120;
-    const crossingHighlightsCheckbox = new Checkbox( this.model.crossingHighlightsEnabledProperty, new Text( MembraneTransportFluent.crossingHighlightsStringProperty, {
+    const crossingHighlightsCheckbox = new Checkbox( this.model.crossingHighlightsEnabledProperty, new Text( MembraneTransportFluent.settings.crossingHighlightsStringProperty, {
       font: MembraneTransportConstants.FONT,
       maxWidth: CHECKBOX_TEXT_MAX_WIDTH
     } ), {
       touchAreaYDilation: 5,
       touchAreaXDilation: 5,
-      accessibleHelpText: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
-      accessibleContextResponseChecked: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty,
-      accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
+      accessibleContextResponseChecked: MembraneTransportFluent.a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty,
+      accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty,
       tandem: options.tandem.createTandem( 'crossingHighlightsCheckbox' )
     } );
 
-    const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.crossingSoundsStringProperty, {
+    const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.settings.crossingSoundsStringProperty, {
       font: MembraneTransportConstants.FONT,
       maxWidth: CHECKBOX_TEXT_MAX_WIDTH
     } ), {
       touchAreaYDilation: 5,
       touchAreaXDilation: 5,
-      accessibleHelpText: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
-      accessibleContextResponseChecked: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty,
-      accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.settings.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
+      accessibleContextResponseChecked: MembraneTransportFluent.a11y.settings.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty,
+      accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty,
       tandem: options.tandem.createTandem( 'crossingSoundsCheckbox' )
     } );
 

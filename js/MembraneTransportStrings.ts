@@ -22,33 +22,39 @@ type StringsType = {
     'playgroundStringProperty': LocalizedStringProperty;
   };
   'solutesStringProperty': LocalizedStringProperty;
-  'oxygenStringProperty': LocalizedStringProperty;
-  'carbonDioxideStringProperty': LocalizedStringProperty;
-  'sodiumIonStringProperty': LocalizedStringProperty;
-  'potassiumIonStringProperty': LocalizedStringProperty;
-  'glucoseStringProperty': LocalizedStringProperty;
-  'atpStringProperty': LocalizedStringProperty;
-  'outsideStringProperty': LocalizedStringProperty;
-  'insideStringProperty': LocalizedStringProperty;
-  'voltageGatedChannelsStringProperty': LocalizedStringProperty;
-  'ligandGatedChannelsStringProperty': LocalizedStringProperty;
-  'activeTransportersStringProperty': LocalizedStringProperty;
-  'leakageChannelsStringProperty': LocalizedStringProperty;
-  'naPlusKPlusPumpStringProperty': LocalizedStringProperty;
-  'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
-  'membranePotentialMVStringProperty': LocalizedStringProperty;
-  'chargesStringProperty': LocalizedStringProperty;
-  'addLigandsStringProperty': LocalizedStringProperty;
-  'removeLigandsStringProperty': LocalizedStringProperty;
-  'animateLipids': {
-    'labelStringProperty': LocalizedStringProperty;
-    'descriptionStringProperty': LocalizedStringProperty;
+  'soluteNames': {
+    'oxygenStringProperty': LocalizedStringProperty;
+    'carbonDioxideStringProperty': LocalizedStringProperty;
+    'sodiumIonStringProperty': LocalizedStringProperty;
+    'potassiumIonStringProperty': LocalizedStringProperty;
+    'glucoseStringProperty': LocalizedStringProperty;
+    'atpStringProperty': LocalizedStringProperty;
   };
-  'glucoseMetabolism': {
-    'labelStringProperty': LocalizedStringProperty;
-    'descriptionStringProperty': LocalizedStringProperty;
+  'cellRegions': {
+    'outsideStringProperty': LocalizedStringProperty;
+    'insideStringProperty': LocalizedStringProperty;
+  };
+  'transportProteinPanel': {
+    'voltageGatedChannelsStringProperty': LocalizedStringProperty;
+    'ligandGatedChannelsStringProperty': LocalizedStringProperty;
+    'activeTransportersStringProperty': LocalizedStringProperty;
+    'leakageChannelsStringProperty': LocalizedStringProperty;
+    'naPlusKPlusPumpStringProperty': LocalizedStringProperty;
+    'sodiumGlucoseCotransporterStringProperty': LocalizedStringProperty;
+    'membranePotentialMVStringProperty': LocalizedStringProperty;
+    'chargesStringProperty': LocalizedStringProperty;
+    'addLigandsStringProperty': LocalizedStringProperty;
+    'removeLigandsStringProperty': LocalizedStringProperty;
   };
   'preferencesDialog': {
+    'animateLipids': {
+      'labelStringProperty': LocalizedStringProperty;
+      'descriptionStringProperty': LocalizedStringProperty;
+    };
+    'glucoseMetabolism': {
+      'labelStringProperty': LocalizedStringProperty;
+      'descriptionStringProperty': LocalizedStringProperty;
+    };
     'audio': {
       'sounds': {
         'stereoCrossingSounds': {
@@ -58,9 +64,13 @@ type StringsType = {
       }
     }
   };
-  'soluteConcentrationsStringProperty': LocalizedStringProperty;
-  'crossingHighlightsStringProperty': LocalizedStringProperty;
-  'crossingSoundsStringProperty': LocalizedStringProperty;
+  'barChart': {
+    'soluteConcentrationsStringProperty': LocalizedStringProperty;
+  };
+  'settings': {
+    'crossingHighlightsStringProperty': LocalizedStringProperty;
+    'crossingSoundsStringProperty': LocalizedStringProperty;
+  };
   'a11y': {
     'simpleDiffusionScreen': {
       'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
@@ -108,15 +118,17 @@ type StringsType = {
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
-    'crossingHighlightsCheckbox': {
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'accessibleContextResponseCheckedStringProperty': LocalizedStringProperty;
-      'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
-    };
-    'crossingSoundsCheckbox': {
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      'accessibleContextResponseCheckedStringProperty': LocalizedStringProperty;
-      'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
+    'settings': {
+      'crossingHighlightsCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseCheckedStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
+      };
+      'crossingSoundsCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseCheckedStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
+      }
     };
     'transportProteinPanel': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
@@ -181,19 +193,21 @@ type StringsType = {
       'grabbedResponseWithEmptyMembraneHintStringProperty': LocalizedStringProperty;
     };
     'membranePotentialValueStringProperty': LocalizedStringProperty;
-    'soluteAccessibleNames': {
-      'oxygenStringProperty': LocalizedStringProperty;
-      'carbonDioxideStringProperty': LocalizedStringProperty;
-      'sodiumIonStringProperty': LocalizedStringProperty;
-      'potassiumIonStringProperty': LocalizedStringProperty;
-      'glucoseStringProperty': LocalizedStringProperty;
-      'atpStringProperty': LocalizedStringProperty;
+    'solutes': {
+      'lowercaseNameStringProperty': LocalizedStringProperty;
+      'uppercaseNameStringProperty': LocalizedStringProperty;
+      'briefNameStringProperty': LocalizedStringProperty;
+      'amountComparisonStringProperty': LocalizedStringProperty;
+      'averageCrossingDirectionStringProperty': LocalizedStringProperty;
     };
-    'soluteStringProperty': LocalizedStringProperty;
-    'soluteCapitalizedStringProperty': LocalizedStringProperty;
-    'soluteBriefStringProperty': LocalizedStringProperty;
-    'soluteComparisonStringProperty': LocalizedStringProperty;
-    'soluteAverageCrossingDirectionStringProperty': LocalizedStringProperty;
+    'solutesPanel': {
+      'oxygenRadioButtonStringProperty': LocalizedStringProperty;
+      'carbonDioxideRadioButtonStringProperty': LocalizedStringProperty;
+      'sodiumIonRadioButtonStringProperty': LocalizedStringProperty;
+      'potassiumIonRadioButtonStringProperty': LocalizedStringProperty;
+      'glucoseRadioButtonStringProperty': LocalizedStringProperty;
+      'atpRadioButtonStringProperty': LocalizedStringProperty;
+    };
     'soluteControl': {
       'outside': {
         'accessibleNameStringProperty': LocalizedStringProperty;

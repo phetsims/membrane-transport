@@ -27,8 +27,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
 
     const animateLipidsControl = new PreferencesControl( {
       isDisposable: false,
-      labelNode: new Text( MembraneTransportFluent.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-      descriptionNode: new RichText( MembraneTransportFluent.animateLipids.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+      labelNode: new Text( MembraneTransportFluent.preferencesDialog.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.animateLipids.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
       controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
       tandem: tandem.createTandem( 'animateLipidsControl' ),
       phetioFeatured: true,
@@ -41,8 +41,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
 
     const glucoseMetabolismControl = new PreferencesControl( {
       isDisposable: false,
-      labelNode: new Text( MembraneTransportFluent.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-      descriptionNode: new RichText( MembraneTransportFluent.glucoseMetabolism.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+      labelNode: new Text( MembraneTransportFluent.preferencesDialog.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.glucoseMetabolism.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
       controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.glucoseMetabolismProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
       tandem: tandem.createTandem( 'glucoseMetabolismControl' ),
       phetioFeatured: true,

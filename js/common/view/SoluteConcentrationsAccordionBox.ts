@@ -33,7 +33,7 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
   public constructor( model: MembraneTransportModel, providedOptions: SoluteBarChartsAccordionBoxOptions ) {
 
     const options = optionize<SoluteBarChartsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
-      titleNode: new Text( MembraneTransportFluent.soluteConcentrationsStringProperty, {
+      titleNode: new Text( MembraneTransportFluent.barChart.soluteConcentrationsStringProperty, {
         fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
         maxWidth: 400
       } ),

@@ -1,58 +1,66 @@
 # Strings for the Membrane Transport simulation
 
 # Title
-membrane-transport.title:                                        Membrane Transport
+membrane-transport.title:    Membrane Transport
 
 # Screens
-screen.simpleDiffusion:                                          Simple Diffusion
-screen.facilitatedDiffusion:                                     Facilitated Diffusion
-screen.activeTransport:                                          Active Transport
-screen.playground:                                               Playground
+screen.simpleDiffusion:      Simple Diffusion
+screen.facilitatedDiffusion: Facilitated Diffusion
+screen.activeTransport:      Active Transport
+screen.playground:           Playground
 
 # Solutes
-solutes:                                                         Solutes
-oxygen:                                                          O<sub>2</sub>
-carbonDioxide:                                                   CO<sub>2</sub>
-sodiumIon:                                                       Na<sup>+</sup>
-potassiumIon:                                                    K<sup>+</sup>
-glucose:                                                         Glucose
-atp:                                                             ATP
+solutes:                     Solutes
+
+# Solute Types
+soluteNames:
+  oxygen:        O<sub>2</sub>
+  carbonDioxide: CO<sub>2</sub>
+  sodiumIon:     Na<sup>+</sup>
+  potassiumIon:  K<sup>+</sup>
+  glucose:       Glucose
+  atp:           ATP
 
 # Cell Regions
-outside:                                                         Outside
-inside:                                                          Inside
+cellRegions:
+  outside: Outside
+  inside:  Inside
 
 # On the Toolbox
-voltageGatedChannels:                                            Voltage-gated Channels
-ligandGatedChannels:                                             Ligand-gated Channels
-activeTransporters:                                              Active Transporters
-leakageChannels:                                                 Leakage Channels
+transportProteinPanel:
+  voltageGatedChannels:       Voltage-gated Channels
+  ligandGatedChannels:        Ligand-gated Channels
+  activeTransporters:         Active Transporters
+  leakageChannels:            Leakage Channels
 
-naPlusKPlusPump:                                                 Na<sup>+</sup>/K<sup>+</sup><br>Pump
-sodiumGlucoseCotransporter:                                      Na<sup>+</sup>/Glucose<br>Cotransporter
+  naPlusKPlusPump:            Na<sup>+</sup>/K<sup>+</sup><br>Pump
+  sodiumGlucoseCotransporter: Na<sup>+</sup>/Glucose<br>Cotransporter
 
-# Membrane Potential Section
-membranePotentialMV:                                             Membrane Potential (mV)
-charges:                                                         Charges
+  # Membrane Potential Section
+  membranePotentialMV:        Membrane Potential (mV)
+  charges:                    Charges
 
-# Ligands Section
-addLigands:                                                      Add Ligands
-removeLigands:                                                   Remove Ligands
+  # Ligands Section
+  addLigands:                 Add Ligands
+  removeLigands:              Remove Ligands
 
 # Preferences Dialog
-animateLipids.label:                                             Animate Lipids
-animateLipids.description:                                       Whether the phospholipids forming the cell membrane should be animated.
-glucoseMetabolism.label:                                         Glucose Metabolism
-glucoseMetabolism.description:                                   Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
-preferencesDialog.audio.sounds.stereoCrossingSounds.label:       Stereo Crossing Sounds
-preferencesDialog.audio.sounds.stereoCrossingSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
+preferencesDialog:
+  animateLipids.label:                           Animate Lipids
+  animateLipids.description:                     Whether the phospholipids forming the cell membrane should be animated.
+  glucoseMetabolism.label:                       Glucose Metabolism
+  glucoseMetabolism.description:                 Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
+  audio.sounds.stereoCrossingSounds.label:       Stereo Crossing Sounds
+  audio.sounds.stereoCrossingSounds.description: Emphasize solute transport direction by mapping sound to right (outside to inside) and left (inside to outside) channels.
 
 # Solute Concentration Bar Charts
-soluteConcentrations:                                            Solute Concentrations
+barChart:
+  soluteConcentrations: Solute Concentrations
 
 # Checkboxes below the play area
-crossingHighlights:                                              Crossing Highlights
-crossingSounds:                                                  Crossing Sounds
+settings:
+  crossingHighlights: Crossing Highlights
+  crossingSounds:     Crossing Sounds
 
 a11y:
   simpleDiffusionScreen:
@@ -112,14 +120,15 @@ a11y:
     accessibleName:            Reset Solutes
     accessibleContextResponse: Solutes cleared. Add solutes to observe changes
     accessibleHelpText:        Disabled when no solutes have been added.
-  crossingHighlightsCheckbox:
-    accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
-    accessibleContextResponseChecked:   Visual highlights for solute crossings, on.
-    accessibleContextResponseUnchecked: Visual highlights for solute crossings, off.
-  crossingSoundsCheckbox:
-    accessibleHelpText:                 Explore with or without unique sounds for solute crossings.
-    accessibleContextResponseChecked:   Solute crossing sounds on.
-    accessibleContextResponseUnchecked: Solute crossing sounds off.
+  settings:
+    crossingHighlightsCheckbox:
+      accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
+      accessibleContextResponseChecked:   Visual highlights for solute crossings, on.
+      accessibleContextResponseUnchecked: Visual highlights for solute crossings, off.
+    crossingSoundsCheckbox:
+      accessibleHelpText:                 Explore with or without unique sounds for solute crossings.
+      accessibleContextResponseChecked:   Solute crossing sounds on.
+      accessibleContextResponseUnchecked: Solute crossing sounds off.
   transportProteinPanel:
     accessibleHeading:  Transport Proteins
     accessibleHelpText: Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
@@ -205,95 +214,99 @@ a11y:
 
 
   # The membrane potential value, used in various places.
-  membranePotentialValue:         |-
-                                  { $membranePotential ->
-                                    [-70] negative 70
-                                    [-50] negative 50
-                                    *[30] positive 30
-                                  } millivolts
+  membranePotentialValue: |-
+                          { $membranePotential ->
+                            [-70] negative 70
+                            [-50] negative 50
+                            *[30] positive 30
+                          } millivolts
 
-  # Accessible names for solute radio buttons
-  soluteAccessibleNames:
-    oxygen:        Oxygen, O2, nonpolar, small
-    carbonDioxide: Carbon Dioxide, CO2, nonpolar, small
-    sodiumIon:     Sodium Ion, Na, positive, small
-    potassiumIon:  Potassium Ion, K, positive, small
-    glucose:       Glucose, hexagonal ring, large
-    atp:           Adenosine Triphosphate, ATP, complex, large
+
 
   # Names for the solute type. Reused in various places.
-  solute:                         |-
-                                  { $soluteType ->
-                                    [oxygen]        oxygen molecules
-                                    [carbonDioxide] carbon dioxide molecules
-                                    [sodiumIon]     sodium ions
-                                    [potassiumIon]  potassium ions
-                                    [glucose]       glucose molecules
-                                   *[atp]           ATP molecules
-                                  }
+  solutes:
+    lowercaseName:            |-
+                              { $soluteType ->
+                                [oxygen]        oxygen molecules
+                                [carbonDioxide] carbon dioxide molecules
+                                [sodiumIon]     sodium ions
+                                [potassiumIon]  potassium ions
+                                [glucose]       glucose molecules
+                               *[atp]           ATP molecules
+                              }
 
-  # Capitalized names for the solute type. Reused in various places.
-  soluteCapitalized:              |-
-                                  { $soluteType ->
-                                    [oxygen]        Oxygen Molecules
-                                    [carbonDioxide] Carbon Dioxide molecules
-                                    [sodiumIon]     Sodium Ions
-                                    [potassiumIon]  Potassium Ions
-                                    [glucose]       Glucose Molecules
-                                   *[atp]           Atp Molecules
-                                  }
+    # Capitalized names for the solute type. Reused in various places.
+    uppercaseName:          |-
+                              { $soluteType ->
+                                [oxygen]        Oxygen Molecules
+                                [carbonDioxide] Carbon Dioxide molecules
+                                [sodiumIon]     Sodium Ions
+                                [potassiumIon]  Potassium Ions
+                                [glucose]       Glucose Molecules
+                               *[atp]           ATP Molecules
+                              }
 
-  # Brevity is the soul of wit, so we use these brief names in various places.
-  soluteBrief:                    |-
-                                  { $soluteType ->
-                                    [oxygen]        Oxygen
-                                    [carbonDioxide] Carbon Dioxide
-                                    [sodiumIon]     Sodium
-                                    [potassiumIon]  Potassium
-                                    [glucose]       Glucose
-                                   *[atp]           Atp
-                                  }
+    # Brevity is the soul of wit, so we use these brief names in various places.
+    briefName:                |-
+                              { $soluteType ->
+                                [oxygen]        Oxygen
+                                [carbonDioxide] Carbon Dioxide
+                                [sodiumIon]     Sodium
+                                [potassiumIon]  Potassium
+                                [glucose]       Glucose
+                               *[atp]           ATP
+                              }
 
-  # A description of relative amounts of solute outside and inside the cell.
-  soluteComparison:               |-
-                                  { $amount ->
-                                    *[none]  none
-                                    [equal] amounts exactly equal outside and inside
-                                    [allOutside] all outside, none inside
-                                    [allInside] all inside, none outside
-                                    [manyManyMoreOutside] many many more outside than inside
-                                    [manyMoreOutside] many more outside than inside
-                                    [aboutTwiceAsManyOutside] about twice as many outside as inside
-                                    [alotMoreOutside] a lot more outside than inside
-                                    [someMoreOutside] some more outside than inside
-                                    [littleBitMoreOutside] a little bit more outside than inside
-                                    [roughlyEqualOutside] roughly equal amounts inside and outside
-                                    [manyManyMoreInside] many many more inside than outside
-                                    [manyMoreInside] many more inside than outside
-                                    [aboutTwiceAsManyInside] about twice as many inside as outside
-                                    [alotMoreInside] a lot more inside than outside
-                                    [someMoreInside] some more inside than outside
-                                    [littleBitMoreInside] a little bit more inside than outside
-                                    [roughlyEqualInside] roughly equal amounts inside and outside
-                                  }
+    # A description of relative amounts of solute outside and inside the cell.
+    amountComparison:         |-
+                              { $amount ->
+                                *[none]  none
+                                [equal] amounts exactly equal outside and inside
+                                [allOutside] all outside, none inside
+                                [allInside] all inside, none outside
+                                [manyManyMoreOutside] many many more outside than inside
+                                [manyMoreOutside] many more outside than inside
+                                [aboutTwiceAsManyOutside] about twice as many outside as inside
+                                [alotMoreOutside] a lot more outside than inside
+                                [someMoreOutside] some more outside than inside
+                                [littleBitMoreOutside] a little bit more outside than inside
+                                [roughlyEqualOutside] roughly equal amounts inside and outside
+                                [manyManyMoreInside] many many more inside than outside
+                                [manyMoreInside] many more inside than outside
+                                [aboutTwiceAsManyInside] about twice as many inside as outside
+                                [alotMoreInside] a lot more inside than outside
+                                [someMoreInside] some more inside than outside
+                                [littleBitMoreInside] a little bit more inside than outside
+                                [roughlyEqualInside] roughly equal amounts inside and outside
+                              }
 
-  # A description of the average crossing direction of a solute across the membrane.
-  soluteAverageCrossingDirection: |-
-                                  { $direction ->
-                                    [toOutside] crossings to outside
-                                    [mostlyToOutside] crossings mostly to outside
-                                    [inBothDirections] crossings in both directions
-                                    [mostlyToInside] crossings mostly to inside
-                                    [toInside] crossings to inside
-                                    *[none] no recent crossings
-                                  }
+    # A description of the average crossing direction of a solute across the membrane.
+    averageCrossingDirection: |-
+                              { $direction ->
+                                [toOutside] crossings to outside
+                                [mostlyToOutside] crossings mostly to outside
+                                [inBothDirections] crossings in both directions
+                                [mostlyToInside] crossings mostly to inside
+                                [toInside] crossings to inside
+                                *[none] no recent crossings
+                              }
+
+  solutesPanel:
+
+    # Accessible names for solute radio buttons
+    oxygenRadioButton:        Oxygen, O2, nonpolar, small
+    carbonDioxideRadioButton: Carbon Dioxide, CO2, nonpolar, small
+    sodiumIonRadioButton:     Sodium Ion, Na, positive, small
+    potassiumIonRadioButton:  Potassium Ion, K, positive, small
+    glucoseRadioButton:       Glucose, hexagonal ring, large
+    atpRadioButton:           Adenosine Triphosphate, ATP, complex, large
 
   soluteControl:
     outside:
-      accessibleName:     "{ a11y.soluteCapitalized } Outside Cell"
+      accessibleName:     "{ a11y.solutes.uppercaseName } Outside Cell"
       accessibleHelpText: Adjust chosen solute amount on outside.
     inside:
-      accessibleName:     "{ a11y.soluteCapitalized } Inside Cell"
+      accessibleName:     "{ a11y.solutes.uppercaseName } Inside Cell"
       accessibleHelpText: Adjust chosen solute amount on inside.
     voicingHintResponse:       Adjust chosen solute amount.
     accessibleRoleDescription: solute adjuster
@@ -308,7 +321,7 @@ a11y:
                                  [largeAmount] large amount of
                                  [hugeAmount] huge amount of
                                 *[maxAmount] max amount of
-                               } { a11y.solute }
+                               } { a11y.solutes.lowercaseName }
     accessibleContextResponse: |-
                                { $amountAdded ->
                                  [aLittle] A little
@@ -316,53 +329,55 @@ a11y:
                                } { $addedOrRemoved ->
                                  [added]   added
                                 *[removed] removed
-                               }. Now, { a11y.soluteComparison }. 
+                               }. Now, { a11y.solutes.amountComparison }. 
 
   soluteConcentrationsAccordionBox:
     descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
+
+    # TODO: Update this key, see https://github.com/phetsims/membrane-transport/issues/333
     barChart:
 
       # Note this description is used instead of accessibleName in the case that there are none inside AND none outside.
-      accessibleNameWithNoParticles: |-
-                                     { a11y.soluteCapitalized }: none outside, none inside.
+      accessibleNameWithNoParticles:                     |-
+                                                         { a11y.solutes.uppercaseName }: none outside, none inside.
 
-      accessibleNameWithParticles:   |-
-                                     { a11y.soluteCapitalized }: { a11y.soluteComparison }; { a11y.soluteAverageCrossingDirection }; { $outsideAmount ->
-                                       [none] none
-                                       [few] a few
-                                       [some] some
-                                       [smallAmount] small amount
-                                       [several] several
-                                       [many] many
-                                       [largeAmount] large amount
-                                       [hugeAmount] huge amount
-                                      *[maxAmount] max amount
-                                     } outside, { $insideAmount ->
-                                       [none] none
-                                       [few] a few
-                                       [some] some
-                                       [smallAmount] small amount
-                                       [several] several
-                                       [many] many
-                                       [largeAmount] large amount
-                                       [hugeAmount] huge amount
-                                      *[maxAmount] max amount
-                                     } inside.
-      glucoseMetabolism:             Glucose disappears from inside as it is metabolized by the cell.
-      accessibleNameWithParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
+      accessibleNameWithParticles:                       |-
+                                                         { a11y.solutes.uppercaseName }: { a11y.solutes.amountComparison }; { a11y.solutes.averageCrossingDirection }; { $outsideAmount ->
+                                                           [none] none
+                                                           [few] a few
+                                                           [some] some
+                                                           [smallAmount] small amount
+                                                           [several] several
+                                                           [many] many
+                                                           [largeAmount] large amount
+                                                           [hugeAmount] huge amount
+                                                          *[maxAmount] max amount
+                                                         } outside, { $insideAmount ->
+                                                           [none] none
+                                                           [few] a few
+                                                           [some] some
+                                                           [smallAmount] small amount
+                                                           [several] several
+                                                           [many] many
+                                                           [largeAmount] large amount
+                                                           [hugeAmount] huge amount
+                                                          *[maxAmount] max amount
+                                                         } inside.
+      glucoseMetabolism:                                 Glucose disappears from inside as it is metabolized by the cell.
+      accessibleNameWithParticlesAndGlucoseMetabolism:   "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
       accessibleNameWithNoParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
-      crossing:                      |-
-                                     { $crossing ->
-                                       *[none] no crossings
-                                       [inside] crossings in
-                                       [outside] crossings out
-                                       [both] crossings in and out
-                                     }
+      crossing:                                          |-
+                                                         { $crossing ->
+                                                           *[none] no crossings
+                                                           [inside] crossings in
+                                                           [outside] crossings out
+                                                           [both] crossings in and out
+                                                         }
 
   soluteCrossing:
-    initialResponse:            "{ a11y.soluteCapitalized } crossing membrane, { a11y.soluteComparison }."
-    subsequentResponse:         "{ a11y.soluteBrief }, { a11y.soluteComparison }."
-    inBalanceResponse:          "{ a11y.soluteCapitalized } crossing steadily in both directions, now roughly equal."
+    initialResponse:            "{ a11y.solutes.uppercaseName } crossing membrane, { a11y.solutes.amountComparison }."
+    subsequentResponse:         "{ a11y.solutes.briefName }, { a11y.solutes.amountComparison }."
+    inBalanceResponse:          "{ a11y.solutes.uppercaseName } crossing steadily in both directions, now roughly equal."
     manyTypesResponse:          Many solute types crossing membrane.
     manyTypesInBalanceResponse: Many solutes types crossing steadily in both directions.
 

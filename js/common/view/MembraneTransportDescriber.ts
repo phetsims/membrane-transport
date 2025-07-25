@@ -429,8 +429,8 @@ export default class MembraneTransportDescriber {
     if ( facilitatedSolutesThatWeShouldDescribe.length === 1 ) {
       const facilitatedSolute = facilitatedSolutesThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( facilitatedSolute );
-      const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
-      descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
+      const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
+      descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
     }
     else if ( simpleDiffusers.length === 1 && this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
 
@@ -438,15 +438,15 @@ export default class MembraneTransportDescriber {
       // we include a more sophisticated description of it
       const soluteType = simpleDiffusers[ 0 ];
       const directionDescriptor = this.getAverageCrossingDirectionDescriptorFromQueue( soluteType );
-      const directionDescriptionString = MembraneTransportFluent.a11y.soluteAverageCrossingDirection.format( { direction: directionDescriptor } );
-      descriptionParts.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } )} crossing membrane, ${directionDescriptionString}` );
+      const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
+      descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing membrane, ${directionDescriptionString}` );
     }
     else {
 
       // Many solutes are moving across so we have a general description of everything happening.
       const solutesThatWeShouldDescribe = solutesThatCrossed.filter( isSoluteDescribable );
       if ( solutesThatWeShouldDescribe.length > 0 ) {
-        const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.soluteBrief.format( {
+        const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.solutes.briefName.format( {
           soluteType: soluteType
         } ) ).join( ', ' );
         descriptionParts.push( `${soluteNames}, crossing the membrane` );
@@ -529,7 +529,7 @@ export default class MembraneTransportDescriber {
       );
 
       if ( this.shouldDescribeComparisons( soluteType ) && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
-        const soluteName = MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } );
+        const soluteName = MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } );
         const comparisonString = this.getSoluteComparisonString( soluteType );
 
         if ( includeSoluteName ) {
@@ -566,7 +566,7 @@ export default class MembraneTransportDescriber {
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
 
         affirm( soluteType !== 'adp' && soluteType !== 'phosphate', 'adp cant cross the membrane, so it should not be described' );
-        changedSteadyStates.push( `${MembraneTransportFluent.a11y.soluteBrief.format( { soluteType: soluteType } )} crossing steadily in both directions, amounts each side roughly equal` );
+        changedSteadyStates.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing steadily in both directions, amounts each side roughly equal` );
       }
 
       // Once we enter steady state, we are not going to leave steady state until we are out of "roughly equal" amounts.
@@ -612,7 +612,7 @@ export default class MembraneTransportDescriber {
       this.model.outsideSoluteCountProperties[ soluteType ].value,
       this.model.insideSoluteCountProperties[ soluteType ].value
     );
-    return MembraneTransportFluent.a11y.soluteComparison.format( {
+    return MembraneTransportFluent.a11y.solutes.amountComparison.format( {
       amount: descriptor
     } );
   }

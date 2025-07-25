@@ -33,33 +33,33 @@ addToMapIfDefined( 'screen_facilitatedDiffusion', 'screen.facilitatedDiffusionSt
 addToMapIfDefined( 'screen_activeTransport', 'screen.activeTransportStringProperty' );
 addToMapIfDefined( 'screen_playground', 'screen.playgroundStringProperty' );
 addToMapIfDefined( 'solutes', 'solutesStringProperty' );
-addToMapIfDefined( 'oxygen', 'oxygenStringProperty' );
-addToMapIfDefined( 'carbonDioxide', 'carbonDioxideStringProperty' );
-addToMapIfDefined( 'sodiumIon', 'sodiumIonStringProperty' );
-addToMapIfDefined( 'potassiumIon', 'potassiumIonStringProperty' );
-addToMapIfDefined( 'glucose', 'glucoseStringProperty' );
-addToMapIfDefined( 'atp', 'atpStringProperty' );
-addToMapIfDefined( 'outside', 'outsideStringProperty' );
-addToMapIfDefined( 'inside', 'insideStringProperty' );
-addToMapIfDefined( 'voltageGatedChannels', 'voltageGatedChannelsStringProperty' );
-addToMapIfDefined( 'ligandGatedChannels', 'ligandGatedChannelsStringProperty' );
-addToMapIfDefined( 'activeTransporters', 'activeTransportersStringProperty' );
-addToMapIfDefined( 'leakageChannels', 'leakageChannelsStringProperty' );
-addToMapIfDefined( 'naPlusKPlusPump', 'naPlusKPlusPumpStringProperty' );
-addToMapIfDefined( 'sodiumGlucoseCotransporter', 'sodiumGlucoseCotransporterStringProperty' );
-addToMapIfDefined( 'membranePotentialMV', 'membranePotentialMVStringProperty' );
-addToMapIfDefined( 'charges', 'chargesStringProperty' );
-addToMapIfDefined( 'addLigands', 'addLigandsStringProperty' );
-addToMapIfDefined( 'removeLigands', 'removeLigandsStringProperty' );
-addToMapIfDefined( 'animateLipids_label', 'animateLipids.labelStringProperty' );
-addToMapIfDefined( 'animateLipids_description', 'animateLipids.descriptionStringProperty' );
-addToMapIfDefined( 'glucoseMetabolism_label', 'glucoseMetabolism.labelStringProperty' );
-addToMapIfDefined( 'glucoseMetabolism_description', 'glucoseMetabolism.descriptionStringProperty' );
+addToMapIfDefined( 'soluteNames_oxygen', 'soluteNames.oxygenStringProperty' );
+addToMapIfDefined( 'soluteNames_carbonDioxide', 'soluteNames.carbonDioxideStringProperty' );
+addToMapIfDefined( 'soluteNames_sodiumIon', 'soluteNames.sodiumIonStringProperty' );
+addToMapIfDefined( 'soluteNames_potassiumIon', 'soluteNames.potassiumIonStringProperty' );
+addToMapIfDefined( 'soluteNames_glucose', 'soluteNames.glucoseStringProperty' );
+addToMapIfDefined( 'soluteNames_atp', 'soluteNames.atpStringProperty' );
+addToMapIfDefined( 'cellRegions_outside', 'cellRegions.outsideStringProperty' );
+addToMapIfDefined( 'cellRegions_inside', 'cellRegions.insideStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_voltageGatedChannels', 'transportProteinPanel.voltageGatedChannelsStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_ligandGatedChannels', 'transportProteinPanel.ligandGatedChannelsStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_activeTransporters', 'transportProteinPanel.activeTransportersStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_leakageChannels', 'transportProteinPanel.leakageChannelsStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_naPlusKPlusPump', 'transportProteinPanel.naPlusKPlusPumpStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_sodiumGlucoseCotransporter', 'transportProteinPanel.sodiumGlucoseCotransporterStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_membranePotentialMV', 'transportProteinPanel.membranePotentialMVStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_charges', 'transportProteinPanel.chargesStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_addLigands', 'transportProteinPanel.addLigandsStringProperty' );
+addToMapIfDefined( 'transportProteinPanel_removeLigands', 'transportProteinPanel.removeLigandsStringProperty' );
+addToMapIfDefined( 'preferencesDialog_animateLipids_label', 'preferencesDialog.animateLipids.labelStringProperty' );
+addToMapIfDefined( 'preferencesDialog_animateLipids_description', 'preferencesDialog.animateLipids.descriptionStringProperty' );
+addToMapIfDefined( 'preferencesDialog_glucoseMetabolism_label', 'preferencesDialog.glucoseMetabolism.labelStringProperty' );
+addToMapIfDefined( 'preferencesDialog_glucoseMetabolism_description', 'preferencesDialog.glucoseMetabolism.descriptionStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_label', 'preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_description', 'preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty' );
-addToMapIfDefined( 'soluteConcentrations', 'soluteConcentrationsStringProperty' );
-addToMapIfDefined( 'crossingHighlights', 'crossingHighlightsStringProperty' );
-addToMapIfDefined( 'crossingSounds', 'crossingSoundsStringProperty' );
+addToMapIfDefined( 'barChart_soluteConcentrations', 'barChart.soluteConcentrationsStringProperty' );
+addToMapIfDefined( 'settings_crossingHighlights', 'settings.crossingHighlightsStringProperty' );
+addToMapIfDefined( 'settings_crossingSounds', 'settings.crossingSoundsStringProperty' );
 addToMapIfDefined( 'a11y_simpleDiffusionScreen_screenButtonsHelpText', 'a11y.simpleDiffusionScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_facilitatedDiffusionScreen_screenButtonsHelpText', 'a11y.facilitatedDiffusionScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_activeTransportScreen_screenButtonsHelpText', 'a11y.activeTransportScreen.screenButtonsHelpTextStringProperty' );
@@ -88,12 +88,12 @@ addToMapIfDefined( 'a11y_soluteControls_accessibleHelpText', 'a11y.soluteControl
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', 'a11y.eraseSolutesButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpText', 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleHelpText', 'a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleContextResponseChecked', 'a11y.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' );
-addToMapIfDefined( 'a11y_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', 'a11y.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' );
-addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleHelpText', 'a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleContextResponseChecked', 'a11y.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty' );
-addToMapIfDefined( 'a11y_crossingSoundsCheckbox_accessibleContextResponseUnchecked', 'a11y.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' );
+addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleHelpText', 'a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseChecked', 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' );
+addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' );
+addToMapIfDefined( 'a11y_settings_crossingSoundsCheckbox_accessibleHelpText', 'a11y.settings.crossingSoundsCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseChecked', 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty' );
+addToMapIfDefined( 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseUnchecked', 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHeading', 'a11y.transportProteinPanel.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHelpText', 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', 'a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' );
@@ -133,17 +133,17 @@ addToMapIfDefined( 'a11y_ligandNode_grabbedResponse', 'a11y.ligandNode.grabbedRe
 addToMapIfDefined( 'a11y_ligandNode_grabbedResponseWithHint', 'a11y.ligandNode.grabbedResponseWithHintStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_grabbedResponseWithEmptyMembraneHint', 'a11y.ligandNode.grabbedResponseWithEmptyMembraneHintStringProperty' );
 addToMapIfDefined( 'a11y_membranePotentialValue', 'a11y.membranePotentialValueStringProperty' );
-addToMapIfDefined( 'a11y_soluteAccessibleNames_oxygen', 'a11y.soluteAccessibleNames.oxygenStringProperty' );
-addToMapIfDefined( 'a11y_soluteAccessibleNames_carbonDioxide', 'a11y.soluteAccessibleNames.carbonDioxideStringProperty' );
-addToMapIfDefined( 'a11y_soluteAccessibleNames_sodiumIon', 'a11y.soluteAccessibleNames.sodiumIonStringProperty' );
-addToMapIfDefined( 'a11y_soluteAccessibleNames_potassiumIon', 'a11y.soluteAccessibleNames.potassiumIonStringProperty' );
-addToMapIfDefined( 'a11y_soluteAccessibleNames_glucose', 'a11y.soluteAccessibleNames.glucoseStringProperty' );
-addToMapIfDefined( 'a11y_soluteAccessibleNames_atp', 'a11y.soluteAccessibleNames.atpStringProperty' );
-addToMapIfDefined( 'a11y_solute', 'a11y.soluteStringProperty' );
-addToMapIfDefined( 'a11y_soluteCapitalized', 'a11y.soluteCapitalizedStringProperty' );
-addToMapIfDefined( 'a11y_soluteBrief', 'a11y.soluteBriefStringProperty' );
-addToMapIfDefined( 'a11y_soluteComparison', 'a11y.soluteComparisonStringProperty' );
-addToMapIfDefined( 'a11y_soluteAverageCrossingDirection', 'a11y.soluteAverageCrossingDirectionStringProperty' );
+addToMapIfDefined( 'a11y_solutes_lowercaseName', 'a11y.solutes.lowercaseNameStringProperty' );
+addToMapIfDefined( 'a11y_solutes_uppercaseName', 'a11y.solutes.uppercaseNameStringProperty' );
+addToMapIfDefined( 'a11y_solutes_briefName', 'a11y.solutes.briefNameStringProperty' );
+addToMapIfDefined( 'a11y_solutes_amountComparison', 'a11y.solutes.amountComparisonStringProperty' );
+addToMapIfDefined( 'a11y_solutes_averageCrossingDirection', 'a11y.solutes.averageCrossingDirectionStringProperty' );
+addToMapIfDefined( 'a11y_solutesPanel_oxygenRadioButton', 'a11y.solutesPanel.oxygenRadioButtonStringProperty' );
+addToMapIfDefined( 'a11y_solutesPanel_carbonDioxideRadioButton', 'a11y.solutesPanel.carbonDioxideRadioButtonStringProperty' );
+addToMapIfDefined( 'a11y_solutesPanel_sodiumIonRadioButton', 'a11y.solutesPanel.sodiumIonRadioButtonStringProperty' );
+addToMapIfDefined( 'a11y_solutesPanel_potassiumIonRadioButton', 'a11y.solutesPanel.potassiumIonRadioButtonStringProperty' );
+addToMapIfDefined( 'a11y_solutesPanel_glucoseRadioButton', 'a11y.solutesPanel.glucoseRadioButtonStringProperty' );
+addToMapIfDefined( 'a11y_solutesPanel_atpRadioButton', 'a11y.solutesPanel.atpRadioButtonStringProperty' );
 addToMapIfDefined( 'a11y_soluteControl_outside_accessibleName', 'a11y.soluteControl.outside.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_soluteControl_outside_accessibleHelpText', 'a11y.soluteControl.outside.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_soluteControl_inside_accessibleName', 'a11y.soluteControl.inside.accessibleNameStringProperty' );
@@ -223,39 +223,47 @@ const MembraneTransportFluent = {
     playgroundStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_playground', _.get( MembraneTransportStrings, 'screen.playgroundStringProperty' ) )
   },
   _comment_0: new FluentComment( {"comment":"Solutes","associatedKey":"solutes"} ),
+  _comment_1: new FluentComment( {"comment":"Names for the solute type. Reused in various places.","associatedKey":"solutes"} ),
   solutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'solutes', _.get( MembraneTransportStrings, 'solutesStringProperty' ) ),
-  oxygenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'oxygen', _.get( MembraneTransportStrings, 'oxygenStringProperty' ) ),
-  carbonDioxideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'carbonDioxide', _.get( MembraneTransportStrings, 'carbonDioxideStringProperty' ) ),
-  sodiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumIon', _.get( MembraneTransportStrings, 'sodiumIonStringProperty' ) ),
-  potassiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'potassiumIon', _.get( MembraneTransportStrings, 'potassiumIonStringProperty' ) ),
-  glucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucose', _.get( MembraneTransportStrings, 'glucoseStringProperty' ) ),
-  atpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'atp', _.get( MembraneTransportStrings, 'atpStringProperty' ) ),
-  _comment_1: new FluentComment( {"comment":"Cell Regions","associatedKey":"outside"} ),
-  outsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'outside', _.get( MembraneTransportStrings, 'outsideStringProperty' ) ),
-  insideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'inside', _.get( MembraneTransportStrings, 'insideStringProperty' ) ),
-  _comment_2: new FluentComment( {"comment":"On the Toolbox","associatedKey":"voltageGatedChannels"} ),
-  voltageGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'voltageGatedChannels', _.get( MembraneTransportStrings, 'voltageGatedChannelsStringProperty' ) ),
-  ligandGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'ligandGatedChannels', _.get( MembraneTransportStrings, 'ligandGatedChannelsStringProperty' ) ),
-  activeTransportersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'activeTransporters', _.get( MembraneTransportStrings, 'activeTransportersStringProperty' ) ),
-  leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'leakageChannels', _.get( MembraneTransportStrings, 'leakageChannelsStringProperty' ) ),
-  naPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'naPlusKPlusPump', _.get( MembraneTransportStrings, 'naPlusKPlusPumpStringProperty' ) ),
-  sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'sodiumGlucoseCotransporterStringProperty' ) ),
-  _comment_3: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotentialMV"} ),
-  membranePotentialMVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membranePotentialMV', _.get( MembraneTransportStrings, 'membranePotentialMVStringProperty' ) ),
-  chargesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'charges', _.get( MembraneTransportStrings, 'chargesStringProperty' ) ),
-  _comment_4: new FluentComment( {"comment":"Ligands Section","associatedKey":"addLigands"} ),
-  addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'addLigands', _.get( MembraneTransportStrings, 'addLigandsStringProperty' ) ),
-  removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'removeLigands', _.get( MembraneTransportStrings, 'removeLigandsStringProperty' ) ),
-  animateLipids: {
-    _comment_0: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"animateLipids.label"} ),
-    labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids_label', _.get( MembraneTransportStrings, 'animateLipids.labelStringProperty' ) ),
-    descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'animateLipids_description', _.get( MembraneTransportStrings, 'animateLipids.descriptionStringProperty' ) )
+  _comment_2: new FluentComment( {"comment":"Solute Types","associatedKey":"soluteNames"} ),
+  soluteNames: {
+    oxygenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_oxygen', _.get( MembraneTransportStrings, 'soluteNames.oxygenStringProperty' ) ),
+    carbonDioxideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_carbonDioxide', _.get( MembraneTransportStrings, 'soluteNames.carbonDioxideStringProperty' ) ),
+    sodiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_sodiumIon', _.get( MembraneTransportStrings, 'soluteNames.sodiumIonStringProperty' ) ),
+    potassiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_potassiumIon', _.get( MembraneTransportStrings, 'soluteNames.potassiumIonStringProperty' ) ),
+    glucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_glucose', _.get( MembraneTransportStrings, 'soluteNames.glucoseStringProperty' ) ),
+    atpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_atp', _.get( MembraneTransportStrings, 'soluteNames.atpStringProperty' ) )
   },
-  glucoseMetabolism: {
-    labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolism_label', _.get( MembraneTransportStrings, 'glucoseMetabolism.labelStringProperty' ) ),
-    descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'glucoseMetabolism_description', _.get( MembraneTransportStrings, 'glucoseMetabolism.descriptionStringProperty' ) )
+  _comment_3: new FluentComment( {"comment":"Cell Regions","associatedKey":"cellRegions"} ),
+  cellRegions: {
+    outsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'cellRegions_outside', _.get( MembraneTransportStrings, 'cellRegions.outsideStringProperty' ) ),
+    insideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'cellRegions_inside', _.get( MembraneTransportStrings, 'cellRegions.insideStringProperty' ) )
   },
+  _comment_4: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
+  transportProteinPanel: {
+    voltageGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_voltageGatedChannels', _.get( MembraneTransportStrings, 'transportProteinPanel.voltageGatedChannelsStringProperty' ) ),
+    ligandGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_ligandGatedChannels', _.get( MembraneTransportStrings, 'transportProteinPanel.ligandGatedChannelsStringProperty' ) ),
+    activeTransportersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_activeTransporters', _.get( MembraneTransportStrings, 'transportProteinPanel.activeTransportersStringProperty' ) ),
+    leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_leakageChannels', _.get( MembraneTransportStrings, 'transportProteinPanel.leakageChannelsStringProperty' ) ),
+    naPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_naPlusKPlusPump', _.get( MembraneTransportStrings, 'transportProteinPanel.naPlusKPlusPumpStringProperty' ) ),
+    sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'transportProteinPanel.sodiumGlucoseCotransporterStringProperty' ) ),
+    _comment_0: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotentialMV"} ),
+    membranePotentialMVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_membranePotentialMV', _.get( MembraneTransportStrings, 'transportProteinPanel.membranePotentialMVStringProperty' ) ),
+    chargesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_charges', _.get( MembraneTransportStrings, 'transportProteinPanel.chargesStringProperty' ) ),
+    _comment_1: new FluentComment( {"comment":"Ligands Section","associatedKey":"addLigands"} ),
+    addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_addLigands', _.get( MembraneTransportStrings, 'transportProteinPanel.addLigandsStringProperty' ) ),
+    removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_removeLigands', _.get( MembraneTransportStrings, 'transportProteinPanel.removeLigandsStringProperty' ) )
+  },
+  _comment_5: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
   preferencesDialog: {
+    animateLipids: {
+      labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_animateLipids_label', _.get( MembraneTransportStrings, 'preferencesDialog.animateLipids.labelStringProperty' ) ),
+      descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_animateLipids_description', _.get( MembraneTransportStrings, 'preferencesDialog.animateLipids.descriptionStringProperty' ) )
+    },
+    glucoseMetabolism: {
+      labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_glucoseMetabolism_label', _.get( MembraneTransportStrings, 'preferencesDialog.glucoseMetabolism.labelStringProperty' ) ),
+      descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_glucoseMetabolism_description', _.get( MembraneTransportStrings, 'preferencesDialog.glucoseMetabolism.descriptionStringProperty' ) )
+    },
     audio: {
       sounds: {
         stereoCrossingSounds: {
@@ -265,11 +273,15 @@ const MembraneTransportFluent = {
       }
     }
   },
-  _comment_5: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrations"} ),
-  soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrations', _.get( MembraneTransportStrings, 'soluteConcentrationsStringProperty' ) ),
-  _comment_6: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"crossingHighlights"} ),
-  crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingHighlights', _.get( MembraneTransportStrings, 'crossingHighlightsStringProperty' ) ),
-  crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'crossingSounds', _.get( MembraneTransportStrings, 'crossingSoundsStringProperty' ) ),
+  _comment_6: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"barChart"} ),
+  barChart: {
+    soluteConcentrationsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'barChart_soluteConcentrations', _.get( MembraneTransportStrings, 'barChart.soluteConcentrationsStringProperty' ) )
+  },
+  _comment_7: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
+  settings: {
+    crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'settings_crossingHighlights', _.get( MembraneTransportStrings, 'settings.crossingHighlightsStringProperty' ) ),
+    crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'settings_crossingSounds', _.get( MembraneTransportStrings, 'settings.crossingSoundsStringProperty' ) )
+  },
   a11y: {
     simpleDiffusionScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_simpleDiffusionScreen_screenButtonsHelpText', _.get( MembraneTransportStrings, 'a11y.simpleDiffusionScreen.screenButtonsHelpTextStringProperty' ) )
@@ -319,16 +331,20 @@ const MembraneTransportFluent = {
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' ) )
     },
-    crossingHighlightsCheckbox: {
-      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' ) ),
-      accessibleContextResponseCheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleContextResponseChecked', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' ) ),
-      accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
+    _comment_0: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
+    settings: {
+      crossingHighlightsCheckbox: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' ) ),
+        accessibleContextResponseCheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseChecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' ) ),
+        accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
+      },
+      crossingSoundsCheckbox: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleHelpTextStringProperty' ) ),
+        accessibleContextResponseCheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseChecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty' ) ),
+        accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
+      }
     },
-    crossingSoundsCheckbox: {
-      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleHelpTextStringProperty' ) ),
-      accessibleContextResponseCheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleContextResponseChecked', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty' ) ),
-      accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_crossingSoundsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
-    },
+    _comment_1: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
     transportProteinPanel: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHeadingStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' ) ),
@@ -397,29 +413,32 @@ const MembraneTransportFluent = {
       grabbedResponseWithHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithHintStringProperty' ), [{"name":"proteinCount"}] ),
       grabbedResponseWithEmptyMembraneHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithEmptyMembraneHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithEmptyMembraneHintStringProperty' ), [{"name":"proteinCount"}] )
     },
-    _comment_0: new FluentComment( {"comment":"The membrane potential value, used in various places.","associatedKey":"membranePotentialValue"} ),
+    _comment_2: new FluentComment( {"comment":"The membrane potential value, used in various places.","associatedKey":"membranePotentialValue"} ),
     membranePotentialValue: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_membranePotentialValue', _.get( MembraneTransportStrings, 'a11y.membranePotentialValueStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
-    _comment_1: new FluentComment( {"comment":"Accessible names for solute radio buttons","associatedKey":"soluteAccessibleNames"} ),
-    soluteAccessibleNames: {
-      oxygenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_oxygen', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.oxygenStringProperty' ) ),
-      carbonDioxideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_carbonDioxide', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.carbonDioxideStringProperty' ) ),
-      sodiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_sodiumIon', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.sodiumIonStringProperty' ) ),
-      potassiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_potassiumIon', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.potassiumIonStringProperty' ) ),
-      glucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_glucose', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.glucoseStringProperty' ) ),
-      atpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteAccessibleNames_atp', _.get( MembraneTransportStrings, 'a11y.soluteAccessibleNames.atpStringProperty' ) )
+    _comment_3: new FluentComment( {"comment":"Solutes","associatedKey":"solutes"} ),
+    _comment_4: new FluentComment( {"comment":"Names for the solute type. Reused in various places.","associatedKey":"solutes"} ),
+    solutes: {
+      lowercaseName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solutes_lowercaseName', _.get( MembraneTransportStrings, 'a11y.solutes.lowercaseNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
+      _comment_0: new FluentComment( {"comment":"Capitalized names for the solute type. Reused in various places.","associatedKey":"uppercaseName"} ),
+      uppercaseName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solutes_uppercaseName', _.get( MembraneTransportStrings, 'a11y.solutes.uppercaseNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
+      _comment_1: new FluentComment( {"comment":"Brevity is the soul of wit, so we use these brief names in various places.","associatedKey":"briefName"} ),
+      _comment_2: new FluentComment( {"comment":"Transport protein brief names, used reused in several in the simulation.","associatedKey":"briefName"} ),
+      briefName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solutes_briefName', _.get( MembraneTransportStrings, 'a11y.solutes.briefNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
+      _comment_3: new FluentComment( {"comment":"A description of relative amounts of solute outside and inside the cell.","associatedKey":"amountComparison"} ),
+      amountComparison: new FluentPattern<{ amount: 'none' | 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' | 'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'alotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' | 'roughlyEqualInside' | TReadOnlyProperty<'none' | 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' | 'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'alotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' | 'roughlyEqualInside'> }>( fluentSupport.bundleProperty, 'a11y_solutes_amountComparison', _.get( MembraneTransportStrings, 'a11y.solutes.amountComparisonStringProperty' ), [{"name":"amount","variants":["none","equal","allOutside","allInside","manyManyMoreOutside","manyMoreOutside","aboutTwiceAsManyOutside","alotMoreOutside","someMoreOutside","littleBitMoreOutside","roughlyEqualOutside","manyManyMoreInside","manyMoreInside","aboutTwiceAsManyInside","alotMoreInside","someMoreInside","littleBitMoreInside","roughlyEqualInside"]}] ),
+      _comment_4: new FluentComment( {"comment":"A description of the average crossing direction of a solute across the membrane.","associatedKey":"averageCrossingDirection"} ),
+      averageCrossingDirection: new FluentPattern<{ direction: 'toOutside' | 'mostlyToOutside' | 'inBothDirections' | 'mostlyToInside' | 'toInside' | 'none' | TReadOnlyProperty<'toOutside' | 'mostlyToOutside' | 'inBothDirections' | 'mostlyToInside' | 'toInside' | 'none'> }>( fluentSupport.bundleProperty, 'a11y_solutes_averageCrossingDirection', _.get( MembraneTransportStrings, 'a11y.solutes.averageCrossingDirectionStringProperty' ), [{"name":"direction","variants":["toOutside","mostlyToOutside","inBothDirections","mostlyToInside","toInside","none"]}] )
     },
-    _comment_2: new FluentComment( {"comment":"Names for the solute type. Reused in various places.","associatedKey":"solute"} ),
-    solute: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solute', _.get( MembraneTransportStrings, 'a11y.soluteStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
-    _comment_3: new FluentComment( {"comment":"Capitalized names for the solute type. Reused in various places.","associatedKey":"soluteCapitalized"} ),
-    soluteCapitalized: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteCapitalized', _.get( MembraneTransportStrings, 'a11y.soluteCapitalizedStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
-    _comment_4: new FluentComment( {"comment":"Brevity is the soul of wit, so we use these brief names in various places.","associatedKey":"soluteBrief"} ),
-    soluteBrief: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteBrief', _.get( MembraneTransportStrings, 'a11y.soluteBriefStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
-    _comment_5: new FluentComment( {"comment":"A description of relative amounts of solute outside and inside the cell.","associatedKey":"soluteComparison"} ),
-    soluteComparison: new FluentPattern<{ amount: 'none' | 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' | 'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'alotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' | 'roughlyEqualInside' | TReadOnlyProperty<'none' | 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'alotMoreOutside' | 'someMoreOutside' | 'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'alotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' | 'roughlyEqualInside'> }>( fluentSupport.bundleProperty, 'a11y_soluteComparison', _.get( MembraneTransportStrings, 'a11y.soluteComparisonStringProperty' ), [{"name":"amount","variants":["none","equal","allOutside","allInside","manyManyMoreOutside","manyMoreOutside","aboutTwiceAsManyOutside","alotMoreOutside","someMoreOutside","littleBitMoreOutside","roughlyEqualOutside","manyManyMoreInside","manyMoreInside","aboutTwiceAsManyInside","alotMoreInside","someMoreInside","littleBitMoreInside","roughlyEqualInside"]}] ),
-    _comment_6: new FluentComment( {"comment":"A description of the average crossing direction of a solute across the membrane.","associatedKey":"soluteAverageCrossingDirection"} ),
-    soluteAverageCrossingDirection: new FluentPattern<{ direction: 'toOutside' | 'mostlyToOutside' | 'inBothDirections' | 'mostlyToInside' | 'toInside' | 'none' | TReadOnlyProperty<'toOutside' | 'mostlyToOutside' | 'inBothDirections' | 'mostlyToInside' | 'toInside' | 'none'> }>( fluentSupport.bundleProperty, 'a11y_soluteAverageCrossingDirection', _.get( MembraneTransportStrings, 'a11y.soluteAverageCrossingDirectionStringProperty' ), [{"name":"direction","variants":["toOutside","mostlyToOutside","inBothDirections","mostlyToInside","toInside","none"]}] ),
+    solutesPanel: {
+      _comment_0: new FluentComment( {"comment":"Accessible names for solute radio buttons","associatedKey":"oxygenRadioButton"} ),
+      oxygenRadioButtonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_solutesPanel_oxygenRadioButton', _.get( MembraneTransportStrings, 'a11y.solutesPanel.oxygenRadioButtonStringProperty' ) ),
+      carbonDioxideRadioButtonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_solutesPanel_carbonDioxideRadioButton', _.get( MembraneTransportStrings, 'a11y.solutesPanel.carbonDioxideRadioButtonStringProperty' ) ),
+      sodiumIonRadioButtonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_solutesPanel_sodiumIonRadioButton', _.get( MembraneTransportStrings, 'a11y.solutesPanel.sodiumIonRadioButtonStringProperty' ) ),
+      potassiumIonRadioButtonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_solutesPanel_potassiumIonRadioButton', _.get( MembraneTransportStrings, 'a11y.solutesPanel.potassiumIonRadioButtonStringProperty' ) ),
+      glucoseRadioButtonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_solutesPanel_glucoseRadioButton', _.get( MembraneTransportStrings, 'a11y.solutesPanel.glucoseRadioButtonStringProperty' ) ),
+      atpRadioButtonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_solutesPanel_atpRadioButton', _.get( MembraneTransportStrings, 'a11y.solutesPanel.atpRadioButtonStringProperty' ) )
+    },
     soluteControl: {
-      _comment_0: new FluentComment( {"comment":"Cell Regions","associatedKey":"outside"} ),
       outside: {
         accessibleName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteControl_outside_accessibleName', _.get( MembraneTransportStrings, 'a11y.soluteControl.outside.accessibleNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControl_outside_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.soluteControl.outside.accessibleHelpTextStringProperty' ) )
@@ -435,6 +454,7 @@ const MembraneTransportFluent = {
     },
     soluteConcentrationsAccordionBox: {
       descriptionContentStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_descriptionContent', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.descriptionContentStringProperty' ) ),
+      _comment_0: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"barChart"} ),
       barChart: {
         _comment_0: new FluentComment( {"comment":"Note this description is used instead of accessibleName in the case that there are none inside AND none outside.","associatedKey":"accessibleNameWithNoParticles"} ),
         accessibleNameWithNoParticles: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_barChart_accessibleNameWithNoParticles', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticlesStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
@@ -490,11 +510,12 @@ const MembraneTransportFluent = {
       accessibleObjectResponseMoving: new FluentPattern<{ slotCount: FluentVariable, slotIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleObjectResponseMoving', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleObjectResponseMovingStringProperty' ), [{"name":"slotCount"},{"name":"slotIndex"}] ),
       _comment_3: new FluentComment( {"comment":"Included in the accessibleName for the protein when it is above an empty slot.","associatedKey":"empty"} ),
       emptyStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_empty', _.get( MembraneTransportStrings, 'a11y.transportProtein.emptyStringProperty' ) ),
-      _comment_4: new FluentComment( {"comment":"Transport protein brief names, used reused in several in the simulation.","associatedKey":"briefName"} ),
+      _comment_4: new FluentComment( {"comment":"Brevity is the soul of wit, so we use these brief names in various places.","associatedKey":"briefName"} ),
+      _comment_5: new FluentComment( {"comment":"Transport protein brief names, used reused in several in the simulation.","associatedKey":"briefName"} ),
       briefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProtein_briefName', _.get( MembraneTransportStrings, 'a11y.transportProtein.briefNameStringProperty' ), [{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] )
     },
-    _comment_7: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
-    _comment_8: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
+    _comment_5: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
+    _comment_6: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
     membranePotential: {
       sodiumVoltageGatedOpenedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumVoltageGatedOpenedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumVoltageGatedOpenedResponseStringProperty' ) ),
       sodiumVoltageGatedClosedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumVoltageGatedClosedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumVoltageGatedClosedResponseStringProperty' ) ),

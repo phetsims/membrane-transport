@@ -18,7 +18,7 @@ const panelOptions = { cornerRadius: MembraneTransportConstants.PANEL_CORNER_RAD
 
 export default class InsideOutsideLabel extends Panel {
   public constructor( side: 'inside' | 'outside', textMaxWidth: number, options?: LayoutNodeOptions ) {
-    super( new Text( side === 'outside' ? MembraneTransportFluent.outsideStringProperty : MembraneTransportFluent.insideStringProperty, {
+    super( new Text( side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty : MembraneTransportFluent.cellRegions.insideStringProperty, {
       fontSize: 13,
       maxWidth: textMaxWidth
     } ), panelOptions );

@@ -83,7 +83,7 @@ export default class MembranePotentialPanel extends Panel {
       spacing: 4,
       align: 'center',
       children: [
-        new VoicingText( MembraneTransportFluent.membranePotentialMVStringProperty, {
+        new VoicingText( MembraneTransportFluent.transportProteinPanel.membranePotentialMVStringProperty, {
           maxWidth: 160,
           font: MembraneTransportConstants.FONT,
 
@@ -145,7 +145,7 @@ export default class MembranePotentialPanel extends Panel {
 
         membranePotentialControl,
 
-        new Checkbox( model.chargesVisibleProperty, new Text( MembraneTransportFluent.chargesStringProperty, {
+        new Checkbox( model.chargesVisibleProperty, new Text( MembraneTransportFluent.transportProteinPanel.chargesStringProperty, {
           maxWidth: 140,
           font: MembraneTransportConstants.FONT
         } ), {

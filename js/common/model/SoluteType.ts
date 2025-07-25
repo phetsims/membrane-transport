@@ -34,12 +34,12 @@ export type { LigandType, ParticleType };
 
 export const getSoluteTypeString = ( soluteType: SoluteType ): TReadOnlyProperty<string> =>
 
-  soluteType === 'oxygen' ? MembraneTransportFluent.oxygenStringProperty :
-  soluteType === 'carbonDioxide' ? MembraneTransportFluent.carbonDioxideStringProperty :
-  soluteType === 'sodiumIon' ? MembraneTransportFluent.sodiumIonStringProperty :
-  soluteType === 'potassiumIon' ? MembraneTransportFluent.potassiumIonStringProperty :
-  soluteType === 'glucose' ? MembraneTransportFluent.glucoseStringProperty :
-  MembraneTransportFluent.atpStringProperty;
+  soluteType === 'oxygen' ? MembraneTransportFluent.soluteNames.oxygenStringProperty :
+  soluteType === 'carbonDioxide' ? MembraneTransportFluent.soluteNames.carbonDioxideStringProperty :
+  soluteType === 'sodiumIon' ? MembraneTransportFluent.soluteNames.sodiumIonStringProperty :
+  soluteType === 'potassiumIon' ? MembraneTransportFluent.soluteNames.potassiumIonStringProperty :
+  soluteType === 'glucose' ? MembraneTransportFluent.soluteNames.glucoseStringProperty :
+  MembraneTransportFluent.soluteNames.atpStringProperty;
 
 export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes ): ProfileColorProperty =>
   soluteType === 'oxygen' ? MembraneTransportColors.oxygenColorProperty :
@@ -56,10 +56,10 @@ export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): str
 export const getSoluteSpinnerTandemName = ( soluteType: SoluteType ): string => `${soluteType}Spinner`;
 
 export const getSoluteAccessibleName = ( soluteType: SoluteType ): TReadOnlyProperty<string> => {
-  return soluteType === 'oxygen' ? MembraneTransportFluent.a11y.soluteAccessibleNames.oxygenStringProperty :
-         soluteType === 'carbonDioxide' ? MembraneTransportFluent.a11y.soluteAccessibleNames.carbonDioxideStringProperty :
-         soluteType === 'sodiumIon' ? MembraneTransportFluent.a11y.soluteAccessibleNames.sodiumIonStringProperty :
-         soluteType === 'potassiumIon' ? MembraneTransportFluent.a11y.soluteAccessibleNames.potassiumIonStringProperty :
-         soluteType === 'glucose' ? MembraneTransportFluent.a11y.soluteAccessibleNames.glucoseStringProperty :
-         MembraneTransportFluent.a11y.soluteAccessibleNames.atpStringProperty;
+  return soluteType === 'oxygen' ? MembraneTransportFluent.a11y.solutesPanel.oxygenRadioButtonStringProperty :
+         soluteType === 'carbonDioxide' ? MembraneTransportFluent.a11y.solutesPanel.carbonDioxideRadioButtonStringProperty :
+         soluteType === 'sodiumIon' ? MembraneTransportFluent.a11y.solutesPanel.sodiumIonRadioButtonStringProperty :
+         soluteType === 'potassiumIon' ? MembraneTransportFluent.a11y.solutesPanel.potassiumIonRadioButtonStringProperty :
+         soluteType === 'glucose' ? MembraneTransportFluent.a11y.solutesPanel.glucoseRadioButtonStringProperty :
+         MembraneTransportFluent.a11y.solutesPanel.atpRadioButtonStringProperty;
 };
