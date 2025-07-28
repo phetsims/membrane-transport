@@ -489,7 +489,7 @@ a11y:
                                           [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
                                            
                                           # Content for the sodium-glucose cotransporter
-                                          *[openToInside] Pumping sodium and glucose to inside, open to inside
+                                          *[openToInside] Shuttles 2 sodium and one glucose to inside and resets to outside.
                                        }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.
