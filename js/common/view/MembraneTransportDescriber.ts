@@ -102,6 +102,23 @@ export default class MembraneTransportDescriber {
     getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
       this.averageSoluteCrossingDirectionProperties[ soluteType ] = new Property<AverageCrossingDirectionDescriptor>( 'none' );
     } );
+
+    // For focused transporters (but not the sodium glucose cotransporter or sodium potassium pump),
+    // describe when particle flow through.
+    model.soluteCrossedMembraneEmitter.addListener( soluteCrossedMembraneEvent => {
+
+      if ( soluteCrossedMembraneEvent.slot &&
+           this.model.focusedProteinProperty.value &&
+           this.model.focusedProteinProperty.value.slot === soluteCrossedMembraneEvent.slot ) {
+
+        // These protein types already have specialized messages based on their states
+        if ( soluteCrossedMembraneEvent.transportProteinType !== 'sodiumPotassiumPump' && soluteCrossedMembraneEvent.transportProteinType !== 'sodiumGlucoseCotransporter' ) {
+
+          const message = soluteCrossedMembraneEvent.solute.soluteType + ' crossed through the ' + soluteCrossedMembraneEvent.transportProteinType + ' ' + soluteCrossedMembraneEvent.direction;
+          this.contextResponseNode.addAccessibleContextResponse( message );
+        }
+      }
+    } );
   }
 
   /**
@@ -109,6 +126,11 @@ export default class MembraneTransportDescriber {
    * to prevent unnecessary repetition.
    */
   private addAccessibleContextResponse( response: AlertableNoUtterance ): void {
+
+    if ( typeof response === 'string' && response.length === 0 ) {
+      return;
+    }
+
     if ( response !== this.previousResponse ) {
       this.contextResponseNode.addAccessibleContextResponse( response );
     }
