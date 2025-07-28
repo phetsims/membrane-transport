@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import AccessibleDraggableOptions from '../../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import { ParallelDOMOptions } from '../../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
@@ -49,7 +50,12 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
 
         // This is only used in the pattern for ligand gated channels.
         proteinType: transportProtein.type === 'sodiumIonLigandGatedChannel' ? 'sodiumIonLigandGatedChannel' :
-                     'potassiumIonLigandGatedChannel'
+                     'potassiumIonLigandGatedChannel',
+
+        // Only used for the sodium-glucose cotransporter. A warning is shown if there is less sodium outside than inside.
+        warningVisible: new DerivedProperty( [ transportProtein.model.lessSodiumOutsideThanInsideProperty ], lessInside => {
+          return lessInside ? 'true' : 'false';
+        } )
       } );
 
       this.addDisposable( accessibleParagraphStringProperty );

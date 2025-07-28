@@ -451,7 +451,11 @@ a11y:
                                           [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate still bound, open to outside
                                           [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
                                        
-                                          [openToOutsideAwaitingParticles] Awaiting sodium and glucose, open to outside
+                                          # For the sodium-glucose cotransporter
+                                          [openToOutsideAwaitingParticles] { $warningVisible ->
+                                            [true] Exclamation point overlaid on protein, awaiting sodium and glucose, open to outside
+                                            *[false] Awaiting sodium and glucose, open to outside
+                                          }
                                           [openToOutsideAllParticlesBound] Sodium and glucose bound, open to outside
                                           [openToInside] Pumping sodium and glucose to inside, open to inside
                                        

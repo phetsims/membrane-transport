@@ -8,10 +8,12 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -116,6 +118,8 @@ export default class MembraneTransportModel extends PhetioObject {
 
   public readonly chargesVisibleProperty: Property<boolean>;
   public readonly membranePotentialProperty: Property<( -70 ) | -50 | 30>;
+
+  public readonly lessSodiumOutsideThanInsideProperty: ReadOnlyProperty<boolean>;
 
   // Property that holds the currently focused transport protein, or null if none is focused.
   // Used for description, to speak details specifically about this protein.
@@ -257,6 +261,12 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
 
     this.membraneSlots.forEach( slot => slot.transportProteinProperty.link( () => this.updateTransportProteinCounts() ) );
+
+    // Show an exclamation mark when there are more sodium ions inside than outside, because this indicates that the
+    this.lessSodiumOutsideThanInsideProperty = new DerivedProperty( [
+      this.outsideSoluteCountProperties.sodiumIon,
+      this.insideSoluteCountProperties.sodiumIon
+    ], ( outsideCount, insideCount ) => outsideCount <= insideCount );
 
     this.soluteCrossedMembraneEmitter.addListener( soluteCrossedMembraneEvent => {
       this.descriptionEventQueue.push( soluteCrossedMembraneEvent );

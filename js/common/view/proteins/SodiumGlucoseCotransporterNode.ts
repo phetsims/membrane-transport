@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
@@ -43,13 +42,6 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
         }
       }, { disposer: this } );
 
-      // Show an exclamation mark when there are more sodium ions inside than outside, because this indicates that the
-      // transporter is not ready to activate.
-      const exclamationVisibleProperty = new DerivedProperty( [
-        sodiumGlucoseCotransporter.model.outsideSoluteCountProperties.sodiumIon,
-        sodiumGlucoseCotransporter.model.insideSoluteCountProperties.sodiumIon
-      ], ( outsideCount, insideCount ) => outsideCount <= insideCount );
-
       const exclamationMark = new Text( '!', {
         font: new PhetFont( {
           size: 300,
@@ -60,12 +52,11 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
         lineWidth: 10,
         centerX: image.centerX,
         bottom: image.height - 95, // Adjusted to position the exclamation mark correctly
-        visibleProperty: exclamationVisibleProperty
+        visibleProperty: sodiumGlucoseCotransporter.model.lessSodiumOutsideThanInsideProperty
       } );
       this.addChild( exclamationMark );
 
       this.disposeEmitter.addListener( () => {
-        exclamationVisibleProperty.dispose();
         exclamationMark.dispose();
       } );
     }
