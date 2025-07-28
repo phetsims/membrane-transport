@@ -451,27 +451,27 @@ a11y:
                                           [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
                                        
                                           [openToOutsideAwaitingParticles] { $warning ->
-                                            [shown] Exclamation point overlaid on protein, awaiting sodium and glucose, open to outside
+                                            [shown] Showing warning that no binding is possible, open to outside
                                             *[hidden] Awaiting sodium and glucose, open to outside
                                           }
                                           [openToOutsideAllParticlesBound] Sodium and glucose bound, open to outside
                                           [openToInside] Pumping sodium and glucose to inside, open to inside
                                        
                                           [ligandBoundClosed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle shape ligand bound, closed channel through membrane 
-                                            *[potassiumIonLigandGatedChannel] star shape ligand bound, closed channel through membrane
+                                            [sodiumIonLigandGatedChannel] triangle-shaped ligand binding, channel opening 
+                                            *[potassiumIonLigandGatedChannel] star-shaped ligand binding, channel opening
                                           }
                                           [ligandBoundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle shape ligand bound, open channel through membrane 
-                                            *[potassiumIonLigandGatedChannel] star shape ligand bound, open channel through membrane
+                                            [sodiumIonLigandGatedChannel] triangle-shaped ligand bound, open channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] star-shaped ligand bound, open channel through membrane
                                           }
                                           [ligandUnboundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] no triangle shape ligand bound, open channel through membrane 
-                                            *[potassiumIonLigandGatedChannel] no star shape ligand bound, open channel through membrane
+                                            [sodiumIonLigandGatedChannel] triangle-shaped ligand floats away, channel closing 
+                                            *[potassiumIonLigandGatedChannel] star-shaped ligand floats away, channel closing
                                           }
                                           [closed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] no triangle shape ligand bound, closed channel through membrane 
-                                            *[potassiumIonLigandGatedChannel] no star shape ligand bound, closed channel through membrane
+                                            [sodiumIonLigandGatedChannel] no triangle-shaped ligand bound, closed channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] no star-shaped ligand bound, closed channel through membrane
                                           }
                                        
                                           [closedNegative70mV] closed channel through membrane at -70 mV
