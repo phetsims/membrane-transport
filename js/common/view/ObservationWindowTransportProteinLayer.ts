@@ -275,10 +275,14 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           transportProtein.stateProperty.lazyLink( state => {
             if ( transportProteinNode.focused ) {
 
-              if ( state === 'openToInsideEmpty' || state === 'openToInsideSodiumAndATPBound' || state === 'openToInside' ) {
+              if ( state === 'openToInsideEmpty' || state === 'openToInsideSodiumAndATPBound' || state === 'openToInside' ||
+                   state === 'ligandBoundOpen' || state === 'closed' ) {
                 transportProteinNode.addAccessibleObjectResponse(
                   MembraneTransportFluent.a11y.transportProtein.accessibleContextResponse.format( {
-                    state: state
+                    state: state,
+
+                    // Only used by the ligand-gated channels
+                    proteinType: transportProtein.type === 'sodiumIonLigandGatedChannel' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel'
                   } )
                 );
               }

@@ -226,8 +226,6 @@ a11y:
                             *[30] positive 30
                           } millivolts
 
-
-
   # Names for the solute type. Reused in various places.
   solutes:
     lowercaseName:            |-
@@ -427,19 +425,20 @@ a11y:
                                           [openToOutsideAwaitingParticles] open to outside 
                                           [openToOutsideAllParticlesBound] open to outside
                                           [openToInside] open to inside
-                                       
+                               
                                           [closedNegative70mV] closed
                                           [openNegative50mV] open 
                                           [closed30mV] closed
-                                       
+                                      
                                           [closedNegative50mV] closed
                                           [open30mV] open
                                        
                                           [ligandBoundClosed] closed
                                           [ligandBoundOpen] open
                                           [ligandUnboundOpen] open
-                                          [open] open 
-                                          *[closed] closed                                           
+                                          [closed] closed
+                              
+                                          *[open] open 
                                        }
 
     accessibleParagraph:               |-
@@ -451,7 +450,6 @@ a11y:
                                           [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate still bound, open to outside
                                           [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
                                        
-                                          # For the sodium-glucose cotransporter
                                           [openToOutsideAwaitingParticles] { $warning ->
                                             [shown] Exclamation point overlaid on protein, awaiting sodium and glucose, open to outside
                                             *[hidden] Awaiting sodium and glucose, open to outside
@@ -491,9 +489,18 @@ a11y:
                                        { $state ->
                                           [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside
                                           [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
-                                           
-                                          # Content for the sodium-glucose cotransporter
+                                       
                                           *[openToInside] Shuttles 2 sodium and one glucose to inside and resets to outside.
+                                       
+                                          [ligandBoundOpen] { $proteinType ->
+                                            [sodiumIonLigandGatedChannel] triangle shape ligand binds, opens 
+                                            *[potassiumIonLigandGatedChannel] star shape ligand binds, opens
+                                          }
+                                          [closed] { $proteinType ->
+                                            [sodiumIonLigandGatedChannel] triangle shape ligand unbinds, closes 
+                                            *[potassiumIonLigandGatedChannel] star shape ligand unbinds, closes
+                                          }
+                                          
                                        }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.
