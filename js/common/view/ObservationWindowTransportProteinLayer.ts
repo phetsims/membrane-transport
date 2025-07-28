@@ -260,7 +260,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
               voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
 
               transportProteinNode.addAccessibleObjectResponse(
-                MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponseOpenClose.format( {
+                MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.format( {
                   state: transportProtein.stateProperty
                 } )
               );

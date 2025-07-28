@@ -254,7 +254,7 @@ type StringsType = {
       'cancelledResponseStringProperty': LocalizedStringProperty;
       'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleObjectResponseOpenCloseStringProperty': LocalizedStringProperty;
+      'accessibleObjectResponseStringProperty': LocalizedStringProperty;
       'accessibleParagraphStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
       'accessibleNameMovingStringProperty': LocalizedStringProperty;

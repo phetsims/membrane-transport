@@ -46,9 +46,10 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
 
       const accessibleParagraphStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleParagraph.createProperty( {
         state: transportProtein.stateProperty,
+
+        // This is only used in the pattern for ligand gated channels.
         proteinType: transportProtein.type === 'sodiumIonLigandGatedChannel' ? 'sodiumIonLigandGatedChannel' :
-                     transportProtein.type === 'potassiumIonLigandGatedChannel' ? 'potassiumIonLigandGatedChannel' :
-                     'other'
+                     'potassiumIonLigandGatedChannel'
       } );
 
       this.addDisposable( accessibleParagraphStringProperty );
