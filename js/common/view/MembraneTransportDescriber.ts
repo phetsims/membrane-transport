@@ -114,7 +114,7 @@ export default class MembraneTransportDescriber {
         // These protein types already have specialized messages based on their states
         if ( soluteCrossedMembraneEvent.transportProteinType !== 'sodiumPotassiumPump' && soluteCrossedMembraneEvent.transportProteinType !== 'sodiumGlucoseCotransporter' ) {
 
-          const message = soluteCrossedMembraneEvent.solute.soluteType + ' crossed through the ' + soluteCrossedMembraneEvent.transportProteinType + ' ' + soluteCrossedMembraneEvent.direction;
+          const message = soluteCrossedMembraneEvent.solute.soluteType + ' to ' + soluteCrossedMembraneEvent.direction;
           this.contextResponseNode.addAccessibleContextResponse( message );
         }
       }
