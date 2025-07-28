@@ -45,12 +45,16 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     // This protein is always 'closed' because there are no states that allow a particle to move through it freely.
     super( model, type, position, 'openToOutsideAwaitingParticles', [] );
 
+    // The transporter transports glucose against the gradient, but can only transport sodium with the gradient.
+    // If it has solutes, and the sodium gradient changes so that there is less sodium outside than inside,
+    // release any particles to cancel the interaction.
     model.lessSodiumOutsideThanInsideProperty.lazyLink( thresholdBlocked => {
       if ( thresholdBlocked ) {
-
         this.model.solutes
           .filter( particle => ( particle.mode as ParticleModeWithSlot ).slot === this.slot )
           .forEach( particle => particle.startRandomWalk() );
+
+        this.stateProperty.value = 'openToOutsideAwaitingParticles';
       }
     }, {
       disposer: this
