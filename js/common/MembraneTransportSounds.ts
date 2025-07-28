@@ -61,8 +61,8 @@ const cardMovementSounds = [
 
 const lowpassFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
-  frequency: 400,
-  Q: 1.5
+  frequency: 420,
+  Q: 1.7
 } );
 
 const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, { initialOutputLevel: 0.3 } ) );
@@ -195,12 +195,12 @@ const ligandUnbindSoundClip = newSoundClip( ligandsUnstickV3_mp3, { initialOutpu
 
 const sodiumLowpassFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
-  frequency: 200,
-  Q: 1.5
+  frequency: 230,
+  Q: 1.7
 } );
 
 const sodiumBindingSoundClip = newSoundClip( naPlusAttach_mp3, {
-  initialOutputLevel: 0.4,
+  initialOutputLevel: 0.5,
   additionalAudioNodes: [
     sodiumLowpassFilter
   ]
