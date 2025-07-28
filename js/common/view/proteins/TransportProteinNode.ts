@@ -53,8 +53,8 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
                      'potassiumIonLigandGatedChannel',
 
         // Only used for the sodium-glucose cotransporter. A warning is shown if there is less sodium outside than inside.
-        warningVisible: new DerivedProperty( [ transportProtein.model.lessSodiumOutsideThanInsideProperty ], lessInside => {
-          return lessInside ? 'true' : 'false';
+        warning: new DerivedProperty( [ transportProtein.model.lessSodiumOutsideThanInsideProperty ], lessInside => {
+          return lessInside ? 'shown' : 'hidden';
         } )
       } );
 
