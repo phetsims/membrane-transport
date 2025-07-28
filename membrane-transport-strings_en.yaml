@@ -487,8 +487,9 @@ a11y:
                                        { $state ->
                                           [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside
                                           [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
-                                       
-                                          *[openToInside] 2 sodium and 1 glucose shuttled to inside
+                                           
+                                          # Content for the sodium-glucose cotransporter
+                                          *[openToInside] Pumping sodium and glucose to inside, open to inside
                                        }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.
