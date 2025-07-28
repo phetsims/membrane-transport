@@ -7,6 +7,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import LeakageChannel from './LeakageChannel.js';
 import LigandGatedChannel from './LigandGatedChannel.js';
@@ -17,7 +18,7 @@ import SodiumVoltageGatedChannel from './SodiumVoltageGatedChannel.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
-export default function createTransportProtein( model: MembraneTransportModel, type: TransportProteinType, position: number ): TransportProtein {
+export default function createTransportProtein( model: MembraneTransportModel, type: TransportProteinType, position: number ): TransportProtein<IntentionalAny> {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
 

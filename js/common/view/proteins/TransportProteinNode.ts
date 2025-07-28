@@ -9,6 +9,7 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import AccessibleDraggableOptions from '../../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import { ParallelDOMOptions } from '../../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
@@ -25,7 +26,7 @@ type ProteinNodeOptions = SelfOptions & NodeOptions;
 
 export default class TransportProteinNode extends InteractiveHighlighting( Node ) {
 
-  protected constructor( image: Image, transportProtein: TransportProtein | null, providedOptions?: ProteinNodeOptions ) {
+  protected constructor( image: Image, transportProtein: TransportProtein<IntentionalAny> | null, providedOptions?: ProteinNodeOptions ) {
     const options = optionize<ProteinNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
     super( options );
 

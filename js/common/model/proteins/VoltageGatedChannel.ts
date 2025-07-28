@@ -11,7 +11,7 @@ import MembraneTransportModel from '../MembraneTransportModel.js';
 import SoluteType from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 
-export default abstract class VoltageGatedChannel<T extends string> extends TransportProtein<T> {
+export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV' | 'closedNegative50mV' | 'open30mV' | 'openNegative50mV' | 'closed30mV'> extends TransportProtein<T> {
   private timeSinceVoltageChanged: number | null = null;
 
   protected constructor( model: MembraneTransportModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number, initialState: T, openStates: T[] ) {

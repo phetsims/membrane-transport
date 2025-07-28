@@ -558,7 +558,7 @@ export default class MembraneTransportModel extends PhetioObject {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
-  public getSlotForTransportProtein( transportProtein: TransportProtein ): Slot | null {
+  public getSlotForTransportProtein( transportProtein: TransportProtein<IntentionalAny> ): Slot | null {
     return this.membraneSlots.find( slot => slot.transportProteinProperty.value === transportProtein ) || null;
   }
 

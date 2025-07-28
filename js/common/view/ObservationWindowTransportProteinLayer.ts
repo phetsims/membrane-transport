@@ -275,9 +275,10 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           transportProtein.stateProperty.lazyLink( state => {
             if ( transportProteinNode.focused ) {
 
+              // NOTE: Only certain states are described here, see the YAML file, since some are transient
               if ( state === 'openToInsideEmpty' || state === 'openToInsideSodiumAndATPBound' || state === 'openToInside' ||
                    state === 'ligandBoundOpen' || state === 'closed' ) {
-                transportProteinNode.addAccessibleObjectResponse(
+                transportProteinNode.addAccessibleContextResponse(
                   MembraneTransportFluent.a11y.transportProtein.accessibleContextResponse.format( {
                     state: state,
 

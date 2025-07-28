@@ -15,7 +15,6 @@ import Property from '../../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
-import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
@@ -25,8 +24,10 @@ import SoluteType from '../SoluteType.js';
 import TransportProteinType from './TransportProteinType.js';
 
 // The State type parameter is a string union defined by the subclass, indicating which conformation or mode the protein
-// is in. We leave the default as IntentionalAny since there are several (10+) usage sites that don't care what state it is in.
-export default abstract class TransportProtein<State extends string = IntentionalAny> extends Disposable {
+// is in. We leave the default as the union of all possibilities several (15+) usage sites that don't care what state it is in.
+type AllStates = 'openToInsideEmpty' | 'openToInsideSodiumBound' | 'openToInsideSodiumAndATPBound' | 'openToInsideSodiumAndPhosphateBound' | 'openToOutsideAwaitingPotassium' | 'openToOutsidePotassiumBound' | 'openToOutsideAwaitingParticles' | 'openToOutsideAllParticlesBound' | 'openToInside' | 'closedNegative70mV' | 'openNegative50mV' | 'closed30mV' | 'closedNegative50mV' | 'open30mV' | 'ligandBoundClosed' | 'ligandBoundOpen' | 'ligandUnboundOpen' | 'closed' | 'open';
+
+export default abstract class TransportProtein<State extends AllStates = AllStates> extends Disposable {
 
   // Bounds of the transport protein in model coordinates.
   public readonly bounds: Bounds2;
