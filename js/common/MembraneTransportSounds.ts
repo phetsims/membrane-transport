@@ -69,8 +69,10 @@ const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( s
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
 // create lowpass filtered sounds
-const cardMovementLowpassSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.3,
+const cardMovementLowpassSoundClips = cardMovementSounds.map( ( sound, index ) => new SoundClip( sound, {
+
+  // boost the volume of highly filtered sounds, to normalize
+  initialOutputLevel: index === 5 ? 20 : 0.3,
   additionalAudioNodes: [ lowpassFilter ]
 } ) );
 cardMovementLowpassSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
