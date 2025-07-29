@@ -1,7 +1,9 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Particle is moving randomly in Brownian motion within the cell or extracellular space.
+ * Mode for a particle exhibiting Brownian motion in the cell or extracellular space.
+ * Handles collisions with boundaries, interactions with membrane proteins, passive diffusion,
+ * and transitions to other movement modes as appropriate.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -61,13 +63,18 @@ export default class RandomWalkMode extends BaseParticleMode {
     };
   }
 
+  /**
+   * @param dt - in seconds
+   * @param particle
+   * @param model
+   */
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     this.stepRandomWalk( dt, particle, model );
   }
 
   /**
-   * Step the particle along a random walk path, including bouncing off the membrane
-   * (central horizontal band) and the top/bottom walls, and wrapping around left/right walls.
+   * Step the particle along a random walk path, including bouncing off the membrane and the top/bottom walls
+   * and wrapping around left/right walls.
    */
   private stepRandomWalk( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     this.updateRandomWalkTimingAndDirection( dt, particle );
@@ -84,7 +91,7 @@ export default class RandomWalkMode extends BaseParticleMode {
       return;
     }
 
-    if ( this.attemptMembraneInteraction( particle, model, particle.getBounds(), isOutsideCell, direction ) ) {
+    if ( this.attemptMembraneInteraction( particle, model, isOutsideCell, direction ) ) {
       return;
     }
 
@@ -102,6 +109,9 @@ export default class RandomWalkMode extends BaseParticleMode {
 
   /**
    * Updates the random walk timing and assigns a new direction if the timer has elapsed.
+   *
+   * @param dt - in seconds
+   * @param particle
    */
   private updateRandomWalkTimingAndDirection( dt: number, particle: Particle ): void {
     const newTimeUntilNextDirection = this.timeUntilNextDirection - dt;
@@ -125,6 +135,10 @@ export default class RandomWalkMode extends BaseParticleMode {
     }
   }
 
+  /**
+   * Handles rebound of a ligand particle against movement bounds, adjusting position and direction.
+   * Updates the particle's mode if its direction changes due to collision.
+   */
   private handleBounceLigand( particle: Particle ): void {
 
     // Recompute thisBounds after the move
@@ -159,8 +173,13 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Checks for a protein interaction and handles it.
-   * Returns true if an interaction occurs.
+   * Attempts a interaction between a particle and any nearby membrane transport protein.
+   * Checks all membrane slots for proximity and cooldown before allowing interaction.
+   *
+   * @param particle
+   * @param model
+   * @param outsideOfCell - Is the particle outside of the cell?
+   * @returns true if the particle interacted with a protein.
    */
   private attemptProteinInteraction( particle: Particle, model: MembraneTransportModel, outsideOfCell: boolean ): boolean {
 
@@ -190,11 +209,18 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Checks for membrane interactions, handling passive diffusion or bounce if necessary.
-   * Returns true if passive diffusion occurs.
+   * Handles membrane interaction for a particle, allowing passive diffusion for gases when possible,
+   * or bouncing the particle off the membrane if diffusion does not occur.
+   *
+   * @param particle
+   * @param membraneTransportModel
+   * @param outsideOfCell - true if the particle is outside the cell
+   * @param direction - direction of the particle's movement
+   * @returns true if passive diffusion occurs, false for all other cases.
    */
-  private attemptMembraneInteraction( particle: Particle, membraneTransportModel: MembraneTransportModel, thisBounds: Bounds2, outsideOfCell: boolean, direction: Vector2 ): boolean {
-    if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( thisBounds ) ) {
+  private attemptMembraneInteraction( particle: Particle, membraneTransportModel: MembraneTransportModel, outsideOfCell: boolean, direction: Vector2 ): boolean {
+    const particleBounds = particle.getBounds();
+    if ( MembraneTransportConstants.MEMBRANE_BOUNDS.intersectsBounds( particleBounds ) ) {
 
       // Check for passive diffusion first, might change mode
       const location = outsideOfCell ? 'outside' : 'inside';
@@ -212,8 +238,8 @@ export default class RandomWalkMode extends BaseParticleMode {
 
       // If not diffusing, bounce off membrane
       const overlap = outsideOfCell ?
-                      MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - thisBounds.minY :
-                      thisBounds.maxY - MembraneTransportConstants.MEMBRANE_BOUNDS.minY;
+                      MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - particleBounds.minY :
+                      particleBounds.maxY - MembraneTransportConstants.MEMBRANE_BOUNDS.minY;
       const sign = outsideOfCell ? 1 : -1;
 
       // Push the entity back out of the membrane.
@@ -233,6 +259,9 @@ export default class RandomWalkMode extends BaseParticleMode {
 
   /**
    * Move the particle according to the potentially modified direction and speed.
+   * @param dt - in seconds
+   * @param particle
+   * @param direction
    */
   private moveParticle( dt: number, particle: Particle, direction: Vector2 ): void {
     particle.position.x += direction.x * dt * TYPICAL_SPEED;
@@ -240,7 +269,7 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Handles horizontal wrapping of the particle around left/right walls.
+   * Handles horizontal wrapping of the particle around left/right walls of the bounding region.
    */
   private handleHorizontalWrap( particle: Particle, boundingRegion: Bounds2 ): void {
     const updatedBoundsAfterMove = particle.getBounds(); // Bounds AFTER movement
@@ -263,7 +292,7 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Handles vertical bouncing of the particle off the top/bottom walls.
+   * Handles vertical bouncing of the particle off the top/bottom walls of the bounding region.
    */
   private handleVerticalBounce( particle: Particle, boundingRegion: Bounds2, direction: Vector2 ): void {
     const newBounds = particle.getBounds();
@@ -359,7 +388,7 @@ export default class RandomWalkMode extends BaseParticleMode {
 
           if ( isLigandFree ) {
             const targetPosition = slot.transportProteinProperty.value instanceof LigandGatedChannel ?
-              ( slot.transportProteinProperty.value ).getBindingPosition() : particle.position.copy();
+                                   ( slot.transportProteinProperty.value ).getBindingPosition() : particle.position.copy();
             const { startPosition, checkpoints, targetPosition: finalTarget } = MoveToTargetMode.createMovementPositions( particle, targetPosition, true );
             particle.mode = new MoveToLigandBindingLocationMode( slot, startPosition, checkpoints, finalTarget );
             return true;
@@ -371,8 +400,10 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Check for sodium and potassium ions interacting with leakage channels.
-   * @returns true if an interaction occurred
+   * Checks if a sodium or potassium ion can interact with a leakage channel at the given slot.
+   * Updates particle mode to move into the channel if interaction occurs.
+   *
+   * @returns true if an interaction occurred.
    */
   private handleLeakageChannelInteraction( particle: Particle, slot: Slot, transportProtein: TransportProtein, outsideOfCell: boolean ): boolean {
 
@@ -398,8 +429,10 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Check for interaction with sodium-glucose cotransporter.
-   * @returns true if an interaction occurred
+   * Checks if a sodium ion or glucose can interact with the sodium-glucose cotransporter.
+   * Updates particle mode to move towards the transporter if interaction is possible.
+   *
+   * @returns true if an interaction occurred.
    */
   private handleSodiumGlucoseCotransporterInteraction(
     particle: Particle,
@@ -446,8 +479,10 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Sodium ions interact with sodium-potassium pump from intracellular side.
-   * @returns true if an interaction occurred
+   * Checks if a sodium ion can interact with the sodium-potassium pump from the intracellular side.
+   * Updates particle mode to move towards the pump if an interaction is possible.
+   *
+   * @returns true if an interaction occurred.
    */
   private handleSodiumPotassiumPumpSodiumIntracellularInteraction(
     particle: Particle,
@@ -479,8 +514,10 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * ATP interaction with sodium-potassium pump from intracellular side.
-   * @returns true if an interaction occurred
+   * Checks if ATP can interact with the sodium-potassium pump from the intracellular side.
+   * Updates particle mode to move towards the pump if an interaction is possible.
+   *
+   * @returns true if an interaction occurred.
    */
   private handleSodiumPotassiumPumpATPIntracellularInteraction(
     particle: Particle,
@@ -507,8 +544,10 @@ export default class RandomWalkMode extends BaseParticleMode {
   }
 
   /**
-   * Potassium ions interact with sodium-potassium pump from extracellular side.
-   * @returns true if an interaction occurred
+   * Checks if a potassium ion can interact with the sodium-potassium pump from the extracellular side.
+   * Updates particle mode to move towards the pump if an interaction is possible.
+   *
+   * @returns true if an interaction occurred.
    */
   private handleSodiumPotassiumPumpPotassiumExtracellularInteraction(
     particle: Particle,

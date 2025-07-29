@@ -39,10 +39,17 @@ export default class MoveToSodiumGlucoseTransporterMode extends MoveToTargetMode
     } );
   }
 
+  /**
+   * Calculates the target position for the particle to move toward the specified binding site on the transporter.
+   */
   protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
     return this.sodiumGlucoseCotransporter.getSitePosition( this.site );
   }
 
+  /**
+   * When the particle reaches the binding site, switch to the WaitingInSodiumGlucoseCotransporterMode.
+   * Snaps to the exact particle position to complete the animation.
+   */
   protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
     affirm( particle.type === 'sodiumIon' || particle.type === 'glucose', 'Only sodium and glucose can move to the sodium glucose cotransporter' );
 

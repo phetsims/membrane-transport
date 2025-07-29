@@ -29,6 +29,9 @@ export default class MoveToCenterOfChannelMode extends MoveToTargetMode {
     } );
   }
 
+  /**
+   * Calculates the target position for the particle to move towards the mouth of the transport protein.
+   */
   protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
     // Determine the y-coordinate of the mouth of the protein based on which side the particle is on
     const isOutsideCell = particle.position.y > 0;
@@ -39,6 +42,9 @@ export default class MoveToCenterOfChannelMode extends MoveToTargetMode {
     return new Vector2( this.slot.position, mouthY );
   }
 
+  /**
+   * When reaching the target position, transition to the EnteringTransportProteinMode.
+   */
   protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
     particle.mode = new EnteringTransportProteinMode(
       this.slot,

@@ -38,10 +38,16 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
     } );
   }
 
+  /**
+   * Returns the position for the particle to move towards to reach the binding site.
+   */
   protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
     return this.sodiumPotassiumPump.getSitePosition( this.site );
   }
 
+  /**
+   * Updates state when a particle reaches its binding site.
+   */
   protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
     const sodiumPotassiumPump = this.slot.transportProteinProperty.value as SodiumPotassiumPump;
 

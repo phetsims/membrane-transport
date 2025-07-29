@@ -32,6 +32,10 @@ export default class WaitingInSodiumPotassiumPumpMode extends BaseParticleMode {
     };
   }
 
+  /**
+   * While the particle is waiting in the pump, keep it at its binding site. Implemented in step
+   * so that particles stay in the right place during conformation changes of the pump.
+   */
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const targetPosition = this.sodiumPotassiumPump.getSitePosition( this.site );
     particle.position.set( targetPosition );

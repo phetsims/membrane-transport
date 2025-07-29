@@ -33,10 +33,8 @@ export default class WaitingInSodiumGlucoseCotransporterMode extends BaseParticl
   }
 
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
-    if ( phet.chipper.queryParameters.dev ) {
-      const targetPosition = this.sodiumGlucoseCotransporter.getSitePosition( this.site );
-      particle.position.set( targetPosition );
-    }
+    // Nothing to do while the particle is waiting in the transporter. Since this protein does not have large
+    // conformational changes, the particle can remain in the same position.
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): WaitingInSodiumGlucoseCotransporterMode {

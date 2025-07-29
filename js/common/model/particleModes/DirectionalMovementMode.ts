@@ -23,18 +23,34 @@ import BaseParticleMode from './BaseParticleMode.js';
 
 export default abstract class DirectionalMovementMode extends BaseParticleMode {
 
+  /**
+   * @param type
+   * @param direction - The direction of movement, either 'inward' (into the cell) or 'outward' (out of the cell).
+   * @param slot - The slot that the particle is moving through, or null for passive diffusion.
+   */
   protected constructor( type: 'movingThroughTransportProtein' | 'passiveDiffusion', public readonly direction: 'inward' | 'outward', public readonly slot: Slot | null ) {
     super( type );
   }
 
+  /**
+   * Updates the particle's position.
+   *
+   * @param dt - in seconds
+   * @param particle
+   * @param model
+   */
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     this.performDirectionalMovement( dt, particle, model );
     this.handleSpecificBehavior( dt, particle, model );
-    this.handleBoundaryBehavior( dt, particle );
+    this.handleBoundaryBehavior( particle );
   }
 
   /**
    * Moves a particle through the membrane, with some randomness to "jiggle" through. But it moves faster vertically to cross the membrane.
+   *
+   * @param dt - in seconds
+   * @param particle
+   * @param model
    */
   protected performDirectionalMovement( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const sign = this.direction === 'inward' ? -1 : 1;
@@ -54,7 +70,14 @@ export default abstract class DirectionalMovementMode extends BaseParticleMode {
     }
   }
 
-  protected handleBoundaryBehavior( dt: number, particle: Particle ): void {
+  /**
+   * Handles the behavior of a particle when it reaches the membrane boundary.
+   * If moving inward and the particle crosses the minimum Y boundary, it moves downward.
+   * If moving outward and the particle crosses the maximum Y boundary, it moves upward.
+   *
+   * @param particle - The particle being moved.
+   */
+  protected handleBoundaryBehavior( particle: Particle ): void {
     if ( this.direction === 'inward' && ( particle.position.y + particle.dimension.height / 2 ) < MembraneTransportConstants.MEMBRANE_BOUNDS.minY ) {
       const downwardDirection = new Vector2(
         dotRandom.nextDoubleBetween( -1, 1 ),

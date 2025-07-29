@@ -29,11 +29,19 @@ export default class MoveToLigandBindingLocationMode extends MoveToTargetMode {
     } );
   }
 
+  /**
+   * Calculates the target position for the ligand particle to move toward the binding site
+   * on the associated LigandGatedChannel. If no channel is present, returns the particle's current position.
+   */
   protected getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2 {
     const ligandGatedChannel = this.slot.transportProteinProperty.value as LigandGatedChannel;
     return ligandGatedChannel ? ligandGatedChannel.getBindingPosition() : particle.position.copy();
   }
 
+  /**
+   * Handles the event when the ligand particle reaches the binding location. Binds the ligand to
+   * the LigandGatedChannel (if available) and sets the particle's position.
+   */
   protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
     const ligandGatedChannel = this.slot.transportProteinProperty.value as LigandGatedChannel;
     if ( ligandGatedChannel && ligandGatedChannel.isAvailableForBinding() ) {

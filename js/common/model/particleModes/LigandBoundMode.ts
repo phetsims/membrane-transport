@@ -31,6 +31,12 @@ export default class LigandBoundMode extends BaseParticleMode {
     };
   }
 
+  /**
+   *
+   * @param dt
+   * @param particle
+   * @param model
+   */
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     particle.position.set( this.ligandGatedChannel.getBindingPosition() );
   }

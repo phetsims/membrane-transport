@@ -32,7 +32,14 @@ export default class EnteringTransportProteinMode extends BaseParticleMode {
     };
   }
 
-  public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
+  /**
+   * Moves the particle toward the entrance ot the transport protein channel.
+   *
+   * @param dt - in seconds
+   * @param particle
+   * @param model
+   */
+  public override step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const direction = particle.position.y > 0 ? -1 : 1;
     const thresholdY = direction === -1
                        ? MembraneTransportConstants.MEMBRANE_BOUNDS.maxY - particle.dimension.height / 2

@@ -45,17 +45,11 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
 
   /**
    * Get the target position for this movement mode.
-   * @param particle - The particle being moved
-   * @param model - The model containing the particle
-   * @returns The target position
    */
   protected abstract getTargetPosition( particle: Particle, model: MembraneTransportModel ): Vector2;
 
   /**
    * Called when the particle has reached the target position.
-   * @param particle - The particle that reached the target
-   * @param model - The model containing the particle
-   * @param targetPosition - The target position that was reached
    */
   protected abstract onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void;
 
@@ -123,6 +117,12 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
     return checkpoints;
   }
 
+  /**
+   * Move the particle towards a target position, which can be a checkpoint (if there are multiple) or the final target.
+   * @param dt - in seconds
+   * @param particle
+   * @param model
+   */
   public step( dt: number, particle: Particle, model: MembraneTransportModel ): void {
     const currentPosition = particle.position.copy();
 
@@ -182,8 +182,10 @@ export default abstract class MoveToTargetMode extends BaseParticleMode {
   }
 
   /**
-   * Helper method to create movement positions for a particle.
-   * @param particle - The particle that will be moving
+   * Helper method to create intermediate movement positions for a particle. Uses calculateCheckpoints to create
+   * points that make it look like the particle is moving toward a target position, with some randomness.
+   *
+   * @param particle
    * @param targetPosition - The final target position
    * @param isProteinTarget - Whether the target is a protein binding site
    * @returns Object containing startPosition, checkpoints array, and targetPosition
