@@ -23,7 +23,7 @@
       "supportsDynamicLocale": true,
       "supportsInteractiveDescription": true,
       "supportsSound": true,
-      "supportsVoicing": true
+      "supportsCoreVoicing": true
     },
     "screenNameKeys": [
       "MEMBRANE_TRANSPORT/screen.simpleDiffusion",
