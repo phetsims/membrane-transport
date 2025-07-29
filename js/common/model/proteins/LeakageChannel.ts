@@ -24,6 +24,13 @@ export default class LeakageChannel extends TransportProtein<LeakageChannelState
     super( model, type, position, 'open', [ 'open' ] );
   }
 
+  /**
+   * Determines if passive transport is possible for the given solute type and location.
+   * Returns true if no solutes are currently moving through the protein and the gradient allows crossing.
+   *
+   * @param soluteType
+   * @param location - 'outside' or 'inside'
+   */
   public override isAvailableForPassiveTransport( soluteType: SoluteType, location: 'outside' | 'inside' ): boolean {
     return !this.hasSolutesMovingTowardOrThroughTransportProtein() && this.model.checkGradientForCrossing( soluteType, location );
   }

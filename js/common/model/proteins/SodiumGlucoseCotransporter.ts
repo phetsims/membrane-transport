@@ -27,6 +27,7 @@ const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
+  // Particle binding sites.
   private static readonly SODIUM_SITE_LEFT = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.sodiumSiteLeft
@@ -61,6 +62,11 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     } );
   }
 
+  /**
+   * Handles solute binding, state transitions, and particle transport.
+   *
+   * @param dt - in seconds
+   */
   public override step( dt: number ): void {
     super.step( dt );
 
@@ -120,6 +126,9 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
                                               solute.mode.site === site ) === undefined;
   }
 
+  /**
+   * Returns the number of sodium binding sites that are currently filled.
+   */
   public getFilledSodiumSiteCount(): number {
     return this.model.solutes.filter( solute => solute.mode instanceof WaitingInSodiumGlucoseCotransporterMode &&
                                                 solute.mode.slot === this.slot &&
@@ -127,7 +136,7 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
   }
 
   /**
-   * Determine open sites on the sodium glucose cotransporter for sodium ions
+   * Returns the open sites on the sodium glucose cotransporter for sodium ions.
    */
   public getAvailableSodiumSites(): Array<'left' | 'right'> {
 

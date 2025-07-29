@@ -69,6 +69,9 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
     this.timeSinceStateTransition = REBINDING_DELAY;
   }
 
+  /**
+   * @param dt - in seconds
+   */
   public override step( dt: number ): void {
     super.step( dt );
 
@@ -89,7 +92,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * Look up the ligand bounds to this protein. This is not an instance variable because
+   * Look up the ligand bound to this protein. This is not an instance variable because
    * we need this to be on the Particle to make it easier to control
    * deserializing from PhET-iO state.
    */
@@ -98,7 +101,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * The ligand remains attached while solutes are passing through, so we must prevent new solutes from passing through
+   * The ligand remains attached while solutes are passing through. We prevent new solutes from passing through
    * if this.timeSinceLigandBound >= this.BINDING_DURATION, so that we don't end up in an infinite loop.
    */
   public override isAvailableForPassiveTransport( soluteType: SoluteType, location: 'inside' | 'outside' ): boolean {
@@ -109,14 +112,15 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * Returns whether the channel is available for binding (not currently bound and past the rebinding delay)
+   * Returns whether the channel is available for binding - not currently bound and past the rebinding delay.
    */
   public isAvailableForBinding(): boolean {
     return this.stateProperty.value === 'closed' && this.timeSinceStateTransition >= REBINDING_DELAY;
   }
 
   /**
-   * Called when a ligand hits the membrane near this channel
+   * Attempts to bind a ligand to the channel. If the channel is available for binding, updates the channel state and sets the
+   * ligand to 'bound' mode.
    */
   public bindLigand( ligand: Particle ): void {
 
@@ -130,8 +134,10 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * Release the bound ligand if any.
-   * @param naturally - If true, the ligand is unbound due to natural causes (e.g., binding duration expired).
+   * Releases the currently bound ligand from the channel, if present.
+   * Updates the ligand to random walk mode, resets the channel state, and emits an event if the release was due to natural causes.
+   *
+   * @param naturally - True if unbinding occurs naturally (e.g., binding duration expired); false if unbound by other means.
    */
   public unbindLigand( naturally: boolean ): void {
     if ( this.boundLigand ) {
@@ -153,7 +159,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
   }
 
   /**
-   * Returns the position of the binding site for the ligand.
+   * Returns the position offset of the binding site for the ligand.
    */
   public getBindingPositionOffset(): Vector2 {
     return this.type === 'sodiumIonLigandGatedChannel' ?
@@ -161,14 +167,16 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
            this.stateProperty.value === 'ligandBoundClosed' ? LigandGatedChannel.POTASSIUM_BINDING_OFFSET_CLOSED : LigandGatedChannel.POTASSIUM_BINDING_OFFSET_OPEN;
   }
 
+  /**
+   * Calculates and returns the absolute binding site position for the ligand based on the slot position and binding offset.
+   */
   public getBindingPosition(): Vector2 {
     const bindingPositionOffset = this.getBindingPositionOffset();
     return new Vector2( this.slot.position, 0 ).plus( bindingPositionOffset );
   }
 
   /**
-   * For the ligand gated channels, clear removes all particles and ligands. Since ligands control
-   * the state, we need to make sure that the state is reset after clearing.
+   * For the ligand gated channels, clear removes all particles and ligands.
    */
   public override clear( slot: Slot ): void {
 

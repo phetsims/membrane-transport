@@ -18,6 +18,11 @@ import SodiumVoltageGatedChannel from './SodiumVoltageGatedChannel.js';
 import TransportProtein from './TransportProtein.js';
 import TransportProteinType from './TransportProteinType.js';
 
+/**
+ * @param model
+ * @param type
+ * @param position - The horizontal position of the transport protein in the membrane.
+ */
 export default function createTransportProtein( model: MembraneTransportModel, type: TransportProteinType, position: number ): TransportProtein<IntentionalAny> {
   return type === 'sodiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
          type === 'potassiumIonLeakageChannel' ? new LeakageChannel( model, type, position ) :
