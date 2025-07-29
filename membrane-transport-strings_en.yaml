@@ -458,20 +458,20 @@ a11y:
                                           [openToInside] Pumping sodium and glucose to inside, open to inside
                                        
                                           [ligandBoundClosed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle-shaped ligand binding, channel opening 
-                                            *[potassiumIonLigandGatedChannel] star-shaped ligand binding, channel opening
+                                            [sodiumIonLigandGatedChannel] triangle ligand binding, channel opening 
+                                            *[potassiumIonLigandGatedChannel] star ligand binding, channel opening
                                           }
                                           [ligandBoundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle-shaped ligand bound, open channel through membrane 
-                                            *[potassiumIonLigandGatedChannel] star-shaped ligand bound, open channel through membrane
+                                            [sodiumIonLigandGatedChannel] triangle ligand bound, open channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] star ligand bound, open channel through membrane
                                           }
                                           [ligandUnboundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle-shaped ligand floats away, channel closing 
-                                            *[potassiumIonLigandGatedChannel] star-shaped ligand floats away, channel closing
+                                            [sodiumIonLigandGatedChannel] triangle ligand floats away, channel closing 
+                                            *[potassiumIonLigandGatedChannel] star ligand floats away, channel closing
                                           }
                                           [closed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] no triangle-shaped ligand bound, closed channel through membrane 
-                                            *[potassiumIonLigandGatedChannel] no star-shaped ligand bound, closed channel through membrane
+                                            [sodiumIonLigandGatedChannel] no triangle ligand bound, closed channel through membrane 
+                                            *[potassiumIonLigandGatedChannel] no star ligand bound, closed channel through membrane
                                           }
                                        
                                           [closedNegative70mV] closed channel through membrane at -70 mV
@@ -491,17 +491,17 @@ a11y:
                                           [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
                                        
                                           *[openToInside] { $glucoseBehavior ->
-                                            [metabolized] Shuttles 2 sodium and one glucose to inside and resets to outside. Shuttled glucose disappears from inside as it is metabolized by the cell
+                                            [metabolized] Shuttles 2 sodium and one glucose to inside and resets to outside, shuttled glucose metabolized
                                             *[persistent] Shuttles 2 sodium and one glucose to inside and resets to outside
                                           }
                                        
                                           [ligandBoundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle shape ligand binds, opens 
-                                            *[potassiumIonLigandGatedChannel] star shape ligand binds, opens
+                                            [sodiumIonLigandGatedChannel] triangle ligand binds, opens 
+                                            *[potassiumIonLigandGatedChannel] star ligand binds, opens
                                           }
                                           [closed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle shape ligand unbinds, closes 
-                                            *[potassiumIonLigandGatedChannel] star shape ligand unbinds, closes
+                                            [sodiumIonLigandGatedChannel] triangle ligand unbinds, closes
+                                            *[potassiumIonLigandGatedChannel] star ligand unbinds, closes
                                           }
                                        }.
 
