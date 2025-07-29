@@ -46,6 +46,9 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // roledescription and accessible name are read.
     if ( transportProtein ) {
 
+      const showWarningProperty = new DerivedProperty( [ transportProtein.model.lessSodiumOutsideThanInsideProperty ], lessInside => {
+        return lessInside ? 'shown' : 'hidden';
+      } );
       const accessibleParagraphStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleParagraph.createProperty( {
         state: transportProtein.stateProperty,
 
@@ -54,12 +57,10 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
                      'potassiumIonLigandGatedChannel',
 
         // Only used for the sodium-glucose cotransporter. A warning is shown if there is less sodium outside than inside.
-        warning: new DerivedProperty( [ transportProtein.model.lessSodiumOutsideThanInsideProperty ], lessInside => {
-          return lessInside ? 'shown' : 'hidden';
-        } )
+        warning: showWarningProperty
       } );
 
-      this.addDisposable( accessibleParagraphStringProperty );
+      this.addDisposable( accessibleParagraphStringProperty, showWarningProperty );
 
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
         accessibleRoleDescription: 'navigable',

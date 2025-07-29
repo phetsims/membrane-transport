@@ -103,7 +103,8 @@ export default class SoluteControl extends Voicing( Panel ) {
 
           // Qualitative descriptions for the amount of a solute, as described in
           // https://github.com/phetsims/membrane-transport/issues/242
-          amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty ),
+          amount: MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( sideCountProperty.value ),
+
           soluteType: model.soluteProperty
         } )
       } );
