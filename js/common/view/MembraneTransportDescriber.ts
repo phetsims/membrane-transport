@@ -114,7 +114,13 @@ export default class MembraneTransportDescriber {
         // These protein types already have specialized messages based on their states
         if ( soluteCrossedMembraneEvent.transportProteinType !== 'sodiumPotassiumPump' && soluteCrossedMembraneEvent.transportProteinType !== 'sodiumGlucoseCotransporter' ) {
 
-          const message = soluteCrossedMembraneEvent.solute.soluteType + ' to ' + soluteCrossedMembraneEvent.direction;
+          // TODO: Needs i18n, see https://github.com/phetsims/membrane-transport/issues/348
+          const briefName = MembraneTransportFluent.a11y.solutes.briefName.format( {
+            soluteType: soluteCrossedMembraneEvent.solute.soluteType as Exclude<SoluteType, 'adp' | 'phosphate'>
+          } );
+          const directionString = soluteCrossedMembraneEvent.direction === 'inward' ? 'in' : 'out';
+
+          const message = `${briefName} crossing ${directionString}`;
           this.contextResponseNode.addAccessibleContextResponse( message );
         }
       }
