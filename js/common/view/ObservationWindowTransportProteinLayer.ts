@@ -23,6 +23,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasProteins } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProtein from '../model/proteins/TransportProtein.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
@@ -283,7 +284,10 @@ export default class ObservationWindowTransportProteinLayer extends Node {
                     state: state,
 
                     // Only used by the ligand-gated channels
-                    proteinType: transportProtein.type === 'sodiumIonLigandGatedChannel' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel'
+                    proteinType: transportProtein.type === 'sodiumIonLigandGatedChannel' ? 'sodiumIonLigandGatedChannel' : 'potassiumIonLigandGatedChannel',
+
+                    // Only used for the sodium-glucose cotransporter
+                    glucoseBehavior: MembraneTransportPreferences.instance.glucoseMetabolismProperty.value ? 'metabolized' : 'persistent'
                   } )
                 );
               }

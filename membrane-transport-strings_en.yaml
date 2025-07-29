@@ -490,7 +490,10 @@ a11y:
                                           [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside
                                           [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
                                        
-                                          *[openToInside] Shuttles 2 sodium and one glucose to inside and resets to outside.
+                                          *[openToInside] { $glucoseBehavior ->
+                                            [metabolized] Shuttles 2 sodium and one glucose to inside and resets to outside. Shuttled glucose disappears from inside as it is metabolized by the cell
+                                            *[persistent] Shuttles 2 sodium and one glucose to inside and resets to outside
+                                          }
                                        
                                           [ligandBoundOpen] { $proteinType ->
                                             [sodiumIonLigandGatedChannel] triangle shape ligand binds, opens 
@@ -500,7 +503,6 @@ a11y:
                                             [sodiumIonLigandGatedChannel] triangle shape ligand unbinds, closes 
                                             *[potassiumIonLigandGatedChannel] star shape ligand unbinds, closes
                                           }
-                                          
                                        }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.
