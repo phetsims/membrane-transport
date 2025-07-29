@@ -60,6 +60,22 @@ addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_descript
 addToMapIfDefined( 'soluteConcentrationsAccordionBox_title', 'soluteConcentrationsAccordionBox.titleStringProperty' );
 addToMapIfDefined( 'settings_crossingHighlights', 'settings.crossingHighlightsStringProperty' );
 addToMapIfDefined( 'settings_crossingSounds', 'settings.crossingSoundsStringProperty' );
+addToMapIfDefined( 'keyboardHelp_soluteAdjusters_title', 'keyboardHelp.soluteAdjusters.titleStringProperty' );
+addToMapIfDefined( 'keyboardHelp_soluteAdjusters_addOrRemoveALot', 'keyboardHelp.soluteAdjusters.addOrRemoveALotStringProperty' );
+addToMapIfDefined( 'keyboardHelp_soluteAdjusters_addOrRemoveALittle', 'keyboardHelp.soluteAdjusters.addOrRemoveALittleStringProperty' );
+addToMapIfDefined( 'keyboardHelp_transportProteinsAndLigands_title', 'keyboardHelp.transportProteinsAndLigands.titleStringProperty' );
+addToMapIfDefined( 'keyboardHelp_transportProteinsAndLigands_navigate', 'keyboardHelp.transportProteinsAndLigands.navigateStringProperty' );
+addToMapIfDefined( 'keyboardHelp_transportProteinsAndLigands_grabOrRelease', 'keyboardHelp.transportProteinsAndLigands.grabOrReleaseStringProperty' );
+addToMapIfDefined( 'keyboardHelp_transportProteinsAndLigands_moveGrabbedItem', 'keyboardHelp.transportProteinsAndLigands.moveGrabbedItemStringProperty' );
+addToMapIfDefined( 'keyboardHelp_transportProteinsAndLigands_cancelGrab', 'keyboardHelp.transportProteinsAndLigands.cancelGrabStringProperty' );
+addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_title', 'keyboardHelp.sortOrDeleteProteins.titleStringProperty' );
+addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_navigateProteins', 'keyboardHelp.sortOrDeleteProteins.navigateProteinsStringProperty' );
+addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_grabProtein', 'keyboardHelp.sortOrDeleteProteins.grabProteinStringProperty' );
+addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_moveGrabbedProtein', 'keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinStringProperty' );
+addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_releaseProtein', 'keyboardHelp.sortOrDeleteProteins.releaseProteinStringProperty' );
+addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_deleteProtein', 'keyboardHelp.sortOrDeleteProteins.deleteProteinStringProperty' );
+addToMapIfDefined( 'keyboardHelp_fromAnywhereInSim_title', 'keyboardHelp.fromAnywhereInSim.titleStringProperty' );
+addToMapIfDefined( 'keyboardHelp_fromAnywhereInSim_pauseOrPlay', 'keyboardHelp.fromAnywhereInSim.pauseOrPlayStringProperty' );
 addToMapIfDefined( 'a11y_simpleDiffusionScreen_screenButtonsHelpText', 'a11y.simpleDiffusionScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_facilitatedDiffusionScreen_screenButtonsHelpText', 'a11y.facilitatedDiffusionScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_activeTransportScreen_screenButtonsHelpText', 'a11y.activeTransportScreen.screenButtonsHelpTextStringProperty' );
@@ -191,6 +207,18 @@ addToMapIfDefined( 'a11y_membranePotential_sodiumOpenedPotassiumClosedResponse',
 addToMapIfDefined( 'a11y_membranePotential_sodiumClosedPotassiumOpenedResponse', 'a11y.membranePotential.sodiumClosedPotassiumOpenedResponseStringProperty' );
 addToMapIfDefined( 'a11y_membranePotential_sodiumClosedPotassiumClosedResponse', 'a11y.membranePotential.sodiumClosedPotassiumClosedResponseStringProperty' );
 addToMapIfDefined( 'a11y_membranePotential_noChangeResponse', 'a11y.membranePotential.noChangeResponseStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALotDescription', 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALotDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALittleDescription', 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALittleDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_navigateDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.navigateDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_grabOrReleaseDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.grabOrReleaseDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_moveGrabbedItemDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_cancelGrabDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.cancelGrabDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_navigateProteinsDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.navigateProteinsDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_grabProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.grabProteinDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_moveGrabbedProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_releaseProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.releaseProteinDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_deleteProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.deleteProteinDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_fromAnywhereInSim_pauseOrPlayDescription', 'a11y.keyboardHelp.fromAnywhereInSim.pauseOrPlayDescriptionStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -275,6 +303,33 @@ const MembraneTransportFluent = {
   settings: {
     crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'settings_crossingHighlights', _.get( MembraneTransportStrings, 'settings.crossingHighlightsStringProperty' ) ),
     crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'settings_crossingSounds', _.get( MembraneTransportStrings, 'settings.crossingSoundsStringProperty' ) )
+  },
+  _comment_8: new FluentComment( {"comment":"Keyboard Help Dialog","associatedKey":"keyboardHelp"} ),
+  keyboardHelp: {
+    soluteAdjusters: {
+      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_soluteAdjusters_title', _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.titleStringProperty' ) ),
+      addOrRemoveALotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_soluteAdjusters_addOrRemoveALot', _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.addOrRemoveALotStringProperty' ) ),
+      addOrRemoveALittleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_soluteAdjusters_addOrRemoveALittle', _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.addOrRemoveALittleStringProperty' ) )
+    },
+    transportProteinsAndLigands: {
+      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_title', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.titleStringProperty' ) ),
+      navigateStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_navigate', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.navigateStringProperty' ) ),
+      grabOrReleaseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_grabOrRelease', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.grabOrReleaseStringProperty' ) ),
+      moveGrabbedItemStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_moveGrabbedItem', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.moveGrabbedItemStringProperty' ) ),
+      cancelGrabStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_cancelGrab', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.cancelGrabStringProperty' ) )
+    },
+    sortOrDeleteProteins: {
+      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_title', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.titleStringProperty' ) ),
+      navigateProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_navigateProteins', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.navigateProteinsStringProperty' ) ),
+      grabProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_grabProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.grabProteinStringProperty' ) ),
+      moveGrabbedProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_moveGrabbedProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinStringProperty' ) ),
+      releaseProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_releaseProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.releaseProteinStringProperty' ) ),
+      deleteProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_deleteProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.deleteProteinStringProperty' ) )
+    },
+    fromAnywhereInSim: {
+      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_fromAnywhereInSim_title', _.get( MembraneTransportStrings, 'keyboardHelp.fromAnywhereInSim.titleStringProperty' ) ),
+      pauseOrPlayStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_fromAnywhereInSim_pauseOrPlay', _.get( MembraneTransportStrings, 'keyboardHelp.fromAnywhereInSim.pauseOrPlayStringProperty' ) )
+    }
   },
   a11y: {
     simpleDiffusionScreen: {
@@ -514,6 +569,33 @@ const MembraneTransportFluent = {
       sodiumClosedPotassiumOpenedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumClosedPotassiumOpenedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumClosedPotassiumOpenedResponseStringProperty' ) ),
       sodiumClosedPotassiumClosedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumClosedPotassiumClosedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumClosedPotassiumClosedResponseStringProperty' ) ),
       noChangeResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_noChangeResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.noChangeResponseStringProperty' ) )
+    },
+    _comment_8: new FluentComment( {"comment":"Keyboard Help Dialog","associatedKey":"keyboardHelp"} ),
+    keyboardHelp: {
+      soluteAdjusters: {
+        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"addOrRemoveALotDescription"} ),
+        addOrRemoveALotDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALotDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALotDescriptionStringProperty' ) ),
+        addOrRemoveALittleDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALittleDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALittleDescriptionStringProperty' ) )
+      },
+      transportProteinsAndLigands: {
+        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"navigateDescription"} ),
+        navigateDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_navigateDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.navigateDescriptionStringProperty' ) ),
+        grabOrReleaseDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_grabOrReleaseDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.grabOrReleaseDescriptionStringProperty' ) ),
+        moveGrabbedItemDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_moveGrabbedItemDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemDescriptionStringProperty' ) ),
+        cancelGrabDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_cancelGrabDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.cancelGrabDescriptionStringProperty' ) )
+      },
+      sortOrDeleteProteins: {
+        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"navigateProteinsDescription"} ),
+        navigateProteinsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_navigateProteinsDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.navigateProteinsDescriptionStringProperty' ) ),
+        grabProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_grabProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.grabProteinDescriptionStringProperty' ) ),
+        moveGrabbedProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_moveGrabbedProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinDescriptionStringProperty' ) ),
+        releaseProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_releaseProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.releaseProteinDescriptionStringProperty' ) ),
+        deleteProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_deleteProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.deleteProteinDescriptionStringProperty' ) )
+      },
+      fromAnywhereInSim: {
+        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"pauseOrPlayDescription"} ),
+        pauseOrPlayDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_fromAnywhereInSim_pauseOrPlayDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.fromAnywhereInSim.pauseOrPlayDescriptionStringProperty' ) )
+      }
     }
   }
 };

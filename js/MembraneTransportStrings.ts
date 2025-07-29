@@ -71,6 +71,32 @@ type StringsType = {
     'crossingHighlightsStringProperty': LocalizedStringProperty;
     'crossingSoundsStringProperty': LocalizedStringProperty;
   };
+  'keyboardHelp': {
+    'soluteAdjusters': {
+      'titleStringProperty': LocalizedStringProperty;
+      'addOrRemoveALotStringProperty': LocalizedStringProperty;
+      'addOrRemoveALittleStringProperty': LocalizedStringProperty;
+    };
+    'transportProteinsAndLigands': {
+      'titleStringProperty': LocalizedStringProperty;
+      'navigateStringProperty': LocalizedStringProperty;
+      'grabOrReleaseStringProperty': LocalizedStringProperty;
+      'moveGrabbedItemStringProperty': LocalizedStringProperty;
+      'cancelGrabStringProperty': LocalizedStringProperty;
+    };
+    'sortOrDeleteProteins': {
+      'titleStringProperty': LocalizedStringProperty;
+      'navigateProteinsStringProperty': LocalizedStringProperty;
+      'grabProteinStringProperty': LocalizedStringProperty;
+      'moveGrabbedProteinStringProperty': LocalizedStringProperty;
+      'releaseProteinStringProperty': LocalizedStringProperty;
+      'deleteProteinStringProperty': LocalizedStringProperty;
+    };
+    'fromAnywhereInSim': {
+      'titleStringProperty': LocalizedStringProperty;
+      'pauseOrPlayStringProperty': LocalizedStringProperty;
+    }
+  };
   'a11y': {
     'simpleDiffusionScreen': {
       'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
@@ -272,6 +298,28 @@ type StringsType = {
       'sodiumClosedPotassiumOpenedResponseStringProperty': LocalizedStringProperty;
       'sodiumClosedPotassiumClosedResponseStringProperty': LocalizedStringProperty;
       'noChangeResponseStringProperty': LocalizedStringProperty;
+    };
+    'keyboardHelp': {
+      'soluteAdjusters': {
+        'addOrRemoveALotDescriptionStringProperty': LocalizedStringProperty;
+        'addOrRemoveALittleDescriptionStringProperty': LocalizedStringProperty;
+      };
+      'transportProteinsAndLigands': {
+        'navigateDescriptionStringProperty': LocalizedStringProperty;
+        'grabOrReleaseDescriptionStringProperty': LocalizedStringProperty;
+        'moveGrabbedItemDescriptionStringProperty': LocalizedStringProperty;
+        'cancelGrabDescriptionStringProperty': LocalizedStringProperty;
+      };
+      'sortOrDeleteProteins': {
+        'navigateProteinsDescriptionStringProperty': LocalizedStringProperty;
+        'grabProteinDescriptionStringProperty': LocalizedStringProperty;
+        'moveGrabbedProteinDescriptionStringProperty': LocalizedStringProperty;
+        'releaseProteinDescriptionStringProperty': LocalizedStringProperty;
+        'deleteProteinDescriptionStringProperty': LocalizedStringProperty;
+      };
+      'fromAnywhereInSim': {
+        'pauseOrPlayDescriptionStringProperty': LocalizedStringProperty;
+      }
     }
   }
 };

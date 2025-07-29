@@ -67,6 +67,29 @@ settings:
   crossingHighlights: Crossing Highlights
   crossingSounds:     Crossing Sounds
 
+# Keyboard Help Dialog
+keyboardHelp:
+  soluteAdjusters:
+    title: Solute Adjusters
+    addOrRemoveALot: Add or remove a lot of chosen solute
+    addOrRemoveALittle: Add or remove a little of chosen solute
+  transportProteinsAndLigands:
+    title: Transport Proteins and Ligands
+    navigate: Navigate proteins in panel or random ligands outside cell
+    grabOrRelease: Grab or release protein or ligand
+    moveGrabbedItem: Move grabbed protein or ligand between available drop locations
+    cancelGrab: Cancel grab or move interaction
+  sortOrDeleteProteins:
+    title: Sort or Delete Proteins in Membrane
+    navigateProteins: Navigate proteins in membrane
+    grabProtein: Grab protein in membrane
+    moveGrabbedProtein: Move grabbed protein between membrane slots
+    releaseProtein: Release grabbed protein into empty slot or swap slots
+    deleteProtein: Delete grabbed protein
+  fromAnywhereInSim:
+    title: From Anywhere in Sim
+    pauseOrPlay: Pause or play action in Observation Window
+
 a11y:
   simpleDiffusionScreen:
     screenButtonsHelpText: Explore what solutes can diffuse freely in a cellular environment.
@@ -538,3 +561,25 @@ a11y:
     sodiumClosedPotassiumOpenedResponse: "{ a11y.membranePotential.potassiumVoltageGatedOpenedResponse } { a11y.membranePotential.sodiumVoltageGatedClosedResponse } "
     sodiumClosedPotassiumClosedResponse: "Voltage-gated channels closed."
     noChangeResponse:                    No change in transport proteins.
+
+  keyboardHelp:
+    soluteAdjusters:
+      # Description strings for PDOM
+      addOrRemoveALotDescription: Add or remove a lot of chosen solute with Left and Right arrow keys.
+      addOrRemoveALittleDescription: Add or remove a little of chosen solute with Shift plus Left and Right arrow keys.
+    transportProteinsAndLigands:
+      # Description strings for PDOM
+      navigateDescription: Navigate proteins in panel or random ligands outside cell with Tab key.
+      grabOrReleaseDescription: Grab or release protein or ligand with Space or Enter keys.
+      moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or letter keys A and D.
+      cancelGrabDescription: Cancel grab or move interaction with Escape key.
+    sortOrDeleteProteins:
+      # Description strings for PDOM
+      navigateProteinsDescription: Navigate proteins in membrane with Left and Right Arrow keys.
+      grabProteinDescription: Grab protein in membrane with Space or Enter keys.
+      moveGrabbedProteinDescription: Move grabbed protein between membrane slots with Left and Right Arrow keys.
+      releaseProteinDescription: Release grabbed protein into empty slot or swap slots with Space or Enter keys.
+      deleteProteinDescription: Delete grabbed protein with Delete key.
+    fromAnywhereInSim:
+      # Description strings for PDOM
+      pauseOrPlayDescription: Pause or play action in Observation Window with Alt key plus K.
