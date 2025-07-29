@@ -63,7 +63,13 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
 
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
         accessibleRoleDescription: 'navigable',
-        accessibleParagraph: accessibleParagraphStringProperty
+
+        // Use descriptionContent instead of accessibleParagraph, because changing the accessibleParagraph causes a full
+        // re-render of the DOM elements, forcing the screen reader to re-read the accessibleName again.
+        // TODO: See https://github.com/phetsims/scenery/issues/1721
+        descriptionTagName: 'p',
+        descriptionContent: accessibleParagraphStringProperty,
+        appendDescription: true
       } ) );
     }
   }
