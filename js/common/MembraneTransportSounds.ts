@@ -268,6 +268,10 @@ export default class MembraneTransportSounds {
     sodiumBindingSoundClip.setPlaybackRate( numberSodiumsFilled === 1 ? G_NOTE :
                                             numberSodiumsFilled === 2 ? C_NOTE :
                                             E_NOTE );
+
+    // Boost the volume of the most filtered sound, to normalize
+    sodiumBindingSoundClip.setOutputLevel( numberSodiumsFilled === 3 ? 1.6 : 0.5 );
+
     sodiumBindingSoundClip.play();
   }
 
@@ -375,6 +379,9 @@ export default class MembraneTransportSounds {
   public static particleBoundToSodiumGlucoseTransporter( type: 'sodiumIon' | 'glucose', filledSodiumSiteCount: number ): void {
     if ( type === 'sodiumIon' ) {
       sodiumBindingSoundClip.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : C_NOTE );
+
+      sodiumBindingSoundClip.setOutputLevel( 0.5 );
+
       sodiumBindingSoundClip.play();
     }
     else {
