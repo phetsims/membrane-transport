@@ -126,8 +126,8 @@ export default class InteractiveSlotsNode extends Node {
       modelY: number
     ): Rectangle => {
 
-      // It was found that the accessible name and role information requires AccessibleInteractiveOptions
-      // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
+      // AccessibleInteractiveOptions allows keys to be used to interact with this Node while a screen reader is
+      // in use. It also the appropriate role and adds it to the traversal order.
       const rect = new Rectangle( 0, 0, 20, 20,
         combineOptions<RectangleOptions>( {}, AccessibleInteractiveOptions, {
           center: modelViewTransform.modelToViewXY( modelX, modelY ),
@@ -144,8 +144,8 @@ export default class InteractiveSlotsNode extends Node {
             objectResponse: voicingObjectResponseProperty
           } );
 
-          // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
-          // Node is focused.
+          // Only added for Voicing because the accessibleName is spoken automatically by the
+          // screen reader when the Node is focused.
           voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
         }
       } );
@@ -172,7 +172,7 @@ export default class InteractiveSlotsNode extends Node {
       }
     };
 
-    // Draw a rectangle centered at each slot, vertically above them.
+    // Create the focusable rectangles that represent the slots.
     slots.forEach( ( slot, index ) => {
 
       // The name of the protein in a slot, for when there is one.

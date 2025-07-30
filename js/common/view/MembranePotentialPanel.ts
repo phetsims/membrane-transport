@@ -1,7 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Membrane potential panel for the membrane transport simulation, shown in the bottom right, only in certain screens.
+ * Membrane potential panel for the membrane transport simulation, shown the toolbox with the voltage gated channels.
+ * Only some screens will have these controls.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

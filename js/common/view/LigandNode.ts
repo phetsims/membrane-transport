@@ -363,9 +363,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
         accessibleHelpText: MembraneTransportFluent.a11y.ligandNode.accessibleHelpTextStringProperty,
 
         onGrab: inputType => {
-
           if ( inputType === 'alternative' ) {
-
             ligandInteractionCueVisibleProperty.value = false;
 
             // Make sure that this ligand is no longer bound to a ligand gated channel.
@@ -417,8 +415,10 @@ export default class LigandNode extends InteractiveHighlightingNode {
               this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponse.format( { ligandType: this.ligand.ligandType } ) );
             }
             else {
+
               // Drop on a slot (0 to SLOT_COUNT-1)
               const targetSlot = this.slots[ this.currentTargetSlotIndex ];
+
               // Drop visually centered above the slot
               const dropPosition = new Vector2( targetSlot.position, MODEL_DRAG_VERTICAL_OFFSET );
               this.ligand.position.set( dropPosition );

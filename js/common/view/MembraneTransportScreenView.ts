@@ -324,7 +324,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomPlayAreaNode.pdomOrder = [
       soluteControlsNode,
       soluteConcentrationsAccordionBox,
-      this.observationWindow, // Contains the ligands.
+      this.observationWindow, // Contains the interactive ligands and transport proteins
       rightSideVBox
     ];
 
@@ -351,7 +351,7 @@ export default class MembraneTransportScreenView extends ScreenView {
   }
 
   /**
-   * Creates a transport protein drag node with the given parameters
+   * Creates a draggable transport protein and adds it to the view.
    * @param modelPosition - The model position to place the drag node
    * @param type - The type to create
    * @param origin - Where the transport protein came from
