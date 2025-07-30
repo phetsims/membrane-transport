@@ -18,7 +18,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import SoluteType, { SoluteControlSolutes, SoluteTypeValues } from './model/SoluteType.js';
+import SoluteType, { SoluteControlSolute, SoluteTypeValues } from './model/SoluteType.js';
 
 type MembraneTransportFeatureSet = 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground';
 
@@ -28,7 +28,7 @@ export const getFeatureSetSoluteTypes = ( featureSet: MembraneTransportFeatureSe
   return ( featureSet === 'activeTransport' || featureSet === 'playground' ) ? SoluteTypeValues : SoluteTypeValues.filter( type => type !== 'atp' );
 };
 
-export const getFeatureSetSelectableSoluteTypes = ( featureSet: MembraneTransportFeatureSet ): readonly SoluteControlSolutes[] => {
+export const getFeatureSetSelectableSoluteTypes = ( featureSet: MembraneTransportFeatureSet ): readonly SoluteControlSolute[] => {
   return getFeatureSetSoluteTypes( featureSet ).filter( type => type !== 'adp' && type !== 'phosphate' );
 };
 

@@ -22,10 +22,8 @@ export const ParticleTypeValues = [ ...SoluteTypeValues, ...LigandTypeValues ] a
 type SoluteType = typeof SoluteTypeValues[number];
 export default SoluteType;
 
-// TODO: Rename these to be singular for convention. See https://github.com/phetsims/membrane-transport/issues/323
-export type PlottableSoluteTypes = Exclude<SoluteType, 'atp' | 'adp' | 'phosphate'>;
-
-export type SoluteControlSolutes = 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp';
+export type PlottableSoluteType = Exclude<SoluteType, 'atp' | 'adp' | 'phosphate'>;
+export type SoluteControlSolute = 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp';
 
 type LigandType = typeof LigandTypeValues[number];
 type ParticleType = typeof ParticleTypeValues[number];
@@ -41,14 +39,14 @@ export const getSoluteTypeString = ( soluteType: SoluteType ): TReadOnlyProperty
   soluteType === 'glucose' ? MembraneTransportFluent.soluteNames.glucoseStringProperty :
   MembraneTransportFluent.soluteNames.atpStringProperty;
 
-export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteTypes ): ProfileColorProperty =>
+export const getSoluteBarChartColorProperty = ( soluteType: PlottableSoluteType ): ProfileColorProperty =>
   soluteType === 'oxygen' ? MembraneTransportColors.oxygenColorProperty :
   soluteType === 'carbonDioxide' ? MembraneTransportColors.carbonDioxideColorProperty :
   soluteType === 'sodiumIon' ? MembraneTransportColors.sodiumIonColorProperty :
   soluteType === 'potassiumIon' ? MembraneTransportColors.potassiumIonColorProperty :
   MembraneTransportColors.glucoseColorProperty;
 
-export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteTypes ): string =>
+export const getSoluteBarChartTandemName = ( soluteType: PlottableSoluteType ): string =>
   `${soluteType}BarChart`;
 
 export const soluteTypeToRadioButtonTandemName = ( soluteType: SoluteType ): string => `${soluteType}RadioButton`;

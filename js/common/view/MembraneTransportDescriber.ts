@@ -19,7 +19,7 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import SoluteType, { PlottableSoluteTypes } from '../model/SoluteType.js';
+import SoluteType, { PlottableSoluteType } from '../model/SoluteType.js';
 
 type SoluteComparisonDescriptor = 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' |
   'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'aLotMoreOutside' | 'someMoreOutside' |
@@ -471,7 +471,7 @@ export default class MembraneTransportDescriber {
     } ).map( e => e.solute.soluteType ) ) as Exclude<SoluteType, 'adp' | 'phosphate'>[];
 
     // Identify all solute types that crossed the membrane
-    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) ) as PlottableSoluteTypes[];
+    const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) ) as PlottableSoluteType[];
 
     const facilitatedSolutesThatWeShouldDescribe = facilitatedSolutes.filter( isSoluteDescribable );
 

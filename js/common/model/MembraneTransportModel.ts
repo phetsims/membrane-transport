@@ -48,7 +48,7 @@ import { TransportProteinTypeValues } from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import Solute from './Solute.js';
 import SoluteCrossedMembraneEvent from './SoluteCrossedMembraneEvent.js';
-import SoluteType, { ParticleType, SoluteControlSolutes } from './SoluteType.js';
+import SoluteType, { ParticleType, SoluteControlSolute } from './SoluteType.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -117,7 +117,7 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly hasAnyADPOrPhosphateProperty = new BooleanProperty( false );
 
   // The solute type selected by the user to add or remove solutes.
-  public readonly soluteProperty: StringUnionProperty<SoluteControlSolutes>;
+  public readonly soluteProperty: StringUnionProperty<SoluteControlSolute>;
 
   // Controls whether charges on the membrane representing the membrane potential are visible.
   public readonly chargesVisibleProperty: Property<boolean>;
@@ -195,7 +195,7 @@ export default class MembraneTransportModel extends PhetioObject {
     const slotsTandem = parentTandem.createGroupTandem( 'slot' );
     this.membraneSlots = SLOT_POSITIONS.map( position => new Slot( this, position, slotsTandem.createNextTandem() ) );
 
-    this.soluteProperty = new StringUnionProperty<SoluteControlSolutes>( 'oxygen', {
+    this.soluteProperty = new StringUnionProperty<SoluteControlSolute>( 'oxygen', {
       validValues: getFeatureSetSelectableSoluteTypes( this.featureSet ),
       tandem: providedOptions.tandem.createTandem( 'soluteProperty' ),
       phetioFeatured: true,

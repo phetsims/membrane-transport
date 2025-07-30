@@ -27,7 +27,7 @@ import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import { SoluteControlSolutes } from '../model/SoluteType.js';
+import { SoluteControlSolute } from '../model/SoluteType.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
@@ -40,7 +40,7 @@ const coarseDelta = 50;
 
 export default class SoluteControl extends Voicing( Panel ) {
   public constructor( model: MembraneTransportModel,
-                      soluteType: SoluteControlSolutes,
+                      soluteType: SoluteControlSolute,
                       side: 'outside' | 'inside',
                       tandem: Tandem,
                       providedOptions: SoluteControlOptions

@@ -27,7 +27,7 @@ import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteTypes } from '../model/SoluteType.js';
+import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteType } from '../model/SoluteType.js';
 import MembraneTransportDescriber, { AverageCrossingDirectionDescriptor } from './MembraneTransportDescriber.js';
 import createParticleNode from './particles/createParticleNode.js';
 
@@ -48,7 +48,7 @@ export default class SoluteBarChartNode extends Node {
    * @param tandem
    */
   public constructor( model: MembraneTransportModel,
-                      soluteType: PlottableSoluteTypes,
+                      soluteType: PlottableSoluteType,
                       averageCrossingDirectionProperty: TReadOnlyProperty<AverageCrossingDirectionDescriptor>,
                       iconAlignGroup: AlignGroup,
                       tandem: Tandem ) {
