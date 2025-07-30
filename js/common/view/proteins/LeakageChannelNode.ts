@@ -17,8 +17,11 @@ import TransportProteinNode from './TransportProteinNode.js';
 
 export default class LeakageChannelNode extends TransportProteinNode {
 
+  /**
+   * @param type
+   * @param transportProtein - use null for static icons
+   */
   public constructor( type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel', transportProtein: TransportProtein | null ) {
-
     const image = new Image( type === 'sodiumIonLeakageChannel' ? sodiumLeakage_svg : potassiumLeakage_svg );
     super( image, transportProtein );
   }

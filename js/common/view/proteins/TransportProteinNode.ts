@@ -10,7 +10,7 @@
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import AccessibleDraggableOptions from '../../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import AccessibleInteractiveOptions from '../../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import { ParallelDOMOptions } from '../../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
@@ -26,6 +26,11 @@ type ProteinNodeOptions = SelfOptions & NodeOptions;
 
 export default class TransportProteinNode extends InteractiveHighlighting( Node ) {
 
+  /**
+   * @param image
+   * @param transportProtein - If null, this will be a static icon.
+   * @param providedOptions
+   */
   protected constructor( image: Image, transportProtein: TransportProtein<IntentionalAny> | null, providedOptions?: ProteinNodeOptions ) {
     const options = optionize<ProteinNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
     super( options );
@@ -34,7 +39,8 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     const modelWidth = MembraneTransportConstants.TRANSPORT_PROTEIN_WIDTH;
     const viewWidth = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.modelToViewDeltaX( modelWidth );
 
-    assert && assert( image.width === 650, `By design, the images should be 650 pixels wide, this one was ${image.width}` );
+    // All protein artwork must have the same width to ensure consistent scaling of transport proteins and correct relative sizing within each artwork
+    assert && assert( image.width === 650, `By design, the images should be 650 view units wide, this one was ${image.width}` );
 
     const viewScale = viewWidth / image.width;
     this.setScaleMagnitude( viewScale );
@@ -42,8 +48,6 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     this.addChild( image );
 
     // pdom - If there is a model representation this Node is in the membrane and is interactive.
-    // It was found that the interactive protein should have the application role so that the
-    // roledescription and accessible name are read.
     if ( transportProtein ) {
 
       const showWarningProperty = new DerivedProperty( [ transportProtein.model.lessSodiumOutsideThanInsideProperty ], lessInside => {
@@ -62,11 +66,12 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
 
       this.addDisposable( accessibleParagraphStringProperty, showWarningProperty );
 
-      this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleDraggableOptions, {
+      this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleInteractiveOptions, {
         accessibleRoleDescription: 'navigable',
 
         // Use descriptionContent instead of accessibleParagraph, because changing the accessibleParagraph causes a full
-        // re-render of the DOM elements, forcing the screen reader to re-read the accessibleName again.
+        // re-render of the DOM elements, forcing the screen reader to re-read the accessibleName again while this
+        // protein has focus.
         // TODO: See https://github.com/phetsims/scenery/issues/1721
         descriptionTagName: 'p',
         descriptionContent: accessibleParagraphStringProperty,

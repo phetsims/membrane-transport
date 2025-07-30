@@ -1,7 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Returns the Node for the given TransportProteinType
+ * Returns a new Node for the given TransportProteinType.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -22,6 +22,12 @@ import SodiumPotassiumPumpNode from './SodiumPotassiumPumpNode.js';
 import SodiumVoltageGatedChannelNode from './SodiumVoltageGatedChannelNode.js';
 import TransportProteinNode from './TransportProteinNode.js';
 
+/**
+ * @param type
+ * @param transportProtein - If null, a Node will be created without a model. This is useful for icons.
+ *                           If a transport protein is provided, the Node will be linked to it. Should mostly be used for
+ *                           proteins that are in the membrane, ready to interact with solutes.
+ */
 export default function createTransportProteinNode( type: TransportProteinType, transportProtein: TransportProtein | null ): TransportProteinNode {
   if ( type === 'sodiumIonLeakageChannel' ) {
     return new LeakageChannelNode( type, transportProtein );

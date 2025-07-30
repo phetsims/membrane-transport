@@ -1,8 +1,7 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Render a channel, for a Node that can be dragged out of the toolbox and dropped into specific slots
- * in the membrane.
+ * A Node for a ligand-gated channel.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -24,8 +23,8 @@ import TransportProteinNode from './TransportProteinNode.js';
 
 export default class LigandGatedChannelNode extends TransportProteinNode {
 
-  // The highlight is shown when the user drags a ligand
-  private readonly highlight?: Image;
+  // A highlight that is shown at the ligand binding site while the user is dragging a ligand.
+  private readonly bindingSiteHighlight?: Image;
 
   /**
    * @param type
@@ -44,7 +43,7 @@ export default class LigandGatedChannelNode extends TransportProteinNode {
       const highlightVisibleProperty = new DerivedProperty( [ channel.model.isUserDraggingLigandProperty, channel.openOrClosedProperty ], ( isUserDraggingLigand, openOrClosed ) => {
         return isUserDraggingLigand && openOrClosed === 'closed';
       } );
-      this.highlight = new Image( type === 'sodiumIonLigandGatedChannel' ? sodiumLigandHighlight_svg : potassiumLigandHighlight_svg, {
+      this.bindingSiteHighlight = new Image( type === 'sodiumIonLigandGatedChannel' ? sodiumLigandHighlight_svg : potassiumLigandHighlight_svg, {
         visibleProperty: highlightVisibleProperty
       } );
 
@@ -59,7 +58,7 @@ export default class LigandGatedChannelNode extends TransportProteinNode {
       channel.openOrClosedProperty.link( openOrClosed => {
 
         // Re-center the highlight on state change, since the open vs closed has different coordinates
-        this.highlight!.center = type === 'sodiumIonLigandGatedChannel' ?
+        this.bindingSiteHighlight!.center = type === 'sodiumIonLigandGatedChannel' ?
                                  MembraneTransportConstants.IMAGE_METRICS.sodiumLigandGatedChannel[ openOrClosed ].ligandBindingSite :
                                  MembraneTransportConstants.IMAGE_METRICS.potassiumLigandGatedChannel[ openOrClosed ].ligandBindingSite;
       } );
@@ -86,7 +85,7 @@ export default class LigandGatedChannelNode extends TransportProteinNode {
    * out of bounds.
    */
   public addHighlightAsChild(): void {
-    this.highlight && this.addChild( this.highlight );
+    this.bindingSiteHighlight && this.addChild( this.bindingSiteHighlight );
   }
 }
 
