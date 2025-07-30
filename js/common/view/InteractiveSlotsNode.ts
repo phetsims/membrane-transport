@@ -1,8 +1,18 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Part of the drag operation for keyboard input of the proteins in the membrane. When a protein is grabbed,
- * this Node becomes active and manages selection of a slot to place the protein.
+ * Implements Interactive Description for  proteins in the membrane while "grabbed."
+ *
+ * This approach focuses on accessibility for both Interactive Description and Voicing.
+ * There are two interaction modes:
+ * - The "selection" mode, which lets users move focus among placed proteins
+ * - The "sorting" mode which is active when a protein is being moved using the keyboard.
+ *
+ * This Node implements the "sorting" mode. See ObservationWindowTransportProteinLayer for the "selection" mode.
+ * Focus is passed between these two Nodes to implement the full interaction.
+ *
+ * While in the "grabbed" state, arrow keys move the selection between available slots, and focus/aria
+ * output (as well as voicing) updates to reflect the targeted drop location.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -16,7 +26,7 @@ import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
+import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import GroupHighlightPath from '../../../../scenery/js/accessibility/GroupHighlightPath.js';
 import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
@@ -64,8 +74,10 @@ export default class InteractiveSlotsNode extends Node {
   // A reference to the grabbed icon Node that indicates visually the type and position of the grabbed protein.
   private grabbedNode: TransportProteinDragNode | null = null;
 
-  // Highlight regions for the target areas, including the off-membrane site
-  private rectangles: Rectangle[] = [];
+  // These are the focusable Nodes that implement much of the interaction. One surrounds each slot.
+  // Arrow keys move focus between these Nodes so that information about the potential slot is
+  // read to the user while they are selecting a new slot.
+  private focusableRectangles: Rectangle[] = [];
 
   // Utterances should not interrupt others so we hear the 'grabbed' response and the name of the protein.
   private readonly grabReleaseUtterance = new Utterance( {
@@ -75,6 +87,7 @@ export default class InteractiveSlotsNode extends Node {
       cancelOther: false,
 
       // Assertive was "losing" the message on Mac/Voiceover, but polite correctly schedules it after reading the accessible name from focus change
+      // See https://github.com/phetsims/membrane-transport/issues/299
       ariaLivePriority: AriaLive.POLITE
     }
   } );
@@ -113,10 +126,10 @@ export default class InteractiveSlotsNode extends Node {
       modelY: number
     ): Rectangle => {
 
-      // It was found that the accessible name and role information requires AccessibleDraggableOptions
+      // It was found that the accessible name and role information requires AccessibleInteractiveOptions
       // to be on the focusable element, see https://github.com/phetsims/membrane-transport/issues/97.
       const rect = new Rectangle( 0, 0, 20, 20,
-        combineOptions<RectangleOptions>( {}, AccessibleDraggableOptions, {
+        combineOptions<RectangleOptions>( {}, AccessibleInteractiveOptions, {
           center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
           // pdom
@@ -200,7 +213,7 @@ export default class InteractiveSlotsNode extends Node {
         MODEL_DRAG_VERTICAL_OFFSET
       );
 
-      this.rectangles.push( rect );
+      this.focusableRectangles.push( rect );
       this.addChild( rect );
     } );
 
@@ -212,7 +225,7 @@ export default class InteractiveSlotsNode extends Node {
       MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
       OFF_MEMBRANE_VERTICAL_OFFSET
     );
-    this.rectangles.push( offMembraneRect );
+    this.focusableRectangles.push( offMembraneRect );
     this.addChild( offMembraneRect );
 
     this.grabbedProperty = new BooleanProperty( false );
@@ -511,8 +524,8 @@ export default class InteractiveSlotsNode extends Node {
     // from the traversal order so that this operation doesn't trigger a blur event. We need to watch for that
     // important event to release/interrupt the interaction.
     const removeFocusRectangles: Node[] = [];
-    this.rectangles.forEach( ( ( rect, index ) => {
-      if ( index === this.selectedIndex || ( this.selectedIndex === 'offMembrane' && index === this.rectangles.length - 1 ) ) {
+    this.focusableRectangles.forEach( ( ( rect, index ) => {
+      if ( index === this.selectedIndex || ( this.selectedIndex === 'offMembrane' && index === this.focusableRectangles.length - 1 ) ) {
         rect.focusable = true;
         rect.focus();
       }
@@ -602,7 +615,7 @@ export default class InteractiveSlotsNode extends Node {
    * protein Node.
    */
   private updateGrabHighlights(): void {
-    this.rectangles.forEach( rect => {
+    this.focusableRectangles.forEach( rect => {
       affirm( this.grabbedNode, 'grabbedNode was expected on updateRectangleSize.' );
       const oldCenter = rect.center;
       rect.setRectBounds( this.grabbedNode.localBounds );
