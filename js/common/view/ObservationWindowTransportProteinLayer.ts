@@ -4,7 +4,15 @@
  * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
  * creates TransportProteinDragNode instances. They also animate based on the model characteristics.
  *
+ * This Node also implements part of alternative input for the proteins. It implements the "selection" portion
+ * BEFORE a protein is grabbed for sorting.
+ *
+ * See InteractiveSlotsNode for handling the sorting state after a protein is grabbed. Focus is coordinated between
+ * these two Nodes. See https://github.com/phetsims/membrane-transport/issues/97#issuecomment-2880717757 for a
+ * description of the design requirements.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -54,7 +62,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   private selectedIndex = 0;
 
   // A parent for the proteins so that the accessibility attributes like accessibleRoleDescription
-  // do not apply to all children of this Node.
+  // and headings do not apply to all children of this Node.
   private readonly proteinsNodeParent: Node;
 
   public constructor(
