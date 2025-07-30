@@ -35,7 +35,7 @@ export default class MembraneTransportScreen extends Screen<MembraneTransportMod
         name: nameProperty,
         backgroundColorProperty: MembraneTransportColors.outsideCellColorProperty,
         tandem: tandem,
-        createKeyboardHelpNode: () => new MembraneTransportKeyboardHelpNode( featureSet ),
+        createKeyboardHelpNode: () => new MembraneTransportKeyboardHelpNode(),
         screenButtonsHelpText: screenButtonHelpTextProperty,
         homeScreenIcon: new ScreenIcon( new Image( homeScreenIcon ), {
           maxIconWidthProportion: 1,
