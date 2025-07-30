@@ -16,7 +16,7 @@ import createParticleNode from './createParticleNode.js';
 // Cache the result to avoid repeatedly creating the particle node and getting its bounds.
 let particleDimensionMap: Record<ParticleType, Dimension2> | null = null;
 
-// Assets cannot be loaded until the simLauncher is complete. So, this is a method rather than an attribute.
+// Assets cannot be loaded until the simLauncher is complete. So, this is a method so it can be looked up lazily.
 export default function getParticleViewDimensions(): Record<ParticleType, Dimension2> {
 
   if ( !particleDimensionMap ) {
