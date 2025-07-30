@@ -19,6 +19,9 @@ export default class Ligand extends Particle {
   // True when the ligand is manually bound to the channel because the user placed it there.
   public manuallyBound = false;
 
+  // Indicates whether the ligand has keyboard focus -- this causes a different random walk behavior.
+  public focused = false;
+
   public constructor(
     position: Vector2,
     public readonly ligandType: LigandType,

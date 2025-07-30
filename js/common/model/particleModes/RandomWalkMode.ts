@@ -16,6 +16,7 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
+import Ligand from '../Ligand.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle, { CAPTURE_RADIUS_PROPERTY } from '../Particle.js';
 import LigandGatedChannel from '../proteins/LigandGatedChannel.js';
@@ -98,7 +99,7 @@ export default class RandomWalkMode extends BaseParticleMode {
     const boundingRegion = isOutsideCell ? MembraneTransportConstants.OUTSIDE_CELL_BOUNDS : MembraneTransportConstants.INSIDE_CELL_BOUNDS;
 
     // Focused ligands have a different random walk behavior, so they do not get too close to the edge or teleport.
-    if ( particle.focused ) {
+    if ( particle instanceof Ligand && particle.focused ) {
       this.handleBounceLigand( particle );
     }
     else {

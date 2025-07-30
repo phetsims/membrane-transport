@@ -69,9 +69,6 @@ export default abstract class Particle {
   // Keep track of how long ago the particle crossed the membrane, to show a highlight when it crosses.
   public timeSinceCrossedMembrane = Number.POSITIVE_INFINITY;
 
-  // Indicates whether the ligand has keyboard focus -- this causes a different random walk behavior.
-  public focused = false;
-
   protected constructor(
     public readonly position: Vector2,
     public readonly type: ParticleType,
