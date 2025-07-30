@@ -1,7 +1,8 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * A model component for a sodium potassium pump.
+ * A model component for a sodium potassium pump. This is the most complex transport protein and goes
+ * through the following steps and particle interactions:
  *
  * ### LIMITING STEP ONE: 3 × Sodium bind
  * - Conformation change: Phosphate binding site opens
@@ -49,6 +50,7 @@ type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' 
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
+  // Binding sites for the protein, relative to the center of the slot.
   private static readonly SODIUM_SITE_1 = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.openDownDimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumPotassiumPump.sodiumSite1
@@ -87,8 +89,6 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     type: TransportProteinType,
     position: number
   ) {
-
-    // This protein is always 'closed' because it has no states that allow a particle to move through it freely.
     super( model, type, position, 'openToInsideEmpty', [] );
 
     this.stateProperty.link( state => {
@@ -103,10 +103,16 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
                                               solute.mode.site === site ) === undefined;
   }
 
+  /**
+   * The sodium potassium pump does not support passive transport.
+   */
   public override isAvailableForPassiveTransport(): boolean {
     return false;
   }
 
+  /**
+   * Returns an array of open (not occupied) sites for sodium.
+   */
   public getOpenSodiumSites(): Array<'sodium1' | 'sodium2' | 'sodium3'> {
     const availableSites: Array<'sodium1' | 'sodium2' | 'sodium3'> = [];
     if ( this.isSiteOpen( 'sodium1' ) ) {
@@ -122,6 +128,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     return availableSites;
   }
 
+  /**
+   * Returns an array of open (not occupied) sites for potassium.
+   */
   public getOpenPotassiumSites(): Array<'potassium1' | 'potassium2'> {
     const availableSites: Array<'potassium1' | 'potassium2'> = [];
     if ( this.isSiteOpen( 'potassium1' ) ) {
@@ -134,22 +143,34 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     return availableSites;
   }
 
+  /**
+   * Returns the number of sodium binding sites that are currently filled.
+   */
   public getNumberOfFilledSodiumSites(): number {
     const sites: SodiumPotassiumPumpSite[] = [ 'sodium1', 'sodium2', 'sodium3' ];
     return sites.filter( site => this.getWaitingSolute( site ) ).length;
   }
 
+  /**
+   * Returns the number of potassium binding sites that are currently filled.
+   */
   public getNumberOfFilledPotassiumSites(): number {
     const sites: SodiumPotassiumPumpSite[] = [ 'potassium1', 'potassium2' ];
     return sites.filter( site => this.getWaitingSolute( site ) ).length;
   }
 
+  /**
+   * Returns the solute that is waiting in the specified site, if any.
+   */
   private getWaitingSolute( site: SodiumPotassiumPumpSite ): Solute | undefined {
     return this.model.solutes.find( solute => solute.mode instanceof WaitingInSodiumPotassiumPumpMode &&
                                               solute.mode.slot === this.slot &&
                                               solute.mode.site === site );
   }
 
+  /**
+   * Handles state transitions when the binding sites are filled.
+   */
   public override step( dt: number ): void {
     super.step( dt );
 
@@ -176,7 +197,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   }
 
   /**
-   * After a delay, the bound ATP hydrolyzes into ADP + phosphate
+   * Splits the bound ATP into ADP and phosphate, updates the solutes and state accordingly.
    */
   public splitATP(): void {
     const atp = this.getWaitingSolute( 'phosphate' );
@@ -196,7 +217,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     this.stateProperty.value = 'openToInsideSodiumAndPhosphateBound';
   }
 
-  // Open upward, letting sodium go outside the cell
+  /**
+   * Opens the pump to the outside, releasing sodium ions outward and updating the pump state.
+   */
   public openUpward(): void {
 
     const sodium1 = this.getWaitingSolute( 'sodium1' );
@@ -210,7 +233,9 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     sodium3!.mode = new MovingThroughTransportProteinMode( this.slot, this.type, 'outward', +5 );
   }
 
-  // Open downward, letting potassium go into the cell
+  /**
+   * Opens the pump to the inside, releasing potassium ions inward and expelling phosphate.
+   */
   public openDownward(): void {
 
     const potassium1 = this.getWaitingSolute( 'potassium1' );
@@ -234,8 +259,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
   }
 
   /**
-   * For the sodium potassium pump, solutes control the state so the state needs to be reset after clearing.
-   * @param slot
+   * Clears solutes from the slot and resets the pump state after removing interacting particles.
    */
   public override clearSolutes( slot: Slot ): void {
     super.clearSolutes( slot );
@@ -248,6 +272,10 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     this.stateProperty.reset();
   }
 
+  /**
+   * Returns the position offset for the specified site based on the current state of the pump.
+   * The offset is relative to the center of the slot.
+   */
   public static getSitePositionOffset( site: SodiumPotassiumPumpSite, state: SodiumPotassiumPumpState ): Vector2 {
     return site === 'sodium1' ? SodiumPotassiumPump.SODIUM_SITE_1 :
            site === 'sodium2' ? SodiumPotassiumPump.SODIUM_SITE_2 :

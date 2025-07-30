@@ -12,6 +12,8 @@ import SoluteType from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
 
 export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV' | 'closedNegative50mV' | 'open30mV' | 'openNegative50mV' | 'closed30mV'> extends TransportProtein<T> {
+
+  // After the membrane potential changes, there is a short delay before the channel state updates.
   private timeSinceVoltageChanged: number | null = null;
 
   protected constructor( model: MembraneTransportModel, type: 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel', position: number, initialState: T, openStates: T[] ) {
@@ -21,10 +23,8 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
     // * -70: resting, both closed
     // * -50: Na open, K closed
     // * +30: Na closed, K open
-    model.membranePotentialProperty.link( voltage => {
-
+    model.membranePotentialProperty.link( () => {
       this.timeSinceVoltageChanged = 0;
-
     }, { disposer: this } );
   }
 
@@ -32,6 +32,10 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
 
   public abstract isStateOpen( state: T ): boolean;
 
+  /**
+   * Manages state change for the voltage-gated channel, updating after a membrane potential change
+   * after a short delay.
+   */
   public override step( dt: number ): void {
     super.step( dt );
 
@@ -47,7 +51,7 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
   }
 
   /**
-   * A voltage gated channel is only available for transport if in the correct state.
+   * A voltage gated channel is only available for transport if in the correct state, according to the membrane potential.
    */
   public override isAvailableForPassiveTransport( soluteType: SoluteType, location: 'inside' | 'outside' ): boolean {
     return this.isStateOpen( this.stateProperty.value ) &&

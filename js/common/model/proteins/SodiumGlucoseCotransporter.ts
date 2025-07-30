@@ -27,7 +27,7 @@ const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
 
-  // Particle binding sites.
+  // Particle binding sites, relative to the center of the slot.
   private static readonly SODIUM_SITE_LEFT = MembraneTransportConstants.getBindingSiteOffset(
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.dimension,
     MembraneTransportConstants.IMAGE_METRICS.sodiumGlucoseCotransporter.sodiumSiteLeft
@@ -156,6 +156,9 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
     return this.isSiteAvailable( 'center' );
   }
 
+  /**
+   * The active transporter does not support passive transport.
+   */
   public override isAvailableForPassiveTransport(): boolean {
     return false;
   }

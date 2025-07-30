@@ -2,7 +2,7 @@
 
 /**
  * TransportProtein keeps track of stateful model information for a transport protein that is actively in a slot.
- * NOTE: this does not extend PhetioObject only the critical part (the type) is needed for serialization.
+ * NOTE: this does not extend PhetioObject. Only the critical part (the type) is needed for serialization.
  * This allows us to avoid dynamic elements in the PhET-iO tree and in the state.
  *
  * @author Sam Reid (PhET Interactive Simulations)
@@ -85,6 +85,9 @@ export default abstract class TransportProtein<State extends AllStates = AllStat
     // More specific details in a subclass
   }
 
+  /**
+   * Returns the slot where this transport protein is located.
+   */
   public get slot(): Slot {
     const slot = this.model.getSlotForTransportProtein( this );
 
@@ -104,10 +107,6 @@ export default abstract class TransportProtein<State extends AllStates = AllStat
     return this.type === 'potassiumIonLigandGatedChannel' || this.type === 'sodiumIonLigandGatedChannel';
   }
 
-  /**
-   * A transport protein is available for transport if there are no solutes moving toward or through it with some
-   * biasing depending on the concentration gradient. Subclasses may have additional criteria for availability.
-   */
   public abstract isAvailableForPassiveTransport( soluteType: SoluteType, location: 'outside' | 'inside' ): boolean;
 
   /**
@@ -120,7 +119,7 @@ export default abstract class TransportProtein<State extends AllStates = AllStat
   }
 
   /**
-   * Release any solutes that are interacting with the transport protein.
+   * Release all solutes that are interacting with the transport protein.
    */
   public clearSolutes( slot: Slot ): void {
 
@@ -129,7 +128,7 @@ export default abstract class TransportProtein<State extends AllStates = AllStat
   }
 
   /**
-   * Release any particles (ligands or solutes) from this protein, and reset the state.
+   * Release all particles (ligands or solutes) from this protein, and reset the state.
    * Particles return to their random walk.
    */
   public clear( slot: Slot ): void {
