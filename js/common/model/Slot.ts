@@ -9,8 +9,8 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
@@ -24,7 +24,7 @@ export default class Slot {
 
   // The type of transport protein that is currently in this slot.
   public readonly transportProteinProperty: Property<null | TransportProtein>;
-  private readonly transportProteinTypeProperty: DerivedProperty<TransportProteinType | null, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny, IntentionalAny>;
+  private readonly transportProteinTypeProperty: TReadOnlyProperty<TransportProteinType | null>;
 
   public constructor( private readonly model: MembraneTransportModel, public readonly position: number, tandem: Tandem ) {
 
@@ -43,13 +43,16 @@ export default class Slot {
 
     this.transportProteinProperty.lazyLink( ( transportProtein, oldTransportProtein ) => {
 
-      // We must releaseParticle given a slot, since the slot is already disassociated from the transport protein.
+      // We must clear given a slot, since the slot is already disassociated from the transport protein.
       // However, we also do not want to add arguments to dispose, so we do this in two steps.
       oldTransportProtein && oldTransportProtein.clear( this );
       oldTransportProtein && oldTransportProtein.dispose();
     } );
   }
 
+  /**
+   * Returns the index of this slot in the list of slots (mostly for phet-io serialization).
+   */
   public getIndex(): number {
     return this.model.membraneSlots.indexOf( this );
   }
@@ -58,18 +61,31 @@ export default class Slot {
     this.transportProteinProperty.reset();
   }
 
+  /**
+   * Returns the type of the transport protein in this slot, or null if the slot is empty.
+   */
   public get transportProteinType(): TransportProteinType | null {
     return this.transportProteinProperty.value ? this.transportProteinProperty.value.type : null;
   }
 
+  /**
+   * Sets the type for the transport protein in this slot by creating a new transport protein of the specified type.
+   * @param transportProteinType
+   */
   public set transportProteinType( transportProteinType: TransportProteinType | null ) {
     this.transportProteinProperty.value = transportProteinType ? createTransportProtein( this.model, transportProteinType, this.position ) : null;
   }
 
+  /**
+   * Returns true if this slot is holding a transport protein.
+   */
   public isFilled(): boolean {
     return this.transportProteinProperty.value !== null;
   }
 
+  /**
+   * Remove the transport protein from the slot, and also clear the transport protein if one is present.
+   */
   public clear(): void {
     if ( this.transportProteinProperty.value ) {
       this.transportProteinProperty.value.clear( this );
