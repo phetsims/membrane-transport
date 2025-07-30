@@ -74,8 +74,6 @@ addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_grabProtein', 'keyboardHel
 addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_moveGrabbedProtein', 'keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinStringProperty' );
 addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_releaseProtein', 'keyboardHelp.sortOrDeleteProteins.releaseProteinStringProperty' );
 addToMapIfDefined( 'keyboardHelp_sortOrDeleteProteins_deleteProtein', 'keyboardHelp.sortOrDeleteProteins.deleteProteinStringProperty' );
-addToMapIfDefined( 'keyboardHelp_fromAnywhereInSim_title', 'keyboardHelp.fromAnywhereInSim.titleStringProperty' );
-addToMapIfDefined( 'keyboardHelp_fromAnywhereInSim_pauseOrPlay', 'keyboardHelp.fromAnywhereInSim.pauseOrPlayStringProperty' );
 addToMapIfDefined( 'a11y_simpleDiffusionScreen_screenButtonsHelpText', 'a11y.simpleDiffusionScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_facilitatedDiffusionScreen_screenButtonsHelpText', 'a11y.facilitatedDiffusionScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_activeTransportScreen_screenButtonsHelpText', 'a11y.activeTransportScreen.screenButtonsHelpTextStringProperty' );
@@ -103,8 +101,7 @@ addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', 'a11y.soluteControls
 addToMapIfDefined( 'a11y_soluteControls_accessibleHelpText', 'a11y.soluteControls.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', 'a11y.eraseSolutesButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' );
-addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpTextDisabled', 'a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty' );
-addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpTextEnabled', 'a11y.eraseSolutesButton.accessibleHelpTextEnabledStringProperty' );
+addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpText', 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleHelpText', 'a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseChecked', 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' );
@@ -220,7 +217,6 @@ addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_grabProteinDescriptio
 addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_moveGrabbedProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_releaseProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.releaseProteinDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_deleteProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.deleteProteinDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_fromAnywhereInSim_pauseOrPlayDescription', 'a11y.keyboardHelp.fromAnywhereInSim.pauseOrPlayDescriptionStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -327,10 +323,6 @@ const MembraneTransportFluent = {
       moveGrabbedProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_moveGrabbedProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinStringProperty' ) ),
       releaseProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_releaseProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.releaseProteinStringProperty' ) ),
       deleteProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_deleteProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.deleteProteinStringProperty' ) )
-    },
-    fromAnywhereInSim: {
-      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_fromAnywhereInSim_title', _.get( MembraneTransportStrings, 'keyboardHelp.fromAnywhereInSim.titleStringProperty' ) ),
-      pauseOrPlayStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_fromAnywhereInSim_pauseOrPlay', _.get( MembraneTransportStrings, 'keyboardHelp.fromAnywhereInSim.pauseOrPlayStringProperty' ) )
     }
   },
   a11y: {
@@ -377,13 +369,13 @@ const MembraneTransportFluent = {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControls_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.soluteControls.accessibleHeadingStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControls_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.soluteControls.accessibleHelpTextStringProperty' ) )
     },
+    _comment_0: new FluentComment( {"comment":"Only display help text when button is disabled","associatedKey":"eraseSolutesButton"} ),
     eraseSolutesButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleNameStringProperty' ) ),
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' ) ),
-      accessibleHelpTextDisabledStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpTextDisabled', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty' ) ),
-      accessibleHelpTextEnabledStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpTextEnabled', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextEnabledStringProperty' ) )
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' ) )
     },
-    _comment_0: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
+    _comment_1: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
     settings: {
       crossingHighlightsCheckbox: {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' ) ),
@@ -396,7 +388,7 @@ const MembraneTransportFluent = {
         accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
       }
     },
-    _comment_1: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
+    _comment_2: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
     transportProteinPanel: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHeadingStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' ) ),
@@ -465,10 +457,10 @@ const MembraneTransportFluent = {
       grabbedResponseWithHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithHintStringProperty' ), [{"name":"proteinCount"}] ),
       grabbedResponseWithEmptyMembraneHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithEmptyMembraneHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithEmptyMembraneHintStringProperty' ), [{"name":"proteinCount"}] )
     },
-    _comment_2: new FluentComment( {"comment":"The membrane potential value, used in various places.","associatedKey":"membranePotentialValue"} ),
+    _comment_3: new FluentComment( {"comment":"The membrane potential value, used in various places.","associatedKey":"membranePotentialValue"} ),
     membranePotentialValue: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_membranePotentialValue', _.get( MembraneTransportStrings, 'a11y.membranePotentialValueStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
-    _comment_3: new FluentComment( {"comment":"Solutes","associatedKey":"solutes"} ),
-    _comment_4: new FluentComment( {"comment":"Names for the solute type. Reused in various places.","associatedKey":"solutes"} ),
+    _comment_4: new FluentComment( {"comment":"Solutes","associatedKey":"solutes"} ),
+    _comment_5: new FluentComment( {"comment":"Names for the solute type. Reused in various places.","associatedKey":"solutes"} ),
     solutes: {
       lowercaseName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_solutes_lowercaseName', _.get( MembraneTransportStrings, 'a11y.solutes.lowercaseNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
       _comment_0: new FluentComment( {"comment":"Capitalized names for the solute type. Reused in various places.","associatedKey":"uppercaseName"} ),
@@ -506,7 +498,7 @@ const MembraneTransportFluent = {
       accessibleObjectResponse: new FluentPattern<{ amount: 'none' | number | 'few' | 'some' | 'smallAmount' | 'several' | number | 'many' | 'largeAmount' | 'hugeAmount' | 'maxAmount' | TReadOnlyProperty<'none' | number | 'few' | 'some' | 'smallAmount' | 'several' | number | 'many' | 'largeAmount' | 'hugeAmount' | 'maxAmount'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteControl_accessibleObjectResponse', _.get( MembraneTransportStrings, 'a11y.soluteControl.accessibleObjectResponseStringProperty' ), [{"name":"amount","variants":["none",{"type":"number","value":"few"},"some","smallAmount","several",{"type":"number","value":"many"},"largeAmount","hugeAmount","maxAmount"]},{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
       accessibleContextResponse: new FluentPattern<{ addedOrRemoved: 'added' | 'removed' | TReadOnlyProperty<'added' | 'removed'>, amount: 'none' | 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'aLotMoreOutside' | 'someMoreOutside' | 'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'aLotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' | 'roughlyEqualInside' | TReadOnlyProperty<'none' | 'equal' | 'allOutside' | 'allInside' | 'manyManyMoreOutside' | 'manyMoreOutside' | 'aboutTwiceAsManyOutside' | 'aLotMoreOutside' | 'someMoreOutside' | 'littleBitMoreOutside' | 'roughlyEqualOutside' | 'manyManyMoreInside' | 'manyMoreInside' | 'aboutTwiceAsManyInside' | 'aLotMoreInside' | 'someMoreInside' | 'littleBitMoreInside' | 'roughlyEqualInside'>, amountAdded: 'aLittle' | 'aLot' | TReadOnlyProperty<'aLittle' | 'aLot'> }>( fluentSupport.bundleProperty, 'a11y_soluteControl_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.soluteControl.accessibleContextResponseStringProperty' ), [{"name":"addedOrRemoved","variants":["added","removed"]},{"name":"amount","variants":["none","equal","allOutside","allInside","manyManyMoreOutside","manyMoreOutside","aboutTwiceAsManyOutside","aLotMoreOutside","someMoreOutside","littleBitMoreOutside","roughlyEqualOutside","manyManyMoreInside","manyMoreInside","aboutTwiceAsManyInside","aLotMoreInside","someMoreInside","littleBitMoreInside","roughlyEqualInside"]},{"name":"amountAdded","variants":["aLittle","aLot"]}] )
     },
-    _comment_5: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrationsAccordionBox"} ),
+    _comment_6: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrationsAccordionBox"} ),
     soluteConcentrationsAccordionBox: {
       descriptionContentStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_descriptionContent', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.descriptionContentStringProperty' ) ),
       barChart: {
@@ -560,8 +552,8 @@ const MembraneTransportFluent = {
       _comment_5: new FluentComment( {"comment":"Transport protein brief names, used reused in several in the simulation.","associatedKey":"briefName"} ),
       briefName: new FluentPattern<{ type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_transportProtein_briefName', _.get( MembraneTransportStrings, 'a11y.transportProtein.briefNameStringProperty' ), [{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] )
     },
-    _comment_6: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
-    _comment_7: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
+    _comment_7: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
+    _comment_8: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
     membranePotential: {
       sodiumVoltageGatedOpenedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumVoltageGatedOpenedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumVoltageGatedOpenedResponseStringProperty' ) ),
       sodiumVoltageGatedClosedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumVoltageGatedClosedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumVoltageGatedClosedResponseStringProperty' ) ),
@@ -574,7 +566,7 @@ const MembraneTransportFluent = {
       sodiumClosedPotassiumClosedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumClosedPotassiumClosedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumClosedPotassiumClosedResponseStringProperty' ) ),
       noChangeResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_noChangeResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.noChangeResponseStringProperty' ) )
     },
-    _comment_8: new FluentComment( {"comment":"Keyboard Help Dialog","associatedKey":"keyboardHelp"} ),
+    _comment_9: new FluentComment( {"comment":"Keyboard Help Dialog","associatedKey":"keyboardHelp"} ),
     keyboardHelp: {
       soluteAdjusters: {
         _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"addOrRemoveALotDescription"} ),
@@ -595,10 +587,6 @@ const MembraneTransportFluent = {
         moveGrabbedProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_moveGrabbedProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinDescriptionStringProperty' ) ),
         releaseProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_releaseProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.releaseProteinDescriptionStringProperty' ) ),
         deleteProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_deleteProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.deleteProteinDescriptionStringProperty' ) )
-      },
-      fromAnywhereInSim: {
-        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"pauseOrPlayDescription"} ),
-        pauseOrPlayDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_fromAnywhereInSim_pauseOrPlayDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.fromAnywhereInSim.pauseOrPlayDescriptionStringProperty' ) )
       }
     }
   }

@@ -179,7 +179,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
       enabledProperty: model.hasAnySolutesProperty,
-      accessibleHelpText: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextStringProperty,
       listener: () => {
         model.clearSolutes();
       }
@@ -187,10 +187,9 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     Multilink.multilink( [
       eraseSolutesButton.enabledProperty,
-      MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty,
-      MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextEnabledStringProperty
-    ], ( enabled, disabledMessage, enabledMessage ) => {
-      eraseSolutesButton.accessibleHelpText = enabled ? enabledMessage : disabledMessage;
+      MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextStringProperty
+    ], ( enabled, disabledMessage ) => {
+      eraseSolutesButton.accessibleHelpText = enabled ? null : disabledMessage;
     } );
 
     soluteControlsNode.addChild( eraseSolutesButton );

@@ -13,9 +13,8 @@ import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/h
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet from '../MembraneTransportFeatureSet.js';
 import SoluteAdjustersKeyboardHelpSection from './SoluteAdjustersKeyboardHelpSection.js';
-import TransportProteinsAndLigandsKeyboardHelpSection from './TransportProteinsAndLigandsKeyboardHelpSection.js';
 import SortOrDeleteProteinsKeyboardHelpSection from './SortOrDeleteProteinsKeyboardHelpSection.js';
-import FromAnywhereInSimHelpSection from './FromAnywhereInSimHelpSection.js';
+import TransportProteinsAndLigandsKeyboardHelpSection from './TransportProteinsAndLigandsKeyboardHelpSection.js';
 
 export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
@@ -28,7 +27,6 @@ export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboard
     ];
 
     const rightColumn = [
-      new FromAnywhereInSimHelpSection(),
       new TimeControlsKeyboardHelpSection(),
       new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } )
     ];

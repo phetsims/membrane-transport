@@ -91,10 +91,6 @@ type StringsType = {
       'moveGrabbedProteinStringProperty': LocalizedStringProperty;
       'releaseProteinStringProperty': LocalizedStringProperty;
       'deleteProteinStringProperty': LocalizedStringProperty;
-    };
-    'fromAnywhereInSim': {
-      'titleStringProperty': LocalizedStringProperty;
-      'pauseOrPlayStringProperty': LocalizedStringProperty;
     }
   };
   'a11y': {
@@ -142,8 +138,7 @@ type StringsType = {
     'eraseSolutesButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextDisabledStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextEnabledStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'settings': {
       'crossingHighlightsCheckbox': {
@@ -318,9 +313,6 @@ type StringsType = {
         'moveGrabbedProteinDescriptionStringProperty': LocalizedStringProperty;
         'releaseProteinDescriptionStringProperty': LocalizedStringProperty;
         'deleteProteinDescriptionStringProperty': LocalizedStringProperty;
-      };
-      'fromAnywhereInSim': {
-        'pauseOrPlayDescriptionStringProperty': LocalizedStringProperty;
       }
     }
   }

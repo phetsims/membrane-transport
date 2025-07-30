@@ -47,11 +47,11 @@ transportProteinPanel:
 # Preferences Dialog
 preferencesDialog:
   animateLipids:
-    label:       Animate Lipids
-    description: Whether the phospholipids forming the cell membrane should be animated.
+    label:       Lipids Animation
+    description: Remove wiggling animation of phospholipid bilayer forming the cell membrane.
   glucoseMetabolism:
     label:       Glucose Metabolism
-    description: Glucose fades and is removed from the inside of the cell simulating conversion for cellular metabolism.
+    description: Fade and remove glucose solutes to simulate conversion for cellular metabolism.
   audio:
     sounds:
       stereoCrossingSounds:
@@ -70,25 +70,22 @@ settings:
 # Keyboard Help Dialog
 keyboardHelp:
   soluteAdjusters:
-    title:              Solute Adjusters
-    addOrRemoveALot:    Add or remove a lot of chosen solute
-    addOrRemoveALittle: Add or remove a little of chosen solute
+    title:              Chosen Solute Adjusters
+    addOrRemoveALot:    Adjust amount
+    addOrRemoveALittle: Adjust in smaller amounts
   transportProteinsAndLigands:
     title:           Transport Proteins and Ligands
-    navigate:        Navigate proteins in panel or random ligands outside cell
-    grabOrRelease:   Grab or release protein or ligand
+    navigate:        Navigate possible proteins or ligands
+    grabOrRelease:   Grab or release
     moveGrabbedItem: Move grabbed protein or ligand between available drop locations
     cancelGrab:      Cancel grab or move interaction
   sortOrDeleteProteins:
     title:              Sort or Delete Proteins in Membrane
     navigateProteins:   Navigate proteins in membrane
     grabProtein:        Grab protein in membrane
-    moveGrabbedProtein: Move grabbed protein between membrane slots
+    moveGrabbedProtein: Move grabbed protein between slots
     releaseProtein:     Release grabbed protein into empty slot or swap slots
     deleteProtein:      Delete grabbed protein
-  fromAnywhereInSim:
-    title:       From Anywhere in Sim
-    pauseOrPlay: Pause or play action in Observation Window
 
 a11y:
   simpleDiffusionScreen:
@@ -144,11 +141,11 @@ a11y:
   soluteControls:
     accessibleHeading:  Solute Controls
     accessibleHelpText: Choose solute for adding or removing with Solute Adjusters.
+  # Only display help text when button is disabled
   eraseSolutesButton:
-    accessibleName:             Reset Solutes
-    accessibleContextResponse:  Solutes cleared. Add solutes to observe changes
-    accessibleHelpTextDisabled: Disabled because no solutes have been added.
-    accessibleHelpTextEnabled:  Remove all solutes from the play area.
+    accessibleName:            Reset Solutes
+    accessibleContextResponse: Solutes cleared.
+    accessibleHelpText:        Disabled when no solutes have been added.
   settings:
     crossingHighlightsCheckbox:
       accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
@@ -160,20 +157,20 @@ a11y:
       accessibleContextResponseUnchecked: Solute crossing sounds off.
   transportProteinPanel:
     accessibleHeading:  Transport Proteins
-    accessibleHelpText: Add up to 7 proteins to membrane. Use keyboard shortcuts to grab, sort,
-                        and release proteins into membrane.
+    accessibleHelpText: Use keyboard shortcuts to grab, sort,
+                        and release up to 7 proteins into membrane. Grab to pull to membrane.
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
-      accessibleHelpText:           Transmembrane single channel proteins that can be open or closed, and a triangle- or star-shaped ligand binding site. Grab to pull to membrane.
+      accessibleHelpText:           Transmembrane single channel proteins that can be open or closed. When closed has a tiangle- or star-shaped ligand binding site.
     leakageChannelPanel:
       sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
       potassiumIonKPlusLeakage: Potassium-selective, Leakage
-      accessibleHelpText:       Transmembrane single channel proteins, always open. Grab to pull to membrane.
+      accessibleHelpText:       Transmembrane single channel proteins, always open.
     voltageGatedChannelPanel:
       sodiumIonNaPlusVoltageGated:   Sodium-selective, Voltage-gated
       potassiumIonKPlusVoltageGated: Potassium-selective, Voltage-gated
-      accessibleHelpText:            Transmembrane single channel proteins that can be open or closed. Grab to pull to membrane.
+      accessibleHelpText:            Transmembrane single channel proteins that can be open or closed.
 
       # For the Membrane Potential radio buttons
       membranePotential:
@@ -200,7 +197,6 @@ a11y:
                                   Proteins that open to one side at a time. Sodium Potassium Pump, when open to inside has binding sites for 3 
                                     sodium and 1 phosphate. When open to outside has binding sites for 2 potassium. Sodium-Glucose Cotransporter, 
                                     only open to outside and has binding sites for 2 sodium and 1 glucose. Requires specific solute concentrations to shuttle.
-                                    Grab to pull to membrane.
 
   ligandNode:
     accessibleName:                              |-
@@ -331,10 +327,10 @@ a11y:
   soluteControl:
     outside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Outside Cell"
-      accessibleHelpText: Adjust chosen solute amount on outside using arrows keys.
+      accessibleHelpText: Add or remove chosen solute amount on outside with arrows keys.
     inside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Inside Cell"
-      accessibleHelpText: Adjust chosen solute amount on inside using arrows keys.
+      accessibleHelpText: Add or remove chosen solute amount on inside with arrows keys.
     voicingHintResponse:       Adjust chosen solute amount.
     accessibleRoleDescription: solute adjuster
     accessibleHelpTextAllDisabled: Solutes cannot be added or removed on this side because there is already the maximum amount on the opposite side.
@@ -352,15 +348,15 @@ a11y:
                                } { a11y.solutes.lowercaseName }
     accessibleContextResponse: |-
                                { $amountAdded ->
-                                 [aLittle] A little
-                                *[aLot]    A lot
+                                 [aLittle] Ten
+                                *[aLot]    Fifty
                                } { $addedOrRemoved ->
                                  [added]   added
                                 *[removed] removed
                                }. Now, { a11y.solutes.amountComparison }. 
 
   soluteConcentrationsAccordionBox:
-    descriptionContent: A barchart for each solute captures amounts on either side of membrane, recent crossings captured with visual highlights and sounds. If needed, pause sim to freeze details for reading.
+    descriptionContent: A dynamic barchart for each solute captures amounts on either side of membrane and emphasizes recent crossings with visual highlights and sounds. If needed, pause sim to freeze details for reading.
 
     barChart:
 
@@ -390,7 +386,7 @@ a11y:
                                                            [hugeAmount] huge amount
                                                           *[maxAmount] max amount
                                                          } inside.
-      glucoseMetabolism:                                 Glucose disappears from inside as it is metabolized by the cell.
+      glucoseMetabolism:                                 Glucose disappears from inside as it is metabolized by cell.
       accessibleNameWithParticlesAndGlucoseMetabolism:   "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
       accessibleNameWithNoParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
 
@@ -412,7 +408,7 @@ a11y:
     accessibleHelpTextNoSolutesOrProteins:       Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add.
 
     # A description of the cell membrane when there are solutes but no proteins yet.
-    accessibleHelpTextWithSolutesNoProteins:     Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Observe crossing solutes. Look for transport proteins to add.
+    accessibleHelpTextWithSolutesNoProteins:     Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Observe crossing solutes and look for transport proteins to add.
 
     # A description of the cell membrane when there are no solutes but there are proteins.
     accessibleHelpTextWithProteinsNoSolutes:     |-
@@ -430,7 +426,7 @@ a11y:
 
   transportProtein:
     grabbedResponse:                Grabbed.
-    offMembraneResponse:            Off membrane
+    offMembraneResponse:            Off membrane.
     releasedReplacedResponse:       Released. Protein replaced.
     deletedResponse:                Deleted.
     cancelledResponse:              Released. Back to initial slot.
@@ -472,11 +468,11 @@ a11y:
                                        [openToInsideSodiumBound] 3 sodium bound, awaiting phosphate, open to inside
                                        [openToInsideSodiumAndATPBound] ATP reacts, phosphate bound, pumping 3 sodium to outside, open to inside
                                        [openToInsideSodiumAndPhosphateBound] Phosphate bound, pumping 3 sodium to outside, open to inside
-                                       [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate still bound, open to outside
+                                       [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate bound, open to outside
                                        [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
                                     
                                        [openToOutsideAwaitingParticles] { $warning ->
-                                         [shown] Showing warning that no binding is possible, open to outside
+                                         [shown] Warning, sodium concentration too low for binding, open to outside
                                          *[hidden] Awaiting sodium and glucose, open to outside
                                        }
                                        [openToOutsideAllParticlesBound] Sodium and glucose bound, open to outside
@@ -567,21 +563,18 @@ a11y:
   keyboardHelp:
     soluteAdjusters:
       # Description strings for PDOM
-      addOrRemoveALotDescription:    Add or remove a lot of chosen solute with Left and Right arrow keys.
-      addOrRemoveALittleDescription: Add or remove a little of chosen solute with Shift plus Left and Right arrow keys.
+      addOrRemoveALotDescription:    Adjust amount with Left and Right arrow keys.
+      addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus Left and Right arrow keys.
     transportProteinsAndLigands:
       # Description strings for PDOM
-      navigateDescription:        Navigate proteins in panel or random ligands outside cell with Tab key.
-      grabOrReleaseDescription:   Grab or release protein or ligand with Space or Enter keys.
+      navigateDescription:        Navigate possible proteins or ligands with Tab key.
+      grabOrReleaseDescription:   Grab or release with Space or Enter keys.
       moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or letter keys A and D.
       cancelGrabDescription:      Cancel grab or move interaction with Escape key.
     sortOrDeleteProteins:
       # Description strings for PDOM
       navigateProteinsDescription:   Navigate proteins in membrane with Left and Right Arrow keys.
       grabProteinDescription:        Grab protein in membrane with Space or Enter keys.
-      moveGrabbedProteinDescription: Move grabbed protein between membrane slots with Left and Right Arrow keys.
+      moveGrabbedProteinDescription: Move grabbed protein between slots with Left and Right Arrow keys.
       releaseProteinDescription:     Release grabbed protein into empty slot or swap slots with Space or Enter keys.
       deleteProteinDescription:      Delete grabbed protein with Delete key.
-    fromAnywhereInSim:
-      # Description strings for PDOM
-      pauseOrPlayDescription: Pause or play action in Observation Window with Alt key plus K.
