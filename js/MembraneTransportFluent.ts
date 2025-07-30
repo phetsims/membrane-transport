@@ -103,7 +103,8 @@ addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', 'a11y.soluteControls
 addToMapIfDefined( 'a11y_soluteControls_accessibleHelpText', 'a11y.soluteControls.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', 'a11y.eraseSolutesButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleContextResponse', 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' );
-addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpText', 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpTextDisabled', 'a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty' );
+addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleHelpTextEnabled', 'a11y.eraseSolutesButton.accessibleHelpTextEnabledStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleHelpText', 'a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseChecked', 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' );
@@ -378,7 +379,8 @@ const MembraneTransportFluent = {
     eraseSolutesButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleNameStringProperty' ) ),
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' ) ),
-      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' ) )
+      accessibleHelpTextDisabledStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpTextDisabled', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty' ) ),
+      accessibleHelpTextEnabledStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpTextEnabled', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextEnabledStringProperty' ) )
     },
     _comment_0: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
     settings: {

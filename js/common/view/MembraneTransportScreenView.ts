@@ -9,6 +9,7 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -178,11 +179,20 @@ export default class MembraneTransportScreenView extends ScreenView {
       accessibleName: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleNameStringProperty,
       accessibleContextResponse: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleContextResponseStringProperty,
       enabledProperty: model.hasAnySolutesProperty,
-      accessibleHelpText: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty,
       listener: () => {
         model.clearSolutes();
       }
     } );
+
+    Multilink.multilink( [
+      eraseSolutesButton.enabledProperty,
+      MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextDisabledStringProperty,
+      MembraneTransportFluent.a11y.eraseSolutesButton.accessibleHelpTextEnabledStringProperty
+    ], ( enabled, disabledMessage, enabledMessage ) => {
+      eraseSolutesButton.accessibleHelpText = enabled ? enabledMessage : disabledMessage;
+    } );
+
     soluteControlsNode.addChild( eraseSolutesButton );
 
     // Solute concentrations

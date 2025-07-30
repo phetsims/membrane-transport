@@ -70,24 +70,24 @@ settings:
 # Keyboard Help Dialog
 keyboardHelp:
   soluteAdjusters:
-    title: Solute Adjusters
-    addOrRemoveALot: Add or remove a lot of chosen solute
+    title:              Solute Adjusters
+    addOrRemoveALot:    Add or remove a lot of chosen solute
     addOrRemoveALittle: Add or remove a little of chosen solute
   transportProteinsAndLigands:
-    title: Transport Proteins and Ligands
-    navigate: Navigate proteins in panel or random ligands outside cell
-    grabOrRelease: Grab or release protein or ligand
+    title:           Transport Proteins and Ligands
+    navigate:        Navigate proteins in panel or random ligands outside cell
+    grabOrRelease:   Grab or release protein or ligand
     moveGrabbedItem: Move grabbed protein or ligand between available drop locations
-    cancelGrab: Cancel grab or move interaction
+    cancelGrab:      Cancel grab or move interaction
   sortOrDeleteProteins:
-    title: Sort or Delete Proteins in Membrane
-    navigateProteins: Navigate proteins in membrane
-    grabProtein: Grab protein in membrane
+    title:              Sort or Delete Proteins in Membrane
+    navigateProteins:   Navigate proteins in membrane
+    grabProtein:        Grab protein in membrane
     moveGrabbedProtein: Move grabbed protein between membrane slots
-    releaseProtein: Release grabbed protein into empty slot or swap slots
-    deleteProtein: Delete grabbed protein
+    releaseProtein:     Release grabbed protein into empty slot or swap slots
+    deleteProtein:      Delete grabbed protein
   fromAnywhereInSim:
-    title: From Anywhere in Sim
+    title:       From Anywhere in Sim
     pauseOrPlay: Pause or play action in Observation Window
 
 a11y:
@@ -145,9 +145,10 @@ a11y:
     accessibleHeading:  Solute Controls
     accessibleHelpText: Choose solute for adding or removing with Solute Adjusters.
   eraseSolutesButton:
-    accessibleName:            Reset Solutes
-    accessibleContextResponse: Solutes cleared. Add solutes to observe changes
-    accessibleHelpText:        Disabled when no solutes have been added.
+    accessibleName:             Reset Solutes
+    accessibleContextResponse:  Solutes cleared. Add solutes to observe changes
+    accessibleHelpTextDisabled: Disabled because no solutes have been added.
+    accessibleHelpTextEnabled:  Remove all solutes from the play area.
   settings:
     crossingHighlightsCheckbox:
       accessibleHelpText:                 Explore with or without visual highlights for solute crossings.
@@ -427,126 +428,126 @@ a11y:
                                                  }. Observe crossing solutes and protein changes, grab protein to re-order or delete.
 
   transportProtein:
-    grabbedResponse:                   Grabbed.
-    offMembraneResponse:               Off membrane
-    releasedReplacedResponse:          Released. Protein replaced.
-    deletedResponse:                   Deleted.
-    cancelledResponse:                 Released. Back to initial slot.
-    proteinLocation:                   "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"
-    accessibleName:                    "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
+    grabbedResponse:                Grabbed.
+    offMembraneResponse:            Off membrane
+    releasedReplacedResponse:       Released. Protein replaced.
+    deletedResponse:                Deleted.
+    cancelledResponse:              Released. Back to initial slot.
+    proteinLocation:                "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"
+    accessibleName:                 "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
 
     # The accessible object response for the transport protein when it is in a slot, describing its open/closed state.
-    accessibleObjectResponse: |-
-                                       { $state ->
-                                          [openToInsideEmpty] open to inside
-                                          [openToInsideSodiumBound] open to inside
-                                          [openToInsideSodiumAndATPBound] open to inside
-                                          [openToInsideSodiumAndPhosphateBound] open to inside
-                                          [openToOutsideAwaitingPotassium] open to outside
-                                          [openToOutsidePotassiumBound] open to outside
-                                       
-                                          [openToOutsideAwaitingParticles] open to outside 
-                                          [openToOutsideAllParticlesBound] open to outside
-                                          [openToInside] open to inside
-                               
-                                          [closedNegative70mV] closed
-                                          [openNegative50mV] open 
-                                          [closed30mV] closed
-                                      
-                                          [closedNegative50mV] closed
-                                          [open30mV] open
-                                       
-                                          [ligandBoundClosed] closed
-                                          [ligandBoundOpen] open
-                                          [ligandUnboundOpen] open
-                                          [closed] closed
-                              
-                                          *[open] open 
+    accessibleObjectResponse:       |-
+                                    { $state ->
+                                       [openToInsideEmpty] open to inside
+                                       [openToInsideSodiumBound] open to inside
+                                       [openToInsideSodiumAndATPBound] open to inside
+                                       [openToInsideSodiumAndPhosphateBound] open to inside
+                                       [openToOutsideAwaitingPotassium] open to outside
+                                       [openToOutsidePotassiumBound] open to outside
+                                    
+                                       [openToOutsideAwaitingParticles] open to outside 
+                                       [openToOutsideAllParticlesBound] open to outside
+                                       [openToInside] open to inside
+                                    
+                                       [closedNegative70mV] closed
+                                       [openNegative50mV] open 
+                                       [closed30mV] closed
+                                    
+                                       [closedNegative50mV] closed
+                                       [open30mV] open
+                                    
+                                       [ligandBoundClosed] closed
+                                       [ligandBoundOpen] open
+                                       [ligandUnboundOpen] open
+                                       [closed] closed
+                                    
+                                       *[open] open 
+                                    }
+
+    accessibleParagraph:            |-
+                                    { $state ->
+                                       [openToInsideEmpty] Awaiting sodium, open to inside
+                                       [openToInsideSodiumBound] 3 sodium bound, awaiting phosphate, open to inside
+                                       [openToInsideSodiumAndATPBound] ATP reacts, phosphate bound, pumping 3 sodium to outside, open to inside
+                                       [openToInsideSodiumAndPhosphateBound] Phosphate bound, pumping 3 sodium to outside, open to inside
+                                       [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate still bound, open to outside
+                                       [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
+                                    
+                                       [openToOutsideAwaitingParticles] { $warning ->
+                                         [shown] Showing warning that no binding is possible, open to outside
+                                         *[hidden] Awaiting sodium and glucose, open to outside
                                        }
-
-    accessibleParagraph:               |-
-                                       { $state ->
-                                          [openToInsideEmpty] Awaiting sodium, open to inside
-                                          [openToInsideSodiumBound] 3 sodium bound, awaiting phosphate, open to inside
-                                          [openToInsideSodiumAndATPBound] ATP reacts, phosphate bound, pumping 3 sodium to outside, open to inside
-                                          [openToInsideSodiumAndPhosphateBound] Phosphate bound, pumping 3 sodium to outside, open to inside
-                                          [openToOutsideAwaitingPotassium] Awaiting potassium, phosphate still bound, open to outside
-                                          [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
-                                       
-                                          [openToOutsideAwaitingParticles] { $warning ->
-                                            [shown] Showing warning that no binding is possible, open to outside
-                                            *[hidden] Awaiting sodium and glucose, open to outside
-                                          }
-                                          [openToOutsideAllParticlesBound] Sodium and glucose bound, open to outside
-                                          [openToInside] Pumping sodium and glucose to inside, open to inside
-                                       
-                                          [ligandBoundClosed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle ligand binding, channel opening 
-                                            *[potassiumIonLigandGatedChannel] star ligand binding, channel opening
-                                          }
-                                          [ligandBoundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle ligand bound, open channel
-                                            *[potassiumIonLigandGatedChannel] star ligand bound, open channel
-                                          }
-                                          [ligandUnboundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle ligand floats away, channel closing 
-                                            *[potassiumIonLigandGatedChannel] star ligand floats away, channel closing
-                                          }
-                                          [closed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] no triangle ligand bound, closed channel
-                                            *[potassiumIonLigandGatedChannel] no star ligand bound, closed channel
-                                          }
-                                       
-                                          [closedNegative70mV] closed channel at -70 mV
-                                          [openNegative50mV] open channel at -50 mV
-                                          [closed30mV] closed channel at 30 mV
-                                       
-                                          [closedNegative50mV] closed channel at -50 mV
-                                          [open30mV] open channel at 30 mV
-                                       
-                                          *[open] open channel through membrane
-                                       }.
+                                       [openToOutsideAllParticlesBound] Sodium and glucose bound, open to outside
+                                       [openToInside] Pumping sodium and glucose to inside, open to inside
+                                    
+                                       [ligandBoundClosed] { $proteinType ->
+                                         [sodiumIonLigandGatedChannel] triangle ligand binding, channel opening 
+                                         *[potassiumIonLigandGatedChannel] star ligand binding, channel opening
+                                       }
+                                       [ligandBoundOpen] { $proteinType ->
+                                         [sodiumIonLigandGatedChannel] triangle ligand bound, open channel
+                                         *[potassiumIonLigandGatedChannel] star ligand bound, open channel
+                                       }
+                                       [ligandUnboundOpen] { $proteinType ->
+                                         [sodiumIonLigandGatedChannel] triangle ligand floats away, channel closing 
+                                         *[potassiumIonLigandGatedChannel] star ligand floats away, channel closing
+                                       }
+                                       [closed] { $proteinType ->
+                                         [sodiumIonLigandGatedChannel] no triangle ligand bound, closed channel
+                                         *[potassiumIonLigandGatedChannel] no star ligand bound, closed channel
+                                       }
+                                    
+                                       [closedNegative70mV] closed channel at -70 mV
+                                       [openNegative50mV] open channel at -50 mV
+                                       [closed30mV] closed channel at 30 mV
+                                    
+                                       [closedNegative50mV] closed channel at -50 mV
+                                       [open30mV] open channel at 30 mV
+                                    
+                                       *[open] open channel through membrane
+                                    }.
 
 
-    accessibleContextResponse:         |-
-                                       { $state ->
-                                          [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside
-                                          [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
-                                       
-                                          *[openToInside] { $glucoseBehavior ->
-                                            [metabolized] Shuttles 2 sodium, one glucose inside, shuttled glucose metabolized
-                                            *[persistent] Shuttles 2 sodium, one glucose inside
-                                          }
-                                       
-                                          [ligandBoundOpen] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle ligand binds, open 
-                                            *[potassiumIonLigandGatedChannel] star ligand binds, open
-                                          }
-                                          [closed] { $proteinType ->
-                                            [sodiumIonLigandGatedChannel] triangle ligand floats away, closed
-                                            *[potassiumIonLigandGatedChannel] star ligand floats away, closed
-                                          }
-                                       }.
+    accessibleContextResponse:      |-
+                                    { $state ->
+                                       [openToInsideEmpty] Phosphate floats away, pumping 2 potassium to inside
+                                       [openToInsideSodiumAndATPBound] ATP reacts, phosphate binds, pumping 3 sodium to outside
+                                    
+                                       *[openToInside] { $glucoseBehavior ->
+                                         [metabolized] Shuttles 2 sodium, one glucose inside, shuttled glucose metabolized
+                                         *[persistent] Shuttles 2 sodium, one glucose inside
+                                       }
+                                    
+                                       [ligandBoundOpen] { $proteinType ->
+                                         [sodiumIonLigandGatedChannel] triangle ligand binds, open 
+                                         *[potassiumIonLigandGatedChannel] star ligand binds, open
+                                       }
+                                       [closed] { $proteinType ->
+                                         [sodiumIonLigandGatedChannel] triangle ligand floats away, closed
+                                         *[potassiumIonLigandGatedChannel] star ligand floats away, closed
+                                       }
+                                    }.
 
     # The accessible object response for the transport protein when the user is moving it between different slots.
-    accessibleNameMoving:              "{ a11y.transportProtein.accessibleObjectResponseMoving }, above { $nameResponse }"
-    accessibleObjectResponseMoving:    Slot { $slotIndex } of { $slotCount }
+    accessibleNameMoving:           "{ a11y.transportProtein.accessibleObjectResponseMoving }, above { $nameResponse }"
+    accessibleObjectResponseMoving: Slot { $slotIndex } of { $slotCount }
 
     # Included in the accessibleName for the protein when it is above an empty slot.
-    empty:                             empty slot
+    empty:                          empty slot
 
     # Transport protein brief names, used reused in several in the simulation.
-    briefName:                         |-
-                                       { $type ->
-                                         [sodiumIonLeakageChannel]         Sodium-selective, Leakage
-                                         [potassiumIonLeakageChannel]      Potassium-selective, Leakage
-                                         [sodiumIonVoltageGatedChannel]    Sodium-selective, Voltage-Gated
-                                         [potassiumIonVoltageGatedChannel] Potassium-selective, Voltage-Gated
-                                         [sodiumIonLigandGatedChannel]     Sodium-selective, Ligand-Gated
-                                         [potassiumIonLigandGatedChannel]  Potassium-selective, Ligand-Gated
-                                         [sodiumPotassiumPump]             Sodium Potassium Pump
-                                        *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
-                                       }
+    briefName:                      |-
+                                    { $type ->
+                                      [sodiumIonLeakageChannel]         Sodium-selective, Leakage
+                                      [potassiumIonLeakageChannel]      Potassium-selective, Leakage
+                                      [sodiumIonVoltageGatedChannel]    Sodium-selective, Voltage-Gated
+                                      [potassiumIonVoltageGatedChannel] Potassium-selective, Voltage-Gated
+                                      [sodiumIonLigandGatedChannel]     Sodium-selective, Ligand-Gated
+                                      [potassiumIonLigandGatedChannel]  Potassium-selective, Ligand-Gated
+                                      [sodiumPotassiumPump]             Sodium Potassium Pump
+                                     *[sodiumGlucoseCotransporter]      Sodium-Glucose Cotransporter
+                                    }
 
   # Membrane potential change responses for voltage-gated channels
   membranePotential:
@@ -565,21 +566,21 @@ a11y:
   keyboardHelp:
     soluteAdjusters:
       # Description strings for PDOM
-      addOrRemoveALotDescription: Add or remove a lot of chosen solute with Left and Right arrow keys.
+      addOrRemoveALotDescription:    Add or remove a lot of chosen solute with Left and Right arrow keys.
       addOrRemoveALittleDescription: Add or remove a little of chosen solute with Shift plus Left and Right arrow keys.
     transportProteinsAndLigands:
       # Description strings for PDOM
-      navigateDescription: Navigate proteins in panel or random ligands outside cell with Tab key.
-      grabOrReleaseDescription: Grab or release protein or ligand with Space or Enter keys.
+      navigateDescription:        Navigate proteins in panel or random ligands outside cell with Tab key.
+      grabOrReleaseDescription:   Grab or release protein or ligand with Space or Enter keys.
       moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or letter keys A and D.
-      cancelGrabDescription: Cancel grab or move interaction with Escape key.
+      cancelGrabDescription:      Cancel grab or move interaction with Escape key.
     sortOrDeleteProteins:
       # Description strings for PDOM
-      navigateProteinsDescription: Navigate proteins in membrane with Left and Right Arrow keys.
-      grabProteinDescription: Grab protein in membrane with Space or Enter keys.
+      navigateProteinsDescription:   Navigate proteins in membrane with Left and Right Arrow keys.
+      grabProteinDescription:        Grab protein in membrane with Space or Enter keys.
       moveGrabbedProteinDescription: Move grabbed protein between membrane slots with Left and Right Arrow keys.
-      releaseProteinDescription: Release grabbed protein into empty slot or swap slots with Space or Enter keys.
-      deleteProteinDescription: Delete grabbed protein with Delete key.
+      releaseProteinDescription:     Release grabbed protein into empty slot or swap slots with Space or Enter keys.
+      deleteProteinDescription:      Delete grabbed protein with Delete key.
     fromAnywhereInSim:
       # Description strings for PDOM
       pauseOrPlayDescription: Pause or play action in Observation Window with Alt key plus K.
