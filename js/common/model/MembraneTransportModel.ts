@@ -93,47 +93,60 @@ export default class MembraneTransportModel extends PhetioObject {
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly isPlayingProperty: BooleanProperty;
 
-  // For Description, keep track of important quantities.
-
   // One NumberProperty for the count of each type of solute, populated in the constructor
-  // Note that not all screens have all solute types. Use getFeatureSetSoluteTypes to get the list of solute types
+  // Note that not all screens have all solute types. Use getFeatureSetSoluteTypes to get the list of solute types.
   public readonly outsideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
   public readonly insideSoluteCountProperties = {} as Record<SoluteType, NumberProperty>;
   public readonly insideSoluteTypesCountProperty = new NumberProperty( 0 );
   public readonly outsideSoluteTypesCountProperty = new NumberProperty( 0 );
 
+  // Total number of solutes inside and outside the membrane.
   public readonly totalOutsideSoluteCountProperty = new NumberProperty( 0 );
   public readonly totalInsideSoluteCountProperty = new NumberProperty( 0 );
 
-
+  // Total number of transport proteins inside and outside the membrane.
   public readonly transportProteinCountProperty = new NumberProperty( 0 );
+
+  // Number of different types of transport proteins inside and outside the membrane.
   public readonly transportProteinTypesCountProperty = new NumberProperty( 0 );
 
   // True when the model has any solutes inside or outside the membrane.
   public readonly hasAnySolutesProperty = new BooleanProperty( false );
 
+  // True when the model has any ADP or phosphate solutes inside or outside the membrane.
   public readonly hasAnyADPOrPhosphateProperty = new BooleanProperty( false );
 
+  // The solute type selected by the user to add or remove solutes.
   public readonly soluteProperty: StringUnionProperty<SoluteControlSolutes>;
 
+  // Controls whether charges on the membrane representing the membrane potential are visible.
   public readonly chargesVisibleProperty: Property<boolean>;
+
+  // The membrane potential, in millivolts (mV).
   public readonly membranePotentialProperty: Property<( -70 ) | -50 | 30>;
 
+  // Specifically for the gradient of sodium, true when there are less sodium ions outside than inside.
   public readonly lessSodiumOutsideThanInsideProperty: ReadOnlyProperty<boolean>;
 
   // Property that holds the currently focused transport protein, or null if none is focused.
   // Used for description, to speak details specifically about this protein.
   public readonly focusedProteinProperty = new Property<TransportProtein | null>( null );
 
+  // Emits an event when a ligand unbinds from a ligand gated channel tue to natural causes (not user interaction or interruption).
   public readonly ligandUnboundDueToNaturalCausesEmitter = new Emitter<[ Ligand ]>( {
     parameters: [ { valueType: Ligand } ]
   } );
 
+  // All solutes that are currently in the model, both inside and outside the membrane.
   public readonly solutes: Solute[] = [];
 
-  // On screens that support ligands, the ligands are eagerly created and shown/hidden based on a Property. They are not cleared on reset
+  // All ligands, outside the membrane. Ligands are eagerly created and shown/hidden based on a Property. They are not cleared on reset.
   public readonly ligands: Ligand[] = [];
 
+  // True when the ligands are added to the model.
+  public readonly areLigandsAddedProperty: BooleanProperty;
+
+  // Emits and event when the model is fully reset, so that subcomponents can reset themselves.
   private readonly resetEmitter = new Emitter();
 
   // The flux entries are used to track the recent flux of solutes through the membrane.
@@ -142,24 +155,28 @@ export default class MembraneTransportModel extends PhetioObject {
   // Total elapsed time in seconds since the simulation started.
   public time = 0;
 
-  public readonly areLigandsAddedProperty: BooleanProperty;
-
+  // The slots in the membrane, which can hold a transport protein.
   public readonly membraneSlots: Slot[];
 
+  // Emits an event when any solute crosses the membrane.
   public readonly soluteCrossedMembraneEmitter = new Emitter<[ SoluteCrossedMembraneEvent ]>( {
     parameters: [ { valueType: SoluteCrossedMembraneEvent } ]
   } );
 
-  // Enqueue events over time for description
+  // Queue of membrane transport events, used to build descriptive summaries of transport activity over time.
+  // This queue is primarily used by MembraneTransportDescriber.
   public readonly descriptionEventQueue: SoluteCrossedMembraneEvent[] = [];
 
-  // Updated lazily in step(), by checking the state of each ligand
+  // Updated lazily in step(), by checking the state of each ligand.
   public readonly isUserDraggingLigandProperty = new BooleanProperty( false );
 
   // Show a highlight around the focusable ligands until the user interacts with one
   public readonly ligandInteractionCueVisibleProperty: BooleanProperty;
 
+  // When true, a highlight surrounds solutes when they cross the membrane to make that event more visible.
   public readonly crossingHighlightsEnabledProperty: Property<boolean>;
+
+  // When true, sounds play in the background that indicate when solutes cross the membrane.
   public readonly crossingSoundsEnabledProperty: Property<boolean>;
 
   public constructor(
@@ -274,13 +291,20 @@ export default class MembraneTransportModel extends PhetioObject {
   }
 
   /**
-   * Add a solute that will enter from a random location along the edge of the observation window.
+   * Add a number of solutes that will enter from a random location along the edge of the observation window.
    */
   public addSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
     this.addParticles( soluteType, location, count, this.solutes );
   }
 
-  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, soluteArray: Particle[] ): void {
+  /**
+   * Adds a number of particles (solute or ligand) to the model at a random location along the edge of the observation window.
+   * @param soluteType
+   * @param location - 'inside' or 'outside' the cell
+   * @param count
+   * @param particleArray - New particles will be added to this array.
+   */
+  public addParticles( soluteType: ParticleType, location: 'inside' | 'outside', count: number, particleArray: Particle[] ): void {
     for ( let i = 0; i < count; i++ ) {
       const x = dotRandom.nextDoubleBetween( MembraneTransportConstants.INSIDE_CELL_BOUNDS.minX, MembraneTransportConstants.INSIDE_CELL_BOUNDS.maxX );
 
@@ -289,25 +313,36 @@ export default class MembraneTransportModel extends PhetioObject {
       const y = location === 'inside' ? MembraneTransportConstants.INSIDE_CELL_BOUNDS.minY + yOffset : MembraneTransportConstants.OUTSIDE_CELL_BOUNDS.maxY - yOffset;
 
       if ( soluteType === 'starLigand' || soluteType === 'triangleLigand' ) {
-        soluteArray.push( new Ligand( new Vector2( x, y ), soluteType, this ) );
+        particleArray.push( new Ligand( new Vector2( x, y ), soluteType, this ) );
       }
       else {
-        soluteArray.push( new Solute( new Vector2( x, y ), soluteType, this ) );
+        particleArray.push( new Solute( new Vector2( x, y ), soluteType, this ) );
       }
     }
     this.updateSoluteCounts();
   }
 
+  /**
+   * Adds a solute to the model, without changing its position.
+   */
   public addSolute( solute: Solute ): void {
     this.solutes.push( solute );
     this.updateSoluteCounts();
   }
 
+  /**
+   * Remove a solute from the model.
+   * @param solute
+   */
   public removeSolute( solute: Solute ): void {
     this.solutes.splice( this.solutes.indexOf( solute ), 1 );
     this.updateSoluteCounts();
   }
 
+  /**
+   * Removes a specified number of solutes inside or outside the membrane. For the cellular area, solutes
+   * are randomly selected for removal.
+   */
   public removeSolutes( soluteType: SoluteType, location: 'inside' | 'outside', count: number ): void {
 
     const removableSolutes = this.solutes.filter( solute =>
@@ -328,6 +363,9 @@ export default class MembraneTransportModel extends PhetioObject {
     this.updateSoluteCounts();
   }
 
+  /**
+   * Clear all solutes from the model.
+   */
   public clearSolutes(): void {
 
     // Clear all solutes from active proteins
@@ -376,16 +414,20 @@ export default class MembraneTransportModel extends PhetioObject {
         }
       } );
 
-      this.stepFlux( dt, soluteInitialYValues );
+      this.stepFlux( soluteInitialYValues );
     }
 
     this.updateSoluteCounts();
 
     this.isUserDraggingLigandProperty.value = this.ligands.filter( ligand => ligand.mode instanceof UserControlledMode ).length > 0;
-
   }
 
-  private stepFlux( dt: number, soluteInitialYValues: Map<Particle, number> ): void {
+  /**
+   * Updates the recent solute flux entries, tracking solutes that have crossed the membrane during this step.
+   *
+   * @param soluteInitialYValues - Map of solutes to their initial y-values before the time step.
+   */
+  private stepFlux( soluteInitialYValues: Map<Particle, number> ): void {
 
     // Prune any recentSoluteFlux that is more than 1000ms old.
     const staleEntries = this.fluxEntries.filter( fluxEntry => this.time - fluxEntry.time > 1 );
@@ -406,6 +448,9 @@ export default class MembraneTransportModel extends PhetioObject {
     } );
   }
 
+  /**
+   * Updates the solute count properties for all solute types and totals after solutes have moved.
+   */
   public updateSoluteCounts(): void {
 
     // Update the solute counts after the solutes have moved
@@ -503,6 +548,9 @@ export default class MembraneTransportModel extends PhetioObject {
     this.transportProteinTypesCountProperty.value = proteinTypesCount;
   }
 
+  /**
+   * Returns the slots that are currently filled with transport proteins.
+   */
   public getFilledSlots(): Slot[] {
     return this.membraneSlots.filter( slot => slot.isFilled() );
   }
@@ -514,6 +562,9 @@ export default class MembraneTransportModel extends PhetioObject {
     return this.getFilledSlots().map( slot => slot.transportProteinProperty.value! );
   }
 
+  /**
+   * Clear entries in the description event queue.
+   */
   public clearDescriptionEventQueue(): void {
     this.descriptionEventQueue.length = 0;
   }
@@ -530,10 +581,16 @@ export default class MembraneTransportModel extends PhetioObject {
     } ).length;
   }
 
+  /**
+   * Returns the leftmost slot without a protein, or null if there are no empty slots.
+   */
   public getLeftmostEmptySlot(): Slot | null {
     return this.membraneSlots.find( slot => !slot.isFilled() ) || null;
   }
 
+  /**
+   * Returns the middle slot for proteins, for default selection.
+   */
   public getMiddleSlot(): Slot {
     return this.membraneSlots[ Math.floor( this.membraneSlots.length / 2 ) ];
   }
@@ -554,10 +611,17 @@ export default class MembraneTransportModel extends PhetioObject {
     return !this.solutes.some( solute => ( solute.mode as ParticleModeWithSlot ).slot === slot && predicate( solute ) );
   }
 
+  /**
+   * Returns a speed factor for the time step, based on the user selected time speed.
+   */
   public getTimeSpeedFactor(): number {
     return this.timeSpeedProperty.value === TimeSpeed.NORMAL ? 1 : 0.5;
   }
 
+  /**
+   * Returns the Slot that the provided TransportProtein is in, or null if it is not in a slot.
+   * @param transportProtein
+   */
   public getSlotForTransportProtein( transportProtein: TransportProtein<IntentionalAny> ): Slot | null {
     return this.membraneSlots.find( slot => slot.transportProteinProperty.value === transportProtein ) || null;
   }
