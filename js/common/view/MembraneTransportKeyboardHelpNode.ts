@@ -18,7 +18,7 @@ import TransportProteinsAndLigandsKeyboardHelpSection from './TransportProteinsA
 
 export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
-  public constructor( featureSet: MembraneTransportFeatureSet ) {
+  public constructor() {
 
     const leftColumn = [
       new SoluteAdjustersKeyboardHelpSection(),
