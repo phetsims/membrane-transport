@@ -77,8 +77,9 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.stepEmitter.addListener( dt => membraneTransportDescriber.step( dt ) );
     this.resetEmitter.addListener( () => membraneTransportDescriber.reset() );
 
-    // A model to view transform that maps a model point to a position in the screen view. This transform includes the translation
-    // of the observation window so that you can position view components relative to things within the observation window.
+    // A model to view transform that maps a model point to a position in the screen view. This transform allows you to position
+    // elements in the overall screen space as if they are placed relative to the model. Use when positioning elements
+    // in the entire screen. For example, when moving a protein from the toolbox to the membrane.
     const screenViewModelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ),
       MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center.plusXY( this.layoutBounds.width / 2 - MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH / 2, MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN ),

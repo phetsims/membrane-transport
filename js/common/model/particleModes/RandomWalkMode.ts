@@ -148,12 +148,12 @@ export default class RandomWalkMode extends BaseParticleMode {
     const direction = this.currentDirection.copy();
 
     // Adjust x-axis collision
-    const xAdjustment = RandomWalkMode.adjustAxis( particle.position.x, updatedBounds.minX, updatedBounds.maxX, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.minX, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.maxX, direction.x );
+    const xAdjustment = RandomWalkMode.adjustAxis( particle.position.x, updatedBounds.minX, updatedBounds.maxX, MembraneTransportConstants.LIGAND_COLLISION_BOUNDS.minX, MembraneTransportConstants.LIGAND_COLLISION_BOUNDS.maxX, direction.x );
     particle.position.x = xAdjustment.newPos;
     direction.x = xAdjustment.newDir;
 
     // Adjust y-axis collision
-    const yAdjustment = RandomWalkMode.adjustAxis( particle.position.y, updatedBounds.minY, updatedBounds.maxY, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.minY, MembraneTransportConstants.FOCUSED_LIGAND_BOUNDS.maxY, direction.y );
+    const yAdjustment = RandomWalkMode.adjustAxis( particle.position.y, updatedBounds.minY, updatedBounds.maxY, MembraneTransportConstants.LIGAND_COLLISION_BOUNDS.minY, MembraneTransportConstants.LIGAND_COLLISION_BOUNDS.maxY, direction.y );
     particle.position.y = yAdjustment.newPos;
     direction.y = yAdjustment.newDir;
 

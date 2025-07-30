@@ -60,23 +60,28 @@ export default class MembraneTransportConstants {
     MembraneTransportConstants.MODEL_WIDTH / 2, 10
   );
 
+  // The model bounds of the area inside the membrane.
   public static readonly INSIDE_CELL_BOUNDS = new Bounds2(
     MembraneTransportConstants.MEMBRANE_BOUNDS.minX, -MembraneTransportConstants.MODEL_HEIGHT / 2,
     MembraneTransportConstants.MEMBRANE_BOUNDS.maxX, MembraneTransportConstants.MEMBRANE_BOUNDS.minY
   );
 
+  // The model bounds of the area outside the membrane.
   public static readonly OUTSIDE_CELL_BOUNDS = new Bounds2(
     MembraneTransportConstants.MEMBRANE_BOUNDS.minX, MembraneTransportConstants.MEMBRANE_BOUNDS.maxY,
     MembraneTransportConstants.MEMBRANE_BOUNDS.maxX, MembraneTransportConstants.MODEL_HEIGHT / 2
   );
 
-  public static readonly FOCUSED_LIGAND_BOUNDS = new Bounds2(
+  // Bounds restricting ligand movement and collision detection outside the membrane, with offsets to look more natural.
+  public static readonly LIGAND_COLLISION_BOUNDS = new Bounds2(
     MembraneTransportConstants.MEMBRANE_BOUNDS.minX + 20, MembraneTransportConstants.MEMBRANE_BOUNDS.maxY,
     MembraneTransportConstants.MEMBRANE_BOUNDS.maxX - 20, MembraneTransportConstants.MODEL_HEIGHT / 2 - 20
   );
 
   public static readonly PANEL_TITLE_FONT_SIZE = 16;
 
+  // A model-view transformation that maps model coordinates to coordinates within the observation window (ignoring
+  // the rest of the screen view layout). This makes it very convenient to place objects directly in the observation window.
   public static readonly OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     new Vector2( 0, 0 ),
     MembraneTransportConstants.OBSERVATION_WINDOW_BOUNDS.center,
@@ -86,7 +91,8 @@ export default class MembraneTransportConstants {
   public static readonly FONT = new PhetFont( 14 );
   public static readonly TEXT_OPTIONS = { font: MembraneTransportConstants.FONT };
 
-  // Track some image metrics in the constants since they are used interaction coordinates in the model
+  // Track some image metrics in the constants since they are used for interactions with the model.
+  // Mostly used to identify the correct binding sites for proteins.
   public static readonly IMAGE_METRICS = {
     potassiumLigandGatedChannel: {
       closed: {
@@ -133,6 +139,7 @@ export default class MembraneTransportConstants {
       potassiumSite2: new Vector2( 443, 339 )
     }
   };
+
   public static readonly PANEL_CORNER_RADIUS = 5;
 
   /**
