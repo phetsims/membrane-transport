@@ -21,6 +21,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
@@ -46,9 +47,22 @@ type SodiumPotassiumPumpState =
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
 
-type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' | 'atp';
+// type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' | 'atp';
+const SodiumPotassiumPumpSiteValues = [ 'sodium1', 'sodium2', 'sodium3', 'potassium1', 'potassium2', 'phosphate', 'atp' ] as const;
+type SodiumPotassiumPumpSite = typeof SodiumPotassiumPumpSiteValues[number];
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
+
+  // Emitters for when particles are bound to the pump.
+  public readonly sodiumBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite ]>( {
+    parameters: [ { validValues: SodiumPotassiumPumpSiteValues } ]
+  } );
+  public readonly potassiumBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite ]>( {
+    parameters: [ { validValues: SodiumPotassiumPumpSiteValues } ]
+  } );
+  public readonly phosphateBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite ]>( {
+    parameters: [ { validValues: SodiumPotassiumPumpSiteValues } ]
+  } );
 
   // Binding sites for the protein, relative to the center of the slot.
   private static readonly SODIUM_SITE_1 = MembraneTransportConstants.getBindingSiteOffset(

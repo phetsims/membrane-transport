@@ -41,6 +41,17 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
           MembraneTransportSounds.activeTransporterRockedAndSuccess();
         }
       } );
+
+      // Particle binding sounds
+      sodiumPotassiumPump.sodiumBoundEmitter.addListener( site => {
+        MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
+      }, { disposer: this } );
+      sodiumPotassiumPump.phosphateBoundEmitter.addListener( () => {
+        MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
+      }, { disposer: this } );
+      sodiumPotassiumPump.potassiumBoundEmitter.addListener( site => {
+        MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
+      }, { disposer: this } );
     }
   }
 }

@@ -10,7 +10,6 @@
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import SodiumPotassiumPump from '../proteins/SodiumPotassiumPump.js';
@@ -57,13 +56,15 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       particle.mode = mode;
       particle.position.set( targetPosition );
 
-      MembraneTransportSounds.sodiumLockedInToSodiumPotassiumPump( mode.site, sodiumPotassiumPump.getNumberOfFilledSodiumSites() );
+      this.sodiumPotassiumPump.sodiumBoundEmitter.emit( mode.site );
     }
     else if ( particle.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
-      particle.mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
+      const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
+      particle.mode = mode;
       sodiumPotassiumPump.stateProperty.value = 'openToInsideSodiumAndATPBound';
-      MembraneTransportSounds.phosphateLockedInToSodiumPotassiumPump();
+
+      sodiumPotassiumPump.phosphateBoundEmitter.emit( mode.site );
     }
     else if ( particle.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ) {
 
@@ -71,7 +72,7 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       particle.mode = mode;
       particle.position.set( targetPosition );
 
-      MembraneTransportSounds.potassiumLockedInToSodiumPotassiumPump( mode.site, sodiumPotassiumPump.getNumberOfFilledPotassiumSites() );
+      sodiumPotassiumPump.potassiumBoundEmitter.emit( mode.site );
 
       if ( sodiumPotassiumPump.getNumberOfFilledPotassiumSites() === 2 ) {
         sodiumPotassiumPump.stateProperty.value = 'openToOutsidePotassiumBound';
