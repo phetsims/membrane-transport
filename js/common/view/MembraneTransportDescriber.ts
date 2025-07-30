@@ -421,8 +421,8 @@ export default class MembraneTransportDescriber {
   public resetAfterFundamentalStateChange(): void {
     this.hintStates = this.getCleanHintStates();
     this.timeSinceHintDescription = 0;
-    this.previousSoluteComparisons = this.getCleanSoluteComparisons();
-    this.previousSteadyStateMap = this.getCleanSteadyStates();
+    // this.previousSoluteComparisons = this.getCleanSoluteComparisons();
+    // this.previousSteadyStateMap = this.getCleanSteadyStates();
   }
 
   private getDescriptionFromEventQueue(): string {
@@ -560,8 +560,11 @@ export default class MembraneTransportDescriber {
 
     // Add a description of all solute types that have changed their relative comparison amount.
     const comparisonString = this.getCompareSoluteCompartmentsIfChanged( solutesThatCrossed );
-    if ( comparisonString && comparisonString.trim().length > 0 ) {
-      responses.push( comparisonString );
+    const solutesThatWeShouldDescribe = solutesThatCrossed.filter( isSoluteDescribable );
+    if ( solutesThatWeShouldDescribe.length > 0 ) {
+      if ( comparisonString && comparisonString.trim().length > 0 ) {
+        responses.push( comparisonString );
+      }
     }
 
     // Update previous comparisons for the next description.
@@ -714,11 +717,11 @@ export default class MembraneTransportDescriber {
       // 100% inward
       descriptor = 'toInside';
     }
-    if ( percentOutward >= 0.6 ) {
+    if ( percentOutward >= 0.7 ) {
       // >= 0.61 outward
       descriptor = 'mostlyToOutside';
     }
-    if ( percentInward >= 0.6 ) {
+    if ( percentInward >= 0.7 ) {
       // >= 0.61 inward
       descriptor = 'mostlyToInside';
     }
