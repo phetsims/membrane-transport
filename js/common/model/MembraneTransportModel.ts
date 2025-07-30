@@ -85,7 +85,7 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
 //      0 - No bias even past the threshold.
 //      0.5 - half of moves against the gradient are blocked.
 //      1 - All moves against the gradient are blocked.
-const BIAS_THRESHOLD = 0.05;
+const BIAS_THRESHOLD = 0.01; // 0.01 * 4 = 0.04, so we need at least a 4% difference in concentration to start biasing
 const GRADIENT_BIAS_STRENGTH = 0.9;
 
 export default class MembraneTransportModel extends PhetioObject {

@@ -164,7 +164,7 @@ a11y:
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
-      accessibleHelpText:           Transmembrane single channel proteins with open and closed states, and a triangle- or star-shaped ligand binding site. Grab to pull to membrane.
+      accessibleHelpText:           Transmembrane single channel proteins that can be open or closed, and a triangle- or star-shaped ligand binding site. Grab to pull to membrane.
     leakageChannelPanel:
       sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
       potassiumIonKPlusLeakage: Potassium-selective, Leakage
@@ -172,7 +172,7 @@ a11y:
     voltageGatedChannelPanel:
       sodiumIonNaPlusVoltageGated:   Sodium-selective, Voltage-gated
       potassiumIonKPlusVoltageGated: Potassium-selective, Voltage-gated
-      accessibleHelpText:            Transmembrane single channel proteins with open and closed states. Grab to pull to membrane.
+      accessibleHelpText:            Transmembrane single channel proteins that can be open or closed. Grab to pull to membrane.
 
       # For the Membrane Potential radio buttons
       membranePotential:
@@ -196,9 +196,9 @@ a11y:
       sodiumPotassiumPump:        Sodium-Potassium Pump
       sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
       accessibleHelpText:         |-
-                                  Proteins that open to one side at a time and follow specific solute binding sequences to transport solutes across membrane.
-                                    Sodium Potassium Pump, when open to inside has binding sites for 3 sodium and 1 phosphate. When open to outside has binding sites for 2 potassium.
-                                    Sodium-Glucose Cotransporter, only open to outside and has binding sites for 2 sodium and 1 glucose. Requires specific solute concentrations to shuttle.
+                                  Proteins that open to one side at a time. Sodium Potassium Pump, when open to inside has binding sites for 3 
+                                    sodium and 1 phosphate. When open to outside has binding sites for 2 potassium. Sodium-Glucose Cotransporter, 
+                                    only open to outside and has binding sites for 2 sodium and 1 glucose. Requires specific solute concentrations to shuttle.
                                     Grab to pull to membrane.
 
   ligandNode:
@@ -309,12 +309,12 @@ a11y:
     # A description of the average crossing direction of a solute across the membrane.
     averageCrossingDirection: |-
                               { $direction ->
-                                [toOutside] crossings to outside
-                                [mostlyToOutside] crossings mostly to outside
-                                [inBothDirections] crossings in both directions
-                                [mostlyToInside] crossings mostly to inside
-                                [toInside] crossings to inside
-                                *[none] no recent crossings
+                                [toOutside] to outside
+                                [mostlyToOutside] mostly to outside
+                                [inBothDirections] in both directions
+                                [mostlyToInside] mostly to inside
+                                [toInside] to inside
+                                *[none] none recently
                               }
 
   solutesPanel:
@@ -330,10 +330,10 @@ a11y:
   soluteControl:
     outside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Outside Cell"
-      accessibleHelpText: Adjust chosen solute amount on outside.
+      accessibleHelpText: Adjust chosen solute amount on outside using arrows keys.
     inside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Inside Cell"
-      accessibleHelpText: Adjust chosen solute amount on inside.
+      accessibleHelpText: Adjust chosen solute amount on inside using arrows keys.
     voicingHintResponse:       Adjust chosen solute amount.
     accessibleRoleDescription: solute adjuster
     accessibleObjectResponse:  |-
@@ -367,7 +367,7 @@ a11y:
                                                          { a11y.solutes.uppercaseName }: none outside, none inside.
 
       accessibleNameWithParticles:                       |-
-                                                         { a11y.solutes.uppercaseName }: { a11y.solutes.amountComparison }; { a11y.solutes.averageCrossingDirection }; { $outsideAmount ->
+                                                         { a11y.solutes.uppercaseName }: { a11y.solutes.amountComparison }; crossings { a11y.solutes.averageCrossingDirection }; { $outsideAmount ->
                                                            [none] none
                                                            [few] a few
                                                            [some] some

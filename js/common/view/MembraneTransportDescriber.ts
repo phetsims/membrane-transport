@@ -57,7 +57,7 @@ type FundamentalState = {
 };
 
 // The interval in seconds at which the system will trigger responses.
-const DESCRIPTION_INTERVAL = 5;
+const DESCRIPTION_INTERVAL = 7;
 
 // The interval in seconds at which the system will trigger a 'hint' response to guide the user to make
 // a change.
@@ -481,7 +481,7 @@ export default class MembraneTransportDescriber {
       const facilitatedSolute = facilitatedSolutesThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ facilitatedSolute ].value;
       const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
-      descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: facilitatedSolute } )} crossing through channels, ${directionDescriptionString}` );
+      descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: facilitatedSolute } )} crossing channels, ${directionDescriptionString}` );
     }
     else if ( simpleDiffusers.length === 1 && this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
 
@@ -500,7 +500,7 @@ export default class MembraneTransportDescriber {
         const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.solutes.briefName.format( {
           soluteType: soluteType
         } ) ).join( ', ' );
-        descriptionParts.push( `${soluteNames}, crossing the membrane` );
+        descriptionParts.push( `${soluteNames}, crossing` );
       }
     }
 
@@ -631,7 +631,7 @@ export default class MembraneTransportDescriber {
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
 
         affirm( soluteType !== 'adp' && soluteType !== 'phosphate', 'adp cant cross the membrane, so it should not be described' );
-        changedSteadyStates.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing steadily in both directions, amounts each side roughly equal` );
+        changedSteadyStates.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing steadily in both directions, each side roughly equal` );
       }
     } );
 
