@@ -8,6 +8,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Range from '../../../../dot/js/Range.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -276,6 +277,20 @@ export default class SoluteControl extends Voicing( Panel ) {
       fireOnHoldTiming: 'custom'
     } );
     this.addInputListener( keyboardListener );
+
+    // Update accessibleHelpText based on button states
+    Multilink.multilink( [
+      decrementFineButton.enabledProperty,
+      decrementCoarseButton.enabledProperty,
+      incrementFineButton.enabledProperty,
+      incrementCoarseButton.enabledProperty,
+      MembraneTransportFluent.a11y.soluteControl.accessibleHelpTextAllDisabledStringProperty,
+      side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleHelpTextStringProperty :
+                          MembraneTransportFluent.a11y.soluteControl.outside.accessibleHelpTextStringProperty
+    ], ( decrementFineEnabled, decrementCoarseEnabled, incrementFineEnabled, incrementCoarseEnabled, allDisabledText, normalText ) => {
+      const anyButtonEnabled = decrementFineEnabled || decrementCoarseEnabled || incrementFineEnabled || incrementCoarseEnabled;
+      this.accessibleHelpText = anyButtonEnabled ? normalText : allDisabledText;
+    } );
   }
 }
 

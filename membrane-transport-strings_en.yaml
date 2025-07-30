@@ -337,6 +337,7 @@ a11y:
       accessibleHelpText: Adjust chosen solute amount on inside using arrows keys.
     voicingHintResponse:       Adjust chosen solute amount.
     accessibleRoleDescription: solute adjuster
+    accessibleHelpTextAllDisabled: Solutes cannot be added or removed on this side because there is already the maximum amount on the opposite side.
     accessibleObjectResponse:  |-
                                { $amount ->
                                  [none] no

@@ -246,6 +246,7 @@ type StringsType = {
       };
       'voicingHintResponseStringProperty': LocalizedStringProperty;
       'accessibleRoleDescriptionStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextAllDisabledStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };

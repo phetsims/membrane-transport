@@ -509,6 +509,9 @@
       "accessibleRoleDescription": {
         "value": "solute adjuster"
       },
+      "accessibleHelpTextAllDisabled": {
+        "value": "Solutes cannot be added or removed on this side because there is already the maximum amount on the opposite side."
+      },
       "accessibleObjectResponse": {
         "value": "{ $amount ->\n  [none] no\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} { a11y_solutes_lowercaseName }"
       },
