@@ -54,6 +54,9 @@ const GLUCOSE_FADE_TIME = 10; // in seconds, how long it takes for glucose to fa
 const ADP_FADE_TIME = 10; // in seconds
 const PHOSPHATE_FADE_TIME = 5; // in seconds
 
+// How long a free phosphate particle can exist before it begins to absorb.
+const PHOSPHATE_TIME_BEFORE_ABSORPTION = 3;
+
 // When a ligand is bound to a protein, it does not have a slot.
 export type ParticleModeWithSlot = BaseParticleMode & { slot: Slot };
 
@@ -64,6 +67,8 @@ export default abstract class Particle {
   // Size of the solute in model coordinates.
   public readonly dimension: Dimension2;
 
+  // Some particles will fade out over time before removal to indicate absorption and metabolism.
+  // See updateAbsorption().
   public opacity = 1;
 
   // Keep track of how long ago the particle crossed the membrane, to show a highlight when it crosses.
@@ -104,11 +109,18 @@ export default abstract class Particle {
     );
   }
 
+  /**
+   * Release this particle from a protein. Usually from user interruption or model clear.
+   * The particle is shifted vertically to a y position to move away from the membrane, and then it starts a random walk.
+   */
   public releaseFromInteraction( y: number ): void {
     this.position.y = y;
     this.startRandomWalk();
   }
 
+  /**
+   * Begin a random walk.
+   */
   public startRandomWalk(): void {
 
     // Start in random walk mode with random directions.
@@ -125,8 +137,8 @@ export default abstract class Particle {
 
   /**
    * This is a finite-state-machine-like implementation of the particle's behavior. We use a lightweight approach,
-   * without classes or abstractions, to centralize the logic for the particle's behavior. This approach also worked well
-   * in Projectile Data Lab's SamplingModel.launchButtonPressed
+   * without classes or abstractions, to centralize the logic for the particle's behavior. Most particle behavior
+   * is implemented by the particle mode.
    */
   public step( dt: number, model: MembraneTransportModel ): void {
 
@@ -182,7 +194,7 @@ export default abstract class Particle {
     }
 
     // Free phosphate molecules move normally for a while, then are absorbed
-    if ( this.type === 'phosphate' && this.mode instanceof RandomWalkMode && this.mode.timeElapsedSinceMembraneCrossing > 3 ) {
+    if ( this.type === 'phosphate' && this.mode instanceof RandomWalkMode && this.mode.timeElapsedSinceMembraneCrossing > PHOSPHATE_TIME_BEFORE_ABSORPTION ) {
       this.opacity -= fadeRatePhosphate;
       if ( this.opacity <= 0 ) {
         removeSolute( this as unknown as Solute );
@@ -202,6 +214,9 @@ export default abstract class Particle {
     return false; // particle not absorbed
   }
 
+  /**
+   * Returns the bounds of this particle in model coordinates, offset by the current position.
+   */
   public getBounds(): Bounds2 {
     return this.dimension.toBounds(
       this.position.x - this.dimension.width / 2,
