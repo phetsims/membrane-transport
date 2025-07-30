@@ -13,6 +13,8 @@ import MembraneTransportQueryParameters from './MembraneTransportQueryParameters
 
 export default class MembraneTransportPreferences {
 
+  // When true, the phospholipid bilayer (circles with tails in that create the membrane) will animate, showing
+  // the tails moving in a fluid-like manner. Some may find this disturbing or distracting, so it can be turned off.
   public readonly animateLipidsProperty = new BooleanProperty( MembraneTransportQueryParameters.animateLipids, {
     tandem: Tandem.PREFERENCES.createTandem( 'animateLipidsProperty' ),
     phetioFeatured: true
@@ -24,6 +26,7 @@ export default class MembraneTransportPreferences {
     phetioFeatured: true
   } );
 
+  // When true, sound effects that use stereo panning will be played.
   public readonly stereoCrossingSoundsEnabledProperty = new BooleanProperty( MembraneTransportQueryParameters.stereoCrossings, {
     tandem: Tandem.PREFERENCES.createTandem( 'stereoCrossingSoundsEnabledProperty' ),
     phetioFeatured: true

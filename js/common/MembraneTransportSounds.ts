@@ -1,7 +1,15 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Play sound effects on certain events.
+ * MembraneTransportSounds centralizes all sound effects for this simulation. It defines, configures, and registers
+ * sound clips for various simulation events such as solute movement, channel actions, ligand binding,
+ * and transporter activity.
+ *
+ * Sounds are organized using static methods according to the event type, some with support for stereo panning or
+ * audio filtering. This class offers static methods to play event-appropriate sounds during simulation execution.
+ *
+ * Typical usage: Call the relevant static method (e.g., MembraneTransportSounds.soluteCrossedMembrane(...))
+ * wherever a sound should be triggered in the simulation logic.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -240,6 +248,11 @@ const soluteCrossingOxygenHighSounds = createPannedSoundSet( soluteCrossingOxyge
 
 export default class MembraneTransportSounds {
 
+  /**
+   * A sound that plays when a solute crosses the membrane. Includes stereo panning, if enabled in preferences.
+   * @param type
+   * @param direction - inward or outward, changing the octave and possibly stereo panning.
+   */
   public static soluteCrossedMembrane(
     type: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | 'adp' | 'phosphate' | 'triangleLigand' | 'starLigand',
     direction: 'inward' | 'outward' ): void {
@@ -286,10 +299,16 @@ export default class MembraneTransportSounds {
     phosphateBindingSoundClip.play();
   }
 
+  /**
+   * Play this sound when the protein is returned to the toolbox.
+   */
   public static proteinReturnedToToolbox(): void {
     proteinReturnToToolboxSound.play();
   }
 
+  /**
+   * General sound for when a draggable object hits a boundary during interaction.
+   */
   public static boundaryReached(): void {
     boundaryReachedSound.play();
   }
@@ -347,6 +366,12 @@ export default class MembraneTransportSounds {
     CardSounds.playCardMovementSound( directionToPlay );
   }
 
+  /**
+   * Plays a sound when a protein is moved over a slot, to indicate that this is a valid location
+   * for the protein to be placed.
+   * @param slotIndex
+   * @param isOccupied - a modified sound indicates that this slot is occupied
+   */
   public static slotHover( slotIndex: number, isOccupied: boolean ): void {
 
     // Use the lowpass filter for occupied slots
