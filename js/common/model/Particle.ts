@@ -136,9 +136,7 @@ export default abstract class Particle {
   }
 
   /**
-   * This is a finite-state-machine-like implementation of the particle's behavior. We use a lightweight approach,
-   * without classes or abstractions, to centralize the logic for the particle's behavior. Most particle behavior
-   * is implemented by the particle mode.
+   * Update the particle. Most particle behavior is implemented by the particle's current mode.
    */
   public step( dt: number, model: MembraneTransportModel ): void {
 
