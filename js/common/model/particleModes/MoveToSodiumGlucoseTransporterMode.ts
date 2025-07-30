@@ -11,7 +11,6 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import membraneTransport from '../../../membraneTransport.js';
-import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import SodiumGlucoseCotransporter from '../proteins/SodiumGlucoseCotransporter.js';
@@ -62,7 +61,7 @@ export default class MoveToSodiumGlucoseTransporterMode extends MoveToTargetMode
 
     particle.position.set( targetPosition );
 
-    MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( particle.type, newMode.sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
+    this.sodiumGlucoseCotransporter.soluteBoundEmitter.emit( particle.type );
   }
 
   public static override fromStateObject( stateObject: IntentionalAny, slot: Slot ): MoveToSodiumGlucoseTransporterMode {

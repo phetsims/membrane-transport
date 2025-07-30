@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import membraneTransport from '../../../membraneTransport.js';
@@ -26,6 +27,11 @@ type SodiumGlucoseCotransporterState = 'openToOutsideAwaitingParticles' | 'openT
 const STATE_TRANSITION_INTERVAL = 0.5;
 
 export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumGlucoseCotransporterState> {
+
+  // Emitter for when a particle binds to the sodium glucose cotransporter.
+  public readonly soluteBoundEmitter = new Emitter<[ 'sodiumIon' | 'glucose' ]>( {
+    parameters: [ { validValues: [ 'sodiumIon', 'glucose' ] } ]
+  } );
 
   // Particle binding sites, relative to the center of the slot.
   private static readonly SODIUM_SITE_LEFT = MembraneTransportConstants.getBindingSiteOffset(

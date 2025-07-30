@@ -53,15 +53,12 @@ type SodiumPotassiumPumpSite = typeof SodiumPotassiumPumpSiteValues[number];
 
 export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiumPumpState> {
 
-  // Emitters for when particles are bound to the pump.
-  public readonly sodiumBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite ]>( {
-    parameters: [ { validValues: SodiumPotassiumPumpSiteValues } ]
-  } );
-  public readonly potassiumBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite ]>( {
-    parameters: [ { validValues: SodiumPotassiumPumpSiteValues } ]
-  } );
-  public readonly phosphateBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite ]>( {
-    parameters: [ { validValues: SodiumPotassiumPumpSiteValues } ]
+  // Emitters an event when a solute binds to a site on the pump.
+  public readonly soluteBoundEmitter = new Emitter<[ SodiumPotassiumPumpSite, 'sodiumIon' | 'potassiumIon' | 'phosphate' ]>( {
+    parameters: [
+      { validValues: SodiumPotassiumPumpSiteValues },
+      { validValues: [ 'sodiumIon', 'potassiumIon', 'phosphate' ] }
+    ]
   } );
 
   // Binding sites for the protein, relative to the center of the slot.

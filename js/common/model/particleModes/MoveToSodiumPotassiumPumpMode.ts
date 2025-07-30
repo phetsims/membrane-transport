@@ -56,7 +56,7 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       particle.mode = mode;
       particle.position.set( targetPosition );
 
-      this.sodiumPotassiumPump.sodiumBoundEmitter.emit( mode.site );
+      sodiumPotassiumPump.soluteBoundEmitter.emit( mode.site, particle.type );
     }
     else if ( particle.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
 
@@ -64,7 +64,7 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       particle.mode = mode;
       sodiumPotassiumPump.stateProperty.value = 'openToInsideSodiumAndATPBound';
 
-      sodiumPotassiumPump.phosphateBoundEmitter.emit( mode.site );
+      sodiumPotassiumPump.soluteBoundEmitter.emit( mode.site, 'phosphate' );
     }
     else if ( particle.type === 'potassiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ) {
 
@@ -72,7 +72,7 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
       particle.mode = mode;
       particle.position.set( targetPosition );
 
-      sodiumPotassiumPump.potassiumBoundEmitter.emit( mode.site );
+      sodiumPotassiumPump.soluteBoundEmitter.emit( mode.site, particle.type );
 
       if ( sodiumPotassiumPump.getNumberOfFilledPotassiumSites() === 2 ) {
         sodiumPotassiumPump.stateProperty.value = 'openToOutsidePotassiumBound';

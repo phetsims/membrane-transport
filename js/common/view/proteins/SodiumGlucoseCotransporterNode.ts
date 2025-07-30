@@ -42,6 +42,11 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
         }
       }, { disposer: this } );
 
+      // Binding sounds
+      sodiumGlucoseCotransporter.soluteBoundEmitter.addListener( particleType => {
+        MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( particleType, sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
+      } );
+
       const exclamationMark = new Text( '!', {
         font: new PhetFont( {
           size: 300,
