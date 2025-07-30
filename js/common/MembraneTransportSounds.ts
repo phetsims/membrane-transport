@@ -80,7 +80,7 @@ cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( sou
 const cardMovementLowpassSoundClips = cardMovementSounds.map( ( sound, index ) => new SoundClip( sound, {
 
   // boost the volume of highly filtered sounds, to normalize
-  initialOutputLevel: index === 5 ? 20 : 0.3,
+  initialOutputLevel: index === 5 ? 12 : 0.3,
   additionalAudioNodes: [ lowpassFilter ]
 } ) );
 cardMovementLowpassSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
@@ -285,7 +285,7 @@ export default class MembraneTransportSounds {
                                             E_NOTE );
 
     // Boost the volume of the most filtered sound, to normalize
-    sodiumBindingSoundClip.setOutputLevel( numberSodiumsFilled === 3 ? 1.6 : 0.5 );
+    sodiumBindingSoundClip.setOutputLevel( numberSodiumsFilled === 3 ? 1.7 : 0.5 );
 
     sodiumBindingSoundClip.play();
   }
