@@ -455,7 +455,7 @@ export default class MembraneTransportDescriber {
     // Returns true if a solute type is in active transport.
     const soluteOnlyInActiveTransport = ( soluteType: SoluteType ): boolean => {
       return ( ( soluteType === 'glucose' || ( soluteType === 'sodiumIon' && !sodiumCrossed ) ) && cotransported ) ||
-             ( soluteType === 'potassiumIon' && potassiumPumped && !potassiumCrossed) ||
+             ( soluteType === 'potassiumIon' && potassiumPumped && !potassiumCrossed ) ||
              ( soluteType === 'sodiumIon' && sodiumPumped && !sodiumCrossed );
     };
 
