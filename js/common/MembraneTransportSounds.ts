@@ -216,9 +216,9 @@ const sodiumBindingSoundClip = newSoundClip( naPlusAttach_mp3, {
   ]
 } );
 const potassiumBindingSoundClip = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.25 } );
-const glucoseActivateTransporterSoundClip = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
+const glucoseActivateTransporterSoundClip = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.2 } );
 
-const phosphateBindingSoundClip = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.3 } );
+const phosphateBindingSoundClip = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.2 } );
 
 const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.2 } );
 const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.2 } );
