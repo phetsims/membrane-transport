@@ -474,20 +474,21 @@ export default class MembraneTransportDescriber {
     const solutesThatCrossed = _.uniq( queue.map( event => event.solute.soluteType ) ) as PlottableSoluteType[];
 
     const facilitatedSolutesThatWeShouldDescribe = facilitatedSolutes.filter( isSoluteDescribable );
+    const simpleDiffusersThatWeShouldDescribe = simpleDiffusers.filter( isSoluteDescribable );
 
     // If there is only one facilitated solute type, and that solute type is NOT in steady state and the comparison descriptor has changed,
     // then we will describe that it is crossing the membrane and in what direction.
-    if ( facilitatedSolutesThatWeShouldDescribe.length === 1 ) {
+    if ( facilitatedSolutesThatWeShouldDescribe.length === 1 && simpleDiffusersThatWeShouldDescribe.length === 0 ) {
       const facilitatedSolute = facilitatedSolutesThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ facilitatedSolute ].value;
       const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
       descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: facilitatedSolute } )} crossing channels, ${directionDescriptionString}` );
     }
-    else if ( simpleDiffusers.length === 1 && this.shouldDescribeComparisons( simpleDiffusers[ 0 ] ) ) {
+    else if ( simpleDiffusersThatWeShouldDescribe.length === 1 && facilitatedSolutesThatWeShouldDescribe.length === 0 ) {
 
       // If there is only one simple diffusion type that has gone into a new comparison region that is not in steady state,
       // we include a more sophisticated description of it
-      const soluteType = simpleDiffusers[ 0 ];
+      const soluteType = simpleDiffusersThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ soluteType ].value;
       const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
       descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing membrane, ${directionDescriptionString}` );
