@@ -483,7 +483,6 @@ export default class MembraneTransportDescriber {
     // they haven't changed the counts enough inside and outside the cell. When a solute is in active transport,
     // it will get a specific description later in the response.
     const isSoluteDescribable = ( soluteType: SoluteType ): boolean => {
-      console.log( soluteOnlyInActiveTransport( soluteType ) );
       return !soluteOnlyInActiveTransport( soluteType ) && this.shouldDescribeComparisons( soluteType );
     };
 
