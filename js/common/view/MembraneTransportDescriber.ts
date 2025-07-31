@@ -444,6 +444,8 @@ export default class MembraneTransportDescriber {
     // Identify active transport events
     const sodiumPumped = queue.some( e => e.transportProteinType === 'sodiumPotassiumPump' && e.solute.soluteType === 'sodiumIon' );
     const potassiumPumped = queue.some( e => e.transportProteinType === 'sodiumPotassiumPump' && e.solute.soluteType === 'potassiumIon' );
+    const sodiumCrossed = queue.some( e => e.transportProteinType !== 'sodiumPotassiumPump' && e.solute.soluteType === 'sodiumIon' );
+    const potassiumCrossed = queue.some( e => e.transportProteinType !== 'sodiumPotassiumPump' && e.solute.soluteType === 'potassiumIon' );
     const cotransported = queue.some( e => e.transportProteinType === 'sodiumGlucoseCotransporter' );
     const anyActiveTransport = sodiumPumped || potassiumPumped || cotransported;
 
@@ -451,17 +453,17 @@ export default class MembraneTransportDescriber {
     const simpleDiffusers = _.uniq( queue.filter( e => e.transportProteinType === null ).map( e => e.solute.soluteType ) ) as ( 'oxygen' | 'carbonDioxide' )[];
 
     // Returns true if a solute type is in active transport.
-    const soluteInActiveTransport = ( soluteType: SoluteType ): boolean => {
-      return ( ( soluteType === 'glucose' || soluteType === 'sodiumIon' ) && cotransported ) ||
-             ( soluteType === 'potassiumIon' && potassiumPumped ) ||
-             ( soluteType === 'sodiumIon' && sodiumPumped );
+    const soluteOnlyInActiveTransport = ( soluteType: SoluteType ): boolean => {
+      return ( ( soluteType === 'glucose' || ( soluteType === 'sodiumIon' && !sodiumCrossed ) ) && cotransported ) ||
+             ( soluteType === 'potassiumIon' && potassiumPumped && !potassiumCrossed) ||
+             ( soluteType === 'sodiumIon' && sodiumPumped && !sodiumCrossed );
     };
 
     // A filter for solute types that removes solutes that are part of active transport and cannot be described because
     // they haven't changed the counts enough inside and outside the cell. When a solute is in active transport,
     // it will get a specific description later in the response.
     const isSoluteDescribable = ( soluteType: SoluteType ): boolean => {
-      return !soluteInActiveTransport( soluteType ) && this.shouldDescribeComparisons( soluteType );
+      return !soluteOnlyInActiveTransport( soluteType ) && this.shouldDescribeComparisons( soluteType );
     };
 
     // Identify facilitated diffusion events (that were not part of active transport)
