@@ -69,12 +69,6 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
   private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
     const iconNode = createParticleNode( soluteType );
-
-    // Scale down the artwork before rasterizing it. On high-DPI displays, when the image gets scaled down
-    // many pixels have to be squeezed into a single pixel, which can result in aliasing artifacts.
-    // See https://github.com/phetsims/membrane-transport/issues/193.
-    iconNode.setScaleMagnitude( 0.1 );
-
     return rasterizeNode( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 
