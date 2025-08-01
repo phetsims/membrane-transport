@@ -126,8 +126,8 @@ a11y:
                             }
       transportProteins:    |-
                             { $proteinCount ->
-                              [one] { $proteinCount} transport protein
-                              *[other] { $proteinCount} transport proteins
+                              [one] { $proteinCount} protein
+                              *[other] { $proteinCount} proteins
                             } of { $proteinTypeCount ->
                               [one] { $proteinTypeCount } type
                              *[other] { $proteinTypeCount} types
@@ -328,33 +328,33 @@ a11y:
   soluteControl:
     outside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Outside Cell"
-      accessibleHelpText: Add or remove chosen solute amount on outside with arrows keys.
+      accessibleHelpText: Adjust chosen solute amount on outside using arrows keys.
     inside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Inside Cell"
-      accessibleHelpText: Add or remove chosen solute amount on inside with arrows keys.
-    voicingHintResponse:           Adjust chosen solute amount.
-    accessibleRoleDescription:     solute adjuster
-    accessibleHelpTextAllDisabled: Solutes cannot be added or removed on this side because there is already the maximum amount on the opposite side.
-    accessibleObjectResponse:      |-
-                                   { $amount ->
-                                     [none] no
-                                     [few] a few
-                                     [some] some
-                                     [smallAmount] small amount of
-                                     [several] several
-                                     [many] many
-                                     [largeAmount] large amount of
-                                     [hugeAmount] huge amount of
-                                    *[maxAmount] max amount of
-                                   } { a11y.solutes.lowercaseName }
-    accessibleContextResponse:     |-
-                                   { $amountAdded ->
-                                     [aLittle] Ten
-                                    *[aLot]    Fifty
-                                   } { $addedOrRemoved ->
-                                     [added]   added
-                                    *[removed] removed
-                                   }. Now, { a11y.solutes.amountComparison }. 
+      accessibleHelpText: Adjust chosen solute amount on inside using arrows keys.
+    voicingHintResponse:       Adjust chosen solute amount.
+    accessibleRoleDescription: solute adjuster
+    accessibleHelpTextAllDisabled: Disabled, total solute amount at max.
+    accessibleObjectResponse:  |-
+                               { $amount ->
+                                 [none] no
+                                 [few] a few
+                                 [some] some
+                                 [smallAmount] small amount of
+                                 [several] several
+                                 [many] many
+                                 [largeAmount] large amount of
+                                 [hugeAmount] huge amount of
+                                *[maxAmount] max amount of
+                               } { a11y.solutes.lowercaseName }
+    accessibleContextResponse: |-
+                               { $amountAdded ->
+                                 [aLittle] Ten
+                                *[aLot]    Fifty
+                               } { $addedOrRemoved ->
+                                 [added]   added
+                                *[removed] removed
+                               }. Now, { a11y.solutes.amountComparison }. 
 
   soluteConcentrationsAccordionBox:
     descriptionContent: A dynamic barchart for each solute captures amounts on either side of membrane and emphasizes recent crossings with visual highlights and sounds. If needed, pause sim to freeze details for reading.
