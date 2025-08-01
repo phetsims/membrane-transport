@@ -80,7 +80,7 @@ cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( sou
 const cardMovementLowpassSoundClips = cardMovementSounds.map( ( sound, index ) => new SoundClip( sound, {
 
   // boost the volume of highly filtered sounds, to normalize
-  initialOutputLevel: index === 5 ? 12 : 0.3,
+  initialOutputLevel: index === 5 ? 12 : 0.2,
   additionalAudioNodes: [ lowpassFilter ]
 } ) );
 cardMovementLowpassSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
@@ -215,13 +215,13 @@ const sodiumBindingSoundClip = newSoundClip( naPlusAttach_mp3, {
     sodiumLowpassFilter
   ]
 } );
-const potassiumBindingSoundClip = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.25 } );
+const potassiumBindingSoundClip = newSoundClip( kPlusAttach_mp3, { initialOutputLevel: 0.18 } );
 const glucoseActivateTransporterSoundClip = newSoundClip( glucoseActivateTransporter_mp3, { initialOutputLevel: 0.2 } );
 
 const phosphateBindingSoundClip = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.2 } );
 
-const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.2 } );
-const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.2 } );
+const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.18 } );
+const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.18 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
@@ -232,7 +232,7 @@ const potassiumCrossingSound = soluteCrossingPotassium_mp3;
 const sodiumCrossingSound = soluteCrossingSodium_mp3;
 
 const baseSoundClipOptions: SoundClipOptions = { initialOutputLevel: 0.2 };
-const gasCrossingSoundOptions: SoundClipOptions = { initialOutputLevel: 0.02 };
+const gasCrossingSoundOptions: SoundClipOptions = { initialOutputLevel: 0.09 };
 
 const soluteCrossingGenericSounds = createPannedSoundSet( genericCrossingSound, baseSoundClipOptions );
 const soluteCrossingPotassiumSounds = createPannedSoundSet( potassiumCrossingSound, baseSoundClipOptions );
@@ -407,7 +407,7 @@ export default class MembraneTransportSounds {
     if ( type === 'sodiumIon' ) {
       sodiumBindingSoundClip.setPlaybackRate( filledSodiumSiteCount === 1 ? G_NOTE : C_NOTE );
 
-      sodiumBindingSoundClip.setOutputLevel( 0.5 );
+      sodiumBindingSoundClip.setOutputLevel( 0.3 );
 
       sodiumBindingSoundClip.play();
     }
