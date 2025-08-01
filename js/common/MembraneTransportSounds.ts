@@ -179,13 +179,13 @@ const channelSounds = {
   1: {
     open: {
       sodiumIonLigandGatedChannel: newSoundClip( sodiumLigandGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( potassiumLigandGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( potassiumLigandGatedChannelOpen_mp3, { initialOutputLevel: 0.13 } ),
       sodiumIonVoltageGatedChannel: newSoundClip( sodiumVoltageGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS ),
       potassiumIonVoltageGatedChannel: newSoundClip( potassiumVoltageGatedChannelOpen_mp3, CHANNEL_SOUND_OPTIONS )
     },
     close: {
       sodiumIonLigandGatedChannel: newSoundClip( sodiumLigandGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS ),
-      potassiumIonLigandGatedChannel: newSoundClip( potassiumLigandGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS ),
+      potassiumIonLigandGatedChannel: newSoundClip( potassiumLigandGatedChannelClose_mp3, { initialOutputLevel: 0.13 } ),
       sodiumIonVoltageGatedChannel: newSoundClip( sodiumVoltageGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS ),
       potassiumIonVoltageGatedChannel: newSoundClip( potassiumVoltageGatedChannelClose_mp3, CHANNEL_SOUND_OPTIONS )
     }

@@ -28,7 +28,7 @@ export default class SoluteSpinnerSoundGenerator extends ValueChangeSoundPlayer 
   public constructor( coarseDelta: number, range: Range ) {
 
     const sliderMiddleSoundGenerator = new SliderMiddleRangeSoundGenerator( coarseDelta, {
-      initialOutputLevel: 0.1
+      initialOutputLevel: 0.2
     } );
     soundManager.addSoundGenerator( sliderMiddleSoundGenerator );
 
