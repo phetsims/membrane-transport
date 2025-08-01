@@ -290,6 +290,9 @@ export default class SoluteControl extends Voicing( Panel ) {
     ], ( decrementFineEnabled, decrementCoarseEnabled, incrementFineEnabled, incrementCoarseEnabled, allDisabledText, normalText ) => {
       const anyButtonEnabled = decrementFineEnabled || decrementCoarseEnabled || incrementFineEnabled || incrementCoarseEnabled;
       this.accessibleHelpText = anyButtonEnabled ? normalText : allDisabledText;
+
+      // set aria-disabled = true on the parent container, see https://github.com/phetsims/membrane-transport/issues/366
+      this.enabledProperty.value = anyButtonEnabled;
     } );
   }
 }
