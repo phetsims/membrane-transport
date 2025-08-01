@@ -90,6 +90,13 @@ export default class SodiumGlucoseCotransporter extends TransportProtein<SodiumG
                                                         solute.mode.slot === slot &&
                                                         solute.mode.site === 'right' );
 
+    /**
+     * Gracefully handle the case where a user removed a bound solute. In that case, we must go to a prior state
+     */
+    if ( this.stateProperty.value === 'openToOutsideAllParticlesBound' && ( !leftIon || !glucose || !rightIon ) ) {
+      this.stateProperty.value = 'openToOutsideAwaitingParticles';
+    }
+
     if ( leftIon && glucose && rightIon ) {
 
       if ( this.stateProperty.value === 'openToOutsideAwaitingParticles' ) {
