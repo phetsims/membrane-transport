@@ -63,19 +63,19 @@ export default class MembraneTransportHotkeyData {
 
   public static readonly soluteControl = {
     coarseIncrement: createHotkeyData(
-      [ 'arrowRight', 'arrowUp' ],
+      [ 'arrowRight', 'arrowUp', 'w', 'd' ],
       new StringProperty( 'Coarse increment solute' )
     ),
     coarseDecrement: createHotkeyData(
-      [ 'arrowLeft', 'arrowDown' ],
+      [ 'arrowLeft', 'arrowDown', 's', 'a' ],
       new StringProperty( 'Coarse decrement solute' )
     ),
     fineIncrement: createHotkeyData(
-      [ 'shift+arrowRight', 'shift+arrowUp' ],
+      [ 'shift+arrowRight', 'shift+arrowUp', 'shift+w', 'shift+d' ],
       new StringProperty( 'Fine increment solute' )
     ),
     fineDecrement: createHotkeyData(
-      [ 'shift+arrowLeft', 'shift+arrowDown' ],
+      [ 'shift+arrowLeft', 'shift+arrowDown', 'shift+s', 'shift+a' ],
       new StringProperty( 'Fine decrement solute' )
     )
   };
