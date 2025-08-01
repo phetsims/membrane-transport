@@ -225,6 +225,9 @@
         "noAddedSolutes": {
           "value": "no added solutes"
         },
+        "noAddedProteins": {
+          "value": "no added proteins"
+        },
         "soluteTypesOnOutside": {
           "value": "{ $count ->\n  [one] { $count } solute type on outside\n *[other] { $count } solute types on outside\n}"
         },

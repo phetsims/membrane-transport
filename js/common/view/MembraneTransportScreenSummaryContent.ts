@@ -13,8 +13,8 @@ import AccessibleListNode from '../../../../scenery-phet/js/accessibility/Access
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
-import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
+import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembraneTransportScreenSummaryContent extends ScreenSummaryContent {
 
@@ -39,6 +39,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
           count: model.insideSoluteTypesCountProperty
         } ),
         visibleProperty: model.hasAnySolutesProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.noAddedProteinsStringProperty,
+        visibleProperty: new DerivedProperty( [ model.transportProteinTypesCountProperty ], count => count === 0 )
       },
       {
         stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.transportProteins.createProperty( {

@@ -120,6 +120,7 @@ type StringsType = {
       'currentDetails': {
         'leadingParagraphStringProperty': LocalizedStringProperty;
         'noAddedSolutesStringProperty': LocalizedStringProperty;
+        'noAddedProteinsStringProperty': LocalizedStringProperty;
         'soluteTypesOnOutsideStringProperty': LocalizedStringProperty;
         'soluteTypesOnInsideStringProperty': LocalizedStringProperty;
         'transportProteinsStringProperty': LocalizedStringProperty;
