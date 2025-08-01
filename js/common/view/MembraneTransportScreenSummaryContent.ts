@@ -42,7 +42,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       },
       {
         stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.noAddedProteinsStringProperty,
-        visibleProperty: new DerivedProperty( [ model.transportProteinTypesCountProperty ], count => count === 0 )
+        visibleProperty: new DerivedProperty( [ model.transportProteinTypesCountProperty ], count => count === 0 && model.featureSet !== 'simpleDiffusion' )
       },
       {
         stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.transportProteins.createProperty( {
