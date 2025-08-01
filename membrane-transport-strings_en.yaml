@@ -143,8 +143,8 @@ a11y:
     accessibleHelpText: Choose solute for adding or removing with Solute Adjusters.
   # Only display help text when button is disabled
   eraseSolutesButton:
-    accessibleName:            Reset Solutes
-    accessibleContextResponse: Solutes cleared.
+    accessibleName:            Remove All Solutes
+    accessibleContextResponse: Solutes cleared. Add solutes to observe changes.
     accessibleHelpText:        Disabled when no solutes have been added.
   settings:
     crossingHighlightsCheckbox:
