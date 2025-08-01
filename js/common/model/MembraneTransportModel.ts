@@ -335,6 +335,7 @@ export default class MembraneTransportModel extends PhetioObject {
    * @param solute
    */
   public removeSolute( solute: Solute ): void {
+    solute.releaseFromInteraction( 0 );
     this.solutes.splice( this.solutes.indexOf( solute ), 1 );
     this.updateSoluteCounts();
   }

@@ -47,7 +47,6 @@ type SodiumPotassiumPumpState =
 // Delay for the protein to transition from bound and closed to bound and open, in seconds.
 const STATE_TRANSITION_INTERVAL = 0.5;
 
-// type SodiumPotassiumPumpSite = 'sodium1' | 'sodium2' | 'sodium3' | 'potassium1' | 'potassium2' | 'phosphate' | 'atp';
 const SodiumPotassiumPumpSiteValues = [ 'sodium1', 'sodium2', 'sodium3', 'potassium1', 'potassium2', 'phosphate', 'atp' ] as const;
 type SodiumPotassiumPumpSite = typeof SodiumPotassiumPumpSiteValues[number];
 
@@ -189,6 +188,26 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
     const sodium2 = this.getWaitingSolute( 'sodium2' );
     const sodium3 = this.getWaitingSolute( 'sodium3' );
 
+    const potassium1 = this.getWaitingSolute( 'potassium1' );
+    const potassium2 = this.getWaitingSolute( 'potassium2' );
+
+    const atp = this.getWaitingSolute( 'atp' );
+
+    /**
+     * Gracefully handle the case where a user removed a bound solute. In that case, we must go to a prior state.
+     * Note that we don't need special handling for the phosphate, since it can only be released by the eraser button
+     * which already resets the protein state.
+     */
+    if ( this.stateProperty.value === 'openToInsideSodiumBound' && ( !sodium1 || !sodium2 || !sodium3 ) ) {
+      this.stateProperty.value = 'openToInsideEmpty';
+    }
+    if ( this.stateProperty.value === 'openToInsideSodiumAndATPBound' && !atp ) {
+      this.stateProperty.value = 'openToInsideSodiumBound';
+    }
+    if ( this.stateProperty.value === 'openToOutsidePotassiumBound' && ( !potassium1 || !potassium2 ) ) {
+      this.stateProperty.value = 'openToOutsideAwaitingPotassium';
+    }
+
     if ( this.stateProperty.value === 'openToInsideEmpty' ) {
       if ( sodium1 && sodium2 && sodium3 ) {
         this.stateProperty.value = 'openToInsideSodiumBound';
@@ -211,7 +230,7 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
    * Splits the bound ATP into ADP and phosphate, updates the solutes and state accordingly.
    */
   public splitATP(): void {
-    const atp = this.getWaitingSolute( 'phosphate' );
+    const atp = this.getWaitingSolute( 'atp' );
 
     affirm( atp, 'There should be an ATP if we are trying to split it.' );
     const currentPosition = atp.position;

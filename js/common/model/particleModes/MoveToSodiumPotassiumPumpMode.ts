@@ -50,17 +50,24 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
   protected onTargetReached( particle: Particle, model: MembraneTransportModel, targetPosition: Vector2 ): void {
     const sodiumPotassiumPump = this.slot.transportProteinProperty.value as SodiumPotassiumPump;
 
-    if ( particle.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToInsideEmpty' ) {
+    if ( particle.type === 'sodiumIon' && sodiumPotassiumPump.stateProperty.value === 'openToInsideEmpty' &&
 
-      const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
+         ( this.site === 'sodium1' || this.site === 'sodium2' || this.site === 'sodium3' )
+
+    ) {
+
+      const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site );
       particle.mode = mode;
       particle.position.set( targetPosition );
 
       sodiumPotassiumPump.soluteBoundEmitter.emit( mode.site, particle.type );
     }
-    else if ( particle.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' ) {
+    else if ( particle.type === 'atp' && sodiumPotassiumPump.stateProperty.value === 'openToInsideSodiumBound' &&
 
-      const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site === 'atp' ? 'phosphate' : this.site );
+              ( this.site === 'atp' )
+    ) {
+
+      const mode = new WaitingInSodiumPotassiumPumpMode( this.slot, sodiumPotassiumPump, this.site );
       particle.mode = mode;
       sodiumPotassiumPump.stateProperty.value = 'openToInsideSodiumAndATPBound';
 

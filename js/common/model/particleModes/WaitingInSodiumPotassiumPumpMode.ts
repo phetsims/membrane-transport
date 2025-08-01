@@ -19,7 +19,7 @@ export default class WaitingInSodiumPotassiumPumpMode extends BaseParticleMode {
 
   public constructor( public readonly slot: Slot,
                       public readonly sodiumPotassiumPump: SodiumPotassiumPump,
-                      public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'phosphate' | 'potassium1' | 'potassium2' ) {
+                      public readonly site: 'sodium1' | 'sodium2' | 'sodium3' | 'atp' | 'phosphate' | 'potassium1' | 'potassium2' ) {
     super( 'waitingInSodiumPotassiumPump' );
   }
 
