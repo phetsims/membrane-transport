@@ -7,11 +7,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 
 export default class TransportProteinsAndLigandsKeyboardHelpSection extends KeyboardHelpSection {
@@ -30,10 +32,16 @@ export default class TransportProteinsAndLigandsKeyboardHelpSection extends Keyb
       pdomLabelStringProperty: MembraneTransportFluent.a11y.keyboardHelp.transportProteinsAndLigands.grabOrReleaseDescriptionStringProperty
     } );
 
-    const moveGrabbedItemRow = KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.observationWindowTransportProteinLayer.selection, {
-      labelStringProperty: MembraneTransportFluent.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemStringProperty,
-      pdomLabelStringProperty: MembraneTransportFluent.a11y.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemDescriptionStringProperty
-    } );
+    const moveGrabbedItemRow = KeyboardHelpSectionRow.labelWithIcon(
+      MembraneTransportFluent.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemStringProperty,
+      KeyboardHelpIconFactory.leftRightOrADKeysRowIcon(),
+      {
+        labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemDescriptionStringProperty,
+        labelOptions: {
+          lineWrap: MembraneTransportConstants.KEYBOARD_HELP_LABEL_LINE_WRAP
+        }
+      }
+    );
 
     const cancelGrabRow = KeyboardHelpSectionRow.fromHotkeyData( MembraneTransportHotkeyData.interactiveSlotsNode.cancelInteraction, {
       labelStringProperty: MembraneTransportFluent.keyboardHelp.transportProteinsAndLigands.cancelGrabStringProperty,
@@ -45,7 +53,9 @@ export default class TransportProteinsAndLigandsKeyboardHelpSection extends Keyb
       grabOrReleaseRow,
       moveGrabbedItemRow,
       cancelGrabRow
-    ] );
+    ], {
+      textMaxWidth: 300
+    } );
   }
 }
 

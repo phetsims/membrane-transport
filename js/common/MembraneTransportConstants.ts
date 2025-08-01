@@ -50,6 +50,9 @@ export default class MembraneTransportConstants {
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;
 
+  // Line wrap for rows of content in the keyboard help dialog.
+  public static readonly KEYBOARD_HELP_LABEL_LINE_WRAP = 250;
+
   // The artwork is sized correctly relatively to each other, but this determines the overall scale factor so that
   // they will have the correct model bounds. This applies to particles and transport proteins.
   public static readonly OVERALL_ARTWORK_SCALE = 0.1;
