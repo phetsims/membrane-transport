@@ -6,17 +6,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import PotassiumVoltageGatedChannel from '../model/proteins/PotassiumVoltageGatedChannel.js';
 import SodiumVoltageGatedChannel from '../model/proteins/SodiumVoltageGatedChannel.js';
-import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 
 export default class MembranePotentialDescriber {
   public static createListener(
     model: MembraneTransportModel,
-    view: MembraneTransportScreenView
+    view: Node // This is the MembraneTransportScreenView, because that is where we want to send the accessible response
   ): ( membranePotential: ( -70 ) | -50 | 30, oldMembranePotential: ( -70 ) | -50 | 30 ) => void {
 
     return ( membranePotential: ( -70 ) | -50 | 30, oldMembranePotential: ( -70 ) | -50 | 30 ): void => {
