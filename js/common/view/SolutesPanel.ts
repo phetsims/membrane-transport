@@ -36,7 +36,7 @@ export default class SolutesPanel extends Node {
 
       // The Voicing Hint Response for this reading block is the same as the accessibleHelpText
       // for the entire panel.
-      readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty
+      readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControls.accessibleHelpTextStringProperty
     } );
 
     const alignGroup = new AlignGroup();
