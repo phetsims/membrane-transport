@@ -1,8 +1,8 @@
 # Membrane Transport Simulation - Model Description
 
 This document describes the core concepts of the **Membrane Transport** simulation, designed for educators and students.
-The simulation models how particles move across a cell membrane via membrane proteins: open channels, gated channels (
-ligand-gated and voltage-gated), active transport pumps, and glucose transporters. Below, key terminology and biological
+The simulation models how particles move across a cell membrane via membrane proteins: open channels, gated channels
+(ligand-gated and voltage-gated), active transport pumps, and glucose transporters. Below, key terminology and biological
 concepts are defined clearly, and the simulation’s behaviors, including channel gating and diffusion, are explained.
 
 ## Terminology
