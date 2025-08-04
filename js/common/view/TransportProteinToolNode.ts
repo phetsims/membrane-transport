@@ -8,6 +8,7 @@
 
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -27,7 +28,7 @@ const richTextOptions: RichTextOptions = {
   maxHeight: 40
 };
 
-export default class TransportProteinToolNode extends VBox {
+export default class TransportProteinToolNode extends Voicing( VBox ) {
 
   // So we can return ChannelDragNodes to its exact location
   public readonly transportProteinNode: Node;
@@ -44,17 +45,19 @@ export default class TransportProteinToolNode extends VBox {
 
     // Scale down the icon further so there is enough space in the toolbox to fit all controls.
     transportProteinNode.scale( 0.5 );
+    transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
+      view.createFromMouseDrag( event, type, this );
+      this.voicingSpeakNameResponse();
+    } ) );
 
-    transportProteinNode.addInputListener( DragListener.createForwardingListener( event => view.createFromMouseDrag( event, type, this ) ) );
-
-    super( combineOptions<VBoxOptions>( {}, {
+    super( combineOptions<VBoxOptions & VoicingOptions>( {}, {
       spacing: -3,
       tagName: 'button',
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
-      accessibleName: accessibleName
+      accessibleName: accessibleName,
+      voicingNameResponse: accessibleName
     } ) );
-
 
     this.addInputListener( {
       click: () => view.forwardFromKeyboard( type, this )
