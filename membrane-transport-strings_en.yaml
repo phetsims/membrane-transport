@@ -328,10 +328,10 @@ a11y:
   soluteControl:
     outside:
       accessibleName:                "{ a11y.solutes.uppercaseName } Outside Cell"
-      accessibleHelpText:            Adjust chosen solute amount on outside with arrows keys or alternate keyboard shortcuts.
+      accessibleHelpText:            Adjust chosen solute amount on outside with arrow keys or alternate keyboard shortcuts.
     inside:
       accessibleName:                "{ a11y.solutes.uppercaseName } Inside Cell"
-      accessibleHelpText:            Adjust chosen solute amount on inside with arrows keys or alternate keyboard shortcuts.
+      accessibleHelpText:            Adjust chosen solute amount on inside with arrow keys or alternate keyboard shortcuts.
     voicingHintResponse:           Adjust chosen solute amount.
     accessibleRoleDescription:     solute adjuster
     accessibleHelpTextAllDisabled: Disabled, total chosen solute at max amount.
