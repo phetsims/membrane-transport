@@ -78,6 +78,9 @@ export default class SoluteControl extends Voicing( Panel ) {
       // https://github.com/phetsims/membrane-transport/issues/219
       voicingHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
 
+      // Pointer-based interaction works with the buttons, so we do not want to show a highlight around the entire control.
+      interactiveHighlightEnabled: false,
+
       // phet-io
       phetioVisiblePropertyInstrumented: false,
       phetioEnabledPropertyInstrumented: false
@@ -286,7 +289,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       incrementCoarseButton.enabledProperty,
       MembraneTransportFluent.a11y.soluteControl.accessibleHelpTextAllDisabledStringProperty,
       side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleHelpTextStringProperty :
-                          MembraneTransportFluent.a11y.soluteControl.outside.accessibleHelpTextStringProperty
+      MembraneTransportFluent.a11y.soluteControl.outside.accessibleHelpTextStringProperty
     ], ( decrementFineEnabled, decrementCoarseEnabled, incrementFineEnabled, incrementCoarseEnabled, allDisabledText, normalText ) => {
       const anyButtonEnabled = decrementFineEnabled || decrementCoarseEnabled || incrementFineEnabled || incrementCoarseEnabled;
       this.accessibleHelpText = anyButtonEnabled ? normalText : allDisabledText;
