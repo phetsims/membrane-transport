@@ -67,8 +67,8 @@ export default class SoluteControl extends Voicing( Panel ) {
       // pdom - extends AccessibleInteractiveOptions
       accessibleRoleDescription: MembraneTransportFluent.a11y.soluteControl.accessibleRoleDescriptionStringProperty,
       accessibleName: accessibleName,
-      accessibleHelpText: side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleHelpTextStringProperty :
-                          MembraneTransportFluent.a11y.soluteControl.outside.accessibleHelpTextStringProperty,
+
+      // accessibleHelpText filled in by a Multilink below
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_AFTER_CONTENT,
 
       // voicing
