@@ -17,15 +17,18 @@ export default class SoluteAdjustersKeyboardHelpSection extends KeyboardHelpSect
 
     const coarseAdjustmentRow = KeyboardHelpSectionRow.labelWithIcon(
       MembraneTransportFluent.keyboardHelp.soluteAdjusters.addOrRemoveALotStringProperty,
-      KeyboardHelpIconFactory.arrowOrWasdKeysRowIcon(),
+      KeyboardHelpIconFactory.leftRightOrADKeysRowIcon(),
       {
         labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.soluteAdjusters.addOrRemoveALotDescriptionStringProperty
       }
     );
 
-    const fineAdjustmentRow = KeyboardHelpSectionRow.labelWithIcon(
+    const fineAdjustmentRow = KeyboardHelpSectionRow.labelWithIconList(
       MembraneTransportFluent.keyboardHelp.soluteAdjusters.addOrRemoveALittleStringProperty,
-      KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.arrowOrWasdKeysRowIcon() ),
+      [
+        KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
+        KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.aDKeysRowIcon() )
+      ],
       {
         labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.soluteAdjusters.addOrRemoveALittleDescriptionStringProperty
       }

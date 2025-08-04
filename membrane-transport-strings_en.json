@@ -484,7 +484,7 @@
           "value": "{ a11y_solutes_uppercaseName } Outside Cell"
         },
         "accessibleHelpText": {
-          "value": "Adjust chosen solute amount on outside with arrows keys or alternate keyboard shortcuts."
+          "value": "Adjust chosen solute amount on outside with arrow keys or alternate keyboard shortcuts."
         }
       },
       "inside": {
@@ -492,7 +492,7 @@
           "value": "{ a11y_solutes_uppercaseName } Inside Cell"
         },
         "accessibleHelpText": {
-          "value": "Adjust chosen solute amount on inside with arrows keys or alternate keyboard shortcuts."
+          "value": "Adjust chosen solute amount on inside with arrow keys or alternate keyboard shortcuts."
         }
       },
       "voicingHintResponse": {
@@ -643,10 +643,10 @@
     "keyboardHelp": {
       "soluteAdjusters": {
         "addOrRemoveALotDescription": {
-          "value": "Adjust amount with Left and Right arrow keys."
+          "value": "Adjust amount with A and D letter keys or Left and Right arrow keys."
         },
         "addOrRemoveALittleDescription": {
-          "value": "Adjust in smaller amounts with Shift plus Left and Right arrow keys."
+          "value": "Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right arrow keys."
         }
       },
       "transportProteinsAndLigands": {

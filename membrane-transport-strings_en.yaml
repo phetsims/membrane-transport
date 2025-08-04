@@ -564,8 +564,8 @@ a11y:
   keyboardHelp:
     soluteAdjusters:
       # Description strings for PDOM
-      addOrRemoveALotDescription:    Adjust amount with Left and Right arrow keys.
-      addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus Left and Right arrow keys.
+      addOrRemoveALotDescription:    Adjust amount with A and D letter keys or Left and Right arrow keys.
+      addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right arrow keys.
     transportProteinsAndLigands:
       # Description strings for PDOM
       navigateDescription:        Navigate possible proteins or ligands with Tab key.
