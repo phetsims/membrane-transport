@@ -13,6 +13,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
+import ReadingBlock from '../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -121,7 +122,14 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     // For layout, not just for debugging
-    const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, { fill: 'white', opacity: 0.2, stroke: 'black', lineWidth: 1 } );
+    const layoutBox = new ( ReadingBlock( Rectangle ) )( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, {
+      fill: 'white',
+      opacity: 0.2,
+      stroke: 'black',
+      lineWidth: 1
+    } );
+
+    layoutBox.readingBlockNameResponse = accessibleNameProperty;
 
     const icon = createParticleNode( soluteType );
 
