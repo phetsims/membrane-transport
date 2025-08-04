@@ -51,7 +51,7 @@ preferencesDialog:
     description: Remove wiggling animation of phospholipid bilayer forming the cell membrane.
   glucoseMetabolism:
     label:       Glucose Metabolism
-    description: Fade and remove glucose solutes to simulate conversion for cellular metabolism.
+    description: Fade and remove glucose solutes inside cell to simulate conversion for cellular metabolism.
   audio:
     sounds:
       stereoCrossingSounds:

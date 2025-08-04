@@ -91,7 +91,7 @@
         "value": "Glucose Metabolism"
       },
       "description": {
-        "value": "Fade and remove glucose solutes to simulate conversion for cellular metabolism."
+        "value": "Fade and remove glucose solutes inside cell to simulate conversion for cellular metabolism."
       }
     },
     "audio": {
