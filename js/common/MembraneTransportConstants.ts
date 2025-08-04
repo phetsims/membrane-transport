@@ -133,9 +133,9 @@ export default class MembraneTransportConstants {
       sodiumSite2: new Vector2( 410, 531 ),
       sodiumSite3: new Vector2( 252, 450.5 ),
 
-      atpSiteOpenToInside: new Vector2( 406, 1220 ),
+      atpSiteOpenToInside: new Vector2( 398, 1212 ),
 
-      phosphateSite: new Vector2( 323, 810 ),
+      phosphateSite: new Vector2( 316, 813 ),
       phosphateSiteOpenToInside: new Vector2( 493, 783 ),
 
       potassiumSite1: new Vector2( 209, 339.5 ),
