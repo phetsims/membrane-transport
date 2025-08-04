@@ -543,17 +543,17 @@ export default class MembraneTransportDescriber {
 
     if ( anyActiveTransport ) {
       if ( sodiumPumped && potassiumPumped ) {
-        descriptionParts.push( 'sodium pumped outside and potassium pumped inside' );
+        descriptionParts.push( 'sodium pumped out, potassium pumped in' );
       }
       else if ( sodiumPumped ) {
-        descriptionParts.push( 'sodium pumped outside' );
+        descriptionParts.push( 'sodium pumped out' );
       }
       else if ( potassiumPumped ) {
-        descriptionParts.push( 'potassium pumped inside' );
+        descriptionParts.push( 'potassium pumped in' );
       }
 
       if ( cotransported ) {
-        descriptionParts.push( 'sodium and glucose shuttled inside' );
+        descriptionParts.push( 'sodium and glucose shuttled in' );
       }
     }
 

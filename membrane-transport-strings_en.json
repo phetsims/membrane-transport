@@ -194,7 +194,7 @@
     "screenSummary": {
       "playArea": {
         "intro": {
-          "value": "An observation window zooms in on a cross-section of a cell's membrane.\n  The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet\n  that separates fluids inside and outside of cell. When added to outside or inside,\n  solute particles are suspended in fluid and randomly move with Brownian motion."
+          "value": "An observation window zooms in on a very small cross-section of a cell's membrane.\n  The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet\n  that separates fluids inside and outside of cell. When added to outside or inside,\n  solute particles are suspended in fluid and randomly move with Brownian motion."
         },
         "proteins": {
           "value": "Transport proteins of different types can be added directly to membrane."
@@ -452,7 +452,7 @@
         "value": "{ $soluteType ->\n  [oxygen]        Oxygen\n  [carbonDioxide] Carbon Dioxide\n  [sodiumIon]     Sodium\n  [potassiumIon]  Potassium\n  [glucose]       Glucose\n *[atp]           ATP\n}"
       },
       "amountComparison": {
-        "value": "{ $amount ->\n  *[none]  none\n  [equal] amounts exactly equal outside and inside\n  [allOutside] all outside, none inside\n  [allInside] all inside, none outside\n  [manyManyMoreOutside] many many more outside than inside\n  [manyMoreOutside] many more outside than inside\n  [aboutTwiceAsManyOutside] about twice as many outside as inside\n  [aLotMoreOutside] a lot more outside than inside\n  [someMoreOutside] some more outside than inside\n  [littleBitMoreOutside] a little bit more outside than inside\n  [roughlyEqualOutside] roughly equal amounts inside and outside\n  [manyManyMoreInside] many many more inside than outside\n  [manyMoreInside] many more inside than outside\n  [aboutTwiceAsManyInside] about twice as many inside as outside\n  [aLotMoreInside] a lot more inside than outside\n  [someMoreInside] some more inside than outside\n  [littleBitMoreInside] a little bit more inside than outside\n  [roughlyEqualInside] roughly equal amounts inside and outside\n}"
+        "value": "{ $amount ->\n  *[none]  none\n  [equal] amounts exactly equal outside and inside\n  [allOutside] all outside, none inside\n  [allInside] all inside, none outside\n  [manyManyMoreOutside] way more outside than inside\n  [manyMoreOutside] many more outside than inside\n  [aboutTwiceAsManyOutside] about twice as many outside as inside\n  [aLotMoreOutside] a lot more outside than inside\n  [someMoreOutside] some more outside than inside\n  [littleBitMoreOutside] a little bit more outside than inside\n  [roughlyEqualOutside] roughly equal amounts inside and outside\n  [manyManyMoreInside] way more inside than outside\n  [manyMoreInside] many more inside than outside\n  [aboutTwiceAsManyInside] about twice as many inside as outside\n  [aLotMoreInside] a lot more inside than outside\n  [someMoreInside] some more inside than outside\n  [littleBitMoreInside] a little bit more inside than outside\n  [roughlyEqualInside] roughly equal amounts inside and outside\n}"
       },
       "averageCrossingDirection": {
         "value": "{ $direction ->\n  [toOutside] to outside\n  [mostlyToOutside] mostly to outside\n  [inBothDirections] in both directions\n  [mostlyToInside] mostly to inside\n  [toInside] to inside\n  *[none] none recently\n}"

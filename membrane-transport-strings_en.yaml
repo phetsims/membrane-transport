@@ -99,7 +99,7 @@ a11y:
   screenSummary:
     playArea:
       intro:       |-
-                   An observation window zooms in on a cross-section of a cell's membrane.
+                   An observation window zooms in on a very small cross-section of a cell's membrane.
                      The membrane consists of a wiggling phospholipid bilayer, a double-layered sheet
                      that separates fluids inside and outside of cell. When added to outside or inside,
                      solute particles are suspended in fluid and randomly move with Brownian motion.
@@ -288,14 +288,14 @@ a11y:
                                 [equal] amounts exactly equal outside and inside
                                 [allOutside] all outside, none inside
                                 [allInside] all inside, none outside
-                                [manyManyMoreOutside] many many more outside than inside
+                                [manyManyMoreOutside] way more outside than inside
                                 [manyMoreOutside] many more outside than inside
                                 [aboutTwiceAsManyOutside] about twice as many outside as inside
                                 [aLotMoreOutside] a lot more outside than inside
                                 [someMoreOutside] some more outside than inside
                                 [littleBitMoreOutside] a little bit more outside than inside
                                 [roughlyEqualOutside] roughly equal amounts inside and outside
-                                [manyManyMoreInside] many many more inside than outside
+                                [manyManyMoreInside] way more inside than outside
                                 [manyMoreInside] many more inside than outside
                                 [aboutTwiceAsManyInside] about twice as many inside as outside
                                 [aLotMoreInside] a lot more inside than outside
