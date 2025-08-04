@@ -91,7 +91,7 @@ and behavior of solutes, ligands, and transport proteins within the membrane.
   * `Ligand` instances are interactive (draggable by mouse/keyboard) and represent signaling molecules. They are
     pre-allocated at startup (`MembraneTransportConstants.LIGAND_COUNT`) and their active state is controlled by
     `areLigandsAddedProperty`.
-  * Each `Particle` has a finite state machine (`mode` Property) that dictates its current behavior (e.g., random walk,
+  * Each `Particle` has a finite state machine (`mode` property) that dictates its current behavior (e.g., random walk,
     passing through a protein). See `js/common/model/Particle.ts` and `js/common/model/particleModes/`.
 * **Transport Proteins (`TransportProtein`):**
   * Represent membrane channels and pumps (e.g., Ligand-Gated Channel, Voltage-Gated Channel, Na+/K+ Pump, Glucose
