@@ -50,7 +50,9 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       fill: 'white',
       expandedDefaultValue: true,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
-      buttonXMargin: 8
+      buttonXMargin: 8,
+
+      voicingHintResponseCollapsed: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.voicingHintResponseCollapsedStringProperty
     }, providedOptions );
 
     const contentWidth = 720;

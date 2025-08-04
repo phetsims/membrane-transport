@@ -358,6 +358,7 @@ a11y:
 
   soluteConcentrationsAccordionBox:
     descriptionContent: A dynamic barchart for each solute captures amounts on either side of membrane and emphasizes recent crossings with visual highlights and sounds. If needed, pause sim to freeze details for reading.
+    voicingHintResponseCollapsed: Expand to explore changing solute concentrations.
 
     barChart:
 
