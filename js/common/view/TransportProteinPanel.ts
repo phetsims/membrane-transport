@@ -86,6 +86,7 @@ export default class TransportProteinPanel extends Panel {
 
             // Setting this removes it from the tab focus order
             readingBlockTagName: null,
+            readingBlockHintResponse: config.accessibleHelpTextStringProperty,
 
             // Setting this removes an unnecessary duplicate from the PDOM
             accessibleParagraph: null
