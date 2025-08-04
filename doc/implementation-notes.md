@@ -121,11 +121,11 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
   membrane.
 * **`TransportProteinDragNode`:** A transient `Node` created when a transport protein is dragged from the toolbox or
   moved on the membrane. It handles the visual representation and interaction during dragging.
-* ** `ObservationWindowTransportProteinLayer`:** The layer for interactive transport proteins, which implements
+* **`ObservationWindowTransportProteinLayer`:** The layer for interactive transport proteins, which implements
   selecting a protein to grab with alternative input.
-* ** `InteractiveSlotsNode`:** Implements sorting transport proteins with alternative input, and works in tandem with
+* **`InteractiveSlotsNode`:** Implements sorting transport proteins with alternative input, and works in tandem with
   `ObservationWindowTransportProteinLayer` to manage the interaction of transport proteins in slots.
-* ** `SoluteCrossedMembraneEvent`:** An event that is emitted when a solute crosses the membrane. This is an important
+* **`SoluteCrossedMembraneEvent`:** An event that is emitted when a solute crosses the membrane. This is an important
   part of the Interactive Description implementation, and allows us to describe simulation behavior over time. See
   `MembraneTransportDescriber` for more details.
 
