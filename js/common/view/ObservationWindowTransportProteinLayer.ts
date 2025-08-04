@@ -271,7 +271,10 @@ export default class ObservationWindowTransportProteinLayer extends Node {
               transportProteinNode.addAccessibleObjectResponse(
                 MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.format( {
                   state: transportProtein.stateProperty
-                } )
+                } ),
+
+                // This response should queue after the 'grab'/'release' responses that may trigger during interaction.
+                'queue'
               );
             }
 
