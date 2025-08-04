@@ -5,7 +5,7 @@ The simulation models how particles move across a cell membrane via membrane pro
 ligand-gated and voltage-gated), active transport pumps, and glucose transporters. Below, key terminology and biological
 concepts are defined clearly, and the simulation’s behaviors, including channel gating and diffusion, are explained.
 
-**Terminology**
+## Terminology
 
 **Cell Membrane:** A semipermeable barrier (phospholipid bilayer) separating a cell’s interior from its exterior
 environment. In the simulation, it’s depicted as a barrier dividing two fluid regions (inside/outside). Most substances
@@ -37,7 +37,7 @@ easily, to cross the membrane passively.
 **Equilibrium:** A state where particle concentrations are equal on both membrane sides, resulting in no net diffusion.
 Particles still move randomly across the membrane, but overall concentrations remain stable.
 
-**Core Concepts Overview**
+## Core Concepts Overview
 
 The simulation emphasizes the cell membrane’s **selective permeability**, showing how cells use proteins (channels and
 pumps) to control transport. Without these proteins, most particles (ions, large polar molecules) cannot cross the
@@ -95,7 +95,7 @@ The simulation models channels as either fully open or fully closed, simplifying
 
 Particles randomly diffuse, visually representing the microscopic randomness driving diffusion.
 
-**Expected Learning Outcomes**
+## Expected Learning Outcomes
 
 Students using the simulation should be able to:
 
