@@ -60,11 +60,11 @@ Exceptions include:
 * `TransportProteinDragNode` instances are transient, created when a transport protein is dragged and disposed of when
   dropped.
 
-**Listeners**: As is common in PhET simulations, many listeners (`link`, `addListener`) are attached to properties and
+**Listeners**: As is common in PhET simulations, many listeners (`link`, `addListener`) are attached to Properties and
 emitters. For objects that exist for the lifetime of the simulation, explicit `unlink` or `removeListener` calls are
 often not strictly necessary, but good practice dictates managing them for dynamic objects or when an object's lifecycle
 is shorter than the simulation's. The `resetEmitter` in `MembraneTransportModel` and `MembraneTransportScreenView`
-is used to reset various properties and components to their initial states.
+is used to reset various Properties and components to their initial states.
 
 **dispose**: Pertinent classes have `dispose` methods, often inherited. Instances that exist for the lifetime of the sim
 are typically not intended to be disposed.
@@ -91,7 +91,7 @@ and behavior of solutes, ligands, and transport proteins within the membrane.
   * `Ligand` instances are interactive (draggable by mouse/keyboard) and represent signaling molecules. They are
     pre-allocated at startup (`MembraneTransportConstants.LIGAND_COUNT`) and their active state is controlled by
     `areLigandsAddedProperty`.
-  * Each `Particle` has a finite state machine (`mode` property) that dictates its current behavior (e.g., random walk,
+  * Each `Particle` has a finite state machine (`mode` Property) that dictates its current behavior (e.g., random walk,
     passing through a protein). See `js/common/model/Particle.ts` and `js/common/model/particleModes/`.
 * **Transport Proteins (`TransportProtein`):**
   * Represent membrane channels and pumps (e.g., Ligand-Gated Channel, Voltage-Gated Channel, Na+/K+ Pump, Glucose
