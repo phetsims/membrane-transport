@@ -1,4 +1,4 @@
-**Membrane Transport Simulation - Model Description**
+# Membrane Transport Simulation - Model Description
 
 This document describes the core concepts of the **Membrane Transport** simulation, designed for educators and students.
 The simulation models how particles move across a cell membrane via membrane proteins: open channels, gated channels (
