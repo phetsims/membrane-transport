@@ -680,6 +680,61 @@
           "value": "Delete grabbed protein with Delete key."
         }
       }
+    },
+    "membraneTransportDescriber": {
+      "particleCrossing": {
+        "value": "{ a11y_solutes_briefName } crossing { $direction ->\n  [inward] in\n *[outward] out\n}"
+      },
+      "hints": {
+        "ligandGatedChannelWithoutLigands": {
+          "value": "Ligand-gated protein closed. Look for ligands"
+        },
+        "voltageGatedChannelAtRestingPotential": {
+          "value": "Voltage-gated protein closed. Check membrane potential"
+        },
+        "pumpAwaitingPhosphateWithoutATP": {
+          "value": "Pump needs phosphate source"
+        },
+        "sodiumGlucoseCotransporterWithLowOutsideSodium": {
+          "value": "Cotransporter not binding sodium. Check outside sodium levels"
+        }
+      },
+      "commaSeparator": {
+        "value": ", "
+      },
+      "andSeparator": {
+        "value": " and "
+      },
+      "sentencePattern": {
+        "value": "{ $content }."
+      },
+      "crossingSteadilyInBothDirections": {
+        "value": "{ a11y_solutes_briefName } crossing steadily in both directions, each side roughly equal"
+      },
+      "crossingChannelsWithDirection": {
+        "value": "{ a11y_solutes_briefName } crossing channels, { a11y_solutes_averageCrossingDirection }"
+      },
+      "crossingMembraneWithDirection": {
+        "value": "{ a11y_solutes_briefName } crossing membrane, { a11y_solutes_averageCrossingDirection }"
+      },
+      "multipleSolutesCrossing": {
+        "value": "{ $soluteNames }, crossing"
+      },
+      "soluteComparisonWithName": {
+        "value": "{ a11y_solutes_briefName }, { a11y_solutes_amountComparison }"
+      },
+      "sodiumPumpedOutside": {
+        "value": "sodium pumped outside"
+      },
+      "potassiumPumpedInside": {
+        "value": "potassium pumped inside"
+      },
+      "sodiumPumpedOutsideAndPotassiumPumpedInside": {
+        "value": "sodium pumped outside and potassium pumped inside"
+      },
+      "sodiumAndGlucoseShuttledInside": {
+        "value": "sodium and glucose shuttled inside"
+      }
     }
   }
 }

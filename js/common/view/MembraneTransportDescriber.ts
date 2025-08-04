@@ -113,14 +113,10 @@ export default class MembraneTransportDescriber {
 
         // These protein types already have specialized messages based on their states
         if ( soluteCrossedMembraneEvent.transportProteinType !== 'sodiumPotassiumPump' && soluteCrossedMembraneEvent.transportProteinType !== 'sodiumGlucoseCotransporter' ) {
-
-          // TODO: Needs i18n, see https://github.com/phetsims/membrane-transport/issues/348
-          const briefName = MembraneTransportFluent.a11y.solutes.briefName.format( {
-            soluteType: soluteCrossedMembraneEvent.solute.soluteType as Exclude<SoluteType, 'adp' | 'phosphate'>
+          const message = MembraneTransportFluent.a11y.membraneTransportDescriber.particleCrossing.format( {
+            soluteType: soluteCrossedMembraneEvent.solute.soluteType as Exclude<SoluteType, 'adp' | 'phosphate'>,
+            direction: soluteCrossedMembraneEvent.direction
           } );
-          const directionString = soluteCrossedMembraneEvent.direction === 'inward' ? 'in' : 'out';
-
-          const message = `${briefName} crossing ${directionString}`;
           this.contextResponseNode.addAccessibleContextResponse( message );
         }
       }
@@ -301,24 +297,27 @@ export default class MembraneTransportDescriber {
     const hintDescriptions = [];
 
     if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasLigandGatedChannelWithoutLigands ) ) {
-      hintDescriptions.push( 'Ligand-gated protein closed. Look for ligands' );
+      hintDescriptions.push( MembraneTransportFluent.a11y.membraneTransportDescriber.hints.ligandGatedChannelWithoutLigandsStringProperty.value );
       hintStates.hasLigandGatedChannelWithoutLigands.provided = true;
     }
     if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasVoltageGatedChannelAtRestingPotential ) ) {
-      hintDescriptions.push( 'Voltage-gated protein closed. Check membrane potential' );
+      hintDescriptions.push( MembraneTransportFluent.a11y.membraneTransportDescriber.hints.voltageGatedChannelAtRestingPotentialStringProperty.value );
       hintStates.hasVoltageGatedChannelAtRestingPotential.provided = true;
     }
     if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasPumpAwaitingPhosphateWithoutATP ) ) {
-      hintDescriptions.push( 'Pump needs phosphate source' );
+      hintDescriptions.push( MembraneTransportFluent.a11y.membraneTransportDescriber.hints.pumpAwaitingPhosphateWithoutATPStringProperty.value );
       hintStates.hasPumpAwaitingPhosphateWithoutATP.provided = true;
     }
     if ( MembraneTransportDescriber.doesHintStateRequireHint( hintStates.hasSodiumGlucoseCotransporterWithLowOutsideSodium ) ) {
-      hintDescriptions.push( 'Cotransporter not binding sodium. Check outside sodium levels' );
+      hintDescriptions.push( MembraneTransportFluent.a11y.membraneTransportDescriber.hints.sodiumGlucoseCotransporterWithLowOutsideSodiumStringProperty.value );
       hintStates.hasSodiumGlucoseCotransporterWithLowOutsideSodium.provided = true;
     }
 
     // Combine contents
-    return hintDescriptions.join( ', ' );
+    const hints = hintDescriptions.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+    return MembraneTransportFluent.a11y.membraneTransportDescriber.sentencePattern.format( {
+      content: hints
+    } );
   }
 
   /**
@@ -517,8 +516,10 @@ export default class MembraneTransportDescriber {
     if ( facilitatedSolutesThatWeShouldDescribe.length === 1 && simpleDiffusersThatWeShouldDescribe.length === 0 ) {
       const facilitatedSolute = facilitatedSolutesThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ facilitatedSolute ].value;
-      const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
-      descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: facilitatedSolute } )} crossing channels, ${directionDescriptionString}` );
+      descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.crossingChannelsWithDirection.format( {
+        soluteType: facilitatedSolute,
+        direction: directionDescriptor
+      } ) );
     }
     else if ( simpleDiffusersThatWeShouldDescribe.length === 1 && facilitatedSolutesThatWeShouldDescribe.length === 0 ) {
 
@@ -526,8 +527,10 @@ export default class MembraneTransportDescriber {
       // we include a more sophisticated description of it
       const soluteType = simpleDiffusersThatWeShouldDescribe[ 0 ];
       const directionDescriptor = this.averageSoluteCrossingDirectionProperties[ soluteType ].value;
-      const directionDescriptionString = MembraneTransportFluent.a11y.solutes.averageCrossingDirection.format( { direction: directionDescriptor } );
-      descriptionParts.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing membrane, ${directionDescriptionString}` );
+      descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.crossingMembraneWithDirection.format( {
+        soluteType: soluteType,
+        direction: directionDescriptor
+      } ) );
     }
     else {
 
@@ -536,24 +539,26 @@ export default class MembraneTransportDescriber {
       if ( solutesThatWeShouldDescribe.length > 0 ) {
         const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.solutes.briefName.format( {
           soluteType: soluteType
-        } ) ).join( ', ' );
-        descriptionParts.push( `${soluteNames}, crossing` );
+        } ) ).join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+        descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.multipleSolutesCrossing.format( {
+          soluteNames: soluteNames
+        } ) );
       }
     }
 
     if ( anyActiveTransport ) {
       if ( sodiumPumped && potassiumPumped ) {
-        descriptionParts.push( 'sodium pumped out, potassium pumped in' );
+        descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty.value );
       }
       else if ( sodiumPumped ) {
-        descriptionParts.push( 'sodium pumped out' );
+        descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.sodiumPumpedOutsideStringProperty.value );
       }
       else if ( potassiumPumped ) {
-        descriptionParts.push( 'potassium pumped in' );
+        descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.potassiumPumpedInsideStringProperty.value );
       }
 
       if ( cotransported ) {
-        descriptionParts.push( 'sodium and glucose shuttled in' );
+        descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.sodiumAndGlucoseShuttledInsideStringProperty.value );
       }
     }
 
@@ -561,7 +566,7 @@ export default class MembraneTransportDescriber {
 
     // First, Combine the event descriptions.
     if ( descriptionParts.length > 0 ) {
-      const firstPart = descriptionParts.join( ' and ' );
+      const firstPart = descriptionParts.join( MembraneTransportFluent.a11y.membraneTransportDescriber.andSeparatorStringProperty.value );
       const capitalized = firstPart.charAt( 0 ).toUpperCase() + firstPart.slice( 1 );
       responses.push( capitalized );
     }
@@ -610,10 +615,12 @@ export default class MembraneTransportDescriber {
     } );
 
     // Join all fragments together.
-    const statement = responses.join( ', ' );
+    const statement = responses.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
 
     // Add a period at the end of the statement.
-    return statement ? `${statement}.` : '';
+    return statement ? MembraneTransportFluent.a11y.membraneTransportDescriber.sentencePattern.format( {
+      content: statement
+    } ) : '';
   }
 
   /**
@@ -643,18 +650,23 @@ export default class MembraneTransportDescriber {
 
     solutesThatCrossed.forEach( soluteType => {
       if ( this.shouldDescribeComparisons( soluteType ) && soluteType !== 'adp' && soluteType !== 'phosphate' ) {
-        const soluteName = MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } );
         const comparisonString = this.getSoluteComparisonString( soluteType );
 
         if ( includeSoluteName ) {
-          changedComparisons.push( `${soluteName}, ${comparisonString}` );
+          changedComparisons.push( MembraneTransportFluent.a11y.membraneTransportDescriber.soluteComparisonWithName.format( {
+            soluteType: soluteType,
+            amount: MembraneTransportDescriber.getSoluteComparisonDescriptor(
+              this.model.outsideSoluteCountProperties[ soluteType ].value,
+              this.model.insideSoluteCountProperties[ soluteType ].value
+            )
+          } ) );
         }
         else {
           changedComparisons.push( comparisonString );
         }
       }
     } );
-    return changedComparisons.join( ', ' );
+    return changedComparisons.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
   }
 
   private getEnteredSteadyStateIfChanged( solutesThatCrossed: SoluteType[] ): string {
@@ -668,11 +680,11 @@ export default class MembraneTransportDescriber {
       if ( isSteadyState && isRoughlyEqual && !this.previousSteadyStateMap[ soluteType ] ) {
 
         affirm( soluteType !== 'adp' && soluteType !== 'phosphate', 'adp cant cross the membrane, so it should not be described' );
-        changedSteadyStates.push( `${MembraneTransportFluent.a11y.solutes.briefName.format( { soluteType: soluteType } )} crossing steadily in both directions, each side roughly equal` );
+        changedSteadyStates.push( MembraneTransportFluent.a11y.membraneTransportDescriber.crossingSteadilyInBothDirections.format( { soluteType: soluteType } ) );
       }
     } );
 
-    return changedSteadyStates.join( ', ' );
+    return changedSteadyStates.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
   }
 
   /**

@@ -315,6 +315,27 @@ type StringsType = {
         'releaseProteinDescriptionStringProperty': LocalizedStringProperty;
         'deleteProteinDescriptionStringProperty': LocalizedStringProperty;
       }
+    };
+    'membraneTransportDescriber': {
+      'particleCrossingStringProperty': LocalizedStringProperty;
+      'hints': {
+        'ligandGatedChannelWithoutLigandsStringProperty': LocalizedStringProperty;
+        'voltageGatedChannelAtRestingPotentialStringProperty': LocalizedStringProperty;
+        'pumpAwaitingPhosphateWithoutATPStringProperty': LocalizedStringProperty;
+        'sodiumGlucoseCotransporterWithLowOutsideSodiumStringProperty': LocalizedStringProperty;
+      };
+      'commaSeparatorStringProperty': LocalizedStringProperty;
+      'andSeparatorStringProperty': LocalizedStringProperty;
+      'sentencePatternStringProperty': LocalizedStringProperty;
+      'crossingSteadilyInBothDirectionsStringProperty': LocalizedStringProperty;
+      'crossingChannelsWithDirectionStringProperty': LocalizedStringProperty;
+      'crossingMembraneWithDirectionStringProperty': LocalizedStringProperty;
+      'multipleSolutesCrossingStringProperty': LocalizedStringProperty;
+      'soluteComparisonWithNameStringProperty': LocalizedStringProperty;
+      'sodiumPumpedOutsideStringProperty': LocalizedStringProperty;
+      'potassiumPumpedInsideStringProperty': LocalizedStringProperty;
+      'sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty': LocalizedStringProperty;
+      'sodiumAndGlucoseShuttledInsideStringProperty': LocalizedStringProperty;
     }
   }
 };
