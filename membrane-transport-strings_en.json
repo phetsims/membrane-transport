@@ -643,10 +643,10 @@
     "keyboardHelp": {
       "soluteAdjusters": {
         "addOrRemoveALotDescription": {
-          "value": "Adjust amount with A and D letter keys or Left and Right arrow keys."
+          "value": "Adjust amount with A and D letter keys or Left and Right Arrow keys."
         },
         "addOrRemoveALittleDescription": {
-          "value": "Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right arrow keys."
+          "value": "Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right Arrow keys."
         }
       },
       "transportProteinsAndLigands": {
