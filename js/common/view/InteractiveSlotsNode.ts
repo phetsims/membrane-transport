@@ -35,7 +35,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
 import { AriaLive } from '../../../../utterance-queue/js/AriaLiveAnnouncer.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
-import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
+import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -551,7 +551,7 @@ export default class InteractiveSlotsNode extends Node {
     this.grabbedNode = this.view.createTemporaryProteinNode( type, slot, toolNode );
 
     // Alert 'grabbed' after so that it will interrupt the focus change read above.
-    this.alert( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
+    this.alertGrabRelease( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
 
     this.grabbedNode.grab( () => {
 
@@ -598,16 +598,21 @@ export default class InteractiveSlotsNode extends Node {
     }
 
     affirm( responseString !== null, 'We should have a response string to say.' );
-    this.alert( this.grabReleaseUtterance, responseString );
+    this.alertGrabRelease( this.grabReleaseUtterance, responseString );
   }
 
   /**
    * A convenience method to alert an accessible response for both Interactive Description and Voicing.
    */
-  private alert( utterance: Utterance, response: AlertableNoUtterance ): void {
+  private alertGrabRelease( utterance: Utterance, response: TReadOnlyProperty<string> | string ): void {
     utterance.alert = response;
     this.addAccessibleResponse( utterance );
-    voicingUtteranceQueue.addToBack( utterance );
+
+    const responsePacket = new ResponsePacket( {
+      objectResponse: response
+    } );
+
+    voicingUtteranceQueue.addToBack( utterance, responsePacket );
   }
 
   /**
