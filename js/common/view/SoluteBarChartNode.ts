@@ -13,10 +13,8 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
-import ReadingBlock from '../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
@@ -31,12 +29,13 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteType } from '../model/SoluteType.js';
 import MembraneTransportDescriber, { AverageCrossingDirectionDescriptor } from './MembraneTransportDescriber.js';
 import createParticleNode from './particles/createParticleNode.js';
+import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
 const BOX_HEIGHT = 92;
 
-export default class SoluteBarChartNode extends Node {
+export default class SoluteBarChartNode extends ReadingBlockNode {
   public readonly stepEmitter = new Emitter<[ number ]>( {
     parameters: [ { valueType: 'number' } ]
   } );
@@ -111,9 +110,10 @@ export default class SoluteBarChartNode extends Node {
       // Gracefully prevent anything from being drawn outside the box
       clipArea: Shape.rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT ),
 
-      // pdom
-      tagName: 'li',
+      // pdom/voicing
+      readingBlockDisabledTagName: 'li',
       accessibleName: accessibleNameProperty,
+      readingBlockNameResponse: accessibleNameProperty,
 
       // phet-io
       visiblePropertyOptions: {
@@ -122,14 +122,12 @@ export default class SoluteBarChartNode extends Node {
     } );
 
     // For layout, not just for debugging
-    const layoutBox = new ( ReadingBlock( Rectangle ) )( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, {
+    const layoutBox = new Rectangle( 0, 0, BOX_WIDTH, BOX_HEIGHT, 4, 4, {
       fill: 'white',
       opacity: 0.2,
       stroke: 'black',
       lineWidth: 1
     } );
-
-    layoutBox.readingBlockNameResponse = accessibleNameProperty;
 
     const icon = createParticleNode( soluteType );
 
