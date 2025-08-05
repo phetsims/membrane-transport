@@ -18,17 +18,21 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
+import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetHasProteins } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
@@ -72,6 +76,58 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   ) {
     super();
 
+    const accessibleHelpTextProperty = new DerivedProperty( [
+
+      // model Properties
+      model.hasAnySolutesProperty,
+      model.transportProteinCountProperty,
+
+      // string Properties
+      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesProteinsHiddenStringProperty,
+      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesProteinsHiddenStringProperty,
+      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesOrProteins.createProperty( {
+        membranePotential: model.membranePotentialProperty
+      } ),
+      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesNoProteins.createProperty( {
+        membranePotential: model.membranePotentialProperty
+      } ),
+      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithProteinsNoSolutes.createProperty( {
+        membranePotential: model.membranePotentialProperty,
+        typeCount: model.transportProteinTypesCountProperty
+      } ),
+      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesAndProteins.createProperty( {
+        membranePotential: model.membranePotentialProperty,
+        typeCount: model.transportProteinTypesCountProperty
+      } )
+    ], (
+      hasAnySolutes,
+      transportProteinCount,
+      noSolutesProteinsHiddenString,
+      withSolutesProteinsHiddenString,
+      noSolutesOrProteinsString,
+      withSolutesNoProteinsString,
+      withProteinsNoSolutesString,
+      withSolutesAndProteinsString
+    ) => {
+      if ( !getFeatureSetHasProteins( model.featureSet ) && !hasAnySolutes ) {
+        return noSolutesProteinsHiddenString;
+      }
+      else if ( !getFeatureSetHasProteins( model.featureSet ) && hasAnySolutes ) {
+        return withSolutesProteinsHiddenString;
+      }
+      else if ( !hasAnySolutes && transportProteinCount === 0 ) {
+        return noSolutesOrProteinsString;
+      }
+      else if ( hasAnySolutes && transportProteinCount === 0 ) {
+        return withSolutesNoProteinsString;
+      }
+      else if ( transportProteinCount > 0 && !hasAnySolutes ) {
+        return withProteinsNoSolutesString;
+      }
+      else {
+        return withSolutesAndProteinsString;
+      }
+    } );
     this.proteinsNodeParent = new Node( {
       tagName: 'div',
 
@@ -80,62 +136,18 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       // An accessible paragraph that describes the membrane potential, number of protein types, and hints to interact when there
       // are no solutes or proteins. It includes string Properties so that it can be localized. Dependency Properties that change
       // strings may not be included in the DerivedProperty since changes to string content will already change the accessibleHelpText.
-      accessibleHelpText: new DerivedProperty( [
-
-        // model Properties
-        model.hasAnySolutesProperty,
-        model.transportProteinCountProperty,
-
-        // string Properties
-        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesProteinsHiddenStringProperty,
-        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesProteinsHiddenStringProperty,
-        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesOrProteins.createProperty( {
-          membranePotential: model.membranePotentialProperty
-        } ),
-        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesNoProteins.createProperty( {
-          membranePotential: model.membranePotentialProperty
-        } ),
-        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithProteinsNoSolutes.createProperty( {
-          membranePotential: model.membranePotentialProperty,
-          typeCount: model.transportProteinTypesCountProperty
-        } ),
-        MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesAndProteins.createProperty( {
-          membranePotential: model.membranePotentialProperty,
-          typeCount: model.transportProteinTypesCountProperty
-        } )
-      ], (
-        hasAnySolutes,
-        transportProteinCount,
-        noSolutesProteinsHiddenString,
-        withSolutesProteinsHiddenString,
-        noSolutesOrProteinsString,
-        withSolutesNoProteinsString,
-        withProteinsNoSolutesString,
-        withSolutesAndProteinsString
-      ) => {
-        if ( !getFeatureSetHasProteins( model.featureSet ) && !hasAnySolutes ) {
-          return noSolutesProteinsHiddenString;
-        }
-        else if ( !getFeatureSetHasProteins( model.featureSet ) && hasAnySolutes ) {
-          return withSolutesProteinsHiddenString;
-        }
-        else if ( !hasAnySolutes && transportProteinCount === 0 ) {
-          return noSolutesOrProteinsString;
-        }
-        else if ( hasAnySolutes && transportProteinCount === 0 ) {
-          return withSolutesNoProteinsString;
-        }
-        else if ( transportProteinCount > 0 && !hasAnySolutes ) {
-          return withProteinsNoSolutesString;
-        }
-        else {
-          return withSolutesAndProteinsString;
-        }
-      } ),
+      accessibleHelpText: accessibleHelpTextProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
-      groupFocusHighlight: true,
-      focusable: false
+      groupFocusHighlight: true
     } );
+
+    // Provide the reading block in parallel so it doesn't interfere with alt-input on the proteinsNodeParent and its children
+    const readingBlockNode = new ReadingBlockNode( {
+      children: [ new Path( modelViewTransform.modelToViewShape( Shape.bounds( MembraneTransportConstants.MEMBRANE_BOUNDS.dilated( 2 ) ) ) ) ],
+      readingBlockNameResponse: accessibleHelpTextProperty
+    } );
+    this.addChild( readingBlockNode );
+
     this.addChild( this.proteinsNodeParent );
 
     // A node that manages the slots that receive focus while the protein is in its "grabbed" state.
@@ -180,7 +192,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
         this.updateFocus();
       }
     } );
-    this.addInputListener( selectionKeyboardListener );
+    this.proteinsNodeParent.addInputListener( selectionKeyboardListener );
 
     const grabKeyboardListener = new KeyboardListener( {
       keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.grabProtein.keyStringProperties,
@@ -195,7 +207,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
         }
       }
     } );
-    this.addInputListener( grabKeyboardListener );
+    this.proteinsNodeParent.addInputListener( grabKeyboardListener );
 
     model.membraneSlots.forEach( slot => {
       slot.transportProteinProperty.link( ( transportProtein, oldTransportProtein ) => {
