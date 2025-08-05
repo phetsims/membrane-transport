@@ -115,14 +115,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       flowBoxSpacing: 12,
       timeSpeedProperty: model.timeSpeedProperty,
       playPauseStepButtonOptions: {
-        includeStepForwardButton: false,
-
-        playPauseButtonOptions: {
-
-          // For Core Voicing, we do want to hear the name because responses are not included.
-          // See https://github.com/phetsims/membrane-transport/issues/363#issuecomment-3152391509.
-          speakVoicingNameResponseOnFire: true
-        }
+        includeStepForwardButton: false
       },
       speedRadioButtonGroupOptions: {
         labelOptions: {
