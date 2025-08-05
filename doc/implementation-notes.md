@@ -6,21 +6,6 @@ voltage-gated channels, a sodium-potassium pump, glucose transporters, and passi
 directly across the membrane (without requiring a channel protein). It is a port of the Java-based simulation to HTML5,
 incorporating modern PhET frameworks and updated pedagogical features.
 
-## Features Overview
-
-- **Included:**
-  - PhET-iO instrumentation
-  - Interactive Description
-  - sonification
-  - Interactive highlights
-  - dynamic locales
-  - sim-specific preferences
-  - Core Voicing
-  - pan/zoom
-
-- **Excluded**
-  - region and culture customization
-
 ### Novel Approaches
 
 * **MembraneTransportFeatureSet**: This is a feature set that is used to enable/disable features in the simulation. It

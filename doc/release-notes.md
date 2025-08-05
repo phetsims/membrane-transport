@@ -44,3 +44,6 @@ For an exemplar, see https://github.com/phetsims/balancing-chemical-equations/bl
 * Dynamic Locale
 * Sim-Specific Preferences
 * Internationalization
+
+### Excluded Features
+* Region and Culture customization
