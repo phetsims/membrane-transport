@@ -362,7 +362,7 @@ export default class MembraneTransportSounds {
     shareWhooshSound.play();
   }
 
-  public static itemMoved( directionToPlay: 'left' | 'right' | 'both' ): void {
+  public static keyboardMovedLigand( directionToPlay: 'left' | 'right' | 'both' ): void {
     CardSounds.playCardMovementSound( directionToPlay );
   }
 

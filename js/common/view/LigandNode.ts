@@ -262,7 +262,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
       if ( newIndex !== null && newIndex !== this.currentTargetSlotIndex ) {
         this.currentTargetSlotIndex = newIndex;
-        MembraneTransportSounds.itemMoved( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
+        MembraneTransportSounds.keyboardMovedLigand( newIndex > this.currentTargetSlotIndex ? 'right' : 'left' );
 
         const targetSlot = this.slots[ newIndex ];
         const protein = targetSlot?.transportProteinProperty.value;
