@@ -644,6 +644,8 @@ export default class MembraneTransportModel extends PhetioObject {
    *
    * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    * for more information on the different serialization types.
+   *
+   * This cannot be moved to Particle.ts because it creates a circular dependency, see https://github.com/phetsims/membrane-transport/issues/392.
    */
   public static readonly ParticleIO = new IOType<Particle, ParticleStateObject>( 'ParticleIO', {
     valueType: Particle,
