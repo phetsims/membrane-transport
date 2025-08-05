@@ -98,26 +98,27 @@ export default class SoluteControl extends Voicing( Panel ) {
 
     // The accessibleObjectResponse for the entire control, describing the current value. It describes the amount of solutes of
     // this type on this side of the membrane qualitatively. It is spoken every time the SoluteControl is used.
-    const createAccessibleObjectResponse = () => {
+    const getObjectResponseContent = () => {
+      return MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.format( {
 
-      // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
-      // pressed rapidly.
-      return new ValueChangeUtterance( {
-        alert: MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponse.format( {
+        // Qualitative descriptions for the amount of a solute, as described in
+        // https://github.com/phetsims/membrane-transport/issues/242
+        amount: MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( sideCountProperty.value ),
 
-          // Qualitative descriptions for the amount of a solute, as described in
-          // https://github.com/phetsims/membrane-transport/issues/242
-          amount: MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor( sideCountProperty.value ),
-
-          soluteType: model.soluteProperty
-        } )
+        soluteType: model.soluteProperty
       } );
+
     };
+
+    // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
+    // pressed rapidly.
+    const createAccessibleObjectResponse = () => new ValueChangeUtterance( {
+      alert: getObjectResponseContent()
+    } );
 
     // The accessibleContextResponse describes the overall change in the simulation. It describes how many of a solute was added or
     // removed, and the relative amounts on each side of the membrane. It is spoken every time the SoluteControl is used.
-    const createContextResponse = ( newValue: number, previousValue: number ) => {
-
+    const createContextResponseContent = ( newValue: number, previousValue: number ) => {
       // In this simulation, it is possible to have a keyup event that doesn't change the value. In that case,
       // we don't want to announce anything.
       if ( newValue === previousValue ) {
@@ -133,12 +134,18 @@ export default class SoluteControl extends Voicing( Panel ) {
 
       // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
       // pressed rapidly.
+      const text = MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
+        amountAdded: amountAdded, // aLittle / aLot
+        addedOrRemoved: addedOrRemoved, // added / removed
+        amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
+      } );
+
+      return text;
+    };
+
+    const createContextResponse = ( newValue: number, previousValue: number ) => {
       return new ValueChangeUtterance( {
-        alert: MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
-          amountAdded: amountAdded, // aLittle / aLot
-          addedOrRemoved: addedOrRemoved, // added / removed
-          amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
-        } )
+        alert: createContextResponseContent( newValue, previousValue )
       } );
     };
 
@@ -189,6 +196,12 @@ export default class SoluteControl extends Voicing( Panel ) {
       // pdom - the context response is queued after the object response so both are spoken
       this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
       this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ), 'queue' );
+
+      this.voicingSpeakFullResponse( {
+        nameResponse: accessibleName,
+        objectResponse: getObjectResponseContent(),
+        contextResponse: createContextResponseContent( totalCountProperty.value, valueBefore )
+      } );
     };
 
     const decrementFineButton = new ArrowButton(

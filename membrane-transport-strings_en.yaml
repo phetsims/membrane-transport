@@ -332,7 +332,7 @@ a11y:
     inside:
       accessibleName:     "{ a11y.solutes.uppercaseName } Inside Cell"
       accessibleHelpText: Adjust chosen solute amount on inside with arrow keys or alternate keyboard shortcuts.
-    voicingHintResponse:           Adjust chosen solute amount.
+    voicingHintResponse:           Adjust chosen solute with Arrow keys or Arrow buttons.
     accessibleRoleDescription:     solute adjuster
     accessibleHelpTextAllDisabled: Disabled, total chosen solute at max amount.
     accessibleObjectResponse:      |-
@@ -357,7 +357,7 @@ a11y:
                                    }. Now, { a11y.solutes.amountComparison }. 
 
   soluteConcentrationsAccordionBox:
-    descriptionContent: A dynamic barchart for each solute captures amounts on either side of membrane and emphasizes recent crossings with visual highlights and sounds. If needed, pause sim to freeze details for reading.
+    descriptionContent:           A dynamic barchart for each solute captures amounts on either side of membrane and emphasizes recent crossings with visual highlights and sounds. If needed, pause sim to freeze details for reading.
     voicingHintResponseCollapsed: Expand to explore changing solute concentrations.
 
     barChart:
