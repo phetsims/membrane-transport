@@ -85,6 +85,11 @@ and behavior of solutes, ligands, and transport proteins within the membrane.
     `areLigandsAddedProperty`.
   * Each `Particle` has a finite state machine (`mode` property) that dictates its current behavior (e.g., random walk,
     passing through a protein). See `js/common/model/Particle.ts` and `js/common/model/particleModes/`.
+  * **BaseParticleMode**: The particle mode system is built on `BaseParticleMode`, an abstract base class that defines
+    the interface for all particle behaviors. Concrete mode implementations (e.g., `RandomWalkMode`, `MoveToTargetMode`,
+    `MoveToCenterOfChannelMode`) extend this base class. Each mode encapsulates specific movement logic in its `step()`
+    method and supports serialization via `toStateObject()`. This pattern avoids complex conditional logic and makes
+    particle behavior modular and testable.
 * **Transport Proteins (`TransportProtein`):**
   * Represent membrane channels and pumps (e.g., Ligand-Gated Channel, Voltage-Gated Channel, Na+/K+ Pump, Glucose
     Transporter).
@@ -95,6 +100,7 @@ and behavior of solutes, ligands, and transport proteins within the membrane.
   * There are `SLOT_COUNT` (7) predefined positions on the membrane where transport proteins can be placed.
   * `membraneSlots` is an array of `Slot` instances, each managing a `transportProteinProperty` that can hold a
     `TransportProtein` or be `null`.
+
 
 ## View
 
@@ -126,6 +132,11 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
 * **`screenViewModelViewTransform`:** A `ModelViewTransform2` specific to the `ScreenView` that helps position UI
   elements relative to the `ObservationWindow`.
 
+## PhET-iO
+
+PhET-iO is PhET's data collection and configuration framework for interactive simulations. The Membrane Transport
+simulation includes comprehensive PhET-iO support for customization and data collection.
+
 ### IOTypes
 
 Custom `IOType`s are defined for key model elements to support PhET-iO serialization:
@@ -148,12 +159,70 @@ when added to slots, and their state is also serialized as part of the `Membrane
 This simulation avoids using PhetioGroup by preallocating the ligand nodes (a finite set), and not instrumenting the
 view elements for the proteins in the membrane.
 
+### Design Decisions
+
+* **Transient Non-PhET-iO Nodes**: When dragging transport proteins, transient non-PhET-iO instrumented nodes are used.
+  This keeps the instrumentation tree cleaner and avoids temporary objects in the PhET-iO state.
+* **Collection Management**: Instead of instrumenting individual particles, the model manages them as collections,
+  simplifying the PhET-iO tree structure.
+
+## Accessibility and Interactive Description
+
+The Membrane Transport simulation includes comprehensive accessibility features, identified by the lead description
+designer as one of the most complex description efforts undertaken at the time of development. Beyond the standard
+PDOM state descriptions, object responses, and context responses, this simulation includes specialized description 
+systems for dynamic content.
+
+### Key Components
+
+* **`MembraneTransportDescriber`**: The central class for managing dynamic descriptions of simulation state. It:
+  * Monitors particle movements and membrane crossings over time via the `soluteCrossedMembraneEmitter`
+  * Generates periodic summaries (every 7 seconds) of transport activity and concentration changes
+  * Provides context-sensitive hints (every 20 seconds) based on simulation state and user interaction patterns
+  * Tracks qualitative comparisons of solute concentrations (e.g., "many more outside", "roughly equal")
+  * Manages hint states for different scenarios (ligand-gated channels without ligands, voltage-gated channels at
+    resting potential, pumps awaiting phosphate without ATP, etc.) 
+  * Avoids repetitive descriptions by comparing against previous responses
+  * Describes immediate particle crossings for focused transport proteins
+* **`MembranePotentialDescriber`**: Specialized describer that creates accessible descriptions for membrane potential
+  changes, particularly important for the voltage-gated channel scenarios
+* **`SoluteCrossedMembraneEvent`**: An event system that tracks when solutes cross the membrane, including:
+  * Which transport protein (if any) was used
+  * Direction of crossing (inward/outward)
+  * Type of solute that crossed
+  * This event queue enables rich descriptions of simulation behavior over time
+
+### Design Patterns
+
+* **Event-Based Descriptions**: Rather than describing instantaneous state, the system tracks events over time to
+  provide meaningful summaries (e.g., "5 sodium ions moved outside through the sodium-potassium pump")
+* **Complex String Templates**: The simulation uses Fluent syntax for internationalized strings with dynamic content,
+  allowing for grammatically correct descriptions across languages
+* **Parallel DOM (PDOM)**: Interactive elements use appropriate HTML tags and ARIA attributes for screen reader
+  compatibility
+* **Voicing**: Audio descriptions provide real-time feedback for key events and state changes
+* **Alternative Input**: Full keyboard navigation and interaction support, including:
+  * Dragging ligands with arrow keys
+  * Selecting and sorting transport proteins
+  * Navigating between different UI controls
+
+### Implementation Notes
+
+* The `descriptionEventQueue` in `MembraneTransportModel` maintains a rolling window of transport events
+* `PatternMessageProperty` instances bind dynamic content to accessible names
+* The system balances between providing enough information and avoiding overwhelming users with too-frequent updates
+* Special handling for ligand interactions includes visual cues that disappear after first interaction
+
 ## Performance and Optimization
 
 - Canvas-based sprite rendering is used for non-interactive particles and phospholipids within the `ObservationWindow`
   to optimize rendering performance.
 - The model and view are designed to be lightweight, with transient nodes used for dragging interactions to avoid
   overhead on persistent objects.
-- The "Hollywood" bias for passive diffusion helps manage the visual behavior of a small number of particles without
-  requiring a large particle count for realistic macroscopic behavior. See `checkGradientForCrossing` and
-  `BIAS_THRESHOLD`.
+- **"Hollywood" Bias for Passive Diffusion**: The simulation uses a probabilistic bias to ensure particles generally
+  move from areas of high concentration to low concentration, even with a small number of on-screen particles. Without
+  this bias, pure Brownian motion would produce large, counter-intuitive fluctuations that could confuse students. The
+  bias system works by probabilistically vetoing moves that go against the concentration gradient. Two parameters control
+  this behavior: `BIAS_THRESHOLD` (minimum concentration difference before bias is applied) and `GRADIENT_BIAS_STRENGTH`
+  (probability of blocking moves against the gradient). This creates pedagogically useful "downhill overall" behavior
+  while still allowing occasional "uphill" movements. See `checkGradientForCrossing` in `MembraneTransportModel`.
