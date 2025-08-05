@@ -1,18 +1,32 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Implements Interactive Description for  proteins in the membrane while "grabbed."
+ * Manages the "sorting" mode interaction for transport proteins, handling visual representation,
+ * keyboard navigation, accessibility features, and sound feedback during protein manipulation.
  *
- * This approach focuses on accessibility for both Interactive Description and Voicing.
- * There are two interaction modes:
- * - The "selection" mode, which lets users move focus among placed proteins
- * - The "sorting" mode which is active when a protein is being moved using the keyboard.
+ * Main responsibilities:
+ * - Creates and manages visual representation of proteins when dragged from toolbox or moved between slots
+ * - Implements keyboard navigation for protein placement (arrow keys to select slots, Enter/Space to release)
+ * - Provides comprehensive accessibility support (Interactive Description and Voicing) during protein sorting
+ * - Handles protein return animations back to the toolbox
+ * - Manages sound feedback for all interaction states (grab, release, swap, delete, boundary reached)
+ * - Coordinates with ObservationWindowTransportProteinLayer to implement the complete protein interaction system
  *
- * This Node implements the "sorting" mode. See ObservationWindowTransportProteinLayer for the "selection" mode.
- * Focus is passed between these two Nodes to implement the full interaction.
+ * Interaction modes:
+ * - "Selection" mode (handled by ObservationWindowTransportProteinLayer): Users move focus among placed proteins
+ * - "Sorting" mode (handled by this Node): Active when a protein is being moved using keyboard or dragged
  *
- * While in the "grabbed" state, arrow keys move the selection between available slots, and focus/aria
- * output (as well as voicing) updates to reflect the targeted drop location.
+ * This Node implements the "sorting" mode. Focus is passed between these two Nodes to provide the full
+ * protein manipulation experience. During the "grabbed" state, arrow keys move selection between available
+ * slots, and accessibility output updates to reflect the targeted drop location.
+ *
+ * Key features:
+ * - Transient protein nodes (TransportProteinDragNode) for visual feedback during manipulation
+ * - Off-membrane positioning for protein return to toolbox
+ * - Protein swapping between slots
+ * - Cancellation and deletion operations
+ * - Group focus management to handle mouse interactions
+ * - Comprehensive sound design for all interaction states
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
