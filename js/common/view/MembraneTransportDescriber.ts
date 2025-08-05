@@ -786,14 +786,6 @@ export default class MembraneTransportDescriber {
       // 0 - 20% difference - in this case the solute is considered to be in steady state
       descriptor = 'inBothDirections';
     }
-    if ( percentOutward === 0.95 ) {
-      // 100% outward
-      descriptor = 'toOutside';
-    }
-    if ( percentInward === 0.95 ) {
-      // 100% inward
-      descriptor = 'toInside';
-    }
     if ( percentOutward >= 0.6 ) {
       // >= 0.61 outward
       descriptor = 'mostlyToOutside';
@@ -802,7 +794,14 @@ export default class MembraneTransportDescriber {
       // >= 0.61 inward
       descriptor = 'mostlyToInside';
     }
-
+    if ( percentOutward === 1 ) {
+      // 100% outward
+      descriptor = 'toOutside';
+    }
+    if ( percentInward === 1 ) {
+      // 100% inward
+      descriptor = 'toInside';
+    }
 
     return descriptor;
   }
