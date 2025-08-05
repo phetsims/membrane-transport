@@ -61,13 +61,20 @@ Exceptions include:
   dropped.
 
 **Listeners**: As is common in PhET simulations, many listeners (`link`, `addListener`) are attached to Properties and
-emitters. For objects that exist for the lifetime of the simulation, explicit `unlink` or `removeListener` calls are
-often not strictly necessary, but good practice dictates managing them for dynamic objects or when an object's lifecycle
-is shorter than the simulation's. The `resetEmitter` in `MembraneTransportModel` and `MembraneTransportScreenView`
-is used to reset various Properties and components to their initial states.
+emitters. This simulation takes advantage of the new `disposer` option pattern (designed in https://github.com/phetsims/axon/issues/455)
+for automatic memory management. When adding listeners, we pass `{ disposer: this }` to methods like `property.link()`,
+`property.lazyLink()`, `emitter.addListener()`, and `node.addInputListener()`. This ensures that listeners are automatically
+removed when the parent object is disposed, simplifying memory management and preventing leaks. For objects that exist
+for the lifetime of the simulation, explicit `unlink` or `removeListener` calls are often not strictly necessary,
+but good practice dictates managing them for dynamic objects or when an object's lifecycle is shorter than the simulation's.
+The `resetEmitter` in `MembraneTransportModel` and `MembraneTransportScreenView` is used to reset various Properties
+and components to their initial states.
 
-**dispose**: Pertinent classes have `dispose` methods, often inherited. Instances that exist for the lifetime of the sim
-are typically not intended to be disposed.
+**dispose**: Pertinent classes have `dispose` methods, often inherited. The simulation also uses the `addDisposable()`
+method to register child components that should be disposed when their parent is disposed. This pattern, combined with
+the `disposer` option for listeners, provides comprehensive memory management. For more details on disposal patterns,
+see https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md#dispose. Instances that exist
+for the lifetime of the sim are typically not intended to be disposed.
 
 ## Screens
 
