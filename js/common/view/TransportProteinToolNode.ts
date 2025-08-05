@@ -11,12 +11,12 @@ import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
-import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 
 const richTextOptions: RichTextOptions = {
@@ -37,7 +37,8 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
     type: TransportProteinType,
     label: TReadOnlyProperty<string>,
     accessibleName: TReadOnlyProperty<string>,
-    view: MembraneTransportScreenView
+    createFromMouseDrag: ( event: PressListenerEvent, type: TransportProteinType, view: TransportProteinToolNode ) => void,
+    forwardFromKeyboard: ( type: TransportProteinType, view: TransportProteinToolNode ) => void
   ) {
 
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
@@ -46,7 +47,7 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
     // Scale down the icon further so there is enough space in the toolbox to fit all controls.
     transportProteinNode.scale( 0.5 );
     transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
-      view.createFromMouseDrag( event, type, this );
+      createFromMouseDrag( event, type, this );
       this.voicingSpeakNameResponse();
     } ) );
 
@@ -60,7 +61,7 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
     } ) );
 
     this.addInputListener( {
-      click: () => view.forwardFromKeyboard( type, this )
+      click: () => forwardFromKeyboard( type, this )
     } );
 
     this.transportProteinNode = transportProteinNode;

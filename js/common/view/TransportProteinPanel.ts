@@ -69,7 +69,8 @@ export default class TransportProteinPanel extends Panel {
               transportProtein.transportProteinType,
               transportProtein.labelProperty,
               transportProtein.accessibleNameStringProperty,
-              view
+              view.createFromMouseDrag.bind( view ),
+              view.forwardFromKeyboard.bind( view )
             );
             transportProteinToolNodes.set( transportProtein.transportProteinType, transportProteinToolNode );
             return transportProteinToolNode;
