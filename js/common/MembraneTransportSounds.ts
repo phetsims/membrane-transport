@@ -362,13 +362,17 @@ export default class MembraneTransportSounds {
     shareWhooshSound.play();
   }
 
+  /**
+   * Plays a card movement sound when a ligand is moved via keyboard. The sound is designed to
+   * resemble a playing card being moved or flicked.
+   */
   public static keyboardMovedLigand( directionToPlay: 'left' | 'right' | 'both' ): void {
     CardSounds.playCardMovementSound( directionToPlay );
   }
 
   /**
    * Plays a sound when a protein is moved over a slot, to indicate that this is a valid location
-   * for the protein to be placed.
+   * for the protein to be placed. The sound is designed to resemble a playing card being moved or flicked.
    * @param slotIndex
    * @param isOccupied - a modified sound indicates that this slot is occupied
    */
