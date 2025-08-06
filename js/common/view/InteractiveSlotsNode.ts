@@ -5,11 +5,10 @@
  * keyboard navigation, accessibility features, and sound feedback during protein manipulation.
  *
  * Main responsibilities:
- * - Creates and manages visual representation of proteins when dragged from toolbox or moved between slots
- * - Implements keyboard navigation for protein placement (arrow keys to select slots, Enter/Space to release)
- * - Provides comprehensive accessibility support (Interactive Description and Voicing) during protein sorting
- * - Handles protein return animations back to the toolbox
- * - Manages sound feedback for all interaction states (grab, release, swap, delete, boundary reached)
+ * - Handles visual representation of proteins when dragged with alt input
+ * - Implements alternative input for protein placement and removal. Removed proteins return to the toolbox.
+ * - Implements Interactive Description and Voicing
+ * - Implements sound for alt input (grab, release, swap, delete, boundary reached)
  * - Coordinates with ObservationWindowTransportProteinLayer to implement the complete protein interaction system
  *
  * Interaction modes:
@@ -19,14 +18,6 @@
  * This Node implements the "sorting" mode. Focus is passed between these two Nodes to provide the full
  * protein manipulation experience. During the "grabbed" state, arrow keys move selection between available
  * slots, and accessibility output updates to reflect the targeted drop location.
- *
- * Key features:
- * - Transient protein nodes (TransportProteinDragNode) for visual feedback during manipulation
- * - Off-membrane positioning for protein return to toolbox
- * - Protein swapping between slots
- * - Cancellation and deletion operations
- * - Group focus management to handle mouse interactions
- * - Comprehensive sound design for all interaction states
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
