@@ -60,10 +60,15 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   private readonly record = new Map<TransportProtein, SlottedNode>();
   private readonly interactiveSlotsNode: InteractiveSlotsNode;
 
-  private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
-
   // The index of the selected transport protein, out of the existing transport proteins.
   private selectedIndex = 0;
+
+  // A reference to the Utterance used by the ReadingBlockNode surrounding the membrane. We need a complicated
+  // Utterance cancellation behavior for this component. The ReadingBlock Utterance should always be interrupted
+  // by the nameUtterance. But the nameUtterance (spoken on protein focus) should not cancel any other Utterances
+  // because we want to hear other information before the protein name, like "released" or other protein state.
+  private readonly readingBlockUtterance: Utterance;
+  private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
   // A parent for the proteins so that the accessibility attributes like accessibleRoleDescription
   // and headings do not apply to all children of this Node.
@@ -147,6 +152,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       readingBlockNameResponse: accessibleHelpTextProperty
     } );
     this.addChild( readingBlockNode );
+
+    this.readingBlockUtterance = readingBlockNode.voicingUtterance;
 
     this.addChild( this.proteinsNodeParent );
 
@@ -278,6 +285,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
 
               // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
               // Node is focused.
+
+              // See documentation about readingBlockUtterance for why this is necessary.
+              voicingUtteranceQueue.cancelUtterance( this.readingBlockUtterance );
               voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
 
               transportProteinNode.addAccessibleObjectResponse(
