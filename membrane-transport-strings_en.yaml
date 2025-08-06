@@ -70,12 +70,12 @@ settings:
 # Keyboard Help Dialog
 keyboardHelp:
   soluteAdjusters:
-    title:              Chosen Solute Adjusters
-    addOrRemoveALot:    Adjust amount
+    title:              Solute Adjusters
+    addOrRemoveALot:    Adjust chosen solute amount
     addOrRemoveALittle: Adjust in smaller amounts
   transportProteinsAndLigands:
-    title:           Transport Proteins and Ligands
-    navigate:        Navigate possible proteins or ligands
+    title:           Transport Proteins or Ligands
+    navigate:        Navigate proteins in panel or added ligands
     grabOrRelease:   Grab or release
     moveGrabbedItem: Move grabbed protein or ligand between available drop locations
     cancelGrab:      Cancel grab or move interaction
@@ -565,11 +565,11 @@ a11y:
   keyboardHelp:
     soluteAdjusters:
       # Description strings for PDOM
-      addOrRemoveALotDescription:    Adjust amount with A and D letter keys or Left and Right Arrow keys.
+      addOrRemoveALotDescription:    Adjust chosen solute amount with A and D letter keys or Left and Right Arrow keys.
       addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right Arrow keys.
     transportProteinsAndLigands:
       # Description strings for PDOM
-      navigateDescription:        Navigate possible proteins or ligands with Tab key.
+      navigateDescription:        Navigate proteins in panel or added ligands with Tab key.
       grabOrReleaseDescription:   Grab or release with Space or Enter keys.
       moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or letter keys A and D.
       cancelGrabDescription:      Cancel grab or move interaction with Escape key.

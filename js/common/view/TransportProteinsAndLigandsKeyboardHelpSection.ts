@@ -23,7 +23,10 @@ export default class TransportProteinsAndLigandsKeyboardHelpSection extends Keyb
       MembraneTransportFluent.keyboardHelp.transportProteinsAndLigands.navigateStringProperty,
       TextKeyNode.tab(),
       {
-        labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.transportProteinsAndLigands.navigateDescriptionStringProperty
+        labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.transportProteinsAndLigands.navigateDescriptionStringProperty,
+        labelOptions: {
+          lineWrap: MembraneTransportConstants.KEYBOARD_HELP_LABEL_LINE_WRAP
+        }
       }
     );
 

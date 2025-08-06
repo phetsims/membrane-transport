@@ -123,10 +123,10 @@
   "keyboardHelp": {
     "soluteAdjusters": {
       "title": {
-        "value": "Chosen Solute Adjusters"
+        "value": "Solute Adjusters"
       },
       "addOrRemoveALot": {
-        "value": "Adjust amount"
+        "value": "Adjust chosen solute amount"
       },
       "addOrRemoveALittle": {
         "value": "Adjust in smaller amounts"
@@ -134,10 +134,10 @@
     },
     "transportProteinsAndLigands": {
       "title": {
-        "value": "Transport Proteins and Ligands"
+        "value": "Transport Proteins or Ligands"
       },
       "navigate": {
-        "value": "Navigate possible proteins or ligands"
+        "value": "Navigate proteins in panel or added ligands"
       },
       "grabOrRelease": {
         "value": "Grab or release"
@@ -646,7 +646,7 @@
     "keyboardHelp": {
       "soluteAdjusters": {
         "addOrRemoveALotDescription": {
-          "value": "Adjust amount with A and D letter keys or Left and Right Arrow keys."
+          "value": "Adjust chosen solute amount with A and D letter keys or Left and Right Arrow keys."
         },
         "addOrRemoveALittleDescription": {
           "value": "Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right Arrow keys."
@@ -654,7 +654,7 @@
       },
       "transportProteinsAndLigands": {
         "navigateDescription": {
-          "value": "Navigate possible proteins or ligands with Tab key."
+          "value": "Navigate proteins in panel or added ligands with Tab key."
         },
         "grabOrReleaseDescription": {
           "value": "Grab or release with Space or Enter keys."
