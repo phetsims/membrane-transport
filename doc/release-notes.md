@@ -34,12 +34,10 @@ For an exemplar, see https://github.com/phetsims/balancing-chemical-equations/bl
 ### Features
 * Alternative Input
 * Interactive Highlights
-* Basic Sound
-* Core Description
-* Core Voicing
+* Voicing
 * PhET-iO
 * Interactive Description
-* Sonification
+* Sound and Sonification
 * Pan/Zoom
 * Dynamic Locale
 * Sim-Specific Preferences
