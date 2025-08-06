@@ -20,22 +20,31 @@ export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboard
 
   public constructor( featureSet: MembraneTransportFeatureSet ) {
 
-    const leftColumn = [
-      new SoluteAdjustersKeyboardHelpSection()
-    ];
+    const leftColumn = [];
+    const rightColumn = [];
 
     // Note that not all screens that have proteins also have ligands. But the section combines the
     // contents, so we just add it all if the feature set indicates there are proteins.
     if ( getFeatureSetHasProteins( featureSet ) ) {
+
+      // sim specific content on the left
+      leftColumn.push( new SoluteAdjustersKeyboardHelpSection() );
       leftColumn.push( new TransportProteinsAndLigandsKeyboardHelpSection() );
       leftColumn.push( new SortOrDeleteProteinsKeyboardHelpSection() );
+
+      // general content on the right
+      rightColumn.push( new TimeControlsKeyboardHelpSection() );
+      rightColumn.push( new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } ) );
     }
+    else {
 
+      // sim specific content on the left, and put the time controls on the left too to
+      // balance the columns when there is less to display
+      leftColumn.push( new SoluteAdjustersKeyboardHelpSection() );
+      leftColumn.push( new TimeControlsKeyboardHelpSection() );
 
-    const rightColumn = [
-      new TimeControlsKeyboardHelpSection(),
-      new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } )
-    ];
+      rightColumn.push( new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } ) );
+    }
 
     super( leftColumn, rightColumn );
   }
