@@ -29,13 +29,13 @@ import cardMovement4_mp3 from '../../../tambo/sounds/cardMovement4_mp3.js';
 import cardMovement5_mp3 from '../../../tambo/sounds/cardMovement5_mp3.js';
 import cardMovement6_mp3 from '../../../tambo/sounds/cardMovement6_mp3.js';
 import shareWhooshSound_mp3 from '../../../tambo/sounds/shareWhooshSound_mp3.js';
-import naKPumpChangedShape_mp3 from '../../sounds/naKPumpChangedShape_mp3.js';
-import coTransporterChangedShapeChord_mp3 from '../../sounds/coTransporterChangedShapeChord_mp3.js';
 import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
+import coTransporterChangedShapeChord_mp3 from '../../sounds/coTransporterChangedShapeChord_mp3.js';
 import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
 import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
 import ligandsStickV3_mp3 from '../../sounds/ligandsStickV3_mp3.js';
 import ligandsUnstickV3_mp3 from '../../sounds/ligandsUnstickV3_mp3.js';
+import naKPumpChangedShape_mp3 from '../../sounds/naKPumpChangedShape_mp3.js';
 import naPlusAttach_mp3 from '../../sounds/naPlusAttach_mp3.js';
 import potassiumLigandGatedChannelClose_mp3 from '../../sounds/potassiumLigandGatedChannelClose_mp3.js';
 import potassiumLigandGatedChannelOpen_mp3 from '../../sounds/potassiumLigandGatedChannelOpen_mp3.js';
@@ -122,6 +122,14 @@ const newAudioContextSoundClip = ( sound: WrappedAudioBuffer, options?: SoundCli
   return soundClip;
 };
 
+/**
+ * Creates a set of SoundClip instances for stereo panned playback.
+ *
+ * @param soundBuffer - The audio buffer to use for all clips
+ * @param baseOptions - Options for SoundClip configuration
+ * @param playbackRate - Optional playback rate for all clips
+ * @returns Object containing center, left, and right panned SoundClips
+ */
 function createPannedSoundSet(
   soundBuffer: WrappedAudioBuffer,
   baseOptions: SoundClipOptions,
