@@ -38,7 +38,7 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
 
       sodiumGlucoseCotransporter.stateProperty.lazyLink( ( state, oldState ) => {
         if ( state === 'openToInside' ) {
-          MembraneTransportSounds.activeCoTransporterSuccess();
+          MembraneTransportSounds.coTransporterChangedShape();
         }
       }, { disposer: this } );
 

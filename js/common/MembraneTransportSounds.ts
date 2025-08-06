@@ -29,8 +29,8 @@ import cardMovement4_mp3 from '../../../tambo/sounds/cardMovement4_mp3.js';
 import cardMovement5_mp3 from '../../../tambo/sounds/cardMovement5_mp3.js';
 import cardMovement6_mp3 from '../../../tambo/sounds/cardMovement6_mp3.js';
 import shareWhooshSound_mp3 from '../../../tambo/sounds/shareWhooshSound_mp3.js';
-import activeTransporterRockOrOpen_mp3 from '../../sounds/activeTransporterRockOrOpen_mp3.js';
-import activeTransporterSuccessChord_mp3 from '../../sounds/activeTransporterSuccessChord_mp3.js';
+import naKPumpChangedShape_mp3 from '../../sounds/naKPumpChangedShape_mp3.js';
+import coTransporterChangedShapeChord_mp3 from '../../sounds/coTransporterChangedShapeChord_mp3.js';
 import atpActivateTransporter_mp3 from '../../sounds/atpActivateTransporter_mp3.js';
 import glucoseActivateTransporter_mp3 from '../../sounds/glucoseActivateTransporter_mp3.js';
 import kPlusAttach_mp3 from '../../sounds/kPlusAttach_mp3.js';
@@ -220,8 +220,8 @@ const glucoseActivateTransporterSoundClip = newSoundClip( glucoseActivateTranspo
 
 const phosphateBindingSoundClip = newSoundClip( atpActivateTransporter_mp3, { initialOutputLevel: 0.2 } );
 
-const activeTransportersRockOrOpenSound = newSoundClip( activeTransporterRockOrOpen_mp3, { initialOutputLevel: 0.18 } );
-const activeTransportersSuccessChord = newSoundClip( activeTransporterSuccessChord_mp3, { initialOutputLevel: 0.18 } );
+const pumpChangedShapeSound = newSoundClip( naKPumpChangedShape_mp3, { initialOutputLevel: 0.18 } );
+const coTransporterChangedShapeSound = newSoundClip( coTransporterChangedShapeChord_mp3, { initialOutputLevel: 0.18 } );
 
 const G_NOTE = 1;
 const C_NOTE = Math.pow( 2, 5 / 12 );
@@ -420,12 +420,12 @@ export default class MembraneTransportSounds {
     }
   }
 
-  public static activeTransporterRockedOrOpen(): void {
-    activeTransportersRockOrOpenSound.play();
+  public static pumpChangedShape(): void {
+    pumpChangedShapeSound.play();
   }
 
-  public static activeCoTransporterSuccess(): void {
-    activeTransportersSuccessChord.play();
+  public static coTransporterChangedShape(): void {
+    coTransporterChangedShapeSound.play();
   }
 
 }

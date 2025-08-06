@@ -38,7 +38,7 @@ export default class SodiumPotassiumPumpNode extends TransportProteinNode {
       sodiumPotassiumPump.stateProperty.lazyLink( state => {
 
         if ( state === 'openToInsideEmpty' || state === 'openToOutsideAwaitingPotassium' ) {
-          MembraneTransportSounds.activeTransporterRockedOrOpen();
+          MembraneTransportSounds.pumpChangedShape();
         }
       } );
 
