@@ -407,10 +407,10 @@ a11y:
     accessibleHelpTextWithSolutesProteinsHidden: Observe crossing solutes. Look to adjust solute types and amounts.
 
     # A description of the cell membrane when there are no solutes and no proteins yet.
-    accessibleHelpTextNoSolutesOrProteins:       No proteins and a membrane potential of { a11y.membranePotentialValue }. Look to add solutes and proteins.
+    accessibleHelpTextNoSolutesOrProteins:       No proteins, and membrane potential of { a11y.membranePotentialValue }. Look to add solutes and proteins.
 
     # A description of the cell membrane when there are solutes but no proteins yet.
-    accessibleHelpTextWithSolutesNoProteins:     No proteins and a membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes. Look to add proteins.
+    accessibleHelpTextWithSolutesNoProteins:     No proteins, and membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes. Look to add proteins.
 
     # A description of the cell membrane when there are no solutes but there are proteins.
     accessibleHelpTextWithProteinsNoSolutes:     |-

@@ -558,10 +558,10 @@
         "value": "Observe crossing solutes. Look to adjust solute types and amounts."
       },
       "accessibleHelpTextNoSolutesOrProteins": {
-        "value": "No proteins and a membrane potential of { a11y_membranePotentialValue }. Look to add solutes and proteins."
+        "value": "No proteins, and membrane potential of { a11y_membranePotentialValue }. Look to add solutes and proteins."
       },
       "accessibleHelpTextWithSolutesNoProteins": {
-        "value": "No proteins and a membrane potential of { a11y_membranePotentialValue }. Observe crossing solutes. Look to add proteins."
+        "value": "No proteins, and membrane potential of { a11y_membranePotentialValue }. Observe crossing solutes. Look to add proteins."
       },
       "accessibleHelpTextWithProteinsNoSolutes": {
         "value": "{$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n} of proteins in membrane and a membrane potential of { a11y_membranePotentialValue }. Look to adjust solute types and amounts."
