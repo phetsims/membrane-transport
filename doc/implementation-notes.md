@@ -46,14 +46,15 @@ Exceptions include:
   dropped.
 
 **Listeners**: As is common in PhET simulations, many listeners (`link`, `addListener`) are attached to Properties and
-emitters. This simulation takes advantage of the new `disposer` option pattern (designed in https://github.com/phetsims/axon/issues/455)
+emitters. This simulation takes advantage of the new `disposer` option pattern (designed
+in https://github.com/phetsims/axon/issues/455)
 for automatic memory management. When adding listeners, we pass `{ disposer: this }` to methods like `property.link()`,
-`property.lazyLink()`, `emitter.addListener()`, and `node.addInputListener()`. This ensures that listeners are automatically
-removed when the parent object is disposed, simplifying memory management and preventing leaks. For objects that exist
-for the lifetime of the simulation, explicit `unlink` or `removeListener` calls are often not strictly necessary,
-but good practice dictates managing them for dynamic objects or when an object's lifecycle is shorter than the simulation's.
-The `resetEmitter` in `MembraneTransportModel` and `MembraneTransportScreenView` is used to reset various Properties
-and components to their initial states.
+`property.lazyLink()`, `emitter.addListener()`, and `node.addInputListener()`. This ensures that listeners are
+automatically removed when the parent object is disposed, simplifying memory management and preventing leaks. For
+objects that exist for the lifetime of the simulation, explicit `unlink` or `removeListener` calls are often not
+strictly necessary, but good practice dictates managing them for dynamic objects or when an object's lifecycle is
+shorter than the simulation's. The `resetEmitter` in `MembraneTransportModel` and `MembraneTransportScreenView` is used
+to reset various Properties and components to their initial states.
 
 **dispose**: Pertinent classes have `dispose` methods, often inherited. The simulation also uses the `addDisposable()`
 method to register child components that should be disposed when their parent is disposed. This pattern, combined with
@@ -84,7 +85,7 @@ and behavior of solutes, ligands, and transport proteins within the membrane.
     pre-allocated at startup (`MembraneTransportConstants.LIGAND_COUNT`) and their active state is controlled by
     `areLigandsAddedProperty`.
   * Each `Particle` has a finite state machine (`mode` property) that dictates its current behavior (e.g., random walk,
-    passing through a protein). See `js/common/model/Particle.ts` and `js/common/model/particleModes/`.
+    passing through a protein). See `js/common/model/Particle.ts`.
   * **BaseParticleMode**: The particle mode system is built on `BaseParticleMode`, an abstract base class that defines
     the interface for all particle behaviors. Concrete mode implementations (e.g., `RandomWalkMode`, `MoveToTargetMode`,
     `MoveToCenterOfChannelMode`) extend this base class. Each mode encapsulates specific movement logic in its `step()`
@@ -100,7 +101,6 @@ and behavior of solutes, ligands, and transport proteins within the membrane.
   * There are `SLOT_COUNT` (7) predefined positions on the membrane where transport proteins can be placed.
   * `membraneSlots` is an array of `Slot` instances, each managing a `transportProteinProperty` that can hold a
     `TransportProtein` or be `null`.
-
 
 ## View
 
@@ -119,8 +119,8 @@ earlier screens opting out of certain features via the `MembraneTransportFeature
   membrane.
 * **`TransportProteinDragNode`:** A transient `Node` created when a transport protein is dragged from the toolbox or
   moved on the membrane. It handles the visual representation and interaction during dragging.
-* **`ObservationWindowTransportProteinLayer`:** The layer for interactive transport proteins, which implements
-  selecting a protein to grab with alternative input.
+* **`ObservationWindowTransportProteinLayer`:** The layer for interactive transport proteins, which implements selecting
+  a protein to grab with alternative input.
 * **`InteractiveSlotsNode`:** Implements sorting transport proteins with alternative input, and works in tandem with
   `ObservationWindowTransportProteinLayer` to manage the interaction of transport proteins in slots.
 * **`SoluteCrossedMembraneEvent`:** An event that is emitted when a solute crosses the membrane. This is an important
@@ -169,20 +169,17 @@ view elements for the proteins in the membrane.
 ## Accessibility and Interactive Description
 
 The Membrane Transport simulation includes comprehensive accessibility features, identified by the lead description
-designer as one of the most complex description efforts undertaken at the time of development. Beyond the standard
-PDOM state descriptions, object responses, and context responses, this simulation includes specialized description 
-systems for dynamic content.
+designer as one of the most complex description efforts undertaken at the time of development. Beyond the standard PDOM
+state descriptions, object responses, and context responses, this simulation includes specialized description systems
+for dynamic content.
 
 ### Key Components
 
 * **`MembraneTransportDescriber`**: The central class for managing dynamic descriptions of simulation state. It:
-  * Monitors particle movements and membrane crossings over time via the `soluteCrossedMembraneEmitter`
-  * Generates periodic summaries (every 7 seconds) of transport activity and concentration changes
-  * Provides context-sensitive hints (every 20 seconds) based on simulation state and user interaction patterns
+  * Monitors particle movements and membrane crossings over time.
+  * Generates periodic summaries of transport activity and concentration changes.
+  * Provides context-sensitive hints based on simulation state and user interaction patterns.
   * Tracks qualitative comparisons of solute concentrations (e.g., "many more outside", "roughly equal")
-  * Manages hint states for different scenarios (ligand-gated channels without ligands, voltage-gated channels at
-    resting potential, pumps awaiting phosphate without ATP, etc.) 
-  * Avoids repetitive descriptions by comparing against previous responses
   * Describes immediate particle crossings for focused transport proteins
 * **`MembranePotentialDescriber`**: Specialized describer that creates accessible descriptions for membrane potential
   changes, particularly important for the voltage-gated channel scenarios
@@ -191,27 +188,7 @@ systems for dynamic content.
   * Direction of crossing (inward/outward)
   * Type of solute that crossed
   * This event queue enables rich descriptions of simulation behavior over time
-
-### Design Patterns
-
-* **Event-Based Descriptions**: Rather than describing instantaneous state, the system tracks events over time to
-  provide meaningful summaries (e.g., "5 sodium ions moved outside through the sodium-potassium pump")
-* **Complex String Templates**: The simulation uses Fluent syntax for internationalized strings with dynamic content,
-  allowing for grammatically correct descriptions across languages
-* **Parallel DOM (PDOM)**: Interactive elements use appropriate HTML tags and ARIA attributes for screen reader
-  compatibility
-* **Voicing**: Audio descriptions provide real-time feedback for key events and state changes
-* **Alternative Input**: Full keyboard navigation and interaction support, including:
-  * Dragging ligands with arrow keys
-  * Selecting and sorting transport proteins
-  * Navigating between different UI controls
-
-### Implementation Notes
-
-* The `descriptionEventQueue` in `MembraneTransportModel` maintains a rolling window of transport events
-* `PatternMessageProperty` instances bind dynamic content to accessible names
-* The system balances between providing enough information and avoiding overwhelming users with too-frequent updates
-* Special handling for ligand interactions includes visual cues that disappear after first interaction
+  * The `descriptionEventQueue` in `MembraneTransportModel` maintains a rolling window of `SoluteCrossedMembraneEvents`.
 
 ## Performance and Optimization
 
@@ -222,7 +199,8 @@ systems for dynamic content.
 - **"Hollywood" Bias for Passive Diffusion**: The simulation uses a probabilistic bias to ensure particles generally
   move from areas of high concentration to low concentration, even with a small number of on-screen particles. Without
   this bias, pure Brownian motion would produce large, counter-intuitive fluctuations that could confuse students. The
-  bias system works by probabilistically vetoing moves that go against the concentration gradient. Two parameters control
-  this behavior: `BIAS_THRESHOLD` (minimum concentration difference before bias is applied) and `GRADIENT_BIAS_STRENGTH`
+  bias system works by probabilistically vetoing moves that go against the concentration gradient. Two parameters
+  control this behavior: `BIAS_THRESHOLD` (minimum concentration difference before bias is applied) and
+  `GRADIENT_BIAS_STRENGTH`
   (probability of blocking moves against the gradient). This creates pedagogically useful "downhill overall" behavior
   while still allowing occasional "uphill" movements. See `checkGradientForCrossing` in `MembraneTransportModel`.
