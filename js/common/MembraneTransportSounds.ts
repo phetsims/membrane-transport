@@ -420,10 +420,14 @@ export default class MembraneTransportSounds {
     }
   }
 
-  public static activeTransporterRockedAndSuccess(): void {
+  public static activeTransporterRockedOrOpen(): void {
     activeTransportersRockOrOpenSound.play();
+  }
+
+  public static activeCoTransporterSuccess(): void {
     activeTransportersSuccessChord.play();
   }
+
 }
 
 membraneTransport.register( 'MembraneTransportSounds', MembraneTransportSounds );
