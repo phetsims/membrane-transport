@@ -505,7 +505,7 @@
         "value": "Disabled, total chosen solute at max amount."
       },
       "accessibleObjectResponse": {
-        "value": "{ $amount ->\n  [none] no\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount of\n *[maxAmount] max amount of\n} { a11y_solutes_lowercaseName }"
+        "value": "{ $amount ->\n  [none] no\n  [few] a few\n  [some] some\n  [smallAmount] small amount of\n  [several] several\n  [many] many\n  [largeAmount] large amount of\n  [hugeAmount] huge amount\n *[maxAmount] max amount of\n} { a11y_solutes_lowercaseName }"
       },
       "accessibleContextResponse": {
         "value": "{ $amountAdded ->\n  [aLittle] Ten\n *[aLot]    Fifty\n} { $addedOrRemoved ->\n  [added]   added\n *[removed] removed\n}. Now, { a11y_solutes_amountComparison }. "
@@ -552,22 +552,22 @@
         "value": "Cell Membrane"
       },
       "accessibleHelpTextNoSolutesProteinsHidden": {
-        "value": "Look for Solute Controls to add and remove solute types."
+        "value": "Look to adjust solute types and amounts."
       },
       "accessibleHelpTextWithSolutesProteinsHidden": {
-        "value": "Observe crossing solutes. Look for Solute Controls to add and remove solute types."
+        "value": "Observe crossing solutes. Look to adjust solute types and amounts."
       },
       "accessibleHelpTextNoSolutesOrProteins": {
-        "value": "Membrane potential is { a11y_membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add."
+        "value": "No proteins and a membrane potential of { a11y_membranePotentialValue }. Look to add solutes and proteins."
       },
       "accessibleHelpTextWithSolutesNoProteins": {
-        "value": "Membrane potential is { a11y_membranePotentialValue }. No proteins in membrane. Observe crossing solutes and look for transport proteins to add."
+        "value": "No proteins and a membrane potential of { a11y_membranePotentialValue }. Observe crossing solutes. Look to add proteins."
       },
       "accessibleHelpTextWithProteinsNoSolutes": {
-        "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Look for Solute Controls to add or remove solutes types."
+        "value": "{$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n} of proteins in membrane and a membrane potential of { a11y_membranePotentialValue }. Look to adjust solute types and amounts."
       },
       "accessibleHelpTextWithSolutesAndProteins": {
-        "value": "Membrane potential is { a11y_membranePotentialValue }. Proteins in membrane, {$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n}. Observe crossing solutes and protein changes, grab protein to re-order or delete."
+        "value": "{$typeCount ->\n[one] { $typeCount } type\n*[other] { $typeCount } types\n} of proteins in membrane and a membrane potential of { a11y_membranePotentialValue }. Observe crossing solutes and protein changes. Look to add solutes or proteins."
       }
     },
     "transportProtein": {

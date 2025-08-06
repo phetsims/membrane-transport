@@ -344,7 +344,7 @@ a11y:
                                      [several] several
                                      [many] many
                                      [largeAmount] large amount of
-                                     [hugeAmount] huge amount of
+                                     [hugeAmount] huge amount
                                     *[maxAmount] max amount of
                                    } { a11y.solutes.lowercaseName }
     accessibleContextResponse:     |-
@@ -401,30 +401,30 @@ a11y:
     accessibleHeading:                           Cell Membrane
 
     # A description of the cell membrane when there are no solutes, and you cannot add any proteins.
-    accessibleHelpTextNoSolutesProteinsHidden:   Look for Solute Controls to add and remove solute types.
+    accessibleHelpTextNoSolutesProteinsHidden:   Look to adjust solute types and amounts.
 
     # A description of the cell membrane when there ARE solutes, but you cannot add any proteins.
-    accessibleHelpTextWithSolutesProteinsHidden: Observe crossing solutes. Look for Solute Controls to add and remove solute types.
+    accessibleHelpTextWithSolutesProteinsHidden: Observe crossing solutes. Look to adjust solute types and amounts.
 
     # A description of the cell membrane when there are no solutes and no proteins yet.
-    accessibleHelpTextNoSolutesOrProteins:       Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Look for Transport Proteins and Solute Controls to add.
+    accessibleHelpTextNoSolutesOrProteins:       No proteins and a membrane potential of { a11y.membranePotentialValue }. Look to add solutes and proteins.
 
     # A description of the cell membrane when there are solutes but no proteins yet.
-    accessibleHelpTextWithSolutesNoProteins:     Membrane potential is { a11y.membranePotentialValue }. No proteins in membrane. Observe crossing solutes and look for transport proteins to add.
+    accessibleHelpTextWithSolutesNoProteins:     No proteins and a membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes. Look to add proteins.
 
     # A description of the cell membrane when there are no solutes but there are proteins.
     accessibleHelpTextWithProteinsNoSolutes:     |-
-                                                 Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
+                                                 {$typeCount ->
                                                  [one] { $typeCount } type
                                                  *[other] { $typeCount } types
-                                                 }. Look for Solute Controls to add or remove solutes types.
+                                                 } of proteins in membrane and a membrane potential of { a11y.membranePotentialValue }. Look to adjust solute types and amounts.
 
     # A description of the cell membrane when there are solutes and proteins.
     accessibleHelpTextWithSolutesAndProteins:    |-
-                                                 Membrane potential is { a11y.membranePotentialValue }. Proteins in membrane, {$typeCount ->
+                                                 {$typeCount ->
                                                  [one] { $typeCount } type
                                                  *[other] { $typeCount } types
-                                                 }. Observe crossing solutes and protein changes, grab protein to re-order or delete.
+                                                 } of proteins in membrane and a membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes and protein changes. Look to add solutes or proteins.
 
   transportProtein:
     grabbedResponse:                Grabbed.
