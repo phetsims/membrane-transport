@@ -189,6 +189,8 @@ for dynamic content.
   * Type of solute that crossed
   * This event queue enables rich descriptions of simulation behavior over time
   * The `descriptionEventQueue` in `MembraneTransportModel` maintains a rolling window of `SoluteCrossedMembraneEvents`.
+* While `MembraneTransportDescriber` describes events over time, other responses are triggered immmediately from user
+  actions or model changes, such as when particles are added/removed, membrane potential changes, and other things.
 
 ## Performance and Optimization
 
