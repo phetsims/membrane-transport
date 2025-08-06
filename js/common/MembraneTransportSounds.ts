@@ -428,10 +428,16 @@ export default class MembraneTransportSounds {
     }
   }
 
+  /**
+   * A sound for then the sodium-potassium pump changes shape, indicating it has moved solute across the membrane.
+   */
   public static pumpChangedShape(): void {
     pumpChangedShapeSound.play();
   }
 
+  /**
+   * A sound for when the co-transporter changes shape, indicating that it has moved solute across the membrane.
+   */
   public static coTransporterChangedShape(): void {
     coTransporterChangedShapeSound.play();
   }
