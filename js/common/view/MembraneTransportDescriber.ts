@@ -3,36 +3,28 @@
 /**
  * Manages dynamic descriptions of membrane transport activity, providing time-based summaries and context-sensitive
  * hints about solute concentrations, transport protein activity, and membrane crossing events.
- * 
- * This class extends the standard PhET accessibility framework by tracking simulation state over time and generating
- * sophisticated descriptions that help users understand complex transport phenomena. It works in conjunction with
- * SoluteCrossedMembraneEvent to build meaningful narratives from individual particle movements.
  *
  * Main responsibilities:
  * - Listens to soluteCrossedMembraneEmitter and maintains a rolling queue of transport events
- * - Generates periodic descriptions (every 7 seconds) summarizing recent transport activity
- * - Provides pedagogical hints (every 20 seconds) when the simulation reaches states requiring user action
+ * - Generates periodic descriptions summarizing recent transport activity
+ * - Provides hints when the simulation reaches states requiring user action
  * - Tracks qualitative concentration comparisons and crossing directions for each solute type
- * - Manages complex state transitions (steady state detection, active vs passive transport categorization)
- * - Avoids repetitive announcements by comparing against previous responses
- * 
+ * - Tracks when solute types enter steady state
+ *
  * Logical flow:
- * 1. Constructor sets up event listeners and initializes state tracking variables
- * 2. step() method is called each animation frame, managing two timer-based systems:
- *    a) Regular descriptions triggered by DESCRIPTION_INTERVAL (7s)
- *    b) Hint descriptions triggered by HINT_DESCRIPTION_INTERVAL (20s) when conditions are met
- * 3. getDescriptionFromEventQueue() analyzes the descriptionEventQueue to create context-appropriate summaries:
+ * 1. step() method is called each animation frame, managing two timer-based systems:
+ *    a) Regular descriptions triggered by DESCRIPTION_INTERVAL
+ *    b) Hint descriptions triggered by HINT_DESCRIPTION_INTERVAL when conditions are met
+ * 2. getDescriptionFromEventQueue() analyzes the descriptionEventQueue to create summaries:
  *    - Categorizes events by transport type (simple diffusion, facilitated diffusion, active transport)
  *    - Identifies concentration changes and crossing patterns
  *    - Generates targeted descriptions based on number and type of events
- * 4. Hint system monitors specific pedagogically important states and provides guidance when needed
- * 5. State tracking prevents redundant descriptions and manages transitions between description modes
+ * 3. Hint system monitors specific pedagogically important states and provides guidance when needed
+ * 4. State tracking prevents redundant descriptions and manages transitions between description modes
  *
  * Integration with other classes:
  * - Receives SoluteCrossedMembraneEvent instances from MembraneTransportModel.soluteCrossedMembraneEmitter
- * - Uses contextResponseNode (typically MembraneTransportScreenView) to deliver accessible responses
- * - Coordinated with MembranePotentialDescriber for voltage-related descriptions
- * - Leverages MembraneTransportFluent for internationalized string templates with complex grammar patterns
+ * - Provides static methods to describe solute comparisons and crossing directions in other contexts
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Jesse Greenberg (PhET Interactive Simulations)
@@ -367,6 +359,10 @@ export default class MembraneTransportDescriber {
     };
   }
 
+  /**
+   * Reset the map of steady state flags. When this is called, any solute that enters steady state will be
+   * described at the next description interval.
+   */
   private getCleanSteadyStates(): Record<SoluteType, boolean> {
     return {
       oxygen: false,
@@ -455,6 +451,16 @@ export default class MembraneTransportDescriber {
     this.previousSteadyStateMap = this.getCleanSteadyStates();
   }
 
+  /**
+   * The main method that generates a description from the event queue.
+   *
+   * Using the queue of crossing events, it determines which solutes and transport mechanisms
+   * were involved (simple diffusion, facilitated diffusion, active transport), and constructs an accessible
+   * summary string.
+   *
+   * It also updates state variables used to track solute comparisons, crossing directions, and steady states.
+   * These are used to control descriptions in subsequent calls.
+   */
   private getDescriptionFromEventQueue(): string {
 
     if ( this.model.focusedProteinProperty.value ) {
@@ -700,6 +706,12 @@ export default class MembraneTransportDescriber {
     return changedComparisons.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
   }
 
+  /**
+   * Returns a description for solute types that have just entered steady state with roughly equal counts,
+   * if any, since the last description.
+   *
+   * @param solutesThatCrossed - Solute types that crossed the membrane in the last interval
+   */
   private getEnteredSteadyStateIfChanged( solutesThatCrossed: SoluteType[] ): string {
     const changedSteadyStates: string[] = [];
 
@@ -747,6 +759,9 @@ export default class MembraneTransportDescriber {
            descriptor === 'roughlyEqualOutside';
   }
 
+  /**
+   * Returns true if the solute type was considered "roughly equal" in the previous description interval.
+   */
   private wereSoluteTypeCountsRoughlyEqual( soluteType: SoluteType ): boolean {
     const previousComparison = this.previousSoluteComparisons[ soluteType ];
     return previousComparison === 'equal' ||
@@ -754,6 +769,9 @@ export default class MembraneTransportDescriber {
            previousComparison === 'roughlyEqualOutside';
   }
 
+  /**
+   * Returns a comparison string for a solute type, describing the relative amounts of that solute inside and outside the cell.
+   */
   private getSoluteComparisonString( soluteType: SoluteType ): string {
     const descriptor = MembraneTransportDescriber.getSoluteComparisonDescriptor(
       this.model.outsideSoluteCountProperties[ soluteType ].value,
@@ -808,18 +826,12 @@ export default class MembraneTransportDescriber {
 
   /**
    * Converts numeric solute counts into qualitative comparison descriptors for accessibility.
-   * 
+   *
    * This method maps raw particle counts to human-readable comparative descriptions like "many more outside"
-   * or "roughly equal". It handles edge cases (zero counts) and uses logarithmic-style thresholds to create
-   * meaningful distinctions across different concentration ratios.
-   * 
-   * The descriptors are designed for educational clarity, helping users understand relative concentrations
-   * without needing to process exact numbers. Thresholds are calibrated to match pedagogical expectations
-   * about what constitutes "significantly more" vs "slightly more" particles.
-   * 
+   * or "roughly equal". It handles edge cases (zero counts).
+   *
    * @param outsideAmount - Number of solute particles outside the cell
-   * @param insideAmount - Number of solute particles inside the cell  
-   * @returns Qualitative descriptor of the concentration comparison
+   * @param insideAmount - Number of solute particles inside the cell
    */
   public static getSoluteComparisonDescriptor( outsideAmount: number, insideAmount: number ): SoluteComparisonDescriptor {
 
@@ -865,20 +877,12 @@ export default class MembraneTransportDescriber {
 
   /**
    * Converts an absolute solute count into a qualitative amount descriptor for accessibility.
-   * 
-   * This method transforms raw particle counts (0-300) into educational descriptors like "few", "many",
+   *
+   * This method transforms raw particle counts into educational descriptors like "few", "many",
    * or "huge amount". The thresholds are designed to provide meaningful distinctions across the full
    * range of possible particle counts in the simulation.
-   * 
-   * The descriptors follow pedagogical principles, using familiar quantity terms that help users
-   * understand simulation state without requiring numerical literacy. Thresholds are percentage-based
-   * relative to MAX_SOLUTE_COUNT to maintain consistency across different simulation configurations.
-   * 
-   * Used primarily for describing current concentrations in accessibility announcements and
-   * creating derived Properties that update automatically as particle counts change.
-   * 
-   * @param count - Absolute number of solute particles (typically 0-300)
-   * @returns Qualitative descriptor of the particle amount
+   *
+   * @param count - Absolute number of solute particles
    */
   public static getSoluteQualitativeAmountDescriptor( count: number ): SoluteQualitativeAmountDescriptor {
     const countAsFraction = count / MembraneTransportConstants.MAX_SOLUTE_COUNT;
