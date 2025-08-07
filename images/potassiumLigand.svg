@@ -9,7 +9,7 @@
         stroke-width: 10px;
       }
     </style>
-    <linearGradient id="d" x1="-2102.62" y1="468.41" x2="-1878.85" y2="468.41" gradientTransform="translate(2174.38 9.85) rotate(10.31)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="d" x1="-1969.88" y1="444.67" x2="-1746.12" y2="444.67" gradientTransform="translate(2039.53 9.44) rotate(10.31)" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#fff"/>
       <stop offset="1" stop-color="#447abd"/>
     </linearGradient>

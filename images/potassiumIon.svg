@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="180" height="180" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
+<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="180" height="180" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
   <defs>
     <style>
-      .cls-1 {
+      .e {
         fill: #231f20;
         stroke: #231f20;
       }
 
-      .cls-1, .cls-2 {
+      .e, .f {
         stroke-miterlimit: 10;
         stroke-width: 10px;
       }
 
-      .cls-2 {
-        fill: url(#linear-gradient);
+      .f {
+        fill: url(#d);
         stroke: #010101;
       }
     </style>
-    <linearGradient id="linear-gradient" x1="175" y1="90" x2="5" y2="90" gradientUnits="userSpaceOnUse">
+    <linearGradient id="d" x1="175" y1="90" x2="5" y2="90" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#00a8d4"/>
       <stop offset=".23" stop-color="#02a8d4"/>
       <stop offset=".36" stop-color="#0aabd5"/>
@@ -31,12 +31,12 @@
       <stop offset="1" stop-color="#fff"/>
     </linearGradient>
   </defs>
-  <g id="Layer_1-2" data-name="Layer_1">
+  <g id="c" data-name="Layer 1">
     <g>
-      <circle class="cls-2" cx="90" cy="90" r="85"/>
+      <circle class="f" cx="90" cy="90" r="85"/>
       <g>
-        <line class="cls-1" x1="90" y1="31" x2="90" y2="149"/>
-        <line class="cls-1" x1="33" y1="90" x2="147" y2="90"/>
+        <line class="e" x1="90" y1="31" x2="90" y2="149"/>
+        <line class="e" x1="33" y1="90" x2="147" y2="90"/>
       </g>
     </g>
   </g>

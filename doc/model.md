@@ -34,7 +34,7 @@ ATP). The sodium-potassium pump is an example, actively moving Na⁺ and K⁺ io
 proteins. Glucose transporters are an example. The transporter enables glucose, which otherwise would not diffuse
 easily, to cross the membrane passively.
 
-**Equilibrium:** A state where particle concentrations are equal on both membrane sides, resulting in no net diffusion.
+**Steady-State:** A state where particle concentrations are equal on both membrane sides, resulting in no net diffusion.
 Particles still move randomly across the membrane, but overall concentrations remain stable.
 
 ## Core Concepts Overview
@@ -44,14 +44,14 @@ pumps) to control transport. Without these proteins, most particles (ions, large
 membrane.
 
 - **Passive Diffusion:** Particles naturally move down their concentration gradients through open channels, without
-  energy input. Diffusion continues until equilibrium is reached.
+  energy input. Diffusion continues until steady-state is reached.
 - **Active Transport:** Pumps use energy to move particles against their gradients, creating or maintaining
   concentration differences.
 
 The simulation also demonstrates passive diffusion of small gases (O₂ and CO₂) directly through the membrane, without
 requiring channel proteins, due to their small size and nonpolar nature.
 
-**Channel Gating Mechanisms**
+### Channel Gating Mechanisms
 
 - **Ligand-Gated Channels:** Open when a ligand binds to the channel. In the simulation, ligand binding instantly opens
   the channel, allowing ions to diffuse through. Removing the ligand closes the channel again, stopping diffusion.
@@ -60,33 +60,33 @@ requiring channel proteins, due to their small size and nonpolar nature.
   charge difference is reached, these channels open automatically, allowing ions to flow until the voltage returns below
   the threshold.
 
-**ATP-Driven Active Transport**
+### ATP-Driven Active Transport
 
 The sodium-potassium pump actively moves Na⁺ and K⁺ against their concentration gradients, requiring ATP energy. This
 mechanism allows cells to maintain gradients essential for functions like nerve signaling. In the simulation, students
 can observe the pump actively creating or increasing gradients.
 
-**Glucose Transporters (Facilitated Diffusion)**
+### Glucose Transporters (Facilitated Diffusion)
 
 Glucose, a large polar molecule, cannot freely cross the membrane. In the simulation, glucose transporters assist
 glucose in diffusing down its gradient, without energy expenditure. The transporters act as bidirectional carriers,
-allowing glucose movement toward equilibrium. The diffusion rate depends on the number of transporters present.
+allowing glucose movement toward steady-state. The diffusion rate depends on the number of transporters present.
 
-**Dynamic Equilibrium and Diffusion Rates**
+### Dynamic steady-state and Diffusion Rates
 
 The simulation visually illustrates that diffusion rates depend on:
 
 - **Gradient size:** Larger concentration differences increase diffusion speed.
 - **Number of open channels:** More channels speed up diffusion.
-- **Pump activity:** Pumps actively prevent equilibrium by continuously moving particles against their gradients.
+- **Pump activity:** Pumps actively prevent steady-state by continuously moving particles against their gradients.
 
-**Passive Diffusion of Gases**
+### Passive Diffusion of Gases
 
 Oxygen (O₂) and carbon dioxide (CO₂) can passively diffuse directly across the membrane without channel proteins, moving
 freely down their concentration gradients due to their small size and nonpolar nature. The simulation reflects this by
 showing these gases crossing the membrane freely without channels.
 
-**Simplified Conceptual Model**
+### Simplified Conceptual Model
 
 The simulation models channels as either fully open or fully closed, simplifying complex real-world mechanisms:
 
@@ -101,12 +101,13 @@ Students using the simulation should be able to:
 
 - Understand selective permeability and identify particle movement through various channel types.
 - Differentiate between passive (channels, facilitated diffusion) and active transport (pumps).
-- Recognize that passive diffusion stops at equilibrium unless actively maintained by pumps.
+- Recognize that passive diffusion stops at steady-state unless actively maintained by pumps.
 - Describe how ligand and voltage signals regulate channel activity.
 - Explain how passive and active transport differ in energy requirements and direction relative to concentration
   gradients.
 
 <!-- TODO (BF): Rough running list below, refine and integrate -->
+
 Assumptions and Simplifications:
 
 - The simulation assumes idealized conditions, such as perfect channel opening/closing and instantaneous ligand binding.
@@ -115,6 +116,3 @@ Assumptions and Simplifications:
 - Lipid Bilayer movement is suggested using slight oscillation of the membrane, but not modeled in detail.
 - The simulation does not include the effects of temperature, pressure, or other environmental factors on diffusion rates.
 - Scales of molecules and transport proteins are not to scale, as the simulation is designed for educational clarity rather than precise molecular representation.
-
-<!-- TODO (BF): remove below and transfer to teacher tips before publication -->
-Teaching Tips

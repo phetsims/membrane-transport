@@ -129,14 +129,14 @@ export default class MembraneTransportConstants {
       openDownWithPhosphateSiteDimension: new Dimension2( 650, 900 ),
       openUpDimension: new Dimension2( 650, 900 ),
 
-      sodiumSite1: new Vector2( 241, 624.5 ),
-      sodiumSite2: new Vector2( 410, 531 ),
-      sodiumSite3: new Vector2( 252, 450.5 ),
+      sodiumSite1: new Vector2( 240, 624.5 ),
+      sodiumSite2: new Vector2( 411, 531 ),
+      sodiumSite3: new Vector2( 251, 450.5 ),
 
       atpSiteOpenToInside: new Vector2( 398, 1212 ),
 
-      phosphateSite: new Vector2( 316, 813 ),
-      phosphateSiteOpenToInside: new Vector2( 493, 783 ),
+      phosphateSite: new Vector2( 318, 812 ),
+      phosphateSiteOpenToInside: new Vector2( 494, 788 ),
 
       potassiumSite1: new Vector2( 209, 339.5 ),
       potassiumSite2: new Vector2( 443, 339 )
