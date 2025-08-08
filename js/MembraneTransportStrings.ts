@@ -264,12 +264,54 @@ type StringsType = {
     };
     'cellMembrane': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextNoSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextWithSolutesProteinsHiddenStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextNoSolutesOrProteinsStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextWithSolutesNoProteinsStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextWithProteinsNoSolutesStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextWithSolutesAndProteinsStringProperty': LocalizedStringProperty;
+      'accessibleStateDescription': {
+        'proteinTypeCountDescriptionStringProperty': LocalizedStringProperty;
+        'proteinsHidden': {
+          'potentialHidden': {
+            'noSolutesStringProperty': LocalizedStringProperty;
+            'withSolutesStringProperty': LocalizedStringProperty;
+          }
+        };
+        'proteinsShown': {
+          'potentialHidden': {
+            'noProteins': {
+              'noSolutesStringProperty': LocalizedStringProperty;
+              'withSolutesStringProperty': LocalizedStringProperty;
+            };
+            'withProteins': {
+              'noSolutesStringProperty': LocalizedStringProperty;
+              'withSolutesStringProperty': LocalizedStringProperty;
+            }
+          };
+          'potentialShown': {
+            'noProteins': {
+              'noSolutesStringProperty': LocalizedStringProperty;
+              'withSolutesStringProperty': LocalizedStringProperty;
+            };
+            'withProteins': {
+              'noSolutesStringProperty': LocalizedStringProperty;
+              'withSolutesStringProperty': LocalizedStringProperty;
+            }
+          }
+        }
+      };
+      'accessibleHelpText': {
+        'proteinsHidden': {
+          'noSolutesStringProperty': LocalizedStringProperty;
+          'withSolutesStringProperty': LocalizedStringProperty;
+        };
+        'proteinsShown': {
+          'noProteins': {
+            'noSolutesStringProperty': LocalizedStringProperty;
+            'withSolutesStringProperty': LocalizedStringProperty;
+          };
+          'withProteins': {
+            'noSolutesStringProperty': LocalizedStringProperty;
+            'withSolutesStringProperty': LocalizedStringProperty;
+          }
+        }
+      };
+      'accessibleHelpTextPatternStringProperty': LocalizedStringProperty;
     };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;

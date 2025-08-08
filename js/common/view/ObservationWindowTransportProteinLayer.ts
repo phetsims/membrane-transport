@@ -33,7 +33,6 @@ import Utterance from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
-import { getFeatureSetHasProteins } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -41,6 +40,7 @@ import TransportProtein from '../model/proteins/TransportProtein.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import InteractiveSlotsNode from './InteractiveSlotsNode.js';
+import MembraneDescriber from './MembraneDescriber.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
 import LigandGatedChannelNode from './proteins/LigandGatedChannelNode.js';
@@ -81,58 +81,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   ) {
     super();
 
-    const accessibleHelpTextProperty = new DerivedProperty( [
+    const membraneDescriber = new MembraneDescriber( model );
 
-      // model Properties
-      model.hasAnySolutesProperty,
-      model.transportProteinCountProperty,
-
-      // string Properties
-      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesProteinsHiddenStringProperty,
-      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesProteinsHiddenStringProperty,
-      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextNoSolutesOrProteins.createProperty( {
-        membranePotential: model.membranePotentialProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesNoProteins.createProperty( {
-        membranePotential: model.membranePotentialProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithProteinsNoSolutes.createProperty( {
-        membranePotential: model.membranePotentialProperty,
-        typeCount: model.transportProteinTypesCountProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextWithSolutesAndProteins.createProperty( {
-        membranePotential: model.membranePotentialProperty,
-        typeCount: model.transportProteinTypesCountProperty
-      } )
-    ], (
-      hasAnySolutes,
-      transportProteinCount,
-      noSolutesProteinsHiddenString,
-      withSolutesProteinsHiddenString,
-      noSolutesOrProteinsString,
-      withSolutesNoProteinsString,
-      withProteinsNoSolutesString,
-      withSolutesAndProteinsString
-    ) => {
-      if ( !getFeatureSetHasProteins( model.featureSet ) && !hasAnySolutes ) {
-        return noSolutesProteinsHiddenString;
-      }
-      else if ( !getFeatureSetHasProteins( model.featureSet ) && hasAnySolutes ) {
-        return withSolutesProteinsHiddenString;
-      }
-      else if ( !hasAnySolutes && transportProteinCount === 0 ) {
-        return noSolutesOrProteinsString;
-      }
-      else if ( hasAnySolutes && transportProteinCount === 0 ) {
-        return withSolutesNoProteinsString;
-      }
-      else if ( transportProteinCount > 0 && !hasAnySolutes ) {
-        return withProteinsNoSolutesString;
-      }
-      else {
-        return withSolutesAndProteinsString;
-      }
-    } );
     this.proteinsNodeParent = new Node( {
       tagName: 'div',
 
@@ -141,7 +91,7 @@ export default class ObservationWindowTransportProteinLayer extends Node {
       // An accessible paragraph that describes the membrane potential, number of protein types, and hints to interact when there
       // are no solutes or proteins. It includes string Properties so that it can be localized. Dependency Properties that change
       // strings may not be included in the DerivedProperty since changes to string content will already change the accessibleHelpText.
-      accessibleHelpText: accessibleHelpTextProperty,
+      accessibleHelpText: membraneDescriber.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
       groupFocusHighlight: true
     } );
@@ -149,7 +99,8 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     // Provide the reading block in parallel so it doesn't interfere with alt-input on the proteinsNodeParent and its children
     const readingBlockNode = new ReadingBlockNode( {
       children: [ new Path( modelViewTransform.modelToViewShape( Shape.bounds( MembraneTransportConstants.MEMBRANE_BOUNDS.dilated( 2 ) ) ) ) ],
-      readingBlockNameResponse: accessibleHelpTextProperty
+      readingBlockNameResponse: membraneDescriber.accessibleStateDescriptionStringProperty,
+      readingBlockHintResponse: membraneDescriber.accessibleHelpTextContentStringProperty
     } );
     this.addChild( readingBlockNode );
 

@@ -179,12 +179,24 @@ addToMapIfDefined( 'a11y_ligandToggleButton_accessibleHelpText', 'a11y.ligandTog
 addToMapIfDefined( 'a11y_ligandToggleButton_addedAccessibleContextResponse', 'a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButton_removedAccessibleContextResponse', 'a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_cellMembrane_accessibleHeading', 'a11y.cellMembrane.accessibleHeadingStringProperty' );
-addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextNoSolutesProteinsHidden', 'a11y.cellMembrane.accessibleHelpTextNoSolutesProteinsHiddenStringProperty' );
-addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextWithSolutesProteinsHidden', 'a11y.cellMembrane.accessibleHelpTextWithSolutesProteinsHiddenStringProperty' );
-addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextNoSolutesOrProteins', 'a11y.cellMembrane.accessibleHelpTextNoSolutesOrProteinsStringProperty' );
-addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextWithSolutesNoProteins', 'a11y.cellMembrane.accessibleHelpTextWithSolutesNoProteinsStringProperty' );
-addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextWithProteinsNoSolutes', 'a11y.cellMembrane.accessibleHelpTextWithProteinsNoSolutesStringProperty' );
-addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextWithSolutesAndProteins', 'a11y.cellMembrane.accessibleHelpTextWithSolutesAndProteinsStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinTypeCountDescription', 'a11y.cellMembrane.accessibleStateDescription.proteinTypeCountDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsHidden_potentialHidden_noSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsHidden.potentialHidden.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsHidden_potentialHidden_withSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsHidden.potentialHidden.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_noProteins_noSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.noProteins.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_noProteins_withSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.noProteins.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_withProteins_noSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.withProteins.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_withProteins_withSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.withProteins.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_noProteins_noSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.noProteins.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_noProteins_withSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.noProteins.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_withProteins_noSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.withProteins.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_withProteins_withSolutes', 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.withProteins.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsHidden_noSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsHidden.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsHidden_withSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsHidden.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsShown_noProteins_noSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsShown.noProteins.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsShown_noProteins_withSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsShown.noProteins.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsShown_withProteins_noSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsShown.withProteins.noSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsShown_withProteins_withSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsShown.withProteins.withSolutesStringProperty' );
+addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextPattern', 'a11y.cellMembrane.accessibleHelpTextPatternStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_grabbedResponse', 'a11y.transportProtein.grabbedResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_offMembraneResponse', 'a11y.transportProtein.offMembraneResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_releasedReplacedResponse', 'a11y.transportProtein.releasedReplacedResponseStringProperty' );
@@ -387,22 +399,30 @@ const MembraneTransportFluent = {
     },
     soluteControls: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControls_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.soluteControls.accessibleHeadingStringProperty' ) ),
+      _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+      _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControls_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.soluteControls.accessibleHelpTextStringProperty' ) )
     },
     _comment_0: new FluentComment( {"comment":"Only display help text when button is disabled","associatedKey":"eraseSolutesButton"} ),
     eraseSolutesButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleNameStringProperty' ) ),
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleContextResponseStringProperty' ) ),
+      _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+      _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseSolutesButton_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.eraseSolutesButton.accessibleHelpTextStringProperty' ) )
     },
     _comment_1: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
     settings: {
       crossingHighlightsCheckbox: {
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty' ) ),
         accessibleContextResponseCheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseChecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty' ) ),
         accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingHighlightsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
       },
       crossingSoundsCheckbox: {
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleHelpTextStringProperty' ) ),
         accessibleContextResponseCheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseChecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty' ) ),
         accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
@@ -411,26 +431,36 @@ const MembraneTransportFluent = {
     _comment_2: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
     transportProteinPanel: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHeadingStringProperty' ) ),
+      _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+      _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' ) ),
       ligandGatedChannelPanel: {
         sodiumIonNaPlusLigandGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' ) ),
         potassiumIonKPlusLigandGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty' ) ),
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.ligandGatedChannelPanel.accessibleHelpTextStringProperty' ) )
       },
       leakageChannelPanel: {
         sodiumIonNaPlusLeakageStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty' ) ),
         potassiumIonKPlusLeakageStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty' ) ),
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.leakageChannelPanel.accessibleHelpTextStringProperty' ) )
       },
       voltageGatedChannelPanel: {
         sodiumIonNaPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty' ) ),
         potassiumIonKPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty' ) ),
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.accessibleHelpTextStringProperty' ) ),
-        _comment_0: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
-        _comment_1: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
+        _comment_2: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
+        _comment_3: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
         membranePotential: {
           radioButtonGroup: {
             accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty' ) ),
+            _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+            _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
             accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty' ) ),
             negative70RadioButton: {
               accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty' ) )
@@ -444,6 +474,8 @@ const MembraneTransportFluent = {
           }
         },
         chargesCheckbox: {
+          _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+          _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
           accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' ) ),
           voicingHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' ) ),
           accessibleContextResponseCheckedNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative70', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty' ) ),
@@ -455,24 +487,28 @@ const MembraneTransportFluent = {
       activeTransportProteinPanel: {
         sodiumPotassiumPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty' ) ),
         sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty' ) ),
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty' ) )
       }
     },
     ligandNode: {
       accessibleName: new FluentPattern<{ ligandType: 'starLigand' | 'triangleLigand' | TReadOnlyProperty<'starLigand' | 'triangleLigand'> }>( fluentSupport.bundleProperty, 'a11y_ligandNode_accessibleName', _.get( MembraneTransportStrings, 'a11y.ligandNode.accessibleNameStringProperty' ), [{"name":"ligandType","variants":["starLigand","triangleLigand"]}] ),
+      _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+      _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.ligandNode.accessibleHelpTextStringProperty' ) ),
       releasedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedResponseStringProperty' ) ),
       releasedOffMembraneResponse: new FluentPattern<{ ligandType: 'starLigand' | 'triangleLigand' | TReadOnlyProperty<'starLigand' | 'triangleLigand'> }>( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedOffMembraneResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedOffMembraneResponseStringProperty' ), [{"name":"ligandType","variants":["starLigand","triangleLigand"]}] ),
       releasedOnProteinResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedOnProteinResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedOnProteinResponseStringProperty' ) ),
       releasedOnBusyOrIncompatibleProteinResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedOnBusyOrIncompatibleProteinResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedOnBusyOrIncompatibleProteinResponseStringProperty' ) ),
       unboundResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_unboundResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.unboundResponseStringProperty' ) ),
-      _comment_0: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that can open or close","associatedKey":"movedAboveLigandGatedChannelResponse"} ),
+      _comment_2: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that can open or close","associatedKey":"movedAboveLigandGatedChannelResponse"} ),
       movedAboveLigandGatedChannelResponse: new FluentPattern<{ index: FluentVariable, ligandType: 'triangleLigand' | 'starLigand' | TReadOnlyProperty<'triangleLigand' | 'starLigand'>, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandNode_movedAboveLigandGatedChannelResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.movedAboveLigandGatedChannelResponseStringProperty' ), [{"name":"index"},{"name":"ligandType","variants":["triangleLigand","starLigand"]},{"name":"openOrClosed","variants":["open","closed"]},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-      _comment_1: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that cannot open or close (leakage channel).","associatedKey":"movedAboveLeakageChannelResponse"} ),
+      _comment_3: new FluentComment( {"comment":"Spoken when the ligand moves above a protein that cannot open or close (leakage channel).","associatedKey":"movedAboveLeakageChannelResponse"} ),
       movedAboveLeakageChannelResponse: new FluentPattern<{ index: FluentVariable, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandNode_movedAboveLeakageChannelResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.movedAboveLeakageChannelResponseStringProperty' ), [{"name":"index"},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-      _comment_2: new FluentComment( {"comment":"Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.","associatedKey":"movedAboveOtherChannelResponse"} ),
+      _comment_4: new FluentComment( {"comment":"Spoken when the ligand moves above any other channel that can open/close, but does not bind to ligands.","associatedKey":"movedAboveOtherChannelResponse"} ),
       movedAboveOtherChannelResponse: new FluentPattern<{ index: FluentVariable, openOrClosed: 'open' | 'closed' | TReadOnlyProperty<'open' | 'closed'>, transportProteinCount: FluentVariable, type: 'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter' | TReadOnlyProperty<'sodiumIonLeakageChannel' | 'potassiumIonLeakageChannel' | 'sodiumIonVoltageGatedChannel' | 'potassiumIonVoltageGatedChannel' | 'sodiumIonLigandGatedChannel' | 'potassiumIonLigandGatedChannel' | 'sodiumPotassiumPump' | 'sodiumGlucoseCotransporter'> }>( fluentSupport.bundleProperty, 'a11y_ligandNode_movedAboveOtherChannelResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.movedAboveOtherChannelResponseStringProperty' ), [{"name":"index"},{"name":"openOrClosed","variants":["open","closed"]},{"name":"transportProteinCount"},{"name":"type","variants":["sodiumIonLeakageChannel","potassiumIonLeakageChannel","sodiumIonVoltageGatedChannel","potassiumIonVoltageGatedChannel","sodiumIonLigandGatedChannel","potassiumIonLigandGatedChannel","sodiumPotassiumPump","sodiumGlucoseCotransporter"]}] ),
-      _comment_3: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","associatedKey":"grabbedResponse"} ),
+      _comment_5: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","associatedKey":"grabbedResponse"} ),
       grabbedResponse: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseStringProperty' ), [{"name":"proteinCount"}] ),
       grabbedResponseWithHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithHintStringProperty' ), [{"name":"proteinCount"}] ),
       grabbedResponseWithEmptyMembraneHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithEmptyMembraneHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithEmptyMembraneHintStringProperty' ), [{"name":"proteinCount"}] )
@@ -505,10 +541,14 @@ const MembraneTransportFluent = {
     soluteControl: {
       outside: {
         accessibleName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteControl_outside_accessibleName', _.get( MembraneTransportStrings, 'a11y.soluteControl.outside.accessibleNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControl_outside_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.soluteControl.outside.accessibleHelpTextStringProperty' ) )
       },
       inside: {
         accessibleName: new FluentPattern<{ soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_soluteControl_inside_accessibleName', _.get( MembraneTransportStrings, 'a11y.soluteControl.inside.accessibleNameStringProperty' ), [{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
+        _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+        _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControl_inside_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.soluteControl.inside.accessibleHelpTextStringProperty' ) )
       },
       voicingHintResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControl_voicingHintResponse', _.get( MembraneTransportStrings, 'a11y.soluteControl.voicingHintResponseStringProperty' ) ),
@@ -532,24 +572,83 @@ const MembraneTransportFluent = {
       }
     },
     ligandToggleButton: {
+      _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+      _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.accessibleHelpTextStringProperty' ) ),
       addedAccessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_addedAccessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty' ) ),
       removedAccessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_removedAccessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty' ) )
     },
     cellMembrane: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHeadingStringProperty' ) ),
-      _comment_0: new FluentComment( {"comment":"A description of the cell membrane when there are no solutes, and you cannot add any proteins.","associatedKey":"accessibleHelpTextNoSolutesProteinsHidden"} ),
-      accessibleHelpTextNoSolutesProteinsHiddenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextNoSolutesProteinsHidden', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextNoSolutesProteinsHiddenStringProperty' ) ),
-      _comment_1: new FluentComment( {"comment":"A description of the cell membrane when there ARE solutes, but you cannot add any proteins.","associatedKey":"accessibleHelpTextWithSolutesProteinsHidden"} ),
-      accessibleHelpTextWithSolutesProteinsHiddenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextWithSolutesProteinsHidden', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextWithSolutesProteinsHiddenStringProperty' ) ),
-      _comment_2: new FluentComment( {"comment":"A description of the cell membrane when there are no solutes and no proteins yet.","associatedKey":"accessibleHelpTextNoSolutesOrProteins"} ),
-      accessibleHelpTextNoSolutesOrProteins: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextNoSolutesOrProteins', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextNoSolutesOrProteinsStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
-      _comment_3: new FluentComment( {"comment":"A description of the cell membrane when there are solutes but no proteins yet.","associatedKey":"accessibleHelpTextWithSolutesNoProteins"} ),
-      accessibleHelpTextWithSolutesNoProteins: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextWithSolutesNoProteins', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextWithSolutesNoProteinsStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
-      _comment_4: new FluentComment( {"comment":"A description of the cell membrane when there are no solutes but there are proteins.","associatedKey":"accessibleHelpTextWithProteinsNoSolutes"} ),
-      accessibleHelpTextWithProteinsNoSolutes: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30>, typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextWithProteinsNoSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextWithProteinsNoSolutesStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]},{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
-      _comment_5: new FluentComment( {"comment":"A description of the cell membrane when there are solutes and proteins.","associatedKey":"accessibleHelpTextWithSolutesAndProteins"} ),
-      accessibleHelpTextWithSolutesAndProteins: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30>, typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextWithSolutesAndProteins', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextWithSolutesAndProteinsStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]},{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
+      _comment_0: new FluentComment( {"comment":"A description of the current state of the protein. For Interactive Description, it will be combined","associatedKey":"accessibleStateDescription"} ),
+      _comment_1: new FluentComment( {"comment":"with the accessibleHelpText to create the full description content. For voicing, it will be used","associatedKey":"accessibleStateDescription"} ),
+      _comment_2: new FluentComment( {"comment":"separately as the reading block response.","associatedKey":"accessibleStateDescription"} ),
+      accessibleStateDescription: {
+        _comment_0: new FluentComment( {"comment":"Reusable description describing the number of types of proteins in the membrane.","associatedKey":"proteinTypeCountDescription"} ),
+        proteinTypeCountDescription: new FluentPattern<{ typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinTypeCountDescription', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinTypeCountDescriptionStringProperty' ), [{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
+        _comment_1: new FluentComment( {"comment":"For screens where you cannot add any proteins.","associatedKey":"proteinsHidden"} ),
+        _comment_2: new FluentComment( {"comment":"For screens where you cannot add any proteins.","associatedKey":"proteinsHidden"} ),
+        proteinsHidden: {
+          _comment_0: new FluentComment( {"comment":"For screens where there is no membrane potential control/display.","associatedKey":"potentialHidden"} ),
+          _comment_1: new FluentComment( {"comment":"For screens where there is no membrane potential control/display.","associatedKey":"potentialHidden"} ),
+          potentialHidden: {
+            noSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsHidden_potentialHidden_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsHidden.potentialHidden.noSolutesStringProperty' ) ),
+            withSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsHidden_potentialHidden_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsHidden.potentialHidden.withSolutesStringProperty' ) )
+          }
+        },
+        _comment_3: new FluentComment( {"comment":"For screens where you can add proteins.","associatedKey":"proteinsShown"} ),
+        _comment_4: new FluentComment( {"comment":"For screens where you can add proteins.","associatedKey":"proteinsShown"} ),
+        proteinsShown: {
+          _comment_0: new FluentComment( {"comment":"For screens where there is no membrane potential control/display.","associatedKey":"potentialHidden"} ),
+          _comment_1: new FluentComment( {"comment":"For screens where there is no membrane potential control/display.","associatedKey":"potentialHidden"} ),
+          potentialHidden: {
+            noProteins: {
+              noSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_noProteins_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.noProteins.noSolutesStringProperty' ) ),
+              withSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_noProteins_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.noProteins.withSolutesStringProperty' ) )
+            },
+            withProteins: {
+              noSolutes: new FluentPattern<{ typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_withProteins_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.withProteins.noSolutesStringProperty' ), [{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
+              withSolutes: new FluentPattern<{ typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialHidden_withProteins_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.withProteins.withSolutesStringProperty' ), [{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
+            }
+          },
+          _comment_2: new FluentComment( {"comment":"For screens where there is membrane potential control/display.","associatedKey":"potentialShown"} ),
+          potentialShown: {
+            noProteins: {
+              noSolutes: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_noProteins_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.noProteins.noSolutesStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
+              withSolutes: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_noProteins_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.noProteins.withSolutesStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] )
+            },
+            withProteins: {
+              noSolutes: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30>, typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_withProteins_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.withProteins.noSolutesStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]},{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
+              withSolutes: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30>, typeCount: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleStateDescription_proteinsShown_potentialShown_withProteins_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.withProteins.withSolutesStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]},{"name":"typeCount","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
+            }
+          }
+        }
+      },
+      _comment_3: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
+      _comment_4: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
+      accessibleHelpText: {
+        _comment_0: new FluentComment( {"comment":"For screens where you cannot add any proteins.","associatedKey":"proteinsHidden"} ),
+        _comment_1: new FluentComment( {"comment":"For screens where you cannot add any proteins.","associatedKey":"proteinsHidden"} ),
+        proteinsHidden: {
+          noSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpText_proteinsHidden_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpText.proteinsHidden.noSolutesStringProperty' ) ),
+          withSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpText_proteinsHidden_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpText.proteinsHidden.withSolutesStringProperty' ) )
+        },
+        _comment_2: new FluentComment( {"comment":"For screens where you can add proteins.","associatedKey":"proteinsShown"} ),
+        _comment_3: new FluentComment( {"comment":"For screens where you can add proteins.","associatedKey":"proteinsShown"} ),
+        proteinsShown: {
+          noProteins: {
+            noSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpText_proteinsShown_noProteins_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpText.proteinsShown.noProteins.noSolutesStringProperty' ) ),
+            withSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpText_proteinsShown_noProteins_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpText.proteinsShown.noProteins.withSolutesStringProperty' ) )
+          },
+          withProteins: {
+            noSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpText_proteinsShown_withProteins_noSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpText.proteinsShown.withProteins.noSolutesStringProperty' ) ),
+            withSolutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpText_proteinsShown_withProteins_withSolutes', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpText.proteinsShown.withProteins.withSolutesStringProperty' ) )
+          }
+        }
+      },
+      _comment_5: new FluentComment( {"comment":"The accessibleHelpText combines the accessibleStateDescription and accessibleHelpText for","associatedKey":"accessibleHelpTextPattern"} ),
+      _comment_6: new FluentComment( {"comment":"Interactive Description.","associatedKey":"accessibleHelpTextPattern"} ),
+      accessibleHelpTextPattern: new FluentPattern<{ accessibleHelpText: FluentVariable, accessibleStateDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHelpTextPattern', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHelpTextPatternStringProperty' ), [{"name":"accessibleHelpText"},{"name":"accessibleStateDescription"}] )
     },
     transportProtein: {
       _comment_0: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","associatedKey":"grabbedResponse"} ),

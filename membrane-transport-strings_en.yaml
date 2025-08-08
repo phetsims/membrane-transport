@@ -399,31 +399,69 @@ a11y:
   cellMembrane:
     accessibleHeading:                           Cell Membrane
 
-    # A description of the cell membrane when there are no solutes, and you cannot add any proteins.
-    accessibleHelpTextNoSolutesProteinsHidden:   Look to adjust solute types and amounts.
+    # A description of the current state of the protein. For Interactive Description, it will be combined
+    # with the accessibleHelpText to create the full description content. For voicing, it will be used
+    # separately as the reading block response.
+    accessibleStateDescription:
 
-    # A description of the cell membrane when there ARE solutes, but you cannot add any proteins.
-    accessibleHelpTextWithSolutesProteinsHidden: Observe crossing solutes. Look to adjust solute types and amounts.
+      # Reusable description describing the number of types of proteins in the membrane.
+      proteinTypeCountDescription: |-
+                                   { $typeCount ->
+                                     [one] { $typeCount } type
+                                     *[other] { $typeCount } types
+                                   } of proteins in membrane
 
-    # A description of the cell membrane when there are no solutes and no proteins yet.
-    accessibleHelpTextNoSolutesOrProteins:       No proteins, and membrane potential of { a11y.membranePotentialValue }. Look to adjust solutes and proteins.
+      # For screens where you cannot add any proteins.
+      proteinsHidden:
 
-    # A description of the cell membrane when there are solutes but no proteins yet.
-    accessibleHelpTextWithSolutesNoProteins:     No proteins, and membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes. Look to add proteins.
+        # For screens where there is no membrane potential control/display.
+        potentialHidden:
+          noSolutes:   No solutes.
+          withSolutes: Solute added.
 
-    # A description of the cell membrane when there are no solutes but there are proteins.
-    accessibleHelpTextWithProteinsNoSolutes:     |-
-                                                 {$typeCount ->
-                                                 [one] { $typeCount } type
-                                                 *[other] { $typeCount } types
-                                                 } of proteins in membrane and a membrane potential of { a11y.membranePotentialValue }. Look to adjust solute types and amounts.
+      # For screens where you can add proteins.
+      proteinsShown:
 
-    # A description of the cell membrane when there are solutes and proteins.
-    accessibleHelpTextWithSolutesAndProteins:    |-
-                                                 {$typeCount ->
-                                                 [one] { $typeCount } type
-                                                 *[other] { $typeCount } types
-                                                 } of proteins in membrane and a membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes and protein changes. Look to add solutes or proteins.
+        # For screens where there is no membrane potential control/display.
+        potentialHidden:
+          noProteins:
+            noSolutes:   No solutes or proteins.
+            withSolutes: Solute added, no proteins in membrane.
+          withProteins:
+            noSolutes:   No solutes. { a11y.cellMembrane.accessibleStateDescription.proteinTypeCountDescription }.
+            withSolutes: Solute added. { a11y.cellMembrane.accessibleStateDescription.proteinTypeCountDescription }.
+
+        # For screens where there is membrane potential control/display.
+        potentialShown:
+          noProteins:
+            noSolutes:   No solutes or proteins, and a membrane potential of { a11y.membranePotentialValue }.
+            withSolutes: Solute added, no proteins in membrane, and a membrane potential of { a11y.membranePotentialValue }.
+          withProteins:
+            noSolutes:   No solutes. { a11y.cellMembrane.accessibleStateDescription.proteinTypeCountDescription }, and a membrane potential of { a11y.membranePotentialValue }.
+            withSolutes: Solute added. { a11y.cellMembrane.accessibleStateDescription.proteinTypeCountDescription }, and a membrane potential of { a11y.membranePotentialValue }.
+
+    # The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription
+    # to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.
+    accessibleHelpText:
+
+      # For screens where you cannot add any proteins.
+      proteinsHidden:
+        noSolutes: Look to adjust solute types and amounts.
+        withSolutes: Observe crossing solutes. Look to adjust solute types and amounts.
+
+      # For screens where you can add proteins.
+      proteinsShown:
+        noProteins:
+          noSolutes: Look to add solutes and proteins.
+          withSolutes: Observe crossing solutes. Look to adjust solutes and proteins.
+        withProteins:
+          noSolutes: Look to adjust solutes and proteins.
+          withSolutes: Observe crossing solutes and protein changes. Look to adjust solutes and proteins.
+
+
+    # The accessibleHelpText combines the accessibleStateDescription and accessibleHelpText for
+    # Interactive Description.
+    accessibleHelpTextPattern: "{ $accessibleStateDescription } { $accessibleHelpText }"
 
   transportProtein:
     grabbedResponse:                Grabbed.
