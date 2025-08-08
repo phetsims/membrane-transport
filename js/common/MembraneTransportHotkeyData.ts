@@ -8,18 +8,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import StringProperty from '../../../axon/js/StringProperty.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import HotkeyData from '../../../scenery/js/input/HotkeyData.js';
 import { OneKeyStroke } from '../../../scenery/js/input/KeyDescriptor.js';
 import membraneTransport from '../membraneTransport.js';
 
-function createHotkeyData( keys: OneKeyStroke[],
-                           keyboardHelpDialogLabelStringProperty: TReadOnlyProperty<string> ): HotkeyData {
+function createHotkeyData( keys: OneKeyStroke[], binderName: string ): HotkeyData {
   return new HotkeyData( {
     keys: keys,
     repoName: membraneTransport.name,
-    keyboardHelpDialogLabelStringProperty: keyboardHelpDialogLabelStringProperty
+
+    // Keyboard Help content does not use HotkeyData directly because it needs
+    // to rearrange the keys in a specific order. So a name for binder is specified
+    // instead of a label for the keyboard help dialog.
+    binderName: binderName
   } );
 }
 
@@ -32,19 +33,19 @@ export default class MembraneTransportHotkeyData {
         ...MembraneTransportHotkeyData.SELECT_LEFT,
         ...MembraneTransportHotkeyData.SELECT_RIGHT
       ],
-      new StringProperty( 'Select a slot' )
+      'Select a slot in the membrane'
     ),
     releaseProtein: createHotkeyData(
       [ 'enter', 'space' ],
-      new StringProperty( 'Release protein' )
+      'Release protein'
     ),
     deleteProtein: createHotkeyData(
       [ 'backspace', 'delete' ],
-      new StringProperty( 'Delete protein' )
+      'Delete protein'
     ),
     cancelInteraction: createHotkeyData(
       [ 'escape' ],
-      new StringProperty( 'Cancel interaction' )
+      'Cancel interaction'
     )
   };
 
@@ -53,30 +54,30 @@ export default class MembraneTransportHotkeyData {
         ...MembraneTransportHotkeyData.SELECT_LEFT,
         ...MembraneTransportHotkeyData.SELECT_RIGHT
       ],
-      new StringProperty( 'Select a protein' )
+      'Select a protein'
     ),
     grabProtein: createHotkeyData(
       [ 'enter', 'space' ],
-      new StringProperty( 'Grab protein' )
+      'Grab protein'
     )
   };
 
   public static readonly soluteControl = {
     coarseIncrement: createHotkeyData(
       [ 'arrowRight', 'arrowUp', 'w', 'd' ],
-      new StringProperty( 'Coarse increment solute' )
+      'Coarse increment solute'
     ),
     coarseDecrement: createHotkeyData(
       [ 'arrowLeft', 'arrowDown', 's', 'a' ],
-      new StringProperty( 'Coarse decrement solute' )
+      'Coarse decrement solute'
     ),
     fineIncrement: createHotkeyData(
       [ 'shift+arrowRight', 'shift+arrowUp', 'shift+w', 'shift+d' ],
-      new StringProperty( 'Fine increment solute' )
+      'Fine increment solute'
     ),
     fineDecrement: createHotkeyData(
       [ 'shift+arrowLeft', 'shift+arrowDown', 'shift+s', 'shift+a' ],
-      new StringProperty( 'Fine decrement solute' )
+      'Fine decrement solute'
     )
   };
 }
