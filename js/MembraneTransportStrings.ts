@@ -131,6 +131,7 @@ type StringsType = {
       };
       'interactionHintStringProperty': LocalizedStringProperty;
       'interactionHintWithTransportProteinsStringProperty': LocalizedStringProperty;
+      'customInteractionsHintStringProperty': LocalizedStringProperty;
     };
     'soluteControls': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;

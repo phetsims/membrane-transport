@@ -8,7 +8,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -84,9 +83,9 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       currentDetailsContent: currentDetailsNode,
 
       interactionHintContent: [
-        model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
-                              MembraneTransportFluent.a11y.screenSummary.interactionHintWithTransportProteinsStringProperty,
-        new StringProperty( 'This screen has custom interactions.' )
+        ( model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
+          MembraneTransportFluent.a11y.screenSummary.interactionHintWithTransportProteinsStringProperty ),
+        MembraneTransportFluent.a11y.screenSummary.customInteractionsHintStringProperty
       ]
     } );
   }
