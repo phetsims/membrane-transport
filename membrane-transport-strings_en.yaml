@@ -158,8 +158,7 @@ a11y:
       accessibleContextResponseUnchecked: Solute crossing sounds off.
   transportProteinPanel:
     accessibleHeading:  Transport Proteins
-    accessibleHelpText: Use keyboard shortcuts to grab, sort,
-                        and release up to 7 proteins into membrane. Grab to pull to membrane.
+    accessibleHelpText: Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane sort or delete. 
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
@@ -205,7 +204,7 @@ a11y:
                                                  [starLigand]     Star Ligand
                                                  *[triangleLigand] Triangle Ligand
                                                  }
-    accessibleHelpText:                          Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally.
+    accessibleHelpText:                          Grab a ligand. Once grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally.
     releasedResponse:                            Released.
     releasedOffMembraneResponse:                 "{ a11y.ligandNode.accessibleName } released off membrane."
 
@@ -407,7 +406,7 @@ a11y:
     accessibleHelpTextWithSolutesProteinsHidden: Observe crossing solutes. Look to adjust solute types and amounts.
 
     # A description of the cell membrane when there are no solutes and no proteins yet.
-    accessibleHelpTextNoSolutesOrProteins:       No proteins, and membrane potential of { a11y.membranePotentialValue }. Look to add solutes and proteins.
+    accessibleHelpTextNoSolutesOrProteins:       No proteins, and membrane potential of { a11y.membranePotentialValue }. Look to adjust solutes and proteins.
 
     # A description of the cell membrane when there are solutes but no proteins yet.
     accessibleHelpTextWithSolutesNoProteins:     No proteins, and membrane potential of { a11y.membranePotentialValue }. Observe crossing solutes. Look to add proteins.

@@ -305,7 +305,7 @@
         "value": "Transport Proteins"
       },
       "accessibleHelpText": {
-        "value": "Use keyboard shortcuts to grab, sort, and release up to 7 proteins into membrane. Grab to pull to membrane."
+        "value": "Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane sort or delete."
       },
       "ligandGatedChannelPanel": {
         "sodiumIonNaPlusLigandGated": {
@@ -402,7 +402,7 @@
         "value": "{ $ligandType ->\n[starLigand]     Star Ligand\n*[triangleLigand] Triangle Ligand\n}"
       },
       "accessibleHelpText": {
-        "value": "Grab a ligand. When grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally."
+        "value": "Grab a ligand. Once grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally."
       },
       "releasedResponse": {
         "value": "Released."
@@ -558,7 +558,7 @@
         "value": "Observe crossing solutes. Look to adjust solute types and amounts."
       },
       "accessibleHelpTextNoSolutesOrProteins": {
-        "value": "No proteins, and membrane potential of { a11y_membranePotentialValue }. Look to add solutes and proteins."
+        "value": "No proteins, and membrane potential of { a11y_membranePotentialValue }. Look to adjust solutes and proteins."
       },
       "accessibleHelpTextWithSolutesNoProteins": {
         "value": "No proteins, and membrane potential of { a11y_membranePotentialValue }. Observe crossing solutes. Look to add proteins."
