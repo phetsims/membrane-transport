@@ -139,6 +139,7 @@ a11y:
       glucoseMetabolism:    Glucose disappears from inside as it is metabolized by the cell
     interactionHint:                      Add or remove solute to outside or inside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins.
+    customInteractionsHint:               This screen has custom interactions.
   soluteControls:
     accessibleHeading:  Solute Controls
     accessibleHelpText: Choose solute for adding or removing with Solute Adjusters.
@@ -158,7 +159,7 @@ a11y:
       accessibleContextResponseUnchecked: Solute crossing sounds off.
   transportProteinPanel:
     accessibleHeading:  Transport Proteins
-    accessibleHelpText: Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane sort or delete. 
+    accessibleHelpText: Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane sort or delete.
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
@@ -397,7 +398,7 @@ a11y:
     removedAccessibleContextResponse: Ligands removed.
 
   cellMembrane:
-    accessibleHeading:                           Cell Membrane
+    accessibleHeading:         Cell Membrane
 
     # A description of the current state of the protein. For Interactive Description, it will be combined
     # with the accessibleHelpText to create the full description content. For voicing, it will be used
@@ -446,16 +447,16 @@ a11y:
 
       # For screens where you cannot add any proteins.
       proteinsHidden:
-        noSolutes: Look to adjust solute types and amounts.
+        noSolutes:   Look to adjust solute types and amounts.
         withSolutes: Observe crossing solutes. Look to adjust solute types and amounts.
 
       # For screens where you can add proteins.
       proteinsShown:
         noProteins:
-          noSolutes: Look to add solutes and proteins.
+          noSolutes:   Look to add solutes and proteins.
           withSolutes: Observe crossing solutes. Look to adjust solutes and proteins.
         withProteins:
-          noSolutes: Look to adjust solutes and proteins.
+          noSolutes:   Look to adjust solutes and proteins.
           withSolutes: Observe crossing solutes and protein changes. Look to adjust solutes and proteins.
 
 
