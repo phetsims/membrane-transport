@@ -249,6 +249,10 @@ addToMapIfDefined( 'a11y_membraneTransportDescriber_sodiumPumpedOutside', 'a11y.
 addToMapIfDefined( 'a11y_membraneTransportDescriber_potassiumPumpedInside', 'a11y.membraneTransportDescriber.potassiumPumpedInsideStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_sodiumPumpedOutsideAndPotassiumPumpedInside', 'a11y.membraneTransportDescriber.sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_sodiumAndGlucoseShuttledInside', 'a11y.membraneTransportDescriber.sodiumAndGlucoseShuttledInsideStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_animateLipids_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.animateLipids.accessibleContextResponseLeftValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_animateLipids_accessibleContextResponseRightValue', 'a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseRightValue', 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -746,6 +750,17 @@ const MembraneTransportFluent = {
       potassiumPumpedInsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membraneTransportDescriber_potassiumPumpedInside', _.get( MembraneTransportStrings, 'a11y.membraneTransportDescriber.potassiumPumpedInsideStringProperty' ) ),
       sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membraneTransportDescriber_sodiumPumpedOutsideAndPotassiumPumpedInside', _.get( MembraneTransportStrings, 'a11y.membraneTransportDescriber.sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty' ) ),
       sodiumAndGlucoseShuttledInsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membraneTransportDescriber_sodiumAndGlucoseShuttledInside', _.get( MembraneTransportStrings, 'a11y.membraneTransportDescriber.sodiumAndGlucoseShuttledInsideStringProperty' ) )
+    },
+    _comment_11: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
+    preferencesDialog: {
+      animateLipids: {
+        accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_animateLipids_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.animateLipids.accessibleContextResponseLeftValueStringProperty' ) ),
+        accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_animateLipids_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty' ) )
+      },
+      glucoseMetabolism: {
+        accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' ) ),
+        accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' ) )
+      }
     }
   }
 };

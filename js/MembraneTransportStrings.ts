@@ -380,6 +380,16 @@ type StringsType = {
       'potassiumPumpedInsideStringProperty': LocalizedStringProperty;
       'sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty': LocalizedStringProperty;
       'sodiumAndGlucoseShuttledInsideStringProperty': LocalizedStringProperty;
+    };
+    'preferencesDialog': {
+      'animateLipids': {
+        'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+      };
+      'glucoseMetabolism': {
+        'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+      }
     }
   }
 };

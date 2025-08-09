@@ -666,3 +666,11 @@ a11y:
     potassiumPumpedInside:                       potassium pumped inside
     sodiumPumpedOutsideAndPotassiumPumpedInside: sodium pumped outside and potassium pumped inside
     sodiumAndGlucoseShuttledInside:              sodium and glucose shuttled inside
+
+  preferencesDialog:
+    animateLipids:
+      accessibleContextResponseLeftValue:  Lipids Animation off.
+      accessibleContextResponseRightValue: Lipids Animation on.
+    glucoseMetabolism:
+      accessibleContextResponseLeftValue:  Glucose Metabolism off.
+      accessibleContextResponseRightValue: Glucose Metabolism on.

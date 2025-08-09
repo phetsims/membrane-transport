@@ -807,6 +807,24 @@
       "sodiumAndGlucoseShuttledInside": {
         "value": "sodium and glucose shuttled inside"
       }
+    },
+    "preferencesDialog": {
+      "animateLipids": {
+        "accessibleContextResponseLeftValue": {
+          "value": "Lipids Animation off."
+        },
+        "accessibleContextResponseRightValue": {
+          "value": "Lipids Animation on."
+        }
+      },
+      "glucoseMetabolism": {
+        "accessibleContextResponseLeftValue": {
+          "value": "Glucose Metabolism off."
+        },
+        "accessibleContextResponseRightValue": {
+          "value": "Glucose Metabolism on."
+        }
+      }
     }
   }
 }

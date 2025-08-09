@@ -12,10 +12,11 @@
 
 import PreferencesControl from '../../../../joist/js/preferences/PreferencesControl.js';
 import PreferencesDialogConstants from '../../../../joist/js/preferences/PreferencesDialogConstants.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
+import ToggleSwitch, { ToggleSwitchOptions } from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -29,7 +30,14 @@ export default class MembraneTransportPreferencesNode extends VBox {
       isDisposable: false,
       labelNode: new Text( MembraneTransportFluent.preferencesDialog.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
       descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.animateLipids.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.animateLipidsProperty, false, true, combineOptions<ToggleSwitchOptions>(
+        {},
+        PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
+        {
+          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.animateLipids.accessibleContextResponseLeftValueStringProperty,
+          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty
+        }
+      ) ),
       tandem: tandem.createTandem( 'animateLipidsControl' ),
       phetioFeatured: true,
       visiblePropertyOptions: {
@@ -43,7 +51,14 @@ export default class MembraneTransportPreferencesNode extends VBox {
       isDisposable: false,
       labelNode: new Text( MembraneTransportFluent.preferencesDialog.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
       descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.glucoseMetabolism.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.glucoseMetabolismProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
+      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.glucoseMetabolismProperty, false, true, combineOptions<ToggleSwitchOptions>(
+        {},
+        PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
+        {
+          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty,
+          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty
+        }
+      ) ),
       tandem: tandem.createTandem( 'glucoseMetabolismControl' ),
       phetioFeatured: true,
       visiblePropertyOptions: {
