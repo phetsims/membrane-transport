@@ -46,8 +46,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
         {},
         PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
         {
-          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseLeftValueStringProperty,
-          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseRightValueStringProperty
+          accessibleContextResponseLeftValue: MembraneTransportFluent.a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseLeftValueStringProperty,
+          accessibleContextResponseRightValue: MembraneTransportFluent.a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseRightValueStringProperty
         }
       ) ),
       tandem: tandem.createTandem( 'animateLipidsControl' ),
@@ -77,8 +77,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
         {},
         PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
         {
-          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty,
-          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseRightValueStringProperty
+          accessibleContextResponseLeftValue: MembraneTransportFluent.a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty,
+          accessibleContextResponseRightValue: MembraneTransportFluent.a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseRightValueStringProperty
         }
       ) ),
       tandem: tandem.createTandem( 'glucoseMetabolismControl' ),

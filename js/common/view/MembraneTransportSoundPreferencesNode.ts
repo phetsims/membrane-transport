@@ -35,8 +35,8 @@ export default class MembraneTransportSoundPreferencesNode extends VBox {
         {},
         PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
         {
-          leftValueContextResponse: 'Stereo Crossing Sounds Off.',
-          rightValueContextResponse: 'Stereo Crossing Sounds On.'
+          accessibleContextResponseLeftValue: 'Stereo Crossing Sounds Off.',
+          accessibleContextResponseRightValue: 'Stereo Crossing Sounds On.'
         }
       ) ),
       descriptionNode: new VoicingRichText( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty, combineOptions<VoicingRichTextOptions>(
