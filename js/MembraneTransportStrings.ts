@@ -389,6 +389,14 @@ type StringsType = {
       'glucoseMetabolism': {
         'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
         'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+      };
+      'audio': {
+        'sounds': {
+          'stereoCrossingSounds': {
+            'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
+            'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+          }
+        }
       }
     }
   }

@@ -10,12 +10,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import JoistStrings from '../../../../joist/js/JoistStrings.js';
 import PreferencesControl from '../../../../joist/js/preferences/PreferencesControl.js';
 import PreferencesDialogConstants from '../../../../joist/js/preferences/PreferencesDialogConstants.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import VoicingRichText, { VoicingRichTextOptions } from '../../../../scenery/js/accessibility/voicing/nodes/VoicingRichText.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
-import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
+import ToggleSwitch, { ToggleSwitchOptions } from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -28,8 +31,25 @@ export default class MembraneTransportSoundPreferencesNode extends VBox {
     const stereoCrossingSoundsControl = new PreferencesControl( {
       isDisposable: false,
       labelNode: new Text( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ),
-      descriptionNode: new RichText( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+      controlNode: new ToggleSwitch( MembraneTransportPreferences.instance.stereoCrossingSoundsEnabledProperty, false, true, combineOptions<ToggleSwitchOptions>(
+        {},
+        PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
+        {
+          leftValueContextResponse: 'Stereo Crossing Sounds Off.',
+          rightValueContextResponse: 'Stereo Crossing Sounds On.'
+        }
+      ) ),
+      descriptionNode: new VoicingRichText( MembraneTransportFluent.preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty, combineOptions<VoicingRichTextOptions>(
+        {},
+        PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS,
+        {
+          accessibleParagraph: null,
+          readingBlockNameResponse: new PatternStringProperty( JoistStrings.a11y.preferences.tabs.labelledDescriptionPatternStringProperty, {
+            label: MembraneTransportFluent.preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty,
+            description: MembraneTransportFluent.preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty
+          } )
+        }
+      ) ),
       tandem: tandem.createTandem( 'stereoCrossingSoundsControl' ),
       phetioFeatured: true,
       visiblePropertyOptions: {

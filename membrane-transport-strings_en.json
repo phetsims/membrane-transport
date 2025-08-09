@@ -824,6 +824,18 @@
         "accessibleContextResponseRightValue": {
           "value": "Glucose Metabolism on."
         }
+      },
+      "audio": {
+        "sounds": {
+          "stereoCrossingSounds": {
+            "accessibleContextResponseLeftValue": {
+              "value": "Stereo Crossing Sounds off."
+            },
+            "accessibleContextResponseRightValue": {
+              "value": "Stereo Crossing Sounds on."
+            }
+          }
+        }
       }
     }
   }

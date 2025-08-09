@@ -253,6 +253,8 @@ addToMapIfDefined( 'a11y_preferencesDialog_animateLipids_accessibleContextRespon
 addToMapIfDefined( 'a11y_preferencesDialog_animateLipids_accessibleContextResponseRightValue', 'a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty' );
 addToMapIfDefined( 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' );
 addToMapIfDefined( 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseRightValue', 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.audio.sounds.stereoCrossingSounds.accessibleContextResponseLeftValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_accessibleContextResponseRightValue', 'a11y.preferencesDialog.audio.sounds.stereoCrossingSounds.accessibleContextResponseRightValueStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -760,6 +762,14 @@ const MembraneTransportFluent = {
       glucoseMetabolism: {
         accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' ) ),
         accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' ) )
+      },
+      audio: {
+        sounds: {
+          stereoCrossingSounds: {
+            accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.audio.sounds.stereoCrossingSounds.accessibleContextResponseLeftValueStringProperty' ) ),
+            accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.audio.sounds.stereoCrossingSounds.accessibleContextResponseRightValueStringProperty' ) )
+          }
+        }
       }
     }
   }

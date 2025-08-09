@@ -674,3 +674,8 @@ a11y:
     glucoseMetabolism:
       accessibleContextResponseLeftValue:  Glucose Metabolism off.
       accessibleContextResponseRightValue: Glucose Metabolism on.
+    audio:
+      sounds:
+        stereoCrossingSounds:
+          accessibleContextResponseLeftValue:  Stereo Crossing Sounds off.
+          accessibleContextResponseRightValue: Stereo Crossing Sounds on.
