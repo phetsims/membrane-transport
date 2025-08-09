@@ -47,13 +47,15 @@ type StringsType = {
     'removeLigandsStringProperty': LocalizedStringProperty;
   };
   'preferencesDialog': {
-    'animateLipids': {
-      'labelStringProperty': LocalizedStringProperty;
-      'descriptionStringProperty': LocalizedStringProperty;
-    };
-    'glucoseMetabolism': {
-      'labelStringProperty': LocalizedStringProperty;
-      'descriptionStringProperty': LocalizedStringProperty;
+    'simulation': {
+      'animateLipids': {
+        'labelStringProperty': LocalizedStringProperty;
+        'descriptionStringProperty': LocalizedStringProperty;
+      };
+      'glucoseMetabolism': {
+        'labelStringProperty': LocalizedStringProperty;
+        'descriptionStringProperty': LocalizedStringProperty;
+      }
     };
     'audio': {
       'sounds': {
@@ -382,13 +384,15 @@ type StringsType = {
       'sodiumAndGlucoseShuttledInsideStringProperty': LocalizedStringProperty;
     };
     'preferencesDialog': {
-      'animateLipids': {
-        'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
-        'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
-      };
-      'glucoseMetabolism': {
-        'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
-        'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+      'simulation': {
+        'animateLipids': {
+          'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
+          'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+        };
+        'glucoseMetabolism': {
+          'accessibleContextResponseLeftValueStringProperty': LocalizedStringProperty;
+          'accessibleContextResponseRightValueStringProperty': LocalizedStringProperty;
+        }
       };
       'audio': {
         'sounds': {

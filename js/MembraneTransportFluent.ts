@@ -51,10 +51,10 @@ addToMapIfDefined( 'transportProteinPanel_membranePotentialMV', 'transportProtei
 addToMapIfDefined( 'transportProteinPanel_charges', 'transportProteinPanel.chargesStringProperty' );
 addToMapIfDefined( 'transportProteinPanel_addLigands', 'transportProteinPanel.addLigandsStringProperty' );
 addToMapIfDefined( 'transportProteinPanel_removeLigands', 'transportProteinPanel.removeLigandsStringProperty' );
-addToMapIfDefined( 'preferencesDialog_animateLipids_label', 'preferencesDialog.animateLipids.labelStringProperty' );
-addToMapIfDefined( 'preferencesDialog_animateLipids_description', 'preferencesDialog.animateLipids.descriptionStringProperty' );
-addToMapIfDefined( 'preferencesDialog_glucoseMetabolism_label', 'preferencesDialog.glucoseMetabolism.labelStringProperty' );
-addToMapIfDefined( 'preferencesDialog_glucoseMetabolism_description', 'preferencesDialog.glucoseMetabolism.descriptionStringProperty' );
+addToMapIfDefined( 'preferencesDialog_simulation_animateLipids_label', 'preferencesDialog.simulation.animateLipids.labelStringProperty' );
+addToMapIfDefined( 'preferencesDialog_simulation_animateLipids_description', 'preferencesDialog.simulation.animateLipids.descriptionStringProperty' );
+addToMapIfDefined( 'preferencesDialog_simulation_glucoseMetabolism_label', 'preferencesDialog.simulation.glucoseMetabolism.labelStringProperty' );
+addToMapIfDefined( 'preferencesDialog_simulation_glucoseMetabolism_description', 'preferencesDialog.simulation.glucoseMetabolism.descriptionStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_label', 'preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty' );
 addToMapIfDefined( 'preferencesDialog_audio_sounds_stereoCrossingSounds_description', 'preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty' );
 addToMapIfDefined( 'soluteConcentrationsAccordionBox_title', 'soluteConcentrationsAccordionBox.titleStringProperty' );
@@ -249,10 +249,10 @@ addToMapIfDefined( 'a11y_membraneTransportDescriber_sodiumPumpedOutside', 'a11y.
 addToMapIfDefined( 'a11y_membraneTransportDescriber_potassiumPumpedInside', 'a11y.membraneTransportDescriber.potassiumPumpedInsideStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_sodiumPumpedOutsideAndPotassiumPumpedInside', 'a11y.membraneTransportDescriber.sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_sodiumAndGlucoseShuttledInside', 'a11y.membraneTransportDescriber.sodiumAndGlucoseShuttledInsideStringProperty' );
-addToMapIfDefined( 'a11y_preferencesDialog_animateLipids_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.animateLipids.accessibleContextResponseLeftValueStringProperty' );
-addToMapIfDefined( 'a11y_preferencesDialog_animateLipids_accessibleContextResponseRightValue', 'a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty' );
-addToMapIfDefined( 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' );
-addToMapIfDefined( 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseRightValue', 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_simulation_animateLipids_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseLeftValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_simulation_animateLipids_accessibleContextResponseRightValue', 'a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseRightValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_simulation_glucoseMetabolism_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' );
+addToMapIfDefined( 'a11y_preferencesDialog_simulation_glucoseMetabolism_accessibleContextResponseRightValue', 'a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' );
 addToMapIfDefined( 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_accessibleContextResponseLeftValue', 'a11y.preferencesDialog.audio.sounds.stereoCrossingSounds.accessibleContextResponseLeftValueStringProperty' );
 addToMapIfDefined( 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_accessibleContextResponseRightValue', 'a11y.preferencesDialog.audio.sounds.stereoCrossingSounds.accessibleContextResponseRightValueStringProperty' );
 
@@ -314,13 +314,15 @@ const MembraneTransportFluent = {
   },
   _comment_5: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
   preferencesDialog: {
-    animateLipids: {
-      labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_animateLipids_label', _.get( MembraneTransportStrings, 'preferencesDialog.animateLipids.labelStringProperty' ) ),
-      descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_animateLipids_description', _.get( MembraneTransportStrings, 'preferencesDialog.animateLipids.descriptionStringProperty' ) )
-    },
-    glucoseMetabolism: {
-      labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_glucoseMetabolism_label', _.get( MembraneTransportStrings, 'preferencesDialog.glucoseMetabolism.labelStringProperty' ) ),
-      descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_glucoseMetabolism_description', _.get( MembraneTransportStrings, 'preferencesDialog.glucoseMetabolism.descriptionStringProperty' ) )
+    simulation: {
+      animateLipids: {
+        labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_animateLipids_label', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.animateLipids.labelStringProperty' ) ),
+        descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_animateLipids_description', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.animateLipids.descriptionStringProperty' ) )
+      },
+      glucoseMetabolism: {
+        labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_glucoseMetabolism_label', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.glucoseMetabolism.labelStringProperty' ) ),
+        descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_glucoseMetabolism_description', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.glucoseMetabolism.descriptionStringProperty' ) )
+      }
     },
     audio: {
       sounds: {
@@ -755,13 +757,15 @@ const MembraneTransportFluent = {
     },
     _comment_11: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
     preferencesDialog: {
-      animateLipids: {
-        accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_animateLipids_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.animateLipids.accessibleContextResponseLeftValueStringProperty' ) ),
-        accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_animateLipids_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty' ) )
-      },
-      glucoseMetabolism: {
-        accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' ) ),
-        accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_glucoseMetabolism_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' ) )
+      simulation: {
+        animateLipids: {
+          accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_simulation_animateLipids_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseLeftValueStringProperty' ) ),
+          accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_simulation_animateLipids_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseRightValueStringProperty' ) )
+        },
+        glucoseMetabolism: {
+          accessibleContextResponseLeftValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_simulation_glucoseMetabolism_accessibleContextResponseLeftValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty' ) ),
+          accessibleContextResponseRightValueStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferencesDialog_simulation_glucoseMetabolism_accessibleContextResponseRightValue', _.get( MembraneTransportStrings, 'a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseRightValueStringProperty' ) )
+        }
       },
       audio: {
         sounds: {

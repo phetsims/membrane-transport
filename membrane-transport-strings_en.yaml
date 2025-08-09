@@ -46,12 +46,13 @@ transportProteinPanel:
 
 # Preferences Dialog
 preferencesDialog:
-  animateLipids:
-    label:       Lipids Animation
-    description: Remove wiggling animation of phospholipid bilayer forming the cell membrane.
-  glucoseMetabolism:
-    label:       Glucose Metabolism
-    description: Fade and remove glucose solutes inside cell to simulate conversion for cellular metabolism.
+  simulation:
+    animateLipids:
+      label:       Lipids Animation
+      description: Remove wiggling animation of phospholipid bilayer forming the cell membrane.
+    glucoseMetabolism:
+      label:       Glucose Metabolism
+      description: Fade and remove glucose solutes inside cell to simulate conversion for cellular metabolism.
   audio:
     sounds:
       stereoCrossingSounds:
@@ -668,12 +669,13 @@ a11y:
     sodiumAndGlucoseShuttledInside:              sodium and glucose shuttled inside
 
   preferencesDialog:
-    animateLipids:
-      accessibleContextResponseLeftValue:  Lipids Animation off.
-      accessibleContextResponseRightValue: Lipids Animation on.
-    glucoseMetabolism:
-      accessibleContextResponseLeftValue:  Glucose Metabolism off.
-      accessibleContextResponseRightValue: Glucose Metabolism on.
+    simulation:
+      animateLipids:
+        accessibleContextResponseLeftValue:  Lipids Animation off.
+        accessibleContextResponseRightValue: Lipids Animation on.
+      glucoseMetabolism:
+        accessibleContextResponseLeftValue:  Glucose Metabolism off.
+        accessibleContextResponseRightValue: Glucose Metabolism on.
     audio:
       sounds:
         stereoCrossingSounds:

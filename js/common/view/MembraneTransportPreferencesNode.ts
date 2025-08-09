@@ -30,15 +30,15 @@ export default class MembraneTransportPreferencesNode extends VBox {
 
     const animateLipidsControl = new PreferencesControl( {
       isDisposable: false,
-      labelNode: new Text( MembraneTransportFluent.preferencesDialog.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-      descriptionNode: new VoicingRichText( MembraneTransportFluent.preferencesDialog.animateLipids.descriptionStringProperty, combineOptions<VoicingRichTextOptions>(
+      labelNode: new Text( MembraneTransportFluent.preferencesDialog.simulation.animateLipids.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new VoicingRichText( MembraneTransportFluent.preferencesDialog.simulation.animateLipids.descriptionStringProperty, combineOptions<VoicingRichTextOptions>(
         {},
         PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS,
         {
           accessibleParagraph: null,
           readingBlockNameResponse: new PatternStringProperty( JoistStrings.a11y.preferences.tabs.labelledDescriptionPatternStringProperty, {
-            label: MembraneTransportFluent.preferencesDialog.animateLipids.labelStringProperty,
-            description: MembraneTransportFluent.preferencesDialog.animateLipids.descriptionStringProperty
+            label: MembraneTransportFluent.preferencesDialog.simulation.animateLipids.labelStringProperty,
+            description: MembraneTransportFluent.preferencesDialog.simulation.animateLipids.descriptionStringProperty
           } )
         }
       ) ),
@@ -46,8 +46,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
         {},
         PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
         {
-          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.animateLipids.accessibleContextResponseLeftValueStringProperty,
-          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.animateLipids.accessibleContextResponseRightValueStringProperty
+          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseLeftValueStringProperty,
+          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.animateLipids.accessibleContextResponseRightValueStringProperty
         }
       ) ),
       tandem: tandem.createTandem( 'animateLipidsControl' ),
@@ -61,15 +61,15 @@ export default class MembraneTransportPreferencesNode extends VBox {
 
     const glucoseMetabolismControl = new PreferencesControl( {
       isDisposable: false,
-      labelNode: new Text( MembraneTransportFluent.preferencesDialog.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-      descriptionNode: new VoicingRichText( MembraneTransportFluent.preferencesDialog.glucoseMetabolism.descriptionStringProperty, combineOptions<VoicingRichTextOptions>(
+      labelNode: new Text( MembraneTransportFluent.preferencesDialog.simulation.glucoseMetabolism.labelStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new VoicingRichText( MembraneTransportFluent.preferencesDialog.simulation.glucoseMetabolism.descriptionStringProperty, combineOptions<VoicingRichTextOptions>(
         {},
         PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS,
         {
           accessibleParagraph: null,
           readingBlockNameResponse: new PatternStringProperty( JoistStrings.a11y.preferences.tabs.labelledDescriptionPatternStringProperty, {
-            label: MembraneTransportFluent.preferencesDialog.glucoseMetabolism.labelStringProperty,
-            description: MembraneTransportFluent.preferencesDialog.glucoseMetabolism.descriptionStringProperty
+            label: MembraneTransportFluent.preferencesDialog.simulation.glucoseMetabolism.labelStringProperty,
+            description: MembraneTransportFluent.preferencesDialog.simulation.glucoseMetabolism.descriptionStringProperty
           } )
         }
       ) ),
@@ -77,8 +77,8 @@ export default class MembraneTransportPreferencesNode extends VBox {
         {},
         PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS,
         {
-          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty,
-          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.glucoseMetabolism.accessibleContextResponseRightValueStringProperty
+          leftValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseLeftValueStringProperty,
+          rightValueContextResponse: MembraneTransportFluent.a11y.preferencesDialog.simulation.glucoseMetabolism.accessibleContextResponseRightValueStringProperty
         }
       ) ),
       tandem: tandem.createTandem( 'glucoseMetabolismControl' ),

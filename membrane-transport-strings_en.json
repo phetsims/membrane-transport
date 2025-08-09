@@ -78,20 +78,22 @@
     }
   },
   "preferencesDialog": {
-    "animateLipids": {
-      "label": {
-        "value": "Lipids Animation"
+    "simulation": {
+      "animateLipids": {
+        "label": {
+          "value": "Lipids Animation"
+        },
+        "description": {
+          "value": "Remove wiggling animation of phospholipid bilayer forming the cell membrane."
+        }
       },
-      "description": {
-        "value": "Remove wiggling animation of phospholipid bilayer forming the cell membrane."
-      }
-    },
-    "glucoseMetabolism": {
-      "label": {
-        "value": "Glucose Metabolism"
-      },
-      "description": {
-        "value": "Fade and remove glucose solutes inside cell to simulate conversion for cellular metabolism."
+      "glucoseMetabolism": {
+        "label": {
+          "value": "Glucose Metabolism"
+        },
+        "description": {
+          "value": "Fade and remove glucose solutes inside cell to simulate conversion for cellular metabolism."
+        }
       }
     },
     "audio": {
@@ -809,20 +811,22 @@
       }
     },
     "preferencesDialog": {
-      "animateLipids": {
-        "accessibleContextResponseLeftValue": {
-          "value": "Lipids Animation off."
+      "simulation": {
+        "animateLipids": {
+          "accessibleContextResponseLeftValue": {
+            "value": "Lipids Animation off."
+          },
+          "accessibleContextResponseRightValue": {
+            "value": "Lipids Animation on."
+          }
         },
-        "accessibleContextResponseRightValue": {
-          "value": "Lipids Animation on."
-        }
-      },
-      "glucoseMetabolism": {
-        "accessibleContextResponseLeftValue": {
-          "value": "Glucose Metabolism off."
-        },
-        "accessibleContextResponseRightValue": {
-          "value": "Glucose Metabolism on."
+        "glucoseMetabolism": {
+          "accessibleContextResponseLeftValue": {
+            "value": "Glucose Metabolism off."
+          },
+          "accessibleContextResponseRightValue": {
+            "value": "Glucose Metabolism on."
+          }
         }
       },
       "audio": {
