@@ -348,12 +348,11 @@ a11y:
                                     *[maxAmount] max amount of
                                    } { a11y.solutes.lowercaseName }
     accessibleContextResponse:     |-
-                                   { $amountAdded ->
-                                     [aLittle] Ten
-                                    *[aLot]    Fifty
-                                   } { $addedOrRemoved ->
-                                     [added]   added
-                                    *[removed] removed
+                                   { $addedOrRemoved ->
+                                     [addedToMax] Solutes added to max
+                                     [removedToMin] Solutes removed
+                                     [added]  {$delta} added
+                                    *[removed] {$delta} removed
                                    }. Now, { a11y.solutes.amountComparison }. 
 
   soluteConcentrationsAccordionBox:

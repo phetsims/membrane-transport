@@ -126,21 +126,23 @@ export default class SoluteControl extends Voicing( Panel ) {
       }
 
       const difference = newValue - previousValue;
-      const amountAdded = Math.abs( difference ) === coarseDelta ? 'aLot' : 'aLittle';
-      const addedOrRemoved = ( difference > 0 ) ? 'added' : 'removed';
+
+      let addedOrRemoved: 'added' | 'removed' | 'addedToMax' | 'removedToMin';
+      if ( difference > 0 ) {
+        addedOrRemoved = ( newValue === MembraneTransportConstants.MAX_SOLUTE_COUNT ) ? 'addedToMax' : 'added';
+      }
+      else {
+        addedOrRemoved = ( newValue === 0 ) ? 'removedToMin' : 'removed';
+      }
 
       const insideCount = model.insideSoluteCountProperties[ soluteType ].value;
       const outsideCount = model.outsideSoluteCountProperties[ soluteType ].value;
 
-      // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
-      // pressed rapidly.
-      const text = MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
-        amountAdded: amountAdded, // aLittle / aLot
-        addedOrRemoved: addedOrRemoved, // added / removed
+      return MembraneTransportFluent.a11y.soluteControl.accessibleContextResponse.format( {
+        delta: Math.abs( difference ),
+        addedOrRemoved: addedOrRemoved,
         amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
       } );
-
-      return text;
     };
 
     const createContextResponse = ( newValue: number, previousValue: number ) => {
