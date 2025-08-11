@@ -350,7 +350,7 @@ a11y:
                                    } { a11y.solutes.lowercaseName }
     accessibleContextResponse:     |-
                                    { $addedOrRemoved ->
-                                     [addedToMax] Solutes added to max
+                                     [addedToMax] {$delta} added, solute at max
                                      [removedToMin] Solutes removed
                                      [added]  {$delta} added
                                     *[removed] {$delta} removed
