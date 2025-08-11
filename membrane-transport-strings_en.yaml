@@ -512,7 +512,7 @@ a11y:
                                        [openToOutsidePotassiumBound] Phosphate floating away, pumping 2 potassium to inside, open to outside
                                     
                                        [openToOutsideAwaitingParticles] { $warning ->
-                                         [shown] Warning, sodium concentration too low for binding, open to outside
+                                         [shown] Warning, outside sodium too low for binding, open to outside
                                          *[hidden] Awaiting sodium and glucose, open to outside
                                        }
                                        [openToOutsideAllParticlesBound] Sodium and glucose bound, open to outside
