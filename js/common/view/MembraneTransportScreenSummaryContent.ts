@@ -83,9 +83,8 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
       currentDetailsContent: currentDetailsNode,
 
       interactionHintContent: [
-        ( model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
-          MembraneTransportFluent.a11y.screenSummary.interactionHintWithTransportProteinsStringProperty ),
-        MembraneTransportFluent.a11y.screenSummary.customInteractionsHintStringProperty
+        model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
+        MembraneTransportFluent.a11y.screenSummary.interactionHintWithTransportProteinsStringProperty
       ]
     } );
   }

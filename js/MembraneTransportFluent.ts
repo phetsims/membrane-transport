@@ -98,7 +98,6 @@ addToMapIfDefined( 'a11y_screenSummary_currentDetails_membranePotential', 'a11y.
 addToMapIfDefined( 'a11y_screenSummary_currentDetails_glucoseMetabolism', 'a11y.screenSummary.currentDetails.glucoseMetabolismStringProperty' );
 addToMapIfDefined( 'a11y_screenSummary_interactionHint', 'a11y.screenSummary.interactionHintStringProperty' );
 addToMapIfDefined( 'a11y_screenSummary_interactionHintWithTransportProteins', 'a11y.screenSummary.interactionHintWithTransportProteinsStringProperty' );
-addToMapIfDefined( 'a11y_screenSummary_customInteractionsHint', 'a11y.screenSummary.customInteractionsHintStringProperty' );
 addToMapIfDefined( 'a11y_soluteControls_accessibleHeading', 'a11y.soluteControls.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_soluteControls_accessibleHelpText', 'a11y.soluteControls.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_eraseSolutesButton_accessibleName', 'a11y.eraseSolutesButton.accessibleNameStringProperty' );
@@ -404,8 +403,7 @@ const MembraneTransportFluent = {
         glucoseMetabolismStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_screenSummary_currentDetails_glucoseMetabolism', _.get( MembraneTransportStrings, 'a11y.screenSummary.currentDetails.glucoseMetabolismStringProperty' ) )
       },
       interactionHintStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_screenSummary_interactionHint', _.get( MembraneTransportStrings, 'a11y.screenSummary.interactionHintStringProperty' ) ),
-      interactionHintWithTransportProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_screenSummary_interactionHintWithTransportProteins', _.get( MembraneTransportStrings, 'a11y.screenSummary.interactionHintWithTransportProteinsStringProperty' ) ),
-      customInteractionsHintStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_screenSummary_customInteractionsHint', _.get( MembraneTransportStrings, 'a11y.screenSummary.customInteractionsHintStringProperty' ) )
+      interactionHintWithTransportProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_screenSummary_interactionHintWithTransportProteins', _.get( MembraneTransportStrings, 'a11y.screenSummary.interactionHintWithTransportProteinsStringProperty' ) )
     },
     soluteControls: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteControls_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.soluteControls.accessibleHeadingStringProperty' ) ),
