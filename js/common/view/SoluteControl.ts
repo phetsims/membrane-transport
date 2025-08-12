@@ -10,6 +10,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Range from '../../../../dot/js/Range.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
@@ -287,7 +288,7 @@ export default class SoluteControl extends Voicing( Panel ) {
           decrementFineButton.pdomClick();
         }
         else {
-          assert && assert( false, `Unexpected key pressed: ${keysPressed}` );
+          affirm( false, `Unexpected key pressed: ${keysPressed}` );
         }
       },
 

@@ -10,6 +10,7 @@
  */
 
 import Dimension2 from '../../../../../dot/js/Dimension2.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import { ParticleType, ParticleTypeValues } from '../../model/SoluteType.js';
 import createParticleNode from './createParticleNode.js';
 
@@ -25,7 +26,7 @@ export default function getParticleViewDimensions(): Record<ParticleType, Dimens
       const myParticleNode = createParticleNode( soluteType );
       const soluteNodeBounds = myParticleNode.bounds;
 
-      assert && assert( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
+      affirm( soluteNodeBounds.height > 0, `soluteNodeBounds.height is ${soluteNodeBounds.height}` );
 
       record[ soluteType ] = new Dimension2( soluteNodeBounds.width, soluteNodeBounds.height );
     } );

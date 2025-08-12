@@ -8,6 +8,7 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import AccessibleInteractiveOptions from '../../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
@@ -40,7 +41,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     const viewWidth = MembraneTransportConstants.OBSERVATION_WINDOW_MODEL_VIEW_TRANSFORM.modelToViewDeltaX( modelWidth );
 
     // All protein artwork must have the same width to ensure consistent scaling of transport proteins and correct relative sizing within each artwork
-    assert && assert( image.width === 650, `By design, the images should be 650 view units wide, this one was ${image.width}` );
+    affirm( image.width === 650, `By design, the images should be 650 view units wide, this one was ${image.width}` );
 
     const viewScale = viewWidth / image.width;
     this.setScaleMagnitude( viewScale );

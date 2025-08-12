@@ -12,6 +12,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
@@ -86,11 +87,11 @@ export default abstract class Particle {
 
     this.dimension = new Dimension2( width, height );
 
-    assert && assert( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
-    assert && assert( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );
-    assert && assert( this.dimension.width > 0, 'dimension.width should be greater than 0' );
-    assert && assert( this.dimension.height > 0, 'dimension.height should be greater than 0' );
-    assert && assert( this.dimension.height / 2 < CAPTURE_RADIUS_PROPERTY.value, 'The capture radius is too small for interaction with membrane.' );
+    affirm( !isNaN( this.dimension.width ), 'dimension.width should not be NaN' );
+    affirm( !isNaN( this.dimension.height ), 'dimension.height should not be NaN' );
+    affirm( this.dimension.width > 0, 'dimension.width should be greater than 0' );
+    affirm( this.dimension.height > 0, 'dimension.height should be greater than 0' );
+    affirm( this.dimension.height / 2 < CAPTURE_RADIUS_PROPERTY.value, 'The capture radius is too small for interaction with membrane.' );
 
     // Start in random walk mode with random directions.
     this.mode = Particle.createRandomWalkMode( true );

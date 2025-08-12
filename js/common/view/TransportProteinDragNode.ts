@@ -14,6 +14,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
@@ -156,7 +157,7 @@ export default class TransportProteinDragNode extends Node {
 
           // If it can animate back to the toolbox, do so. May not be possible if the toolbox is hidden via phet-io.
           if ( toolNode.wasVisuallyDisplayed() ) {
-            assert && assert( toolNode, `toolNode should be defined, type = ${this.type}` ); // This was failing on CT
+            affirm( toolNode, `toolNode should be defined, type = ${this.type}` ); // This was failing on CT
             const viewPoint = view.globalToLocalPoint( toolNode.transportProteinNode.globalBounds.center );
             const modelPoint = screenViewModelViewTransform.viewToModelPosition( viewPoint );
 
