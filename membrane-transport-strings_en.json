@@ -257,9 +257,6 @@
       },
       "interactionHintWithTransportProteins": {
         "value": "Add or remove solutes to outside or inside of cell, and play with transport proteins."
-      },
-      "customInteractionsHint": {
-        "value": "This screen has custom interactions."
       }
     },
     "soluteControls": {

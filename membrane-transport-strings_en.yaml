@@ -140,7 +140,6 @@ a11y:
       glucoseMetabolism:    Glucose disappears from inside as it is metabolized by the cell
     interactionHint:                      Add or remove solute to outside or inside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins.
-    customInteractionsHint:               This screen has custom interactions.
   soluteControls:
     accessibleHeading:  Solute Controls
     accessibleHelpText: Choose solute for adding or removing with Solute Adjusters.
