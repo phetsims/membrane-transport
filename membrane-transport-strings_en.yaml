@@ -163,7 +163,7 @@ a11y:
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
       potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
-      accessibleHelpText:           Transmembrane single channel proteins that can be open or closed. When closed has a tiangle- or star-shaped ligand binding site.
+      accessibleHelpText:           Transmembrane single channel proteins that can be open or closed. When closed has a triangle- or star-shaped ligand binding site.
     leakageChannelPanel:
       sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
       potassiumIonKPlusLeakage: Potassium-selective, Leakage
