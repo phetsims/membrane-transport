@@ -270,7 +270,6 @@ export default class SoluteControl extends Voicing( Panel ) {
         this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
 
         // voicing
-        console.log( 'here?' );
         this.voicingSpeakResponse( {
           nameResponse: accessibleName,
           objectResponse: getObjectResponseContent()
