@@ -23,6 +23,7 @@ import ArrowButton, { ArrowButtonOptions } from '../../../../sun/js/buttons/Arro
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ResponsePatternCollection from '../../../../utterance-queue/js/ResponsePatternCollection.js';
 import ValueChangeUtterance from '../../../../utterance-queue/js/ValueChangeUtterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -77,6 +78,10 @@ export default class SoluteControl extends Voicing( Panel ) {
 
       // this control manages its own voicing on focus
       voicingFocusListener: null,
+
+      // For this control, it was requested that the object response be spoken before the name response, see
+      // https://github.com/phetsims/membrane-transport/issues/244#issuecomment-3189249913
+      voicingResponsePatternCollection: ResponsePatternCollection.OBJECT_RESPONSE_FIRST_PATTERNS,
 
       // A custom shorter voicingHintResponse was requested for this control, see
       // https://github.com/phetsims/membrane-transport/issues/219
