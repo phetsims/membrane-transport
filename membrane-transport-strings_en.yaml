@@ -465,6 +465,7 @@ a11y:
 
   transportProtein:
     grabbedResponse:                Grabbed.
+    initialGrabbedHintResponse:     Choose slot with A or D keys. Space to release. Delete to remove.
     offMembraneResponse:            Off membrane.
     releasedReplacedResponse:       Released. Protein replaced.
     deletedResponse:                Deleted.

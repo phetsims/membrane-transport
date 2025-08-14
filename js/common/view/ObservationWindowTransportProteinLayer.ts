@@ -334,6 +334,10 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     this.interactiveSlotsNode.grab( slot, type, toolNode );
   }
 
+  public reset(): void {
+    this.interactiveSlotsNode.reset();
+  }
+
   public step( dt: number ): void {
     this.children.forEach( child => {
       if ( child instanceof TransportProteinNode ) {

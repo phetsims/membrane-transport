@@ -84,6 +84,9 @@ export default class InteractiveSlotsNode extends Node {
   // read to the user while they are selecting a new slot.
   private focusableRectangles: Rectangle[] = [];
 
+  // The first time the protein is grabbed, additional information about how to interact with the protein is read to the user.
+  private firstProteinGrab = true;
+
   // Utterances should not interrupt others so we hear the 'grabbed' response and the name of the protein.
   private readonly grabReleaseUtterance = new Utterance( {
     announcerOptions: {
@@ -558,6 +561,13 @@ export default class InteractiveSlotsNode extends Node {
     // Alert 'grabbed' after so that it will interrupt the focus change read above.
     this.alertGrabRelease( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
 
+    if ( this.firstProteinGrab ) {
+
+      // The first time a protein is grabbed, read additional information about how to interact with it.\
+      // Output is queued so that it does not interrupt the grabbed response.
+      this.addAccessibleHelpResponse( MembraneTransportFluent.a11y.transportProtein.initialGrabbedHintResponseStringProperty, 'queue' );
+    }
+
     this.grabbedNode.grab( () => {
 
       // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -569,6 +579,15 @@ export default class InteractiveSlotsNode extends Node {
       // Move focus to the grabbed Node.
       this.updateFocus();
     } );
+
+    this.firstProteinGrab = false;
+  }
+
+  /**
+   * Reset variables that track successful interactions so that the interaction hint will be read again after reset.
+   */
+  public reset(): void {
+    this.firstProteinGrab = true;
   }
 
   /**

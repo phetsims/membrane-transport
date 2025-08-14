@@ -317,6 +317,7 @@ type StringsType = {
     };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;
+      'initialGrabbedHintResponseStringProperty': LocalizedStringProperty;
       'offMembraneResponseStringProperty': LocalizedStringProperty;
       'releasedReplacedResponseStringProperty': LocalizedStringProperty;
       'deletedResponseStringProperty': LocalizedStringProperty;

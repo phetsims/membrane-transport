@@ -198,6 +198,7 @@ addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsShown_withProte
 addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsShown_withProteins_withSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsShown.withProteins.withSolutesStringProperty' );
 addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpTextPattern', 'a11y.cellMembrane.accessibleHelpTextPatternStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_grabbedResponse', 'a11y.transportProtein.grabbedResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_initialGrabbedHintResponse', 'a11y.transportProtein.initialGrabbedHintResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_offMembraneResponse', 'a11y.transportProtein.offMembraneResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_releasedReplacedResponse', 'a11y.transportProtein.releasedReplacedResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_deletedResponse', 'a11y.transportProtein.deletedResponseStringProperty' );
@@ -661,6 +662,7 @@ const MembraneTransportFluent = {
     transportProtein: {
       _comment_0: new FluentComment( {"comment":"Spoken when the ligand is grabbed.","associatedKey":"grabbedResponse"} ),
       grabbedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_grabbedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.grabbedResponseStringProperty' ) ),
+      initialGrabbedHintResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_initialGrabbedHintResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.initialGrabbedHintResponseStringProperty' ) ),
       offMembraneResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_offMembraneResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.offMembraneResponseStringProperty' ) ),
       releasedReplacedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_releasedReplacedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.releasedReplacedResponseStringProperty' ) ),
       deletedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_deletedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.deletedResponseStringProperty' ) ),

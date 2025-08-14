@@ -81,6 +81,7 @@ export default class ObservationWindow extends Node {
 
     this.transportProteinLayer = new ObservationWindowTransportProteinLayer( model, view, modelViewTransform );
     this.stepEmitter.addListener( dt => this.transportProteinLayer.step( dt ) );
+    this.resetEmitter.addListener( () => this.transportProteinLayer.reset() );
     clipNode.addChild( this.transportProteinLayer );
 
     // ligand and membrane transport protein layer
