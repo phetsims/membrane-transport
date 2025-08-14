@@ -75,6 +75,9 @@ export default class SoluteControl extends Voicing( Panel ) {
       // voicing
       voicingNameResponse: accessibleName,
 
+      // this control manages its own voicing on focus
+      voicingFocusListener: null,
+
       // A custom shorter voicingHintResponse was requested for this control, see
       // https://github.com/phetsims/membrane-transport/issues/219
       voicingHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
@@ -262,7 +265,16 @@ export default class SoluteControl extends Voicing( Panel ) {
     // Speak the object response describing the "value" of the control when it is focused.
     this.focusedProperty.link( focused => {
       if ( focused ) {
+
+        // pdom
         this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
+
+        // voicing
+        console.log( 'here?' );
+        this.voicingSpeakResponse( {
+          nameResponse: accessibleName,
+          objectResponse: getObjectResponseContent()
+        } );
       }
     } );
 
