@@ -203,7 +203,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
       this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ), 'queue' );
 
-      this.voicingSpeakFullResponse( {
+      this.voicingSpeakResponse( {
         nameResponse: accessibleName,
         objectResponse: getObjectResponseContent(),
         contextResponse: createContextResponseContent( totalCountProperty.value, valueBefore )
