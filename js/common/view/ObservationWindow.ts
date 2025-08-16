@@ -13,7 +13,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -23,7 +22,6 @@ import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
-import InsideOutsideLabel from './InsideOutsideLabel.js';
 import LigandNode from './LigandNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -146,24 +144,6 @@ export default class ObservationWindow extends Node {
       // Add all nodes to clipNode in the specified order
       orderedLigandNodes.forEach( ligandNode => clipNode.addChild( ligandNode ) );
     }
-
-    // NOTE: Duplication with SoluteConcentrationsAccordionBox
-    const TEXT_MARGIN = 3;
-    const TEXT_MAX_WIDTH = 120;
-    const outsideText = new InsideOutsideLabel( 'outside', TEXT_MAX_WIDTH );
-    const insideText = new InsideOutsideLabel( 'inside', TEXT_MAX_WIDTH );
-
-    ManualConstraint.create( this, [ outsideText ], outsideTextProxy => {
-      outsideTextProxy.top = TEXT_MARGIN;
-      outsideTextProxy.left = TEXT_MARGIN;
-    } );
-    ManualConstraint.create( this, [ insideText ], insideTextProxy => {
-      insideTextProxy.bottom = MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT - TEXT_MARGIN;
-      insideTextProxy.left = TEXT_MARGIN;
-    } );
-
-    this.addChild( outsideText );
-    this.addChild( insideText );
 
     // Draw the particles in front
     const frontCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'front' );

@@ -18,6 +18,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
+import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
@@ -252,6 +253,9 @@ export default class MembraneTransportScreenView extends ScreenView {
       }
     } );
 
+    const insideSoluteControlAlignGroup = new AlignGroup();
+    const outsideSoluteControlAlignGroup = new AlignGroup();
+
     // Number controls for the 'outside' solute concentrations
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
     getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
@@ -264,7 +268,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
       // ATP can only be added inside the cell
       if ( soluteType !== 'atp' ) {
-        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside',
+        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', outsideSoluteControlAlignGroup,
           outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
             centerX: soluteControlCenterX,
             top: this.observationWindow.top,
@@ -276,14 +280,18 @@ export default class MembraneTransportScreenView extends ScreenView {
         soluteControls.push( outsideSoluteControl );
       }
 
-      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside',
+      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', insideSoluteControlAlignGroup,
         insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
           centerX: soluteControlCenterX,
-          bottom: this.observationWindow.bottom,
 
           // So it is very clear that this is associated with the inside of the cell
           fill: MembraneTransportColors.observationWindowInsideCellColorProperty
         } );
+
+      ManualConstraint.create( this, [ insideSoluteControl, this.observationWindow ], ( insideSoluteControlProxy, observationWindowProxy ) => {
+        insideSoluteControlProxy.bottom = observationWindowProxy.bottom;
+      } );
+
       insideSoluteControlNode.addChild( insideSoluteControl );
       soluteControls.push( insideSoluteControl );
     } );

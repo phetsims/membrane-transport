@@ -17,8 +17,11 @@ import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibil
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
+import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import ArrowButton, { ArrowButtonOptions } from '../../../../sun/js/buttons/ArrowButton.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
@@ -32,6 +35,7 @@ import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolute } from '../model/SoluteType.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
+import createParticleNode from './particles/createParticleNode.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -45,6 +49,7 @@ export default class SoluteControl extends Voicing( Panel ) {
   public constructor( model: MembraneTransportModel,
                       soluteType: SoluteControlSolute,
                       side: 'outside' | 'inside',
+                      alignGroup: AlignGroup,
                       tandem: Tandem,
                       providedOptions: SoluteControlOptions
   ) {
@@ -255,6 +260,8 @@ export default class SoluteControl extends Voicing( Panel ) {
       }, buttonOptions, coarseButtonOptions, { tandem: tandem.createTandem( 'incrementCoarseButton' ) } )
     );
 
+    const TEXT_MAX_WIDTH = 80;
+
     const buttonBox = new HBox( {
       spacing: 10,
       children: [
@@ -265,7 +272,38 @@ export default class SoluteControl extends Voicing( Panel ) {
       ]
     } );
 
-    super( buttonBox, options );
+    // ############ TODO: https://github.com/phetsims/membrane-transport/issues/408 This code is copied with SolutesPanel.ts
+    const icon = createParticleNode( soluteType );
+
+    // We want to keep the relative sizes correct for the gas solutes and the icons
+    // but the ATP and Glucose are much larger, so we scale them down.
+    icon.setScaleMagnitude( soluteType === 'atp' ? 0.045 :
+                            soluteType === 'glucose' ? 0.09 :
+                            0.1 );
+
+    // ATP is vertical in the play area but horizontal in the radio button icon
+    icon.setRotation( soluteType === 'atp' ? Math.PI / 2 : 0 );
+    // ############ This code is copied with SolutesPanel.ts
+
+    const label = new HBox( {
+      spacing: 5,
+      children: [
+        alignGroup.createBox( icon ),
+        new Text( side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty : MembraneTransportFluent.cellRegions.insideStringProperty, {
+          fontSize: 13,
+          maxWidth: TEXT_MAX_WIDTH
+        } )
+      ]
+    } );
+    const contents = new VBox( {
+      spacing: 5,
+      children: [
+        label,
+        buttonBox
+      ]
+    } );
+
+    super( contents, options );
 
     // Speak the object response describing the "value" of the control when it is focused.
     this.focusedProperty.link( focused => {
