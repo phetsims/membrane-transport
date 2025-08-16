@@ -34,7 +34,7 @@ import MembraneTransportColors from '../MembraneTransportColors.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import TransportProteinType from '../model/proteins/TransportProteinType.js';
+import TransportProteinType, { TransportProteinTypeValues } from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MembranePotentialDescriber from './MembranePotentialDescriber.js';
@@ -47,6 +47,7 @@ import SolutesPanel from './SolutesPanel.js';
 import ThumbnailNode from './ThumbnailNode.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
 import TransportProteinPanel from './TransportProteinPanel.js';
+import TransportProteinToolboxGrabCueNode from './TransportProteinToolboxGrabCueNode.js';
 import TransportProteinToolNode from './TransportProteinToolNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -64,6 +65,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
   public readonly screenViewModelViewTransform: ModelViewTransform2;
   private readonly transportProteinPanel?: TransportProteinPanel;
+  private readonly transportProteinToolboxGrabCueNode?: TransportProteinToolboxGrabCueNode;
 
   public constructor(
     public readonly model: MembraneTransportModel,
@@ -350,6 +352,22 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
 
     this.model.membranePotentialProperty.lazyLink( MembranePotentialDescriber.createListener( model, this ) );
+
+    // For screens with transport proteins, create the toolbox grab cue node.
+    if ( this.transportProteinPanel ) {
+      const transportProteinToolNodes = TransportProteinTypeValues.map( type => this.transportProteinPanel!.getTransportProteinToolNode( type ) ).filter( node => !!node );
+      this.transportProteinToolboxGrabCueNode = new TransportProteinToolboxGrabCueNode( transportProteinToolNodes );
+
+      // Set the x-coordinate of the grab cue node to be to the right of the left edge of the transport protein panel (overlapping)
+      // y-coordinate is set in TransportProteinToolboxGrabCueNode, so we only need to set the x-coordinate.
+      ManualConstraint.create( this, [ this.transportProteinPanel, this.transportProteinToolboxGrabCueNode ], ( transportProteinPanelProxy, grabCueNodeProxy ) => {
+        grabCueNodeProxy.right = transportProteinPanelProxy.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN * 2;
+      } );
+
+      this.addChild( this.transportProteinToolboxGrabCueNode );
+
+      this.resetEmitter.addListener( () => this.transportProteinToolboxGrabCueNode!.reset() );
+    }
   }
 
   /**
@@ -413,6 +431,8 @@ export default class MembraneTransportScreenView extends ScreenView {
     // Creating from the toolbox, find the leftmost empty slot or the middle slot if all are filled.
     const slot = this.model.getLeftmostEmptySlot() || this.model.getMiddleSlot();
     this.observationWindow.forwardFromKeyboard( slot, type, toolNode );
+
+    this.transportProteinToolboxGrabCueNode?.createdFromKeyboard();
   }
 
   /**
