@@ -35,7 +35,7 @@ import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { SoluteControlSolute } from '../model/SoluteType.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
-import createParticleNode from './particles/createParticleNode.js';
+import createParticleIconNode from './particles/createParticleIconNode.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -272,18 +272,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       ]
     } );
 
-    // ############ TODO: https://github.com/phetsims/membrane-transport/issues/408 This code is copied with SolutesPanel.ts
-    const icon = createParticleNode( soluteType );
-
-    // We want to keep the relative sizes correct for the gas solutes and the icons
-    // but the ATP and Glucose are much larger, so we scale them down.
-    icon.setScaleMagnitude( soluteType === 'atp' ? 0.045 :
-                            soluteType === 'glucose' ? 0.09 :
-                            0.1 );
-
-    // ATP is vertical in the play area but horizontal in the radio button icon
-    icon.setRotation( soluteType === 'atp' ? Math.PI / 2 : 0 );
-    // ############ This code is copied with SolutesPanel.ts
+    const icon = createParticleIconNode( soluteType );
 
     const label = new HBox( {
       spacing: 5,

@@ -21,7 +21,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportFeatureSet, { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import SoluteType, { getSoluteAccessibleName, getSoluteTypeString, soluteTypeToRadioButtonTandemName } from '../model/SoluteType.js';
-import createParticleNode from './particles/createParticleNode.js';
+import createParticleIconNode from './particles/createParticleIconNode.js';
 
 export default class SolutesPanel extends Node {
   public constructor( featureSet: MembraneTransportFeatureSet, soluteProperty: PhetioProperty<SoluteType>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
@@ -55,16 +55,7 @@ export default class SolutesPanel extends Node {
         },
         createNode: () => {
 
-          const icon = createParticleNode( soluteType );
-
-          // We want to keep the relative sizes correct for the gas solutes and the icons
-          // but the ATP and Glucose are much larger, so we scale them down.
-          icon.setScaleMagnitude( soluteType === 'atp' ? 0.045 :
-                                  soluteType === 'glucose' ? 0.09 :
-                                  0.1 );
-
-          // ATP is vertical in the play area but horizontal in the radio button icon
-          icon.setRotation( soluteType === 'atp' ? Math.PI / 2 : 0 );
+          const icon = createParticleIconNode( soluteType );
 
           return alignGroup.createBox( new VBox( {
             spacing: 3,
