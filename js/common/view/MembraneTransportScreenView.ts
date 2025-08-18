@@ -73,10 +73,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     providedOptions: MembraneTransportScreenViewOptions ) {
 
     const options = optionize<MembraneTransportScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-      screenSummaryContent: new MembraneTransportScreenSummaryContent( model ),
-      screenSummaryNodeOptions: {
-        strongKeyboardShortcutsHint: true
-      }
+      screenSummaryContent: new MembraneTransportScreenSummaryContent( model )
     }, providedOptions );
     super( options );
 
