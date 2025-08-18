@@ -26,6 +26,13 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
     model.membranePotentialProperty.link( () => {
       this.timeSinceVoltageChanged = 0;
     }, { disposer: this } );
+
+    // When the channel closes, boot out any solutes that are passing through
+    this.openOrClosedProperty.lazyLink( openOrClosed => {
+      if ( openOrClosed === 'closed' ) {
+        this.clearSolutes( this.slot );
+      }
+    } );
   }
 
   public abstract getStateForVoltage( voltage: number ): T;
