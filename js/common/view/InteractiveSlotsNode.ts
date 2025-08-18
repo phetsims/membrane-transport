@@ -100,6 +100,14 @@ export default class InteractiveSlotsNode extends Node {
     }
   } );
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+  private readonly hintUtterance = new Utterance( {
+    announcerOptions: {
+      cancelOther: false
+    },
+    alert: new ResponsePacket( {
+      hintResponse: MembraneTransportFluent.a11y.transportProtein.initialGrabbedHintResponseStringProperty
+    } )
+  } );
 
   /**
    * @param slots - Slots available to place a protein
@@ -559,13 +567,10 @@ export default class InteractiveSlotsNode extends Node {
     this.grabbedNode = this.view.createTemporaryProteinNode( type, slot, toolNode );
 
     // Alert 'grabbed' after so that it will interrupt the focus change read above.
-    this.alertGrabRelease( this.grabReleaseUtterance, MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
+    this.alertGrabRelease( MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
 
     if ( this.firstProteinGrab ) {
-
-      // The first time a protein is grabbed, read additional information about how to interact with it.\
-      // Output is queued so that it does not interrupt the grabbed response.
-      this.addAccessibleHelpResponse( MembraneTransportFluent.a11y.transportProtein.initialGrabbedHintResponseStringProperty, 'queue' );
+      this.alertHint();
     }
 
     this.grabbedNode.grab( () => {
@@ -622,21 +627,29 @@ export default class InteractiveSlotsNode extends Node {
     }
 
     affirm( responseString !== null, 'We should have a response string to say.' );
-    this.alertGrabRelease( this.grabReleaseUtterance, responseString );
+    this.alertGrabRelease( responseString );
   }
 
   /**
    * A convenience method to alert an accessible response for both Interactive Description and Voicing.
    */
-  private alertGrabRelease( utterance: Utterance, response: TReadOnlyProperty<string> | string ): void {
-    utterance.alert = response;
-    this.addAccessibleResponse( utterance );
+  private alertGrabRelease( response: TReadOnlyProperty<string> | string ): void {
+    this.grabReleaseUtterance.alert = response;
+    this.addAccessibleResponse( this.grabReleaseUtterance );
 
     const responsePacket = new ResponsePacket( {
       objectResponse: response
     } );
 
-    voicingUtteranceQueue.addToBack( utterance, responsePacket );
+    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, responsePacket );
+  }
+
+  private alertHint(): void {
+
+    // The first time a protein is grabbed, read additional information about how to interact with it.\
+    // Output is queued so that it does not interrupt the grabbed response.
+    this.addAccessibleHelpResponse( this.hintUtterance, 'queue' );
+    voicingUtteranceQueue.addToBack( this.hintUtterance );
   }
 
   /**
