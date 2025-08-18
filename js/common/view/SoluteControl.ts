@@ -15,6 +15,7 @@ import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-c
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
+import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
@@ -274,13 +275,24 @@ export default class SoluteControl extends Voicing( Panel ) {
 
     const icon = createParticleIconNode( soluteType );
 
-    const label = new HBox( {
-      spacing: 5,
+    const labelContent = side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty : MembraneTransportFluent.cellRegions.insideStringProperty;
+    const label = new ReadingBlockNode( {
+      readingBlockNameResponse: labelContent,
+      readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
+      readingBlockTagName: null,
+
       children: [
-        alignGroup.createBox( icon ),
-        new Text( side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty : MembraneTransportFluent.cellRegions.insideStringProperty, {
-          fontSize: 13,
-          maxWidth: TEXT_MAX_WIDTH
+
+        // visual label
+        new HBox( {
+          spacing: 5,
+          children: [
+            alignGroup.createBox( icon ),
+            new Text( labelContent, {
+              fontSize: 13,
+              maxWidth: TEXT_MAX_WIDTH
+            } )
+          ]
         } )
       ]
     } );
@@ -304,7 +316,8 @@ export default class SoluteControl extends Voicing( Panel ) {
         // voicing
         this.voicingSpeakResponse( {
           nameResponse: accessibleName,
-          objectResponse: getObjectResponseContent()
+          objectResponse: getObjectResponseContent(),
+          hintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty
         } );
       }
     } );
