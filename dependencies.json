@@ -1,7 +1,7 @@
 {
-  "comment": "# membrane-transport 1.0.0-dev.22 Tue Aug 12 2025 12:30:12 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# membrane-transport 1.0.0-dev.23 Mon Aug 18 2025 13:08:40 GMT-0400 (Eastern Daylight Time)",
   "assert": {
-    "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
+    "sha": "1a4637cfff70e7e8b0844dc43848a86ae89b4cf5",
     "branch": "main"
   },
   "axon": {
@@ -21,7 +21,7 @@
     "branch": "main"
   },
   "joist": {
-    "sha": "f9336f22d72b773e3af144eb95b794bc4db10d54",
+    "sha": "6d92102032889182352630c00ed0866d1f1755c4",
     "branch": "main"
   },
   "kite": {
@@ -29,11 +29,11 @@
     "branch": "main"
   },
   "membrane-transport": {
-    "sha": "2d7141e2d9f38dd4f705918886f571d6ca84e133",
+    "sha": "ebb35c0720f50fb1f1a44efdc6ed602dcbb5cf5f",
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "b756a38a646e9dada7ebb1c729f81829ae9088b5",
+    "sha": "5f2de27c91ace816080a450e377e35297ea5b427",
     "branch": "main"
   },
   "phet-core": {
@@ -45,7 +45,7 @@
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "c7d1a9a822fdc095ff918d9c3dad1b0189f2c1ab",
+    "sha": "62f769232612752da3d7753481fa3271a226f277",
     "branch": "main"
   },
   "phet-io-wrappers": {
@@ -65,11 +65,11 @@
     "branch": "main"
   },
   "scenery": {
-    "sha": "0c678a8b1030189214ac4d6c12530db5ee011247",
+    "sha": "7a01a333b3034084e0246c4c465c21cbd50c907f",
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "2221258103185179b29c2e2aa0d53f33db88f217",
+    "sha": "689e0702410932a7185fd878cedd48eb25580ff2",
     "branch": "main"
   },
   "sherpa": {
@@ -77,11 +77,11 @@
     "branch": "main"
   },
   "studio": {
-    "sha": "0254103f342b17890c5fe862aae6df3b400620a8",
+    "sha": "86729fd89b7c8826874f20835d0fc2e4f4b31e5b",
     "branch": "main"
   },
   "sun": {
-    "sha": "2559094d888021b8e37a92f184fc660da60bb852",
+    "sha": "a2c36d752082f850438360da2406dd2e3865f4ea",
     "branch": "main"
   },
   "tambo": {
@@ -89,7 +89,7 @@
     "branch": "main"
   },
   "tandem": {
-    "sha": "542ac4ad237ff66145ad025b64ef7a5eaf53e68b",
+    "sha": "cc1d8a0017c372e4e20ed04ae0f594dea573fc76",
     "branch": "main"
   },
   "twixt": {
@@ -97,7 +97,7 @@
     "branch": "main"
   },
   "utterance-queue": {
-    "sha": "6df7c7f772010c0cb70e58a60d9d56536f6c5266",
+    "sha": "718d4e1e5ae323398a6972d18a1dd79146368185",
     "branch": "main"
   }
 }
