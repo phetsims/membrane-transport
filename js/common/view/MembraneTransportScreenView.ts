@@ -250,8 +250,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       }
     } );
 
-    const insideSoluteControlAlignGroup = new AlignGroup();
-    const outsideSoluteControlAlignGroup = new AlignGroup();
+    const soluteControlAlignGroup = new AlignGroup();
 
     // Number controls for the 'outside' solute concentrations
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one
@@ -265,7 +264,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
       // ATP can only be added inside the cell
       if ( soluteType !== 'atp' ) {
-        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', outsideSoluteControlAlignGroup,
+        const outsideSoluteControl = new SoluteControl( this.model, soluteType, 'outside', soluteControlAlignGroup,
           outsideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
             centerX: soluteControlCenterX,
             top: this.observationWindow.top,
@@ -277,7 +276,7 @@ export default class MembraneTransportScreenView extends ScreenView {
         soluteControls.push( outsideSoluteControl );
       }
 
-      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', insideSoluteControlAlignGroup,
+      const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', soluteControlAlignGroup,
         insideSoluteControlsTandem.createTandem( getSoluteSpinnerTandemName( soluteType ) ), {
           centerX: soluteControlCenterX,
 
