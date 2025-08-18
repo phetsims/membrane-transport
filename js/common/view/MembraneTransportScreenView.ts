@@ -32,10 +32,10 @@ import MembraneTransportConstants from '../../common/MembraneTransportConstants.
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
-import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
+import { getFeatureSetSoluteTypes, getFeatureSetTransportProteins } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportSounds from '../MembraneTransportSounds.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
-import TransportProteinType, { TransportProteinTypeValues } from '../model/proteins/TransportProteinType.js';
+import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
 import MembranePotentialDescriber from './MembranePotentialDescriber.js';
@@ -363,7 +363,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     // For screens with transport proteins, create the toolbox grab cue node.
     if ( this.transportProteinPanel ) {
-      const transportProteinToolNodes = TransportProteinTypeValues.map( type => this.transportProteinPanel!.getTransportProteinToolNode( type ) ).filter( node => !!node );
+      const transportProteinToolNodes = getFeatureSetTransportProteins( model.featureSet ).map( type => this.transportProteinPanel!.getTransportProteinToolNode( type ) ).filter( node => !!node );
       this.transportProteinToolboxGrabCueNode = new TransportProteinToolboxGrabCueNode( transportProteinToolNodes );
 
       // Set the x-coordinate of the grab cue node to be to the right of the left edge of the transport protein panel (overlapping)

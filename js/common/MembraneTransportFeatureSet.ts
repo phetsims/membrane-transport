@@ -9,6 +9,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import TransportProteinType, { TransportProteinTypeValues } from './model/proteins/TransportProteinType.js';
 import SoluteType, { SoluteControlSolute, SoluteTypeValues } from './model/SoluteType.js';
 
 type MembraneTransportFeatureSet = 'simpleDiffusion' | 'facilitatedDiffusion' | 'activeTransport' | 'playground';
@@ -33,4 +34,27 @@ export const getFeatureSetHasLigands = ( featureSet: MembraneTransportFeatureSet
 
 export const getFeatureSetHasProteins = ( featureSet: MembraneTransportFeatureSet ): boolean => {
   return featureSet !== 'simpleDiffusion';
+};
+
+export const getFeatureSetTransportProteins = ( featureSet: MembraneTransportFeatureSet ): readonly TransportProteinType[] => {
+  if ( featureSet === 'simpleDiffusion' ) {
+    return [];
+  }
+  else if ( featureSet === 'facilitatedDiffusion' ) {
+    return [ 'sodiumIonLeakageChannel',
+      'potassiumIonLeakageChannel',
+
+      'sodiumIonVoltageGatedChannel',
+      'potassiumIonVoltageGatedChannel',
+
+      'sodiumIonLigandGatedChannel',
+      'potassiumIonLigandGatedChannel' ];
+  }
+  else if ( featureSet === 'activeTransport' ) {
+    return [ 'sodiumPotassiumPump',
+      'sodiumGlucoseCotransporter' ];
+  }
+  else { // playground
+    return TransportProteinTypeValues;
+  }
 };
