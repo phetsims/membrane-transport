@@ -285,6 +285,8 @@ export default class MembraneTransportScreenView extends ScreenView {
           fill: MembraneTransportColors.observationWindowInsideCellColorProperty
         } );
 
+      // When the height of the inside solute controls changes, set its vertical position. Without this, it could end up
+      // vertically offset from the desired position.
       ManualConstraint.create( this, [ insideSoluteControl, this.observationWindow ], ( insideSoluteControlProxy, observationWindowProxy ) => {
         insideSoluteControlProxy.bottom = observationWindowProxy.bottom;
       } );
