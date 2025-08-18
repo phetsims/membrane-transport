@@ -368,7 +368,13 @@ export default class MembraneTransportScreenView extends ScreenView {
       // Set the x-coordinate of the grab cue node to be to the right of the left edge of the transport protein panel (overlapping)
       // y-coordinate is set in TransportProteinToolboxGrabCueNode, so we only need to set the x-coordinate.
       ManualConstraint.create( this, [ this.transportProteinPanel, this.transportProteinToolboxGrabCueNode ], ( transportProteinPanelProxy, grabCueNodeProxy ) => {
-        grabCueNodeProxy.right = transportProteinPanelProxy.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN * 2;
+
+        const left = transportProteinPanelProxy.left;
+
+        // check if left is numeric, in case the panel bounds collapse due to content being hidden by phet-io
+        if ( !isNaN( left ) && isFinite( left ) ) {
+          grabCueNodeProxy.right = left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN * 2;
+        }
       } );
 
       this.addChild( this.transportProteinToolboxGrabCueNode );
