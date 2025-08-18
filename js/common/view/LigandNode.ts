@@ -24,11 +24,13 @@ import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-
 import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
 import HighlightPath from '../../../../scenery/js/accessibility/HighlightPath.js';
 import InteractiveHighlightingNode, { InteractiveHighlightingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
+import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -104,13 +106,22 @@ export default class LigandNode extends InteractiveHighlightingNode {
       cursor: 'pointer'
     };
 
+    const accessibleNameProperty = MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.ligandType } );
+
+    // For voicing, speak the accessible name when focused or pressed.
+    const voiceAccessibleName = () => {
+      voicingUtteranceQueue.addToBack( new ResponsePacket( {
+        nameResponse: accessibleNameProperty
+      } ) );
+    };
+
     const options =
       focusable ?
       ( combineOptions<InteractiveHighlightingNodeOptions>( {
         tagName: 'button', // Treat as a button for focus/activation
         labelTagName: 'p', // Contains the accessible name
         containerTagName: 'div', // Required for labelTagName
-        innerContent: MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.ligandType } )
+        innerContent: accessibleNameProperty
       }, AccessibleDraggableOptions, sharedOptions ) ) :
       sharedOptions;
 
@@ -138,6 +149,10 @@ export default class LigandNode extends InteractiveHighlightingNode {
       if ( !focused && this.ligand.mode.type !== 'ligandBound' && this.ligand.mode.type !== 'moveToLigandBindingLocation' ) {
         this.ligand.mode = Particle.createRandomWalkMode( true );
       }
+
+      if ( focused ) {
+        voiceAccessibleName();
+      }
     } );
 
     this.ligand = ligand;
@@ -163,6 +178,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
         if ( this.isKeyboardGrabbed ) {
           return;
         }
+
+        // Voice the name at the start of the interaction
+        voiceAccessibleName();
 
         // Make sure that the ligand is no longer bound to a ligand gated channel
         ligand.unbindFromChannel();
