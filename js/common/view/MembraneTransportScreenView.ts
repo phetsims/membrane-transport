@@ -358,7 +358,8 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.model.membranePotentialProperty.lazyLink( MembranePotentialDescriber.createListener( model, this ) );
 
-    // For screens with transport proteins, create the toolbox grab cue node.
+    // For screens with transport proteins, create the toolbox grab cue node. It is created and added after the panel because
+    // this cue needs to be visually on top of most things in the view.
     if ( this.transportProteinPanel ) {
       const transportProteinToolNodes = getFeatureSetTransportProteins( model.featureSet ).map( type => this.transportProteinPanel!.getTransportProteinToolNode( type ) ).filter( node => !!node );
       this.transportProteinToolboxGrabCueNode = new TransportProteinToolboxGrabCueNode( transportProteinToolNodes );
