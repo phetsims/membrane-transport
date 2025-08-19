@@ -237,10 +237,12 @@ type StringsType = {
       'outside': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'readingBlockNameResponseStringProperty': LocalizedStringProperty;
       };
       'inside': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'readingBlockNameResponseStringProperty': LocalizedStringProperty;
       };
       'voicingHintResponseStringProperty': LocalizedStringProperty;
       'accessibleRoleDescriptionStringProperty': LocalizedStringProperty;

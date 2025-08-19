@@ -276,8 +276,13 @@ export default class SoluteControl extends Voicing( Panel ) {
     const icon = createParticleIconNode( soluteType );
 
     const labelContent = side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty : MembraneTransportFluent.cellRegions.insideStringProperty;
+    const readingBlockNameResponsePattern = side === 'outside' ? MembraneTransportFluent.a11y.soluteControl.outside.readingBlockNameResponse :
+                                            MembraneTransportFluent.a11y.soluteControl.inside.readingBlockNameResponse;
     const label = new ReadingBlockNode( {
-      readingBlockNameResponse: labelContent,
+      readingBlockNameResponse: readingBlockNameResponsePattern.createProperty( {
+        soluteType: soluteType,
+        amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty )
+      } ),
       readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
       readingBlockTagName: null,
 

@@ -487,6 +487,9 @@
         },
         "accessibleHelpText": {
           "value": "Adjust chosen solute amount on outside with arrow keys or alternate keyboard shortcuts."
+        },
+        "readingBlockNameResponse": {
+          "value": "{ a11y_soluteControl_accessibleObjectResponse }, Outside"
         }
       },
       "inside": {
@@ -495,6 +498,9 @@
         },
         "accessibleHelpText": {
           "value": "Adjust chosen solute amount on inside with arrow keys or alternate keyboard shortcuts."
+        },
+        "readingBlockNameResponse": {
+          "value": "{ a11y_soluteControl_accessibleObjectResponse }, Inside"
         }
       },
       "voicingHintResponse": {
