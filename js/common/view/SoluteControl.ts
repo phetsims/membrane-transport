@@ -11,12 +11,12 @@ import GatedVisibleProperty from '../../../../axon/js/GatedVisibleProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Range from '../../../../dot/js/Range.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
-import { combineOptions, EmptySelfOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
-import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
-import Voicing, { VoicingOptions } from '../../../../scenery/js/accessibility/voicing/Voicing.js';
+import VoicingNode, { VoicingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
+import ReadingBlock, { ReadingBlockOptions } from '../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
 import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -40,13 +40,15 @@ import createParticleIconNode from './particles/createParticleIconNode.js';
 import SoluteSpinnerSoundGenerator from './SoluteSpinnerSoundGenerator.js';
 
 type SelfOptions = EmptySelfOptions;
-type ParentOptions = PanelOptions & VoicingOptions;
+type ParentOptions = PanelOptions & ReadingBlockOptions;
 type SoluteControlOptions = SelfOptions & StrictOmit<ParentOptions, 'tandem'>;
 
 const fineDelta = 10;
 const coarseDelta = 50;
 
-export default class SoluteControl extends Voicing( Panel ) {
+export default class SoluteControl extends ReadingBlock( Panel ) {
+  private readonly voicingButtonsBox: VoicingNode;
+
   public constructor( model: MembraneTransportModel,
                       soluteType: SoluteControlSolute,
                       side: 'outside' | 'inside',
@@ -61,40 +63,25 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
     const gatedVisibleProperty = new GatedVisibleProperty( simControlledVisibleProperty, tandem );
 
+    const sideCountProperty = side === 'inside' ? model.insideSoluteCountProperties[ soluteType ] : model.outsideSoluteCountProperties[ soluteType ];
+
     const accessibleName = side === 'inside' ? MembraneTransportFluent.a11y.soluteControl.inside.accessibleName.format( { soluteType: soluteType } ) :
                            MembraneTransportFluent.a11y.soluteControl.outside.accessibleName.format( { soluteType: soluteType } );
+    const readingBlockNameResponsePattern = side === 'outside' ? MembraneTransportFluent.a11y.soluteControl.outside.readingBlockNameResponse :
+                                            MembraneTransportFluent.a11y.soluteControl.inside.readingBlockNameResponse;
 
-    // Extends AccessibleInteractiveOptions, which forces the screen reader to give all keyboard events for this custom
-    // interaction.
-    const options = optionize4<SoluteControlOptions, SelfOptions, ParentOptions>()( {}, AccessibleInteractiveOptions, {
+    const options = optionize<SoluteControlOptions, SelfOptions, ParentOptions>()( {
       yMargin: 10,
       align: 'center',
       visibleProperty: gatedVisibleProperty,
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
 
-      // pdom - extends AccessibleInteractiveOptions
-      accessibleRoleDescription: MembraneTransportFluent.a11y.soluteControl.accessibleRoleDescriptionStringProperty,
-      accessibleName: accessibleName,
-
-      // accessibleHelpText filled in by a Multilink below
-      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_AFTER_CONTENT,
-
-      // voicing
-      voicingNameResponse: accessibleName,
-
-      // this control manages its own voicing on focus
-      voicingFocusListener: null,
-
-      // For this control, it was requested that the object response be spoken before the name response, see
-      // https://github.com/phetsims/membrane-transport/issues/244#issuecomment-3189249913
-      voicingResponsePatternCollection: ResponsePatternCollection.OBJECT_RESPONSE_FIRST_PATTERNS,
-
-      // A custom shorter voicingHintResponse was requested for this control, see
-      // https://github.com/phetsims/membrane-transport/issues/219
-      voicingHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
-
-      // Pointer-based interaction works with the buttons, so we do not want to show a highlight around the entire control.
-      interactiveHighlightEnabled: false,
+      readingBlockNameResponse: readingBlockNameResponsePattern.createProperty( {
+        soluteType: soluteType,
+        amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty )
+      } ),
+      readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
+      readingBlockTagName: null,
 
       // phet-io
       phetioVisiblePropertyInstrumented: false,
@@ -107,7 +94,6 @@ export default class SoluteControl extends Voicing( Panel ) {
     } );
 
     // You can only add up to the maximum number of solutes on BOTH sides. But you can only remove however many solutes are on this side.
-    const sideCountProperty = side === 'inside' ? model.insideSoluteCountProperties[ soluteType ] : model.outsideSoluteCountProperties[ soluteType ];
     const decrementEnabledProperty = new DerivedProperty( [ sideCountProperty ], sideCount => sideCount > 0 );
     const incrementEnabledProperty = new DerivedProperty( [ totalCountProperty ], totalCount => totalCount < MembraneTransportConstants.MAX_SOLUTE_COUNT );
 
@@ -214,7 +200,7 @@ export default class SoluteControl extends Voicing( Panel ) {
       this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
       this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ), 'queue' );
 
-      this.voicingSpeakResponse( {
+      this.voicingButtonsBox.voicingSpeakResponse( {
         nameResponse: accessibleName,
         objectResponse: getObjectResponseContent(),
         contextResponse: createContextResponseContent( totalCountProperty.value, valueBefore )
@@ -263,41 +249,56 @@ export default class SoluteControl extends Voicing( Panel ) {
 
     const TEXT_MAX_WIDTH = 80;
 
-    const buttonBox = new HBox( {
-      spacing: 10,
+    // Extends AccessibleInteractiveOptions, which forces the screen reader to give all keyboard events for this custom
+    // interaction.
+    const voicingButtonsBox = new VoicingNode( combineOptions<VoicingNodeOptions>( {}, AccessibleInteractiveOptions, {
       children: [
-        decrementFineButton,
-        decrementCoarseButton,
-        incrementCoarseButton,
-        incrementFineButton
-      ]
-    } );
+        new HBox( {
+          spacing: 10,
+          children: [
+            decrementFineButton,
+            decrementCoarseButton,
+            incrementCoarseButton,
+            incrementFineButton
+          ]
+        } )
+      ],
+
+      // pdom - extends AccessibleInteractiveOptions
+      accessibleRoleDescription: MembraneTransportFluent.a11y.soluteControl.accessibleRoleDescriptionStringProperty,
+      accessibleName: accessibleName,
+
+      // accessibleHelpText filled in by a Multilink below
+      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_AFTER_CONTENT,
+
+      // voicing
+      voicingNameResponse: accessibleName,
+
+      // this control manages its own voicing on focus
+      voicingFocusListener: null,
+
+      // For this control, it was requested that the object response be spoken before the name response, see
+      // https://github.com/phetsims/membrane-transport/issues/244#issuecomment-3189249913
+      voicingResponsePatternCollection: ResponsePatternCollection.OBJECT_RESPONSE_FIRST_PATTERNS,
+
+      // A custom shorter voicingHintResponse was requested for this control, see
+      // https://github.com/phetsims/membrane-transport/issues/219
+      voicingHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
+
+      // Pointer-based interaction works with the buttons, so we do not want to show a highlight around the entire control.
+      interactiveHighlightEnabled: false
+    } ) );
 
     const icon = createParticleIconNode( soluteType );
 
-    const labelContent = side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty : MembraneTransportFluent.cellRegions.insideStringProperty;
-    const readingBlockNameResponsePattern = side === 'outside' ? MembraneTransportFluent.a11y.soluteControl.outside.readingBlockNameResponse :
-                                            MembraneTransportFluent.a11y.soluteControl.inside.readingBlockNameResponse;
-    const label = new ReadingBlockNode( {
-      readingBlockNameResponse: readingBlockNameResponsePattern.createProperty( {
-        soluteType: soluteType,
-        amount: MembraneTransportDescriber.createQualitativeAmountDescriptorProperty( sideCountProperty )
-      } ),
-      readingBlockHintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty,
-      readingBlockTagName: null,
-
+    const label = new HBox( {
+      spacing: 5,
       children: [
-
-        // visual label
-        new HBox( {
-          spacing: 5,
-          children: [
-            alignGroup.createBox( icon ),
-            new Text( labelContent, {
-              fontSize: 13,
-              maxWidth: TEXT_MAX_WIDTH
-            } )
-          ]
+        alignGroup.createBox( icon ),
+        new Text( side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty :
+                  MembraneTransportFluent.cellRegions.insideStringProperty, {
+          fontSize: 13,
+          maxWidth: TEXT_MAX_WIDTH
         } )
       ]
     } );
@@ -305,21 +306,23 @@ export default class SoluteControl extends Voicing( Panel ) {
       spacing: 5,
       children: [
         label,
-        buttonBox
+        voicingButtonsBox
       ]
     } );
 
     super( contents, options );
 
+    this.voicingButtonsBox = voicingButtonsBox;
+
     // Speak the object response describing the "value" of the control when it is focused.
-    this.focusedProperty.link( focused => {
+    voicingButtonsBox.focusedProperty.link( focused => {
       if ( focused ) {
 
         // pdom
-        this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
+        voicingButtonsBox.addAccessibleObjectResponse( createAccessibleObjectResponse() );
 
         // voicing
-        this.voicingSpeakResponse( {
+        voicingButtonsBox.voicingSpeakResponse( {
           nameResponse: accessibleName,
           objectResponse: getObjectResponseContent(),
           hintResponse: MembraneTransportFluent.a11y.soluteControl.voicingHintResponseStringProperty
