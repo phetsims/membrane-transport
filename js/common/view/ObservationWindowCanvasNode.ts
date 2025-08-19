@@ -132,11 +132,11 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
       const height = this.modelViewTransform.modelToViewDeltaY( solute.dimension.height );
 
       if ( this.model.crossingHighlightsEnabledProperty.value ) {
-        if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.2 ) {
+        if ( solute.timeSinceCrossedMembrane > 0 && solute.timeSinceCrossedMembrane < 0.44 ) {
 
           // draw a highlight
           context.fillStyle = MembraneTransportColors.crossingHighlightColorProperty.value.toCSS();
-          context.globalAlpha = 0.5;
+          context.globalAlpha = 0.6;
           context.beginPath();
           context.arc( x, y, width / 2 * 1.2, 0, Math.PI * 2 );
           context.fill();

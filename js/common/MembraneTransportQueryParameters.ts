@@ -32,7 +32,7 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
   // Max solutes per solute type
   maxSolutes: {
     type: 'number',
-    defaultValue: 300
+    defaultValue: 200
   },
 
   // Sound design for channel crossings uses stereo panning
