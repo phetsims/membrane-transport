@@ -276,6 +276,7 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
         // If we are moving right and there are no slots, then we are off the membrane
         newIndex = OFF_MEMBRANE_SLOT_INDEX;
+        this.alert( MembraneTransportFluent.a11y.ligandNode.movedOffMembraneResponseStringProperty );
       }
 
       if ( newIndex !== null && newIndex !== this.currentTargetSlotIndex ) {

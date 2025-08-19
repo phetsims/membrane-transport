@@ -210,6 +210,7 @@ type StringsType = {
       'releasedOnProteinResponseStringProperty': LocalizedStringProperty;
       'releasedOnBusyOrIncompatibleProteinResponseStringProperty': LocalizedStringProperty;
       'unboundResponseStringProperty': LocalizedStringProperty;
+      'movedOffMembraneResponseStringProperty': LocalizedStringProperty;
       'movedAboveLigandGatedChannelResponseStringProperty': LocalizedStringProperty;
       'movedAboveLeakageChannelResponseStringProperty': LocalizedStringProperty;
       'movedAboveOtherChannelResponseStringProperty': LocalizedStringProperty;

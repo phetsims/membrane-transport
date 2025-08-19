@@ -421,6 +421,9 @@
       "unboundResponse": {
         "value": "Ligand floats away. Protein closes."
       },
+      "movedOffMembraneResponse": {
+        "value": "Off membrane."
+      },
       "movedAboveLigandGatedChannelResponse": {
         "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProtein_briefName } { $ligandType ->\n[triangleLigand] Triangle Site\n*[starLigand]     Star Site\n}, { $index } of { $transportProteinCount } Proteins."
       },
