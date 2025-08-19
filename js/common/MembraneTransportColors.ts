@@ -23,31 +23,31 @@ const MembraneTransportColors = {
 
   // Color for the outside/extracellular fluid, also serves as the background color for the screen.
   outsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'outsideCellColor', {
-    default: 'rgb(135, 206, 235)'
+    default: '#b8dfff'
   } ),
   insideCellColorProperty: new ProfileColorProperty( membraneTransport, 'insideCellColor', {
-    default: 'rgb(253, 244, 201)'
+    default: '#fdf4c9'
   } ),
 
   // Color for the outside/extracellular fluid, also serves as the background color for the screen.
   observationWindowOutsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'observationWindowOutsideCellColor', {
-    default: 'rgb(184, 223, 255)'
+    default: '#dbefff'
   } ),
   observationWindowInsideCellColorProperty: new ProfileColorProperty( membraneTransport, 'observationWindowInsideCellColor', {
-    default: 'rgb(255, 249, 240)'
+    default: '#fff9f0'
   } ),
 
   oxygenColorProperty: new ProfileColorProperty( membraneTransport, 'O2Color', {
-    default: PhetColorScheme.RED_COLORBLIND.toCSS() // Same as ph-scale OxygenNode
+    default: '#ff0000'
   } ),
   phosphateColorProperty: new ProfileColorProperty( membraneTransport, 'phosphateColor', {
     default: 'rgb(123,104,238)'
   } ),
   carbonDioxideColorProperty: new ProfileColorProperty( membraneTransport, 'CO2BarChartColor', {
-    default: 'rgb(95,80,69)'
+    default: '#737373'
   } ),
   sodiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'NaBarChartColor', {
-    default: 'rgb(255, 210, 46)'
+    default: '#ff5500'
   } ),
   potassiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'KBarChartColor', {
     default: 'rgb(0, 168, 212)'
@@ -59,10 +59,10 @@ const MembraneTransportColors = {
     default: 'rgb(46, 13, 98)'
   } ),
   fluxHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'fluxHighlightColor', {
-    default: 'yellow'
+    default: '#ffff94'
   } ),
   crossingHighlightColorProperty: new ProfileColorProperty( membraneTransport, 'crossingHighlightColor', {
-    default: 'yellow'
+    default: '#ffff94'
   } ),
   lipidTailColorProperty: new ProfileColorProperty( membraneTransport, 'lipidTailColor', {
     default: 'rgb(229,68,143)'
