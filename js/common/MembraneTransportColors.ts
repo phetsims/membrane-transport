@@ -15,7 +15,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import ProfileColorProperty from '../../../scenery/js/util/ProfileColorProperty.js';
 import membraneTransport from '../membraneTransport.js';
 
