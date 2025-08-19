@@ -21,7 +21,6 @@ import TProperty from '../../../../axon/js/TProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
@@ -81,26 +80,36 @@ export default class ObservationWindowTransportProteinLayer extends Node {
   ) {
     super();
 
-    const membraneDescriber = new MembraneDescriber( model );
+    // The accessible list that describes the overall state of the membrane.
+    const accessibleListNode = MembraneDescriber.createAccessibleList(
+      model,
+      MembraneTransportFluent.a11y.cellMembrane.leadingParagraphStringProperty
+    );
 
+    // The dynamic accessibleHelpText that guides the user to productive interaction. It is assigned
+    // as PDOm content to a Node and also used in the ReadingBlockNode for Voicing.
+    const accessibleHelpTextStringProperty = MembraneDescriber.createAccessibleHelpText( model );
+    const accessibleHelpTextNode = new Node( {
+      tagName: 'p',
+      innerContent: accessibleHelpTextStringProperty
+    } );
+
+    // A parent Node for proteins. All accessible proteins will be under this accessible heading, after the
+    // accessible list and help text.
     this.proteinsNodeParent = new Node( {
       tagName: 'div',
-
       accessibleHeading: MembraneTransportFluent.a11y.cellMembrane.accessibleHeadingStringProperty,
-
-      // An accessible paragraph that describes the membrane potential, number of protein types, and hints to interact when there
-      // are no solutes or proteins. It includes string Properties so that it can be localized. Dependency Properties that change
-      // strings may not be included in the DerivedProperty since changes to string content will already change the accessibleHelpText.
-      accessibleHelpText: membraneDescriber.accessibleHelpTextStringProperty,
-      accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT,
       groupFocusHighlight: true
     } );
+
+    this.proteinsNodeParent.addChild( accessibleListNode );
+    this.proteinsNodeParent.addChild( accessibleHelpTextNode );
 
     // Provide the reading block in parallel so it doesn't interfere with alt-input on the proteinsNodeParent and its children
     const readingBlockNode = new ReadingBlockNode( {
       children: [ new Path( modelViewTransform.modelToViewShape( Shape.bounds( MembraneTransportConstants.MEMBRANE_BOUNDS.dilated( 2 ) ) ) ) ],
-      readingBlockNameResponse: membraneDescriber.accessibleStateDescriptionStringProperty,
-      readingBlockHintResponse: membraneDescriber.accessibleHelpTextContentStringProperty
+      readingBlockNameResponse: accessibleListNode.voicingContentStringProperty,
+      readingBlockHintResponse: accessibleHelpTextStringProperty
     } );
     this.addChild( readingBlockNode );
 
@@ -205,8 +214,9 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           this.selectedIndex = _.findIndex( this.getTransportProteinNodes(), node => node.node === transportProteinNode );
           this.updateFocus();
 
-          // Make sure that the transport proteins are in the correct reading order.
-          this.proteinsNodeParent.pdomOrder = this.getTransportProteinNodes().map( node => node.node );
+          // Make sure that the transport proteins are in the correct reading order. They come after the accessible list and help text
+          // describing the overall state of the membrane.
+          this.proteinsNodeParent.pdomOrder = [ accessibleListNode, accessibleHelpTextNode, ...this.getTransportProteinNodes().map( node => node.node ) ];
 
           // The short name of the transport protein.
           const nameResponseProperty = MembraneTransportFluent.a11y.transportProtein.briefName.createProperty( {

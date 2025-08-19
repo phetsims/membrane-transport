@@ -17,133 +17,25 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasProteins, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
+import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 
 export default class MembraneDescriber {
 
-  // The state description of the membrane, describing presence of solutes, proteins, and membrane potential.
-  public readonly accessibleStateDescriptionStringProperty: TReadOnlyProperty<string>;
-
-  // The help text content for the membrane, with a hint about how to use it.
-  public readonly accessibleHelpTextContentStringProperty: TReadOnlyProperty<string>;
-
-  // The accessibleHelpText string Property, which is used for accessibleHelpText with Interactive Description.
-  // It is composed with the two Properties above. For Voicing, each Property above is assigned to a unique
-  // response type.
+  // The help text content for the membrane, with a hint about how to use it. There are many different values
+  // this can take depending on the state of the model. It is designed to guide the user to further interaction.
   public readonly accessibleHelpTextStringProperty: TReadOnlyProperty<string>;
 
   public constructor( model: MembraneTransportModel ) {
 
-    this.accessibleStateDescriptionStringProperty = new DerivedProperty( [
-
-      // model Properties
-      model.hasAnySolutesProperty,
-      model.transportProteinCountProperty,
-
-      // string Properties
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsHidden.potentialHidden.noSolutesStringProperty,
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsHidden.potentialHidden.withSolutesStringProperty,
-
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.noProteins.noSolutesStringProperty,
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.noProteins.withSolutesStringProperty,
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.withProteins.noSolutes.createProperty( {
-        typeCount: model.transportProteinTypesCountProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialHidden.withProteins.withSolutes.createProperty( {
-        typeCount: model.transportProteinTypesCountProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.noProteins.noSolutes.createProperty( {
-        membranePotential: model.membranePotentialProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.noProteins.withSolutes.createProperty( {
-        membranePotential: model.membranePotentialProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.withProteins.noSolutes.createProperty( {
-        membranePotential: model.membranePotentialProperty,
-        typeCount: model.transportProteinTypesCountProperty
-      } ),
-      MembraneTransportFluent.a11y.cellMembrane.accessibleStateDescription.proteinsShown.potentialShown.withProteins.withSolutes.createProperty( {
-        membranePotential: model.membranePotentialProperty,
-        typeCount: model.transportProteinTypesCountProperty
-      } )
-    ], (
-      hasAnySolutes,
-      transportProteinCount,
-      proteinsHiddenPotentialHiddenNoSolutesString,
-      proteinsHiddenPotentialHiddenWithSolutesString,
-      proteinsShownPotentialHiddenNoProteinsNoSolutesString,
-      proteinsShownPotentialHiddenNoProteinsWithSolutesString,
-      proteinsShownPotentialHiddenWithProteinsNoSolutesString,
-      proteinsShownPotentialHiddenWithProteinsWithSolutesString,
-      proteinsShownPotentialShownNoProteinsNoSolutesString,
-      proteinsShownPotentialShownNoProteinsWithSolutesString,
-      proteinsShownPotentialShownWithProteinsNoSolutesString,
-      proteinsShownPotentialShownWithProteinsWithSolutesString
-    ) => {
-      if ( getFeatureSetHasProteins( model.featureSet ) ) {
-        if ( getFeatureSetHasVoltages( model.featureSet ) ) {
-          if ( transportProteinCount === 0 ) {
-            if ( hasAnySolutes ) {
-              return proteinsShownPotentialShownNoProteinsWithSolutesString;
-            }
-            else {
-              return proteinsShownPotentialShownNoProteinsNoSolutesString;
-            }
-          }
-          else {
-            if ( hasAnySolutes ) {
-              return proteinsShownPotentialShownWithProteinsWithSolutesString;
-            }
-            else {
-              return proteinsShownPotentialShownWithProteinsNoSolutesString;
-            }
-          }
-        }
-        else {
-          if ( transportProteinCount === 0 ) {
-            if ( hasAnySolutes ) {
-              return proteinsShownPotentialHiddenNoProteinsWithSolutesString;
-            }
-            else {
-              return proteinsShownPotentialHiddenNoProteinsNoSolutesString;
-            }
-          }
-          else {
-            if ( hasAnySolutes ) {
-              return proteinsShownPotentialHiddenWithProteinsWithSolutesString;
-            }
-            else {
-              return proteinsShownPotentialHiddenWithProteinsNoSolutesString;
-            }
-          }
-        }
-      }
-      else {
-        if ( transportProteinCount === 0 ) {
-          if ( hasAnySolutes ) {
-            return proteinsHiddenPotentialHiddenWithSolutesString;
-          }
-          else {
-            return proteinsHiddenPotentialHiddenNoSolutesString;
-          }
-        }
-        else {
-          if ( hasAnySolutes ) {
-            return proteinsShownPotentialHiddenWithProteinsWithSolutesString;
-          }
-          else {
-            return proteinsShownPotentialHiddenWithProteinsNoSolutesString;
-          }
-        }
-      }
-    } );
-
-    this.accessibleHelpTextContentStringProperty = new DerivedProperty( [
+    this.accessibleHelpTextStringProperty = new DerivedProperty( [
       // model Properties
       model.hasAnySolutesProperty,
       model.transportProteinCountProperty,
@@ -193,11 +85,63 @@ export default class MembraneDescriber {
         }
       }
     } );
+  }
 
-    this.accessibleHelpTextStringProperty = MembraneTransportFluent.a11y.cellMembrane.accessibleHelpTextPattern.createProperty( {
-      accessibleStateDescription: this.accessibleStateDescriptionStringProperty,
-      accessibleHelpText: this.accessibleHelpTextContentStringProperty
+  public static createAccessibleList( model: MembraneTransportModel, leadingParagraphStringProperty: TReadOnlyProperty<string> ): AccessibleListNode {
+    return new AccessibleListNode( [
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.noAddedSolutesStringProperty,
+        visibleProperty: DerivedProperty.not( model.hasAnySolutesProperty )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.soluteTypesOnOutside.createProperty( {
+          count: model.outsideSoluteTypesCountProperty
+        } ),
+        visibleProperty: model.hasAnySolutesProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.soluteTypesOnInside.createProperty( {
+          count: model.insideSoluteTypesCountProperty
+        } ),
+        visibleProperty: model.hasAnySolutesProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.noAddedProteinsStringProperty,
+        visibleProperty: new DerivedProperty( [ model.transportProteinTypesCountProperty ], count => count === 0 && model.featureSet !== 'simpleDiffusion' )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.transportProteins.createProperty( {
+          proteinCount: model.transportProteinCountProperty,
+          proteinTypeCount: model.transportProteinTypesCountProperty
+        } ),
+        visibleProperty: new DerivedProperty( [ model.transportProteinCountProperty ], count => count > 0 )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.ligandsStringProperty,
+        visibleProperty: model.areLigandsAddedProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.atpReactingStringProperty,
+        visibleProperty: model.hasAnyADPOrPhosphateProperty
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.membranePotential.createProperty( {
+          membranePotential: model.membranePotentialProperty
+        } ),
+        visibleProperty: new BooleanProperty( getFeatureSetHasVoltages( model.featureSet ) )
+      },
+      {
+        stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.glucoseMetabolismStringProperty,
+        visibleProperty: MembraneTransportPreferences.instance.glucoseMetabolismProperty
+      }
+    ], {
+      leadingParagraphStringProperty: leadingParagraphStringProperty,
+      punctuationStyle: 'semicolon'
     } );
+  }
+
+  public static createAccessibleHelpText( model: MembraneTransportModel ): TReadOnlyProperty<string> {
+    return new MembraneDescriber( model ).accessibleHelpTextStringProperty;
   }
 }
 

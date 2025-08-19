@@ -269,37 +269,7 @@ type StringsType = {
     };
     'cellMembrane': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
-      'accessibleStateDescription': {
-        'proteinTypeCountDescriptionStringProperty': LocalizedStringProperty;
-        'proteinsHidden': {
-          'potentialHidden': {
-            'noSolutesStringProperty': LocalizedStringProperty;
-            'withSolutesStringProperty': LocalizedStringProperty;
-          }
-        };
-        'proteinsShown': {
-          'potentialHidden': {
-            'noProteins': {
-              'noSolutesStringProperty': LocalizedStringProperty;
-              'withSolutesStringProperty': LocalizedStringProperty;
-            };
-            'withProteins': {
-              'noSolutesStringProperty': LocalizedStringProperty;
-              'withSolutesStringProperty': LocalizedStringProperty;
-            }
-          };
-          'potentialShown': {
-            'noProteins': {
-              'noSolutesStringProperty': LocalizedStringProperty;
-              'withSolutesStringProperty': LocalizedStringProperty;
-            };
-            'withProteins': {
-              'noSolutesStringProperty': LocalizedStringProperty;
-              'withSolutesStringProperty': LocalizedStringProperty;
-            }
-          }
-        }
-      };
+      'leadingParagraphStringProperty': LocalizedStringProperty;
       'accessibleHelpText': {
         'proteinsHidden': {
           'noSolutesStringProperty': LocalizedStringProperty;
@@ -315,8 +285,7 @@ type StringsType = {
             'withSolutesStringProperty': LocalizedStringProperty;
           }
         }
-      };
-      'accessibleHelpTextPatternStringProperty': LocalizedStringProperty;
+      }
     };
     'transportProtein': {
       'grabbedResponseStringProperty': LocalizedStringProperty;

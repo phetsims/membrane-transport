@@ -562,58 +562,8 @@
       "accessibleHeading": {
         "value": "Cell Membrane"
       },
-      "accessibleStateDescription": {
-        "proteinTypeCountDescription": {
-          "value": "{ $typeCount ->\n  [one] { $typeCount } type\n  *[other] { $typeCount } types\n} of proteins in membrane"
-        },
-        "proteinsHidden": {
-          "potentialHidden": {
-            "noSolutes": {
-              "value": "No solutes."
-            },
-            "withSolutes": {
-              "value": "Solute added."
-            }
-          }
-        },
-        "proteinsShown": {
-          "potentialHidden": {
-            "noProteins": {
-              "noSolutes": {
-                "value": "No solutes or proteins."
-              },
-              "withSolutes": {
-                "value": "Solute added, no proteins in membrane."
-              }
-            },
-            "withProteins": {
-              "noSolutes": {
-                "value": "No solutes. { a11y_cellMembrane_accessibleStateDescription_proteinTypeCountDescription }."
-              },
-              "withSolutes": {
-                "value": "Solute added. { a11y_cellMembrane_accessibleStateDescription_proteinTypeCountDescription }."
-              }
-            }
-          },
-          "potentialShown": {
-            "noProteins": {
-              "noSolutes": {
-                "value": "No solutes or proteins, and a membrane potential of { a11y_membranePotentialValue }."
-              },
-              "withSolutes": {
-                "value": "Solute added, no proteins in membrane, and a membrane potential of { a11y_membranePotentialValue }."
-              }
-            },
-            "withProteins": {
-              "noSolutes": {
-                "value": "No solutes. { a11y_cellMembrane_accessibleStateDescription_proteinTypeCountDescription }, and a membrane potential of { a11y_membranePotentialValue }."
-              },
-              "withSolutes": {
-                "value": "Solute added. { a11y_cellMembrane_accessibleStateDescription_proteinTypeCountDescription }, and a membrane potential of { a11y_membranePotentialValue }."
-              }
-            }
-          }
-        }
+      "leadingParagraph": {
+        "value": "Zoomed-in cross section of cell has:"
       },
       "accessibleHelpText": {
         "proteinsHidden": {
@@ -642,9 +592,6 @@
             }
           }
         }
-      },
-      "accessibleHelpTextPattern": {
-        "value": "{ $accessibleStateDescription } { $accessibleHelpText }"
       }
     },
     "transportProtein": {
