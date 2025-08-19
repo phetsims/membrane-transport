@@ -425,7 +425,7 @@
         "value": "Off membrane."
       },
       "movedAboveLigandGatedChannelResponse": {
-        "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProtein_briefName } { $ligandType ->\n[triangleLigand] Triangle Site\n*[starLigand]     Star Site\n}, { $index } of { $transportProteinCount } Proteins."
+        "value": "Above { $openOrClosed ->\n[open]   open\n*[closed] closed\n} { a11y_transportProtein_briefName } { $proteinType ->\n[sodiumIonLigandGatedChannel] Triangle Site\n*[potassiumIonLigandGatedChannel]     Star Site\n}, { $index } of { $transportProteinCount } Proteins."
       },
       "movedAboveLeakageChannelResponse": {
         "value": "Above { a11y_transportProtein_briefName }, { $index } of { $transportProteinCount } Proteins."

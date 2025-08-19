@@ -303,11 +303,17 @@ export default class LigandNode extends InteractiveHighlightingNode {
             } ) );
           }
           else if ( isLigandGatedChannel ) {
+            const proteinType = protein.type;
+            affirm(
+              proteinType === 'sodiumIonLigandGatedChannel' || proteinType === 'potassiumIonLigandGatedChannel',
+              'Expecting a ligand gated channel type in this case'
+            );
+
             this.alert( MembraneTransportFluent.a11y.ligandNode.movedAboveLigandGatedChannelResponse.format( {
               openOrClosed: protein.openOrClosedProperty,
               index: index,
-              type: protein.type,
-              ligandType: this.ligand.ligandType,
+              type: proteinType,
+              proteinType: proteinType,
               transportProteinCount: transportProteinCountProperty
             } ) );
           }

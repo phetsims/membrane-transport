@@ -221,9 +221,9 @@ a11y:
                                                  Above { $openOrClosed ->
                                                  [open]   open
                                                  *[closed] closed
-                                                 } { a11y.transportProtein.briefName } { $ligandType ->
-                                                 [triangleLigand] Triangle Site
-                                                 *[starLigand]     Star Site
+                                                 } { a11y.transportProtein.briefName } { $proteinType ->
+                                                 [sodiumIonLigandGatedChannel] Triangle Site
+                                                 *[potassiumIonLigandGatedChannel]     Star Site
                                                  }, { $index } of { $transportProteinCount } Proteins.
 
     # Spoken when the ligand moves above a protein that cannot open or close (leakage channel).
