@@ -1,5 +1,5 @@
 {
-  "comment": "# membrane-transport 1.0.0-dev.23 Mon Aug 18 2025 13:08:40 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# membrane-transport 1.0.0-dev.24 Tue Aug 19 2025 15:08:15 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "1a4637cfff70e7e8b0844dc43848a86ae89b4cf5",
     "branch": "main"
@@ -13,7 +13,7 @@
     "branch": "main"
   },
   "chipper": {
-    "sha": "1eb234fb12959919c0ce5698d0fb95fe30c6df3f",
+    "sha": "54763822843ece2623ece7a8b6815e9aaac5abb0",
     "branch": "main"
   },
   "dot": {
@@ -29,11 +29,11 @@
     "branch": "main"
   },
   "membrane-transport": {
-    "sha": "ebb35c0720f50fb1f1a44efdc6ed602dcbb5cf5f",
+    "sha": "32eef65b7cdf0bc0b601e82d93f5284e7c5d27a1",
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "5f2de27c91ace816080a450e377e35297ea5b427",
+    "sha": "9642f1cbcf4bd113d6ea90d9582dd780ef9165db",
     "branch": "main"
   },
   "phet-core": {
@@ -45,7 +45,7 @@
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "62f769232612752da3d7753481fa3271a226f277",
+    "sha": "205799fcdc5a530bdd6987df4807daa5009a5b78",
     "branch": "main"
   },
   "phet-io-wrappers": {
@@ -65,11 +65,11 @@
     "branch": "main"
   },
   "scenery": {
-    "sha": "7a01a333b3034084e0246c4c465c21cbd50c907f",
+    "sha": "abf8764671c6b0b84215b635d33676db7b53ca55",
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "689e0702410932a7185fd878cedd48eb25580ff2",
+    "sha": "e9e08e97a73fd3f79522bb7476f67328351936ba",
     "branch": "main"
   },
   "sherpa": {
@@ -81,7 +81,7 @@
     "branch": "main"
   },
   "sun": {
-    "sha": "a2c36d752082f850438360da2406dd2e3865f4ea",
+    "sha": "4d4a14d789e727e92921de74c17fe825e2514222",
     "branch": "main"
   },
   "tambo": {
@@ -97,7 +97,7 @@
     "branch": "main"
   },
   "utterance-queue": {
-    "sha": "718d4e1e5ae323398a6972d18a1dd79146368185",
+    "sha": "bcdf256cdf176bd934451df3ca1abb96e9f3afb3",
     "branch": "main"
   }
 }
