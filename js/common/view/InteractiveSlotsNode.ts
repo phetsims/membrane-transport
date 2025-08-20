@@ -481,14 +481,17 @@ export default class InteractiveSlotsNode extends VoicingNode {
 
         this.release();
 
-        this.emoteRelease( 'cancel' );
 
         if ( origin instanceof TransportProteinToolNode ) {
+
+          this.emoteRelease( 'return' );
 
           // Return focus to the toolbar
           origin.focus();
         }
         else {
+
+          this.emoteRelease( 'cancel' );
 
           // Restore the selectedType to the origin slot.
           origin.transportProteinType = selectedType;
