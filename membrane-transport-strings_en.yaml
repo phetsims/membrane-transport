@@ -331,11 +331,11 @@ a11y:
   soluteControl:
     outside:
       accessibleName:           "{ a11y.solutes.uppercaseName } Outside Cell"
-      accessibleHelpText:       Adjust chosen solute amount on outside with arrow keys or alternate keyboard shortcuts.
+      accessibleHelpText:       Adjust chosen solute amount on outside with Arrow keys or alternate keyboard shortcuts.
       readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Outside"
     inside:
       accessibleName:           "{ a11y.solutes.uppercaseName } Inside Cell"
-      accessibleHelpText:       Adjust chosen solute amount on inside with arrow keys or alternate keyboard shortcuts.
+      accessibleHelpText:       Adjust chosen solute amount on inside with Arrow keys or alternate keyboard shortcuts.
       readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Inside"
     voicingHintResponse:           Adjust chosen solute with Arrow keys or Arrow buttons.
     accessibleRoleDescription:     solute adjuster
@@ -563,8 +563,8 @@ a11y:
   keyboardHelp:
     soluteAdjusters:
       # Description strings for PDOM
-      addOrRemoveALotDescription:    Adjust chosen solute amount with A and D letter keys or Left and Right Arrow keys.
-      addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus A and D letter keys or Shift plus Left and Right Arrow keys.
+      addOrRemoveALotDescription:    Adjust chosen solute amount with Left and Right Arrow keys or A and D letter keys.
+      addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus Left and Right Arrow keys or Shift plus A and D letter keys.
     transportProteinsAndLigands:
       # Description strings for PDOM
       navigateDescription:        Navigate proteins in panel or added ligands with Tab key.
