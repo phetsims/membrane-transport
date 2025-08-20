@@ -645,16 +645,16 @@ export default class InteractiveSlotsNode extends VoicingNode {
     this.grabReleaseUtterance.alert = new ResponsePacket( {
       objectResponse: response
     } );
-    this.addAccessibleResponse( this.grabReleaseUtterance );
+    this.view.addAccessibleResponse( this.grabReleaseUtterance );
 
     Voicing.alertUtterance( this.grabReleaseUtterance );
   }
 
   private alertHint(): void {
 
-    // The first time a protein is grabbed, read additional information about how to interact with it.\
+    // The first time a protein is grabbed, read additional information about how to interact with it.
     // Output is queued so that it does not interrupt the grabbed response.
-    this.addAccessibleHelpResponse( this.hintUtterance, 'queue' );
+    this.view.addAccessibleHelpResponse( this.hintUtterance, 'queue' );
 
     Voicing.alertUtterance( this.hintUtterance );
   }
