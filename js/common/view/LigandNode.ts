@@ -23,14 +23,13 @@ import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibilit
 import GrabDragInteraction from '../../../../scenery-phet/js/accessibility/grab-drag/GrabDragInteraction.js';
 import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
 import HighlightPath from '../../../../scenery/js/accessibility/HighlightPath.js';
-import InteractiveHighlightingNode, { InteractiveHighlightingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
-import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
+import { InteractiveHighlightingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
+import VoicingNode from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -63,7 +62,7 @@ class LigandIndexProperty extends Vector2Property {
   }
 }
 
-export default class LigandNode extends InteractiveHighlightingNode {
+export default class LigandNode extends VoicingNode {
 
   private readonly ligand: Ligand;
   private readonly modelViewTransform: ModelViewTransform2;
@@ -110,9 +109,9 @@ export default class LigandNode extends InteractiveHighlightingNode {
 
     // For voicing, speak the accessible name when focused or pressed.
     const voiceAccessibleName = () => {
-      voicingUtteranceQueue.addToBack( new ResponsePacket( {
+      this.voicingSpeakNameResponse( {
         nameResponse: accessibleNameProperty
-      } ) );
+      } );
     };
 
     const options =

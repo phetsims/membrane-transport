@@ -34,7 +34,8 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import GroupHighlightPath from '../../../../scenery/js/accessibility/GroupHighlightPath.js';
-import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
+import VoicingNode from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
+import Voicing from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
@@ -65,7 +66,7 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node f
 const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
 const OFF_MEMBRANE_HORIZONTAL_OFFSET = 10;
 
-export default class InteractiveSlotsNode extends Node {
+export default class InteractiveSlotsNode extends VoicingNode {
 
   // The index of the slot that is currently selected. If the user activates the slot, the selected protein type will be placed there.
   private selectedIndex: number | 'offMembrane' = 0;
@@ -99,7 +100,9 @@ export default class InteractiveSlotsNode extends Node {
       ariaLivePriority: AriaLive.POLITE
     }
   } );
+
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+
   private readonly hintUtterance = new Utterance( {
     announcerOptions: {
       cancelOther: false
@@ -133,6 +136,12 @@ export default class InteractiveSlotsNode extends Node {
       ) )
     } );
 
+    // Register utterances to this Node so that they are not spoken if the Node is
+    // not globally voicingVisible.
+    Voicing.registerUtteranceToVoicingNode( this.hintUtterance, this );
+    Voicing.registerUtteranceToVoicingNode( this.nameUtterance, this );
+    Voicing.registerUtteranceToVoicingNode( this.grabReleaseUtterance, this );
+
     // A focusable Node that contains the accessible content for the interaction.
     const createAccessibleRectangle = (
       accessibleNameProperty: TReadOnlyProperty<string>,
@@ -155,14 +164,14 @@ export default class InteractiveSlotsNode extends Node {
 
       rect.focusedProperty.link( focused => {
         if ( focused ) {
-          const responsePacket = new ResponsePacket( {
+          this.nameUtterance.alert = new ResponsePacket( {
             nameResponse: voicingNameResponseProperty,
             objectResponse: voicingObjectResponseProperty
           } );
 
           // Only added for Voicing because the accessibleName is spoken automatically by the
           // screen reader when the Node is focused.
-          voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
+          Voicing.alertUtterance( this.nameUtterance );
         }
       } );
 
@@ -566,13 +575,6 @@ export default class InteractiveSlotsNode extends Node {
     this.selectedIndex = this.slots.indexOf( slot );
     this.grabbedNode = this.view.createTemporaryProteinNode( type, slot, toolNode );
 
-    // Alert 'grabbed' after so that it will interrupt the focus change read above.
-    this.alertGrabRelease( MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
-
-    if ( this.firstProteinGrab ) {
-      this.alertHint();
-    }
-
     this.grabbedNode.grab( () => {
 
       // Make sure that the selected index is set before the grabbedProperty, so that the focus is set correctly.
@@ -583,9 +585,15 @@ export default class InteractiveSlotsNode extends Node {
 
       // Move focus to the grabbed Node.
       this.updateFocus();
-    } );
 
-    this.firstProteinGrab = false;
+      // Alert 'grabbed' after so that it will interrupt the focus change read above.
+      this.alertGrabRelease( MembraneTransportFluent.a11y.transportProtein.grabbedResponseStringProperty );
+
+      if ( this.firstProteinGrab ) {
+        this.alertHint();
+        this.firstProteinGrab = false;
+      }
+    } );
   }
 
   /**
@@ -634,14 +642,12 @@ export default class InteractiveSlotsNode extends Node {
    * A convenience method to alert an accessible response for both Interactive Description and Voicing.
    */
   private alertGrabRelease( response: TReadOnlyProperty<string> | string ): void {
-    this.grabReleaseUtterance.alert = response;
-    this.addAccessibleResponse( this.grabReleaseUtterance );
-
-    const responsePacket = new ResponsePacket( {
+    this.grabReleaseUtterance.alert = new ResponsePacket( {
       objectResponse: response
     } );
+    this.addAccessibleResponse( this.grabReleaseUtterance );
 
-    voicingUtteranceQueue.addToBack( this.grabReleaseUtterance, responsePacket );
+    Voicing.alertUtterance( this.grabReleaseUtterance );
   }
 
   private alertHint(): void {
@@ -649,7 +655,8 @@ export default class InteractiveSlotsNode extends Node {
     // The first time a protein is grabbed, read additional information about how to interact with it.\
     // Output is queued so that it does not interrupt the grabbed response.
     this.addAccessibleHelpResponse( this.hintUtterance, 'queue' );
-    voicingUtteranceQueue.addToBack( this.hintUtterance );
+
+    Voicing.alertUtterance( this.hintUtterance );
   }
 
   /**

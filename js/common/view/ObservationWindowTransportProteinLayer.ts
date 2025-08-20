@@ -22,6 +22,8 @@ import Shape from '../../../../kite/js/Shape.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
+import VoicingNode from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
+import Voicing from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import voicingUtteranceQueue from '../../../../scenery/js/accessibility/voicing/voicingUtteranceQueue.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
@@ -54,7 +56,7 @@ export type SlottedNode = {
   indexProperty: TProperty<number>;
 };
 
-export default class ObservationWindowTransportProteinLayer extends Node {
+export default class ObservationWindowTransportProteinLayer extends VoicingNode {
 
   private readonly record = new Map<TransportProtein, SlottedNode>();
   private readonly interactiveSlotsNode: InteractiveSlotsNode;
@@ -114,6 +116,11 @@ export default class ObservationWindowTransportProteinLayer extends Node {
     this.addChild( readingBlockNode );
 
     this.readingBlockUtterance = readingBlockNode.voicingUtterance;
+
+    // Register these Utterances to this Node so that content is not spoken
+    // if the Node is globally voicingVisible: false.
+    Voicing.registerUtteranceToVoicingNode( this.nameUtterance, this );
+    Voicing.registerUtteranceToVoicingNode( this.readingBlockUtterance, this );
 
     this.addChild( this.proteinsNodeParent );
 
@@ -239,17 +246,18 @@ export default class ObservationWindowTransportProteinLayer extends Node {
           // Voicing - speak the appropriate response on focus.
           transportProteinNode.focusedProperty.link( focused => {
             if ( focused ) {
-              const responsePacket = new ResponsePacket( {
-                nameResponse: nameResponseProperty,
-                objectResponse: locationStringProperty
-              } );
 
               // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
               // Node is focused.
 
               // See documentation about readingBlockUtterance for why this is necessary.
               voicingUtteranceQueue.cancelUtterance( this.readingBlockUtterance );
-              voicingUtteranceQueue.addToBack( this.nameUtterance, responsePacket );
+
+              this.nameUtterance.alert = new ResponsePacket( {
+                nameResponse: nameResponseProperty,
+                objectResponse: locationStringProperty
+              } );
+              Voicing.alertUtterance( this.nameUtterance );
 
               transportProteinNode.addAccessibleObjectResponse(
                 MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.format( {
