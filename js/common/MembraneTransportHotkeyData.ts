@@ -34,7 +34,7 @@ export default class MembraneTransportHotkeyData {
       'Select a slot in the membrane'
     ),
     releaseProtein: createHotkeyData(
-      [ 'enter', 'space' ],
+      [ 'space', 'enter' ],
       'Release protein'
     ),
     deleteProtein: createHotkeyData(
@@ -55,7 +55,7 @@ export default class MembraneTransportHotkeyData {
       'Select a protein'
     ),
     grabProtein: createHotkeyData(
-      [ 'enter', 'space' ],
+      [ 'space', 'enter' ],
       'Grab protein'
     )
   };
