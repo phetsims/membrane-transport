@@ -30,7 +30,12 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
     // When the channel closes, boot out any solutes that are passing through
     this.openOrClosedProperty.lazyLink( openOrClosed => {
       if ( openOrClosed === 'closed' ) {
-        this.clearSolutes( this.slot );
+        const slot = this.model.getSlotForTransportProtein( this );
+
+        // Graceful. The slot may not exist if the channel is removed from the membrane.
+        if ( slot ) {
+          this.clearSolutes( slot );
+        }
       }
     } );
   }
