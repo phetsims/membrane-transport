@@ -610,8 +610,14 @@
       "deletedResponse": {
         "value": "Deleted."
       },
-      "cancelledResponse": {
+      "cancelledBackToSlotResponse": {
         "value": "Released. Back to initial slot."
+      },
+      "cancelledBackToPanelResponse": {
+        "value": "Released. Back in panel."
+      },
+      "reorderedResponse": {
+        "value": "Reordered."
       },
       "proteinLocation": {
         "value": "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"

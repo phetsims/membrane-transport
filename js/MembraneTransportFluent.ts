@@ -194,7 +194,9 @@ addToMapIfDefined( 'a11y_transportProtein_initialGrabbedHintResponse', 'a11y.tra
 addToMapIfDefined( 'a11y_transportProtein_offMembraneResponse', 'a11y.transportProtein.offMembraneResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_releasedReplacedResponse', 'a11y.transportProtein.releasedReplacedResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_deletedResponse', 'a11y.transportProtein.deletedResponseStringProperty' );
-addToMapIfDefined( 'a11y_transportProtein_cancelledResponse', 'a11y.transportProtein.cancelledResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_cancelledBackToSlotResponse', 'a11y.transportProtein.cancelledBackToSlotResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_cancelledBackToPanelResponse', 'a11y.transportProtein.cancelledBackToPanelResponseStringProperty' );
+addToMapIfDefined( 'a11y_transportProtein_reorderedResponse', 'a11y.transportProtein.reorderedResponseStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_proteinLocation', 'a11y.transportProtein.proteinLocationStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_accessibleName', 'a11y.transportProtein.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_transportProtein_accessibleObjectResponse', 'a11y.transportProtein.accessibleObjectResponseStringProperty' );
@@ -614,7 +616,9 @@ const MembraneTransportFluent = {
       offMembraneResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_offMembraneResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.offMembraneResponseStringProperty' ) ),
       releasedReplacedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_releasedReplacedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.releasedReplacedResponseStringProperty' ) ),
       deletedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_deletedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.deletedResponseStringProperty' ) ),
-      cancelledResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_cancelledResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.cancelledResponseStringProperty' ) ),
+      cancelledBackToSlotResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_cancelledBackToSlotResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.cancelledBackToSlotResponseStringProperty' ) ),
+      cancelledBackToPanelResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_cancelledBackToPanelResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.cancelledBackToPanelResponseStringProperty' ) ),
+      reorderedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_reorderedResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.reorderedResponseStringProperty' ) ),
       proteinLocation: new FluentPattern<{ proteinCount: FluentVariable, proteinIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_proteinLocation', _.get( MembraneTransportStrings, 'a11y.transportProtein.proteinLocationStringProperty' ), [{"name":"proteinCount"},{"name":"proteinIndex"}] ),
       accessibleName: new FluentPattern<{ nameResponse: FluentVariable, proteinCount: FluentVariable, proteinIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleNameStringProperty' ), [{"name":"nameResponse"},{"name":"proteinCount"},{"name":"proteinIndex"}] ),
       _comment_1: new FluentComment( {"comment":"The accessible object response for the transport protein when it is in a slot, describing its open/closed state.","associatedKey":"accessibleObjectResponse"} ),

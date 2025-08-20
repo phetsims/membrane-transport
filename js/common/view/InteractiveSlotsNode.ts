@@ -614,11 +614,11 @@ export default class InteractiveSlotsNode extends VoicingNode {
 
     if ( reason === 'return' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();
-      responseString = 'Released. Back in panel.';
+      responseString = MembraneTransportFluent.a11y.transportProtein.cancelledBackToPanelResponseStringProperty.value;
     }
     else if ( reason === 'swap' ) {
       MembraneTransportSounds.transportProteinSwapped();
-      responseString = 'Re-ordered.';
+      responseString = MembraneTransportFluent.a11y.transportProtein.reorderedResponseStringProperty.value;
     }
     else if ( reason === 'delete' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();
@@ -630,7 +630,7 @@ export default class InteractiveSlotsNode extends VoicingNode {
     }
     else if ( reason === 'cancel' ) {
       MembraneTransportSounds.transportProteinReleased();
-      responseString = MembraneTransportFluent.a11y.transportProtein.cancelledResponseStringProperty.value;
+      responseString = MembraneTransportFluent.a11y.transportProtein.cancelledBackToSlotResponseStringProperty.value;
     }
     else if ( reason === 'replace' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();

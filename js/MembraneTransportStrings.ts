@@ -293,7 +293,9 @@ type StringsType = {
       'offMembraneResponseStringProperty': LocalizedStringProperty;
       'releasedReplacedResponseStringProperty': LocalizedStringProperty;
       'deletedResponseStringProperty': LocalizedStringProperty;
-      'cancelledResponseStringProperty': LocalizedStringProperty;
+      'cancelledBackToSlotResponseStringProperty': LocalizedStringProperty;
+      'cancelledBackToPanelResponseStringProperty': LocalizedStringProperty;
+      'reorderedResponseStringProperty': LocalizedStringProperty;
       'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseStringProperty': LocalizedStringProperty;

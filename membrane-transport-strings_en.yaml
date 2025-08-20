@@ -402,8 +402,8 @@ a11y:
     removedAccessibleContextResponse: Ligands removed.
 
   cellMembrane:
-    accessibleHeading:         Cell Membrane
-    leadingParagraph:          "Zoomed-in cross section of cell has:"
+    accessibleHeading: Cell Membrane
+    leadingParagraph:  "Zoomed-in cross section of cell has:"
 
     # The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription
     # to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.
@@ -429,7 +429,9 @@ a11y:
     offMembraneResponse:            Off membrane.
     releasedReplacedResponse:       Released. Protein replaced.
     deletedResponse:                Deleted.
-    cancelledResponse:              Released. Back to initial slot.
+    cancelledBackToSlotResponse:              Released. Back to initial slot.
+    cancelledBackToPanelResponse:   Released. Back in panel.
+    reorderedResponse:              Reordered.
     proteinLocation:                "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"
     accessibleName:                 "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
 
