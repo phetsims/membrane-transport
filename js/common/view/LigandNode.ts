@@ -484,15 +484,17 @@ export default class LigandNode extends VoicingNode {
         // The grab and release alerts are handled by the logic in onGrab and onRelease.
         createReleasedResponse: () => null,
 
-        createGrabbedResponse: () => {
-
-          // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
-          const patternMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportFluent.a11y.ligandNode.grabbedResponseWithEmptyMembraneHint :
-                                         grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportFluent.a11y.ligandNode.grabbedResponse :
-                                         MembraneTransportFluent.a11y.ligandNode.grabbedResponseWithHint;
-          return patternMessageProperty.format( {
-            proteinCount: transportProteinCountProperty
-          } );
+        createGrabbedResponse: inputType => {
+          if ( inputType === 'alternative' ) {
+            // If there are no proteins, add a hint that guides to add more. If it is the first grab, add additional information about how to move the ligand. Otherwise, no hint.
+            const patternMessageProperty = transportProteinCountProperty.value === 0 ? MembraneTransportFluent.a11y.ligandNode.grabbedResponseWithEmptyMembraneHint :
+                                           grabDragInteraction.grabDragUsageTracker.numberOfKeyboardGrabs > 1 ? MembraneTransportFluent.a11y.ligandNode.grabbedResponse :
+                                           MembraneTransportFluent.a11y.ligandNode.grabbedResponseWithHint;
+            return patternMessageProperty.format( {
+              proteinCount: transportProteinCountProperty
+            } );
+          }
+          return null;
         }
       } );
 
