@@ -636,7 +636,7 @@ const MembraneTransportFluent = {
       _comment_6: new FluentComment( {"comment":"\"above Sodium-selective, Leakage\". It takes the value of the nameResponse instead","associatedKey":"accessibleObjectResponseMoving"} ),
       _comment_7: new FluentComment( {"comment":"of forwarding to the fluent pattern because","associatedKey":"accessibleObjectResponseMoving"} ),
       accessibleObjectResponseMoving: new FluentPattern<{ slotContents: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleObjectResponseMoving', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleObjectResponseMovingStringProperty' ), [{"name":"slotContents"}] ),
-      _comment_8: new FluentComment( {"comment":"For Interactive Description, the","associatedKey":"accessibleNameAndObjectResponse"} ),
+      _comment_8: new FluentComment( {"comment":"For Interactive Description, the accessible name combines the name response and the object response.","associatedKey":"accessibleNameAndObjectResponse"} ),
       accessibleNameAndObjectResponse: new FluentPattern<{ nameResponse: FluentVariable, objectResponse: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleNameAndObjectResponse', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleNameAndObjectResponseStringProperty' ), [{"name":"nameResponse"},{"name":"objectResponse"}] ),
       _comment_9: new FluentComment( {"comment":"Included in the accessibleName for the protein when it is above an empty slot.","associatedKey":"empty"} ),
       emptyStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_empty', _.get( MembraneTransportStrings, 'a11y.transportProtein.emptyStringProperty' ) ),
