@@ -70,6 +70,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
   // because we want to hear other information before the protein name, like "released" or other protein state.
   private readonly readingBlockUtterance: Utterance;
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
+  private readonly objectResponseUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
   // A parent for the proteins so that the accessibility attributes like accessibleRoleDescription
   // and headings do not apply to all children of this Node.
@@ -120,6 +121,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
     // Register these Utterances to this Node so that content is not spoken
     // if the Node is globally voicingVisible: false.
     Voicing.registerUtteranceToVoicingNode( this.nameUtterance, this );
+    Voicing.registerUtteranceToVoicingNode( this.objectResponseUtterance, this );
     Voicing.registerUtteranceToVoicingNode( this.readingBlockUtterance, this );
 
     this.addChild( this.proteinsNodeParent );
@@ -247,26 +249,26 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
           transportProteinNode.focusedProperty.link( focused => {
             if ( focused ) {
 
-              // Only added for Voicing because the accessibleName is spoken for Interactive Description when the
-              // Node is focused.
-
               // See documentation about readingBlockUtterance for why this is necessary.
               voicingUtteranceQueue.cancelUtterance( this.readingBlockUtterance );
 
+              // The name response is only added for Voicing because the accessibleName is spoken for
+              // Interactive Description when the Node is focused.
               this.nameUtterance.alert = new ResponsePacket( {
                 nameResponse: nameResponseProperty,
                 objectResponse: locationStringProperty
               } );
               Voicing.alertUtterance( this.nameUtterance );
 
-              transportProteinNode.addAccessibleObjectResponse(
-                MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.format( {
+              // This response should queue after the 'grab'/'release' responses that may trigger during interaction.
+              this.objectResponseUtterance.alert = new ResponsePacket( {
+                objectResponse: MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponse.format( {
                   state: transportProtein.stateProperty
-                } ),
+                } )
+              } );
 
-                // This response should queue after the 'grab'/'release' responses that may trigger during interaction.
-                'queue'
-              );
+              transportProteinNode.addAccessibleObjectResponse( this.objectResponseUtterance, 'queue' );
+              Voicing.alertUtterance( this.objectResponseUtterance );
             }
 
             this.model.focusedProteinProperty.value = focused ? transportProtein : null;
