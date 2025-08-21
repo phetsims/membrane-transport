@@ -49,7 +49,7 @@ const MembraneTransportColors = {
     default: '#ff5500'
   } ),
   potassiumIonColorProperty: new ProfileColorProperty( membraneTransport, 'KBarChartColor', {
-    default: 'rgb(0, 168, 212)'
+    default: '#009BC2'
   } ),
   glucoseColorProperty: new ProfileColorProperty( membraneTransport, 'glucoseBarChartColor', {
     default: 'rgb(106,42,211)'
