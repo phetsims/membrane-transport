@@ -142,7 +142,7 @@ a11y:
     interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins.
   soluteControls:
     accessibleHeading:  Solute Controls
-    accessibleHelpText: Choose solute for Solute Adjusters.
+    accessibleHelpText: Choose a solute for the Solute Adjusters.
   # Only display help text when button is disabled
   eraseSolutesButton:
     accessibleName:            Erase All Solutes
