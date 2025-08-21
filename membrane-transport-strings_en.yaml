@@ -572,15 +572,15 @@ a11y:
       # Description strings for PDOM
       navigateDescription:        Navigate proteins in panel or added ligands with Tab key.
       grabOrReleaseDescription:   Grab or release with Space or Enter keys.
-      moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or letter keys A and D.
+      moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or A and D letter keys.
       cancelGrabDescription:      Cancel grab or move interaction with Escape key.
     sortOrDeleteProteins:
       # Description strings for PDOM
-      navigateProteinsDescription:   Navigate proteins in membrane with Left and Right Arrow keys.
+      navigateProteinsDescription:   Navigate proteins in membrane with Left and Right Arrow keys or A and D letter keys.
       grabProteinDescription:        Grab protein in membrane with Space or Enter keys.
-      moveGrabbedProteinDescription: Move grabbed protein between slots with Left and Right Arrow keys.
+      moveGrabbedProteinDescription: Move grabbed protein between slots with Left and Right Arrow keys or A and D letter keys.
       releaseProteinDescription:     Release grabbed protein into empty slot or swap slots with Space or Enter keys.
-      deleteProteinDescription:      Delete grabbed protein with Delete key.
+      deleteProteinDescription:      Delete grabbed protein with Backspace or Delete key.
 
   # Strings for MembraneTransportDescriber
   membraneTransportDescriber:
