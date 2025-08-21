@@ -529,9 +529,18 @@ a11y:
                                        }
                                     }.
 
-    # The accessible object response for the transport protein when the user is moving it between different slots.
-    accessibleNameMoving:           "{ a11y.transportProtein.accessibleObjectResponseMoving }, above { $nameResponse }"
-    accessibleObjectResponseMoving: Slot { $slotIndex } of { $slotCount }
+    # The accessible name for the slot when moving a protein above it is the slot index relative to the total count.
+    # Like "Slot 1 of 7".
+    accessibleNameMoving: Slot { $slotIndex } of { $slotCount }
+
+    # The accessible object response for the slot when moving a protein above it is
+    # the type of protein currently sitting in the slot like
+    # "above Sodium-selective, Leakage". It takes the value of the nameResponse instead
+    # of forwarding to the fluent pattern because
+    accessibleObjectResponseMoving: above { $slotContents }
+
+    # For Interactive Description, the accessible name combines the name response and the object response.
+    accessibleNameAndObjectResponse: "{ $nameResponse }, { $objectResponse }"
 
     # Included in the accessibleName for the protein when it is above an empty slot.
     empty:                          empty slot

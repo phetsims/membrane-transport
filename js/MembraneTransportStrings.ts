@@ -304,6 +304,7 @@ type StringsType = {
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
       'accessibleNameMovingStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseMovingStringProperty': LocalizedStringProperty;
+      'accessibleNameAndObjectResponseStringProperty': LocalizedStringProperty;
       'emptyStringProperty': LocalizedStringProperty;
       'briefNameStringProperty': LocalizedStringProperty;
     };

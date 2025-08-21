@@ -34,7 +34,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibility/AccessibleInteractiveOptions.js';
 import GroupFocusListener from '../../../../scenery/js/accessibility/GroupFocusListener.js';
 import GroupHighlightPath from '../../../../scenery/js/accessibility/GroupHighlightPath.js';
-import VoicingNode from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
 import Voicing from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -66,7 +65,7 @@ const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node f
 const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
 const OFF_MEMBRANE_HORIZONTAL_OFFSET = 10;
 
-export default class InteractiveSlotsNode extends VoicingNode {
+export default class InteractiveSlotsNode extends Node {
 
   // The index of the slot that is currently selected. If the user activates the slot, the selected protein type will be placed there.
   private selectedIndex: number | 'offMembrane' = 0;
@@ -137,10 +136,14 @@ export default class InteractiveSlotsNode extends VoicingNode {
     } );
 
     // Register utterances to this Node so that they are not spoken if the Node is
-    // not globally voicingVisible.
-    Voicing.registerUtteranceToVoicingNode( this.hintUtterance, this );
-    Voicing.registerUtteranceToVoicingNode( this.nameUtterance, this );
-    Voicing.registerUtteranceToVoicingNode( this.grabReleaseUtterance, this );
+    // not globally voicingVisible. Note that registering to the ScreenView works because
+    // the screen view directly sets the voicingVisibleProperty when sim voicing is disabled.
+    // We do not want to register to this Node because the InteractiveSlotsNode becomes invisible
+    // when switching to the "select" state, and we want to make sure that we hear the "released"
+    // response before that happens.
+    Voicing.registerUtteranceToNode( this.hintUtterance, view );
+    Voicing.registerUtteranceToNode( this.nameUtterance, view );
+    Voicing.registerUtteranceToNode( this.grabReleaseUtterance, view );
 
     // A focusable Node that contains the accessible content for the interaction.
     const createAccessibleRectangle = (
@@ -200,7 +203,13 @@ export default class InteractiveSlotsNode extends VoicingNode {
     // Create the focusable rectangles that represent the slots.
     slots.forEach( ( slot, index ) => {
 
-      // The name of the protein in a slot, for when there is one.
+      // The name response includes the location in the protein in the membrane, like "slot 1 of 7".
+      const nameResponseStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNameMoving.createProperty( {
+        slotIndex: `${index + 1}`,
+        slotCount: `${slots.length}`
+      } );
+
+      // Compute the brief name of the protein
       const briefNameProperty = MembraneTransportFluent.a11y.transportProtein.briefName.createProperty( {
         type: new DerivedProperty( [ slot.transportProteinProperty ], transportProtein => {
 
@@ -209,11 +218,8 @@ export default class InteractiveSlotsNode extends VoicingNode {
         } )
       } );
 
-      const objectResponseStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponseMoving.createProperty( {
-        slotIndex: `${index + 1}`,
-        slotCount: `${slots.length}`
-      } );
-      const nameResponseStringProperty = new DerivedProperty( [
+      // The name of the protein in the slot, or "empty" if there isn't one.
+      const slotContentsStringProperty = new DerivedProperty( [
         slot.transportProteinProperty,
         MembraneTransportFluent.a11y.transportProtein.emptyStringProperty,
         briefNameProperty
@@ -221,17 +227,21 @@ export default class InteractiveSlotsNode extends VoicingNode {
         return transportProtein ? briefName : emptyString;
       } );
 
-      // The "reversed" accessible name pattern puts the slot before the protein name and will produce the requested output like
-      // "Above slot 1 of 3, empty" or
-      // "Above slot 2 of 3, Sodium Ion, Leakage"
-      const accessibleNameProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNameMoving.createProperty( {
-        slotIndex: `${index + 1}`,
-        slotCount: `${slots.length}`,
-        nameResponse: nameResponseStringProperty
+      // The accessible object response includes the contents of the slot as we move over it. Something
+      // like "above Sodium-Selective, Leakage".
+      const objectResponseStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleObjectResponseMoving.createProperty( {
+        slotContents: slotContentsStringProperty
+      } );
+
+      // The accessible name for Interactive Description combines the voicing name response and the voicing
+      // object response.
+      const accessibleNameStringProperty = MembraneTransportFluent.a11y.transportProtein.accessibleNameAndObjectResponse.createProperty( {
+        nameResponse: nameResponseStringProperty,
+        objectResponse: objectResponseStringProperty
       } );
 
       const rect = createAccessibleRectangle(
-        accessibleNameProperty,
+        accessibleNameStringProperty,
         nameResponseStringProperty,
         objectResponseStringProperty,
         slot.position,
