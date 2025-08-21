@@ -211,8 +211,8 @@ export default class ObservationWindow extends Node {
     const closest = this.getClosestSlotDragIndicatorNode( globalBounds );
 
     this.slotDragIndicatorNodes.forEach( slotDragIndicatorNode => {
-      slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'rgb(0, 173, 29)' : 'white';
-      slotDragIndicatorNode.fill = slotDragIndicatorNode === closest ? 'rgba(0, 173, 29, 0.2)' : 'rgba( 0, 0, 0, 0.2 )';
+      slotDragIndicatorNode.stroke = slotDragIndicatorNode === closest ? 'white' : 'black';
+      slotDragIndicatorNode.fill = slotDragIndicatorNode === closest ? 'rgba(0, 0, 0, 0.5)' : 'rgba( 255, 255, 255, 0.7 )';
     } );
   }
 }

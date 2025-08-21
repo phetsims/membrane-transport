@@ -512,7 +512,7 @@ export default class LigandNode extends VoicingNode {
 
       const outline = new Circle( POTASSIUM_REGION_HEIGHT / 2, {
         translation: region.center,
-        stroke: 'forestgreen',
+        stroke: 'black',
         lineWidth: 15,
 
         // Adjusted so the phase matches
