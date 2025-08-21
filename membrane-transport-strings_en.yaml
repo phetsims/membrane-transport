@@ -429,11 +429,12 @@ a11y:
     offMembraneResponse:            Off membrane.
     releasedReplacedResponse:       Released. Protein replaced.
     deletedResponse:                Deleted.
-    cancelledBackToSlotResponse:              Released. Back to initial slot.
+    cancelledBackToSlotResponse:    Released. Back to initial slot.
     cancelledBackToPanelResponse:   Released. Back in panel.
     reorderedResponse:              Reordered.
     proteinLocation:                "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"
     accessibleName:                 "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
+    voicingHintResponse:            Space to grab or release.
 
     # The accessible object response for the transport protein when it is in a slot, describing its open/closed state.
     accessibleObjectResponse:       |-

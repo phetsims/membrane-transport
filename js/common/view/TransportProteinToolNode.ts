@@ -15,6 +15,7 @@ import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListen
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import createTransportProteinNode from './proteins/createTransportProteinNode.js';
@@ -57,7 +58,8 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
       children: [ transportProteinNode, new RichText( label, richTextOptions ) ],
       cursor: 'pointer',
       accessibleName: accessibleName,
-      voicingNameResponse: accessibleName
+      voicingNameResponse: accessibleName,
+      voicingHintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponseStringProperty
     } ) );
 
     this.addInputListener( {
