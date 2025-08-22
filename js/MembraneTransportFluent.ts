@@ -172,6 +172,8 @@ addToMapIfDefined( 'a11y_soluteControl_accessibleHelpTextAllDisabled', 'a11y.sol
 addToMapIfDefined( 'a11y_soluteControl_accessibleObjectResponse', 'a11y.soluteControl.accessibleObjectResponseStringProperty' );
 addToMapIfDefined( 'a11y_soluteControl_accessibleContextResponse', 'a11y.soluteControl.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_descriptionContent', 'a11y.soluteConcentrationsAccordionBox.descriptionContentStringProperty' );
+addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_accessibleContextResponseExpanded', 'a11y.soluteConcentrationsAccordionBox.accessibleContextResponseExpandedStringProperty' );
+addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_accessibleContextResponseCollapsed', 'a11y.soluteConcentrationsAccordionBox.accessibleContextResponseCollapsedStringProperty' );
 addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_voicingHintResponseCollapsed', 'a11y.soluteConcentrationsAccordionBox.voicingHintResponseCollapsedStringProperty' );
 addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_barChart_accessibleNameWithNoParticles', 'a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticlesStringProperty' );
 addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_barChart_accessibleNameWithParticles', 'a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticlesStringProperty' );
@@ -570,6 +572,8 @@ const MembraneTransportFluent = {
     _comment_6: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrationsAccordionBox"} ),
     soluteConcentrationsAccordionBox: {
       descriptionContentStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_descriptionContent', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.descriptionContentStringProperty' ) ),
+      accessibleContextResponseExpandedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_accessibleContextResponseExpanded', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.accessibleContextResponseExpandedStringProperty' ) ),
+      accessibleContextResponseCollapsedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_accessibleContextResponseCollapsed', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.accessibleContextResponseCollapsedStringProperty' ) ),
       voicingHintResponseCollapsedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soluteConcentrationsAccordionBox_voicingHintResponseCollapsed', _.get( MembraneTransportStrings, 'a11y.soluteConcentrationsAccordionBox.voicingHintResponseCollapsedStringProperty' ) ),
       barChart: {
         _comment_0: new FluentComment( {"comment":"Note this description is used instead of accessibleName in the case that there are none inside AND none outside.","associatedKey":"accessibleNameWithNoParticles"} ),

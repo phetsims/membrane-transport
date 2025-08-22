@@ -253,6 +253,8 @@ type StringsType = {
     };
     'soluteConcentrationsAccordionBox': {
       'descriptionContentStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseExpandedStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseCollapsedStringProperty': LocalizedStringProperty;
       'voicingHintResponseCollapsedStringProperty': LocalizedStringProperty;
       'barChart': {
         'accessibleNameWithNoParticlesStringProperty': LocalizedStringProperty;
