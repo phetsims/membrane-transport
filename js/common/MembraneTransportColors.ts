@@ -79,7 +79,7 @@ const MembraneTransportColors = {
     default: 'rgb(234,144,255)'
   } ),
   ligandButtonColorProperty: new ProfileColorProperty( membraneTransport, 'ligandButtonColor', {
-    default: 'rgb(153,206,255)'
+    default: 'rgb(255, 240, 105)'
   } )
 };
 
