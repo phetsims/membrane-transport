@@ -38,7 +38,6 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
 import { getSoluteSpinnerTandemName } from '../model/SoluteType.js';
-import MembranePotentialDescriber from './MembranePotentialDescriber.js';
 import MembraneTransportDescriber from './MembraneTransportDescriber.js';
 import MembraneTransportScreenSummaryContent from './MembraneTransportScreenSummaryContent.js';
 import ObservationWindow from './ObservationWindow.js';
@@ -356,8 +355,6 @@ export default class MembraneTransportScreenView extends ScreenView {
         MembraneTransportSounds.soluteCrossedMembrane( event.solute.type, event.direction );
       }
     } );
-
-    this.model.membranePotentialProperty.lazyLink( MembranePotentialDescriber.createListener( model, this ) );
 
     // For screens with transport proteins, create the toolbox grab cue node. It is created and added after the panel because
     // this cue needs to be visually on top of most things in the view.

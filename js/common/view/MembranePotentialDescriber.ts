@@ -6,7 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Node from '../../../../scenery/js/nodes/Node.js';
+import Property from '../../../../axon/js/Property.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -14,12 +14,18 @@ import PotassiumVoltageGatedChannel from '../model/proteins/PotassiumVoltageGate
 import SodiumVoltageGatedChannel from '../model/proteins/SodiumVoltageGatedChannel.js';
 
 export default class MembranePotentialDescriber {
-  public static createListener(
-    model: MembraneTransportModel,
-    view: Node // This is the MembraneTransportScreenView, because that is where we want to send the accessible response
-  ): ( membranePotential: ( -70 ) | -50 | 30, oldMembranePotential: ( -70 ) | -50 | 30 ) => void {
 
-    return ( membranePotential: ( -70 ) | -50 | 30, oldMembranePotential: ( -70 ) | -50 | 30 ): void => {
+  /**
+   * Creates a description string Property that describes the state of the membrane due to a change in membrane potential.
+   * Description content depends on the presence and state of sodium and potassium voltage-gated channels.
+   *
+   * To dispose, dispose of the returned Property.
+   */
+  public static createDescriptionStringProperty( model: MembraneTransportModel ): Property<string | null> {
+    const descriptionStringProperty = new Property<string | null>( null );
+
+    // This listener will be unlinked when the descriptionStringProperty is disposed through the disposer option.
+    model.membranePotentialProperty.lazyLink( ( membranePotential, oldMembranePotential ) => {
       const filledSlots = model.getFilledSlots();
       const sodiumVoltageGatedChannels = filledSlots.filter( slot => slot.transportProteinType === 'sodiumIonVoltageGatedChannel' );
       const potassiumVoltageGatedChannels = filledSlots.filter( slot => slot.transportProteinType === 'potassiumIonVoltageGatedChannel' );
@@ -108,11 +114,10 @@ export default class MembranePotentialDescriber {
         response = MembraneTransportFluent.a11y.membranePotential.noChangeResponseStringProperty.value;
       }
 
-      // Only announce if there was actually a change
-      if ( response ) {
-        view.addAccessibleResponse( response );
-      }
-    };
+      descriptionStringProperty.value = response;
+    }, { disposer: descriptionStringProperty } );
+
+    return descriptionStringProperty;
   }
 }
 

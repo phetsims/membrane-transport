@@ -27,6 +27,7 @@ import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+import MembranePotentialDescriber from './MembranePotentialDescriber.js';
 
 export default class MembranePotentialPanel extends Panel {
   public constructor( model: MembraneTransportModel, tandem: Tandem ) {
@@ -37,7 +38,12 @@ export default class MembranePotentialPanel extends Panel {
       phetioVisiblePropertyInstrumented: false,
 
       // Do not let the mouse area extend beyond the button, see https://github.com/phetsims/membrane-transport/issues/358
-      mouseAreaXDilation: 0
+      mouseAreaXDilation: 0,
+
+      // The context response depends on the membrane potential and state of proteins in the membrane. Since
+      // context responses are spoken after the Property changes, we can pass this Property to the
+      // accessibleContextResponse of each radio button.
+      accessibleContextResponse: MembranePotentialDescriber.createDescriptionStringProperty( model )
     };
 
     const membranePotentialRadioButtonGroup = new RectangularRadioButtonGroup( model.membranePotentialProperty, [ {
