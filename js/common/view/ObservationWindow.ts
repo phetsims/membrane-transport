@@ -103,6 +103,7 @@ export default class ObservationWindow extends Node {
 
         const ligandNode = new LigandNode(
           model.membraneSlots,
+          model.ligands,
           model.areLigandsAddedProperty,
           ligand, modelViewTransform,
           ligandViewNode,

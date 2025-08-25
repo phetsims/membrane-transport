@@ -130,6 +130,8 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
       // Set the ligand to 'bound' mode to pause its motion.
       ligand.mode = new LigandBoundMode( this, this.slot );
+
+      ligand.position.set( this.getBindingPosition() );
     }
   }
 

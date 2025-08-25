@@ -8,6 +8,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -86,6 +87,7 @@ export default class LigandNode extends VoicingNode {
 
   public constructor(
     private readonly slots: Slot[],
+    private readonly ligands: Ligand[],
     areLigandsAddedProperty: TProperty<boolean>,
     ligand: Ligand,
     modelViewTransform: ModelViewTransform2,
@@ -226,11 +228,7 @@ export default class LigandNode extends VoicingNode {
           return;
         }
 
-        // Upon release of a mouse/touch drag, resume random walk. This also allows the ligand to bind if close to a target.
-        ligand.mode = Particle.createRandomWalkMode( true );
-
-        // If the ligand is release within the capture radius of a corresponding ligand gated channel, clear the ligand gated channel cooldown so it can immediately bind.
-        this.checkAndClearBindingCooldown();
+        this.setLigandModeOnRelease();
 
         pressOffset = null;
       },
@@ -476,8 +474,8 @@ export default class LigandNode extends VoicingNode {
               this.resetKeyboardInteractionState();
             }
 
-            // Resume random walk. If close to a target channel, it can bind.
-            this.ligand.mode = Particle.createRandomWalkMode( true );
+            // If close to a target channel, it can bind. Otherwise, resume random walk.
+            this.setLigandModeOnRelease();
 
             this.updateVisualPosition(); // Ensure view matches model after drop
           }
@@ -531,7 +529,10 @@ export default class LigandNode extends VoicingNode {
     // Initial positioning
     this.updateVisualPosition();
 
-    soundDragListener.isOverProperty.link( isOver => {
+    Multilink.multilink( [
+      soundDragListener.isPressedProperty,
+      soundDragListener.isOverProperty
+    ], ( isPressed, isOver ) => {
 
       if ( isOver ) {
         ligandInteractionCueVisibleProperty.value = false;
@@ -539,7 +540,7 @@ export default class LigandNode extends VoicingNode {
 
       // If the ligand is already controlled, don't start walking when the pointer goes out.
       // Do not release a bound ligand by mouseover
-      if ( ligand.mode.type !== 'userControlled' && ligand.mode.type !== 'ligandBound' ) {
+      if ( !isPressed && ligand.mode.type !== 'ligandBound' ) {
         ligand.mode = isOver ? new UserOverMode() : Particle.createRandomWalkMode( true );
       }
     } );
@@ -596,28 +597,53 @@ export default class LigandNode extends VoicingNode {
   }
 
   /**
-   * Checks if the ligand is near a compatible, closed LGC and clears the cooldown if so.
-   * This is called after a mouse/touch drag ends. The keyboard drop handles this inline.
+   * Returns true if the provided slot has a ligand gated channel that is
+   * available for binding this ligand.
    */
-  private checkAndClearBindingCooldown(): void {
-    for ( let i = 0; i < this.slots.length; i++ ) {
-      const slot = this.slots[ i ];
-      const transportProtein = slot.transportProteinProperty.value;
-      const distance = this.ligand.position.distance( new Vector2( slot.position, 0 ) ); // Check distance to binding site (y=0)
+  private isNearbyChannelAvailableForBinding( slot: Slot ): boolean {
+    const transportProtein = slot.transportProteinProperty.value;
+    const distance = this.ligand.position.distance( new Vector2( slot.position, 0 ) ); // Check distance to binding site (y=0)
 
-      if ( transportProtein &&
-           distance < CAPTURE_RADIUS_PROPERTY.value &&
-           transportProtein instanceof LigandGatedChannel &&
-           transportProtein.stateProperty.value === 'closed' &&
-           this.isCompatibleLigand( transportProtein ) ) {
-        transportProtein.clearRebindingCooldown();
-      }
-    }
+    return !!( transportProtein &&
+               distance < CAPTURE_RADIUS_PROPERTY.value &&
+               transportProtein instanceof LigandGatedChannel &&
+               transportProtein.stateProperty.value === 'closed' &&
+               this.isCompatibleLigand( transportProtein ) );
   }
 
   private alert( message: AlertableNoUtterance ): void {
     this.utterance.alert = message;
     this.alerter.alert( this.utterance );
+  }
+
+  /**
+   * Upon release, set the ligand to immediately bind to a nearby ligand
+   * gated channel if it is available for binding. Interrupts any other
+   * ligands that are trying to bind to that same protein. If no nearby
+   * protein is available for binding, return to random walk model.
+   */
+  private setLigandModeOnRelease(): void {
+
+    // If releasing above a free ligand gated channel, bind to it. Otherwise, resume random walk.
+    const closestSlot = _.minBy( this.slots, slot => this.ligand.position.distance( new Vector2( slot.position, 0 ) ) );
+    if ( closestSlot && this.isNearbyChannelAvailableForBinding( closestSlot ) ) {
+
+      // iterate over all particles and see if any are moving toward this protein. If they are, then put them back in random walk. Then proceed with
+      // binding this ligand...
+      this.ligands.forEach( otherLigand => {
+        if ( otherLigand !== this.ligand && otherLigand.mode.type === 'moveToLigandBindingLocation' ) {
+          otherLigand.mode = Particle.createRandomWalkMode( true );
+        }
+      } );
+
+      ( closestSlot.transportProteinProperty.value as LigandGatedChannel ).bindLigand( this.ligand );
+    }
+    else {
+      this.ligand.mode = Particle.createRandomWalkMode( true );
+    }
+
+    // Ensure view matches model after drop since view position usually only updates during step().
+    this.updateVisualPosition();
   }
 
   /**
