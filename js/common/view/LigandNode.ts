@@ -636,7 +636,11 @@ export default class LigandNode extends VoicingNode {
         }
       } );
 
-      ( closestSlot.transportProteinProperty.value as LigandGatedChannel ).bindLigand( this.ligand );
+      const protein = closestSlot.transportProteinProperty.value as LigandGatedChannel;
+
+      // Clear the binding cooldown so that the ligand can be immediately placed on release.
+      protein.clearRebindingCooldown();
+      protein.bindLigand( this.ligand );
     }
     else {
       this.ligand.mode = Particle.createRandomWalkMode( true );

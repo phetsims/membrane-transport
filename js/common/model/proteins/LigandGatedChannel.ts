@@ -126,7 +126,8 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
 
     // Only bind if not already bound and past the rebinding delay
     if ( this.isAvailableForBinding() ) {
-      this.stateProperty.value = 'ligandBoundClosed';
+
+      this.stateProperty.value = this.model.isPlayingProperty.value ? 'ligandBoundClosed' : 'ligandBoundOpen';
 
       // Set the ligand to 'bound' mode to pause its motion.
       ligand.mode = new LigandBoundMode( this, this.slot );
@@ -149,7 +150,7 @@ export default class LigandGatedChannel extends TransportProtein<LigandGatedChan
       ligand.mode = Particle.createRandomWalkMode( false );
 
       // Clear the bound state
-      this.stateProperty.value = 'ligandUnboundOpen';
+      this.stateProperty.value = this.model.isPlayingProperty.value ? 'ligandUnboundOpen' : 'closed';
 
       if ( naturally ) {
         this.ligandUnboundDueToNaturalCausesEmitter.emit( ligand );
