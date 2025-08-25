@@ -205,6 +205,7 @@ type StringsType = {
     'ligandNode': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'voicingHintResponseStringProperty': LocalizedStringProperty;
       'releasedResponseStringProperty': LocalizedStringProperty;
       'releasedOffMembraneResponseStringProperty': LocalizedStringProperty;
       'releasedOnProteinResponseStringProperty': LocalizedStringProperty;

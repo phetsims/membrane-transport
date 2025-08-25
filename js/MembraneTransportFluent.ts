@@ -136,6 +136,7 @@ addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiu
 addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_accessibleHelpText', 'a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_accessibleName', 'a11y.ligandNode.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_accessibleHelpText', 'a11y.ligandNode.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_ligandNode_voicingHintResponse', 'a11y.ligandNode.voicingHintResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_releasedResponse', 'a11y.ligandNode.releasedResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_releasedOffMembraneResponse', 'a11y.ligandNode.releasedOffMembraneResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_releasedOnProteinResponse', 'a11y.ligandNode.releasedOnProteinResponseStringProperty' );
@@ -504,6 +505,7 @@ const MembraneTransportFluent = {
       _comment_0: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
       _comment_1: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.ligandNode.accessibleHelpTextStringProperty' ) ),
+      voicingHintResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_voicingHintResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.voicingHintResponseStringProperty' ) ),
       releasedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedResponseStringProperty' ) ),
       releasedOffMembraneResponse: new FluentPattern<{ ligandType: 'starLigand' | 'triangleLigand' | TReadOnlyProperty<'starLigand' | 'triangleLigand'> }>( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedOffMembraneResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedOffMembraneResponseStringProperty' ), [{"name":"ligandType","variants":["starLigand","triangleLigand"]}] ),
       releasedOnProteinResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandNode_releasedOnProteinResponse', _.get( MembraneTransportStrings, 'a11y.ligandNode.releasedOnProteinResponseStringProperty' ) ),

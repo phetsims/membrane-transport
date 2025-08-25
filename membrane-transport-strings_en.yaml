@@ -206,6 +206,7 @@ a11y:
                                                  *[triangleLigand] Triangle Ligand
                                                  }
     accessibleHelpText:                          Grab a ligand. Once grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally.
+    voicingHintResponse:                         Move to ligand-gated protein.
     releasedResponse:                            Released.
     releasedOffMembraneResponse:                 "{ a11y.ligandNode.accessibleName } released off membrane."
 
@@ -361,10 +362,10 @@ a11y:
                                    }. Now, { a11y.solutes.amountComparison }. 
 
   soluteConcentrationsAccordionBox:
-    descriptionContent:           Dynamic bar charts show concentration comparisons and recent crossings for each solute. If needed, pause sim to read details.
-    accessibleContextResponseExpanded:   Dynamic bar charts show solute details.
-    accessibleContextResponseCollapsed:  Dynamic bar charts hidden.
-    voicingHintResponseCollapsed: Expand to show dynamic bar charts with solute details.
+    descriptionContent:                 Dynamic bar charts show concentration comparisons and recent crossings for each solute. If needed, pause sim to read details.
+    accessibleContextResponseExpanded:  Dynamic bar charts show solute details.
+    accessibleContextResponseCollapsed: Dynamic bar charts hidden.
+    voicingHintResponseCollapsed:       Expand to show dynamic bar charts with solute details.
 
     barChart:
 

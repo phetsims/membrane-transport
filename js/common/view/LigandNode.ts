@@ -107,10 +107,12 @@ export default class LigandNode extends VoicingNode {
 
     const accessibleNameProperty = MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.ligandType } );
 
-    // For voicing, speak the accessible name when focused or pressed.
+    // For voicing, speak the accessible name when focused or pressed and hint response (when enabled)
+    // 
     const voiceAccessibleName = () => {
       this.voicingSpeakNameResponse( {
-        nameResponse: accessibleNameProperty
+        nameResponse: accessibleNameProperty,
+        hintResponse: MembraneTransportFluent.a11y.ligandNode.voicingHintResponseStringProperty
       } );
     };
 
