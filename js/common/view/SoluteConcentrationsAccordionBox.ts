@@ -46,6 +46,11 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       // Makes it easy to position the collapsed accordion box so that when it expands it has the correct layout.
       useExpandedBoundsWhenCollapsed: true,
 
+      contentXMargin: 5,
+      contentYMargin: 5,
+      titleXMargin: 5,
+      titleYMargin: 5,
+      contentYSpacing: 0,
       titleAlignX: 'left',
       fill: 'white',
       expandedDefaultValue: true,
