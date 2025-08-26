@@ -212,7 +212,7 @@ export default class TransportProteinPanel extends Panel {
       const result: Node[] = [];
       for ( let i = 0; i < nodes.length; i++ ) {
         if ( i > 0 ) {
-          result.push( new HSeparator( { stroke: 'black', lineWidth: 2 } ) );
+          result.push( new HSeparator( { stroke: 'black', lineWidth: 1 } ) );
         }
         result.push( nodes[ i ] );
       }
