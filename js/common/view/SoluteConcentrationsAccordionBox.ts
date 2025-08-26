@@ -8,10 +8,11 @@
 
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
+import Shape from '../../../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
@@ -63,7 +64,26 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
     }, providedOptions );
 
     const contentWidth = 720;
-    const contentNode = new Rectangle( 0, 0, contentWidth, 100, {
+    
+    // Local closure arrow functions for shape creation
+    const createContentShape = ( width: number ) => Shape.roundedRectangleWithRadii( 0, 0, width, 100, {
+      bottomLeft: 5,
+      bottomRight: 5,
+      topLeft: 5,
+      topRight: 5
+    } );
+    
+    const createTopHalfShape = ( width: number ) => Shape.roundedRectangleWithRadii( 0, 0, width, 50, {
+      topLeft: 5, topRight: 5,
+      bottomLeft: 0, bottomRight: 0
+    } );
+    
+    const createBottomHalfShape = ( width: number ) => Shape.roundedRectangleWithRadii( 0, 50, width, 50, {
+      topLeft: 0, topRight: 0,
+      bottomLeft: 5, bottomRight: 5
+    } );
+
+    const contentNode = new Path( createContentShape( contentWidth ), {
       stroke: 'black',
       lineWidth: 1
     } );
@@ -73,10 +93,10 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
     } );
 
     // the top half is extracellular
-    const topHalf = new Rectangle( 0, 0, contentWidth, 50, {
+    const topHalf = new Path( createTopHalfShape( contentWidth ), {
       fill: MembraneTransportColors.observationWindowOutsideCellColorProperty
     } );
-    const bottomHalf = new Rectangle( 0, 50, contentWidth, 50, {
+    const bottomHalf = new Path( createBottomHalfShape( contentWidth ), {
       fill: MembraneTransportColors.observationWindowInsideCellColorProperty
     } );
 
@@ -120,11 +140,11 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
 
     hbox.boundsProperty.link( () => {
 
-      // Don't crash when hbox.width is NaN
+      // Don't crash when hbox.width is NaN by recomputing the shapes like above.
       const rectWidth = hbox.width >= 0 ? hbox.width + 75 : 0;
-      contentNode.setRectWidth( rectWidth );
-      topHalf.setRectWidth( rectWidth );
-      bottomHalf.setRectWidth( rectWidth );
+      contentNode.setShape( createContentShape( rectWidth ) );
+      topHalf.setShape( createTopHalfShape( rectWidth ) );
+      bottomHalf.setShape( createBottomHalfShape( rectWidth ) );
     } );
 
     super( contentNode, options );
