@@ -259,7 +259,7 @@ addToMapIfDefined( 'a11y_preferencesDialog_audio_sounds_stereoCrossingSounds_acc
 const createFluentFile = (): string => {
   let ftl = '';
   for (const [key, stringProperty] of fluentKeyToStringPropertyMap.entries()) {
-    ftl += `${key} = ${stringProperty.value}\n`;
+    ftl += `${key} = ${stringProperty.value.replace('\n','\n ')}\n`;
   }
   return ftl;
 };
