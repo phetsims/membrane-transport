@@ -30,7 +30,7 @@ const removeLigandSoundPlayer = new SoundClip( removeLigands_mp3, {
 soundManager.addSoundGenerator( removeLigandSoundPlayer );
 
 const TEXT_OPTIONS = {
-  fontSize: 12,
+  fontSize: 14,
   maxWidth: 160
 } as const;
 
