@@ -249,7 +249,14 @@ export default class MembraneTransportScreenView extends ScreenView {
       }
     } );
 
-    const soluteControlAlignGroup = new AlignGroup();
+    const soluteControlAlignGroup = new AlignGroup( {
+
+      // allow text to move left and right
+      matchHorizontal: false,
+
+      // Do not let the panels get taller and shorter
+      matchVertical: true
+    } );
 
     // Number controls for the 'outside' solute concentrations
     // Loop through the outsideSoluteCountProperties record and create a FineCoarseSpinner for each one

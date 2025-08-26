@@ -292,12 +292,12 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
     const icon = createParticleIconNode( soluteType );
 
     const label = new HBox( {
-      spacing: 5,
+      spacing: 10,
       children: [
         alignGroup.createBox( icon ),
         new Text( side === 'outside' ? MembraneTransportFluent.cellRegions.outsideStringProperty :
                   MembraneTransportFluent.cellRegions.insideStringProperty, {
-          fontSize: 13,
+          fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
           maxWidth: TEXT_MAX_WIDTH
         } )
       ]
