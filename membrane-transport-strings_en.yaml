@@ -76,7 +76,7 @@ keyboardHelp:
     addOrRemoveALittle: Adjust in smaller amounts
   transportProteinsAndLigands:
     title:           Transport Proteins or Ligands
-    navigate:        Navigate proteins in panel or added ligands
+    navigate:        Navigate proteins in toolbox or added ligands
     grabOrRelease:   Grab or release
     moveGrabbedItem: Move grabbed protein or ligand between available drop locations
     cancelGrab:      Cancel grab or move interaction
@@ -161,16 +161,16 @@ a11y:
     accessibleHeading:  Transport Proteins
     accessibleHelpText: Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane to sort or delete.
     ligandGatedChannelPanel:
-      sodiumIonNaPlusLigandGated:   Sodium-selective, Ligand-gated
-      potassiumIonKPlusLigandGated: Potassium-selective, Ligand-gated
+      sodiumIonNaPlusLigandGated:   Grab Sodium-selective, Ligand-gated
+      potassiumIonKPlusLigandGated: Grab Potassium-selective, Ligand-gated
       accessibleHelpText:           Transmembrane single channel proteins that can be open or closed. When closed has a triangle- or star-shaped ligand binding site.
     leakageChannelPanel:
-      sodiumIonNaPlusLeakage:   Sodium-selective, Leakage
-      potassiumIonKPlusLeakage: Potassium-selective, Leakage
+      sodiumIonNaPlusLeakage:   Grab Sodium-selective, Leakage
+      potassiumIonKPlusLeakage: Grab Potassium-selective, Leakage
       accessibleHelpText:       Transmembrane single channel proteins, always open.
     voltageGatedChannelPanel:
-      sodiumIonNaPlusVoltageGated:   Sodium-selective, Voltage-gated
-      potassiumIonKPlusVoltageGated: Potassium-selective, Voltage-gated
+      sodiumIonNaPlusVoltageGated:   Grab Sodium-selective, Voltage-gated
+      potassiumIonKPlusVoltageGated: Grab Potassium-selective, Voltage-gated
       accessibleHelpText:            Transmembrane single channel proteins that can be open or closed.
 
       # For the Membrane Potential radio buttons
@@ -356,7 +356,7 @@ a11y:
     accessibleContextResponse:     |-
                                    { $addedOrRemoved ->
                                      [addedToMax] {$delta} added, solute at max
-                                     [removedToMin] Solutes removed
+                                     [removedToMin] Removed
                                      [added]  {$delta} added
                                     *[removed] {$delta} removed
                                    }. Now, { a11y.solutes.amountComparison }. 
@@ -429,13 +429,13 @@ a11y:
   transportProtein:
     grabbedResponse:                 Grabbed.
     initialGrabbedHintResponse:      Choose slot with A or D keys. Space to release. Delete to remove.
-    offMembraneResponse:             Off membrane.
-    releasedReplacedResponse:        Released. Protein replaced.
+    offMembraneResponse:             Above toolbox, off membrane.
+    releasedReplacedResponse:        Released in membrane. Protein replaced.
     deletedResponse:                 Deleted.
-    cancelledBackToSlotResponse:     Released. Back to initial slot.
-    cancelledBackToPanelResponse:    Released. Back in panel.
+    cancelledBackToSlotResponse:     Cancelled. Back to initial slot.
+    cancelledBackToPanelResponse:    Cancelled. Back in toolbox.
     reorderedResponse:               Reordered.
-    proteinLocation:                 "{ $proteinIndex } of { $proteinCount } Proteins in Membrane"
+    proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
     voicingHintResponse:             Space to grab or release.
 
@@ -582,7 +582,7 @@ a11y:
       addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus Left and Right Arrow keys or Shift plus A and D letter keys.
     transportProteinsAndLigands:
       # Description strings for PDOM
-      navigateDescription:        Navigate proteins in panel or added ligands with Tab key.
+      navigateDescription:        Navigate proteins in toolbox or added ligands with Tab key.
       grabOrReleaseDescription:   Grab or release with Space or Enter keys.
       moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or A and D letter keys.
       cancelGrabDescription:      Cancel grab or move interaction with Escape key.
