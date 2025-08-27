@@ -166,12 +166,20 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.addChild( checkboxVBox );
 
     // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
-    const soluteControlsNode = new Node( {
+    // const soluteControlsNode = new Node( {
+    //   accessibleHeading: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty,
+    //   accessibleHelpText: MembraneTransportFluent.a11y.soluteControls.accessibleHelpTextStringProperty,
+    //   accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
+    // } );
+    // this.addChild( soluteControlsNode );
+
+    // A parent Node for the SoluteControl components, for layering and also grouping for accessibility.
+    const soluteControlsParentNode = new Node( {
       accessibleHeading: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty,
       accessibleHelpText: MembraneTransportFluent.a11y.soluteControls.accessibleHelpTextStringProperty,
       accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
     } );
-    this.addChild( soluteControlsNode );
+    this.addChild( soluteControlsParentNode );
 
     const eraseSolutesButton = new EraserButton( {
       scale: 1.2,
@@ -194,7 +202,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       eraseSolutesButton.accessibleHelpText = enabled ? null : disabledMessage;
     } );
 
-    soluteControlsNode.addChild( eraseSolutesButton );
+    this.addChild( eraseSolutesButton );
 
     // Solute concentrations
     const soluteConcentrationsAccordionBox = new SoluteConcentrationsAccordionBox( model, membraneTransportDescriber.averageSoluteCrossingDirectionProperties, {
@@ -227,7 +235,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     ManualConstraint.create( this, [ solutesPanel ], solutesPanelProxy => {
       solutesPanelProxy.centerY = screenViewModelViewTransform.modelToViewY( MembraneTransportConstants.MEMBRANE_BOUNDS.centerY );
     } );
-    soluteControlsNode.addChild( solutesPanel );
+    this.addChild( solutesPanel );
 
     // For keyboard focus order
     const soluteControls: SoluteControl[] = [];
@@ -300,20 +308,20 @@ export default class MembraneTransportScreenView extends ScreenView {
       soluteControls.push( insideSoluteControl );
     } );
 
-    soluteControlsNode.addChild( outsideSoluteControlNode );
-    soluteControlsNode.addChild( insideSoluteControlNode );
+    soluteControlsParentNode.addChild( outsideSoluteControlNode );
+    soluteControlsParentNode.addChild( insideSoluteControlNode );
 
     const cellNode = new Image( cell_svg, {
       maxWidth: 120,
       top: this.observationWindow.centerY,
-      centerX: soluteControlsNode.centerX + 30
+      left: soluteControlsParentNode.left + 3
     } );
     this.addChild( cellNode );
 
     this.addChild( new ThumbnailNode( cellNode.centerX - 3, cellNode.top + 1.5, this.observationWindow.bounds ) );
 
     // In front of the ThumbnailNode, so that it is not obscured by the thumbnail.
-    soluteControlsNode.moveToFront();
+    soluteControlsParentNode.moveToFront();
 
     const rightSideVBoxChildren: Node[] = [];
     if ( model.featureSet !== 'simpleDiffusion' ) {
@@ -331,14 +339,12 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
     this.addChild( rightSideVBox );
 
-    soluteControlsNode.pdomOrder = [
-      solutesPanel,
-      ...soluteControls,
-      eraseSolutesButton
-    ];
-
     this.pdomPlayAreaNode.pdomOrder = [
-      soluteControlsNode,
+      solutesPanel,
+      soluteControlsParentNode,
+      // ...soluteControls,
+      eraseSolutesButton,
+
       soluteConcentrationsAccordionBox,
       this.observationWindow, // Contains the interactive ligands and transport proteins
       rightSideVBox

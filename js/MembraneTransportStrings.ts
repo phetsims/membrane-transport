@@ -234,6 +234,7 @@ type StringsType = {
       'potassiumIonRadioButtonStringProperty': LocalizedStringProperty;
       'glucoseRadioButtonStringProperty': LocalizedStringProperty;
       'atpRadioButtonStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'soluteControl': {
       'outside': {

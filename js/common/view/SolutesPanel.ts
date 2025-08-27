@@ -77,6 +77,7 @@ export default class SolutesPanel extends Node {
       tandem: providedOptions.tandem.createTandem( 'soluteRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,
       accessibleName: MembraneTransportFluent.solutesStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.solutesPanel.accessibleHelpTextStringProperty,
 
       // Not supposed to be read on focus, see https://github.com/phetsims/membrane-transport/issues/240#issuecomment-2992343983
       speakVoicingNameResponseOnFocus: false

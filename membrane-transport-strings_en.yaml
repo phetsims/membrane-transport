@@ -140,9 +140,11 @@ a11y:
       glucoseMetabolism:    Glucose disappears from inside as it is metabolized by the cell
     interactionHint:                      Add or remove solute to outside or inside of cell.
     interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins.
+
+  # Accessible content for a container holding all SoluteControls - the components that let you add or remove solutes.
   soluteControls:
-    accessibleHeading:  Solute Controls
-    accessibleHelpText: Choose a solute for the Solute Adjusters.
+    accessibleHeading:  Solute Adjusters
+    accessibleHelpText: Add or remove chosen solute to outside or inside of cell.
   # Only display help text when button is disabled
   eraseSolutesButton:
     accessibleName:            Erase All Solutes
@@ -328,6 +330,9 @@ a11y:
     potassiumIonRadioButton:  Potassium Ion, K, positive, small
     glucoseRadioButton:       Glucose, hexagonal ring, large
     atpRadioButton:           Adenosine Triphosphate, ATP, complex, large
+
+    # Accessible help text for the radio button group. The accessible name comes from the visual name.
+    accessibleHelpText:       Choose a solute for the Solute Adjusters.
 
   soluteControl:
     outside:

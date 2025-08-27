@@ -261,10 +261,10 @@
     },
     "soluteControls": {
       "accessibleHeading": {
-        "value": "Solute Controls"
+        "value": "Solute Adjusters"
       },
       "accessibleHelpText": {
-        "value": "Choose a solute for the Solute Adjusters."
+        "value": "Add or remove chosen solute to outside or inside of cell."
       }
     },
     "eraseSolutesButton": {
@@ -484,6 +484,9 @@
       },
       "atpRadioButton": {
         "value": "Adenosine Triphosphate, ATP, complex, large"
+      },
+      "accessibleHelpText": {
+        "value": "Choose a solute for the Solute Adjusters."
       }
     },
     "soluteControl": {
