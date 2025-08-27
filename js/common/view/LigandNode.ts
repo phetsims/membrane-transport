@@ -110,11 +110,11 @@ export default class LigandNode extends VoicingNode {
     const accessibleNameProperty = MembraneTransportFluent.a11y.ligandNode.accessibleName.createProperty( { ligandType: ligand.ligandType } );
 
     // For voicing, speak the accessible name when focused or pressed and hint response (when enabled)
-    // 
-    const voiceAccessibleName = () => {
+    // @param includeHintResponse - For some forms of input, the hint response can be skipped.
+    const voiceAccessibleName = ( includeHintResponse: boolean ) => {
       this.voicingSpeakNameResponse( {
         nameResponse: accessibleNameProperty,
-        hintResponse: MembraneTransportFluent.a11y.ligandNode.voicingHintResponseStringProperty
+        hintResponse: includeHintResponse ? MembraneTransportFluent.a11y.ligandNode.voicingHintResponseStringProperty : null
       } );
     };
 
@@ -154,7 +154,10 @@ export default class LigandNode extends VoicingNode {
       }
 
       if ( focused ) {
-        voiceAccessibleName();
+
+        // For focus related events, the it will be clear enough that the user can drag it to a protein when they pick it up
+        // with enter/space, so it can be skipped to reduce length of speech.
+        voiceAccessibleName( false );
       }
     } );
 
@@ -183,7 +186,7 @@ export default class LigandNode extends VoicingNode {
         }
 
         // Voice the name at the start of the interaction
-        voiceAccessibleName();
+        voiceAccessibleName( true );
 
         // Make sure that the ligand is no longer bound to a ligand gated channel
         ligand.unbindFromChannel();
