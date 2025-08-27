@@ -342,7 +342,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.pdomPlayAreaNode.pdomOrder = [
       solutesPanel,
       soluteControlsParentNode,
-      // ...soluteControls,
       eraseSolutesButton,
 
       soluteConcentrationsAccordionBox,
