@@ -7,7 +7,7 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import VoicingText from '../../../../scenery/js/accessibility/voicing/nodes/VoicingText.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
