@@ -271,98 +271,98 @@ const MembraneTransportFluent = {
   "membrane-transport": {
     _comment_0: new FluentComment( {"comment":"Strings for the Membrane Transport simulation","associatedKey":"membrane-transport.title"} ),
     _comment_1: new FluentComment( {"comment":"Title","associatedKey":"membrane-transport.title"} ),
-    titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'membrane_transport_title', _.get( MembraneTransportStrings, 'membrane-transport.titleStringProperty' ) )
+    titleStringProperty: _.get( MembraneTransportStrings, 'membrane-transport.titleStringProperty' )
   },
   screen: {
     _comment_0: new FluentComment( {"comment":"Screens","associatedKey":"screen.simpleDiffusion"} ),
-    simpleDiffusionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_simpleDiffusion', _.get( MembraneTransportStrings, 'screen.simpleDiffusionStringProperty' ) ),
-    facilitatedDiffusionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_facilitatedDiffusion', _.get( MembraneTransportStrings, 'screen.facilitatedDiffusionStringProperty' ) ),
-    activeTransportStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_activeTransport', _.get( MembraneTransportStrings, 'screen.activeTransportStringProperty' ) ),
-    playgroundStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_playground', _.get( MembraneTransportStrings, 'screen.playgroundStringProperty' ) )
+    simpleDiffusionStringProperty: _.get( MembraneTransportStrings, 'screen.simpleDiffusionStringProperty' ),
+    facilitatedDiffusionStringProperty: _.get( MembraneTransportStrings, 'screen.facilitatedDiffusionStringProperty' ),
+    activeTransportStringProperty: _.get( MembraneTransportStrings, 'screen.activeTransportStringProperty' ),
+    playgroundStringProperty: _.get( MembraneTransportStrings, 'screen.playgroundStringProperty' )
   },
   _comment_0: new FluentComment( {"comment":"Solutes","associatedKey":"solutes"} ),
   _comment_1: new FluentComment( {"comment":"Names for the solute type. Reused in various places.","associatedKey":"solutes"} ),
-  solutesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'solutes', _.get( MembraneTransportStrings, 'solutesStringProperty' ) ),
+  solutesStringProperty: _.get( MembraneTransportStrings, 'solutesStringProperty' ),
   _comment_2: new FluentComment( {"comment":"Solute Types","associatedKey":"soluteNames"} ),
   soluteNames: {
-    oxygenStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_oxygen', _.get( MembraneTransportStrings, 'soluteNames.oxygenStringProperty' ) ),
-    carbonDioxideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_carbonDioxide', _.get( MembraneTransportStrings, 'soluteNames.carbonDioxideStringProperty' ) ),
-    sodiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_sodiumIon', _.get( MembraneTransportStrings, 'soluteNames.sodiumIonStringProperty' ) ),
-    potassiumIonStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_potassiumIon', _.get( MembraneTransportStrings, 'soluteNames.potassiumIonStringProperty' ) ),
-    glucoseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_glucose', _.get( MembraneTransportStrings, 'soluteNames.glucoseStringProperty' ) ),
-    atpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteNames_atp', _.get( MembraneTransportStrings, 'soluteNames.atpStringProperty' ) )
+    oxygenStringProperty: _.get( MembraneTransportStrings, 'soluteNames.oxygenStringProperty' ),
+    carbonDioxideStringProperty: _.get( MembraneTransportStrings, 'soluteNames.carbonDioxideStringProperty' ),
+    sodiumIonStringProperty: _.get( MembraneTransportStrings, 'soluteNames.sodiumIonStringProperty' ),
+    potassiumIonStringProperty: _.get( MembraneTransportStrings, 'soluteNames.potassiumIonStringProperty' ),
+    glucoseStringProperty: _.get( MembraneTransportStrings, 'soluteNames.glucoseStringProperty' ),
+    atpStringProperty: _.get( MembraneTransportStrings, 'soluteNames.atpStringProperty' )
   },
   _comment_3: new FluentComment( {"comment":"Cell Regions","associatedKey":"cellRegions"} ),
   cellRegions: {
-    outsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'cellRegions_outside', _.get( MembraneTransportStrings, 'cellRegions.outsideStringProperty' ) ),
-    insideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'cellRegions_inside', _.get( MembraneTransportStrings, 'cellRegions.insideStringProperty' ) )
+    outsideStringProperty: _.get( MembraneTransportStrings, 'cellRegions.outsideStringProperty' ),
+    insideStringProperty: _.get( MembraneTransportStrings, 'cellRegions.insideStringProperty' )
   },
   _comment_4: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
   transportProteinPanel: {
-    voltageGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_voltageGatedChannels', _.get( MembraneTransportStrings, 'transportProteinPanel.voltageGatedChannelsStringProperty' ) ),
-    ligandGatedChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_ligandGatedChannels', _.get( MembraneTransportStrings, 'transportProteinPanel.ligandGatedChannelsStringProperty' ) ),
-    activeTransportersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_activeTransporters', _.get( MembraneTransportStrings, 'transportProteinPanel.activeTransportersStringProperty' ) ),
-    leakageChannelsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_leakageChannels', _.get( MembraneTransportStrings, 'transportProteinPanel.leakageChannelsStringProperty' ) ),
-    naPlusKPlusPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_naPlusKPlusPump', _.get( MembraneTransportStrings, 'transportProteinPanel.naPlusKPlusPumpStringProperty' ) ),
-    sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'transportProteinPanel.sodiumGlucoseCotransporterStringProperty' ) ),
+    voltageGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.voltageGatedChannelsStringProperty' ),
+    ligandGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.ligandGatedChannelsStringProperty' ),
+    activeTransportersStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.activeTransportersStringProperty' ),
+    leakageChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.leakageChannelsStringProperty' ),
+    naPlusKPlusPumpStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.naPlusKPlusPumpStringProperty' ),
+    sodiumGlucoseCotransporterStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.sodiumGlucoseCotransporterStringProperty' ),
     _comment_0: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotentialMV"} ),
-    membranePotentialMVStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_membranePotentialMV', _.get( MembraneTransportStrings, 'transportProteinPanel.membranePotentialMVStringProperty' ) ),
-    chargesStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_charges', _.get( MembraneTransportStrings, 'transportProteinPanel.chargesStringProperty' ) ),
+    membranePotentialMVStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.membranePotentialMVStringProperty' ),
+    chargesStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.chargesStringProperty' ),
     _comment_1: new FluentComment( {"comment":"Ligands Section","associatedKey":"addLigands"} ),
-    addLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_addLigands', _.get( MembraneTransportStrings, 'transportProteinPanel.addLigandsStringProperty' ) ),
-    removeLigandsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'transportProteinPanel_removeLigands', _.get( MembraneTransportStrings, 'transportProteinPanel.removeLigandsStringProperty' ) )
+    addLigandsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.addLigandsStringProperty' ),
+    removeLigandsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.removeLigandsStringProperty' )
   },
   _comment_5: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
   preferencesDialog: {
     simulation: {
       animateLipids: {
-        labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_animateLipids_label', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.animateLipids.labelStringProperty' ) ),
-        descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_animateLipids_description', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.animateLipids.descriptionStringProperty' ) )
+        labelStringProperty: _.get( MembraneTransportStrings, 'preferencesDialog.simulation.animateLipids.labelStringProperty' ),
+        descriptionStringProperty: _.get( MembraneTransportStrings, 'preferencesDialog.simulation.animateLipids.descriptionStringProperty' )
       },
       glucoseMetabolism: {
-        labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_glucoseMetabolism_label', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.glucoseMetabolism.labelStringProperty' ) ),
-        descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_simulation_glucoseMetabolism_description', _.get( MembraneTransportStrings, 'preferencesDialog.simulation.glucoseMetabolism.descriptionStringProperty' ) )
+        labelStringProperty: _.get( MembraneTransportStrings, 'preferencesDialog.simulation.glucoseMetabolism.labelStringProperty' ),
+        descriptionStringProperty: _.get( MembraneTransportStrings, 'preferencesDialog.simulation.glucoseMetabolism.descriptionStringProperty' )
       }
     },
     audio: {
       sounds: {
         stereoCrossingSounds: {
-          labelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoCrossingSounds_label', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty' ) ),
-          descriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'preferencesDialog_audio_sounds_stereoCrossingSounds_description', _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty' ) )
+          labelStringProperty: _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoCrossingSounds.labelStringProperty' ),
+          descriptionStringProperty: _.get( MembraneTransportStrings, 'preferencesDialog.audio.sounds.stereoCrossingSounds.descriptionStringProperty' )
         }
       }
     }
   },
   _comment_6: new FluentComment( {"comment":"Solute Concentration Bar Charts","associatedKey":"soluteConcentrationsAccordionBox"} ),
   soluteConcentrationsAccordionBox: {
-    titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'soluteConcentrationsAccordionBox_title', _.get( MembraneTransportStrings, 'soluteConcentrationsAccordionBox.titleStringProperty' ) )
+    titleStringProperty: _.get( MembraneTransportStrings, 'soluteConcentrationsAccordionBox.titleStringProperty' )
   },
   _comment_7: new FluentComment( {"comment":"Checkboxes below the play area","associatedKey":"settings"} ),
   settings: {
-    crossingHighlightsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'settings_crossingHighlights', _.get( MembraneTransportStrings, 'settings.crossingHighlightsStringProperty' ) ),
-    crossingSoundsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'settings_crossingSounds', _.get( MembraneTransportStrings, 'settings.crossingSoundsStringProperty' ) )
+    crossingHighlightsStringProperty: _.get( MembraneTransportStrings, 'settings.crossingHighlightsStringProperty' ),
+    crossingSoundsStringProperty: _.get( MembraneTransportStrings, 'settings.crossingSoundsStringProperty' )
   },
   _comment_8: new FluentComment( {"comment":"Keyboard Help Dialog","associatedKey":"keyboardHelp"} ),
   keyboardHelp: {
     soluteAdjusters: {
-      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_soluteAdjusters_title', _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.titleStringProperty' ) ),
-      addOrRemoveALotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_soluteAdjusters_addOrRemoveALot', _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.addOrRemoveALotStringProperty' ) ),
-      addOrRemoveALittleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_soluteAdjusters_addOrRemoveALittle', _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.addOrRemoveALittleStringProperty' ) )
+      titleStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.titleStringProperty' ),
+      addOrRemoveALotStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.addOrRemoveALotStringProperty' ),
+      addOrRemoveALittleStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.soluteAdjusters.addOrRemoveALittleStringProperty' )
     },
     transportProteinsAndLigands: {
-      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_title', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.titleStringProperty' ) ),
-      navigateStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_navigate', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.navigateStringProperty' ) ),
-      grabOrReleaseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_grabOrRelease', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.grabOrReleaseStringProperty' ) ),
-      moveGrabbedItemStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_moveGrabbedItem', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.moveGrabbedItemStringProperty' ) ),
-      cancelGrabStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_transportProteinsAndLigands_cancelGrab', _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.cancelGrabStringProperty' ) )
+      titleStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.titleStringProperty' ),
+      navigateStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.navigateStringProperty' ),
+      grabOrReleaseStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.grabOrReleaseStringProperty' ),
+      moveGrabbedItemStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.moveGrabbedItemStringProperty' ),
+      cancelGrabStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.transportProteinsAndLigands.cancelGrabStringProperty' )
     },
     sortOrDeleteProteins: {
-      titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_title', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.titleStringProperty' ) ),
-      navigateProteinsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_navigateProteins', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.navigateProteinsStringProperty' ) ),
-      grabProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_grabProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.grabProteinStringProperty' ) ),
-      moveGrabbedProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_moveGrabbedProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinStringProperty' ) ),
-      releaseProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_releaseProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.releaseProteinStringProperty' ) ),
-      deleteProteinStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelp_sortOrDeleteProteins_deleteProtein', _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.deleteProteinStringProperty' ) )
+      titleStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.titleStringProperty' ),
+      navigateProteinsStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.navigateProteinsStringProperty' ),
+      grabProteinStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.grabProteinStringProperty' ),
+      moveGrabbedProteinStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinStringProperty' ),
+      releaseProteinStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.releaseProteinStringProperty' ),
+      deleteProteinStringProperty: _.get( MembraneTransportStrings, 'keyboardHelp.sortOrDeleteProteins.deleteProteinStringProperty' )
     }
   },
   a11y: {
