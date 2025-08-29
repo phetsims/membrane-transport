@@ -42,11 +42,11 @@ simLauncher.launch( () => {
   const options: SimOptions = {
 
     credits: {
-      leadDesign: 'Brett Fiedler',
+      leadDesign: 'Brett Fiedler, Taliesin Smith',
       softwareDevelopment: 'Jesse Greenberg, Sam Reid',
-      team: 'Holly Basta, Mike Klymkowsky, Mark Nielsen, Kathy Perkins, Amy Rouinfar, Taliesin Smith',
+      team: 'Holly Basta, Mike Klymkowsky, Mark Nielsen, Kathy Perkins, Amy Rouinfar, Nancy Salpepi',
       contributors: '',
-      qualityAssurance: '',
+      qualityAssurance: 'Matthew Moore, Valentina P\u00e9rez, Kathryn Woessner',
       graphicArts: 'Brett Fiedler',
       soundDesign: 'Ashton Morris, Emily Moore',
       thanks: ''
