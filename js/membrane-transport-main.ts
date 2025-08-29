@@ -46,7 +46,7 @@ simLauncher.launch( () => {
       softwareDevelopment: 'Jesse Greenberg, Sam Reid',
       team: 'Holly Basta, Mike Klymkowsky, Mark Nielsen, Kathy Perkins, Amy Rouinfar, Nancy Salpepi',
       contributors: '',
-      qualityAssurance: 'Matthew Moore, Valentina P\u00e9rez, Kathryn Woessner',
+      qualityAssurance: 'Matthew Moore, Nancy Salpepi, Valentina P\u00e9rez, Kathryn Woessner',
       graphicArts: 'Brett Fiedler',
       soundDesign: 'Ashton Morris, Emily Moore',
       thanks: ''
