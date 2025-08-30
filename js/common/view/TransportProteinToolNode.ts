@@ -49,7 +49,12 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
     transportProteinNode.scale( 0.5 );
     transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
       createFromMouseDrag( event, type, this );
-      this.voicingSpeakNameResponse();
+
+      // When picked up with mouse/touch, speak the name of the tool and include
+      // a hint response that is specific to this input type.
+      this.voicingSpeakNameResponse( {
+        hintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponseMouseInputStringProperty
+      } );
     } ) );
 
     super( combineOptions<VBoxOptions & VoicingOptions>( {}, {

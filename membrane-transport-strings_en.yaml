@@ -443,6 +443,7 @@ a11y:
     proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
     voicingHintResponse:             Space to grab or release.
+    voicingHintResponseMouseInput:   Move to membrane.
 
     # The accessible object response for the transport protein when it is in a slot, describing its open/closed state.
     accessibleObjectResponse:        |-

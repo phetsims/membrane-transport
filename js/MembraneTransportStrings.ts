@@ -303,6 +303,7 @@ type StringsType = {
       'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
       'voicingHintResponseStringProperty': LocalizedStringProperty;
+      'voicingHintResponseMouseInputStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseStringProperty': LocalizedStringProperty;
       'accessibleParagraphStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
