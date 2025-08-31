@@ -63,7 +63,7 @@ type ReleaseReason = 'release' // basic release case
 
 const MODEL_DRAG_VERTICAL_OFFSET = 10; // The vertical offset of the drag node from the slot
 const OFF_MEMBRANE_VERTICAL_OFFSET = 50; // The vertical offset of the drag node from the membrane when off-membrane
-const OFF_MEMBRANE_HORIZONTAL_OFFSET = 10;
+const OFF_MEMBRANE_HORIZONTAL_OFFSET = 3.5; // Horizontal offset to center the icon above the membrane
 
 export default class InteractiveSlotsNode extends Node {
 
@@ -262,7 +262,7 @@ export default class InteractiveSlotsNode extends Node {
       MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
       null,
       'offMembrane',
-      MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
+      MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 + OFF_MEMBRANE_HORIZONTAL_OFFSET,
       OFF_MEMBRANE_VERTICAL_OFFSET
     );
     this.focusableRectangles.push( offMembraneRect );
@@ -555,7 +555,7 @@ export default class InteractiveSlotsNode extends Node {
     // Move the grabbedNode icon to the selected slot
     if ( this.grabbedNode ) {
       if ( this.selectedIndex === 'offMembrane' ) {
-        this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET ) );
+        this.grabbedNode.setModelPosition( new Vector2( MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 + OFF_MEMBRANE_HORIZONTAL_OFFSET, OFF_MEMBRANE_VERTICAL_OFFSET ) );
       }
       else {
         const selectedSlot = this.slots[ this.selectedIndex ];
