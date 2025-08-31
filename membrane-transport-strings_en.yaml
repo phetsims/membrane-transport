@@ -438,7 +438,7 @@ a11y:
     releasedReplacedResponse:        Released in membrane. Protein replaced.
     deletedResponse:                 Deleted.
     cancelledBackToSlotResponse:     Cancelled. Back to initial slot.
-    cancelledBackToPanelResponse:    Cancelled. Back in toolbox.
+    cancelledBackToToolboxResponse:    Cancelled. Back in toolbox.
     reorderedResponse:               Reordered.
     proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"

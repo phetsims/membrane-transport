@@ -629,7 +629,7 @@ export default class InteractiveSlotsNode extends Node {
 
     if ( reason === 'return' ) {
       MembraneTransportSounds.proteinReturnedToToolbox();
-      responseString = MembraneTransportFluent.a11y.transportProtein.cancelledBackToPanelResponseStringProperty.value;
+      responseString = MembraneTransportFluent.a11y.transportProtein.cancelledBackToToolboxResponseStringProperty.value;
     }
     else if ( reason === 'swap' ) {
       MembraneTransportSounds.transportProteinSwapped();

@@ -625,7 +625,7 @@
       "cancelledBackToSlotResponse": {
         "value": "Cancelled. Back to initial slot."
       },
-      "cancelledBackToPanelResponse": {
+      "cancelledBackToToolboxResponse": {
         "value": "Cancelled. Back in toolbox."
       },
       "reorderedResponse": {

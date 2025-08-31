@@ -298,7 +298,7 @@ type StringsType = {
       'releasedReplacedResponseStringProperty': LocalizedStringProperty;
       'deletedResponseStringProperty': LocalizedStringProperty;
       'cancelledBackToSlotResponseStringProperty': LocalizedStringProperty;
-      'cancelledBackToPanelResponseStringProperty': LocalizedStringProperty;
+      'cancelledBackToToolboxResponseStringProperty': LocalizedStringProperty;
       'reorderedResponseStringProperty': LocalizedStringProperty;
       'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
