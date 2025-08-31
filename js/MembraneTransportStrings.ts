@@ -302,8 +302,11 @@ type StringsType = {
       'reorderedResponseStringProperty': LocalizedStringProperty;
       'proteinLocationStringProperty': LocalizedStringProperty;
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'voicingHintResponseStringProperty': LocalizedStringProperty;
-      'voicingHintResponseMouseInputStringProperty': LocalizedStringProperty;
+      'voicingHintResponse': {
+        'generalStringProperty': LocalizedStringProperty;
+        'mouseInputFromToolboxStringProperty': LocalizedStringProperty;
+        'mouseInputFromMembraneStringProperty': LocalizedStringProperty;
+      };
       'accessibleObjectResponseStringProperty': LocalizedStringProperty;
       'accessibleParagraphStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;

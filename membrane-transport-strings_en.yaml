@@ -442,8 +442,16 @@ a11y:
     reorderedResponse:               Reordered.
     proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
-    voicingHintResponse:             Space to grab or release.
-    voicingHintResponseMouseInput:   Move to membrane.
+    voicingHintResponse:
+
+      # Spoken when the protein in the toolbox is is focused.
+      general:                Space to grab or release.
+
+      # Spoken when the protein in the toolbox is grabbed with mouse input.
+      mouseInputFromToolbox:  Move to membrane.
+
+      # Spoken when the protein in the membrane is grabbed with mouse input.
+      mouseInputFromMembrane: Reorder or remove from membrane.
 
     # The accessible object response for the transport protein when it is in a slot, describing its open/closed state.
     accessibleObjectResponse:        |-

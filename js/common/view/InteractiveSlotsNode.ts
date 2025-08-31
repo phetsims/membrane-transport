@@ -82,7 +82,7 @@ export default class InteractiveSlotsNode extends Node {
   // These are the focusable Nodes that implement much of the interaction. One surrounds each slot.
   // Arrow keys move focus between these Nodes so that information about the potential slot is
   // read to the user while they are selecting a new slot.
-  private focusableRectangles: Rectangle[] = [];
+  private focusableRectangles: InteractiveSlotRectangle[] = [];
 
   // The first time the protein is grabbed, additional information about how to interact with the protein is read to the user.
   private firstProteinGrab = true;
@@ -150,20 +150,23 @@ export default class InteractiveSlotsNode extends Node {
       accessibleNameProperty: TReadOnlyProperty<string>,
       voicingNameResponseProperty: TReadOnlyProperty<string>,
       voicingObjectResponseProperty: TReadOnlyProperty<string> | null,
+      index: number | 'offMembrane',
       modelX: number,
       modelY: number
-    ): Rectangle => {
+    ): InteractiveSlotRectangle => {
 
       // AccessibleInteractiveOptions allows keys to be used to interact with this Node while a screen reader is
       // in use. It also the appropriate role and adds it to the traversal order.
-      const rect = new Rectangle( 0, 0, 20, 20,
-        combineOptions<RectangleOptions>( {}, AccessibleInteractiveOptions, {
+      const rect = new InteractiveSlotRectangle(
+        voicingNameResponseProperty,
+        voicingObjectResponseProperty,
+        index,
+        {
           center: modelViewTransform.modelToViewXY( modelX, modelY ),
 
           // pdom
-          accessibleRoleDescription: 'sortable',
           accessibleName: accessibleNameProperty
-        } ) );
+        } );
 
       rect.focusedProperty.link( focused => {
         if ( focused ) {
@@ -244,6 +247,7 @@ export default class InteractiveSlotsNode extends Node {
         accessibleNameStringProperty,
         nameResponseStringProperty,
         objectResponseStringProperty,
+        index,
         slot.position,
         MODEL_DRAG_VERTICAL_OFFSET
       );
@@ -257,6 +261,7 @@ export default class InteractiveSlotsNode extends Node {
       MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
       MembraneTransportFluent.a11y.transportProtein.offMembraneResponseStringProperty,
       null,
+      'offMembrane',
       MembraneTransportConstants.MEMBRANE_BOUNDS.width / 2 - OFF_MEMBRANE_HORIZONTAL_OFFSET,
       OFF_MEMBRANE_VERTICAL_OFFSET
     );
@@ -673,6 +678,26 @@ export default class InteractiveSlotsNode extends Node {
   }
 
   /**
+   * When a Protein receives input from mouse/touch events, we want to speak the same information that is
+   * spoken when the slot is focused using keyboard navigation. However, the InteractiveSlotsNode does not
+   * activate without keyboard focus. So we need a method to look up the appropriate response for a slot.
+   *
+   * @returns a ResponsePacket with the responses for a protein that was grabbed using mouse/touch input.
+   */
+  public getMouseResponsePacketForSlot( slot: Slot ): ResponsePacket {
+    const interactiveSlotRectangle = this.focusableRectangles.find( interactiveRectangle => {
+      return interactiveRectangle.index === this.slots.indexOf( slot );
+    } );
+    affirm( interactiveSlotRectangle, 'We should have found a rectangle for the slot.' );
+
+    return new ResponsePacket( {
+      nameResponse: interactiveSlotRectangle.voicingNameResponseProperty,
+      objectResponse: interactiveSlotRectangle.voicingObjectResponseProperty,
+      hintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponse.mouseInputFromMembraneStringProperty
+    } );
+  }
+
+  /**
    * Redraw the Rectangles that represent the slots so that the highlight nicely surrounds the grabbed
    * protein Node.
    */
@@ -683,6 +708,36 @@ export default class InteractiveSlotsNode extends Node {
       rect.setRectBounds( this.grabbedNode.localBounds );
       rect.center = oldCenter;
     } );
+  }
+}
+
+/**
+ * An inner class for the interactive slot. It is a Rectangle that is focusable and interactive
+ * for accessibility.
+ */
+class InteractiveSlotRectangle extends Rectangle {
+
+  // So that the responses can be looked up for various user interactions.
+  public readonly voicingNameResponseProperty: TReadOnlyProperty<string>;
+  public readonly voicingObjectResponseProperty: TReadOnlyProperty<string> | null;
+
+  // So that this rectangle can be identified to access Voicing responses later.
+  public readonly index: number | 'offMembrane';
+
+  public constructor(
+    voicingNameResponseProperty: TReadOnlyProperty<string>,
+    voicingObjectResponseProperty: TReadOnlyProperty<string> | null,
+    index: number | 'offMembrane',
+    providedOptions?: RectangleOptions
+  ) {
+    const options = combineOptions<RectangleOptions>( {}, AccessibleInteractiveOptions, {
+      accessibleRoleDescription: 'sortable'
+    }, providedOptions );
+    super( options );
+
+    this.voicingNameResponseProperty = voicingNameResponseProperty;
+    this.voicingObjectResponseProperty = voicingObjectResponseProperty;
+    this.index = index;
   }
 }
 

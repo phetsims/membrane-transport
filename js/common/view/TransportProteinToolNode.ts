@@ -53,7 +53,7 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
       // When picked up with mouse/touch, speak the name of the tool and include
       // a hint response that is specific to this input type.
       this.voicingSpeakNameResponse( {
-        hintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponseMouseInputStringProperty
+        hintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponse.mouseInputFromToolboxStringProperty
       } );
     } ) );
 
@@ -64,7 +64,7 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
       cursor: 'pointer',
       accessibleName: accessibleName,
       voicingNameResponse: accessibleName,
-      voicingHintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponseStringProperty
+      voicingHintResponse: MembraneTransportFluent.a11y.transportProtein.voicingHintResponse.generalStringProperty
     } ) );
 
     this.addInputListener( {

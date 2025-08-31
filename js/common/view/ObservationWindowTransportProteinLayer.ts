@@ -72,6 +72,11 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
   private readonly nameUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
   private readonly objectResponseUtterance = new Utterance( { announcerOptions: { cancelOther: false } } );
 
+  // Mouse/Touch input uses its own utterance that SHOULD cancel other utterances. When you click on the
+  // protein, the information about the slot location is spoken along with other responses from
+  // InteractiveSlotsNode.
+  private readonly mouseResponseUtterance = new Utterance();
+
   // A parent for the proteins so that the accessibility attributes like accessibleRoleDescription
   // and headings do not apply to all children of this Node.
   private readonly proteinsNodeParent: Node;
@@ -123,6 +128,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
     Voicing.registerUtteranceToVoicingNode( this.nameUtterance, this );
     Voicing.registerUtteranceToVoicingNode( this.objectResponseUtterance, this );
     Voicing.registerUtteranceToVoicingNode( this.readingBlockUtterance, this );
+    Voicing.registerUtteranceToVoicingNode( this.mouseResponseUtterance, this );
 
     this.addChild( this.proteinsNodeParent );
 
@@ -207,6 +213,11 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
           transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
             slot.clear();
             view.createFromMouseDrag( event, type, slot );
+
+            // Upon mouse input, speak the response that would be heard from InteractiveSlotsNode
+            // with keyboard input.
+            this.mouseResponseUtterance.alert = this.interactiveSlotsNode.getMouseResponsePacketForSlot( slot );
+            Voicing.alertUtterance( this.mouseResponseUtterance );
           } ) );
 
           transportProteinNode.mutate( {
