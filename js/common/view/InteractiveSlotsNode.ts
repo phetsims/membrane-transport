@@ -397,7 +397,6 @@ export default class InteractiveSlotsNode extends Node {
 
           // When changing the protein, it disrupts the focus. This helps us restore focus to the right place
           // after that step, taking precedence.
-          let focusTarget: Node | null = null;
 
           // If the selected slot already has a transport protein, the proteins will be "swapped" -
           // move the current protein to the slot that was originally selected.
@@ -415,31 +414,21 @@ export default class InteractiveSlotsNode extends Node {
             }
             else {
 
-              // Protein from toolbar replaces existing protein in slot. Animate the replaced protein back to the toolbox.
+              // Protein from toolbox replaces existing protein in slot. Animate the replaced protein back to the toolbox.
               const replacedProteinNode = view.createTemporaryProteinNode( currentType, selectedSlot );
               returnToolToToolbox( replacedProteinNode );
               releaseReason = 'replace';
 
-              if ( origin instanceof TransportProteinToolNode ) {
-                focusTarget = origin;
-              }
             }
           }
           else {
             releaseReason = 'release';
-
-            if ( origin instanceof TransportProteinToolNode ) {
-              focusTarget = origin;
-            }
           }
 
           // Place the transport protein in the selected slot
           affirm( selectedType, 'If grabbed, there must be a selected type.' );
           afterEmoteActions.push( () => {
             selectedSlot.transportProteinType = selectedType;
-
-            // Must be done after setting the transport protein type, since that alters the focus
-            focusTarget && focusTarget.focus();
           } );
         }
 
