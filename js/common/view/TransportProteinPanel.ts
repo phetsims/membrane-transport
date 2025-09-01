@@ -98,7 +98,7 @@ export default class TransportProteinPanel extends Panel {
         stroke: null,
 
         // Expand the width of these panels so that they are about the same width as the solutes controls.
-        minWidth: 200,
+        minWidth: 216,
 
         // pdom
         accessibleHeading: config.titleProperty,
