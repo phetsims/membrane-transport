@@ -41,6 +41,10 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
     const falseNode = new Text( MembraneTransportFluent.transportProteinPanel.addLigandsStringProperty, TEXT_OPTIONS );
 
     super( model.areLigandsAddedProperty, trueNode, falseNode, {
+      layoutOptions: {
+        topMargin: 2,
+        bottomMargin: 4
+      },
       baseColor: MembraneTransportColors.ligandButtonColorProperty,
       tandem: tandem,
 
