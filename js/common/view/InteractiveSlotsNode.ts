@@ -286,50 +286,48 @@ export default class InteractiveSlotsNode extends Node {
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const allSlotsCount = slots.length;
-        const delta = MembraneTransportHotkeyData.SELECT_LEFT.includes( keysPressed ) ? -1 : 1;
+        const movingLeft = MembraneTransportHotkeyData.SELECT_LEFT.includes( keysPressed );
 
-        // If off the membrane, we can only move to the left, and the next index should be slots.length;
         const originalIndex = this.selectedIndex;
-        if ( this.selectedIndex === 'offMembrane' ) {
-          if ( delta < 0 ) {
-            this.selectedIndex = allSlotsCount - 1;
-          }
+
+        // Determine whether the off-membrane option should be included in the cycle
+        affirm( this.selectedType, 'selectedType should be defined when grabbed' );
+        const toolNode = this.view.getTransportProteinToolNode( this.selectedType );
+        const includeOffMembrane = !!( toolNode && toolNode.wasVisuallyDisplayed() );
+
+        // Build the ordered list of positions to cycle through.
+        const slotPositions = Array.from( { length: allSlotsCount }, ( _, i ) => i );
+        const positions: Array<number | 'offMembrane'> = includeOffMembrane ? [ 'offMembrane', ...slotPositions ] : slotPositions;
+
+        // Compute next position with wrap-around behavior.
+        let nextSelection: number | 'offMembrane';
+        const currentIndexInPositions = positions.findIndex( p => p === this.selectedIndex );
+
+        if ( currentIndexInPositions === -1 ) {
+          // Current selection is 'offMembrane' but it's not in the positions (tool hidden).
+          // Still cycle to the opposite side of the slot list.
+          nextSelection = movingLeft ? positions[ positions.length - 1 ] : positions[ 0 ];
         }
         else {
-          const nextIndex = this.selectedIndex + delta;
-
-          // If at the right edge and trying to move further right, move off the membrane
-          // but only if the corresponding tool node is visually displayed (not hidden via phet-io)
-          if ( nextIndex === allSlotsCount ) {
-            affirm( this.selectedType, 'selectedType should be defined when grabbed' );
-            const toolNode = this.view.getTransportProteinToolNode( this.selectedType );
-            if ( toolNode && toolNode.wasVisuallyDisplayed() ) {
-              this.selectedIndex = 'offMembrane';
-
-              // Play a sound for moving off the membrane
-              MembraneTransportSounds.slotHover( 7, false );
-            }
-            else {
-              // Cannot move off membrane, stay at the rightmost slot
-              this.selectedIndex = allSlotsCount - 1;
-            }
+          const delta = movingLeft ? -1 : 1;
+          let nextIndexInPositions = currentIndexInPositions + delta;
+          if ( nextIndexInPositions < 0 ) {
+            nextIndexInPositions = positions.length - 1;
           }
-          else {
-
-            // otherwise, bound to the left edge of the membrane
-            this.selectedIndex = Math.max( nextIndex, 0 );
+          else if ( nextIndexInPositions >= positions.length ) {
+            nextIndexInPositions = 0;
           }
+          nextSelection = positions[ nextIndexInPositions ];
         }
-        if ( this.selectedIndex !== originalIndex ) {
 
-          // If the selected index changed, update the focus
-          this.updateFocus();
+        // Update selected index and play appropriate sound when moving to off-membrane
+        this.selectedIndex = nextSelection;
+        if ( nextSelection === 'offMembrane' && originalIndex !== 'offMembrane' ) {
+          MembraneTransportSounds.slotHover( 7, false );
         }
-        else {
 
-          // The user was at the edge, and tried to move further, so play a boundary reached sound
-          MembraneTransportSounds.boundaryReached();
-        }
+        // Update focus after changing selection
+        this.updateFocus();
       }
     } );
     this.addInputListener( selectionKeyboardListener );
