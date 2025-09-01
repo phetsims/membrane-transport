@@ -12,7 +12,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -26,7 +26,7 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
+import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import cell_svg from '../../../images/cell_svg.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -132,29 +132,32 @@ export default class MembraneTransportScreenView extends ScreenView {
     this.addChild( timeControlNode );
 
     const CHECKBOX_TEXT_MAX_WIDTH = 120;
+
+    const CHECKBOX_OPTIONS: CheckboxOptions = {
+      touchAreaYDilation: 5,
+      touchAreaXDilation: 5,
+      boxWidth: 14
+    };
+
     const crossingHighlightsCheckbox = new Checkbox( this.model.crossingHighlightsEnabledProperty, new Text( MembraneTransportFluent.settings.crossingHighlightsStringProperty, {
       font: MembraneTransportConstants.FONT,
       maxWidth: CHECKBOX_TEXT_MAX_WIDTH
-    } ), {
-      touchAreaYDilation: 5,
-      touchAreaXDilation: 5,
+    } ), combineOptions<CheckboxOptions>( {}, CHECKBOX_OPTIONS, {
       accessibleHelpText: MembraneTransportFluent.a11y.settings.crossingHighlightsCheckbox.accessibleHelpTextStringProperty,
       accessibleContextResponseChecked: MembraneTransportFluent.a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseCheckedStringProperty,
       accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.settings.crossingHighlightsCheckbox.accessibleContextResponseUncheckedStringProperty,
       tandem: options.tandem.createTandem( 'crossingHighlightsCheckbox' )
-    } );
+    } ) );
 
     const crossingSoundsCheckbox = new Checkbox( this.model.crossingSoundsEnabledProperty, new Text( MembraneTransportFluent.settings.crossingSoundsStringProperty, {
       font: MembraneTransportConstants.FONT,
       maxWidth: CHECKBOX_TEXT_MAX_WIDTH
-    } ), {
-      touchAreaYDilation: 5,
-      touchAreaXDilation: 5,
+    } ), combineOptions<CheckboxOptions>( {}, CHECKBOX_OPTIONS, {
       accessibleHelpText: MembraneTransportFluent.a11y.settings.crossingSoundsCheckbox.accessibleHelpTextStringProperty,
       accessibleContextResponseChecked: MembraneTransportFluent.a11y.settings.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty,
       accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty,
       tandem: options.tandem.createTandem( 'crossingSoundsCheckbox' )
-    } );
+    } ) );
 
     const checkboxVBox = new VBox( {
       children: [ crossingHighlightsCheckbox, crossingSoundsCheckbox ],
@@ -237,9 +240,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
     this.addChild( solutesPanel );
 
-    // For keyboard focus order
-    const soluteControls: SoluteControl[] = [];
-
     const outsideSoluteControlsTandem = soluteControlsTandem.createTandem( 'outsideSoluteControls' );
     const insideSoluteControlsTandem = soluteControlsTandem.createTandem( 'insideSoluteControls' );
 
@@ -287,7 +287,6 @@ export default class MembraneTransportScreenView extends ScreenView {
             fill: MembraneTransportColors.observationWindowOutsideCellColorProperty
           } );
         outsideSoluteControlNode.addChild( outsideSoluteControl );
-        soluteControls.push( outsideSoluteControl );
       }
 
       const insideSoluteControl = new SoluteControl( this.model, soluteType, 'inside', soluteControlAlignGroup,
@@ -305,7 +304,6 @@ export default class MembraneTransportScreenView extends ScreenView {
       } );
 
       insideSoluteControlNode.addChild( insideSoluteControl );
-      soluteControls.push( insideSoluteControl );
     } );
 
     soluteControlsParentNode.addChild( outsideSoluteControlNode );
