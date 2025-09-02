@@ -27,7 +27,7 @@ cellRegions:
   inside:  Inside
 
 # On the Toolbox
-transportProteinPanel:
+transportProteinToolbox:
   voltageGatedChannels:       Voltage-gated Channels
   ligandGatedChannels:        Ligand-gated Channels
   activeTransporters:         Active Transporters
@@ -159,7 +159,7 @@ a11y:
       accessibleHelpText:                 Explore with or without unique sounds for solute crossings.
       accessibleContextResponseChecked:   Solute crossing sounds on.
       accessibleContextResponseUnchecked: Solute crossing sounds off.
-  transportProteinPanel:
+  transportProteinToolbox:
     accessibleHeading:  Transport Proteins
     accessibleHelpText: Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane to sort or delete.
     ligandGatedChannelPanel:

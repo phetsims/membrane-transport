@@ -45,7 +45,7 @@
       "value": "Inside"
     }
   },
-  "transportProteinPanel": {
+  "transportProteinToolbox": {
     "voltageGatedChannels": {
       "value": "Voltage-gated Channels"
     },
@@ -302,7 +302,7 @@
         }
       }
     },
-    "transportProteinPanel": {
+    "transportProteinToolbox": {
       "accessibleHeading": {
         "value": "Transport Proteins"
       },

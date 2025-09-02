@@ -51,7 +51,7 @@ export default class MembranePotentialPanel extends Panel {
       createNode: tandem => new Text( '-70', MembraneTransportConstants.TEXT_OPTIONS ),
       tandemName: 'negative70RadioButton',
       options: combineOptions<RectangularRadioButtonOptions>( {
-          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty
         },
         radioButtonOptions
       )
@@ -61,7 +61,7 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '-50', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'negative50RadioButton',
         options: combineOptions<RectangularRadioButtonOptions>( {
-            accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
+            accessibleName: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty
           },
           radioButtonOptions )
       },
@@ -70,12 +70,12 @@ export default class MembranePotentialPanel extends Panel {
         createNode: tandem => new Text( '+30', MembraneTransportConstants.TEXT_OPTIONS ),
         tandemName: 'positive30RadioButton',
         options: combineOptions<RectangularRadioButtonOptions>( {
-          accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
+          accessibleName: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty
         }, radioButtonOptions )
       } ], {
       orientation: 'horizontal',
-      accessibleName: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
-      accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
+      accessibleName: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
+      accessibleHelpText: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty,
       tandem: membranePotentialControlTandem.createTandem( 'membranePotentialRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false,
       spacing: 25,
@@ -101,7 +101,7 @@ export default class MembranePotentialPanel extends Panel {
       spacing: 4,
       align: 'center',
       children: [
-        new VoicingText( MembraneTransportFluent.transportProteinPanel.membranePotentialMVStringProperty, {
+        new VoicingText( MembraneTransportFluent.transportProteinToolbox.membranePotentialMVStringProperty, {
           maxWidth: 160,
           font: MembraneTransportConstants.FONT,
 
@@ -113,8 +113,8 @@ export default class MembranePotentialPanel extends Panel {
           accessibleParagraph: null,
 
           // This reading block uses a different name response that does not include the units.
-          readingBlockNameResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
-          readingBlockHintResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty
+          readingBlockNameResponse: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty,
+          readingBlockHintResponse: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty
         } ),
 
         arrowNode,
@@ -163,7 +163,7 @@ export default class MembranePotentialPanel extends Panel {
 
         membranePotentialControl,
 
-        new Checkbox( model.chargesVisibleProperty, new Text( MembraneTransportFluent.transportProteinPanel.chargesStringProperty, {
+        new Checkbox( model.chargesVisibleProperty, new Text( MembraneTransportFluent.transportProteinToolbox.chargesStringProperty, {
           maxWidth: 140,
           font: MembraneTransportConstants.FONT
         } ), {
@@ -174,16 +174,16 @@ export default class MembranePotentialPanel extends Panel {
           touchAreaXDilation: 5,
           touchAreaYDilation: 5,
           tandem: tandem.createTandem( 'chargesCheckbox' ),
-          accessibleHelpText: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
-          accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty,
+          accessibleHelpText: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty,
+          accessibleContextResponseUnchecked: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty,
           accessibleContextResponseChecked: DerivedProperty.fromRecord( model.membranePotentialProperty, {
-            [ -70 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty,
-            [ -50 ]: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty,
-            30: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty
+            [ -70 ]: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty,
+            [ -50 ]: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty,
+            30: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty
           } ),
 
           // The Voicing hint response is requested to be less verbose than the accessibleHelpText, see https://github.com/phetsims/membrane-transport/issues/254.
-          voicingHintResponse: MembraneTransportFluent.a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty,
+          voicingHintResponse: MembraneTransportFluent.a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty,
           boxWidth: MembraneTransportConstants.FONT.getNumericSize()
         } )
       ]

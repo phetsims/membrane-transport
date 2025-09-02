@@ -34,7 +34,7 @@ type StringsType = {
     'outsideStringProperty': LocalizedStringProperty;
     'insideStringProperty': LocalizedStringProperty;
   };
-  'transportProteinPanel': {
+  'transportProteinToolbox': {
     'voltageGatedChannelsStringProperty': LocalizedStringProperty;
     'ligandGatedChannelsStringProperty': LocalizedStringProperty;
     'activeTransportersStringProperty': LocalizedStringProperty;
@@ -155,7 +155,7 @@ type StringsType = {
         'accessibleContextResponseUncheckedStringProperty': LocalizedStringProperty;
       }
     };
-    'transportProteinPanel': {
+    'transportProteinToolbox': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'ligandGatedChannelPanel': {

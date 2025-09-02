@@ -41,16 +41,16 @@ addToMapIfDefined( 'soluteNames_glucose', 'soluteNames.glucoseStringProperty' );
 addToMapIfDefined( 'soluteNames_atp', 'soluteNames.atpStringProperty' );
 addToMapIfDefined( 'cellRegions_outside', 'cellRegions.outsideStringProperty' );
 addToMapIfDefined( 'cellRegions_inside', 'cellRegions.insideStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_voltageGatedChannels', 'transportProteinPanel.voltageGatedChannelsStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_ligandGatedChannels', 'transportProteinPanel.ligandGatedChannelsStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_activeTransporters', 'transportProteinPanel.activeTransportersStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_leakageChannels', 'transportProteinPanel.leakageChannelsStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_naPlusKPlusPump', 'transportProteinPanel.naPlusKPlusPumpStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_sodiumGlucoseCotransporter', 'transportProteinPanel.sodiumGlucoseCotransporterStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_membranePotentialMV', 'transportProteinPanel.membranePotentialMVStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_charges', 'transportProteinPanel.chargesStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_addLigands', 'transportProteinPanel.addLigandsStringProperty' );
-addToMapIfDefined( 'transportProteinPanel_removeLigands', 'transportProteinPanel.removeLigandsStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_voltageGatedChannels', 'transportProteinToolbox.voltageGatedChannelsStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_ligandGatedChannels', 'transportProteinToolbox.ligandGatedChannelsStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_activeTransporters', 'transportProteinToolbox.activeTransportersStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_leakageChannels', 'transportProteinToolbox.leakageChannelsStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_naPlusKPlusPump', 'transportProteinToolbox.naPlusKPlusPumpStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_sodiumGlucoseCotransporter', 'transportProteinToolbox.sodiumGlucoseCotransporterStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_membranePotentialMV', 'transportProteinToolbox.membranePotentialMVStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_charges', 'transportProteinToolbox.chargesStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_addLigands', 'transportProteinToolbox.addLigandsStringProperty' );
+addToMapIfDefined( 'transportProteinToolbox_removeLigands', 'transportProteinToolbox.removeLigandsStringProperty' );
 addToMapIfDefined( 'preferencesDialog_simulation_animateLipids_label', 'preferencesDialog.simulation.animateLipids.labelStringProperty' );
 addToMapIfDefined( 'preferencesDialog_simulation_animateLipids_description', 'preferencesDialog.simulation.animateLipids.descriptionStringProperty' );
 addToMapIfDefined( 'preferencesDialog_simulation_glucoseMetabolism_label', 'preferencesDialog.simulation.glucoseMetabolism.labelStringProperty' );
@@ -109,31 +109,31 @@ addToMapIfDefined( 'a11y_settings_crossingHighlightsCheckbox_accessibleContextRe
 addToMapIfDefined( 'a11y_settings_crossingSoundsCheckbox_accessibleHelpText', 'a11y.settings.crossingSoundsCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseChecked', 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseCheckedStringProperty' );
 addToMapIfDefined( 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseUnchecked', 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHeading', 'a11y.transportProteinPanel.accessibleHeadingStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_accessibleHelpText', 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', 'a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', 'a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_ligandGatedChannelPanel_accessibleHelpText', 'a11y.transportProteinPanel.ligandGatedChannelPanel.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', 'a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', 'a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_leakageChannelPanel_accessibleHelpText', 'a11y.transportProteinPanel.leakageChannelPanel.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', 'a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', 'a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_accessibleHelpText', 'a11y.transportProteinPanel.voltageGatedChannelPanel.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative70', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative50', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedPositive30', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseUnchecked', 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty' );
-addToMapIfDefined( 'a11y_transportProteinPanel_activeTransportProteinPanel_accessibleHelpText', 'a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_accessibleHeading', 'a11y.transportProteinToolbox.accessibleHeadingStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_accessibleHelpText', 'a11y.transportProteinToolbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', 'a11y.transportProteinToolbox.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', 'a11y.transportProteinToolbox.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_ligandGatedChannelPanel_accessibleHelpText', 'a11y.transportProteinToolbox.ligandGatedChannelPanel.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_leakageChannelPanel_sodiumIonNaPlusLeakage', 'a11y.transportProteinToolbox.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_leakageChannelPanel_potassiumIonKPlusLeakage', 'a11y.transportProteinToolbox.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_leakageChannelPanel_accessibleHelpText', 'a11y.transportProteinToolbox.leakageChannelPanel.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_accessibleHelpText', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative70', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative50', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedPositive30', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseUnchecked', 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_activeTransportProteinPanel_sodiumPotassiumPump', 'a11y.transportProteinToolbox.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_activeTransportProteinPanel_sodiumGlucoseCotransporter', 'a11y.transportProteinToolbox.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty' );
+addToMapIfDefined( 'a11y_transportProteinToolbox_activeTransportProteinPanel_accessibleHelpText', 'a11y.transportProteinToolbox.activeTransportProteinPanel.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_accessibleName', 'a11y.ligandNode.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_accessibleHelpText', 'a11y.ligandNode.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_voicingHintResponse', 'a11y.ligandNode.voicingHintResponseStringProperty' );
@@ -299,20 +299,20 @@ const MembraneTransportFluent = {
     outsideStringProperty: _.get( MembraneTransportStrings, 'cellRegions.outsideStringProperty' ),
     insideStringProperty: _.get( MembraneTransportStrings, 'cellRegions.insideStringProperty' )
   },
-  _comment_4: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
-  transportProteinPanel: {
-    voltageGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.voltageGatedChannelsStringProperty' ),
-    ligandGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.ligandGatedChannelsStringProperty' ),
-    activeTransportersStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.activeTransportersStringProperty' ),
-    leakageChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.leakageChannelsStringProperty' ),
-    naPlusKPlusPumpStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.naPlusKPlusPumpStringProperty' ),
-    sodiumGlucoseCotransporterStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.sodiumGlucoseCotransporterStringProperty' ),
+  _comment_4: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinToolbox"} ),
+  transportProteinToolbox: {
+    voltageGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.voltageGatedChannelsStringProperty' ),
+    ligandGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.ligandGatedChannelsStringProperty' ),
+    activeTransportersStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.activeTransportersStringProperty' ),
+    leakageChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.leakageChannelsStringProperty' ),
+    naPlusKPlusPumpStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.naPlusKPlusPumpStringProperty' ),
+    sodiumGlucoseCotransporterStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.sodiumGlucoseCotransporterStringProperty' ),
     _comment_0: new FluentComment( {"comment":"Membrane Potential Section","associatedKey":"membranePotentialMV"} ),
-    membranePotentialMVStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.membranePotentialMVStringProperty' ),
-    chargesStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.chargesStringProperty' ),
+    membranePotentialMVStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.membranePotentialMVStringProperty' ),
+    chargesStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.chargesStringProperty' ),
     _comment_1: new FluentComment( {"comment":"Ligands Section","associatedKey":"addLigands"} ),
-    addLigandsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.addLigandsStringProperty' ),
-    removeLigandsStringProperty: _.get( MembraneTransportStrings, 'transportProteinPanel.removeLigandsStringProperty' )
+    addLigandsStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.addLigandsStringProperty' ),
+    removeLigandsStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.removeLigandsStringProperty' )
   },
   _comment_5: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
   preferencesDialog: {
@@ -444,53 +444,53 @@ const MembraneTransportFluent = {
         accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_settings_crossingSoundsCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.settings.crossingSoundsCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
       }
     },
-    _comment_3: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinPanel"} ),
-    transportProteinPanel: {
-      accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHeadingStringProperty' ) ),
+    _comment_3: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinToolbox"} ),
+    transportProteinToolbox: {
+      accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.accessibleHeadingStringProperty' ) ),
       _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
       _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
       _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.accessibleHelpTextStringProperty' ) ),
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.accessibleHelpTextStringProperty' ) ),
       ligandGatedChannelPanel: {
-        sodiumIonNaPlusLigandGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' ) ),
-        potassiumIonKPlusLigandGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty' ) ),
+        sodiumIonNaPlusLigandGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_ligandGatedChannelPanel_sodiumIonNaPlusLigandGated', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.ligandGatedChannelPanel.sodiumIonNaPlusLigandGatedStringProperty' ) ),
+        potassiumIonKPlusLigandGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_ligandGatedChannelPanel_potassiumIonKPlusLigandGated', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.ligandGatedChannelPanel.potassiumIonKPlusLigandGatedStringProperty' ) ),
         _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
         _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
         _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_ligandGatedChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.ligandGatedChannelPanel.accessibleHelpTextStringProperty' ) )
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_ligandGatedChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.ligandGatedChannelPanel.accessibleHelpTextStringProperty' ) )
       },
       leakageChannelPanel: {
-        sodiumIonNaPlusLeakageStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_sodiumIonNaPlusLeakage', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty' ) ),
-        potassiumIonKPlusLeakageStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_potassiumIonKPlusLeakage', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty' ) ),
+        sodiumIonNaPlusLeakageStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_leakageChannelPanel_sodiumIonNaPlusLeakage', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.leakageChannelPanel.sodiumIonNaPlusLeakageStringProperty' ) ),
+        potassiumIonKPlusLeakageStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_leakageChannelPanel_potassiumIonKPlusLeakage', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.leakageChannelPanel.potassiumIonKPlusLeakageStringProperty' ) ),
         _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
         _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
         _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_leakageChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.leakageChannelPanel.accessibleHelpTextStringProperty' ) )
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_leakageChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.leakageChannelPanel.accessibleHelpTextStringProperty' ) )
       },
       voltageGatedChannelPanel: {
-        sodiumIonNaPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty' ) ),
-        potassiumIonKPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty' ) ),
+        sodiumIonNaPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_sodiumIonNaPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.sodiumIonNaPlusVoltageGatedStringProperty' ) ),
+        potassiumIonKPlusVoltageGatedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_potassiumIonKPlusVoltageGated', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.potassiumIonKPlusVoltageGatedStringProperty' ) ),
         _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
         _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
         _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.accessibleHelpTextStringProperty' ) ),
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.accessibleHelpTextStringProperty' ) ),
         _comment_3: new FluentComment( {"comment":"For the Membrane Potential radio buttons","associatedKey":"membranePotential"} ),
         _comment_4: new FluentComment( {"comment":"Membrane potential change responses for voltage-gated channels","associatedKey":"membranePotential"} ),
         membranePotential: {
           radioButtonGroup: {
-            accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty' ) ),
+            accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleNameStringProperty' ) ),
             _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
             _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
             _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-            accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty' ) ),
+            accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.accessibleHelpTextStringProperty' ) ),
             negative70RadioButton: {
-              accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty' ) )
+              accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative70RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative70RadioButton.accessibleNameStringProperty' ) )
             },
             negative50RadioButton: {
-              accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty' ) )
+              accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_negative50RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.negative50RadioButton.accessibleNameStringProperty' ) )
             },
             positive30RadioButton: {
-              accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty' ) )
+              accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_membranePotential_radioButtonGroup_positive30RadioButton_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.membranePotential.radioButtonGroup.positive30RadioButton.accessibleNameStringProperty' ) )
             }
           }
         },
@@ -498,21 +498,21 @@ const MembraneTransportFluent = {
           _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
           _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
           _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-          accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' ) ),
-          voicingHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' ) ),
-          accessibleContextResponseCheckedNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative70', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty' ) ),
-          accessibleContextResponseCheckedNegative50StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative50', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty' ) ),
-          accessibleContextResponseCheckedPositive30StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedPositive30', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty' ) ),
-          accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
+          accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleHelpTextStringProperty' ) ),
+          voicingHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_voicingHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.voicingHelpTextStringProperty' ) ),
+          accessibleContextResponseCheckedNegative70StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative70', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative70StringProperty' ) ),
+          accessibleContextResponseCheckedNegative50StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedNegative50', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedNegative50StringProperty' ) ),
+          accessibleContextResponseCheckedPositive30StringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseCheckedPositive30', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseCheckedPositive30StringProperty' ) ),
+          accessibleContextResponseUncheckedStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_voltageGatedChannelPanel_chargesCheckbox_accessibleContextResponseUnchecked', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.voltageGatedChannelPanel.chargesCheckbox.accessibleContextResponseUncheckedStringProperty' ) )
         }
       },
       activeTransportProteinPanel: {
-        sodiumPotassiumPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumPotassiumPump', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty' ) ),
-        sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty' ) ),
+        sodiumPotassiumPumpStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_activeTransportProteinPanel_sodiumPotassiumPump', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.activeTransportProteinPanel.sodiumPotassiumPumpStringProperty' ) ),
+        sodiumGlucoseCotransporterStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_activeTransportProteinPanel_sodiumGlucoseCotransporter', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.activeTransportProteinPanel.sodiumGlucoseCotransporterStringProperty' ) ),
         _comment_0: new FluentComment( {"comment":"Accessible help text for the radio button group. The accessible name comes from the visual name.","associatedKey":"accessibleHelpText"} ),
         _comment_1: new FluentComment( {"comment":"The accessibleHelpText portion of the description. It is combined with the accessibleStateDescription","associatedKey":"accessibleHelpText"} ),
         _comment_2: new FluentComment( {"comment":"to create the full accessibleHelpText. For voicing, it is used separately as the reading block hint response.","associatedKey":"accessibleHelpText"} ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinPanel_activeTransportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinPanel.activeTransportProteinPanel.accessibleHelpTextStringProperty' ) )
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProteinToolbox_activeTransportProteinPanel_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.transportProteinToolbox.activeTransportProteinPanel.accessibleHelpTextStringProperty' ) )
       }
     },
     ligandNode: {
