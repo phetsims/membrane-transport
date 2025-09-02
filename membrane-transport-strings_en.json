@@ -620,13 +620,13 @@
         "value": "Released in membrane. Protein replaced."
       },
       "deletedResponse": {
-        "value": "Deleted."
+        "value": "Grabbed protein deleted."
       },
       "cancelledBackToSlotResponse": {
-        "value": "Cancelled. Back to initial slot."
+        "value": "Cancelled. Back in membrane."
       },
       "cancelledBackToToolboxResponse": {
-        "value": "Cancelled. Back in toolbox."
+        "value": "Back in toolbox."
       },
       "reorderedResponse": {
         "value": "Reordered."

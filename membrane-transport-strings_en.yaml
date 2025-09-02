@@ -436,9 +436,9 @@ a11y:
     initialGrabbedHintResponse:      Choose slot with A or D keys. Space to release. Delete to remove.
     offMembraneResponse:             Above toolbox, off membrane.
     releasedReplacedResponse:        Released in membrane. Protein replaced.
-    deletedResponse:                 Deleted.
-    cancelledBackToSlotResponse:     Cancelled. Back to initial slot.
-    cancelledBackToToolboxResponse:    Cancelled. Back in toolbox.
+    deletedResponse:                 Grabbed protein deleted.
+    cancelledBackToSlotResponse:     Cancelled. Back in membrane.
+    cancelledBackToToolboxResponse:  Back in toolbox.
     reorderedResponse:               Reordered.
     proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
