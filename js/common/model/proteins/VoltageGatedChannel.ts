@@ -54,7 +54,7 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
     if ( this.timeSinceVoltageChanged !== null ) {
       this.timeSinceVoltageChanged += dt;
 
-      if ( this.timeSinceVoltageChanged > 0.5 ) {
+      if ( this.timeSinceVoltageChanged > 0.25 ) {
         const voltage = this.model.membranePotentialProperty.value;
         this.stateProperty.value = this.getStateForVoltage( voltage );
         this.timeSinceVoltageChanged = null;

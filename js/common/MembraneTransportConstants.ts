@@ -100,21 +100,21 @@ export default class MembraneTransportConstants {
     potassiumLigandGatedChannel: {
       closed: {
         dimension: new Dimension2( 650, 900 ),
-        ligandBindingSite: new Vector2( 76, 126.1 )
+        ligandBindingSite: new Vector2( 77, 127 )
       },
       open: {
         dimension: new Dimension2( 650, 900 ),
-        ligandBindingSite: new Vector2( 76, 126.1 )
+        ligandBindingSite: new Vector2( 77, 127 )
       }
     },
     sodiumLigandGatedChannel: {
       closed: {
         dimension: new Dimension2( 650, 900 ),
-        ligandBindingSite: new Vector2( 185, 148 )
+        ligandBindingSite: new Vector2( 185, 149 )
       },
       open: {
         dimension: new Dimension2( 650, 900 ),
-        ligandBindingSite: new Vector2( 129, 148 )
+        ligandBindingSite: new Vector2( 128, 149 )
       }
     },
 
