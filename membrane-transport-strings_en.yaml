@@ -194,8 +194,8 @@ a11y:
         accessibleContextResponseCheckedPositive30: Negative outside and positive inside; charge signs sparse along membrane.
         accessibleContextResponseUnchecked:         Membrane potential charge signs, hidden.
     activeTransportProteinPanel:
-      sodiumPotassiumPump:        Sodium-Potassium Pump
-      sodiumGlucoseCotransporter: Sodium-Glucose Cotransporter
+      sodiumPotassiumPump:        Grab Sodium-Potassium Pump
+      sodiumGlucoseCotransporter: Grab Sodium-Glucose Cotransporter
       accessibleHelpText:         |-
                                   Proteins that open to one side at a time. Sodium Potassium Pump, when open to inside has binding sites for 3 
                                     sodium and 1 phosphate. When open to outside has binding sites for 2 potassium. Sodium-Glucose Cotransporter, 
