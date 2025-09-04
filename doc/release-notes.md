@@ -29,12 +29,13 @@ For an exemplar, see https://github.com/phetsims/balancing-chemical-equations/bl
 *
 -->
 
-## 1.0 (in progress)
+## 1.0 ({{PUBLICATION_DATE}}) <!-- TODO: ADD DATE ON RELEASE --!>
 
 ### Features
+
 * Alternative Input
 * Interactive Highlights
-* Voicing
+* Core Voicing
 * PhET-iO
 * Interactive Description
 * Sound and Sonification
@@ -44,4 +45,5 @@ For an exemplar, see https://github.com/phetsims/balancing-chemical-equations/bl
 * Internationalization
 
 ### Excluded Features
+
 * Region and Culture customization
