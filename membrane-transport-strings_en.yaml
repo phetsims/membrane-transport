@@ -138,8 +138,8 @@ a11y:
       atpReacting:          ATP reacting to form ADP and phosphate, which regularly fade away on the inside
       membranePotential:    "membrane potential of { a11y.membranePotentialValue }"
       glucoseMetabolism:    Glucose disappears from inside as it is metabolized by the cell
-    interactionHint:                      Add or remove solute to outside or inside of cell.
-    interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins.
+    interactionHint:                      Add or remove solute to outside or inside of cell, and observe solute concentrations.
+    interactionHintWithTransportProteins: Add or remove solutes to outside or inside of cell, and play with transport proteins, and observe solute concentrations.
 
   # Accessible content for a container holding all SoluteControls - the components that let you add or remove solutes.
   soluteControls:
