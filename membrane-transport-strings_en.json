@@ -304,7 +304,7 @@
     },
     "transportProteinToolbox": {
       "accessibleHeading": {
-        "value": "Transport Proteins"
+        "value": "Transport Protein Toolbox"
       },
       "accessibleHelpText": {
         "value": "Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane to sort or delete."

@@ -160,7 +160,7 @@ a11y:
       accessibleContextResponseChecked:   Solute crossing sounds on.
       accessibleContextResponseUnchecked: Solute crossing sounds off.
   transportProteinToolbox:
-    accessibleHeading:  Transport Proteins
+    accessibleHeading:  Transport Protein Toolbox
     accessibleHelpText: Look for proteins to grab. Once grabbed, use keyboard shortcuts to release in a membrane slot. Grab again from membrane to sort or delete.
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Grab Sodium-selective, Ligand-gated
