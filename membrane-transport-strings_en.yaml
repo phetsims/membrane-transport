@@ -210,7 +210,7 @@ a11y:
     accessibleHelpText:                          Grab a ligand. Once grabbed, use keyboard shortcuts to move ligand to binding site. Release to bind or let ligands bind naturally.
     voicingHintResponse:                         Move to ligand-gated protein.
     releasedResponse:                            Released.
-    releasedOffMembraneResponse:                 "{ a11y.ligandNode.accessibleName } released off membrane."
+    releasedOffMembraneResponse:                 "Released. { a11y.ligandNode.accessibleName } floats away."
 
     releasedOnProteinResponse:                   Released. Binding successful. Protein opens.
     releasedOnBusyOrIncompatibleProteinResponse: Released. Binding unsuccessful. Ligand floats away.
@@ -240,7 +240,7 @@ a11y:
                                                  } { a11y.transportProtein.briefName }, { $index } of { $transportProteinCount } Proteins.
 
     # Spoken when the ligand is grabbed.
-    grabbedResponse:                             Grabbed. Outside, { $proteinCount } Proteins in Membrane.
+    grabbedResponse:                             Grabbed. Off membrane. { $proteinCount } Proteins in Membrane.
     grabbedResponseWithHint:                     "{ a11y.ligandNode.grabbedResponse } Move ligand with A or D keys. Space to release."
     grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Space to release. Add transport proteins."
 
