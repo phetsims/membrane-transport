@@ -499,30 +499,30 @@ a11y:
                                         [openToInside] Pumping sodium and glucose to inside, open to inside
                                      
                                         [ligandBoundClosed] { $proteinType ->
-                                          [sodiumIonLigandGatedChannel] triangle ligand binding, channel opening 
-                                          *[potassiumIonLigandGatedChannel] star ligand binding, channel opening
+                                          [sodiumIonLigandGatedChannel] Triangle ligand binding, channel opening
+                                          *[potassiumIonLigandGatedChannel] Star ligand binding, channel opening
                                         }
                                         [ligandBoundOpen] { $proteinType ->
-                                          [sodiumIonLigandGatedChannel] triangle ligand bound, open channel
-                                          *[potassiumIonLigandGatedChannel] star ligand bound, open channel
+                                          [sodiumIonLigandGatedChannel] Channel open with bound triangle ligand
+                                          *[potassiumIonLigandGatedChannel] Channel open with bound star ligand
                                         }
                                         [ligandUnboundOpen] { $proteinType ->
-                                          [sodiumIonLigandGatedChannel] triangle ligand floats away, channel closing 
-                                          *[potassiumIonLigandGatedChannel] star ligand floats away, channel closing
+                                          [sodiumIonLigandGatedChannel] Triangle ligand floats away, channel closing 
+                                          *[potassiumIonLigandGatedChannel] Star ligand floats away, channel closing
                                         }
                                         [closed] { $proteinType ->
-                                          [sodiumIonLigandGatedChannel] no triangle ligand bound, closed channel
-                                          *[potassiumIonLigandGatedChannel] no star ligand bound, closed channel
+                                          [sodiumIonLigandGatedChannel] Channel closed with no bound triangle ligand
+                                          *[potassiumIonLigandGatedChannel] Channel closed with no bound star ligand
                                         }
                                      
-                                        [closedNegative70mV] closed channel at -70 mV
-                                        [openNegative50mV] open channel at -50 mV
-                                        [closed30mV] closed channel at 30 mV
+                                        [closedNegative70mV] Channel closed at -70 mV
+                                        [openNegative50mV] Channel open at -50 mV
+                                        [closed30mV] Channel closed at 30 mV
                                      
-                                        [closedNegative50mV] closed channel at -50 mV
-                                        [open30mV] open channel at 30 mV
+                                        [closedNegative50mV] Channel closed at -50 mV
+                                        [open30mV] Channel open at 30 mV
                                      
-                                        *[open] open channel through membrane
+                                        *[open] Channel open
                                      }.
 
 
@@ -537,12 +537,12 @@ a11y:
                                         }
                                      
                                         [ligandBoundOpen] { $proteinType ->
-                                          [sodiumIonLigandGatedChannel] triangle ligand binds, open 
-                                          *[potassiumIonLigandGatedChannel] star ligand binds, open
+                                          [sodiumIonLigandGatedChannel] Triangle ligand binds, open
+                                          *[potassiumIonLigandGatedChannel] Star ligand binds, open
                                         }
                                         [closed] { $proteinType ->
-                                          [sodiumIonLigandGatedChannel] triangle ligand floats away, closed
-                                          *[potassiumIonLigandGatedChannel] star ligand floats away, closed
+                                          [sodiumIonLigandGatedChannel] Triangle ligand floats away, closed
+                                          *[potassiumIonLigandGatedChannel] Star ligand floats away, closed
                                         }
                                      }.
 
