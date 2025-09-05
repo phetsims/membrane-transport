@@ -253,10 +253,10 @@
         }
       },
       "interactionHint": {
-        "value": "Add or remove solute to outside or inside of cell, and observe solute concentrations."
+        "value": "Add or remove solute to outside or inside of cell and observe solute concentrations."
       },
       "interactionHintWithTransportProteins": {
-        "value": "Add or remove solutes to outside or inside of cell, and play with transport proteins, and observe solute concentrations."
+        "value": "Add or remove solutes to outside or inside of cell, move transport proteins to membrane, and observe solute concentrations."
       }
     },
     "soluteControls": {
