@@ -215,13 +215,7 @@ export default class MembraneTransportScreenView extends ScreenView {
 
     this.resetEmitter.addListener( () => soluteConcentrationsAccordionBox.reset() );
 
-    // The design request was for the solute accordion box left edge to align with the solute panel left edge. However,
-    // the solute panel is centered between the left edge and the observation window, and may not always be visible.
-    // Therefore, we simplify by computing a magic number that satisfies the design request in the default case without
-    // introducing additional complexity.
-    const ADDITIONAL_OFFSET_SOLUTE_ACCORDION_BOX = 8;
-
-    soluteConcentrationsAccordionBox.left = this.layoutBounds.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN + ADDITIONAL_OFFSET_SOLUTE_ACCORDION_BOX;
+    soluteConcentrationsAccordionBox.left = this.layoutBounds.left + MembraneTransportConstants.SCREEN_VIEW_X_MARGIN;
     soluteConcentrationsAccordionBox.bottom = this.layoutBounds.bottom - MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN;
 
     this.addChild( soluteConcentrationsAccordionBox );
@@ -334,7 +328,7 @@ export default class MembraneTransportScreenView extends ScreenView {
       spacing: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
       children: rightSideVBoxChildren,
       top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
-      centerX: ( this.layoutBounds.right + this.observationWindow.right ) / 2
+      right: this.layoutBounds.right - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN
     } );
     this.addChild( rightSideVBox );
 
