@@ -58,8 +58,8 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
       cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
       buttonXMargin: 8,
 
-      contextResponseExpanded: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.accessibleContextResponseExpandedStringProperty,
-      contextResponseCollapsed: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.accessibleContextResponseCollapsedStringProperty,
+      accessibleContextResponseExpanded: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.accessibleContextResponseExpandedStringProperty,
+      accessibleContextResponseCollapsed: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.accessibleContextResponseCollapsedStringProperty,
       voicingHintResponseCollapsed: MembraneTransportFluent.a11y.soluteConcentrationsAccordionBox.voicingHintResponseCollapsedStringProperty
     }, providedOptions );
 
