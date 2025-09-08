@@ -252,6 +252,7 @@ type StringsType = {
       'accessibleHelpTextAllDisabledStringProperty': LocalizedStringProperty;
       'accessibleObjectResponseStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
+      'accessibleObjectResponseAtMaxStringProperty': LocalizedStringProperty;
     };
     'soluteConcentrationsAccordionBox': {
       'descriptionContentStringProperty': LocalizedStringProperty;

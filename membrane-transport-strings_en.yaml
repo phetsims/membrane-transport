@@ -364,7 +364,11 @@ a11y:
                                      [removedToMin] Removed
                                      [added]  {$delta} added
                                     *[removed] {$delta} removed
-                                   }. Now, { a11y.solutes.amountComparison }. 
+                                   }. Now, { a11y.solutes.amountComparison }.
+
+    # A response that is spoken when the solute count is already at the maximum
+    # and the user tries to add more. It makes it clear that nothing is changing.
+    accessibleObjectResponseAtMax: 'Solute at max.'
 
   soluteConcentrationsAccordionBox:
     descriptionContent:                 Dynamic bar charts show concentration comparisons and recent crossings for each solute. If needed, pause sim to read details.

@@ -330,6 +330,33 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       }
     } );
 
+    /**
+     * Handles the increment button actions for solute controls, for a coarse or fine increment.
+     */
+    const handleIncrement = ( button: ArrowButton ) => {
+
+      // If the button is disabled (because we are already at the max), then we want to describe that
+      // the max as already been reached so that the user knows why nothing happened.
+      if ( !incrementEnabledProperty.value ) {
+
+        // Interactive Description
+        const atMaxUtterance = new ValueChangeUtterance( {
+          alert: MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponseAtMaxStringProperty
+        } );
+        this.voicingButtonsBox.addAccessibleObjectResponse( atMaxUtterance );
+
+        // Voicing
+        this.voicingButtonsBox.voicingSpeakObjectResponse( {
+          objectResponse: MembraneTransportFluent.a11y.soluteControl.accessibleObjectResponseAtMaxStringProperty
+        } );
+      }
+      else {
+
+        // Otherwise, just press the button and doing so will trigger a object/context response.
+        button.pdomClick();
+      }
+    };
+
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
     const keyboardListener = new KeyboardListener( {
       keyStringProperties: HotkeyData.combineKeyStringProperties( [
@@ -340,13 +367,13 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       ] ),
       fire: ( event, keysPressed, listener ) => {
         if ( MembraneTransportHotkeyData.soluteControl.coarseIncrement.hasKeyStroke( keysPressed ) ) {
-          incrementCoarseButton.pdomClick();
+          handleIncrement( incrementCoarseButton );
         }
         else if ( MembraneTransportHotkeyData.soluteControl.coarseDecrement.hasKeyStroke( keysPressed ) ) {
           decrementCoarseButton.pdomClick();
         }
         else if ( MembraneTransportHotkeyData.soluteControl.fineIncrement.hasKeyStroke( keysPressed ) ) {
-          incrementFineButton.pdomClick();
+          handleIncrement( incrementFineButton );
         }
         else if ( MembraneTransportHotkeyData.soluteControl.fineDecrement.hasKeyStroke( keysPressed ) ) {
           decrementFineButton.pdomClick();
