@@ -355,7 +355,7 @@ a11y:
                                      [several] several
                                      [many] many
                                      [largeAmount] large amount of
-                                     [hugeAmount] huge amount
+                                     [hugeAmount] huge amount of
                                     *[maxAmount] max amount of
                                    } { a11y.solutes.lowercaseName }
     accessibleContextResponse:     |-
