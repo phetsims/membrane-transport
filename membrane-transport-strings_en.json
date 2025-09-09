@@ -528,7 +528,7 @@
         "value": "{ $addedOrRemoved ->\n  [addedToMax] {$delta} added, solute at max\n  [removedToMin] Removed\n  [added]  {$delta} added\n *[removed] {$delta} removed\n}. Now, { a11y_solutes_amountComparison }."
       },
       "accessibleObjectResponseAtMax": {
-        "value": "Solute at max."
+        "value": "solute at max"
       }
     },
     "soluteConcentrationsAccordionBox": {
