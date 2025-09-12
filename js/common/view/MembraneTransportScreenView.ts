@@ -319,7 +319,7 @@ export default class MembraneTransportScreenView extends ScreenView {
     const rightSideVBox = new VBox( {
       spacing: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
       children: rightSideVBoxChildren,
-      top: MembraneTransportConstants.SCREEN_VIEW_Y_MARGIN,
+      top: this.observationWindow.top,
       right: this.layoutBounds.right - MembraneTransportConstants.SCREEN_VIEW_X_MARGIN
     } );
     this.addChild( rightSideVBox );
