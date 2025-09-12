@@ -168,14 +168,6 @@ export default class MembraneTransportScreenView extends ScreenView {
     } );
     this.addChild( checkboxVBox );
 
-    // A parent Node for the controls related to selecting solutes, adding solutes, and removing solutes.
-    // const soluteControlsNode = new Node( {
-    //   accessibleHeading: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty,
-    //   accessibleHelpText: MembraneTransportFluent.a11y.soluteControls.accessibleHelpTextStringProperty,
-    //   accessibleHelpTextBehavior: ParallelDOM.HELP_TEXT_BEFORE_CONTENT
-    // } );
-    // this.addChild( soluteControlsNode );
-
     // A parent Node for the SoluteControl components, for layering and also grouping for accessibility.
     const soluteControlsParentNode = new Node( {
       accessibleHeading: MembraneTransportFluent.a11y.soluteControls.accessibleHeadingStringProperty,
