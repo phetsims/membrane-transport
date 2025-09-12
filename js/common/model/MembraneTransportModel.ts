@@ -85,7 +85,7 @@ for ( let i = 0; i < SLOT_COUNT; i++ ) {
 //      0 - No bias even past the threshold.
 //      0.5 - half of moves against the gradient are blocked.
 //      1 - All moves against the gradient are blocked.
-const BIAS_THRESHOLD = 0.01; // 0.01 * 4 = 0.04, so we need at least a 4% difference in concentration to start biasing
+const BIAS_THRESHOLD = 0.1;
 const GRADIENT_BIAS_STRENGTH = 0.9;
 
 export default class MembraneTransportModel extends PhetioObject {
@@ -530,6 +530,20 @@ export default class MembraneTransportModel extends PhetioObject {
     }
 
     return allowCrossing;
+  }
+
+  /**
+   * Returns true if crossing logic should use checkGradientForCrossing for oxygen and carbon dioxide.
+   * When a gas is not in steady state, we should apply a bias to a particular side. When in steady state,
+   * there is no bias and crossing simply happens with a  "random crossing chance".
+   *
+   * For other passive diffusion, we always apply the gradient bias.
+   */
+  public shouldApplyBiasForGasses( soluteType: SoluteType ): boolean {
+    const gradient = this.getSignedGradient( soluteType );
+    const absoluteGradient = Math.abs( gradient );
+
+    return absoluteGradient > BIAS_THRESHOLD;
   }
 
   /**

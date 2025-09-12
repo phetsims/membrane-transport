@@ -226,11 +226,27 @@ export default class RandomWalkMode extends BaseParticleMode {
       // Check for passive diffusion first, might change mode
       const location = outsideOfCell ? 'outside' : 'inside';
       const isGasParticle = particle.type === 'oxygen' || particle.type === 'carbonDioxide';
-      if ( isGasParticle &&
-           dotRandom.nextDouble() < 0.90 &&
-           membraneTransportModel.checkGradientForCrossing( particle.type, location ) &&
-           this.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN
-      ) {
+
+      // When far from "steady state", we should apply a bias to a particular side to make it look
+      // like gases are crossing more frequently to one side. When in steady state, respect the
+      // "random crossing chance" that gasses have, without biasing a particular side.
+      let shouldCross = false;
+
+      if ( isGasParticle ) {
+        if ( membraneTransportModel.shouldApplyBiasForGasses( particle.type ) ) {
+
+          // The gas is far enough from equilibrium that we should bias a particular side.
+          shouldCross = membraneTransportModel.checkGradientForCrossing( particle.type, location );
+        }
+        else {
+
+          // The gas is close enough to equilibrium that we should not bias a particular side and crossing
+          // should appear at random.
+          shouldCross = dotRandom.nextDouble() < 0.90;
+        }
+      }
+
+      if ( shouldCross ) {
         const newMode = new PassiveDiffusionMode( outsideOfCell ? 'inward' : 'outward' );
         particle.mode = newMode;
 
