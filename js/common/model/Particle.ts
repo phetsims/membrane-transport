@@ -41,11 +41,6 @@ import Slot from './Slot.js';
 import type Solute from './Solute.js';
 import { ParticleType } from './SoluteType.js';
 
-// The amount of time that must pass before a particle can cross the membrane again.
-// Does not apply to passive diffusion of gasses (oxygen and carbon dioxide).
-// TODO: Move this to constants! It is duplicated, see https://github.com/phetsims/membrane-transport/issues/467
-const CROSSING_COOLDOWN = 10;
-
 // The radius of the circle around the center of a transport protein where a particle will be captured so
 // we can decide how it should interact with the transport protein.
 // The extra capture radius was added so that all particles can be captured. If the capture radius is less than
@@ -104,7 +99,7 @@ export default abstract class Particle {
    */
   public static createRandomWalkMode( allowImmediateInteraction: boolean ): RandomWalkMode {
 
-    const timeElapsedSinceMembraneCrossing = allowImmediateInteraction ? CROSSING_COOLDOWN : 0;
+    const timeElapsedSinceMembraneCrossing = allowImmediateInteraction ? MembraneTransportConstants.CROSSING_COOLDOWN : 0;
     return new RandomWalkMode(
       Particle.createRandomUnitVector(),
       RandomWalkUtils.sampleValueHowLongToGoStraight(),

@@ -38,9 +38,6 @@ import PassiveDiffusionMode from './PassiveDiffusionMode.js';
 // Typical speed for movement
 const TYPICAL_SPEED = 30;
 
-// The amount of time that must pass before a particle can cross the membrane again.
-const CROSSING_COOLDOWN = 10;
-
 // Epsilon value for nudging the particle into bounds after teleporting so that it doesn't instantly teleport back to the other side
 const NUDGE_EPSILON = 1E-6;
 
@@ -199,7 +196,7 @@ export default class RandomWalkMode extends BaseParticleMode {
         captureRadius = captureRadius * 2;
       }
 
-      if ( transportProtein && distance < captureRadius && this.timeElapsedSinceMembraneCrossing > CROSSING_COOLDOWN ) {
+      if ( transportProtein && distance < captureRadius && this.timeElapsedSinceMembraneCrossing > MembraneTransportConstants.CROSSING_COOLDOWN ) {
         const interactedWithProtein = this.handleProteinInteractionDuringRandomWalk( particle, slot, transportProtein, model, outsideOfCell );
         if ( interactedWithProtein ) {
           return true;

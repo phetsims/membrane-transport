@@ -32,6 +32,12 @@ export default class MembraneTransportConstants {
   public static readonly OBSERVATION_WINDOW_WIDTH = 534;
   public static readonly OBSERVATION_WINDOW_HEIGHT = 400;
 
+  // The amount of time that must pass before a particle can cross the membrane again.
+  // Otherwise, particles can appear to cross back and forth repeatedly.
+  // Does not apply to passive diffusion of gasses (oxygen and carbon dioxide), see
+  // https://github.com/phetsims/membrane-transport/issues/467#issuecomment-3286383552
+  public static readonly CROSSING_COOLDOWN = 10;
+
   public static readonly OBSERVATION_WINDOW_BOUNDS = new Bounds2(
     0, 0,
     MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH, MembraneTransportConstants.OBSERVATION_WINDOW_HEIGHT
