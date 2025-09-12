@@ -272,7 +272,7 @@ const fluentSupport = new FluentContainer( createFluentFile, Array.from(fluentKe
 
 const MembraneTransportFluent = {
   "membrane-transport": {
-    _comment_0: new FluentComment( {"comment":"Strings for the Membrane Transport simulation","associatedKey":"membrane-transport.title"} ),
+    _comment_0: new FluentComment( {"comment":"Strings for PhET's Membrane Transport simulation","associatedKey":"membrane-transport.title"} ),
     _comment_1: new FluentComment( {"comment":"Title","associatedKey":"membrane-transport.title"} ),
     titleStringProperty: _.get( MembraneTransportStrings, 'membrane-transport.titleStringProperty' )
   },
