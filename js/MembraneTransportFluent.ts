@@ -41,6 +41,7 @@ addToMapIfDefined( 'soluteNames_glucose', 'soluteNames.glucoseStringProperty' );
 addToMapIfDefined( 'soluteNames_atp', 'soluteNames.atpStringProperty' );
 addToMapIfDefined( 'cellRegions_outside', 'cellRegions.outsideStringProperty' );
 addToMapIfDefined( 'cellRegions_inside', 'cellRegions.insideStringProperty' );
+addToMapIfDefined( 'outsideSodiumTooLow', 'outsideSodiumTooLowStringProperty' );
 addToMapIfDefined( 'transportProteinToolbox_voltageGatedChannels', 'transportProteinToolbox.voltageGatedChannelsStringProperty' );
 addToMapIfDefined( 'transportProteinToolbox_ligandGatedChannels', 'transportProteinToolbox.ligandGatedChannelsStringProperty' );
 addToMapIfDefined( 'transportProteinToolbox_activeTransporters', 'transportProteinToolbox.activeTransportersStringProperty' );
@@ -300,6 +301,7 @@ const MembraneTransportFluent = {
     outsideStringProperty: _.get( MembraneTransportStrings, 'cellRegions.outsideStringProperty' ),
     insideStringProperty: _.get( MembraneTransportStrings, 'cellRegions.insideStringProperty' )
   },
+  outsideSodiumTooLowStringProperty: _.get( MembraneTransportStrings, 'outsideSodiumTooLowStringProperty' ),
   _comment_4: new FluentComment( {"comment":"On the Toolbox","associatedKey":"transportProteinToolbox"} ),
   transportProteinToolbox: {
     voltageGatedChannelsStringProperty: _.get( MembraneTransportStrings, 'transportProteinToolbox.voltageGatedChannelsStringProperty' ),

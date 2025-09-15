@@ -6,9 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
-import Text from '../../../../../scenery/js/nodes/Text.js';
 
 import sodiumGlucoseCotransporterState1_svg from '../../../../images/sodiumGlucoseCotransporterState1_svg.js';
 import sodiumGlucoseCotransporterState3_svg from '../../../../images/sodiumGlucoseCotransporterState3_svg.js';
@@ -16,6 +14,7 @@ import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import SodiumGlucoseCotransporter from '../../model/proteins/SodiumGlucoseCotransporter.js';
 import TransportProteinNode from './TransportProteinNode.js';
+import ExclamationMarkNode from '../ExclamationMarkNode.js';
 
 export default class SodiumGlucoseCotransporterNode extends TransportProteinNode {
 
@@ -47,14 +46,7 @@ export default class SodiumGlucoseCotransporterNode extends TransportProteinNode
         MembraneTransportSounds.particleBoundToSodiumGlucoseTransporter( particleType, sodiumGlucoseCotransporter.getFilledSodiumSiteCount() );
       } );
 
-      const exclamationMark = new Text( '!', {
-        font: new PhetFont( {
-          size: 300,
-          weight: 'bold'
-        } ),
-        fill: 'yellow',
-        stroke: 'black',
-        lineWidth: 10,
+      const exclamationMark = new ExclamationMarkNode( {
         centerX: image.centerX,
         bottom: image.height - 95, // Adjusted to position the exclamation mark correctly
         visibleProperty: sodiumGlucoseCotransporter.model.lessSodiumOutsideThanInsideProperty

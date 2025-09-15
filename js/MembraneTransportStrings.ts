@@ -34,6 +34,7 @@ type StringsType = {
     'outsideStringProperty': LocalizedStringProperty;
     'insideStringProperty': LocalizedStringProperty;
   };
+  'outsideSodiumTooLowStringProperty': LocalizedStringProperty;
   'transportProteinToolbox': {
     'voltageGatedChannelsStringProperty': LocalizedStringProperty;
     'ligandGatedChannelsStringProperty': LocalizedStringProperty;

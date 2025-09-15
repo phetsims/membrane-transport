@@ -26,6 +26,8 @@ cellRegions:
   outside: Outside
   inside:  Inside
 
+outsideSodiumTooLow:         Outside sodium too low
+
 # On the Toolbox
 transportProteinToolbox:
   voltageGatedChannels:       Voltage-gated Channels

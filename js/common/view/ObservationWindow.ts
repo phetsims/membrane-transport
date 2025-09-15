@@ -7,21 +7,28 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
+import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasLigands } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
 import Slot from '../model/Slot.js';
+import ExclamationMarkNode from './ExclamationMarkNode.js';
 import LigandNode from './LigandNode.js';
 import MembraneTransportScreenView from './MembraneTransportScreenView.js';
 import ObservationWindowCanvasNode from './ObservationWindowCanvasNode.js';
@@ -150,6 +157,35 @@ export default class ObservationWindow extends Node {
     const frontCanvas = new ObservationWindowCanvasNode( model, modelViewTransform, canvasBounds, 'front' );
     clipNode.addChild( frontCanvas );
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
+
+    // Show the "!" and text when the outside sodium is too low and there is a sodium glucose cotransporter present
+    const text = new Text( MembraneTransportFluent.outsideSodiumTooLowStringProperty, {
+      font: MembraneTransportConstants.FONT
+    } );
+    const panel = new Panel( new HBox( {
+      spacing: 5,
+      children: [
+        new ExclamationMarkNode( {
+
+          // Bigger than the text so it looks more close to the size of the icon in the protein
+          maxHeight: text.height + 15
+        } ),
+        text
+      ]
+    } ), {
+      xMargin: 5,
+      yMargin: 3,
+      stroke: null,
+      fill: 'rgba( 255, 255, 255, 0.8 )',
+      visibleProperty: DerivedProperty.and( [ model.lessSodiumOutsideThanInsideProperty, model.hasSodiumGlucoseCotransporterProperty ] )
+    } );
+
+    ManualConstraint.create( this, [ panel, clipNode ], ( outsideSodiumTooLowTextProxy, clipNodeProxy ) => {
+      outsideSodiumTooLowTextProxy.top = 5;
+      outsideSodiumTooLowTextProxy.centerX = clipNodeProxy.centerX;
+    } );
+
+    clipNode.addChild( panel );
   }
 
   public getTransportProteinNodes(): SlottedNode[] {

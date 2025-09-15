@@ -179,6 +179,8 @@ export default class MembraneTransportModel extends PhetioObject {
   // When true, sounds play in the background that indicate when solutes cross the membrane.
   public readonly crossingSoundsEnabledProperty: Property<boolean>;
 
+  public readonly hasSodiumGlucoseCotransporterProperty: BooleanProperty = new BooleanProperty( false );
+
   public constructor(
     public readonly featureSet: MembraneTransportFeatureSet,
     providedOptions: MembraneTransportModelOptions ) {
@@ -275,6 +277,8 @@ export default class MembraneTransportModel extends PhetioObject {
       this.membraneSlots.forEach( slot => {
         slot.reset();
       } );
+
+      this.hasSodiumGlucoseCotransporterProperty.reset();
     } );
 
     this.membraneSlots.forEach( slot => slot.transportProteinProperty.link( () => this.updateTransportProteinCounts() ) );
@@ -561,6 +565,8 @@ export default class MembraneTransportModel extends PhetioObject {
       }
     } );
     this.transportProteinTypesCountProperty.value = proteinTypesCount;
+
+    this.hasSodiumGlucoseCotransporterProperty.value = filledSlots.some( slot => slot.transportProteinType === 'sodiumGlucoseCotransporter' );
   }
 
   /**
