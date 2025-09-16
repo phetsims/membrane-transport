@@ -168,20 +168,21 @@ export default class ObservationWindow extends Node {
         new ExclamationMarkNode( {
 
           // Bigger than the text so it looks more close to the size of the icon in the protein
-          maxHeight: text.height + 15
+          maxHeight: text.height + 10
         } ),
         text
       ]
     } ), {
-      xMargin: 5,
-      yMargin: 3,
+      xMargin: 10,
+      yMargin: 0,
       stroke: null,
-      fill: 'rgba( 255, 255, 255, 0.8 )',
+      fill: 'rgba( 255, 255, 255, 0.85 )',
+      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
       visibleProperty: DerivedProperty.and( [ model.lessSodiumOutsideThanInsideProperty, model.hasSodiumGlucoseCotransporterProperty ] )
     } );
 
     ManualConstraint.create( this, [ panel, clipNode ], ( outsideSodiumTooLowTextProxy, clipNodeProxy ) => {
-      outsideSodiumTooLowTextProxy.top = 5;
+      outsideSodiumTooLowTextProxy.top = 10;
       outsideSodiumTooLowTextProxy.centerX = clipNodeProxy.centerX;
     } );
 
