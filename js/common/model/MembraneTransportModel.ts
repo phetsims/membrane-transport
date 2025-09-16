@@ -179,6 +179,7 @@ export default class MembraneTransportModel extends PhetioObject {
   // When true, sounds play in the background that indicate when solutes cross the membrane.
   public readonly crossingSoundsEnabledProperty: Property<boolean>;
 
+  // True when the model has a sodium-glucose cotransporter protein in one of its slots.
   public readonly hasSodiumGlucoseCotransporterProperty: BooleanProperty = new BooleanProperty( false );
 
   public constructor(

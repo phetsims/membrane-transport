@@ -159,18 +159,18 @@ export default class ObservationWindow extends Node {
     this.stepEmitter.addListener( dt => frontCanvas.step( dt ) );
 
     // Show the "!" and text when the outside sodium is too low and there is a sodium glucose cotransporter present
-    const text = new Text( MembraneTransportFluent.outsideSodiumTooLowStringProperty, {
+    const hintText = new Text( MembraneTransportFluent.outsideSodiumTooLowStringProperty, {
       font: MembraneTransportConstants.FONT
     } );
-    const panel = new Panel( new HBox( {
+    const hintPanel = new Panel( new HBox( {
       spacing: 5,
       children: [
         new ExclamationMarkNode( {
 
           // Bigger than the text so it looks more close to the size of the icon in the protein
-          maxHeight: text.height + 10
+          maxHeight: hintText.height + 10
         } ),
-        text
+        hintText
       ]
     } ), {
       xMargin: 10,
@@ -181,12 +181,12 @@ export default class ObservationWindow extends Node {
       visibleProperty: DerivedProperty.and( [ model.lessSodiumOutsideThanInsideProperty, model.hasSodiumGlucoseCotransporterProperty ] )
     } );
 
-    ManualConstraint.create( this, [ panel, clipNode ], ( outsideSodiumTooLowTextProxy, clipNodeProxy ) => {
+    ManualConstraint.create( this, [ hintPanel, clipNode ], ( outsideSodiumTooLowTextProxy, clipNodeProxy ) => {
       outsideSodiumTooLowTextProxy.top = 10;
       outsideSodiumTooLowTextProxy.centerX = clipNodeProxy.centerX;
     } );
 
-    clipNode.addChild( panel );
+    clipNode.addChild( hintPanel );
   }
 
   public getTransportProteinNodes(): SlottedNode[] {
