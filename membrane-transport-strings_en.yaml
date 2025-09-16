@@ -630,7 +630,7 @@ a11y:
       ligandGatedChannelWithoutLigands:               Ligand-gated protein closed. Look for ligands
       voltageGatedChannelAtRestingPotential:          Voltage-gated protein closed. Check membrane potential
       pumpAwaitingPhosphateWithoutATP:                Pump needs phosphate source
-      sodiumGlucoseCotransporterWithLowOutsideSodium: Cotransporter not binding sodium. Check outside sodium levels
+      sodiumGlucoseCotransporterWithLowOutsideSodium: Cotransporter not binding sodium. Outside sodium too low.
     
     # Message separators. Multiple pieces of information are often combined into a single message and
     # these are used to separate them.
