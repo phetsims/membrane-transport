@@ -49,7 +49,7 @@ simLauncher.launch( () => {
       qualityAssurance: 'Matthew Moore, Nancy Salpepi, Valentina P\u00e9rez, Kathryn Woessner',
       graphicArts: 'Brett Fiedler',
       soundDesign: 'Ashton Morris, Emily Moore',
-      thanks: ''
+      thanks: 'HHMI BioInteractive for their partnership on the inclusive design and accessibility of this simulation.'
     },
 
     preferencesModel: new PreferencesModel( {
