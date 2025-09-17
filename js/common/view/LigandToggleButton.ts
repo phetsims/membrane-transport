@@ -50,10 +50,9 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
 
       // pdom
       accessibleHelpText: MembraneTransportFluent.a11y.ligandToggleButton.accessibleHelpTextStringProperty,
-      accessibleContextResponse: () => {
-        return model.areLigandsAddedProperty.value ? MembraneTransportFluent.a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty :
-               MembraneTransportFluent.a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty;
-      },
+      accessibleContextResponseOn: MembraneTransportFluent.a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty,
+      accessibleContextResponseOff: MembraneTransportFluent.a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty,
+
       valueOnSoundPlayer: addLigandSoundPlayer,
       valueOffSoundPlayer: removeLigandSoundPlayer
     } );
