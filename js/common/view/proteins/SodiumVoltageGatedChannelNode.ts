@@ -36,14 +36,17 @@ export default class SodiumVoltageGatedChannelNode extends TransportProteinNode 
 
       }, { disposer: this } );
 
-      channel.stateProperty.lazyLink( state => {
+      channel.stateProperty.lazyLink( ( state, oldState ) => {
+
         // choose open or closing sound based on the voltage
         // Since the state is linked before the view is created, we can rely on it having the correct value during this callback.
         // NOTE: this is a listener order dependency
         if ( state === 'openNegative50mV' ) {
           MembraneTransportSounds.channelOpened( 'sodiumIonVoltageGatedChannel' );
         }
-        else {
+        else if ( oldState === 'openNegative50mV' ) {
+
+          // Only play a sound on conformation change. The closed both have the same conformation.
           MembraneTransportSounds.channelClosed( 'sodiumIonVoltageGatedChannel' );
         }
       }, { disposer: this } );
