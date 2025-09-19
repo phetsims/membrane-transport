@@ -45,6 +45,10 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
     // NOTE: There is similar code in ObservationWindowChanelLayer (which drags out of the membrane).
     const transportProteinNode = createTransportProteinNode( type, null );
 
+    // This tool is interactive and has its own interactive highlight that surrounds the label. So disable the
+    // interactive highlight for the icon in this case.
+    transportProteinNode.interactiveHighlightEnabled = false;
+
     // Scale down the icon further so there is enough space in the toolbox to fit all controls.
     transportProteinNode.scale( 0.5 );
     transportProteinNode.addInputListener( DragListener.createForwardingListener( event => {
