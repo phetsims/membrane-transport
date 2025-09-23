@@ -13,6 +13,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
+import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
@@ -29,7 +30,6 @@ import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import { getSoluteBarChartColorProperty, getSoluteTypeString, PlottableSoluteType } from '../model/SoluteType.js';
 import MembraneTransportDescriber, { AverageCrossingDirectionDescriptor } from './MembraneTransportDescriber.js';
 import createParticleNode from './particles/createParticleNode.js';
-import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 
 // For ease of layout and equal spacing, fit everything into a single box of fixed size.
 const BOX_WIDTH = 124;
@@ -141,7 +141,7 @@ export default class SoluteBarChartNode extends ReadingBlockNode {
 
     const text = new RichText( getSoluteTypeString( soluteType ), {
       font: MembraneTransportConstants.FONT,
-      maxWidth: BOX_WIDTH * 0.5
+      maxWidth: soluteType === 'glucose' ? 68 : 52
     } );
 
     const iconWithText = new HBox( {
