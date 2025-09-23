@@ -1,4 +1,3 @@
-
 # Cadenas para la simulación Membrane Transport de PhET
 
 # Título
@@ -27,7 +26,7 @@ cellRegions:
   outside: Exterior
   inside:  Interior
 
-outsideSodiumTooLow:         ¡Sodio exterior demasiado bajo!
+outsideSodiumTooLow:         ¡Sodio en el exterior demasiado bajo!
 
 # En la caja de herramientas
 transportProteinToolbox:
@@ -81,7 +80,7 @@ keyboardHelp:
     title:           Proteínas de transporte o ligandos
     navigate:        Navegar por proteínas en la caja de herramientas o por ligandos añadidos
     grabOrRelease:   Tomar o soltar
-    moveGrabbedItem: Mover la proteína o el ligando tomado entre ubicaciones de colocación disponibles
+    moveGrabbedItem: Mover la proteína o el ligando tomado entre posiciones disponibles
     cancelGrab:      Cancelar la toma o el movimiento
   sortOrDeleteProteins:
     title:              Ordenar o eliminar proteínas en la membrana
@@ -189,13 +188,13 @@ a11y:
             accessibleName: menos 50 milivoltios
           positive30RadioButton:
             accessibleName: más 30 milivoltios
-      chargesCheckbox:
-        accessibleHelpText:                         Explora con o sin signos de carga que muestran el potencial de membrana a lo largo del interior y el exterior.
-        voicingHelpText:                            Explora con o sin signos de carga a lo largo de la membrana.
-        accessibleContextResponseCheckedNegative70: Positivo afuera y negativo adentro; signos de carga densos a lo largo de la membrana.
-        accessibleContextResponseCheckedNegative50: Positivo afuera y negativo adentro; signos de carga poco densos a lo largo de la membrana.
-        accessibleContextResponseCheckedPositive30: Negativo afuera y positivo adentro; signos de carga escasos a lo largo de la membrana.
-        accessibleContextResponseUnchecked:         Signos de carga del potencial de membrana, ocultos.
+  chargesCheckbox:
+    accessibleHelpText:                         Explora con o sin signos de carga que muestran el potencial de membrana a lo largo del interior y el exterior.
+    voicingHelpText:                            Explora con o sin signos de carga a lo largo de la membrana.
+    accessibleContextResponseCheckedNegative70: Positivo en el exterior y negativo en el interior; signos de carga densos a lo largo de la membrana.
+    accessibleContextResponseCheckedNegative50: Positivo en el exterior y negativo en el interior; signos de carga poco densos a lo largo de la membrana.
+    accessibleContextResponseCheckedPositive30: Negativo en el exterior y positivo en el interior; signos de carga escasos a lo largo de la membrana.
+    accessibleContextResponseUnchecked:         Signos de carga del potencial de membrana, ocultos.
     activeTransportProteinPanel:
       sodiumPotassiumPump:        Tomar Bomba sodio-potasio
       sodiumGlucoseCotransporter: Tomar Cotransportador sodio-glucosa
@@ -254,9 +253,9 @@ a11y:
   # El valor del potencial de membrana, usado en varios lugares.
   membranePotentialValue: |-
                           { $membranePotential ->
-                            [-70] menos 70
-                            [-50] menos 50
-                            *[30] más 30
+                            [-70] negativo 70
+                            [-50] negativo 50
+                            *[30] positivo 30
                           } milivoltios
 
   # Nombres para el tipo de soluto. Reutilizados en varios lugares.
@@ -332,10 +331,10 @@ a11y:
     # Nombres accesibles para los botones de opción de soluto
     oxygenRadioButton:        Oxígeno, O2, apolar, pequeño
     carbonDioxideRadioButton: Dióxido de carbono, CO2, apolar, pequeño
-    sodiumIonRadioButton:     Ion sodio, Na, positivo, pequeño
-    potassiumIonRadioButton:  Ion potasio, K, positivo, pequeño
+    sodiumIonRadioButton:     Ion de sodio, Na, positivo, pequeño
+    potassiumIonRadioButton:  Ion de potasio, K, positivo, pequeño
     glucoseRadioButton:       Glucosa, anillo hexagonal, grande
-    atpRadioButton:           Adenosín trifosfato, ATP, complejo, grande
+    atpRadioButton:           Adenosina trifosfato, ATP, complejo, grande
 
     # Texto de ayuda accesible para el grupo de botones de opción. El nombre accesible viene del nombre visual.
     accessibleHelpText:       Elige un soluto para los Ajustadores de solutos.
@@ -416,7 +415,7 @@ a11y:
 
   ligandToggleButton:
     accessibleHelpText:               Agrega o quita ligandos con forma de triángulo y estrella en el exterior de la célula.
-    addedAccessibleContextResponse:   El exterior se inundó de ligandos.
+    addedAccessibleContextResponse:   Exterior inundado de ligandos.
     removedAccessibleContextResponse: Ligandos eliminados.
 
   observationWindow:
@@ -610,7 +609,7 @@ a11y:
       # Cadenas de descripción para PDOM
       navigateDescription:        Navega por proteínas en la caja de herramientas o ligandos añadidos con la tecla Tab.
       grabOrReleaseDescription:   Toma o suelta con la barra espaciadora o Enter.
-      moveGrabbedItemDescription: Mueve la proteína o ligando tomado entre ubicaciones de colocación disponibles con Flecha izquierda y derecha o con A y D.
+      moveGrabbedItemDescription: Mueve la proteína o el ligando tomado entre posiciones disponibles con Flecha izquierda y derecha o con A y D.
       cancelGrabDescription:      Cancela la toma o el movimiento con Escape.
     sortOrDeleteProteins:
       # Cadenas de descripción para PDOM
