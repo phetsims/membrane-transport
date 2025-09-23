@@ -1,0 +1,678 @@
+
+# Cadenas para la simulación Membrane Transport de PhET
+
+# Título
+membrane-transport.title:    Transporte de membrana
+
+# Pantallas
+screen.simpleDiffusion:      Difusión simple
+screen.facilitatedDiffusion: Difusión facilitada
+screen.activeTransport:      Transporte activo
+screen.playground:           Laboratorio
+
+# Solutos
+solutes:                     Solutos
+
+# Tipos de soluto
+soluteNames:
+  oxygen:        O<sub>2</sub>
+  carbonDioxide: CO<sub>2</sub>
+  sodiumIon:     Na<sup>+</sup>
+  potassiumIon:  K<sup>+</sup>
+  glucose:       Glucosa
+  atp:           ATP
+
+# Regiones celulares
+cellRegions:
+  outside: Exterior
+  inside:  Interior
+
+outsideSodiumTooLow:         ¡Sodio exterior demasiado bajo!
+
+# En la caja de herramientas
+transportProteinToolbox:
+  voltageGatedChannels:       Canales regulados por voltaje
+  ligandGatedChannels:        Canales regulados por ligando
+  activeTransporters:         Transportadores activos
+  leakageChannels:            Canales de fuga
+
+  naPlusKPlusPump:            Na<sup>+</sup>/K<sup>+</sup><br>Bomba
+  sodiumGlucoseCotransporter: Na<sup>+</sup>/Glucosa<br>Cotransportador
+
+  # Sección de potencial de membrana
+  membranePotentialMV:        Potencial de membrana (mV)
+  charges:                    Cargas
+
+  # Sección de ligandos
+  addLigands:                 Agregar ligandos
+  removeLigands:              Quitar ligandos
+
+# Diálogo de Preferencias
+preferencesDialog:
+  simulation:
+    animateLipids:
+      label:       Animación de lípidos
+      description: Animación ondulante de la bicapa de fosfolípidos que forma la membrana celular.
+    glucoseMetabolism:
+      label:       Metabolismo de la glucosa
+      description: Las moléculas de glucosa se desvanecen dentro de la célula para simular su conversión en el metabolismo celular.
+  audio:
+    sounds:
+      stereoCrossingSounds:
+        label:       Sonidos estéreo de cruce
+        description: Enfatiza la dirección del transporte de solutos asignando el sonido al canal derecho (del exterior al interior) y al izquierdo (del interior al exterior).
+
+# Gráficas de barras de concentración de solutos
+soluteConcentrationsAccordionBox:
+  title: Concentraciones de solutos
+
+# Casillas debajo del área de juego
+settings:
+  crossingHighlights: Resaltados de cruce
+  crossingSounds:     Sonidos de cruce
+
+# Diálogo de ayuda de teclado
+keyboardHelp:
+  soluteAdjusters:
+    title:              Ajustadores de solutos
+    addOrRemoveALot:    Ajustar cantidad del soluto elegido
+    addOrRemoveALittle: Ajustar en cantidades más pequeñas
+  transportProteinsAndLigands:
+    title:           Proteínas de transporte o ligandos
+    navigate:        Navegar por proteínas en la caja de herramientas o por ligandos añadidos
+    grabOrRelease:   Tomar o soltar
+    moveGrabbedItem: Mover la proteína o el ligando tomado entre ubicaciones de colocación disponibles
+    cancelGrab:      Cancelar la toma o el movimiento
+  sortOrDeleteProteins:
+    title:              Ordenar o eliminar proteínas en la membrana
+    navigateProteins:   Navegar por las proteínas en la membrana
+    grabProtein:        Tomar proteína en la membrana
+    moveGrabbedProtein: Mover la proteína tomada entre ranuras
+    releaseProtein:     Soltar la proteína tomada en una ranura vacía o intercambiar ranuras
+    deleteProtein:      Eliminar proteína tomada
+
+a11y:
+  simpleDiffusionScreen:
+    screenButtonsHelpText: Explora qué solutos pueden difundirse libremente en un entorno celular.
+  facilitatedDiffusionScreen:
+    screenButtonsHelpText: Explora condiciones para facilitar la difusión de solutos usando proteínas de transporte.
+  activeTransportScreen:
+    screenButtonsHelpText: Explora condiciones para transportar activamente solutos usando proteínas de transporte.
+  playgroundScreen:
+    screenButtonsHelpText: Juega con todos los solutos y todas las proteínas de transporte.
+  screenSummary:
+    playArea:
+      intro:       |-
+                   Una ventana de observación hace zoom en una sección transversal muy pequeña de la membrana de una célula.
+                     La membrana consiste en una bicapa de fosfolípidos ondulante, una lámina de doble capa
+                     que separa los fluidos dentro y fuera de la célula. Al agregar al exterior o al interior,
+                     las partículas de soluto quedan suspendidas en el fluido y se mueven aleatoriamente con movimiento browniano.
+      proteins:    Se pueden agregar directamente a la membrana proteínas de transporte de distintos tipos.
+      potential:   Hay opciones para cambiar el entorno celular y afectar a las proteínas añadidas.
+      barCharts:   Las gráficas de barras de concentraciones comparan dinámicamente las cantidades de soluto fuera y dentro de la célula.
+      screen1:     "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.barCharts }"
+      screen2and4: "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.proteins } { a11y.screenSummary.playArea.potential } { a11y.screenSummary.playArea.barCharts }"
+      screen3:     "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.proteins } { a11y.screenSummary.playArea.barCharts }"
+    controlArea:                          Puedes pausar la acción o ralentizarla para escuchar más detalles, añadir o quitar sonidos y resaltados que enfatizan los cruces de solutos, y restablecer todo para comenzar de nuevo.
+    currentDetails:
+      leadingParagraph:     "Ahora mismo, la sección transversal ampliada de la célula tiene:"
+      noAddedSolutes:       sin solutos añadidos
+      noAddedProteins:      sin proteínas añadidas
+      soluteTypesOnOutside: |-
+                            { $count ->
+                              [one] { $count } tipo de soluto en el exterior
+                             *[other] { $count } tipos de soluto en el exterior
+                            }
+      soluteTypesOnInside:  |-
+                            { $count ->
+                              [one] { $count } tipo de soluto en el interior
+                             *[other] { $count } tipos de soluto en el interior
+                            }
+      transportProteins:    |-
+                            { $proteinCount ->
+                              [one] { $proteinCount } proteína
+                              *[other] { $proteinCount } proteínas
+                            } de { $proteinTypeCount ->
+                              [one] { $proteinTypeCount } tipo
+                             *[other] { $proteinTypeCount } tipos
+                            }, en la membrana
+
+      ligands:              2 tipos de ligandos añadidos solo en el exterior
+      atpReacting:          ATP reaccionando para formar ADP y fosfato, que regularmente se desvanecen en el interior
+      membranePotential:    "potencial de membrana de { a11y.membranePotentialValue }"
+      glucoseMetabolism:    La glucosa desaparece del interior a medida que es metabolizada por la célula
+    interactionHint:                      Agrega o quita solutos en el exterior o interior de la célula y observa las concentraciones.
+    interactionHintWithTransportProteins: Agrega o quita solutos en el exterior o interior de la célula, mueve proteínas de transporte a la membrana y observa las concentraciones.
+
+  # Contenido accesible para un contenedor con todos los SoluteControls: componentes para añadir o quitar solutos.
+  soluteControls:
+    accessibleHeading:  Ajustadores de solutos
+    accessibleHelpText: Agrega o quita el soluto elegido en el exterior o interior de la célula.
+  # Mostrar el texto de ayuda solo cuando el botón esté deshabilitado
+  eraseSolutesButton:
+    accessibleName:            Borrar todos los solutos
+    accessibleContextResponse: Solutos borrados. Agrega solutos para observar cambios.
+    accessibleHelpText:        Deshabilitado cuando no se han añadido solutos.
+  settings:
+    crossingHighlightsCheckbox:
+      accessibleHelpText:                 Explora con o sin resaltados visuales para los cruces de solutos.
+      accessibleContextResponseChecked:   Resaltados visuales para cruces de solutos, activados.
+      accessibleContextResponseUnchecked: Resaltados visuales para cruces de solutos, desactivados.
+    crossingSoundsCheckbox:
+      accessibleHelpText:                 Explora con o sin sonidos únicos para los cruces de solutos.
+      accessibleContextResponseChecked:   Sonidos de cruce de solutos activados.
+      accessibleContextResponseUnchecked: Sonidos de cruce de solutos desactivados.
+  transportProteinToolbox:
+    accessibleHeading:  Caja de herramientas de proteínas de transporte
+    accessibleHelpText: Busca proteínas para tomar. Una vez tomada, usa accesos de teclado para soltarla en una ranura de la membrana. Tómala de nuevo desde la membrana para ordenar o eliminar.
+    ligandGatedChannelPanel:
+      sodiumIonNaPlusLigandGated:   Tomar Selectiva para sodio, regulada por ligando
+      potassiumIonKPlusLigandGated: Tomar Selectiva para potasio, regulada por ligando
+      accessibleHelpText:           Proteínas transmembrana de un solo canal que pueden estar abiertas o cerradas. Cuando están cerradas, tienen un sitio de unión de ligando con forma de triángulo o estrella.
+    leakageChannelPanel:
+      sodiumIonNaPlusLeakage:   Tomar Selectiva para sodio, de fuga
+      potassiumIonKPlusLeakage: Tomar Selectiva para potasio, de fuga
+      accessibleHelpText:       Proteínas transmembrana de un solo canal, siempre abiertas.
+    voltageGatedChannelPanel:
+      sodiumIonNaPlusVoltageGated:   Tomar Selectiva para sodio, regulada por voltaje
+      potassiumIonKPlusVoltageGated: Tomar Selectiva para potasio, regulada por voltaje
+      accessibleHelpText:            Proteínas transmembrana de un solo canal que pueden estar abiertas o cerradas.
+
+      # Para los botones de radio del Potencial de membrana
+      membranePotential:
+        radioButtonGroup:
+          accessibleName:     Potencial de membrana
+          accessibleHelpText: Ajusta milivoltios y observa las proteínas.
+          negative70RadioButton:
+            accessibleName: menos 70 milivoltios
+          negative50RadioButton:
+            accessibleName: menos 50 milivoltios
+          positive30RadioButton:
+            accessibleName: más 30 milivoltios
+      chargesCheckbox:
+        accessibleHelpText:                         Explora con o sin signos de carga que muestran el potencial de membrana a lo largo del interior y el exterior.
+        voicingHelpText:                            Explora con o sin signos de carga a lo largo de la membrana.
+        accessibleContextResponseCheckedNegative70: Positivo afuera y negativo adentro; signos de carga densos a lo largo de la membrana.
+        accessibleContextResponseCheckedNegative50: Positivo afuera y negativo adentro; signos de carga poco densos a lo largo de la membrana.
+        accessibleContextResponseCheckedPositive30: Negativo afuera y positivo adentro; signos de carga escasos a lo largo de la membrana.
+        accessibleContextResponseUnchecked:         Signos de carga del potencial de membrana, ocultos.
+    activeTransportProteinPanel:
+      sodiumPotassiumPump:        Tomar Bomba sodio-potasio
+      sodiumGlucoseCotransporter: Tomar Cotransportador sodio-glucosa
+      accessibleHelpText:         |-
+                                  Proteínas que se abren a un lado a la vez. La bomba sodio-potasio, cuando está abierta hacia el interior tiene sitios de unión para 3 
+                                    sodios y 1 fosfato. Cuando está abierta hacia el exterior tiene sitios de unión para 2 potasios. El cotransportador sodio-glucosa, 
+                                    solo se abre hacia el exterior y tiene sitios de unión para 2 sodios y 1 glucosa. Requiere una concentración de sodio exterior más alta para transportar.
+
+  ligandNode:
+    accessibleName:                              |-
+                                                 { $ligandType ->
+                                                 [starLigand]     Ligando estrella
+                                                 *[triangleLigand] Ligando triángulo
+                                                 }
+    accessibleHelpText:                          Toma un ligando. Una vez tomado, usa accesos de teclado para mover el ligando al sitio de unión. Suelta para unir o deja que los ligandos se unan de forma natural.
+    voicingHintResponse:                         Mover a proteína regulada por ligando.
+    releasedResponse:                            Soltado.
+    releasedOffMembraneResponse:                 "Soltado. { a11y.ligandNode.accessibleName } se aleja flotando."
+
+    releasedOnProteinResponse:                   Soltado. Unión exitosa. La proteína se abre.
+    releasedOnBusyOrIncompatibleProteinResponse: Soltado. Unión no exitosa. El ligando se aleja flotando.
+    unboundResponse:                             El ligando se aleja flotando. La proteína se cierra.
+
+    # Se pronuncia cuando el ligando se mueve fuera de la membrana.
+    movedOffMembraneResponse:                    Fuera de la membrana.
+
+    # Se pronuncia cuando el ligando se mueve encima de una proteína que puede abrirse o cerrarse
+    movedAboveLigandGatedChannelResponse:        |-
+                                                 Encima de { $openOrClosed ->
+                                                 [open]   abierta
+                                                 *[closed] cerrada
+                                                 } { a11y.transportProtein.briefName } { $proteinType ->
+                                                 [sodiumIonLigandGatedChannel] Sitio triángulo
+                                                 *[potassiumIonLigandGatedChannel]     Sitio estrella
+                                                 }, { $index } de { $transportProteinCount } proteínas.
+
+    # Se pronuncia cuando el ligando se mueve encima de una proteína que no puede abrirse o cerrarse (canal de fuga).
+    movedAboveLeakageChannelResponse:            Encima de { a11y.transportProtein.briefName }, { $index } de { $transportProteinCount } proteínas.
+
+    # Se pronuncia cuando el ligando se mueve encima de cualquier otro canal que puede abrirse/cerrarse pero no se une a ligandos.
+    movedAboveOtherChannelResponse:              |-
+                                                 Encima de { $openOrClosed ->
+                                                 [open]   abierta
+                                                 *[closed] cerrada
+                                                 } { a11y.transportProtein.briefName }, { $index } de { $transportProteinCount } proteínas.
+
+    # Se pronuncia cuando se toma el ligando.
+    grabbedResponse:                             Tomado. Fuera de la membrana. { $proteinCount } proteínas en la membrana.
+    grabbedResponseWithHint:                     "{ a11y.ligandNode.grabbedResponse } Mueve el ligando con las teclas A o D. Barra espaciadora para soltar."
+    grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Barra espaciadora para soltar. Agrega proteínas de transporte."
+
+
+  # El valor del potencial de membrana, usado en varios lugares.
+  membranePotentialValue: |-
+                          { $membranePotential ->
+                            [-70] menos 70
+                            [-50] menos 50
+                            *[30] más 30
+                          } milivoltios
+
+  # Nombres para el tipo de soluto. Reutilizados en varios lugares.
+  solutes:
+    lowercaseName:            |-
+                              { $soluteType ->
+                                [oxygen]        moléculas de oxígeno
+                                [carbonDioxide] moléculas de dióxido de carbono
+                                [sodiumIon]     iones de sodio
+                                [potassiumIon]  iones de potasio
+                                [glucose]       moléculas de glucosa
+                               *[atp]           moléculas de ATP
+                              }
+
+    # Nombres capitalizados para el tipo de soluto. Reutilizados en varios lugares.
+    uppercaseName:            |-
+                              { $soluteType ->
+                                [oxygen]        Moléculas de oxígeno
+                                [carbonDioxide] Moléculas de dióxido de carbono
+                                [sodiumIon]     Iones de sodio
+                                [potassiumIon]  Iones de potasio
+                                [glucose]       Moléculas de glucosa
+                               *[atp]           Moléculas de ATP
+                              }
+
+    # Por brevedad, usamos estos nombres breves en varios lugares.
+    briefName:                |-
+                              { $soluteType ->
+                                [oxygen]        Oxígeno
+                                [carbonDioxide] Dióxido de carbono
+                                [sodiumIon]     Sodio
+                                [potassiumIon]  Potasio
+                                [glucose]       Glucosa
+                               *[atp]           ATP
+                              }
+
+    # Descripción de las cantidades relativas de soluto fuera y dentro de la célula.
+    amountComparison:         |-
+                              { $amount ->
+                                *[none]  ninguna
+                                [equal] cantidades exactamente iguales fuera y dentro
+                                [allOutside] todo fuera, nada dentro
+                                [allInside] todo dentro, nada fuera
+                                [manyManyMoreOutside] muchísimo más fuera que dentro
+                                [manyMoreOutside] mucho más fuera que dentro
+                                [aboutTwiceAsManyOutside] aproximadamente el doble fuera que dentro
+                                [aLotMoreOutside] bastante más fuera que dentro
+                                [someMoreOutside] algo más fuera que dentro
+                                [littleBitMoreOutside] un poco más fuera que dentro
+                                [roughlyEqualOutside] cantidades aproximadamente iguales dentro y fuera
+                                [manyManyMoreInside] muchísimo más dentro que fuera
+                                [manyMoreInside] mucho más dentro que fuera
+                                [aboutTwiceAsManyInside] aproximadamente el doble dentro que fuera
+                                [aLotMoreInside] bastante más dentro que fuera
+                                [someMoreInside] algo más dentro que fuera
+                                [littleBitMoreInside] un poco más dentro que fuera
+                                [roughlyEqualInside] cantidades aproximadamente iguales dentro y fuera
+                              }
+
+    # Descripción de la dirección media de cruce de un soluto a través de la membrana.
+    averageCrossingDirection: |-
+                              { $direction ->
+                                [toOutside] hacia afuera
+                                [mostlyToOutside] mayormente hacia afuera
+                                [inBothDirections] en ambas direcciones
+                                [mostlyToInside] mayormente hacia adentro
+                                [toInside] hacia adentro
+                                *[none] ninguno recientemente
+                              }
+
+  solutesPanel:
+
+    # Nombres accesibles para los botones de opción de soluto
+    oxygenRadioButton:        Oxígeno, O2, apolar, pequeño
+    carbonDioxideRadioButton: Dióxido de carbono, CO2, apolar, pequeño
+    sodiumIonRadioButton:     Ion sodio, Na, positivo, pequeño
+    potassiumIonRadioButton:  Ion potasio, K, positivo, pequeño
+    glucoseRadioButton:       Glucosa, anillo hexagonal, grande
+    atpRadioButton:           Adenosín trifosfato, ATP, complejo, grande
+
+    # Texto de ayuda accesible para el grupo de botones de opción. El nombre accesible viene del nombre visual.
+    accessibleHelpText:       Elige un soluto para los Ajustadores de solutos.
+
+  soluteControl:
+    outside:
+      accessibleName:           "{ a11y.solutes.uppercaseName } Exterior de la célula"
+      accessibleHelpText:       Ajusta la cantidad del soluto elegido en el exterior con las flechas u otros atajos de teclado.
+      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Exterior"
+    inside:
+      accessibleName:           "{ a11y.solutes.uppercaseName } Interior de la célula"
+      accessibleHelpText:       Ajusta la cantidad del soluto elegido en el interior con las flechas u otros atajos de teclado.
+      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Interior"
+    voicingHintResponse:           Ajusta el soluto elegido con las flechas o los botones de flecha.
+    accessibleRoleDescription:     ajustador de soluto
+    accessibleHelpTextAllDisabled: Deshabilitado, el total del soluto elegido está en la cantidad máxima.
+    accessibleObjectResponse:      |-
+                                   { $amount ->
+                                     [none] ninguna
+                                     [few] unas pocas
+                                     [some] algunas
+                                     [smallAmount] pequeña cantidad de
+                                     [several] varias
+                                     [many] muchas
+                                     [largeAmount] gran cantidad de
+                                     [hugeAmount] enorme cantidad de
+                                    *[maxAmount] cantidad máxima de
+                                   } { a11y.solutes.lowercaseName }
+    accessibleContextResponse:     |-
+                                   { $addedOrRemoved ->
+                                     [addedToMax] {$delta} añadidas, soluto al máximo
+                                     [removedToMin] Eliminadas
+                                     [added]  {$delta} añadidas
+                                    *[removed] {$delta} eliminadas
+                                   }. Ahora, { a11y.solutes.amountComparison }.
+
+    # Respuesta pronunciada cuando la cantidad del soluto ya está en el máximo
+    # y el usuario intenta añadir más. Aclara que nada está cambiando.
+    accessibleObjectResponseAtMax: 'soluto al máximo'
+
+  soluteConcentrationsAccordionBox:
+    descriptionContent:                 Las gráficas de barras dinámicas muestran comparaciones de concentraciones y cruces recientes para cada soluto. Si es necesario, pausa la simulación para leer detalles.
+    accessibleContextResponseExpanded:  Las gráficas de barras dinámicas muestran detalles de los solutos.
+    accessibleContextResponseCollapsed: Gráficas de barras dinámicas ocultas.
+    voicingHintResponseCollapsed:       Expande para mostrar gráficas de barras dinámicas con detalles de solutos.
+
+    barChart:
+
+      # Esta descripción se usa en lugar de accessibleName en el caso de que no haya ninguno dentro NI ninguno fuera.
+      accessibleNameWithNoParticles:                     |-
+                                                         { a11y.solutes.uppercaseName }: ninguna fuera, ninguna dentro.
+
+      accessibleNameWithParticles:                       |-
+                                                         { a11y.solutes.uppercaseName }: { a11y.solutes.amountComparison }; cruces { a11y.solutes.averageCrossingDirection }; { $outsideAmount ->
+                                                           [none] ninguna
+                                                           [few] unas pocas
+                                                           [some] algunas
+                                                           [smallAmount] pequeña cantidad
+                                                           [several] varias
+                                                           [many] muchas
+                                                           [largeAmount] gran cantidad
+                                                           [hugeAmount] enorme cantidad
+                                                          *[maxAmount] cantidad máxima
+                                                         } fuera, { $insideAmount ->
+                                                           [none] ninguna
+                                                           [few] unas pocas
+                                                           [some] algunas
+                                                           [smallAmount] pequeña cantidad
+                                                           [several] varias
+                                                           [many] muchas
+                                                           [largeAmount] gran cantidad
+                                                           [hugeAmount] enorme cantidad
+                                                          *[maxAmount] cantidad máxima
+                                                         } dentro.
+      glucoseMetabolism:                                 La glucosa desaparece del interior a medida que es metabolizada por la célula.
+      accessibleNameWithParticlesAndGlucoseMetabolism:   "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
+      accessibleNameWithNoParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
+
+  ligandToggleButton:
+    accessibleHelpText:               Agrega o quita ligandos con forma de triángulo y estrella en el exterior de la célula.
+    addedAccessibleContextResponse:   El exterior se inundó de ligandos.
+    removedAccessibleContextResponse: Ligandos eliminados.
+
+  cellMembrane:
+    accessibleHeading: Membrana celular
+    leadingParagraph:  "La sección transversal ampliada de la célula tiene:"
+
+    # La parte accessibleHelpText de la descripción. Se combina con accessibleStateDescription
+    # para crear el texto de ayuda accesible completo. Para la locución, se usa por separado como la respuesta de pista del bloque de lectura.
+    accessibleHelpText:
+
+      # Para pantallas donde no se pueden añadir proteínas.
+      proteinsHidden:
+        noSolutes:   Busca ajustar tipos y cantidades de soluto.
+        withSolutes: Observa solutos cruzando. Busca ajustar tipos y cantidades de soluto.
+
+      # Para pantallas donde puedes añadir proteínas.
+      proteinsShown:
+        noProteins:
+          noSolutes:   Busca añadir solutos y proteínas.
+          withSolutes: Observa solutos cruzando. Busca ajustar solutos y proteínas.
+        withProteins:
+          noSolutes:   Busca ajustar solutos y proteínas.
+          withSolutes: Observa solutos cruzando y cambios en proteínas. Busca ajustar solutos y proteínas.
+
+  transportProtein:
+    grabbedResponse:                 Tomada.
+    initialGrabbedHintResponse:      Elige ranura con A o D. Barra espaciadora para soltar. Supr para eliminar.
+    offMembraneResponse:             Encima de la caja de herramientas, fuera de la membrana.
+    releasedReplacedResponse:        Soltada en la membrana. Proteína reemplazada.
+    deletedResponse:                 Proteína tomada eliminada.
+    cancelledBackToSlotResponse:     Cancelado. De vuelta en la membrana.
+    cancelledBackToToolboxResponse:  De vuelta en la caja de herramientas.
+    reorderedResponse:               Reordenada.
+    proteinLocation:                 "en la membrana, { $proteinIndex } de { $proteinCount } proteínas "
+    accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
+    voicingHintResponse:
+
+      # Se pronuncia cuando la proteína en la caja de herramientas está enfocada.
+      general:                Barra espaciadora para tomar o soltar.
+
+      # Se pronuncia cuando la proteína en la caja de herramientas se toma con el ratón.
+      mouseInputFromToolbox:  Mover a la membrana.
+
+      # Se pronuncia cuando la proteína en la membrana se toma con el ratón.
+      mouseInputFromMembrane: Reordenar o quitar de la membrana.
+
+    # Respuesta del objeto accesible para la proteína de transporte cuando está en una ranura, describiendo su estado abierto/cerrado.
+    accessibleObjectResponse:        |-
+                                     { $state ->
+                                        [openToInsideEmpty] abierta hacia el interior
+                                        [openToInsideSodiumBound] abierta hacia el interior
+                                        [openToInsideSodiumAndATPBound] abierta hacia el interior
+                                        [openToInsideSodiumAndPhosphateBound] abierta hacia el interior
+                                        [openToOutsideAwaitingPotassium] abierta hacia el exterior
+                                        [openToOutsidePotassiumBound] abierta hacia el exterior
+                                     
+                                        [openToOutsideAwaitingParticles] abierta hacia el exterior 
+                                        [openToOutsideAllParticlesBound] abierta hacia el exterior
+                                        [openToInside] abierta hacia el interior
+                                     
+                                        [closedNegative70mV] cerrada
+                                        [openNegative50mV] abierta 
+                                        [closed30mV] cerrada
+                                     
+                                        [closedNegative50mV] cerrada
+                                        [open30mV] abierta
+                                     
+                                        [ligandBoundClosed] cerrada
+                                        [ligandBoundOpen] abierta
+                                        [ligandUnboundOpen] abierta
+                                        [closed] cerrada
+                                     
+                                        *[open] abierta 
+                                     }
+
+    accessibleParagraph:             |-
+                                     { $state ->
+                                        [openToInsideEmpty] A la espera de sodio, abierta hacia el interior
+                                        [openToInsideSodiumBound] 3 sodios unidos, esperando fosfato, abierta hacia el interior
+                                        [openToInsideSodiumAndATPBound] El ATP reacciona, fosfato unido, bombeando 3 sodios al exterior, abierta hacia el interior
+                                        [openToInsideSodiumAndPhosphateBound] Fosfato unido, bombeando 3 sodios al exterior, abierta hacia el interior
+                                        [openToOutsideAwaitingPotassium] A la espera de potasio, fosfato unido, abierta hacia el exterior
+                                        [openToOutsidePotassiumBound] El fosfato se aleja flotando, bombeando 2 potasios al interior, abierta hacia el exterior
+                                     
+                                        [openToOutsideAwaitingParticles] { $warning ->
+                                          [shown] Advertencia, sodio exterior demasiado bajo para unión, abierta hacia el exterior
+                                          *[hidden] A la espera de sodio y glucosa, abierta hacia el exterior
+                                        }
+                                        [openToOutsideAllParticlesBound] Sodio y glucosa unidos, abierta hacia el exterior
+                                        [openToInside] Bombeando sodio y glucosa al interior, abierta hacia el interior
+                                     
+                                        [ligandBoundClosed] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Unión de ligando triángulo, canal abriéndose
+                                          *[potassiumIonLigandGatedChannel] Unión de ligando estrella, canal abriéndose
+                                        }
+                                        [ligandBoundOpen] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Canal abierto con ligando triángulo unido
+                                          *[potassiumIonLigandGatedChannel] Canal abierto con ligando estrella unido
+                                        }
+                                        [ligandUnboundOpen] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] El ligando triángulo se aleja flotando, el canal se cierra 
+                                          *[potassiumIonLigandGatedChannel] El ligando estrella se aleja flotando, el canal se cierra
+                                        }
+                                        [closed] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Canal cerrado sin ligando triángulo unido
+                                          *[potassiumIonLigandGatedChannel] Canal cerrado sin ligando estrella unido
+                                        }
+                                     
+                                        [closedNegative70mV] Canal cerrado a -70 mV
+                                        [openNegative50mV] Canal abierto a -50 mV
+                                        [closed30mV] Canal cerrado a 30 mV
+                                     
+                                        [closedNegative50mV] Canal cerrado a -50 mV
+                                        [open30mV] Canal abierto a 30 mV
+                                     
+                                        *[open] Canal abierto
+                                     }.
+
+
+    accessibleContextResponse:       |-
+                                     { $state ->
+                                        [openToInsideEmpty] El fosfato se aleja flotando, bombeando 2 potasios al interior
+                                        [openToInsideSodiumAndATPBound] El ATP reacciona, se une fosfato, bombeando 3 sodios al exterior
+                                     
+                                        *[openToInside] { $glucoseBehavior ->
+                                          [metabolized] Transporta 2 sodios y 1 glucosa al interior; la glucosa transportada se metaboliza
+                                          *[persistent] Transporta 2 sodios y 1 glucosa al interior
+                                        }
+                                     
+                                        [ligandBoundOpen] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Se une ligando triángulo, abierta
+                                          *[potassiumIonLigandGatedChannel] Se une ligando estrella, abierta
+                                        }
+                                        [closed] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] El ligando triángulo se aleja flotando, cerrada
+                                          *[potassiumIonLigandGatedChannel] El ligando estrella se aleja flotando, cerrada
+                                        }
+                                     }.
+
+    # El nombre accesible para la ranura al mover una proteína encima es el índice de la ranura relativo al total.
+    # Por ejemplo, "Ranura 1 de 7".
+    accessibleNameMoving:            Ranura { $slotIndex } de { $slotCount }
+
+    # La respuesta del objeto accesible para la ranura al mover una proteína encima es
+    # el tipo de proteína que está actualmente en la ranura, por ejemplo
+    # "encima de Selectiva para sodio, de fuga".
+    accessibleObjectResponseMoving:  encima de { $slotContents }
+
+    # Para la Descripción Interactiva, el nombre accesible combina la respuesta de nombre y la respuesta del objeto.
+    accessibleNameAndObjectResponse: "{ $nameResponse }, { $objectResponse }"
+
+    # Incluido en el nombre accesible para la proteína cuando está encima de una ranura vacía.
+    empty:                           ranura vacía
+
+    # Nombres breves de proteínas de transporte, reutilizados en varios lugares de la simulación.
+    briefName:                       |-
+                                     { $type ->
+                                       [sodiumIonLeakageChannel]         Selectiva para sodio, de fuga
+                                       [potassiumIonLeakageChannel]      Selectiva para potasio, de fuga
+                                       [sodiumIonVoltageGatedChannel]    Selectiva para sodio, regulada por voltaje
+                                       [potassiumIonVoltageGatedChannel] Selectiva para potasio, regulada por voltaje
+                                       [sodiumIonLigandGatedChannel]     Selectiva para sodio, regulada por ligando
+                                       [potassiumIonLigandGatedChannel]  Selectiva para potasio, regulada por ligando
+                                       [sodiumPotassiumPump]             Bomba sodio-potasio
+                                      *[sodiumGlucoseCotransporter]      Cotransportador sodio-glucosa
+                                     }
+
+  # Respuestas a cambios de potencial de membrana para canales regulados por voltaje
+  membranePotential:
+    sodiumVoltageGatedOpenedResponse:    Selectiva para sodio, regulada por voltaje, abierta.
+    sodiumVoltageGatedClosedResponse:    Selectiva para sodio, regulada por voltaje, cerrada.
+    potassiumVoltageGatedOpenedResponse: Selectiva para potasio, regulada por voltaje, abierta.
+    potassiumVoltageGatedClosedResponse: Selectiva para potasio, regulada por voltaje, cerrada.
+    sodiumOpenedPotassiumOpenedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedOpenedResponse }"
+    sodiumOpenedPotassiumClosedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedClosedResponse }"
+
+    # Preferimos decir primero lo que se abrió, ya que los usuarios están más interesados en oír qué acaba de abrirse.
+    sodiumClosedPotassiumOpenedResponse: "{ a11y.membranePotential.potassiumVoltageGatedOpenedResponse } { a11y.membranePotential.sodiumVoltageGatedClosedResponse } "
+    sodiumClosedPotassiumClosedResponse: "Canales regulados por voltaje cerrados."
+    noChangeResponse:                    Sin cambios en las proteínas de transporte.
+
+  keyboardHelp:
+    soluteAdjusters:
+      # Cadenas de descripción para PDOM
+      addOrRemoveALotDescription:    Ajusta la cantidad del soluto elegido con Flecha izquierda y derecha o con las teclas A y D.
+      addOrRemoveALittleDescription: Ajusta en cantidades más pequeñas con Mayús más Flecha izquierda y derecha o Mayús más A y D.
+    transportProteinsAndLigands:
+      # Cadenas de descripción para PDOM
+      navigateDescription:        Navega por proteínas en la caja de herramientas o ligandos añadidos con la tecla Tab.
+      grabOrReleaseDescription:   Toma o suelta con la barra espaciadora o Enter.
+      moveGrabbedItemDescription: Mueve la proteína o ligando tomado entre ubicaciones de colocación disponibles con Flecha izquierda y derecha o con A y D.
+      cancelGrabDescription:      Cancela la toma o el movimiento con Escape.
+    sortOrDeleteProteins:
+      # Cadenas de descripción para PDOM
+      navigateProteinsDescription:   Navega por proteínas en la membrana con Flecha izquierda y derecha o con A y D.
+      grabProteinDescription:        Toma la proteína en la membrana con la barra espaciadora o Enter.
+      moveGrabbedProteinDescription: Mueve la proteína tomada entre ranuras con Flecha izquierda y derecha o con A y D.
+      releaseProteinDescription:     Suelta la proteína tomada en una ranura vacía o intercambia ranuras con la barra espaciadora o Enter.
+      deleteProteinDescription:      Elimina la proteína tomada con Retroceso o Supr.
+
+  # Cadenas para MembraneTransportDescriber
+  membraneTransportDescriber:
+
+    # Respuestas de cruce de partículas: se pronuncian cada vez que una partícula cruza a través de una proteína enfocada.
+    particleCrossing:                            |-
+                                                 { a11y.solutes.briefName } cruzando { $direction ->
+                                                   [inward] hacia adentro
+                                                  *[outward] hacia afuera
+                                                 }
+
+    # Mensajes de pista para diferentes estados de proteína. Se pronuncian tras una larga espera cuando el usuario necesita
+    # hacer algo para crear una interacción productiva.
+    hints:
+      ligandGatedChannelWithoutLigands:               Proteína regulada por ligando cerrada. Busca ligandos
+      voltageGatedChannelAtRestingPotential:          Proteína regulada por voltaje cerrada. Revisa el potencial de membrana
+      pumpAwaitingPhosphateWithoutATP:                La bomba necesita una fuente de fosfato
+      sodiumGlucoseCotransporterWithLowOutsideSodium: El cotransportador no une sodio. Sodio exterior demasiado bajo.
+
+    # Separadores de mensajes. Frecuentemente se combinan varias piezas de información en un solo mensaje y
+    # estos se usan para separarlas.
+    commaSeparator:                              ", "
+    andSeparator:                                " y "
+
+    # Tras ensamblar contenido con separadores, a veces es necesario envolverlo en una oración.
+    sentencePattern:                             "{ $content }."
+
+    # Enunciado incluido cuando un tipo de soluto alcanza estado estacionario, con las mismas cantidades moviéndose hacia dentro y hacia fuera de la membrana.
+    crossingSteadilyInBothDirections:            "{ a11y.solutes.briefName } cruzando de forma constante en ambas direcciones, cada lado aproximadamente igual"
+
+    # Cuando solo hay un tipo de soluto facilitado que describir, se usa esta descripción más detallada para indicar que cruza
+    # a través de un canal.
+    crossingChannelsWithDirection:               "{ a11y.solutes.briefName } cruzando canales, { a11y.solutes.averageCrossingDirection }"
+
+    # Cuando solo hay un tipo de soluto que cruza por difusión simple, se usa esta oración más detallada.
+    crossingMembraneWithDirection:               "{ a11y.solutes.briefName } cruzando la membrana, { a11y.solutes.averageCrossingDirection }"
+
+    # Usada en la mayoría de los casos, describe que muchos solutos están cruzando la membrana.
+    multipleSolutesCrossing:                     "{ $soluteNames }, cruzando"
+
+    # Describe el tipo de soluto y la cantidad relativa dentro vs fuera de la célula. Se incluye cuando
+    # cambia la comparación de cantidades descrita para un tipo de soluto.
+    soluteComparisonWithName:                    "{ a11y.solutes.briefName }, { a11y.solutes.amountComparison }"
+
+    # Descripciones específicas para eventos de transporte activo.
+    sodiumPumpedOutside:                         sodio bombeado al exterior
+    potassiumPumpedInside:                       potasio bombeado al interior
+    sodiumPumpedOutsideAndPotassiumPumpedInside: sodio bombeado al exterior y potasio bombeado al interior
+    sodiumAndGlucoseShuttledInside:              sodio y glucosa transportados al interior
+
+  preferencesDialog:
+    simulation:
+      animateLipids:
+        accessibleContextResponseLeftValue:  Animación de lípidos desactivada.
+        accessibleContextResponseRightValue: Animación de lípidos activada.
+      glucoseMetabolism:
+        accessibleContextResponseLeftValue:  Metabolismo de la glucosa desactivado.
+        accessibleContextResponseRightValue: Metabolismo de la glucosa activado.
+    audio:
+      sounds:
+        stereoCrossingSounds:
+          accessibleContextResponseLeftValue:  Sonidos estéreo de cruce desactivados.
+          accessibleContextResponseRightValue: Sonidos estéreo de cruce activados.

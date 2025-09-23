@@ -1,0 +1,564 @@
+membrane-transport.title:    Transport membranaire
+
+screen.simpleDiffusion:      Diffusion simple
+screen.facilitatedDiffusion: Diffusion facilitée
+screen.activeTransport:      Transport actif
+screen.playground:           Terrain d’expérimentation
+
+solutes:                     Solutés
+
+soluteNames:
+  oxygen:        O<sub>2</sub>
+  carbonDioxide: CO<sub>2</sub>
+  sodiumIon:     Na<sup>+</sup>
+  potassiumIon:  K<sup>+</sup>
+  glucose:       Glucose
+  atp:           ATP
+
+cellRegions:
+  outside: Extérieur
+  inside:  Intérieur
+
+outsideSodiumTooLow:         Sodium extérieur trop faible !
+
+transportProteinToolbox:
+  voltageGatedChannels:       Canaux voltage‑dépendants
+  ligandGatedChannels:        Canaux ligand‑dépendants
+  activeTransporters:         Transporteurs actifs
+  leakageChannels:            Canaux de fuite
+
+  naPlusKPlusPump:            Na<sup>+</sup>/K<sup>+</sup><br>Pompe
+  sodiumGlucoseCotransporter: Na<sup>+</sup>/Glucose<br>Cotransporteur
+
+  membranePotentialMV:        Potentiel de membrane (mV)
+  charges:                    Charges
+
+  addLigands:                 Ajouter des ligands
+  removeLigands:              Retirer les ligands
+
+preferencesDialog:
+  simulation:
+    animateLipids:
+      label:       Animation des lipides
+      description: Animation ondulante de la bicouche phospholipidique formant la membrane cellulaire.
+    glucoseMetabolism:
+      label:       Métabolisme du glucose
+      description: Les molécules de glucose s’estompent à l’intérieur de la cellule pour simuler leur conversion par le métabolisme cellulaire.
+  audio:
+    sounds:
+      stereoCrossingSounds:
+        label:       Sons stéréo de franchissement
+        description: Met en évidence la direction du transport des solutés en mappant le son sur les canaux droit (extérieur vers intérieur) et gauche (intérieur vers extérieur).
+
+soluteConcentrationsAccordionBox:
+  title: Concentrations des solutés
+
+settings:
+  crossingHighlights: Surlignage des franchissements
+  crossingSounds:     Sons des franchissements
+
+keyboardHelp:
+  soluteAdjusters:
+    title:              Réglages de soluté
+    addOrRemoveALot:    Ajuster la quantité du soluté choisi
+    addOrRemoveALittle: Ajuster par petites quantités
+  transportProteinsAndLigands:
+    title:           Protéines de transport ou ligands
+    navigate:        Parcourir les protéines dans la boîte à outils ou les ligands ajoutés
+    grabOrRelease:   Saisir ou relâcher
+    moveGrabbedItem: Déplacer la protéine ou le ligand saisi entre les emplacements de dépôt disponibles
+    cancelGrab:      Annuler la saisie ou le déplacement
+  sortOrDeleteProteins:
+    title:              Trier ou supprimer des protéines dans la membrane
+    navigateProteins:   Parcourir les protéines dans la membrane
+    grabProtein:        Saisir une protéine dans la membrane
+    moveGrabbedProtein: Déplacer la protéine saisie entre les fentes
+    releaseProtein:     Relâcher la protéine saisie dans une fente vide ou permuter
+    deleteProtein:      Supprimer la protéine saisie
+
+a11y:
+  simpleDiffusionScreen:
+    screenButtonsHelpText: Explorer quels solutés peuvent diffuser librement dans un environnement cellulaire.
+  facilitatedDiffusionScreen:
+    screenButtonsHelpText: Explorer les conditions qui facilitent la diffusion des solutés à l’aide de protéines de transport.
+  activeTransportScreen:
+    screenButtonsHelpText: Explorer les conditions permettant le transport actif des solutés à l’aide de protéines de transport.
+  playgroundScreen:
+    screenButtonsHelpText: Expérimenter avec tous les solutés et toutes les protéines de transport.
+  screenSummary:
+    playArea:
+      intro:       |-
+                   Une fenêtre d’observation zoome sur une très petite section transversale de la membrane d’une cellule.
+                     La membrane consiste en une bicouche de phospholipides ondulante, une feuille à double couche
+                     qui sépare les fluides à l’intérieur et à l’extérieur de la cellule. Lorsqu’ils sont ajoutés à l’extérieur ou à l’intérieur,
+                     les particules de soluté sont en suspension dans le fluide et se déplacent aléatoirement selon un mouvement brownien.
+      proteins:    Des protéines de transport de différents types peuvent être ajoutées directement à la membrane.
+      potential:   Des options permettent de modifier l’environnement cellulaire et d’influencer les protéines ajoutées.
+      barCharts:   Des histogrammes des concentrations de soluté comparent dynamiquement les quantités à l’extérieur et à l’intérieur de la cellule.
+      screen1:     "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.barCharts }"
+      screen2and4: "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.proteins } { a11y.screenSummary.playArea.potential } { a11y.screenSummary.playArea.barCharts }"
+      screen3:     "{ a11y.screenSummary.playArea.intro } { a11y.screenSummary.playArea.proteins } { a11y.screenSummary.playArea.barCharts }"
+    controlArea:                          Vous pouvez mettre l’action en pause ou la ralentir pour entendre plus de détails, ajouter ou retirer des sons et des surlignages qui mettent en évidence les franchissements des solutés, et réinitialiser pour recommencer.
+    currentDetails:
+      leadingParagraph:     "En ce moment, la section transversale agrandie de la cellule contient :"
+      noAddedSolutes:       aucun soluté ajouté
+      noAddedProteins:      aucune protéine ajoutée
+      soluteTypesOnOutside: |-
+                            { $count ->
+                              [one] { $count } type de soluté à l’extérieur
+                             *[other] { $count } types de soluté à l’extérieur
+                            }
+      soluteTypesOnInside:  |-
+                            { $count ->
+                              [one] { $count } type de soluté à l’intérieur
+                             *[other] { $count } types de soluté à l’intérieur
+                            }
+      transportProteins:    |-
+                            { $proteinCount ->
+                              [one] { $proteinCount } protéine
+                              *[other] { $proteinCount } protéines
+                            } de { $proteinTypeCount ->
+                              [one] { $proteinTypeCount } type
+                             *[other] { $proteinTypeCount } types
+                            }, dans la membrane
+
+      ligands:              2 types de ligands ajoutés uniquement à l’extérieur
+      atpReacting:          L’ATP réagit pour former de l’ADP et du phosphate, qui s’estompent régulièrement à l’intérieur
+      membranePotential:    "potentiel de membrane de { a11y.membranePotentialValue }"
+      glucoseMetabolism:    Le glucose disparaît de l’intérieur lorsqu’il est métabolisé par la cellule
+    interactionHint:                      Ajouter ou retirer des solutés à l’extérieur ou à l’intérieur de la cellule et observer les concentrations de soluté.
+    interactionHintWithTransportProteins: Ajouter ou retirer des solutés à l’extérieur ou à l’intérieur de la cellule, placer des protéines de transport dans la membrane, et observer les concentrations de soluté.
+
+  soluteControls:
+    accessibleHeading:  Réglages de soluté
+    accessibleHelpText: Ajouter ou retirer le soluté choisi à l’extérieur ou à l’intérieur de la cellule.
+  eraseSolutesButton:
+    accessibleName:            Effacer tous les solutés
+    accessibleContextResponse: Solutés effacés. Ajoutez des solutés pour observer des changements.
+    accessibleHelpText:        Désactivé quand aucun soluté n’a été ajouté.
+  settings:
+    crossingHighlightsCheckbox:
+      accessibleHelpText:                 Explorer avec ou sans surlignage visuel des franchissements de soluté.
+      accessibleContextResponseChecked:   Surlignage visuel des franchissements de soluté activé.
+      accessibleContextResponseUnchecked: Surlignage visuel des franchissements de soluté désactivé.
+    crossingSoundsCheckbox:
+      accessibleHelpText:                 Explorer avec ou sans sons uniques pour les franchissements de soluté.
+      accessibleContextResponseChecked:   Sons de franchissement des solutés activés.
+      accessibleContextResponseUnchecked: Sons de franchissement des solutés désactivés.
+  transportProteinToolbox:
+    accessibleHeading:  Boîte à outils des protéines de transport
+    accessibleHelpText: Cherchez des protéines à saisir. Une fois saisies, utilisez les raccourcis clavier pour les déposer dans une fente de la membrane. Saisissez de nouveau depuis la membrane pour trier ou supprimer.
+    ligandGatedChannelPanel:
+      sodiumIonNaPlusLigandGated:   Saisir Sélectif au sodium, ligand‑dépendant
+      potassiumIonKPlusLigandGated: Saisir Sélectif au potassium, ligand‑dépendant
+      accessibleHelpText:           Protéines transmembranaires à canal unique pouvant être ouvertes ou fermées. Fermées, elles possèdent un site de liaison en forme de triangle ou d’étoile.
+    leakageChannelPanel:
+      sodiumIonNaPlusLeakage:   Saisir Sélectif au sodium, fuite
+      potassiumIonKPlusLeakage: Saisir Sélectif au potassium, fuite
+      accessibleHelpText:       Protéines transmembranaires à canal unique, toujours ouvertes.
+    voltageGatedChannelPanel:
+      sodiumIonNaPlusVoltageGated:   Saisir Sélectif au sodium, voltage‑dépendant
+      potassiumIonKPlusVoltageGated: Saisir Sélectif au potassium, voltage‑dépendant
+      accessibleHelpText:            Protéines transmembranaires à canal unique pouvant être ouvertes ou fermées.
+      membranePotential:
+        radioButtonGroup:
+          accessibleName:     Potentiel de membrane
+          accessibleHelpText: Ajuster les millivolts et observer les protéines.
+          negative70RadioButton:
+            accessibleName: moins 70 millivolts
+          negative50RadioButton:
+            accessibleName: moins 50 millivolts
+          positive30RadioButton:
+            accessibleName: plus 30 millivolts
+      chargesCheckbox:
+        accessibleHelpText:                         Explorer avec ou sans signes de charge indiquant le potentiel de membrane le long de l’intérieur et de l’extérieur.
+        voicingHelpText:                            Explorer avec ou sans signes de charge le long de la membrane.
+        accessibleContextResponseCheckedNegative70: Positif à l’extérieur et négatif à l’intérieur ; signes de charge densément répartis le long de la membrane.
+        accessibleContextResponseCheckedNegative50: Positif à l’extérieur et négatif à l’intérieur ; signes de charge légèrement répartis le long de la membrane.
+        accessibleContextResponseCheckedPositive30: Négatif à l’extérieur et positif à l’intérieur ; signes de charge clairsemés le long de la membrane.
+        accessibleContextResponseUnchecked:         Signes de charge du potentiel de membrane, masqués.
+    activeTransportProteinPanel:
+      sodiumPotassiumPump:        Saisir Pompe sodium‑potassium
+      sodiumGlucoseCotransporter: Saisir Cotransporteur sodium‑glucose
+      accessibleHelpText:         |-
+                                  Protéines qui s’ouvrent d’un seul côté à la fois. La pompe sodium‑potassium, ouverte vers l’intérieur, possède des sites de liaison pour 3 ions sodium et 1 phosphate. Ouverte vers l’extérieur, elle possède des sites de liaison pour 2 ions potassium. Le cotransporteur sodium‑glucose n’est ouvert que vers l’extérieur et a des sites de liaison pour 2 ions sodium et 1 glucose. Nécessite une concentration extérieure en sodium plus élevée pour assurer la navette.
+
+  ligandNode:
+    accessibleName:                              |-
+                                                 { $ligandType ->
+                                                 [starLigand]     Ligand étoile
+                                                 *[triangleLigand] Ligand triangle
+                                                 }
+    accessibleHelpText:                          Saisir un ligand. Une fois saisi, utilisez les raccourcis clavier pour déplacer le ligand vers un site de liaison. Relâchez pour lier ou laissez les ligands se lier naturellement.
+    voicingHintResponse:                         Se déplacer vers une protéine ligand‑dépendante.
+    releasedResponse:                            Relâché.
+    releasedOffMembraneResponse:                 "Relâché. { a11y.ligandNode.accessibleName } s’éloigne."
+
+    releasedOnProteinResponse:                   Relâché. Liaison réussie. La protéine s’ouvre.
+    releasedOnBusyOrIncompatibleProteinResponse: Relâché. Liaison échouée. Le ligand s’éloigne.
+    unboundResponse:                             Le ligand s’éloigne. La protéine se ferme.
+
+    movedOffMembraneResponse:                    Hors membrane.
+
+    movedAboveLigandGatedChannelResponse:        |-
+                                                 Au‑dessus de { $openOrClosed ->
+                                                 [open]   ouvert
+                                                 *[closed] fermé
+                                                 } { a11y.transportProtein.briefName } { $proteinType ->
+                                                 [sodiumIonLigandGatedChannel] Site triangle
+                                                 *[potassiumIonLigandGatedChannel]     Site étoile
+                                                 }, { $index } sur { $transportProteinCount } protéines.
+
+    movedAboveLeakageChannelResponse:            Au‑dessus de { a11y.transportProtein.briefName }, { $index } sur { $transportProteinCount } protéines.
+
+    movedAboveOtherChannelResponse:              |-
+                                                 Au‑dessus de { $openOrClosed ->
+                                                 [open]   ouvert
+                                                 *[closed] fermé
+                                                 } { a11y.transportProtein.briefName }, { $index } sur { $transportProteinCount } protéines.
+
+    grabbedResponse:                             Saisi. Hors membrane. { $proteinCount } protéines dans la membrane.
+    grabbedResponseWithHint:                     "{ a11y.ligandNode.grabbedResponse } Déplacer le ligand avec les touches A ou D. Espace pour relâcher."
+    grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Espace pour relâcher. Ajouter des protéines de transport."
+
+  membranePotentialValue: |-
+                          { $membranePotential ->
+                            [-70] moins 70
+                            [-50] moins 50
+                            *[30] plus 30
+                          } millivolts
+
+  solutes:
+    lowercaseName:            |-
+                              { $soluteType ->
+                                [oxygen]        molécules d’oxygène
+                                [carbonDioxide] molécules de dioxyde de carbone
+                                [sodiumIon]     ions sodium
+                                [potassiumIon]  ions potassium
+                                [glucose]       molécules de glucose
+                               *[atp]           molécules d’ATP
+                              }
+
+    uppercaseName:            |-
+                              { $soluteType ->
+                                [oxygen]        Molécules d’oxygène
+                                [carbonDioxide] Molécules de dioxyde de carbone
+                                [sodiumIon]     Ions sodium
+                                [potassiumIon]  Ions potassium
+                                [glucose]       Molécules de glucose
+                               *[atp]           Molécules d’ATP
+                              }
+
+    briefName:                |-
+                              { $soluteType ->
+                                [oxygen]        Oxygène
+                                [carbonDioxide] Dioxyde de carbone
+                                [sodiumIon]     Sodium
+                                [potassiumIon]  Potassium
+                                [glucose]       Glucose
+                               *[atp]           ATP
+                              }
+
+    amountComparison:         |-
+                              { $amount ->
+                                *[none]  aucun
+                                [equal] quantités exactement égales à l’extérieur et à l’intérieur
+                                [allOutside] toutes à l’extérieur, aucune à l’intérieur
+                                [allInside] toutes à l’intérieur, aucune à l’extérieur
+                                [manyManyMoreOutside] énormément plus à l’extérieur qu’à l’intérieur
+                                [manyMoreOutside] beaucoup plus à l’extérieur qu’à l’intérieur
+                                [aboutTwiceAsManyOutside] environ deux fois plus à l’extérieur qu’à l’intérieur
+                                [aLotMoreOutside] nettement plus à l’extérieur qu’à l’intérieur
+                                [someMoreOutside] un peu plus à l’extérieur qu’à l’intérieur
+                                [littleBitMoreOutside] légèrement plus à l’extérieur qu’à l’intérieur
+                                [roughlyEqualOutside] quantités à peu près égales à l’intérieur et à l’extérieur
+                                [manyManyMoreInside] énormément plus à l’intérieur qu’à l’extérieur
+                                [manyMoreInside] beaucoup plus à l’intérieur qu’à l’extérieur
+                                [aboutTwiceAsManyInside] environ deux fois plus à l’intérieur qu’à l’extérieur
+                                [aLotMoreInside] nettement plus à l’intérieur qu’à l’extérieur
+                                [someMoreInside] un peu plus à l’intérieur qu’à l’extérieur
+                                [littleBitMoreInside] légèrement plus à l’intérieur qu’à l’extérieur
+                                [roughlyEqualInside] quantités à peu près égales à l’intérieur et à l’extérieur
+                              }
+
+    averageCrossingDirection: |-
+                              { $direction ->
+                                [toOutside] vers l’extérieur
+                                [mostlyToOutside] principalement vers l’extérieur
+                                [inBothDirections] dans les deux sens
+                                [mostlyToInside] principalement vers l’intérieur
+                                [toInside] vers l’intérieur
+                                *[none] aucun récemment
+                              }
+
+  solutesPanel:
+    oxygenRadioButton:        Oxygène, O2, non polaire, petit
+    carbonDioxideRadioButton: Dioxyde de carbone, CO2, non polaire, petit
+    sodiumIonRadioButton:     Ion sodium, Na, positif, petit
+    potassiumIonRadioButton:  Ion potassium, K, positif, petit
+    glucoseRadioButton:       Glucose, anneau hexagonal, grand
+    atpRadioButton:           Adénosine triphosphate, ATP, complexe, grand
+    accessibleHelpText:       Choisir un soluté pour les Réglages de soluté.
+
+  soluteControl:
+    outside:
+      accessibleName:           "{ a11y.solutes.uppercaseName } À l’extérieur de la cellule"
+      accessibleHelpText:       Ajuster la quantité du soluté choisi à l’extérieur avec les touches fléchées ou des raccourcis clavier alternatifs.
+      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Extérieur"
+    inside:
+      accessibleName:           "{ a11y.solutes.uppercaseName } À l’intérieur de la cellule"
+      accessibleHelpText:       Ajuster la quantité du soluté choisi à l’intérieur avec les touches fléchées ou des raccourcis clavier alternatifs.
+      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Intérieur"
+    voicingHintResponse:           Ajuster le soluté choisi avec les touches fléchées ou les boutons fléchés.
+    accessibleRoleDescription:     régleur de soluté
+    accessibleHelpTextAllDisabled: Désactivé, quantité totale du soluté choisi au maximum.
+    accessibleObjectResponse:      |-
+                                   { $amount ->
+                                     [none] pas de
+                                     [few] quelques
+                                     [some] un peu de
+                                     [smallAmount] petite quantité de
+                                     [several] plusieurs
+                                     [many] beaucoup de
+                                     [largeAmount] grande quantité de
+                                     [hugeAmount] énorme quantité de
+                                    *[maxAmount] quantité maximale de
+                                   } { a11y.solutes.lowercaseName }
+    accessibleContextResponse:     |-
+                                   { $addedOrRemoved ->
+                                     [addedToMax] Ajout de {$delta}, soluté au maximum
+                                     [removedToMin] Retrait effectué
+                                     [added]  Ajout de {$delta}
+                                    *[removed] Retrait de {$delta}
+                                   }. À présent, { a11y.solutes.amountComparison }.
+    accessibleObjectResponseAtMax: soluté au maximum
+
+  soluteConcentrationsAccordionBox:
+    descriptionContent:                 Des histogrammes dynamiques montrent les comparaisons de concentration et les franchissements récents pour chaque soluté. Si nécessaire, mettez la simulation en pause pour lire les détails.
+    accessibleContextResponseExpanded:  Des histogrammes dynamiques montrent les détails des solutés.
+    accessibleContextResponseCollapsed: Histogrammes dynamiques masqués.
+    voicingHintResponseCollapsed:       Développer pour afficher des histogrammes dynamiques avec les détails des solutés.
+    barChart:
+      accessibleNameWithNoParticles:                     |-
+                                                         { a11y.solutes.uppercaseName }: aucune à l’extérieur, aucune à l’intérieur.
+      accessibleNameWithParticles:                       |-
+                                                         { a11y.solutes.uppercaseName }: { a11y.solutes.amountComparison }; franchissements { a11y.solutes.averageCrossingDirection }; { $outsideAmount ->
+                                                           [none] aucune
+                                                           [few] quelques
+                                                           [some] un peu
+                                                           [smallAmount] petite quantité
+                                                           [several] plusieurs
+                                                           [many] beaucoup
+                                                           [largeAmount] grande quantité
+                                                           [hugeAmount] énorme quantité
+                                                          *[maxAmount] quantité maximale
+                                                         } à l’extérieur, { $insideAmount ->
+                                                           [none] aucune
+                                                           [few] quelques
+                                                           [some] un peu
+                                                           [smallAmount] petite quantité
+                                                           [several] plusieurs
+                                                           [many] beaucoup
+                                                           [largeAmount] grande quantité
+                                                           [hugeAmount] énorme quantité
+                                                          *[maxAmount] quantité maximale
+                                                         } à l’intérieur.
+      glucoseMetabolism:                                 Le glucose disparaît de l’intérieur lorsqu’il est métabolisé par la cellule.
+      accessibleNameWithParticlesAndGlucoseMetabolism:   "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
+      accessibleNameWithNoParticlesAndGlucoseMetabolism: "{ a11y.soluteConcentrationsAccordionBox.barChart.accessibleNameWithNoParticles } { a11y.soluteConcentrationsAccordionBox.barChart.glucoseMetabolism }"
+
+  ligandToggleButton:
+    accessibleHelpText:               Ajouter ou retirer des ligands en forme de triangle et d’étoile à l’extérieur de la cellule.
+    addedAccessibleContextResponse:   Extérieur inondé de ligands.
+    removedAccessibleContextResponse: Ligands retirés.
+
+  cellMembrane:
+    accessibleHeading: Membrane cellulaire
+    leadingParagraph:  "La section transversale agrandie de la cellule contient :"
+    accessibleHelpText:
+      proteinsHidden:
+        noSolutes:   Voir pour ajuster les types et les quantités de soluté.
+        withSolutes: Observer les solutés qui franchissent. Voir pour ajuster les types et les quantités de soluté.
+      proteinsShown:
+        noProteins:
+          noSolutes:   Voir pour ajouter des solutés et des protéines.
+          withSolutes: Observer les solutés qui franchissent. Voir pour ajuster les solutés et les protéines.
+        withProteins:
+          noSolutes:   Voir pour ajuster les solutés et les protéines.
+          withSolutes: Observer les franchissements des solutés et les changements des protéines. Voir pour ajuster les solutés et les protéines.
+
+  transportProtein:
+    grabbedResponse:                 Saisie.
+    initialGrabbedHintResponse:      Choisissez une fente avec A ou D. Espace pour relâcher. Suppr pour enlever.
+    offMembraneResponse:             Au‑dessus de la boîte à outils, hors membrane.
+    releasedReplacedResponse:        Relâchée dans la membrane. Protéine remplacée.
+    deletedResponse:                 Protéine saisie supprimée.
+    cancelledBackToSlotResponse:     Annulé. De retour dans la membrane.
+    cancelledBackToToolboxResponse:  De retour dans la boîte à outils.
+    reorderedResponse:               Réordonnée.
+    proteinLocation:                 "dans la membrane, { $proteinIndex } sur { $proteinCount } protéines "
+    accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
+    voicingHintResponse:
+      general:                Espace pour saisir ou relâcher.
+      mouseInputFromToolbox:  Déplacer vers la membrane.
+      mouseInputFromMembrane: Réordonner ou retirer de la membrane.
+    accessibleObjectResponse:        |-
+                                     { $state ->
+                                        [openToInsideEmpty] ouvert vers l’intérieur
+                                        [openToInsideSodiumBound] ouvert vers l’intérieur
+                                        [openToInsideSodiumAndATPBound] ouvert vers l’intérieur
+                                        [openToInsideSodiumAndPhosphateBound] ouvert vers l’intérieur
+                                        [openToOutsideAwaitingPotassium] ouvert vers l’extérieur
+                                        [openToOutsidePotassiumBound] ouvert vers l’extérieur
+                                        [openToOutsideAwaitingParticles] ouvert vers l’extérieur 
+                                        [openToOutsideAllParticlesBound] ouvert vers l’extérieur
+                                        [openToInside] ouvert vers l’intérieur
+                                        [closedNegative70mV] fermé
+                                        [openNegative50mV] ouvert 
+                                        [closed30mV] fermé
+                                        [closedNegative50mV] fermé
+                                        [open30mV] ouvert
+                                        [ligandBoundClosed] fermé
+                                        [ligandBoundOpen] ouvert
+                                        [ligandUnboundOpen] ouvert
+                                        [closed] fermé
+                                        *[open] ouvert 
+                                     }
+
+    accessibleParagraph:             |-
+                                     { $state ->
+                                        [openToInsideEmpty] En attente de sodium, ouvert vers l’intérieur
+                                        [openToInsideSodiumBound] 3 ions sodium liés, en attente de phosphate, ouvert vers l’intérieur
+                                        [openToInsideSodiumAndATPBound] L’ATP réagit, phosphate lié, pompe 3 sodium vers l’extérieur, ouvert vers l’intérieur
+                                        [openToInsideSodiumAndPhosphateBound] Phosphate lié, pompe 3 sodium vers l’extérieur, ouvert vers l’intérieur
+                                        [openToOutsideAwaitingPotassium] En attente de potassium, phosphate lié, ouvert vers l’extérieur
+                                        [openToOutsidePotassiumBound] Le phosphate s’éloigne, pompe 2 potassium vers l’intérieur, ouvert vers l’extérieur
+                                        [openToOutsideAwaitingParticles] { $warning ->
+                                          [shown] Avertissement, sodium extérieur trop faible pour la liaison, ouvert vers l’extérieur
+                                          *[hidden] En attente de sodium et de glucose, ouvert vers l’extérieur
+                                        }
+                                        [openToOutsideAllParticlesBound] Sodium et glucose liés, ouvert vers l’extérieur
+                                        [openToInside] Pompe le sodium et le glucose vers l’intérieur, ouvert vers l’intérieur
+                                        [ligandBoundClosed] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Liaison de ligand triangle, canal en ouverture
+                                          *[potassiumIonLigandGatedChannel] Liaison de ligand étoile, canal en ouverture
+                                        }
+                                        [ligandBoundOpen] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Canal ouvert avec ligand triangle lié
+                                          *[potassiumIonLigandGatedChannel] Canal ouvert avec ligand étoile lié
+                                        }
+                                        [ligandUnboundOpen] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Le ligand triangle s’éloigne, canal en fermeture 
+                                          *[potassiumIonLigandGatedChannel] Le ligand étoile s’éloigne, canal en fermeture
+                                        }
+                                        [closed] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Canal fermé, aucun ligand triangle lié
+                                          *[potassiumIonLigandGatedChannel] Canal fermé, aucun ligand étoile lié
+                                        }
+                                        [closedNegative70mV] Canal fermé à -70 mV
+                                        [openNegative50mV] Canal ouvert à -50 mV
+                                        [closed30mV] Canal fermé à 30 mV
+                                        [closedNegative50mV] Canal fermé à -50 mV
+                                        [open30mV] Canal ouvert à 30 mV
+                                        *[open] Canal ouvert
+                                     }.
+
+    accessibleContextResponse:       |-
+                                     { $state ->
+                                        [openToInsideEmpty] Le phosphate s’éloigne, pompe 2 potassium vers l’intérieur
+                                        [openToInsideSodiumAndATPBound] L’ATP réagit, le phosphate se lie, pompe 3 sodium vers l’extérieur
+                                        *[openToInside] { $glucoseBehavior ->
+                                          [metabolized] Navette 2 sodium et un glucose vers l’intérieur, le glucose navetté est métabolisé
+                                          *[persistent] Navette 2 sodium et un glucose vers l’intérieur
+                                        }
+                                        [ligandBoundOpen] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Ligand triangle lié, ouvert
+                                          *[potassiumIonLigandGatedChannel] Ligand étoile lié, ouvert
+                                        }
+                                        [closed] { $proteinType ->
+                                          [sodiumIonLigandGatedChannel] Le ligand triangle s’éloigne, fermé
+                                          *[potassiumIonLigandGatedChannel] Le ligand étoile s’éloigne, fermé
+                                        }
+                                     }.
+
+    accessibleNameMoving:            Fente { $slotIndex } sur { $slotCount }
+    accessibleObjectResponseMoving:  au‑dessus de { $slotContents }
+    accessibleNameAndObjectResponse: "{ $nameResponse }, { $objectResponse }"
+    empty:                           fente vide
+    briefName:                       |-
+                                     { $type ->
+                                       [sodiumIonLeakageChannel]         Sélectif au sodium, fuite
+                                       [potassiumIonLeakageChannel]      Sélectif au potassium, fuite
+                                       [sodiumIonVoltageGatedChannel]    Sélectif au sodium, voltage‑dépendant
+                                       [potassiumIonVoltageGatedChannel] Sélectif au potassium, voltage‑dépendant
+                                       [sodiumIonLigandGatedChannel]     Sélectif au sodium, ligand‑dépendant
+                                       [potassiumIonLigandGatedChannel]  Sélectif au potassium, ligand‑dépendant
+                                       [sodiumPotassiumPump]             Pompe sodium‑potassium
+                                      *[sodiumGlucoseCotransporter]      Cotransporteur sodium‑glucose
+                                     }
+
+  membranePotential:
+    sodiumVoltageGatedOpenedResponse:    Sélectif au sodium, voltage‑dépendant, ouvert.
+    sodiumVoltageGatedClosedResponse:    Sélectif au sodium, voltage‑dépendant, fermé.
+    potassiumVoltageGatedOpenedResponse: Sélectif au potassium, voltage‑dépendant, ouvert.
+    potassiumVoltageGatedClosedResponse: Sélectif au potassium, voltage‑dépendant, fermé.
+    sodiumOpenedPotassiumOpenedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedOpenedResponse }"
+    sodiumOpenedPotassiumClosedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedClosedResponse }"
+    sodiumClosedPotassiumOpenedResponse: "{ a11y.membranePotential.potassiumVoltageGatedOpenedResponse } { a11y.membranePotential.sodiumVoltageGatedClosedResponse } "
+    sodiumClosedPotassiumClosedResponse: "Canaux voltage‑dépendants fermés."
+    noChangeResponse:                    Aucun changement des protéines de transport.
+
+  keyboardHelp:
+    soluteAdjusters:
+      addOrRemoveALotDescription:    Ajuster la quantité du soluté choisi avec les flèches gauche/droite ou les touches A et D.
+      addOrRemoveALittleDescription: Ajuster par petites quantités avec Maj + flèches gauche/droite ou Maj + A et D.
+    transportProteinsAndLigands:
+      navigateDescription:        Parcourir les protéines dans la boîte à outils ou les ligands ajoutés avec Tab.
+      grabOrReleaseDescription:   Saisir ou relâcher avec Espace ou Entrée.
+      moveGrabbedItemDescription: Déplacer la protéine ou le ligand saisi entre les emplacements de dépôt disponibles avec les flèches gauche/droite ou A et D.
+      cancelGrabDescription:      Annuler la saisie ou le déplacement avec Échap.
+    sortOrDeleteProteins:
+      navigateProteinsDescription:   Parcourir les protéines dans la membrane avec les flèches gauche/droite ou A et D.
+      grabProteinDescription:        Saisir une protéine dans la membrane avec Espace ou Entrée.
+      moveGrabbedProteinDescription: Déplacer la protéine saisie entre les fentes avec les flèches gauche/droite ou A et D.
+      releaseProteinDescription:     Relâcher la protéine saisie dans une fente vide ou permuter avec Espace ou Entrée.
+      deleteProteinDescription:      Supprimer la protéine saisie avec Retour arrière ou Supprimer.
+
+  membraneTransportDescriber:
+    particleCrossing:                            |-
+                                                 { a11y.solutes.briefName } franchit { $direction ->
+                                                   [inward] vers l’intérieur
+                                                  *[outward] vers l’extérieur
+                                                 }
+    hints:
+      ligandGatedChannelWithoutLigands:               Protéine ligand‑dépendante fermée. Chercher des ligands
+      voltageGatedChannelAtRestingPotential:          Protéine voltage‑dépendante fermée. Vérifier le potentiel de membrane
+      pumpAwaitingPhosphateWithoutATP:                La pompe a besoin d’une source de phosphate
+      sodiumGlucoseCotransporterWithLowOutsideSodium: Le cotransporteur ne lie pas le sodium. Sodium extérieur trop faible
+    commaSeparator:                              ", "
+    andSeparator:                                " et "
+    sentencePattern:                             "{ $content }."
+    crossingSteadilyInBothDirections:            "{ a11y.solutes.briefName } franchit régulièrement dans les deux sens, chaque côté à peu près égal"
+    crossingChannelsWithDirection:               "{ a11y.solutes.briefName } franchit les canaux, { a11y.solutes.averageCrossingDirection }"
+    crossingMembraneWithDirection:               "{ a11y.solutes.briefName } franchit la membrane, { a11y.solutes.averageCrossingDirection }"
+    multipleSolutesCrossing:                     "{ $soluteNames }, franchissent"
+    soluteComparisonWithName:                    "{ a11y.solutes.briefName }, { a11y.solutes.amountComparison }"
+    sodiumPumpedOutside:                         sodium pompé vers l’extérieur
+    potassiumPumpedInside:                       potassium pompé vers l’intérieur
+    sodiumPumpedOutsideAndPotassiumPumpedInside: sodium pompé vers l’extérieur et potassium pompé vers l’intérieur
+    sodiumAndGlucoseShuttledInside:              sodium et glucose navettés vers l’intérieur
+
+  preferencesDialog:
+    simulation:
+      animateLipids:
+        accessibleContextResponseLeftValue:  Animation des lipides désactivée.
+        accessibleContextResponseRightValue: Animation des lipides activée.
+      glucoseMetabolism:
+        accessibleContextResponseLeftValue:  Métabolisme du glucose désactivé.
+        accessibleContextResponseRightValue: Métabolisme du glucose activé.
+    audio:
+      sounds:
+        stereoCrossingSounds:
+          accessibleContextResponseLeftValue:  Sons stéréo de franchissement désactivés.
+          accessibleContextResponseRightValue: Sons stéréo de franchissement activés.
+
