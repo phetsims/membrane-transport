@@ -220,6 +220,8 @@ type StringsType = {
       'grabbedResponseWithHintStringProperty': LocalizedStringProperty;
       'grabbedResponseWithEmptyMembraneHintStringProperty': LocalizedStringProperty;
     };
+    'sortableStringProperty': LocalizedStringProperty;
+    'navigableStringProperty': LocalizedStringProperty;
     'membranePotentialValueStringProperty': LocalizedStringProperty;
     'solutes': {
       'lowercaseNameStringProperty': LocalizedStringProperty;
@@ -272,6 +274,9 @@ type StringsType = {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'addedAccessibleContextResponseStringProperty': LocalizedStringProperty;
       'removedAccessibleContextResponseStringProperty': LocalizedStringProperty;
+    };
+    'observationWindow': {
+      'accessibleHeadingStringProperty': LocalizedStringProperty;
     };
     'cellMembrane': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;

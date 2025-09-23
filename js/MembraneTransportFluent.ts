@@ -150,6 +150,8 @@ addToMapIfDefined( 'a11y_ligandNode_movedAboveOtherChannelResponse', 'a11y.ligan
 addToMapIfDefined( 'a11y_ligandNode_grabbedResponse', 'a11y.ligandNode.grabbedResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_grabbedResponseWithHint', 'a11y.ligandNode.grabbedResponseWithHintStringProperty' );
 addToMapIfDefined( 'a11y_ligandNode_grabbedResponseWithEmptyMembraneHint', 'a11y.ligandNode.grabbedResponseWithEmptyMembraneHintStringProperty' );
+addToMapIfDefined( 'a11y_sortable', 'a11y.sortableStringProperty' );
+addToMapIfDefined( 'a11y_navigable', 'a11y.navigableStringProperty' );
 addToMapIfDefined( 'a11y_membranePotentialValue', 'a11y.membranePotentialValueStringProperty' );
 addToMapIfDefined( 'a11y_solutes_lowercaseName', 'a11y.solutes.lowercaseNameStringProperty' );
 addToMapIfDefined( 'a11y_solutes_uppercaseName', 'a11y.solutes.uppercaseNameStringProperty' );
@@ -187,6 +189,7 @@ addToMapIfDefined( 'a11y_soluteConcentrationsAccordionBox_barChart_accessibleNam
 addToMapIfDefined( 'a11y_ligandToggleButton_accessibleHelpText', 'a11y.ligandToggleButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButton_addedAccessibleContextResponse', 'a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_ligandToggleButton_removedAccessibleContextResponse', 'a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_observationWindow_accessibleHeading', 'a11y.observationWindow.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_cellMembrane_accessibleHeading', 'a11y.cellMembrane.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_cellMembrane_leadingParagraph', 'a11y.cellMembrane.leadingParagraphStringProperty' );
 addToMapIfDefined( 'a11y_cellMembrane_accessibleHelpText_proteinsHidden_noSolutes', 'a11y.cellMembrane.accessibleHelpText.proteinsHidden.noSolutesStringProperty' );
@@ -543,6 +546,8 @@ const MembraneTransportFluent = {
       grabbedResponseWithHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithHintStringProperty' ), [{"name":"proteinCount"}] ),
       grabbedResponseWithEmptyMembraneHint: new FluentPattern<{ proteinCount: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_ligandNode_grabbedResponseWithEmptyMembraneHint', _.get( MembraneTransportStrings, 'a11y.ligandNode.grabbedResponseWithEmptyMembraneHintStringProperty' ), [{"name":"proteinCount"}] )
     },
+    sortableStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_sortable', _.get( MembraneTransportStrings, 'a11y.sortableStringProperty' ) ),
+    navigableStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_navigable', _.get( MembraneTransportStrings, 'a11y.navigableStringProperty' ) ),
     _comment_4: new FluentComment( {"comment":"The membrane potential value, used in various places.","associatedKey":"membranePotentialValue"} ),
     membranePotentialValue: new FluentPattern<{ membranePotential: -70 | -50 | 30 | TReadOnlyProperty<-70 | -50 | 30> }>( fluentSupport.bundleProperty, 'a11y_membranePotentialValue', _.get( MembraneTransportStrings, 'a11y.membranePotentialValueStringProperty' ), [{"name":"membranePotential","variants":[-70,-50,30]}] ),
     _comment_5: new FluentComment( {"comment":"Solutes","associatedKey":"solutes"} ),
@@ -621,6 +626,9 @@ const MembraneTransportFluent = {
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_accessibleHelpText', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.accessibleHelpTextStringProperty' ) ),
       addedAccessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_addedAccessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.addedAccessibleContextResponseStringProperty' ) ),
       removedAccessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_ligandToggleButton_removedAccessibleContextResponse', _.get( MembraneTransportStrings, 'a11y.ligandToggleButton.removedAccessibleContextResponseStringProperty' ) )
+    },
+    observationWindow: {
+      accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_observationWindow_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.observationWindow.accessibleHeadingStringProperty' ) )
     },
     cellMembrane: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_cellMembrane_accessibleHeading', _.get( MembraneTransportStrings, 'a11y.cellMembrane.accessibleHeadingStringProperty' ) ),

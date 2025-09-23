@@ -449,6 +449,12 @@
         "value": "{ a11y_ligandNode_grabbedResponse } Space to release. Add transport proteins."
       }
     },
+    "sortable": {
+      "value": "sortable"
+    },
+    "navigable": {
+      "value": "navigable"
+    },
     "membranePotentialValue": {
       "value": "{ $membranePotential ->\n  [-70] negative 70\n  [-50] negative 50\n  *[30] positive 30\n} millivolts"
     },
@@ -574,6 +580,11 @@
       },
       "removedAccessibleContextResponse": {
         "value": "Ligands removed."
+      }
+    },
+    "observationWindow": {
+      "accessibleHeading": {
+        "value": "Observation Window"
       }
     },
     "cellMembrane": {

@@ -68,7 +68,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
       this.addDisposable( accessibleParagraphStringProperty, showWarningProperty );
 
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleInteractiveOptions, {
-        accessibleRoleDescription: 'navigable',
+        accessibleRoleDescription: MembraneTransportFluent.a11y.navigableStringProperty,
 
         // Use descriptionContent instead of accessibleParagraph, because changing the accessibleParagraph causes a full
         // re-render of the DOM elements, forcing the screen reader to re-read the accessibleName again while this
