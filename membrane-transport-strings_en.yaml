@@ -246,6 +246,8 @@ a11y:
     grabbedResponseWithHint:                     "{ a11y.ligandNode.grabbedResponse } Move ligand with A or D keys. Space to release."
     grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Space to release. Add transport proteins."
 
+  sortable:               sortable
+  navigable:              navigable
 
   # The membrane potential value, used in various places.
   membranePotentialValue: |-
@@ -370,7 +372,7 @@ a11y:
 
     # A response that is spoken when the solute count is already at the maximum
     # and the user tries to add more. It makes it clear that nothing is changing.
-    accessibleObjectResponseAtMax: 'solute at max'
+    accessibleObjectResponseAtMax: solute at max
 
   soluteConcentrationsAccordionBox:
     descriptionContent:                 Dynamic bar charts show concentration comparisons and recent crossings for each solute. If needed, pause sim to read details.
@@ -414,6 +416,9 @@ a11y:
     accessibleHelpText:               Add or remove triangle- and star-shaped ligands to outside of cell.
     addedAccessibleContextResponse:   Outside flooded with ligands.
     removedAccessibleContextResponse: Ligands removed.
+
+  observationWindow:
+    accessibleHeading: Observation Window
 
   cellMembrane:
     accessibleHeading: Cell Membrane

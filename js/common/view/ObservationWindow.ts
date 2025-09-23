@@ -9,7 +9,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -73,7 +72,7 @@ export default class ObservationWindow extends Node {
 
     super( {
       children: [ clipNode, frameNode ],
-      accessibleHeading: new StringProperty( 'Observation Window' ) // Possibly call this the observation window?
+      accessibleHeading: MembraneTransportFluent.a11y.observationWindow.accessibleHeadingStringProperty
     } );
 
     // first, we will have a background canvas layer for the performance intensive parts

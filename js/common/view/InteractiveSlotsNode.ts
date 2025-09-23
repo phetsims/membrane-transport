@@ -718,7 +718,7 @@ class InteractiveSlotRectangle extends Rectangle {
     providedOptions?: RectangleOptions
   ) {
     const options = combineOptions<RectangleOptions>( {}, AccessibleInteractiveOptions, {
-      accessibleRoleDescription: 'sortable'
+      accessibleRoleDescription: MembraneTransportFluent.a11y.sortableStringProperty
     }, providedOptions );
     super( options );
 
