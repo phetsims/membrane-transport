@@ -248,6 +248,9 @@ a11y:
     grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Barra espaciadora para soltar. Agrega proteínas de transporte."
 
 
+  sortable:               ordenable
+  navigable:              navegable
+
   # El valor del potencial de membrana, usado en varios lugares.
   membranePotentialValue: |-
                           { $membranePotential ->
@@ -415,6 +418,9 @@ a11y:
     accessibleHelpText:               Agrega o quita ligandos con forma de triángulo y estrella en el exterior de la célula.
     addedAccessibleContextResponse:   El exterior se inundó de ligandos.
     removedAccessibleContextResponse: Ligandos eliminados.
+
+  observationWindow:
+    accessibleHeading: Ventana de observación
 
   cellMembrane:
     accessibleHeading: Membrana celular
@@ -630,7 +636,7 @@ a11y:
       ligandGatedChannelWithoutLigands:               Proteína regulada por ligando cerrada. Busca ligandos
       voltageGatedChannelAtRestingPotential:          Proteína regulada por voltaje cerrada. Revisa el potencial de membrana
       pumpAwaitingPhosphateWithoutATP:                La bomba necesita una fuente de fosfato
-      sodiumGlucoseCotransporterWithLowOutsideSodium: El cotransportador no une sodio. Sodio exterior demasiado bajo.
+      sodiumGlucoseCotransporterWithLowOutsideSodium: El cotransportador no une sodio. Sodio exterior demasiado bajo
 
     # Separadores de mensajes. Frecuentemente se combinan varias piezas de información en un solo mensaje y
     # estos se usan para separarlas.

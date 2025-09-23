@@ -221,6 +221,10 @@ a11y:
     grabbedResponseWithHint:                     "{ a11y.ligandNode.grabbedResponse } Déplacer le ligand avec les touches A ou D. Espace pour relâcher."
     grabbedResponseWithEmptyMembraneHint:        "{ a11y.ligandNode.grabbedResponse } Espace pour relâcher. Ajouter des protéines de transport."
 
+
+  sortable:               triable
+  navigable:              navigable
+
   membranePotentialValue: |-
                           { $membranePotential ->
                             [-70] moins 70
@@ -371,6 +375,9 @@ a11y:
     accessibleHelpText:               Ajouter ou retirer des ligands en forme de triangle et d’étoile à l’extérieur de la cellule.
     addedAccessibleContextResponse:   Extérieur inondé de ligands.
     removedAccessibleContextResponse: Ligands retirés.
+
+  observationWindow:
+    accessibleHeading: Fenêtre d’observation
 
   cellMembrane:
     accessibleHeading: Membrane cellulaire
@@ -561,4 +568,3 @@ a11y:
         stereoCrossingSounds:
           accessibleContextResponseLeftValue:  Sons stéréo de franchissement désactivés.
           accessibleContextResponseRightValue: Sons stéréo de franchissement activés.
-
