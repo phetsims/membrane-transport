@@ -13,6 +13,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -161,22 +162,30 @@ export default class ObservationWindow extends Node {
     const hintText = new Text( MembraneTransportFluent.outsideSodiumTooLowStringProperty, {
       font: MembraneTransportConstants.FONT
     } );
-    const hintPanel = new Panel( new HBox( {
-      spacing: 5,
-      children: [
-        new ExclamationMarkNode( {
 
-          // Bigger than the text so it looks more close to the size of the icon in the protein
-          maxHeight: hintText.height + 10
-        } ),
-        hintText
-      ]
-    } ), {
-      xMargin: 10,
-      yMargin: 0,
-      stroke: null,
-      fill: 'rgba( 255, 255, 255, 0.85 )',
-      cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS,
+    const hintPanel = new ReadingBlockNode( {
+      readingBlockNameResponse: MembraneTransportFluent.outsideSodiumTooLowStringProperty,
+      children: [
+        new Panel( new HBox( {
+          spacing: 5,
+          children: [
+            new ExclamationMarkNode( {
+
+              // Bigger than the text so it looks more close to the size of the icon in the protein
+              maxHeight: hintText.height + 10
+            } ),
+            hintText
+          ]
+        } ), {
+          xMargin: 10,
+          yMargin: 0,
+          stroke: null,
+          fill: 'rgba( 255, 255, 255, 0.85 )',
+          cornerRadius: MembraneTransportConstants.PANEL_CORNER_RADIUS
+        } )
+      ],
+
+      // VisibleProperty on the ReadingBlockNode (instead of children) so that it cannot receive input when invisible.
       visibleProperty: DerivedProperty.and( [ model.lessSodiumOutsideThanInsideProperty, model.hasSodiumGlucoseCotransporterProperty ] )
     } );
 
@@ -253,4 +262,5 @@ export default class ObservationWindow extends Node {
     } );
   }
 }
+
 membraneTransport.register( 'ObservationWindow', ObservationWindow );
