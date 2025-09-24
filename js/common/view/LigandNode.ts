@@ -31,6 +31,7 @@ import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import { AriaLive } from '../../../../utterance-queue/js/AriaLiveAnnouncer.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
@@ -79,6 +80,12 @@ export default class LigandNode extends VoicingNode {
 
     // A longer delay to prevent this content from being spoken too frequently.
     alertStableDelay: 500,
+
+    // All responses from the ligand are due to user interactions and we want them to interrupt
+    // stale responses. See https://github.com/phetsims/membrane-transport/issues/491.
+    announcerOptions: {
+      ariaLivePriority: AriaLive.ASSERTIVE
+    },
 
     // This utterance is not registered to a Node, and so it will always be spoken.
     voicingCanAnnounceProperties: [ new Property( true ) ]
