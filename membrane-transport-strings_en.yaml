@@ -634,8 +634,8 @@ a11y:
     
     # Message separators. Multiple pieces of information are often combined into a single message and
     # these are used to separate them.
-    commaSeparator:                              ", "
-    andSeparator:                                " and "
+    commaSeparator:                              ","
+    andSeparator:                                and
 
     # After assembling content with separators, it sometimes needs to be wrapped in a sentence.
     sentencePattern:                             "{ $content }."

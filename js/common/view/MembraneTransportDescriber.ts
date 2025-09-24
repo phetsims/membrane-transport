@@ -337,7 +337,7 @@ export default class MembraneTransportDescriber {
     }
 
     // Combine contents
-    const hints = hintDescriptions.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+    const hints = MembraneTransportDescriber.joinComma( hintDescriptions );
     return MembraneTransportFluent.a11y.membraneTransportDescriber.sentencePattern.format( {
       content: hints
     } );
@@ -574,9 +574,10 @@ export default class MembraneTransportDescriber {
       // Many solutes are moving across so we have a general description of everything happening.
       const solutesThatWeShouldDescribe = solutesThatCrossed.filter( isSoluteCrossingDescribable );
       if ( solutesThatWeShouldDescribe.length > 0 ) {
-        const soluteNames = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.solutes.briefName.format( {
+        const soluteNameList = solutesThatWeShouldDescribe.map( soluteType => MembraneTransportFluent.a11y.solutes.briefName.format( {
           soluteType: soluteType
-        } ) ).join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+        } ) );
+        const soluteNames = MembraneTransportDescriber.joinComma( soluteNameList );
         descriptionParts.push( MembraneTransportFluent.a11y.membraneTransportDescriber.multipleSolutesCrossing.format( {
           soluteNames: soluteNames
         } ) );
@@ -603,7 +604,7 @@ export default class MembraneTransportDescriber {
 
     // First, Combine the event descriptions.
     if ( descriptionParts.length > 0 ) {
-      const firstPart = descriptionParts.join( MembraneTransportFluent.a11y.membraneTransportDescriber.andSeparatorStringProperty.value );
+      const firstPart = MembraneTransportDescriber.joinAnd( descriptionParts );
       const capitalized = firstPart.charAt( 0 ).toUpperCase() + firstPart.slice( 1 );
       responses.push( capitalized );
     }
@@ -652,7 +653,7 @@ export default class MembraneTransportDescriber {
     } );
 
     // Join all fragments together.
-    const statement = responses.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+    const statement = MembraneTransportDescriber.joinComma( responses );
 
     // Add a period at the end of the statement.
     return statement ? MembraneTransportFluent.a11y.membraneTransportDescriber.sentencePattern.format( {
@@ -703,7 +704,7 @@ export default class MembraneTransportDescriber {
         }
       }
     } );
-    return changedComparisons.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+    return MembraneTransportDescriber.joinComma( changedComparisons );
   }
 
   /**
@@ -727,7 +728,7 @@ export default class MembraneTransportDescriber {
       }
     } );
 
-    return changedSteadyStates.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value );
+    return MembraneTransportDescriber.joinComma( changedSteadyStates );
   }
 
   /**
@@ -903,6 +904,20 @@ export default class MembraneTransportDescriber {
    */
   public static createQualitativeAmountDescriptorProperty( countProperty: TReadOnlyProperty<number> ): TReadOnlyProperty<SoluteQualitativeAmountDescriptor> {
     return new DerivedProperty( [ countProperty ], MembraneTransportDescriber.getSoluteQualitativeAmountDescriptor );
+  }
+
+  /**
+   * Join the strings with the provided separator, adding a space after it.
+   */
+  private static joinComma( parts: string[] ): string {
+    return parts.join( MembraneTransportFluent.a11y.membraneTransportDescriber.commaSeparatorStringProperty.value + ' ' );
+  }
+
+  /**
+   * Join the strings with 'and', adding a space before and after it.
+   */
+  private static joinAnd( parts: string[] ): string {
+    return parts.join( ' ' + MembraneTransportFluent.a11y.membraneTransportDescriber.andSeparatorStringProperty.value + ' ' );
   }
 }
 

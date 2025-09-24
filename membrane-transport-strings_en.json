@@ -768,10 +768,10 @@
         }
       },
       "commaSeparator": {
-        "value": ", "
+        "value": ","
       },
       "andSeparator": {
-        "value": " and "
+        "value": "and"
       },
       "sentencePattern": {
         "value": "{ $content }."
