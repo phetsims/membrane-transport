@@ -29,7 +29,8 @@ export default class MembraneTransportPreferences {
   // When true, sound effects that use stereo panning will be played.
   public readonly stereoCrossingSoundsEnabledProperty = new BooleanProperty( MembraneTransportQueryParameters.stereoCrossings, {
     tandem: Tandem.PREFERENCES.createTandem( 'stereoCrossingSoundsEnabledProperty' ),
-    phetioFeatured: true
+    phetioFeatured: true,
+    phetioState: false // Even though it is a sim-specific preference, this setting appears in the "Audio" tab of the preferences dialog, and is hence not phet-io stateful. See https://github.com/phetsims/membrane-transport/issues/494
   } );
 
   public static readonly instance = new MembraneTransportPreferences();
