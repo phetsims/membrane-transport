@@ -90,6 +90,26 @@ export default class LigandNode extends VoicingNode {
     // This utterance is not registered to a Node, and so it will always be spoken.
     voicingCanAnnounceProperties: [ new Property( true ) ]
   } );
+
+  // A polite utterance for releases, so that we hear it after the new name of the ligand as it changes from
+  // the grab drag interaction. This is necessary because of a VoiceOver bug, see
+  // https://bugs.webkit.org/show_bug.cgi?id=291748
+  private readonly releaseUtterance = new Utterance( {
+
+    // A longer delay to prevent this content from being spoken too frequently.
+    alertStableDelay: 500,
+
+    // All responses from the ligand are due to user interactions and we want them to interrupt
+    // stale responses. See https://github.com/phetsims/membrane-transport/issues/491.
+    announcerOptions: {
+      ariaLivePriority: AriaLive.POLITE
+    },
+
+    // This utterance is not registered to a Node, and so it will always be spoken.
+    voicingCanAnnounceProperties: [ new Property( true ) ]
+  } );
+
+
   private readonly alerter: Alerter;
 
   public constructor(
@@ -440,13 +460,13 @@ export default class LigandNode extends VoicingNode {
               affirm( this.initialPositionBeforeGrab, 'initialPositionBeforeGrab should be set before the listener fires.' );
               this.ligand.position.set( this.initialPositionBeforeGrab );
 
-              this.alert( MembraneTransportFluent.a11y.ligandNode.releasedResponseStringProperty );
+              this.alertRelease( MembraneTransportFluent.a11y.ligandNode.releasedResponseStringProperty );
             }
             else if ( this.currentTargetSlotIndex === OFF_MEMBRANE_SLOT_INDEX ) {
 
               // Drop off membrane: Use calculated position above "slot 8"
               this.ligand.position.set( this.getOffMembraneDropPosition() );
-              this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponse.format( { ligandType: this.ligand.ligandType } ) );
+              this.alertRelease( MembraneTransportFluent.a11y.ligandNode.releasedOffMembraneResponse.format( { ligandType: this.ligand.ligandType } ) );
             }
             else {
 
@@ -464,18 +484,18 @@ export default class LigandNode extends VoicingNode {
 
                   // Allow immediate binding attempt by model
                   protein.clearRebindingCooldown();
-                  this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOnProteinResponseStringProperty );
+                  this.alertRelease( MembraneTransportFluent.a11y.ligandNode.releasedOnProteinResponseStringProperty );
                   this.ligand.manuallyBound = true;
                 }
                 else {
-                  this.alert( MembraneTransportFluent.a11y.ligandNode.releasedOnBusyOrIncompatibleProteinResponseStringProperty );
+                  this.alertRelease( MembraneTransportFluent.a11y.ligandNode.releasedOnBusyOrIncompatibleProteinResponseStringProperty );
                 }
               }
               else {
 
                 // Incompatible drop (wrong LGC, non-LGC, or empty slot)
                 // Ligand mode is already set to random walk, starting from the dropPosition.
-                this.alert( MembraneTransportFluent.a11y.ligandNode.releasedResponseStringProperty );
+                this.alertRelease( MembraneTransportFluent.a11y.ligandNode.releasedResponseStringProperty );
               }
             }
 
@@ -624,6 +644,14 @@ export default class LigandNode extends VoicingNode {
   private alert( message: AlertableNoUtterance ): void {
     this.utterance.alert = message;
     this.alerter.alert( this.utterance );
+  }
+
+  /**
+   * Alert for all of the release cases.
+   */
+  private alertRelease( message: AlertableNoUtterance ): void {
+    this.releaseUtterance.alert = message;
+    this.alerter.alert( this.releaseUtterance );
   }
 
   /**
