@@ -163,7 +163,7 @@ a11y:
       accessibleContextResponseUnchecked: Sonidos de cruce de solutos desactivados.
   transportProteinToolbox:
     accessibleHeading:  Caja de herramientas de proteínas de transporte
-    accessibleHelpText: Busca proteínas para tomar. Una vez tomada, usa accesos de teclado para soltarla en una ranura de la membrana. Tómala de nuevo desde la membrana para ordenar o eliminar.
+    accessibleHelpText: Busca proteínas para tomar. Una vez tomada, usa atajos de teclado para soltarla en una ranura de la membrana. Tómala de nuevo desde la membrana para ordenar o eliminar.
     ligandGatedChannelPanel:
       sodiumIonNaPlusLigandGated:   Tomar Selectiva para sodio, regulada por ligando
       potassiumIonKPlusLigandGated: Tomar Selectiva para potasio, regulada por ligando
@@ -337,7 +337,7 @@ a11y:
     atpRadioButton:           Adenosina trifosfato, ATP, complejo, grande
 
     # Texto de ayuda accesible para el grupo de botones de opción. El nombre accesible viene del nombre visual.
-    accessibleHelpText:       Elige un soluto para los Ajustadores de solutos.
+    accessibleHelpText:       Elige un soluto para los ajustadores de solutos.
 
   soluteControl:
     outside:
