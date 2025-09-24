@@ -341,13 +341,13 @@ a11y:
 
   soluteControl:
     outside:
-      accessibleName:           "{ a11y.solutes.uppercaseName } Exterior de la célula"
+      accessibleName:           "{ a11y.solutes.uppercaseName } exterior de la célula"
       accessibleHelpText:       Ajusta la cantidad del soluto elegido en el exterior con las flechas u otros atajos de teclado.
-      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Exterior"
+      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, exterior"
     inside:
-      accessibleName:           "{ a11y.solutes.uppercaseName } Interior de la célula"
+      accessibleName:           "{ a11y.solutes.uppercaseName } interior de la célula"
       accessibleHelpText:       Ajusta la cantidad del soluto elegido en el interior con las flechas u otros atajos de teclado.
-      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, Interior"
+      readingBlockNameResponse: "{ a11y.soluteControl.accessibleObjectResponse }, interior"
     voicingHintResponse:           Ajusta el soluto elegido con las flechas o los botones de flecha.
     accessibleRoleDescription:     ajustador de soluto
     accessibleHelpTextAllDisabled: Deshabilitado, el total del soluto elegido está en la cantidad máxima.
