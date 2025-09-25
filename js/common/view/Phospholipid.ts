@@ -92,6 +92,9 @@ export default class Phospholipid {
       anchorY: anchorY,
       controlPoints: createControlPoints( anchorXRight, anchorY )
     } );
+
+    // Initialize to a plausible articulated pose so we don't need a burn-in of frames.
+    this.randomizeInitialArticulation();
   }
 
   /**
@@ -229,6 +232,37 @@ export default class Phospholipid {
         }
       }
     }
+  }
+
+  /**
+   * Set an initial articulated shape that approximates the long-run distribution of the random walk in step().
+   *
+   * Heuristics used:
+   * - Sample headOffsetX from a symmetric triangular distribution within [-HEAD_WINDOW_SIZE, HEAD_WINDOW_SIZE].
+   * - Sample each tail control point independently, from a symmetric triangular distribution within
+   *   [anchorX - tailWindowSize, anchorX + tailWindowSize]. This mirrors the steady-state spread produced by the
+   *   clamped random walk with friction, without correlating across points (which step() does not impose either).
+   * - Initialize velocities to 0 so the first visible frame is stable.
+   */
+  private randomizeInitialArticulation(): void {
+
+    // Head horizontal wander
+    this.headOffsetX = Phospholipid.triSymmetric( HEAD_WINDOW_SIZE );
+    this.headVx = 0;
+
+    // Tail control points
+    for ( const state of this.tailStates ) {
+      for ( const cp of state.controlPoints ) {
+        const offset = Phospholipid.triSymmetric( tailWindowSize * 2 ); // in [-tailWindowSize, tailWindowSize]
+        cp.x = state.anchorX + offset;
+        cp.vx = 0;
+      }
+    }
+  }
+
+  // Symmetric triangular distribution on [-width, width] using the difference of two uniforms.
+  private static triSymmetric( width: number ): number {
+    return dotRandom.nextDoubleBetween( -width, width );
   }
 }
 
