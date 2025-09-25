@@ -74,6 +74,7 @@ export default class LigandNode extends VoicingNode {
   private isKeyboardGrabbed = false;
   private currentTargetSlotIndex: number | null = null; // 0 to SLOT_COUNT-1 for slots, SLOT_COUNT for off-membrane, null if not targeted
   private initialPositionBeforeGrab: Vector2 | null = null;
+  private readonly grabDragInteraction: GrabDragInteraction | null = null;
 
   public readonly resetEmitter = new Emitter();
 
@@ -211,9 +212,17 @@ export default class LigandNode extends VoicingNode {
 
         ligandInteractionCueVisibleProperty.value = false;
 
-        // Prevent interaction if grabbed by keyboard
+        // If currently keyboard-grabbed, hand off to pointer input.
         if ( this.isKeyboardGrabbed ) {
-          return;
+
+          // This flag disables the onRelease logic of GrabDragInteraction during input mode handoff,
+          // preventing sounds and release alerts from being triggered when switching from keyboard to
+          // pointer interaction.
+          this.isKeyboardGrabbed = false;
+          this.grabDragInteraction && this.grabDragInteraction.interrupt();
+
+          // Reset state so that the alt input logic can resume correctly on the next grab.
+          ligandIndexProperty.setPropertyValue( INITIAL_POSITION_INDEX.copy() );
         }
 
         // Voice the name at the start of the interaction
@@ -531,6 +540,7 @@ export default class LigandNode extends VoicingNode {
           return null;
         }
       } );
+      this.grabDragInteraction = grabDragInteraction;
 
       this.resetEmitter.addListener( () => {
         grabDragInteraction.reset();
