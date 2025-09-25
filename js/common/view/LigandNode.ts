@@ -26,6 +26,7 @@ import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js'
 import HighlightPath from '../../../../scenery/js/accessibility/HighlightPath.js';
 import { InteractiveHighlightingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/InteractiveHighlightingNode.js';
 import VoicingNode from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
+import Voicing from '../../../../scenery/js/accessibility/voicing/Voicing.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
@@ -129,6 +130,9 @@ export default class LigandNode extends VoicingNode {
       sharedOptions;
 
     super( options );
+
+    Voicing.registerUtteranceToVoicingNode( this.utterance, this );
+    Voicing.registerUtteranceToVoicingNode( this.releaseUtterance, this );
 
     // Expand the hit area for touch/mouse interactions, so it is easier to grab with the mouse
     const region = this.localBounds.dilated( 70 );
