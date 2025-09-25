@@ -27,24 +27,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     type: 'boolean',
     defaultValue: false,
     public: true
-  },
-
-  // Max solutes per solute type
-  maxSolutes: {
-    type: 'number',
-    defaultValue: 200
-  },
-
-  // Sound design for channel crossings uses stereo panning
-  stereoCrossings: {
-    type: 'boolean',
-    defaultValue: false
-  },
-
-  gasCrossingSound: {
-    type: 'string',
-    validValues: [ 'fm', 'dist' ],
-    defaultValue: 'fm'
   }
 } );
 

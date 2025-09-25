@@ -20,7 +20,6 @@ import Vector2 from '../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import membraneTransport from '../membraneTransport.js';
-import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 
 export default class MembraneTransportConstants {
 
@@ -50,7 +49,7 @@ export default class MembraneTransportConstants {
                                         MembraneTransportConstants.OBSERVATION_WINDOW_WIDTH;
 
   public static readonly LIGAND_COUNT = 7; // Per ligand type
-  public static readonly MAX_SOLUTE_COUNT = MembraneTransportQueryParameters.maxSolutes; // Per solute type
+  public static readonly MAX_SOLUTE_COUNT = 200; // Per solute type
   public static readonly TRANSPORT_PROTEIN_WIDTH = 25; // Width in model coordinates
 
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
