@@ -9,6 +9,7 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import platform from '../../../../phet-core/js/platform.js';
 import VoicingText from '../../../../scenery/js/accessibility/voicing/nodes/VoicingText.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -79,7 +80,11 @@ export default class TransportProteinPanel extends Panel {
       } );
 
       return new Panel( new VBox( {
-        spacing: 5, // spacing between the title and the content
+
+        // Reduce spacing on mobile Safari to prevent the panel from appearing oversized due to
+        // platform-specific font differences. See
+        // https://github.com/phetsims/membrane-transport/issues/477
+        spacing: platform.mobileSafari ? 3 : 5, // spacing between the title and the content
         children: [
           titleAlignGroup.createBox( new VoicingText( config.titleProperty, {
             fontSize: MembraneTransportConstants.PANEL_TITLE_FONT_SIZE,
