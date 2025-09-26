@@ -7,8 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Image from '../../../../../scenery/js/nodes/Image.js';
-import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
+import Image, { ImageOptions } from '../../../../../scenery/js/nodes/Image.js';
 import adp_svg from '../../../../images/adp_svg.js';
 import atp_svg from '../../../../images/atp_svg.js';
 import carbonDioxide_svg from '../../../../images/carbonDioxide_svg.js';
@@ -21,21 +20,17 @@ import sodiumIon_svg from '../../../../images/sodiumIon_svg.js';
 import sodiumLigand_svg from '../../../../images/sodiumLigand_svg.js';
 import { ParticleType } from '../../model/SoluteType.js';
 
-export default function createParticleNode( particleType: ParticleType, options?: NodeOptions ): Node {
-  const particleNode = particleType === 'oxygen' ? new Image( oxygen_svg ) :
-                       particleType === 'carbonDioxide' ? new Image( carbonDioxide_svg ) :
-                       particleType === 'sodiumIon' ? new Image( sodiumIon_svg ) :
-                       particleType === 'potassiumIon' ? new Image( potassiumIon_svg ) :
-                       particleType === 'glucose' ? new Image( glucose_svg ) :
-                       particleType === 'triangleLigand' ? new Image( sodiumLigand_svg, {
-                                                           opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
-                                                         } ) :
-                       particleType === 'starLigand' ? new Image( potassiumLigand_svg, {
-                                                       opacity: phet.chipper.queryParameters.dev ? 0.5 : 1
-                                                     } ) :
-                       particleType === 'atp' ? new Image( atp_svg ) :
-                       particleType === 'adp' ? new Image( adp_svg ) :
-                       particleType === 'phosphate' ? new Image( phosphate_svg ) : // Rotated 20 degrees when bound
+export default function createParticleNode( particleType: ParticleType, options?: ImageOptions ): Image {
+  const particleNode = particleType === 'oxygen' ? new Image( oxygen_svg, options ) :
+                       particleType === 'carbonDioxide' ? new Image( carbonDioxide_svg, options ) :
+                       particleType === 'sodiumIon' ? new Image( sodiumIon_svg, options ) :
+                       particleType === 'potassiumIon' ? new Image( potassiumIon_svg, options ) :
+                       particleType === 'glucose' ? new Image( glucose_svg, options ) :
+                       particleType === 'triangleLigand' ? new Image( sodiumLigand_svg, options ) :
+                       particleType === 'starLigand' ? new Image( potassiumLigand_svg, options ) :
+                       particleType === 'atp' ? new Image( atp_svg, options ) :
+                       particleType === 'adp' ? new Image( adp_svg, options ) :
+                       particleType === 'phosphate' ? new Image( phosphate_svg, options ) : // Rotated 20 degrees when bound
 
                          // throw error
                        ( () => { throw new Error( `Unrecognized particle type: ${particleType}` ); } )();
