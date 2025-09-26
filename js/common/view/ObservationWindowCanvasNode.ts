@@ -212,6 +212,8 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
    * poor rendering at low resolution. We gradually made the screen smaller until the rendering was too poor. At that point,
    * we tried the next mipmap level and saw the rendering improved. 3 is the max value available for our images, beyond that
    * there is no available mipmap.
+   *
+   * If you need more levels, you can add more where we create the Image with option mipmapInitialLevel of Image.
    */
   private mapScaleToMipmapLevel( scale: number ): number {
     if ( scale > 0.9 ) {
