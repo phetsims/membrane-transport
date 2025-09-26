@@ -16,7 +16,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CanvasNode from '../../../../scenery/js/nodes/CanvasNode.js';
-import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
 import membraneTransport from '../../membraneTransport.js';
@@ -32,7 +32,7 @@ import Phospholipid from './Phospholipid.js';
 
 export default class ObservationWindowCanvasNode extends CanvasNode {
 
-  private readonly soluteTypeToImageMap = new Map<SoluteType, HTMLImageElement | HTMLCanvasElement>();
+  private readonly soluteTypeToImageMap = new Map<SoluteType, Image>();
   private readonly phospholipids: Phospholipid[] = [];
 
   public constructor(
@@ -46,7 +46,12 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
     } );
 
     getFeatureSetSoluteTypes( model.featureSet ).forEach( soluteType => {
-      this.soluteTypeToImageMap.set( soluteType, this.createImage( soluteType ) );
+      this.soluteTypeToImageMap.set( soluteType, createParticleNode( soluteType, {
+
+        // Mipmaps allow us to have better quality images on low resolution displays,
+        // see https://github.com/phetsims/membrane-transport/issues/492.
+        mipmap: true
+      } ) );
     } );
 
     // Compute the exact number of phospholipids needed to fill the screen
@@ -65,11 +70,6 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
 
     // Randomize z-ordering
     this.phospholipids = dotRandom.shuffle( phospholipids );
-  }
-
-  private createImage( soluteType: SoluteType ): HTMLImageElement | HTMLCanvasElement {
-    const iconNode = createParticleNode( soluteType );
-    return rasterizeNode( iconNode, { wrap: false, resolution: 4 } ).image;
   }
 
   // Convenience functions to move and line in model coordinates
@@ -149,18 +149,24 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
                      ( solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsideAwaitingPotassium' ||
                        solute.mode.sodiumPotassiumPump.stateProperty.value === 'openToOutsidePotassiumBound' );
 
+      const transformationMatrix = context.getTransform();
+      const matrixScale = this.approxMipmapScale( transformationMatrix );
+
+      const mipmapLevel = this.mapScaleToMipmapLevel( matrixScale );
+      const mipmapCanvas = image.getMipmapCanvas( mipmapLevel );
+
       // Draw the image centered at the position.
       if ( rotate ) {
         context.save();
 
         context.translate( x, y );
         context.rotate( 20 * Math.PI / 180 ); // Rotate 20 degrees (convert to radians)
-        context.drawImage( image, -width / 2, -height / 2, width, height ); // Draw image at origin (since we've translated to center)
+        context.drawImage( mipmapCanvas, -width / 2, -height / 2, width, height ); // Draw image at origin (since we've translated to center)
 
         context.restore();
       }
       else {
-        context.drawImage( image, x - width / 2, y - height / 2, width, height );
+        context.drawImage( mipmapCanvas, x - width / 2, y - height / 2, width, height );
       }
 
       // Reset globalAlpha to prevent affecting other drawings
@@ -202,18 +208,48 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   }
 
   /**
+   * Map a scale value to a mipmap level. Values were found by inspection. We tested on an old Chromebook, where we observed
+   * poor rendering at low resolution. We gradually made the screen smaller until the rendering was too poor. At that point,
+   * we tried the next mipmap level and saw the rendering improved. 3 is the max value available for our images, beyond that
+   * there is no available mipmap.
+   */
+  private mapScaleToMipmapLevel( scale: number ): number {
+    if ( scale > 0.9 ) {
+      return 0;
+    }
+    if ( scale > 0.75 ) {
+      return 1;
+    }
+    if ( scale > 0.6 ) {
+      return 2;
+    }
+    return 3;
+  }
+
+  /**
+   * Compute the scale factor from a DOMMatrix. We assume that there is now skew, and that x and y are scaled isometrically.
+   */
+  private approxMipmapScale( m: DOMMatrix ): number {
+
+    // NOTE: We expect these to be the same, this is just for safety.
+    const sx = Math.hypot( m.a, m.b ); // |A * [1,0]|
+    const sy = Math.hypot( m.c, m.d ); // |A * [0,1]|
+    return Math.min( sx, sy );
+  }
+
+  /**
    * Draw waypoints for particles in MoveToTargetMode for debugging visualization
    */
   private drawMoveToTargetWaypoints( context: CanvasRenderingContext2D ): void {
     this.model.solutes.forEach( solute => {
       if ( solute.mode instanceof MoveToTargetMode ) {
         const mode = solute.mode;
-        
+
         // Draw start position in red
         if ( mode.startPosition ) {
           this.drawWaypoint( context, mode.startPosition, 'red', 3 );
         }
-        
+
         // Draw checkpoints with different colors/sizes
         if ( mode.checkpoints && mode.checkpoints.length > 0 ) {
           // First checkpoint in green
@@ -229,20 +265,20 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
             this.drawWaypoint( context, mode.checkpoints[ 2 ], 'purple', 4 );
           }
         }
-        
+
         // Draw target position in blue
         if ( mode.targetPosition ) {
           this.drawWaypoint( context, mode.targetPosition, 'blue', 3 );
         }
-        
+
         // Draw a line from particle current position to what it's currently targeting
         if ( mode.startPosition && mode.checkpoints && mode.targetPosition ) {
           // Get the current target from the mode
           const currentTarget = mode.currentTargetPublic;
-          
+
           // Draw thick yellow line from particle to its current target
           this.drawWaypointLine( context, solute.position, currentTarget, 'rgba(255, 255, 0, 0.8)' );
-          
+
           // Draw connecting lines for the planned path
           // From start to first checkpoint
           if ( mode.checkpoints[ 0 ] ) {
@@ -269,7 +305,7 @@ export default class ObservationWindowCanvasNode extends CanvasNode {
   private drawWaypoint( context: CanvasRenderingContext2D, position: Vector2, color: string, radius: number ): void {
     const viewX = this.modelViewTransform.modelToViewX( position.x );
     const viewY = this.modelViewTransform.modelToViewY( position.y );
-    
+
     context.fillStyle = color;
     context.beginPath();
     context.arc( viewX, viewY, radius, 0, 2 * Math.PI );
