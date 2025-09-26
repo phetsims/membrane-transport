@@ -282,6 +282,14 @@ export default class LigandNode extends VoicingNode {
     // All ligands can be mouse-controlled, but only one of each type can be keyboard-focused
     this.addInputListener( soundDragListener );
 
+    // Apply a dashed highlight when the ligand is grabbed via pointer interaction.
+    // For focusable ligands, the GrabDragInteraction manages the highlight appearance.
+    if ( !focusable ) {
+      soundDragListener.isPressedProperty.link( pressed => {
+        highlightPath.setDashed( pressed );
+      } );
+    }
+
     const ligandIndexProperty = new LigandIndexProperty( INITIAL_POSITION_INDEX.copy() );
     this.resetEmitter.addListener( () => ligandIndexProperty.reset() );
 
