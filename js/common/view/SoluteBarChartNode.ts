@@ -15,7 +15,6 @@ import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ReadingBlockNode from '../../../../scenery/js/accessibility/voicing/nodes/ReadingBlockNode.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
-import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
@@ -141,21 +140,14 @@ export default class SoluteBarChartNode extends ReadingBlockNode {
 
     const text = new RichText( getSoluteTypeString( soluteType ), {
       font: MembraneTransportConstants.FONT,
-      maxWidth: soluteType === 'glucose' ? 68 : 52
+      maxWidth: soluteType === 'glucose' ? 68 : 52,
+      left: soluteType === 'glucose' ? 52 : 65,
+      y: BOX_HEIGHT - 5
     } );
 
-    const iconWithText = new HBox( {
+    icon.centerY = BOX_HEIGHT - 10;
+    icon.right = text.left - 5;
 
-      // Put in an alignGroup box so that we can align all text baselines and icons
-      children: [ iconAlignGroup.createBox( icon ), text ],
-      spacing: 3,
-      align: 'bottom',
-
-      centerX: BOX_WIDTH / 2,
-
-      // Use y instead of bottom so the text baselines will align
-      y: BOX_HEIGHT - 20
-    } );
     const originExtent = 54;
     const origin = new Path( Shape.lineSegment( 20, BOX_HEIGHT / 2 + originExtent / 2, 20, BOX_HEIGHT / 2 - originExtent / 2 ), {
       stroke: 'black', lineWidth: 2
@@ -286,7 +278,8 @@ export default class SoluteBarChartNode extends ReadingBlockNode {
 
     this.children = [
       layoutBox,
-      iconWithText,
+      icon,
+      text,
 
       orangeOuterHeads,
       pinkInnerTails,
