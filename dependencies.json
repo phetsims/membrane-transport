@@ -1,5 +1,5 @@
 {
-  "comment": "# membrane-transport 1.0.0-rc.1 Mon Sep 29 2025 15:02:01 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# membrane-transport 1.0.0-rc.2 Mon Sep 29 2025 15:19:32 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "1a4637cfff70e7e8b0844dc43848a86ae89b4cf5",
     "branch": "HEAD"
@@ -22,14 +22,14 @@
   },
   "joist": {
     "sha": "233890423eef6324fe5a3c2afb52ed75b771d36e",
-    "branch": "membrane-transport-1.0"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "675542eee554022ce8777d756ab841c10ebf5f9e",
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "037fe99238a700da856a5024301506dd3cca1d3a",
+    "sha": "dba620b0f90fbe192a9a5b92db8fb6bfa7c5f2d2",
     "branch": "1.0"
   },
   "perennial-alias": {
@@ -66,7 +66,7 @@
   },
   "scenery": {
     "sha": "6e31bcc6ce509a1a382ef9af33f37d7d348761dd",
-    "branch": "membrane-transport-1.0"
+    "branch": "HEAD"
   },
   "scenery-phet": {
     "sha": "b0501e008d5086d20f437dfbff6db4725485563d",
@@ -78,7 +78,7 @@
   },
   "studio": {
     "sha": "aa1d0e7042274d2036d32aa74d67a4e331f9dddb",
-    "branch": "membrane-transport-1.0"
+    "branch": "HEAD"
   },
   "sun": {
     "sha": "37b0caf0586d267c46054dcf483c7214522b8c7f",
@@ -98,6 +98,6 @@
   },
   "utterance-queue": {
     "sha": "2bc15e8c6ddb4b14a3dcf335260166fc8c947cd0",
-    "branch": "membrane-transport-1.0"
+    "branch": "HEAD"
   }
 }
