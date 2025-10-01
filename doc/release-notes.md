@@ -29,13 +29,13 @@ For an exemplar, see https://github.com/phetsims/balancing-chemical-equations/bl
 *
 -->
 
-## 1.0 ({{PUBLICATION_DATE}}) <!-- TODO: ADD DATE ON RELEASE --!>
+## 1.0 (Oct 1, 2025)
 
 ### Features
 
 * Alternative Input
 * Interactive Highlights
-* Core Voicing
+* Core Voicing - This simulation contains additional voicing features beyond the core voicing functionality, but does not include all descriptions available in the intereactive description feature, such as all context responses.
 * PhET-iO
 * Interactive Description
 * Sound and Sonification
