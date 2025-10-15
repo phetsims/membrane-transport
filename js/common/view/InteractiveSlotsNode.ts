@@ -659,7 +659,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // The first time a protein is grabbed, read additional information about how to interact with it.
     // Output is queued so that it does not interrupt the grabbed response.
-    this.view.addAccessibleHelpResponse( this.hintUtterance, 'queue' );
+    this.view.addAccessibleHelpResponse( this.hintUtterance, { alertBehavior: 'queue' } );
 
     Voicing.alertUtterance( this.hintUtterance );
   }

@@ -278,7 +278,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
                 } )
               } );
 
-              transportProteinNode.addAccessibleObjectResponse( this.objectResponseUtterance, 'queue' );
+              transportProteinNode.addAccessibleObjectResponse( this.objectResponseUtterance, { alertBehavior: 'queue' } );
               Voicing.alertUtterance( this.objectResponseUtterance );
             }
 

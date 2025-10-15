@@ -198,7 +198,7 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
 
       // pdom - the context response is queued after the object response so both are spoken
       this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
-      this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ), 'queue' );
+      this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ), { alertBehavior: 'queue' } );
 
       this.voicingButtonsBox.voicingSpeakResponse( {
         nameResponse: accessibleName,
