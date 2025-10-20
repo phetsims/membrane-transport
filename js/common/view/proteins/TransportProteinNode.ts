@@ -69,14 +69,7 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
 
       this.mutate( combineOptions<ParallelDOMOptions>( {}, AccessibleInteractiveOptions, {
         accessibleRoleDescription: MembraneTransportFluent.a11y.navigableStringProperty,
-
-        // Use descriptionContent instead of accessibleParagraph, because changing the accessibleParagraph causes a full
-        // re-render of the DOM elements, forcing the screen reader to re-read the accessibleName again while this
-        // protein has focus.
-        // TODO: See https://github.com/phetsims/scenery/issues/1721
-        descriptionTagName: 'p',
-        descriptionContent: accessibleParagraphStringProperty,
-        appendDescription: true
+        accessibleParagraph: accessibleParagraphStringProperty
       } ) );
     }
   }
