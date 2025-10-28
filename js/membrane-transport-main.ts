@@ -39,6 +39,8 @@ simLauncher.launch( () => {
     new PlaygroundScreen( Tandem.ROOT.createTandem( 'playgroundScreen' ) )
   ];
 
+  console.log( 'hi codex!' );
+
   const options: SimOptions = {
 
     credits: {
