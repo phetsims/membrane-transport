@@ -58,87 +58,103 @@
 
   const groups = {
     'View': '#f9a97d',
-    'Model': '#6ec6ff',
+    'Model Group': '#6ec6ff',
     'PhET-iO': '#8dd3c7',
     'A11y': '#d4b6ff'
   };
 
+  const nodeSizes = {
+    'Visual Design': 21,
+    'Alt-Input': 12,
+    'Group Highlighting': 5,
+    'Mouse/Touch': 7,
+    'Interactive Highlights': 6,
+    'Pan/Zoom': 4,
+    'Model': 8,
+    'Sonification': 4,
+    'PhET-iO Instrumentation': 10,
+    'PhET-iO State': 8,
+    'PhET-iO Dynamic Layout': 4,
+    'Preferences': 3,
+    'Query Parameters': 2,
+    'Description Tier 1+2': 11,
+    'Voicing': 5,
+    'i18n': 8,
+    'i18n Dynamic Layout': 5
+  };
+
   const nodes = [
-    { id: 'Visual Design (16)', group: 'View' },
-    { id: 'Keyboard Interaction (9)', group: 'View' },
-    { id: 'Group Highlighting (5)', group: 'View' },
-    { id: 'Mouse/Touch Interaction (7)', group: 'View' },
-    { id: 'Interactive Highlights (6)', group: 'View' },
-    { id: 'Automatic Pan when Zoomed (4)', group: 'View' },
-    { id: 'Model Mechanics (8)', group: 'Model' },
-    { id: 'Sonification (4)', group: 'Model' },
-    { id: 'PhET-iO Instrumentation (10)', group: 'PhET-iO' },
-    { id: 'PhET-iO State (7)', group: 'PhET-iO' },
-    { id: 'PhET-iO Dynamic Layout (5)', group: 'PhET-iO' },
-    { id: 'Preferences (5)', group: 'Model' },
-    { id: 'Query Parameters (3)', group: 'Model' },
-    { id: 'Description Tier 1+2 (11)', group: 'A11y' },
-    { id: 'Voicing (6)', group: 'A11y' },
-    { id: 'i18n (9)', group: 'A11y' },
-    { id: 'i18n Dynamic Layout (7)', group: 'A11y' }
+    { id: 'Visual Design', group: 'View' },
+    { id: 'Alt-Input', group: 'View' },
+    { id: 'Group Highlighting', group: 'View' },
+    { id: 'Mouse/Touch', group: 'View' },
+    { id: 'Interactive Highlights', group: 'View' },
+    { id: 'Pan/Zoom', group: 'View' },
+    { id: 'Model', group: 'Model Group' },
+    { id: 'Sonification', group: 'Model Group' },
+    { id: 'PhET-iO Instrumentation', group: 'PhET-iO' },
+    { id: 'PhET-iO State', group: 'PhET-iO' },
+    { id: 'PhET-iO Dynamic Layout', group: 'PhET-iO' },
+    { id: 'Preferences', group: 'Model Group' },
+    { id: 'Query Parameters', group: 'Model Group' },
+    { id: 'Description Tier 1+2', group: 'A11y' },
+    { id: 'Voicing', group: 'A11y' },
+    { id: 'i18n', group: 'A11y' },
+    { id: 'i18n Dynamic Layout', group: 'A11y' }
   ];
 
-  nodes.forEach( node => {
-    const match = node.id.match( /\((\d+)\)$/ );
-    node.value = match ? Number( match[ 1 ] ) : 1;
-  } );
-
   const radiusAdjustments = {
-    'Visual Design (16)': 1.2,
-    'Keyboard Interaction (9)': 1.5,
-    'Description Tier 1+2 (11)': 1.4
+    'Visual Design': 1.2,
+    'Alt-Input': 1.5,
+    'Description Tier 1+2': 1.4
   };
 
   nodes.forEach( node => {
+    node.value = nodeSizes[ node.id ] || 1;
     node.adjustedValue = node.value * ( radiusAdjustments[ node.id ] || 1 );
     node.color = groups[ node.group ] || '#ccc';
-    if ( node.id === 'Sonification (4)' ) {
+    if ( node.id === 'Sonification' ) {
       node.color = '#f9a97d';
     }
   } );
 
   const links = [
-    [ 'Visual Design (16)', 'Model Mechanics (8)' ],
-    [ 'Model Mechanics (8)', 'PhET-iO Instrumentation (10)' ],
-    [ 'Model Mechanics (8)', 'PhET-iO State (7)' ],
-    [ 'PhET-iO Instrumentation (10)', 'PhET-iO State (7)' ],
-    [ 'Model Mechanics (8)', 'Description Tier 1+2 (11)' ],
-    [ 'Model Mechanics (8)', 'Sonification (4)' ],
-    [ 'Model Mechanics (8)', 'Mouse/Touch Interaction (7)' ],
-    [ 'Visual Design (16)', 'Mouse/Touch Interaction (7)' ],
-    [ 'Visual Design (16)', 'Keyboard Interaction (9)' ],
-    [ 'Visual Design (16)', 'Interactive Highlights (6)' ],
-    [ 'Visual Design (16)', 'Automatic Pan when Zoomed (4)' ],
-    [ 'Keyboard Interaction (9)', 'Group Highlighting (5)' ],
-    [ 'Group Highlighting (5)', 'Interactive Highlights (6)' ],
-    [ 'Interactive Highlights (6)', 'Keyboard Interaction (9)' ],
-    [ 'Interactive Highlights (6)', 'Mouse/Touch Interaction (7)' ],
-    [ 'Keyboard Interaction (9)', 'Mouse/Touch Interaction (7)' ],
-    [ 'Keyboard Interaction (9)', 'Description Tier 1+2 (11)' ],
-    [ 'Keyboard Interaction (9)', 'Automatic Pan when Zoomed (4)' ],
-    [ 'Description Tier 1+2 (11)', 'Voicing (6)' ],
-    [ 'Description Tier 1+2 (11)', 'Preferences (5)' ],
-    [ 'Description Tier 1+2 (11)', 'i18n (9)' ],
-    [ 'Description Tier 1+2 (11)', 'Interactive Highlights (6)' ],
-    [ 'Description Tier 1+2 (11)', 'Visual Design (16)' ],
-    [ 'Voicing (6)', 'i18n (9)' ],
-    [ 'Voicing (6)', 'Preferences (5)' ],
-    [ 'Sonification (4)', 'Preferences (5)' ],
-    [ 'i18n (9)', 'Query Parameters (3)' ],
-    [ 'i18n (9)', 'i18n Dynamic Layout (7)' ],
-    [ 'i18n (9)', 'PhET-iO Instrumentation (10)' ],
-    [ 'i18n Dynamic Layout (7)', 'Visual Design (16)' ],
-    [ 'i18n Dynamic Layout (7)', 'PhET-iO Dynamic Layout (5)' ],
-    [ 'PhET-iO Dynamic Layout (5)', 'PhET-iO Instrumentation (10)' ],
-    [ 'PhET-iO Instrumentation (10)', 'Preferences (5)' ],
-    [ 'PhET-iO Instrumentation (10)', 'Query Parameters (3)' ],
-    [ 'Preferences (5)', 'PhET-iO State (7)' ],
-    [ 'Query Parameters (3)', 'Preferences (5)' ]
+    [ 'Visual Design', 'Model' ],
+    [ 'Model', 'PhET-iO Instrumentation' ],
+    [ 'Model', 'PhET-iO State' ],
+    [ 'PhET-iO Instrumentation', 'PhET-iO State' ],
+    [ 'Model', 'Description Tier 1+2' ],
+    [ 'Model', 'Sonification' ],
+    [ 'Model', 'Mouse/Touch' ],
+    [ 'Visual Design', 'Mouse/Touch' ],
+    [ 'Visual Design', 'Alt-Input' ],
+    [ 'Visual Design', 'Interactive Highlights' ],
+    [ 'Visual Design', 'Pan/Zoom' ],
+    [ 'Mouse/Touch', 'Pan/Zoom' ],
+    [ 'Alt-Input', 'Group Highlighting' ],
+    [ 'Group Highlighting', 'Interactive Highlights' ],
+    [ 'Interactive Highlights', 'Alt-Input' ],
+    [ 'Interactive Highlights', 'Mouse/Touch' ],
+    [ 'Alt-Input', 'Mouse/Touch' ],
+    [ 'Alt-Input', 'Description Tier 1+2' ],
+    [ 'Alt-Input', 'Pan/Zoom' ],
+    [ 'Description Tier 1+2', 'Voicing' ],
+    [ 'Description Tier 1+2', 'Preferences' ],
+    [ 'Description Tier 1+2', 'i18n' ],
+    [ 'Description Tier 1+2', 'Interactive Highlights' ],
+    [ 'Description Tier 1+2', 'Visual Design' ],
+    [ 'Voicing', 'i18n' ],
+    [ 'Voicing', 'Preferences' ],
+    [ 'Sonification', 'Preferences' ],
+    [ 'i18n', 'Query Parameters' ],
+    [ 'i18n', 'i18n Dynamic Layout' ],
+    [ 'i18n', 'PhET-iO Instrumentation' ],
+    [ 'i18n Dynamic Layout', 'Visual Design' ],
+    [ 'PhET-iO Dynamic Layout', 'PhET-iO Instrumentation' ],
+    [ 'PhET-iO Instrumentation', 'Preferences' ],
+    [ 'PhET-iO Instrumentation', 'Query Parameters' ],
+    [ 'Preferences', 'PhET-iO State' ],
+    [ 'Query Parameters', 'Preferences' ]
   ].map( ( [ source, target ] ) => ( { source: source, target: target } ) );
   /* eslint-disable */
   const svg = d3.select( '#graph' ).append( 'svg' );
