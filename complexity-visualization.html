@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Membrane Transport Complexity Graph</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #f7f8fa;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    #graph {
+      width: 100%;
+      height: 100%;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .link {
+      stroke: #b0b7c3;
+      stroke-width: 2px;
+      opacity: 0.8;
+    }
+
+    .node circle {
+      stroke-width: 2.5px;
+    }
+
+    .node rect {
+      fill: rgba(255, 255, 255, 0.3);
+      stroke: none;
+      rx: 6px;
+      ry: 6px;
+    }
+
+    .node text {
+      pointer-events: none;
+      font-size: 13px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #1f252f;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+</head>
+<body>
+<div id="graph"></div>
+<script>
+  /* eslint-disable */
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const groups = {
+    'View': '#f9a97d',
+    'Model': '#6ec6ff',
+    'PhET-iO': '#8dd3c7',
+    'A11y': '#d4b6ff'
+  };
+
+  const nodes = [
+    { id: 'Visual Design (16)', group: 'View' },
+    { id: 'Keyboard Interaction (9)', group: 'View' },
+    { id: 'Group Highlighting (5)', group: 'View' },
+    { id: 'Mouse/Touch Interaction (7)', group: 'View' },
+    { id: 'Interactive Highlights (6)', group: 'View' },
+    { id: 'Automatic Pan when Zoomed (4)', group: 'View' },
+    { id: 'Model Mechanics (8)', group: 'Model' },
+    { id: 'Sonification (4)', group: 'Model' },
+    { id: 'PhET-iO Instrumentation (10)', group: 'PhET-iO' },
+    { id: 'PhET-iO State (7)', group: 'PhET-iO' },
+    { id: 'PhET-iO Dynamic Layout (5)', group: 'PhET-iO' },
+    { id: 'Preferences (5)', group: 'Model' },
+    { id: 'Query Parameters (3)', group: 'Model' },
+    { id: 'Description Tier 1+2 (11)', group: 'A11y' },
+    { id: 'Voicing (6)', group: 'A11y' },
+    { id: 'i18n (9)', group: 'A11y' },
+    { id: 'i18n Dynamic Layout (7)', group: 'A11y' }
+  ];
+
+  nodes.forEach( node => {
+    const match = node.id.match( /\((\d+)\)$/ );
+    node.value = match ? Number( match[ 1 ] ) : 1;
+  } );
+
+  const radiusAdjustments = {
+    'Visual Design (16)': 1.2,
+    'Keyboard Interaction (9)': 1.5,
+    'Description Tier 1+2 (11)': 1.4
+  };
+
+  nodes.forEach( node => {
+    node.adjustedValue = node.value * ( radiusAdjustments[ node.id ] || 1 );
+    node.color = groups[ node.group ] || '#ccc';
+    if ( node.id === 'Sonification (4)' ) {
+      node.color = '#f9a97d';
+    }
+  } );
+
+  const links = [
+    [ 'Visual Design (16)', 'Model Mechanics (8)' ],
+    [ 'Model Mechanics (8)', 'PhET-iO Instrumentation (10)' ],
+    [ 'Model Mechanics (8)', 'PhET-iO State (7)' ],
+    [ 'PhET-iO Instrumentation (10)', 'PhET-iO State (7)' ],
+    [ 'Model Mechanics (8)', 'Description Tier 1+2 (11)' ],
+    [ 'Model Mechanics (8)', 'Sonification (4)' ],
+    [ 'Model Mechanics (8)', 'Mouse/Touch Interaction (7)' ],
+    [ 'Visual Design (16)', 'Mouse/Touch Interaction (7)' ],
+    [ 'Visual Design (16)', 'Keyboard Interaction (9)' ],
+    [ 'Visual Design (16)', 'Interactive Highlights (6)' ],
+    [ 'Visual Design (16)', 'Automatic Pan when Zoomed (4)' ],
+    [ 'Keyboard Interaction (9)', 'Group Highlighting (5)' ],
+    [ 'Group Highlighting (5)', 'Interactive Highlights (6)' ],
+    [ 'Interactive Highlights (6)', 'Keyboard Interaction (9)' ],
+    [ 'Interactive Highlights (6)', 'Mouse/Touch Interaction (7)' ],
+    [ 'Keyboard Interaction (9)', 'Mouse/Touch Interaction (7)' ],
+    [ 'Keyboard Interaction (9)', 'Description Tier 1+2 (11)' ],
+    [ 'Keyboard Interaction (9)', 'Automatic Pan when Zoomed (4)' ],
+    [ 'Description Tier 1+2 (11)', 'Voicing (6)' ],
+    [ 'Description Tier 1+2 (11)', 'Preferences (5)' ],
+    [ 'Description Tier 1+2 (11)', 'i18n (9)' ],
+    [ 'Description Tier 1+2 (11)', 'Interactive Highlights (6)' ],
+    [ 'Description Tier 1+2 (11)', 'Visual Design (16)' ],
+    [ 'Voicing (6)', 'i18n (9)' ],
+    [ 'Voicing (6)', 'Preferences (5)' ],
+    [ 'Sonification (4)', 'Preferences (5)' ],
+    [ 'i18n (9)', 'Query Parameters (3)' ],
+    [ 'i18n (9)', 'i18n Dynamic Layout (7)' ],
+    [ 'i18n (9)', 'PhET-iO Instrumentation (10)' ],
+    [ 'i18n Dynamic Layout (7)', 'Visual Design (16)' ],
+    [ 'i18n Dynamic Layout (7)', 'PhET-iO Dynamic Layout (5)' ],
+    [ 'PhET-iO Dynamic Layout (5)', 'PhET-iO Instrumentation (10)' ],
+    [ 'PhET-iO Instrumentation (10)', 'Preferences (5)' ],
+    [ 'PhET-iO Instrumentation (10)', 'Query Parameters (3)' ],
+    [ 'Preferences (5)', 'PhET-iO State (7)' ],
+    [ 'Query Parameters (3)', 'Preferences (5)' ]
+  ].map( ( [ source, target ] ) => ( { source: source, target: target } ) );
+  /* eslint-disable */
+  const svg = d3.select( '#graph' ).append( 'svg' );
+
+  const radiusScale = d3.scaleSqrt()
+    .domain( d3.extent( nodes, d => d.adjustedValue ) )
+    .range( [ 26, 56 ] );
+
+  const link = svg.append( 'g' )
+    .attr( 'stroke-linecap', 'round' )
+    .selectAll( 'line' )
+    .data( links )
+    .enter()
+    .append( 'line' )
+    .attr( 'class', 'link' );
+
+  const node = svg.append( 'g' )
+    .attr( 'stroke-linecap', 'round' )
+    .selectAll( '.node' )
+    .data( nodes )
+    .enter()
+    .append( 'g' )
+    .attr( 'class', 'node' )
+    .call( d3.drag()
+      .on( 'start', dragstarted )
+      .on( 'drag', dragged )
+      .on( 'end', dragended ) );
+
+  node.append( 'circle' )
+    .attr( 'fill', d => d.color )
+    .attr( 'stroke', d => d3.color( d.color ).darker() )
+    .attr( 'r', d => radiusScale( d.adjustedValue ) );
+
+  const textPadding = 6;
+
+  const text = node.append( 'text' )
+    .attr( 'dy', '0.35em' )
+    .text( d => d.id );
+
+  text.each( function( d ) {
+    const bbox = this.getBBox();
+    d.textWidth = bbox.width;
+    d.textHeight = bbox.height;
+  } );
+
+  node.insert( 'rect', 'text' )
+    .attr( 'width', d => ( d.textWidth || 0 ) + textPadding * 2 )
+    .attr( 'height', d => ( d.textHeight || 0 ) + textPadding * 2 )
+    .attr( 'x', d => -( ( d.textWidth || 0 ) / 2 ) - textPadding )
+    .attr( 'y', d => -( ( d.textHeight || 0 ) / 2 ) - textPadding );
+
+  const simulation = d3.forceSimulation( nodes )
+    .force( 'link', d3.forceLink( links ).id( d => d.id ).distance( 160 ).strength( 0.5 ) )
+    .force( 'charge', d3.forceManyBody().strength( -800 ) )
+    .force( 'center', d3.forceCenter( width / 2, height / 2 ) )
+    .force( 'collide', d3.forceCollide().radius( d => radiusScale( d.adjustedValue ) + 10 ) )
+    .on( 'tick', ticked );
+
+  window.addEventListener( 'resize', () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    svg.attr( 'width', w ).attr( 'height', h );
+    simulation.force( 'center', d3.forceCenter( w / 2, h / 2 ) ).alpha( 0.3 ).restart();
+  } );
+
+  svg.attr( 'width', width ).attr( 'height', height );
+
+  function ticked() {
+    link
+      .attr( 'x1', d => d.source.x )
+      .attr( 'y1', d => d.source.y )
+      .attr( 'x2', d => d.target.x )
+      .attr( 'y2', d => d.target.y );
+
+    node.attr( 'transform', d => `translate(${d.x},${d.y})` );
+  }
+
+  function dragstarted( event, d ) {
+    if ( !event.active ) {simulation.alphaTarget( 0.3 ).restart();}
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+
+  function dragged( event, d ) {
+    d.fx = event.x;
+    d.fy = event.y;
+  }
+
+  function dragended( event, d ) {
+    if ( !event.active ) {simulation.alphaTarget( 0 );}
+    d.fx = null;
+    d.fy = null;
+  }
+</script>
+</body>
+</html>
