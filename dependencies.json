@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "988e7d9c5ec8b55e6e3d1b7f33b3914f4e1c2458",
+    "sha": "72104090979235d4f3f85e5550af194896cfb8a6",
     "branch": "1.0"
   },
   "perennial-alias": {
@@ -81,7 +81,7 @@
     "branch": "HEAD"
   },
   "sun": {
-    "sha": "37b0caf0586d267c46054dcf483c7214522b8c7f",
+    "sha": "5bba168e2218ceee42bd7fad624787fa9ee6bda6",
     "branch": "HEAD"
   },
   "tambo": {
