@@ -455,7 +455,7 @@ a11y:
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
     voicingHintResponse:
 
-      # Spoken when the protein in the toolbox is is focused.
+      # Spoken when the protein in the toolbox is focused.
       general:                Space to grab or release.
 
       # Spoken when the protein in the toolbox is grabbed with mouse input.
