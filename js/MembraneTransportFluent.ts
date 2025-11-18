@@ -668,7 +668,7 @@ const MembraneTransportFluent = {
       proteinLocation: new FluentPattern<{ proteinCount: FluentVariable, proteinIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_proteinLocation', _.get( MembraneTransportStrings, 'a11y.transportProtein.proteinLocationStringProperty' ), [{"name":"proteinCount"},{"name":"proteinIndex"}] ),
       accessibleName: new FluentPattern<{ nameResponse: FluentVariable, proteinCount: FluentVariable, proteinIndex: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_transportProtein_accessibleName', _.get( MembraneTransportStrings, 'a11y.transportProtein.accessibleNameStringProperty' ), [{"name":"nameResponse"},{"name":"proteinCount"},{"name":"proteinIndex"}] ),
       voicingHintResponse: {
-        _comment_0: new FluentComment( {"comment":"Spoken when the protein in the toolbox is is focused.","associatedKey":"general"} ),
+        _comment_0: new FluentComment( {"comment":"Spoken when the protein in the toolbox is focused.","associatedKey":"general"} ),
         generalStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_voicingHintResponse_general', _.get( MembraneTransportStrings, 'a11y.transportProtein.voicingHintResponse.generalStringProperty' ) ),
         _comment_1: new FluentComment( {"comment":"Spoken when the protein in the toolbox is grabbed with mouse input.","associatedKey":"mouseInputFromToolbox"} ),
         mouseInputFromToolboxStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_transportProtein_voicingHintResponse_mouseInputFromToolbox', _.get( MembraneTransportStrings, 'a11y.transportProtein.voicingHintResponse.mouseInputFromToolboxStringProperty' ) ),
