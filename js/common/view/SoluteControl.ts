@@ -169,7 +169,7 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       soundPlayer: nullSoundPlayer,
 
       // Individual buttons are not available, the entire control is one stop in the traversal order.
-      pdomVisible: false,
+      accessibleVisible: false,
 
       phetioVisiblePropertyInstrumented: false
     };
