@@ -334,25 +334,6 @@ type StringsType = {
       'sodiumClosedPotassiumClosedResponseStringProperty': LocalizedStringProperty;
       'noChangeResponseStringProperty': LocalizedStringProperty;
     };
-    'keyboardHelp': {
-      'soluteAdjusters': {
-        'addOrRemoveALotDescriptionStringProperty': LocalizedStringProperty;
-        'addOrRemoveALittleDescriptionStringProperty': LocalizedStringProperty;
-      };
-      'transportProteinsAndLigands': {
-        'navigateDescriptionStringProperty': LocalizedStringProperty;
-        'grabOrReleaseDescriptionStringProperty': LocalizedStringProperty;
-        'moveGrabbedItemDescriptionStringProperty': LocalizedStringProperty;
-        'cancelGrabDescriptionStringProperty': LocalizedStringProperty;
-      };
-      'sortOrDeleteProteins': {
-        'navigateProteinsDescriptionStringProperty': LocalizedStringProperty;
-        'grabProteinDescriptionStringProperty': LocalizedStringProperty;
-        'moveGrabbedProteinDescriptionStringProperty': LocalizedStringProperty;
-        'releaseProteinDescriptionStringProperty': LocalizedStringProperty;
-        'deleteProteinDescriptionStringProperty': LocalizedStringProperty;
-      }
-    };
     'membraneTransportDescriber': {
       'particleCrossingStringProperty': LocalizedStringProperty;
       'hints': {

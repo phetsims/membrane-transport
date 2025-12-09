@@ -392,7 +392,7 @@ export default class LigandNode extends VoicingNode {
     if ( focusable ) {
 
       const escListener = new KeyboardListener( {
-        keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.cancelInteraction.keyStringProperties,
+        keyStringProperties: MembraneTransportHotkeyData.proteinsOrLigands.cancel.keyStringProperties,
         fire: () => {
 
           // Ignore if focus is lost or interaction disabled somehow

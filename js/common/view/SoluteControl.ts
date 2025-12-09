@@ -17,7 +17,6 @@ import AccessibleInteractiveOptions from '../../../../scenery-phet/js/accessibil
 import ParallelDOM from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import VoicingNode, { VoicingNodeOptions } from '../../../../scenery/js/accessibility/voicing/nodes/VoicingNode.js';
 import ReadingBlock, { ReadingBlockOptions } from '../../../../scenery/js/accessibility/voicing/ReadingBlock.js';
-import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -359,23 +358,23 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
 
     // KeyboardListener supports alt input. It directly clicks the buttons so that they look pressed and play sounds when the keyboard is used.
     const keyboardListener = new KeyboardListener( {
-      keyStringProperties: HotkeyData.combineKeyStringProperties( [
-        MembraneTransportHotkeyData.soluteControl.coarseIncrement,
-        MembraneTransportHotkeyData.soluteControl.coarseDecrement,
-        MembraneTransportHotkeyData.soluteControl.fineIncrement,
-        MembraneTransportHotkeyData.soluteControl.fineDecrement
-      ] ),
+      keys: [
+        ...MembraneTransportHotkeyData.COARSE_INCREMENT_KEYS,
+        ...MembraneTransportHotkeyData.COARSE_DECREMENT_KEYS,
+        ...MembraneTransportHotkeyData.FINE_INCREMENT_KEYS,
+        ...MembraneTransportHotkeyData.FINE_DECREMENT_KEYS
+      ],
       fire: ( event, keysPressed, listener ) => {
-        if ( MembraneTransportHotkeyData.soluteControl.coarseIncrement.hasKeyStroke( keysPressed ) ) {
+        if ( MembraneTransportHotkeyData.COARSE_INCREMENT_KEYS.includes( keysPressed ) ) {
           handleIncrement( incrementCoarseButton );
         }
-        else if ( MembraneTransportHotkeyData.soluteControl.coarseDecrement.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.COARSE_DECREMENT_KEYS.includes( keysPressed ) ) {
           decrementCoarseButton.pdomClick();
         }
-        else if ( MembraneTransportHotkeyData.soluteControl.fineIncrement.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.FINE_INCREMENT_KEYS.includes( keysPressed ) ) {
           handleIncrement( incrementFineButton );
         }
-        else if ( MembraneTransportHotkeyData.soluteControl.fineDecrement.hasKeyStroke( keysPressed ) ) {
+        else if ( MembraneTransportHotkeyData.FINE_DECREMENT_KEYS.includes( keysPressed ) ) {
           decrementFineButton.pdomClick();
         }
         else {

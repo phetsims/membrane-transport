@@ -600,25 +600,6 @@ a11y:
     sodiumClosedPotassiumClosedResponse: "Voltage-gated channels closed."
     noChangeResponse:                    No change in transport proteins.
 
-  keyboardHelp:
-    soluteAdjusters:
-      # Description strings for PDOM
-      addOrRemoveALotDescription:    Adjust chosen solute amount with Left and Right Arrow keys or A and D letter keys.
-      addOrRemoveALittleDescription: Adjust in smaller amounts with Shift plus Left and Right Arrow keys or Shift plus A and D letter keys.
-    transportProteinsAndLigands:
-      # Description strings for PDOM
-      navigateDescription:        Navigate proteins in toolbox or added ligands with Tab key.
-      grabOrReleaseDescription:   Grab or release with Space or Enter keys.
-      moveGrabbedItemDescription: Move grabbed protein or ligand between available drop locations with Left and Right Arrow keys or A and D letter keys.
-      cancelGrabDescription:      Cancel grab or move interaction with Escape key.
-    sortOrDeleteProteins:
-      # Description strings for PDOM
-      navigateProteinsDescription:   Navigate proteins in membrane with Left and Right Arrow keys or A and D letter keys.
-      grabProteinDescription:        Grab protein in membrane with Space or Enter keys.
-      moveGrabbedProteinDescription: Move grabbed protein between slots with Left and Right Arrow keys or A and D letter keys.
-      releaseProteinDescription:     Release grabbed protein into empty slot or swap slots with Space or Enter keys.
-      deleteProteinDescription:      Delete grabbed protein with Backspace or Delete key.
-
   # Strings for MembraneTransportDescriber
   membraneTransportDescriber:
 

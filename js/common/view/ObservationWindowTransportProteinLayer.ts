@@ -164,7 +164,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
-      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.selection.keyStringProperties,
+      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.navigateProteins.keyStringProperties,
       enabledProperty: DerivedProperty.not( this.interactiveSlotsNode.grabbedProperty ),
       fire: ( event, keysPressed, listener ) => {
         const proteinCount = model.getFilledSlots().length;

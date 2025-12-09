@@ -228,17 +228,6 @@ addToMapIfDefined( 'a11y_membranePotential_sodiumOpenedPotassiumClosedResponse',
 addToMapIfDefined( 'a11y_membranePotential_sodiumClosedPotassiumOpenedResponse', 'a11y.membranePotential.sodiumClosedPotassiumOpenedResponseStringProperty' );
 addToMapIfDefined( 'a11y_membranePotential_sodiumClosedPotassiumClosedResponse', 'a11y.membranePotential.sodiumClosedPotassiumClosedResponseStringProperty' );
 addToMapIfDefined( 'a11y_membranePotential_noChangeResponse', 'a11y.membranePotential.noChangeResponseStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALotDescription', 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALotDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALittleDescription', 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALittleDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_navigateDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.navigateDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_grabOrReleaseDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.grabOrReleaseDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_moveGrabbedItemDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_transportProteinsAndLigands_cancelGrabDescription', 'a11y.keyboardHelp.transportProteinsAndLigands.cancelGrabDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_navigateProteinsDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.navigateProteinsDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_grabProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.grabProteinDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_moveGrabbedProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_releaseProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.releaseProteinDescriptionStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelp_sortOrDeleteProteins_deleteProteinDescription', 'a11y.keyboardHelp.sortOrDeleteProteins.deleteProteinDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_particleCrossing', 'a11y.membraneTransportDescriber.particleCrossingStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_hints_ligandGatedChannelWithoutLigands', 'a11y.membraneTransportDescriber.hints.ligandGatedChannelWithoutLigandsStringProperty' );
 addToMapIfDefined( 'a11y_membraneTransportDescriber_hints_voltageGatedChannelAtRestingPotential', 'a11y.membraneTransportDescriber.hints.voltageGatedChannelAtRestingPotentialStringProperty' );
@@ -709,30 +698,7 @@ const MembraneTransportFluent = {
       sodiumClosedPotassiumClosedResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_sodiumClosedPotassiumClosedResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.sodiumClosedPotassiumClosedResponseStringProperty' ) ),
       noChangeResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membranePotential_noChangeResponse', _.get( MembraneTransportStrings, 'a11y.membranePotential.noChangeResponseStringProperty' ) )
     },
-    _comment_10: new FluentComment( {"comment":"Keyboard Help Dialog","associatedKey":"keyboardHelp"} ),
-    keyboardHelp: {
-      soluteAdjusters: {
-        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"addOrRemoveALotDescription"} ),
-        addOrRemoveALotDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALotDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALotDescriptionStringProperty' ) ),
-        addOrRemoveALittleDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_soluteAdjusters_addOrRemoveALittleDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.soluteAdjusters.addOrRemoveALittleDescriptionStringProperty' ) )
-      },
-      transportProteinsAndLigands: {
-        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"navigateDescription"} ),
-        navigateDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_navigateDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.navigateDescriptionStringProperty' ) ),
-        grabOrReleaseDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_grabOrReleaseDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.grabOrReleaseDescriptionStringProperty' ) ),
-        moveGrabbedItemDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_moveGrabbedItemDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.moveGrabbedItemDescriptionStringProperty' ) ),
-        cancelGrabDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_transportProteinsAndLigands_cancelGrabDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.transportProteinsAndLigands.cancelGrabDescriptionStringProperty' ) )
-      },
-      sortOrDeleteProteins: {
-        _comment_0: new FluentComment( {"comment":"Description strings for PDOM","associatedKey":"navigateProteinsDescription"} ),
-        navigateProteinsDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_navigateProteinsDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.navigateProteinsDescriptionStringProperty' ) ),
-        grabProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_grabProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.grabProteinDescriptionStringProperty' ) ),
-        moveGrabbedProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_moveGrabbedProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.moveGrabbedProteinDescriptionStringProperty' ) ),
-        releaseProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_releaseProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.releaseProteinDescriptionStringProperty' ) ),
-        deleteProteinDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_sortOrDeleteProteins_deleteProteinDescription', _.get( MembraneTransportStrings, 'a11y.keyboardHelp.sortOrDeleteProteins.deleteProteinDescriptionStringProperty' ) )
-      }
-    },
-    _comment_11: new FluentComment( {"comment":"Strings for MembraneTransportDescriber","associatedKey":"membraneTransportDescriber"} ),
+    _comment_10: new FluentComment( {"comment":"Strings for MembraneTransportDescriber","associatedKey":"membraneTransportDescriber"} ),
     membraneTransportDescriber: {
       _comment_0: new FluentComment( {"comment":"Particle crossing responses - spoken whenever a particle crosses through a focused protein.","associatedKey":"particleCrossing"} ),
       particleCrossing: new FluentPattern<{ direction: 'inward' | 'outward' | TReadOnlyProperty<'inward' | 'outward'>, soluteType: 'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp' | TReadOnlyProperty<'oxygen' | 'carbonDioxide' | 'sodiumIon' | 'potassiumIon' | 'glucose' | 'atp'> }>( fluentSupport.bundleProperty, 'a11y_membraneTransportDescriber_particleCrossing', _.get( MembraneTransportStrings, 'a11y.membraneTransportDescriber.particleCrossingStringProperty' ), [{"name":"direction","variants":["inward","outward"]},{"name":"soluteType","variants":["oxygen","carbonDioxide","sodiumIon","potassiumIon","glucose","atp"]}] ),
@@ -768,7 +734,7 @@ const MembraneTransportFluent = {
       sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membraneTransportDescriber_sodiumPumpedOutsideAndPotassiumPumpedInside', _.get( MembraneTransportStrings, 'a11y.membraneTransportDescriber.sodiumPumpedOutsideAndPotassiumPumpedInsideStringProperty' ) ),
       sodiumAndGlucoseShuttledInsideStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_membraneTransportDescriber_sodiumAndGlucoseShuttledInside', _.get( MembraneTransportStrings, 'a11y.membraneTransportDescriber.sodiumAndGlucoseShuttledInsideStringProperty' ) )
     },
-    _comment_12: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
+    _comment_11: new FluentComment( {"comment":"Preferences Dialog","associatedKey":"preferencesDialog"} ),
     preferencesDialog: {
       simulation: {
         animateLipids: {

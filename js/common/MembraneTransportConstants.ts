@@ -18,7 +18,9 @@ import Bounds2 from '../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import KeyboardHelpSectionRow from '../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import HotkeyData from '../../../scenery/js/input/HotkeyData.js';
 import membraneTransport from '../membraneTransport.js';
 
 export default class MembraneTransportConstants {
@@ -55,8 +57,21 @@ export default class MembraneTransportConstants {
   public static readonly SCREEN_VIEW_X_MARGIN = 8;
   public static readonly SCREEN_VIEW_Y_MARGIN = 8;
 
-  // Line wrap for rows of content in the keyboard help dialog.
-  public static readonly KEYBOARD_HELP_LABEL_LINE_WRAP = 250;
+  /**
+   * Creates a KeyboardHelpSectionRow from the provided HotkeyData, using sim specific
+   * options for styling.
+   */
+  public static createKeyboardHelpSectionRow( hotkeyData: HotkeyData ): KeyboardHelpSectionRow {
+    return KeyboardHelpSectionRow.fromHotkeyData(
+      hotkeyData, {
+        labelWithIconOptions: {
+          labelOptions: {
+            lineWrap: 250
+          }
+        }
+      }
+    );
+  }
 
   // The artwork is sized correctly relatively to each other, but this determines the overall scale factor so that
   // they will have the correct model bounds. This applies to particles and transport proteins.

@@ -282,7 +282,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Add a keyboard listener that manages selection of the transport proteins
     const selectionKeyboardListener = new KeyboardListener( {
-      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.selection.keyStringProperties,
+      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.navigateProteins.keyStringProperties,
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const allSlotsCount = slots.length;
@@ -436,7 +436,7 @@ export default class InteractiveSlotsNode extends Node {
       }
     };
     const releaseKeyboardListener = new KeyboardListener( {
-      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.releaseProtein.keyStringProperties,
+      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.releaseProtein.keyStringProperties,
       fireOnDown: false,
       fire: ( event, keysPressed, listener ) => {
         fireReleased();
@@ -445,7 +445,7 @@ export default class InteractiveSlotsNode extends Node {
     this.addInputListener( releaseKeyboardListener );
 
     const deleteKeyboardListener = new KeyboardListener( {
-      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.deleteProtein.keyStringProperties,
+      keyStringProperties: MembraneTransportHotkeyData.observationWindowTransportProteinLayer.deleteProtein.keyStringProperties,
       enabledProperty: this.grabbedProperty,
       fire: ( event, keysPressed, listener ) => {
         const grabbedNode = this.grabbedNode;
@@ -474,7 +474,7 @@ export default class InteractiveSlotsNode extends Node {
 
     // Return the protein to its origin when pressing escape to cancel.
     const escapeKeyboardListener = new KeyboardListener( {
-      keyStringProperties: MembraneTransportHotkeyData.interactiveSlotsNode.cancelInteraction.keyStringProperties,
+      keyStringProperties: MembraneTransportHotkeyData.proteinsOrLigands.cancel.keyStringProperties,
       enabledProperty: this.grabbedProperty,
       fire: () => {
         affirm( this.grabbedNode, 'We must have a Node if this listener is firing.' );

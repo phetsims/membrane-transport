@@ -6,34 +6,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
-import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
+import MembraneTransportConstants from '../MembraneTransportConstants.js';
+import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
 
 export default class SoluteAdjustersKeyboardHelpSection extends KeyboardHelpSection {
   public constructor() {
-
-    const coarseAdjustmentRow = KeyboardHelpSectionRow.labelWithIcon(
-      MembraneTransportFluent.keyboardHelp.soluteAdjusters.addOrRemoveALotStringProperty,
-      KeyboardHelpIconFactory.leftRightOrADKeysRowIcon(),
-      {
-        labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.soluteAdjusters.addOrRemoveALotDescriptionStringProperty
-      }
-    );
-
-    const fineAdjustmentRow = KeyboardHelpSectionRow.labelWithIconList(
-      MembraneTransportFluent.keyboardHelp.soluteAdjusters.addOrRemoveALittleStringProperty,
-      [
-        KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
-        KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.aDKeysRowIcon() )
-      ],
-      {
-        labelInnerContent: MembraneTransportFluent.a11y.keyboardHelp.soluteAdjusters.addOrRemoveALittleDescriptionStringProperty
-      }
-    );
-
+    const coarseAdjustmentRow = MembraneTransportConstants.createKeyboardHelpSectionRow( MembraneTransportHotkeyData.soluteControl.coarse );
+    const fineAdjustmentRow = MembraneTransportConstants.createKeyboardHelpSectionRow( MembraneTransportHotkeyData.soluteControl.fine );
     super( MembraneTransportFluent.keyboardHelp.soluteAdjusters.titleStringProperty, [
       coarseAdjustmentRow,
       fineAdjustmentRow
