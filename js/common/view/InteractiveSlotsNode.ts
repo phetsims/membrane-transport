@@ -650,7 +650,7 @@ export default class InteractiveSlotsNode extends Node {
     this.grabReleaseUtterance.alert = new ResponsePacket( {
       objectResponse: response
     } );
-    this.view.addAccessibleResponse( this.grabReleaseUtterance );
+    this.view.addAccessibleObjectResponse( this.grabReleaseUtterance );
 
     Voicing.alertUtterance( this.grabReleaseUtterance );
   }
