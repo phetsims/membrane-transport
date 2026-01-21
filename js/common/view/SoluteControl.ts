@@ -195,9 +195,11 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       // sound
       soundGenerator.playSoundForValueChange( totalCountProperty.value, valueBefore );
 
-      // pdom - the context response is queued after the object response so both are spoken
-      this.addAccessibleObjectResponse( createAccessibleObjectResponse() );
-      this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ), { alertBehavior: 'queue' } );
+      // pdom - flush the current queue so we don't get spammed with information from rapid presses.
+      // Flush is used instead of interruptible because we do not want the following context response
+      // to interrupt the object response.
+      this.addAccessibleObjectResponse( createAccessibleObjectResponse(), { flush: true } );
+      this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ) );
 
       this.voicingButtonsBox.voicingSpeakResponse( {
         nameResponse: accessibleName,
