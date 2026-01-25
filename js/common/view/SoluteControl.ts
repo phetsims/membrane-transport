@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Shows the panel and spinner that allows the user to add and remove a particular type of Solute.

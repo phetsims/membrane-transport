@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * This layer shows the channels in the observation window. They can be dragged out like a toolbox pattern, which
