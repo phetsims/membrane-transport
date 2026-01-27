@@ -107,14 +107,7 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
 
         soluteType: model.soluteProperty
       } );
-
     };
-
-    // A ValueChangeUtterance helps ensure that only the most recent change is spoken. Useful if arrow keys are
-    // pressed rapidly.
-    const createAccessibleObjectResponse = () => new ValueChangeUtterance( {
-      alert: getObjectResponseContent()
-    } );
 
     // The accessibleContextResponse describes the overall change in the simulation. It describes how many of a solute was added or
     // removed, and the relative amounts on each side of the membrane. It is spoken every time the SoluteControl is used.
@@ -142,12 +135,6 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
         delta: Math.abs( difference ),
         addedOrRemoved: addedOrRemoved,
         amount: MembraneTransportDescriber.getSoluteComparisonDescriptor( outsideCount, insideCount )
-      } );
-    };
-
-    const createContextResponse = ( newValue: number, previousValue: number ) => {
-      return new ValueChangeUtterance( {
-        alert: createContextResponseContent( newValue, previousValue )
       } );
     };
 
@@ -195,11 +182,12 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       // sound
       soundGenerator.playSoundForValueChange( totalCountProperty.value, valueBefore );
 
+      // pdom - channel is used so that
       // pdom - flush the current queue so we don't get spammed with information from rapid presses.
       // Flush is used instead of interruptible because we do not want the following context response
       // to interrupt the object response.
-      this.addAccessibleObjectResponse( createAccessibleObjectResponse(), { flush: true } );
-      this.addAccessibleContextResponse( createContextResponse( totalCountProperty.value, valueBefore ) );
+      this.addAccessibleObjectResponse( getObjectResponseContent(), { channel: 'solute-object-response' } );
+      this.addAccessibleContextResponse( createContextResponseContent( totalCountProperty.value, valueBefore ), { channel: 'solute-context-response' } );
 
       this.voicingButtonsBox.voicingSpeakResponse( {
         nameResponse: accessibleName,
@@ -320,7 +308,7 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       if ( focused ) {
 
         // pdom
-        voicingButtonsBox.addAccessibleObjectResponse( createAccessibleObjectResponse() );
+        voicingButtonsBox.addAccessibleObjectResponse( getObjectResponseContent() );
 
         // voicing
         voicingButtonsBox.voicingSpeakResponse( {
