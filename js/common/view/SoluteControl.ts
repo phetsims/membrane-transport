@@ -186,8 +186,8 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
       // pdom - flush the current queue so we don't get spammed with information from rapid presses.
       // Flush is used instead of interruptible because we do not want the following context response
       // to interrupt the object response.
-      this.addAccessibleObjectResponse( getObjectResponseContent(), { channel: 'solute-object-response' } );
-      this.addAccessibleContextResponse( createContextResponseContent( totalCountProperty.value, valueBefore ), { channel: 'solute-context-response' } );
+      this.addAccessibleObjectResponse( getObjectResponseContent(), { responseGroup: 'solute-object-response' } );
+      this.addAccessibleContextResponse( createContextResponseContent( totalCountProperty.value, valueBefore ), { responseGroup: 'solute-context-response' } );
 
       this.voicingButtonsBox.voicingSpeakResponse( {
         nameResponse: accessibleName,
