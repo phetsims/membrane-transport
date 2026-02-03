@@ -1,5 +1,5 @@
 {
-  "comment": "# membrane-transport 1.0.2 Fri Nov 07 2025 16:17:55 GMT-0500 (Eastern Standard Time)",
+  "comment": "# membrane-transport 1.0.3-rc.1 Tue Feb 03 2026 08:44:03 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "1a4637cfff70e7e8b0844dc43848a86ae89b4cf5",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "1b5c095a26c9e0c93bd510139d5d329af05ce1df",
+    "sha": "7c2c15f68824eee62aa27e8aa87860e89b2b65dd",
     "branch": "1.0"
   },
   "perennial-alias": {
