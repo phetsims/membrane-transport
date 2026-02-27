@@ -25,7 +25,10 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
                        model.featureSet === 'activeTransport' ? MembraneTransportFluent.a11y.screenSummary.playArea.screen3StringProperty :
                        MembraneTransportFluent.a11y.screenSummary.playArea.screen2and4StringProperty,
       controlAreaContent: MembraneTransportFluent.a11y.screenSummary.controlAreaStringProperty,
-      currentDetailsContent: currentDetailsNode,
+      currentDetailsContent: {
+        node: currentDetailsNode,
+        voicingContent: [ currentDetailsNode.voicingContentStringProperty ]
+      },
       interactionHintContent: [
         model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
         MembraneTransportFluent.a11y.screenSummary.interactionHintWithTransportProteinsStringProperty
