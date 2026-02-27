@@ -20,12 +20,18 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
-import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
+import AccessibleList, { AccessibleListItem } from '../../../../scenery-phet/js/accessibility/AccessibleList.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasProteins, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
+
+type AccessibleListContent = {
+  node: Node;
+  voicingContentStringProperty: TReadOnlyProperty<string>;
+};
 
 export default class MembraneDescriber {
 
@@ -87,8 +93,8 @@ export default class MembraneDescriber {
     } );
   }
 
-  public static createAccessibleList( model: MembraneTransportModel, leadingParagraphStringProperty: TReadOnlyProperty<string> ): AccessibleListNode {
-    return new AccessibleListNode( [
+  public static createAccessibleList( model: MembraneTransportModel, leadingParagraphStringProperty: TReadOnlyProperty<string> ): AccessibleListContent {
+    const listItems: AccessibleListItem[] = [
       {
         stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.noAddedSolutesStringProperty,
         visibleProperty: DerivedProperty.not( model.hasAnySolutesProperty )
@@ -134,10 +140,20 @@ export default class MembraneDescriber {
         stringProperty: MembraneTransportFluent.a11y.screenSummary.currentDetails.glucoseMetabolismStringProperty,
         visibleProperty: MembraneTransportPreferences.instance.glucoseMetabolismProperty
       }
-    ], {
+    ];
+
+    const listOptions = {
+      listItems: listItems,
       leadingParagraphStringProperty: leadingParagraphStringProperty,
-      punctuationStyle: 'semicolon'
-    } );
+      punctuationStyle: 'semicolon' as const
+    };
+
+    return {
+      node: new Node( {
+        accessibleTemplate: AccessibleList.createTemplate( listOptions )
+      } ),
+      voicingContentStringProperty: AccessibleList.createVoicingStringProperty( listOptions )
+    };
   }
 
   public static createAccessibleHelpText( model: MembraneTransportModel ): TReadOnlyProperty<string> {

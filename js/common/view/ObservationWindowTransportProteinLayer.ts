@@ -89,7 +89,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
     super();
 
     // The accessible list that describes the overall state of the membrane.
-    const accessibleListNode = MembraneDescriber.createAccessibleList(
+    const accessibleListContent = MembraneDescriber.createAccessibleList(
       model,
       MembraneTransportFluent.a11y.cellMembrane.leadingParagraphStringProperty
     );
@@ -110,13 +110,13 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
       groupFocusHighlight: true
     } );
 
-    this.proteinsNodeParent.addChild( accessibleListNode );
+    this.proteinsNodeParent.addChild( accessibleListContent.node );
     this.proteinsNodeParent.addChild( accessibleHelpTextNode );
 
     // Provide the reading block in parallel so it doesn't interfere with alt-input on the proteinsNodeParent and its children
     const readingBlockNode = new ReadingBlockNode( {
       children: [ new Path( modelViewTransform.modelToViewShape( Shape.bounds( MembraneTransportConstants.MEMBRANE_BOUNDS.dilated( 2 ) ) ) ) ],
-      readingBlockNameResponse: accessibleListNode.voicingContentStringProperty,
+      readingBlockNameResponse: accessibleListContent.voicingContentStringProperty,
       readingBlockHintResponse: accessibleHelpTextStringProperty
     } );
     this.addChild( readingBlockNode );
@@ -236,7 +236,7 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
 
           // Make sure that the transport proteins are in the correct reading order. They come after the accessible list and help text
           // describing the overall state of the membrane.
-          this.proteinsNodeParent.pdomOrder = [ accessibleListNode, accessibleHelpTextNode, ...this.getTransportProteinNodes().map( node => node.node ) ];
+          this.proteinsNodeParent.pdomOrder = [ accessibleListContent.node, accessibleHelpTextNode, ...this.getTransportProteinNodes().map( node => node.node ) ];
 
           // The short name of the transport protein.
           const nameResponseProperty = MembraneTransportFluent.a11y.transportProtein.briefName.createProperty( {

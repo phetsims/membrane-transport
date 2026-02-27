@@ -18,7 +18,7 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
    * @param model - This class is responsible for describing the entire model so it takes the entire model and is coupled to it.
    */
   public constructor( model: MembraneTransportModel ) {
-    const currentDetailsNode = MembraneDescriber.createAccessibleList( model, MembraneTransportFluent.a11y.screenSummary.currentDetails.leadingParagraphStringProperty );
+    const currentDetailsContent = MembraneDescriber.createAccessibleList( model, MembraneTransportFluent.a11y.screenSummary.currentDetails.leadingParagraphStringProperty );
     super( {
       playAreaContent: model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.playArea.screen1StringProperty :
                        model.featureSet === 'facilitatedDiffusion' ? MembraneTransportFluent.a11y.screenSummary.playArea.screen2and4StringProperty :
@@ -26,8 +26,8 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
                        MembraneTransportFluent.a11y.screenSummary.playArea.screen2and4StringProperty,
       controlAreaContent: MembraneTransportFluent.a11y.screenSummary.controlAreaStringProperty,
       currentDetailsContent: {
-        node: currentDetailsNode,
-        voicingContent: [ currentDetailsNode.voicingContentStringProperty ]
+        node: currentDetailsContent.node,
+        voicingContent: [ currentDetailsContent.voicingContentStringProperty ]
       },
       interactionHintContent: [
         model.featureSet === 'simpleDiffusion' ? MembraneTransportFluent.a11y.screenSummary.interactionHintStringProperty :
