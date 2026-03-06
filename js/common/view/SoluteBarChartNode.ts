@@ -112,8 +112,7 @@ export default class SoluteBarChartNode extends ReadingBlockNode {
       // pdom/voicing
       readingBlockDisabledTagName: 'li',
 
-      // In this context, accessibleName changes confuse the VoiceOver cursor, so we instead use innerContent, see https://github.com/phetsims/membrane-transport/issues/433 and https://github.com/phetsims/scenery/issues/1731
-      innerContent: accessibleNameProperty,
+      accessibleName: accessibleNameProperty,
       readingBlockNameResponse: accessibleNameProperty,
 
       // phet-io
