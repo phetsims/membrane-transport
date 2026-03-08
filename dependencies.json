@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "0c068b2cd229bbf62507f95470df8d0ced7de16d",
+    "sha": "0201849ff0d25437ed238e647c1eec689a57e27e",
     "branch": "1.0"
   },
   "perennial-alias": {
@@ -53,7 +53,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "eb169ca7823664501d032843310d278d5e167004",
+    "sha": "966b33da1bb6fdb13722ee2f6feab401efdc8844",
     "branch": "HEAD"
   },
   "phetmarks": {
