@@ -150,7 +150,7 @@ export default class MembraneDescriber {
 
     return {
       node: new Node( {
-        accessibleTemplate: AccessibleList.createTemplate( listOptions )
+        accessibleTemplate: AccessibleList.createTemplateProperty( listOptions )
       } ),
       voicingContentStringProperty: AccessibleList.createVoicingStringProperty( listOptions )
     };
