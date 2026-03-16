@@ -81,7 +81,7 @@ export default class LigandNode extends VoicingNode {
   private readonly utterance = new Utterance( {
 
     // A longer delay to prevent this content from being spoken too frequently.
-    alertStableDelay: 500,
+    alertDelay: 500,
 
     // All responses from the ligand are due to user interactions and we want them to interrupt
     // stale responses. See https://github.com/phetsims/membrane-transport/issues/491.
@@ -99,7 +99,7 @@ export default class LigandNode extends VoicingNode {
   private readonly releaseUtterance = new Utterance( {
 
     // A longer delay to prevent this content from being spoken too frequently.
-    alertStableDelay: 500,
+    alertDelay: 500,
 
     // All responses from the ligand are due to user interactions and we want them to interrupt
     // stale responses. See https://github.com/phetsims/membrane-transport/issues/491.
