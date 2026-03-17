@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "chipper": {
-    "sha": "81cf685233aeb5a5eec60651e3359af5ec247a69",
+    "sha": "c9687ba194cb53a7651a48fb6ad5273d45438191",
     "branch": "HEAD"
   },
   "dot": {
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "13db0ef1a58f290638f2e082ab625ce155cf5790",
+    "sha": "d335f976fc34504bdb639c625c7ba4c3835aa9b6",
     "branch": "1.0"
   },
   "perennial-alias": {
