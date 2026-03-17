@@ -29,11 +29,11 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "d335f976fc34504bdb639c625c7ba4c3835aa9b6",
+    "sha": "a81e6a42c3cdca28ae3586ee81d3abc74493133e",
     "branch": "1.0"
   },
   "perennial-alias": {
-    "sha": "744bfb5b50b948d57d43f9ab74c4ee26a9799645",
+    "sha": "b4dd6562e58bce9a30640ec479ac58c09ff7b3b7",
     "branch": "HEAD"
   },
   "phet-core": {
