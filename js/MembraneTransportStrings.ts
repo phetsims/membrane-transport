@@ -380,4 +380,6 @@ type StringsType = {
 
 const MembraneTransportStrings = getStringModule( 'MEMBRANE_TRANSPORT' ) as StringsType;
 
+membraneTransport.register( 'MembraneTransportStrings', MembraneTransportStrings );
+
 export default MembraneTransportStrings;
