@@ -32,6 +32,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );
 logGlobal( 'phet.preloads.phetio.queryParameters' );
-logGlobal( 'phet.membraneTransport.MembraneTransportQueryParameters' );
+phet.log && phet.log( `MembraneTransportQueryParameters: ${JSON.stringify( MembraneTransportQueryParameters, null, 2 )}` );
 
 export default MembraneTransportQueryParameters;
