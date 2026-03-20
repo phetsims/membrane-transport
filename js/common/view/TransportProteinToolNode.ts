@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * In the TransportProteinPanel toolbox, show a tool icon that can be dragged to create a new transport protein.

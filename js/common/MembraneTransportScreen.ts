@@ -1,4 +1,4 @@
-// Copyright 2024-2025, University of Colorado Boulder
+// Copyright 2024-2026, University of Colorado Boulder
 
 /**
  * Base class for any of the screens in the Membrane Transport simulation.  This class is responsible for creating the model and view.

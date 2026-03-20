@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * LigandToggleButton.ts shows an Add Ligands or Remove Ligands button for screens that support ligands.

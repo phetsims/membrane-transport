@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Scenery Node for a leakage channel, for a Node that can be dragged out of the toolbox and dropped into specific slots

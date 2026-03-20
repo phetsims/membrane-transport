@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * A target zone where a membrane transport protein can be dropped. When the user drags a transport protein toward this slot, it

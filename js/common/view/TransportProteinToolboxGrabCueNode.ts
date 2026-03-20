@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Show a "Space to grab or release" cue when a transport protein toolbox tool has focus. Hide the cue after keyboard interaction.

@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * MembraneTransportSounds centralizes all sound effects for this simulation. It defines, configures, and registers

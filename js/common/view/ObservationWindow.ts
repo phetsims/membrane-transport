@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Shows the rectangle with the cross-section of the cell membrane where solutes, ligands, transport proteins are.

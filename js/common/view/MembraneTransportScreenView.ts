@@ -1,4 +1,4 @@
-// Copyright 2024-2025, University of Colorado Boulder
+// Copyright 2024-2026, University of Colorado Boulder
 
 /**
  * ScreenView for the Membrane Transport simulation. Note that this provides the full features of the Playground screen,

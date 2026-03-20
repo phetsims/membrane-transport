@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Particle is occupying a binding site within the Sodium-Potassium Pump, waiting for the transport cycle to proceed.

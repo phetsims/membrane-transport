@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * TransportProtein keeps track of stateful model information for a transport protein that is actively in a slot.

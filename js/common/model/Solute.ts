@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * The model for a solute, which can be added by the user, and diffuse across the membrane or transport through the

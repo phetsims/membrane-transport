@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Particle (e.g., O2, CO2) is moving directly across the lipid bilayer without a channel or transporter.

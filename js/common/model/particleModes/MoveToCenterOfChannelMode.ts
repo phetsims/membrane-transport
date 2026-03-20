@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * The Particle is moving towards the central opening of a transport protein channel (e.g., leakage or gated ion channel).

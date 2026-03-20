@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Membrane potential panel for the membrane transport simulation, shown the toolbox with the voltage gated channels.
