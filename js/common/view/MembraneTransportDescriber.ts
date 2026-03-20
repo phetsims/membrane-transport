@@ -37,7 +37,6 @@ import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import _ from '../../../../sherpa/js/lodash.js';
 import { AlertableNoUtterance, TAlertable } from '../../../../utterance-queue/js/Utterance.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
@@ -920,5 +919,3 @@ export default class MembraneTransportDescriber {
     return parts.join( ' ' + MembraneTransportFluent.a11y.membraneTransportDescriber.andSeparatorStringProperty.value + ' ' );
   }
 }
-
-membraneTransport.register( 'MembraneTransportDescriber', MembraneTransportDescriber );

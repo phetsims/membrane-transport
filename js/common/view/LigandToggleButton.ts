@@ -14,7 +14,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 import addLigands_mp3 from '../../../sounds/addLigands_mp3.js';
 import removeLigands_mp3 from '../../../sounds/removeLigands_mp3.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -58,4 +57,3 @@ export default class LigandToggleButton extends BooleanRectangularToggleButton {
     } );
   }
 }
-membraneTransport.register( 'LigandToggleButton', LigandToggleButton );

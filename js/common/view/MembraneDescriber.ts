@@ -22,7 +22,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import AccessibleList, { AccessibleListItem } from '../../../../scenery-phet/js/accessibility/AccessibleList.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import { getFeatureSetHasProteins, getFeatureSetHasVoltages } from '../MembraneTransportFeatureSet.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
@@ -160,5 +159,3 @@ export default class MembraneDescriber {
     return new MembraneDescriber( model ).accessibleHelpTextStringProperty;
   }
 }
-
-membraneTransport.register( 'MembraneDescriber', MembraneDescriber );

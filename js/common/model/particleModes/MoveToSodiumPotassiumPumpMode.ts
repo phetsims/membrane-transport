@@ -9,7 +9,6 @@
 
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import SodiumPotassiumPump from '../proteins/SodiumPotassiumPump.js';
@@ -99,5 +98,3 @@ export default class MoveToSodiumPotassiumPumpMode extends MoveToTargetMode {
     );
   }
 }
-
-membraneTransport.register( 'MoveToSodiumPotassiumPumpMode', MoveToSodiumPotassiumPumpMode );

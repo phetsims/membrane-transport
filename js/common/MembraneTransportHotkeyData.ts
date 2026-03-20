@@ -129,5 +129,3 @@ export default class MembraneTransportHotkeyData {
     )
   };
 }
-
-membraneTransport.register( 'MembraneTransportHotkeyData', MembraneTransportHotkeyData );

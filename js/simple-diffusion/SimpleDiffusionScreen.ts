@@ -11,7 +11,6 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import simple_diffusion_home_icon_svg from '../../images/simple_diffusion_home_icon_svg.js';
 import simple_diffusion_nav_icon_svg from '../../images/simple_diffusion_nav_icon_svg.js';
 import MembraneTransportScreen from '../common/MembraneTransportScreen.js';
-import membraneTransport from '../membraneTransport.js';
 import MembraneTransportFluent from '../MembraneTransportFluent.js';
 
 export default class SimpleDiffusionScreen extends MembraneTransportScreen {
@@ -28,5 +27,3 @@ export default class SimpleDiffusionScreen extends MembraneTransportScreen {
   }
 
 }
-
-membraneTransport.register( 'SimpleDiffusionScreen', SimpleDiffusionScreen );

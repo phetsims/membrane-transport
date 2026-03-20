@@ -21,7 +21,6 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import KeyboardHelpSectionRow from '../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import HotkeyData from '../../../scenery/js/input/HotkeyData.js';
-import membraneTransport from '../membraneTransport.js';
 
 export default class MembraneTransportConstants {
 
@@ -184,5 +183,3 @@ export default class MembraneTransportConstants {
     // This class should not be instantiated
   }
 }
-
-membraneTransport.register( 'MembraneTransportConstants', MembraneTransportConstants );

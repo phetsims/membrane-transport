@@ -20,7 +20,6 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ToggleSwitch, { ToggleSwitchOptions } from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportPreferences from '../MembraneTransportPreferences.js';
 
@@ -66,5 +65,3 @@ export default class MembraneTransportSoundPreferencesNode extends VBox {
     } );
   }
 }
-
-membraneTransport.register( 'MembraneTransportSoundPreferencesNode', MembraneTransportSoundPreferencesNode );

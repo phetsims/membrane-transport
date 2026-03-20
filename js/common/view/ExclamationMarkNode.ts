@@ -8,7 +8,6 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
-import membraneTransport from '../../membraneTransport.js';
 
 export default class ExclamationMarkNode extends Text {
   public constructor( options?: TextOptions ) {
@@ -27,5 +26,3 @@ export default class ExclamationMarkNode extends Text {
     options && this.mutate( options );
   }
 }
-
-membraneTransport.register( 'ExclamationMarkNode', ExclamationMarkNode );

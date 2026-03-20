@@ -11,7 +11,6 @@
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import membraneTransport from '../../membraneTransport.js';
 import TransportProteinDragNode from './TransportProteinDragNode.js';
 
 /**
@@ -50,5 +49,3 @@ export default function animateProteinReturn(
 
   return animation;
 }
-
-membraneTransport.register( 'animateProteinReturn', animateProteinReturn );

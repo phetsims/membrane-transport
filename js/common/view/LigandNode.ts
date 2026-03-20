@@ -34,7 +34,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { AriaLive } from '../../../../utterance-queue/js/AriaLiveAnnouncer.js';
 import Utterance, { AlertableNoUtterance } from '../../../../utterance-queue/js/Utterance.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
@@ -718,4 +717,3 @@ export default class LigandNode extends VoicingNode {
     this.updateVisualPosition();
   }
 }
-membraneTransport.register( 'LigandNode', LigandNode );

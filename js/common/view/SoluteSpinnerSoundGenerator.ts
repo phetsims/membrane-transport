@@ -16,7 +16,6 @@ import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueC
 import soundManager from '../../../../tambo/js/soundManager.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import sliderMovement_mp3 from '../../../sounds/sliderMovement_mp3.js';
-import membraneTransport from '../../membraneTransport.js';
 
 export default class SoluteSpinnerSoundGenerator extends ValueChangeSoundPlayer {
 
@@ -113,5 +112,3 @@ class SliderMiddleRangeSoundGenerator extends SoundGenerator implements TSoundPl
     // does nothing in this class, but is needed for the TSoundPlayer interface
   }
 }
-
-membraneTransport.register( 'SoluteSpinnerSoundGenerator', SoluteSpinnerSoundGenerator );

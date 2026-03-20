@@ -83,5 +83,4 @@ const MembraneTransportColors = {
   } )
 };
 
-membraneTransport.register( 'MembraneTransportColors', MembraneTransportColors );
 export default MembraneTransportColors;

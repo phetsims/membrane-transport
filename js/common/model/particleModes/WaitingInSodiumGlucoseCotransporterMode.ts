@@ -8,7 +8,6 @@
  */
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 import SodiumGlucoseCotransporter from '../proteins/SodiumGlucoseCotransporter.js';
@@ -45,5 +44,3 @@ export default class WaitingInSodiumGlucoseCotransporterMode extends BaseParticl
     );
   }
 }
-
-membraneTransport.register( 'WaitingInSodiumGlucoseCotransporterMode', WaitingInSodiumGlucoseCotransporterMode );

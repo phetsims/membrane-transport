@@ -7,7 +7,6 @@
  */
 
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
@@ -22,5 +21,3 @@ export default class SoluteAdjustersKeyboardHelpSection extends KeyboardHelpSect
     ] );
   }
 }
-
-membraneTransport.register( 'SoluteAdjustersKeyboardHelpSection', SoluteAdjustersKeyboardHelpSection );

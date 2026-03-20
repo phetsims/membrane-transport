@@ -38,7 +38,6 @@
  */
 
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import Particle from '../Particle.js';
 
@@ -70,5 +69,3 @@ export default abstract class BaseParticleMode {
     throw new Error( 'fromStateObject must be implemented by subclasses' );
   }
 }
-
-membraneTransport.register( 'BaseParticleMode', BaseParticleMode );

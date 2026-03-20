@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import PotassiumVoltageGatedChannel from '../model/proteins/PotassiumVoltageGatedChannel.js';
@@ -120,5 +119,3 @@ export default class MembranePotentialDescriber {
     return descriptionStringProperty;
   }
 }
-
-membraneTransport.register( 'MembranePotentialDescriber', MembranePotentialDescriber );

@@ -7,7 +7,6 @@
  */
 
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
 import MembraneDescriber from './MembraneDescriber.js';
@@ -36,5 +35,3 @@ export default class MembraneTransportScreenSummaryContent extends ScreenSummary
     } );
   }
 }
-
-membraneTransport.register( 'MembraneTransportScreenSummaryContent', MembraneTransportScreenSummaryContent );

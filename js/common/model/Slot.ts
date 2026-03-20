@@ -14,7 +14,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
 import createTransportProtein from './proteins/createTransportProtein.js';
 import TransportProtein from './proteins/TransportProtein.js';
@@ -103,5 +102,3 @@ export default class Slot {
     return new Vector2( this.position, 0 );
   }
 }
-
-membraneTransport.register( 'Slot', Slot );

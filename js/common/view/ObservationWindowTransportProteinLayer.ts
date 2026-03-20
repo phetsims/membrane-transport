@@ -31,7 +31,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
@@ -377,5 +376,3 @@ export default class ObservationWindowTransportProteinLayer extends VoicingNode 
     } );
   }
 }
-
-membraneTransport.register( 'ObservationWindowTransportProteinLayer', ObservationWindowTransportProteinLayer );

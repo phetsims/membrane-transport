@@ -16,7 +16,6 @@ import { ParallelDOMOptions } from '../../../../../scenery/js/accessibility/pdom
 import InteractiveHighlighting from '../../../../../scenery/js/accessibility/voicing/InteractiveHighlighting.js';
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions } from '../../../../../scenery/js/nodes/Node.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportFluent from '../../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import TransportProtein from '../../model/proteins/TransportProtein.js';
@@ -79,5 +78,3 @@ export default class TransportProteinNode extends InteractiveHighlighting( Node 
     // override as needed
   }
 }
-
-membraneTransport.register( 'TransportProteinNode', TransportProteinNode );

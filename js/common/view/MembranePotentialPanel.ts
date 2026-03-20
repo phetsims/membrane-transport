@@ -23,7 +23,6 @@ import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularR
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportModel from '../model/MembraneTransportModel.js';
@@ -243,5 +242,3 @@ export default class MembranePotentialPanel extends Panel {
     } );
   }
 }
-
-membraneTransport.register( 'MembranePotentialPanel', MembranePotentialPanel );

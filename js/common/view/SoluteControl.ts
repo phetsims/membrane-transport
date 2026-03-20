@@ -28,7 +28,6 @@ import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ResponsePatternCollection from '../../../../utterance-queue/js/ResponsePatternCollection.js';
 import ValueChangeUtterance from '../../../../utterance-queue/js/ValueChangeUtterance.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
@@ -395,5 +394,3 @@ export default class SoluteControl extends ReadingBlock( Panel ) {
     } );
   }
 }
-
-membraneTransport.register( 'SoluteControl', SoluteControl );

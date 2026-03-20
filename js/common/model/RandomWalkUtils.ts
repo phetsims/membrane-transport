@@ -11,7 +11,6 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import { boxMullerTransform } from '../../../../dot/js/util/boxMullerTransform.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import membraneTransport from '../../membraneTransport.js';
 
 const RandomWalkUtils = {
 
@@ -32,7 +31,5 @@ const RandomWalkUtils = {
     return new Vector2( Math.cos( angle ), Math.sin( angle ) );
   }
 };
-
-membraneTransport.register( 'RandomWalkUtils', RandomWalkUtils );
 
 export default RandomWalkUtils;

@@ -9,7 +9,6 @@
 import Image from '../../../../../scenery/js/nodes/Image.js';
 import potassiumVoltageGatedClosed_svg from '../../../../images/potassiumVoltageGatedClosed_svg.js';
 import potassiumVoltageGatedOpen_svg from '../../../../images/potassiumVoltageGatedOpen_svg.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import PotassiumVoltageGatedChannel from '../../model/proteins/PotassiumVoltageGatedChannel.js';
 import TransportProteinNode from './TransportProteinNode.js';
@@ -52,5 +51,3 @@ export default class PotassiumVoltageGatedChannelNode extends TransportProteinNo
     }
   }
 }
-
-membraneTransport.register( 'PotassiumVoltageGatedChannelNode', PotassiumVoltageGatedChannelNode );

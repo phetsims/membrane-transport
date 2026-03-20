@@ -37,7 +37,6 @@ import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/Refer
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasLigands, getFeatureSetHasVoltages, getFeatureSetSelectableSoluteTypes, getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
 import Ligand from './Ligand.js';
 import Particle, { ParticleModeWithSlot } from './Particle.js';
@@ -843,6 +842,3 @@ export type ParticleStateObject = {
   model: ReferenceIOState;
   opacity: number;
 };
-
-
-membraneTransport.register( 'MembraneTransportModel', MembraneTransportModel );

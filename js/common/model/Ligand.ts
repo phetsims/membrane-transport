@@ -8,7 +8,6 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportModel from './MembraneTransportModel.js';
 import Particle from './Particle.js';
 import LigandBoundMode from './particleModes/LigandBoundMode.js';
@@ -46,5 +45,3 @@ export default class Ligand extends Particle {
     }
   }
 }
-
-membraneTransport.register( 'Ligand', Ligand );

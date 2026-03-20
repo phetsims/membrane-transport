@@ -10,7 +10,6 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import active_transport_home_icon_svg from '../../images/active_transport_home_icon_svg.js';
 import active_transport_nav_icon_svg from '../../images/active_transport_nav_icon_svg.js';
 import MembraneTransportScreen from '../common/MembraneTransportScreen.js';
-import membraneTransport from '../membraneTransport.js';
 import MembraneTransportFluent from '../MembraneTransportFluent.js';
 
 export default class ActiveTransportScreen extends MembraneTransportScreen {
@@ -26,5 +25,3 @@ export default class ActiveTransportScreen extends MembraneTransportScreen {
     );
   }
 }
-
-membraneTransport.register( 'ActiveTransportScreen', ActiveTransportScreen );

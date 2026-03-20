@@ -20,7 +20,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
@@ -293,5 +292,3 @@ export default class SoluteBarChartNode extends ReadingBlockNode {
     ];
   }
 }
-
-membraneTransport.register( 'SoluteBarChartNode', SoluteBarChartNode );

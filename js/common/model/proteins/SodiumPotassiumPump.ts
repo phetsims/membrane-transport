@@ -24,7 +24,6 @@
 import Emitter from '../../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import { ParticleModeWithSlot } from '../Particle.js';
@@ -319,5 +318,3 @@ export default class SodiumPotassiumPump extends TransportProtein<SodiumPotassiu
            ( () => { throw new Error( `Unhandled site: ${site}` ); } )(); // IIFE to throw error
   }
 }
-
-membraneTransport.register( 'SodiumPotassiumPump', SodiumPotassiumPump );

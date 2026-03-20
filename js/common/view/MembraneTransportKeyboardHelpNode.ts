@@ -10,7 +10,6 @@
 import BasicActionsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/BasicActionsKeyboardHelpSection.js';
 import TimeControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/TimeControlsKeyboardHelpSection.js';
 import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFeatureSet, { getFeatureSetHasProteins } from '../MembraneTransportFeatureSet.js';
 import SoluteAdjustersKeyboardHelpSection from './SoluteAdjustersKeyboardHelpSection.js';
 import SortOrDeleteProteinsKeyboardHelpSection from './SortOrDeleteProteinsKeyboardHelpSection.js';
@@ -49,5 +48,3 @@ export default class MembraneTransportKeyboardHelpNode extends TwoColumnKeyboard
     super( leftColumn, rightColumn );
   }
 }
-
-membraneTransport.register( 'MembraneTransportKeyboardHelpNode', MembraneTransportKeyboardHelpNode );

@@ -10,7 +10,6 @@ import Image from '../../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import potassiumLigand_svg from '../../../../images/potassiumLigand_svg.js';
 import sodiumLigand_svg from '../../../../images/sodiumLigand_svg.js';
-import membraneTransport from '../../../membraneTransport.js';
 
 export default class LigandParticleNode extends Node {
 
@@ -23,5 +22,3 @@ export default class LigandParticleNode extends Node {
     } );
   }
 }
-
-membraneTransport.register( 'LigandParticleNode', LigandParticleNode );

@@ -8,7 +8,6 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import membraneTransport from '../membraneTransport.js';
 import MembraneTransportQueryParameters from './MembraneTransportQueryParameters.js';
 
 export default class MembraneTransportPreferences {
@@ -40,5 +39,3 @@ export default class MembraneTransportPreferences {
     // This is a singleton, so prevent instantiation.
   }
 }
-
-membraneTransport.register( 'MembraneTransportPreferences', MembraneTransportPreferences );

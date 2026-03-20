@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import VoltageGatedChannel from './VoltageGatedChannel.js';
 
@@ -29,5 +28,3 @@ export default class SodiumVoltageGatedChannel extends VoltageGatedChannel<Volta
     return state === 'openNegative50mV';
   }
 }
-
-membraneTransport.register( 'SodiumVoltageGatedChannel', SodiumVoltageGatedChannel );

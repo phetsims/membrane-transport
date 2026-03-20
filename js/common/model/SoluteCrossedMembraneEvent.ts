@@ -7,7 +7,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import membraneTransport from '../../membraneTransport.js';
 import TransportProteinType from './proteins/TransportProteinType.js';
 import Slot from './Slot.js';
 import Solute from './Solute.js';
@@ -23,5 +22,3 @@ export default class SoluteCrossedMembraneEvent {
     this.transportProteinType = slot ? slot.transportProteinType : null;
   }
 }
-
-membraneTransport.register( 'SoluteCrossedMembraneEvent', SoluteCrossedMembraneEvent );

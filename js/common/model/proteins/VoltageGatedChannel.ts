@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
 import SoluteType from '../SoluteType.js';
 import TransportProtein from './TransportProtein.js';
@@ -71,5 +70,3 @@ export default abstract class VoltageGatedChannel<T extends 'closedNegative70mV'
            this.model.checkGradientForCrossing( soluteType, location );
   }
 }
-
-membraneTransport.register( 'VoltageGatedChannel', VoltageGatedChannel );

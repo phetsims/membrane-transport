@@ -9,7 +9,6 @@
 import { LayoutNodeOptions } from '../../../../scenery/js/layout/nodes/LayoutNode.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 
 export default class InsideOutsideLabel extends Panel {
@@ -25,5 +24,3 @@ export default class InsideOutsideLabel extends Panel {
     options && this.mutate( options );
   }
 }
-
-membraneTransport.register( 'InsideOutsideLabel', InsideOutsideLabel );

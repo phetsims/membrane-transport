@@ -10,7 +10,6 @@
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import membraneTransport from '../membraneTransport.js';
 
 const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
 
@@ -29,8 +28,6 @@ const MembraneTransportQueryParameters = QueryStringMachine.getAll( {
     public: true
   }
 } );
-
-membraneTransport.register( 'MembraneTransportQueryParameters', MembraneTransportQueryParameters );
 
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );

@@ -14,7 +14,6 @@ import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/GrabReleaseCueNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import membraneTransport from '../../membraneTransport.js';
 
 export default class TransportProteinToolboxGrabCueNode extends GrabReleaseCueNode {
 
@@ -66,5 +65,3 @@ export default class TransportProteinToolboxGrabCueNode extends GrabReleaseCueNo
     this.hasInteractedProperty.reset();
   }
 }
-
-membraneTransport.register( 'TransportProteinToolboxGrabCueNode', TransportProteinToolboxGrabCueNode );

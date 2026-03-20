@@ -16,7 +16,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import MembraneTransportColors from '../../common/MembraneTransportColors.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import { getFeatureSetSoluteTypes } from '../MembraneTransportFeatureSet.js';
@@ -151,4 +150,3 @@ export default class SoluteConcentrationsAccordionBox extends AccordionBox {
     this.stepEmitter = stepEmitter;
   }
 }
-membraneTransport.register( 'SoluteConcentrationsAccordionBox', SoluteConcentrationsAccordionBox );

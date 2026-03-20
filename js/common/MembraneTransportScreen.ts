@@ -14,7 +14,6 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import MembraneTransportColors from '../common/MembraneTransportColors.js';
-import membraneTransport from '../membraneTransport.js';
 import MembraneTransportFeatureSet from './MembraneTransportFeatureSet.js';
 import MembraneTransportModel from './model/MembraneTransportModel.js';
 import MembraneTransportKeyboardHelpNode from './view/MembraneTransportKeyboardHelpNode.js';
@@ -49,5 +48,3 @@ export default class MembraneTransportScreen extends Screen<MembraneTransportMod
     );
   }
 }
-
-membraneTransport.register( 'MembraneTransportScreen', MembraneTransportScreen );

@@ -15,7 +15,6 @@ import potassiumLigandHighlight_svg from '../../../../images/potassiumLigandHigh
 import sodiumLigandGatedClosed_svg from '../../../../images/sodiumLigandGatedClosed_svg.js';
 import sodiumLigandGatedOpen_svg from '../../../../images/sodiumLigandGatedOpen_svg.js';
 import sodiumLigandHighlight_svg from '../../../../images/sodiumLigandHighlight_svg.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import MembraneTransportSounds from '../../MembraneTransportSounds.js';
 import LigandGatedChannel from '../../model/proteins/LigandGatedChannel.js';
@@ -88,5 +87,3 @@ export default class LigandGatedChannelNode extends TransportProteinNode {
     this.bindingSiteHighlight && this.addChild( this.bindingSiteHighlight );
   }
 }
-
-membraneTransport.register( 'LigandGatedChannelNode', LigandGatedChannelNode );

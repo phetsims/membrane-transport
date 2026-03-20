@@ -14,7 +14,6 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../../../scenery/js/nodes/RichText.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import TransportProteinType from '../model/proteins/TransportProteinType.js';
@@ -78,5 +77,3 @@ export default class TransportProteinToolNode extends Voicing( VBox ) {
     this.transportProteinNode = transportProteinNode;
   }
 }
-
-membraneTransport.register( 'TransportProteinToolNode', TransportProteinToolNode );

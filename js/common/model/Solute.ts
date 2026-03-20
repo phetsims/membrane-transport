@@ -9,7 +9,6 @@
  */
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import membraneTransport from '../../membraneTransport.js';
 import Particle from './Particle.js';
 import SoluteType from './SoluteType.js';
 
@@ -23,5 +22,3 @@ export default class Solute extends Particle {
     super( position, soluteType, model );
   }
 }
-
-membraneTransport.register( 'Solute', Solute );

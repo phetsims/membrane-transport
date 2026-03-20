@@ -41,7 +41,6 @@ import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectan
 import { AriaLive } from '../../../../utterance-queue/js/AriaLiveAnnouncer.js';
 import ResponsePacket from '../../../../utterance-queue/js/ResponsePacket.js';
 import Utterance from '../../../../utterance-queue/js/Utterance.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 import MembraneTransportHotkeyData from '../MembraneTransportHotkeyData.js';
@@ -727,5 +726,3 @@ class InteractiveSlotRectangle extends Rectangle {
     this.index = index;
   }
 }
-
-membraneTransport.register( 'InteractiveSlotsNode', InteractiveSlotsNode );

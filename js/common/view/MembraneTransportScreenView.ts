@@ -29,7 +29,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import cell_svg from '../../../images/cell_svg.js';
 import MembraneTransportConstants from '../../common/MembraneTransportConstants.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportFluent from '../../MembraneTransportFluent.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import { getFeatureSetSoluteTypes, getFeatureSetTransportProteins } from '../MembraneTransportFeatureSet.js';
@@ -462,5 +461,3 @@ export default class MembraneTransportScreenView extends ScreenView {
     return this.transportProteinPanel!.getTransportProteinToolNode( type );
   }
 }
-
-membraneTransport.register( 'MembraneTransportScreenView', MembraneTransportScreenView );

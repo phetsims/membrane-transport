@@ -11,7 +11,6 @@
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import membraneTransport from '../../membraneTransport.js';
 import MembraneTransportColors from '../MembraneTransportColors.js';
 import MembraneTransportConstants from '../MembraneTransportConstants.js';
 
@@ -265,5 +264,3 @@ export default class Phospholipid {
     return dotRandom.nextDoubleBetween( -width, width );
   }
 }
-
-membraneTransport.register( 'Phospholipid', Phospholipid );

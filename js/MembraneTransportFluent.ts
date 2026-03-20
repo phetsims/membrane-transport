@@ -760,5 +760,3 @@ const MembraneTransportFluent = {
 };
 
 export default MembraneTransportFluent;
-
-membraneTransport.register('MembraneTransportFluent', MembraneTransportFluent);

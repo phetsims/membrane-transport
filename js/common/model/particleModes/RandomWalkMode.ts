@@ -14,7 +14,6 @@ import dotRandom from '../../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
-import membraneTransport from '../../../membraneTransport.js';
 import MembraneTransportConstants from '../../MembraneTransportConstants.js';
 import Ligand from '../Ligand.js';
 import MembraneTransportModel from '../MembraneTransportModel.js';
@@ -600,5 +599,3 @@ export default class RandomWalkMode extends BaseParticleMode {
     );
   }
 }
-
-membraneTransport.register( 'RandomWalkMode', RandomWalkMode );
