@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "fdc0b332c75d7a484a8e05b8c7e7a5869e4e1c72",
+    "sha": "64df9a204d040c718155202f9ecc9c7b136de58f",
     "branch": "1.0"
   },
   "perennial-alias": {
@@ -65,7 +65,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "6e31bcc6ce509a1a382ef9af33f37d7d348761dd",
+    "sha": "a3176f8c975907fc19bd6e67d2f31aebecf692fb",
     "branch": "HEAD"
   },
   "scenery-phet": {
