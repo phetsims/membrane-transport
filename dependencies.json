@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "8d08d6ddc174c0ed801fc56246fe207277500e85",
+    "sha": "ba205bf22da085b59a1081b4b772b071680f5ce2",
     "branch": "HEAD"
   },
   "kite": {
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "membrane-transport": {
-    "sha": "936f020eaf0f472477381b659cad6b1d31aced4e",
+    "sha": "34045844b0e081102945748f63310166ed73d4ee",
     "branch": "1.0"
   },
   "perennial-alias": {
