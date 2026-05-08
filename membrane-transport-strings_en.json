@@ -649,7 +649,7 @@
         "value": "Reordered."
       },
       "proteinLocation": {
-        "value": "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
+        "value": "in Membrane, { $proteinIndex } of { $proteinCount } Proteins"
       },
       "accessibleName": {
         "value": "{ $nameResponse }, { a11y_transportProtein_proteinLocation }"
@@ -710,7 +710,7 @@
         "value": "{ a11y_membranePotential_sodiumVoltageGatedOpenedResponse } { a11y_membranePotential_potassiumVoltageGatedClosedResponse }"
       },
       "sodiumClosedPotassiumOpenedResponse": {
-        "value": "{ a11y_membranePotential_potassiumVoltageGatedOpenedResponse } { a11y_membranePotential_sodiumVoltageGatedClosedResponse } "
+        "value": "{ a11y_membranePotential_potassiumVoltageGatedOpenedResponse } { a11y_membranePotential_sodiumVoltageGatedClosedResponse }"
       },
       "sodiumClosedPotassiumClosedResponse": {
         "value": "Voltage-gated channels closed."

@@ -451,7 +451,7 @@ a11y:
     cancelledBackToSlotResponse:     Cancelled. Back in membrane.
     cancelledBackToToolboxResponse:  Back in toolbox.
     reorderedResponse:               Reordered.
-    proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins "
+    proteinLocation:                 "in Membrane, { $proteinIndex } of { $proteinCount } Proteins"
     accessibleName:                  "{ $nameResponse }, { a11y.transportProtein.proteinLocation }"
     voicingHintResponse:
 
@@ -596,7 +596,7 @@ a11y:
     sodiumOpenedPotassiumClosedResponse: "{ a11y.membranePotential.sodiumVoltageGatedOpenedResponse } { a11y.membranePotential.potassiumVoltageGatedClosedResponse }"
 
     # We like to say opening first, since users are more interested to hear what just opened.
-    sodiumClosedPotassiumOpenedResponse: "{ a11y.membranePotential.potassiumVoltageGatedOpenedResponse } { a11y.membranePotential.sodiumVoltageGatedClosedResponse } "
+    sodiumClosedPotassiumOpenedResponse: "{ a11y.membranePotential.potassiumVoltageGatedOpenedResponse } { a11y.membranePotential.sodiumVoltageGatedClosedResponse }"
     sodiumClosedPotassiumClosedResponse: "Voltage-gated channels closed."
     noChangeResponse:                    No change in transport proteins.
 
