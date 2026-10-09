@@ -59,7 +59,7 @@ to reset various Properties and components to their initial states.
 **dispose**: Pertinent classes have `dispose` methods, often inherited. The simulation also uses the `addDisposable()`
 method to register child components that should be disposed when their parent is disposed. This pattern, combined with
 the `disposer` option for listeners, provides comprehensive memory management. For more details on disposal patterns,
-see https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md#dispose. Instances that exist
+see [phet-software-design-patterns.md](../../phet-info/doc/phet-software-design-patterns.md#dispose). Instances that exist
 for the lifetime of the sim are typically not intended to be disposed.
 
 ## Screens

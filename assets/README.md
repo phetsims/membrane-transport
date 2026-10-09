@@ -1,1 +1,0 @@
-All membrane-transport artwork is authored directly as editable SVG files in images/. However, an aggregate .ai file is also available.
